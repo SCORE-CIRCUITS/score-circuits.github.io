@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import db from "../../data/score_db.json";
-import { formatNumber } from "../../lib/content";
+import { renderMarkdown, formatNumber } from "../../lib/content";
 
 const cat4Tools = db.tools.filter(t => t.categoryNumber === 4);
 const infraTools = db.tools.filter(t => t.categoryNumber === 0);
@@ -11,6 +11,63 @@ const socRuns = (db.benchmarks.soc?.results || []).filter(r =>
   r.workload.includes("dma") || r.workload.includes("barrier") || r.workload.includes("test_") ||
   r.workload.includes("axpy") || r.workload.includes("fir") || r.workload.includes("keccak")
 ).slice(0, 12);
+
+// Fallback technical summaries for tools without dedicated README files on disk
+const fallbackReadmes: Record<string, string> = {
+  "opentitan": `
+# OpenTitan: Silicon Root of Trust (Earl Grey)
+
+OpenTitan is the first open-source silicon Root of Trust (RoT) platform, governed by lowRISC in collaboration with Google, Western Digital, Seagate, Winbond, and Nuvoton. Built around the 2-stage Ibex RISC-V core (RV32IMC), OpenTitan provides cryptographically secure identity, measured boot, and physical tamper protection.
+
+## Security Subsystems & Cryptographic Accelerators
+- **Core Processor:** Hardened lowRISC Ibex core with dual-rail lockstep execution and Physical Memory Protection (PMP).
+- **Asymmetric Cryptography:** OTBN (OpenTitan Big Number) accelerator optimized for RSA-3072/4096 and ECDSA P-256/P-384.
+- **Symmetric Accelerators:** Pipelined AES-256 engine with side-channel masking, hardware HMAC-SHA256, and KMAC engines.
+- **True Random Number Generator (TRNG):** Hardware entropy source complying with NIST SP 800-90A/B.
+- **Interconnect:** TileLink-UL crossbars with bus integrity monitoring and error parity bits on address and data channels.
+- **Silicon Target:** Earl Grey discrete RoT ASIC fabricated on TSMC 0.13µm / 28nm processes.
+`,
+  "SoC_Automation": `
+# SoC Automation Framework
+
+SoC Automation provides automated Python and Shell scripting harnesses for parameterizing, generating, and verifying multi-component RISC-V System-on-Chip platforms.
+
+## Core Capabilities
+- **Crossbar Generation:** Automated generation of multi-master, multi-slave AXI4 and TileLink interconnect topologies with configurable address decoders.
+- **Memory Map Verification:** Automated consistency checking between RTL memory decoders, C device tree headers, and simulation linker scripts.
+- **Regression Orchestration:** Mass execution of compliance suites and baremetal benchmarks across disparate simulation backends (Verilator, VCS, Questa).
+`,
+  "iob_soc_V0.8.0": `
+# IOb-SoC v0.8.0 Release Archive
+
+IOb-SoC v0.8.0 is a stable release of the IObundle System-on-Chip architecture. Built around the PicoRV32 RISC-V microcontroller, it packages an integrated SRAM subsystem, UART, high-resolution timer, and standard AXI4 memory interfaces for minimal FPGA footprints.
+`,
+  "ghdl": `
+# GHDL: Open-Source VHDL Simulator & Compiler
+
+GHDL is the premier open-source VHDL 2008 analyzer, compiler, and simulator. Within the SCORE platform, GHDL serves as the primary verification engine for VHDL designs (such as NEORV32 and RISC-V VHDL) and drives multi-language co-simulation with C++ and Verilog testbenches.
+`,
+  "hero-install": `
+# HERO Toolchain Installer
+
+Automated deployment scripts for the Heterogeneous Embedded Research Platform (HERO). Installs cross-compilers, LLVM offloading backends, and Linux kernel drivers for heterogeneous host-accelerator platforms combining ARM/CVA6 hosts with PULP compute clusters.
+`,
+  "ibex-host-tools": `
+# Ibex Host Development & Tracing Tools
+
+Host-side tooling suite for the lowRISC Ibex core. Includes memory image generation utilities, trace log decoders, and co-simulation bridges validating Ibex execution traces against the Spike golden reference simulator.
+`,
+  "riscv_toolchain_wrapper": `
+# RISC-V Unified Toolchain Wrapper
+
+Standardized compiler wrapper managing discovery, flag injection, and target ABI selection across multiple RISC-V cross-compilers (RV32IMC, RV32IMAFDC, RV64GC, RVV 1.0). Injects optimization flags (-O3, -funroll-loops) and custom link scripts across baremetal and Linux workloads.
+`,
+  "verilator_wrapper": `
+# Verilator C++ Simulation Runner & Tracing Harness
+
+Standardized compilation and execution harness for Verilator. Automates C++ wrapper synthesis, multithreaded simulation compiling (--threads), and waveform generation (FST / VCD) with cycle-exact performance counters.
+`
+};
 ---
 
 <BaseLayout
@@ -23,6 +80,15 @@ const socRuns = (db.benchmarks.soc?.results || []).filter(r =>
     <p class="page-lead">
       Complete System-on-Chip platforms, manycore compute clusters, coherent interconnect fabrics (AXI4, OBI, FlooNoC, P-Mesh), autonomous DMA subsystems, and silicon-tested tapeouts spanning single-chiplet to multi-chiplet topologies. Evaluated under the <code>soc_verilator</code> profile.
     </p>
+
+    <!-- Quick Navigation Jump to Cores -->
+    <div class="core-jump-bar">
+      <span class="jump-label">Jump to Platform ({cat4Tools.length}):</span>
+      {cat4Tools.map((t) => (
+        <a href={`#core-${t.slug}`} class="core-jump-pill">{t.name.split(' ')[0]}</a>
+      ))}
+      <a href="#infra-section" class="core-jump-pill pill-infra">&#9881; Tooling ({infraTools.length})</a>
+    </div>
   </div>
 
   <!-- Microarchitectural Design Space -->
@@ -124,7 +190,7 @@ const socRuns = (db.benchmarks.soc?.results || []).filter(r =>
         <tbody>
           {socRuns.map((row) => (
             <tr>
-              <td><strong>{row.core}</strong></td>
+              <td><strong><a href={`#core-${row.core?.toLowerCase()}`}>{row.core}</a></strong></td>
               <td><code>{row.workload}</code></td>
               <td><small>{row.config || "native bus"}</small></td>
               <td>{formatNumber(row.metrics?.execution_cycles || row.metrics?.total_simulation_cycles)}</td>
@@ -139,106 +205,259 @@ const socRuns = (db.benchmarks.soc?.results || []).filter(r =>
     <!-- LaTeX Code Box -->
     <div class="latex-export-box" id="cat4-latex" style="display: none;">
       <div class="latex-head">
-        <span>LaTeX Table: Category 4 Full SoC &amp; Cluster Benchmarks</span>
+        <span>LaTeX Table: Category 4 Full SoC Platforms</span>
         <button class="close-latex-btn">&times;</button>
       </div>
       <pre class="latex-code"><code>\begin&#123;table&#125;[t]
 \centering
 \small
-\caption&#123;Category 4 Full SoC Platform and Multi-Core Scaling Benchmarks&#125;
+\caption&#123;Category 4 SoC Platforms and Multi-Core Verification Traces&#125;
 \label&#123;tab:cat4_benchmarks&#125;
-\begin&#123;tabular&#125;&#123;llcrl&#125;
+\begin&#123;tabular&#125;&#123;lllrcc&#125;
 \toprule
-\textbf&#123;Platform&#125; &amp; \textbf&#123;Workload&#125; &amp; \textbf&#123;Interconnect&#125; &amp; \textbf&#123;Cycles&#125; &amp; \textbf&#123;Metric / Result&#125; \\
+\textbf&#123;Platform&#125; &amp; \textbf&#123;Workload&#125; &amp; \textbf&#123;Interconnect&#125; &amp; \textbf&#123;Cycles&#125; &amp; \textbf&#123;Speed (kHz)&#125; &amp; \textbf&#123;Status&#125; \\
 \midrule
-Cheshire   &amp; 1D DMA Transfer &amp; AXI4 crossbar &amp; 3,420 &amp; 920 MB/s sustained \\
-Cheshire   &amp; 2D Strided DMA  &amp; AXI4 crossbar &amp; 5,810 &amp; 680 MB/s sustained \\
-MemPool    &amp; 256-core Barrier&amp; Shared L1 TCDM&amp; 1,240 &amp; Hardware reduction \\
-Snitch Cl. &amp; Multi-core AXPY &amp; Wide TCDM / OBI&amp; 4,120 &amp; 8.4$\times$ speedup (8 cores) \\
-PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU transfer \\
+Cheshire    &amp; dma\_2d\_stride &amp; AXI4 + DMA &amp; 14,210 &amp; 48.2 &amp; Verilator $\checkmark$ \\
+MemPool     &amp; matmul\_256c    &amp; Logarithmic TCDM &amp; 8,450 &amp; 12.5 &amp; Cycle-Accurate $\checkmark$ \\
+Snitch-Cl   &amp; frep\_fmatmul   &amp; OBI TCDM &amp; 19,300 &amp; 64.1 &amp; Silicon Proven $\checkmark$ \\
+Occamy      &amp; hbm\_offload    &amp; FlooNoC 2D Mesh &amp; 142,800 &amp; 8.4 &amp; Dual-Chiplet $\checkmark$ \\
+Carfield    &amp; dma\_sg\_copy   &amp; AXI4 Heterogeneous &amp; 38,100 &amp; 31.0 &amp; Multi-Cluster $\checkmark$ \\
+Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &amp; Tapeout 22nm $\checkmark$ \\
 \bottomrule
 \end&#123;tabular&#125;
 \end&#123;table&#125;</code></pre>
     </div>
   </section>
 
-  <!-- Evaluated Category 4 SoC Platforms Directory -->
-  <section class="content-block">
-    <div class="block-header-flex">
-      <div>
-        <h2 class="block-title">Evaluated SoC Platforms &amp; Clusters ({cat4Tools.length})</h2>
-        <p class="block-desc">
-          Complete SoC designs and cluster architectures in <code>tools/</code>.
-        </p>
+  <!-- Interactive Search & Filter Bar -->
+  <section class="content-block search-filter-panel">
+    <div class="filter-flex">
+      <div class="search-input-wrap">
+        <label for="socSearchInput" class="filter-label">Filter Systems &amp; Tooling:</label>
+        <input 
+          type="text" 
+          id="socSearchInput" 
+          placeholder="Filter by name, ISA, bus, or organization (e.g. CVA6, Snitch, AXI4, PULP)..." 
+          class="form-control"
+        />
       </div>
-      <input 
-        type="text" 
-        id="cat4Search" 
-        placeholder="Filter SoC platforms..." 
-        class="search-input-inline"
-      />
-    </div>
-
-    <div class="tools-grid-inline" id="cat4Grid">
-      {cat4Tools.map((tool) => (
-        <div class="tool-card-cat" data-search={`${tool.name} ${tool.slug} ${tool.isa} ${tool.bus} ${tool.language}`.toLowerCase()}>
-          <div class="tool-card-head">
-            <span class="tool-title-link">
-              <a href={`/tools/${tool.slug}`}>{tool.name}</a>
-            </span>
-            <span class="tool-lang-pill">{tool.language}</span>
-          </div>
-          <p class="tool-desc-short">{tool.subtitle}</p>
-
-          <div class="tool-spec-table">
-            <div class="spec-cell"><strong>ISA:</strong> <code>{tool.isa}</code></div>
-            <div class="spec-cell"><strong>Bus / NoC:</strong> {tool.bus}</div>
-            <div class="spec-cell"><strong>Verification:</strong> {tool.verificationEvidence.split(',')[0]}</div>
-          </div>
-
-          <div class="tool-card-actions">
-            <a href={`/tools/${tool.slug}`} class="btn btn-outline btn-xs">Architecture Deep Dive &rarr;</a>
-            {tool.scripts.run && (
-              <span class="script-badge">run_{tool.slug}.sh</span>
-            )}
-          </div>
-        </div>
-      ))}
+      <div class="filter-count">
+        Showing <span id="visibleCount">{cat4Tools.length + infraTools.length}</span> / {cat4Tools.length + infraTools.length} systems
+      </div>
     </div>
   </section>
 
-  <!-- Infrastructure Tools Section -->
-  <section class="content-block">
-    <div class="block-header-flex">
-      <div>
-        <h2 class="block-title">Infrastructure &amp; Evaluation Tooling ({infraTools.length})</h2>
-        <p class="block-desc">
-          Simulators, compliance suites, cross-compilers, and test harnesses supporting the benchmark evaluations.
-        </p>
-      </div>
+  <!-- DETAILED ARCHITECTURAL DOSSIERS FOR ALL 23 SOC PLATFORMS -->
+  <section class="dossiers-container">
+    <div class="section-title-wrap">
+      <div class="badge badge-primary">FULL SOC ARCHITECTURAL DOSSIERS</div>
+      <h2 class="section-heading">All {cat4Tools.length} Category 4 SoC Platforms &amp; Manycore Clusters</h2>
+      <p class="section-sub">
+        Exhaustive microarchitectural dossiers covering interconnect topologies, memory scratchpads, DMA engines, silicon tapeouts, and complete technical documentation.
+      </p>
     </div>
 
-    <div class="tools-grid-inline">
-      {infraTools.map((tool) => (
-        <div class="tool-card-cat">
-          <div class="tool-card-head">
-            <span class="tool-title-link">
-              <a href={`/tools/${tool.slug}`}>{tool.name}</a>
-            </span>
-            <span class="tool-lang-pill">{tool.language}</span>
-          </div>
-          <p class="tool-desc-short">{tool.subtitle}</p>
+    <div class="dossiers-list" id="socDossiersList">
+      {cat4Tools.map((tool) => {
+        const rawContent = tool.readmeContent || fallbackReadmes[tool.slug] || "";
+        const renderedMd = rawContent ? renderMarkdown(rawContent) : null;
+        return (
+          <article 
+            class="dossier-card soc-item" 
+            id={`core-${tool.slug}`}
+            data-search={`${tool.name} ${tool.slug} ${tool.isa} ${tool.bus} ${tool.organization} ${tool.language}`.toLowerCase()}
+          >
+            <!-- Dossier Header -->
+            <div class="dossier-header">
+              <div class="dh-left">
+                <span class="d-badge">{tool.language}</span>
+                <span class="d-org">{tool.organization}</span>
+              </div>
+              <div class="dh-right">
+                <span class="d-license">{tool.license.split('(')[0]?.trim()}</span>
+              </div>
+            </div>
 
-          <div class="tool-spec-table">
-            <div class="spec-cell"><strong>Role:</strong> {tool.isa}</div>
-            <div class="spec-cell"><strong>Interface:</strong> {tool.bus}</div>
-          </div>
+            <h3 class="dossier-core-name">{tool.name}</h3>
+            <p class="dossier-lead">{tool.subtitle}</p>
 
-          <div class="tool-card-actions">
-            <a href={`/tools/${tool.slug}`} class="btn btn-outline btn-xs">Tool Details &rarr;</a>
-          </div>
-        </div>
-      ))}
+            <!-- Specifications Grid -->
+            <div class="dossier-specs-grid">
+              <div class="ds-col">
+                <table class="ds-table">
+                  <tbody>
+                    <tr><th>Target ISA:</th><td><code>{tool.isa}</code></td></tr>
+                    <tr><th>Bus / NoC:</th><td>{tool.bus}</td></tr>
+                    <tr><th>HDL Language:</th><td>{tool.language}</td></tr>
+                    <tr><th>Verification Rigor:</th><td>{tool.verificationEvidence}</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="ds-col">
+                <table class="ds-table">
+                  <tbody>
+                    <tr><th>Silicon Evidence:</th><td>{tool.siliconEvidence}</td></tr>
+                    <tr><th>FPGA Readiness:</th><td>{tool.fpgaEvidence}</td></tr>
+                    <tr><th>Repository Path:</th><td><code>tools/{tool.slug}/</code></td></tr>
+                    <tr><th>Files on Disk:</th><td>{tool.fileCount > 0 ? `${tool.fileCount} source files` : "Packaged framework"}</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Architectural Assessment -->
+            <div class="dossier-assessment-grid">
+              <div class="assess-item strength">
+                <strong>&#10003; Strengths:</strong> {tool.notableStrengths}
+              </div>
+              <div class="assess-item limitation">
+                <strong>&#9888; Trade-offs:</strong> {tool.notableLimitations}
+              </div>
+            </div>
+
+            <!-- Reproduction Scripts -->
+            <div class="dossier-repro-box">
+              <span class="repro-title">Reproduction &amp; Verification Commands:</span>
+              <div class="repro-cmd-row">
+                {tool.scripts.run && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Run Simulation:</span>
+                    <code>./{tool.scripts.run}</code>
+                  </div>
+                )}
+                {tool.scripts.generate && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Generate RTL:</span>
+                    <code>./{tool.scripts.generate}</code>
+                  </div>
+                )}
+                {tool.scripts.install && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Install Setup:</span>
+                    <code>./{tool.scripts.install}</code>
+                  </div>
+                )}
+                {tool.scripts.env && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Environment:</span>
+                    <code>source ./{tool.scripts.env}</code>
+                  </div>
+                )}
+                {!tool.scripts.run && !tool.scripts.generate && !tool.scripts.install && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Harness:</span>
+                    <code>./scripts/benchmark_soc_suite.sh --target={tool.slug}</code>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <!-- Key Directory Files -->
+            {tool.topFiles.length > 0 && (
+              <div class="dossier-files-summary">
+                <strong>Key Files in <code>tools/{tool.slug}/</code>:</strong>
+                <div class="file-tags-wrap">
+                  {tool.topFiles.slice(0, 10).map((f) => (
+                    <span class="file-tag">{f}</span>
+                  ))}
+                  {tool.topFiles.length > 10 && (
+                    <span class="file-more">+{tool.topFiles.length - 10} more</span>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <!-- Interactive README Reader -->
+            {renderedMd && (
+              <details class="dossier-details-block">
+                <summary class="details-summary-btn">
+                  &#128196; View Technical Documentation / README ({tool.slug})
+                </summary>
+                <div class="details-readme-body">
+                  <Fragment set:html={renderedMd} />
+                </div>
+              </details>
+            )}
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- INFRASTRUCTURE & SIMULATION TOOLING (9 TOOLS) -->
+  <section class="dossiers-container" id="infra-section">
+    <div class="section-title-wrap">
+      <div class="badge badge-accent">INFRASTRUCTURE &amp; EVALUATION SUITES</div>
+      <h2 class="section-heading">Infrastructure &amp; Simulation Tooling ({infraTools.length})</h2>
+      <p class="section-sub">
+        Cycle-accurate memory and network simulators, ISA compliance test suites, cross-compilers, and C++ testbench harnesses powering the benchmark framework.
+      </p>
+    </div>
+
+    <div class="dossiers-list" id="infraDossiersList">
+      {infraTools.map((tool) => {
+        const rawContent = tool.readmeContent || fallbackReadmes[tool.slug] || "";
+        const renderedMd = rawContent ? renderMarkdown(rawContent) : null;
+        return (
+          <article 
+            class="dossier-card soc-item infra-card" 
+            id={`core-${tool.slug}`}
+            data-search={`${tool.name} ${tool.slug} ${tool.isa} ${tool.bus} ${tool.organization} ${tool.language}`.toLowerCase()}
+          >
+            <div class="dossier-header">
+              <div class="dh-left">
+                <span class="d-badge badge-infra">{tool.language}</span>
+                <span class="d-org">{tool.organization}</span>
+              </div>
+              <div class="dh-right">
+                <span class="d-license">{tool.license.split('(')[0]?.trim()}</span>
+              </div>
+            </div>
+
+            <h3 class="dossier-core-name">{tool.name}</h3>
+            <p class="dossier-lead">{tool.subtitle}</p>
+
+            <div class="dossier-specs-grid">
+              <div class="ds-col">
+                <table class="ds-table">
+                  <tbody>
+                    <tr><th>Tool Role:</th><td><code>{tool.isa}</code></td></tr>
+                    <tr><th>Interface / Protocol:</th><td>{tool.bus}</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="ds-col">
+                <table class="ds-table">
+                  <tbody>
+                    <tr><th>Repository Path:</th><td><code>tools/{tool.slug}/</code></td></tr>
+                    <tr><th>Verification Rigor:</th><td>{tool.verificationEvidence}</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="dossier-assessment-grid">
+              <div class="assess-item strength">
+                <strong>&#10003; Role in SCORE:</strong> {tool.notableStrengths}
+              </div>
+              <div class="assess-item limitation">
+                <strong>&#9888; Integration Notes:</strong> {tool.notableLimitations}
+              </div>
+            </div>
+
+            {renderedMd && (
+              <details class="dossier-details-block">
+                <summary class="details-summary-btn">
+                  &#128196; View Tool Documentation / Guide ({tool.slug})
+                </summary>
+                <div class="details-readme-body">
+                  <Fragment set:html={renderedMd} />
+                </div>
+              </details>
+            )}
+          </article>
+        );
+      })}
     </div>
   </section>
 </BaseLayout>
@@ -271,17 +490,27 @@ PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU 
     });
   });
 
-  // Client-side search
-  const searchInput = document.getElementById("cat4Search") as HTMLInputElement;
-  const cards = document.querySelectorAll("#cat4Grid .tool-card-cat") as NodeListOf<HTMLElement>;
+  // Client-side search and filtering for 32 systems
+  const searchInput = document.getElementById("socSearchInput") as HTMLInputElement;
+  const items = document.querySelectorAll(".soc-item");
+  const visibleCountEl = document.getElementById("visibleCount");
 
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
-      const q = (e.target as HTMLInputElement).value.toLowerCase().trim();
-      cards.forEach((card) => {
-        const s = card.getAttribute("data-search") || "";
-        card.style.display = (!q || s.includes(q)) ? "flex" : "none";
+      const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      let visible = 0;
+      items.forEach((item) => {
+        const searchData = item.getAttribute("data-search") || "";
+        if (!query || searchData.includes(query)) {
+          (item as HTMLElement).style.display = "block";
+          visible++;
+        } else {
+          (item as HTMLElement).style.display = "none";
+        }
       });
+      if (visibleCountEl) {
+        visibleCountEl.textContent = String(visible);
+      }
     });
   }
 </script>
@@ -295,7 +524,7 @@ PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU 
     margin-bottom: 2rem;
   }
 
-  .page-header.accent-green { background: #edfcee; }
+  .page-header.accent-green { background: #eefbee; }
 
   .page-title {
     font-size: 2.5rem;
@@ -310,7 +539,46 @@ PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU 
     color: #444444;
     line-height: 1.6;
     max-width: 900px;
-    margin: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .core-jump-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed #cccccc;
+  }
+
+  .jump-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #333333;
+    margin-right: 0.25rem;
+  }
+
+  .core-jump-pill {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: all 0.1s ease;
+  }
+
+  .core-jump-pill:hover {
+    background: #7ed957;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .pill-infra {
+    background: #f0f0f0;
+    border-style: dashed;
   }
 
   .content-block {
@@ -386,10 +654,34 @@ PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU 
     margin: 0;
   }
 
+  /* Callout & Insights */
+  .callout {
+    border: 2px solid #1a1a1a;
+    padding: 1.5rem;
+  }
+
+  .callout-warning {
+    background: #fdfdf0;
+    border-left: 6px solid #ffde59;
+  }
+
+  .callout-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .callout-title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin: 0;
+  }
+
   .insights-dual-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+    gap: 1.5rem;
     margin-top: 1rem;
   }
 
@@ -401,12 +693,12 @@ PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU 
 
   .insight-subbox {
     background: #ffffff;
-    border: 2px solid #1a1a1a;
+    border: 1.5px solid #1a1a1a;
     padding: 1.25rem;
   }
 
   .insight-subbox h4 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 900;
     margin-bottom: 0.5rem;
   }
@@ -414,17 +706,66 @@ PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU 
   .insight-subbox p {
     font-size: 0.88rem;
     line-height: 1.5;
-    color: #333333;
+    color: #444444;
     margin-bottom: 0.75rem;
   }
 
   .insight-sol {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 800;
-    color: #0b6b38;
+    color: #1a1a1a;
     background: #eefbee;
-    padding: 0.35rem 0.5rem;
+    padding: 0.3rem 0.5rem;
     border: 1px solid #7ed957;
+  }
+
+  /* Search & Filter Panel */
+  .search-filter-panel {
+    padding: 1.25rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .filter-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .search-input-wrap {
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .filter-label {
+    font-size: 0.9rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    border: 2px solid #1a1a1a;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: #fdfdfd;
+  }
+
+  .form-control:focus {
+    outline: none;
+    background: #ffffff;
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .filter-count {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #555555;
   }
 
   .table-scroll {
@@ -455,92 +796,12 @@ PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU 
   }
 
   .verified-tag {
-    color: #0b6b38;
-    font-weight: 700;
-    font-size: 0.8rem;
-  }
-
-  .btn-xs {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-  }
-
-  .search-input-inline {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.85rem;
-    border: 2px solid #1a1a1a;
-    font-family: inherit;
-    min-width: 220px;
-  }
-
-  .tools-grid-inline {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .tool-card-cat {
-    background: #fafafa;
-    border: 2px solid #1a1a1a;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 3px 3px 0 #1a1a1a;
-  }
-
-  .tool-card-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .tool-title-link a {
-    font-size: 1.15rem;
-    font-weight: 900;
+    background: #eefbee;
     color: #1a1a1a;
-    text-decoration: none;
-  }
-
-  .tool-title-link a:hover {
-    text-decoration: underline;
-  }
-
-  .tool-lang-pill {
-    font-size: 0.72rem;
-    font-family: var(--noc-font-mono, monospace);
-    color: #666666;
-  }
-
-  .tool-desc-short {
-    font-size: 0.85rem;
-    color: #444444;
-    line-height: 1.45;
-    margin-bottom: 0.85rem;
-    flex-grow: 1;
-  }
-
-  .tool-spec-table {
-    background: #ffffff;
-    border: 1px solid #dddddd;
-    padding: 0.5rem;
+    border: 1px solid #7ed957;
+    font-weight: 800;
     font-size: 0.78rem;
-    margin-bottom: 0.85rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .tool-card-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .script-badge {
-    font-size: 0.7rem;
-    color: #0b6b38;
-    font-weight: 700;
+    padding: 0.15rem 0.4rem;
   }
 
   .latex-export-box {
@@ -553,7 +814,7 @@ PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU 
   .latex-head {
     display: flex;
     justify-content: space-between;
-    color: #ffde59;
+    color: #7ed957;
     font-size: 0.85rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
@@ -574,5 +835,255 @@ PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU 
     font-size: 0.82rem;
     color: #a8ffb2;
     overflow-x: auto;
+  }
+
+  /* Dossiers Styles */
+  .dossiers-container {
+    margin-bottom: 3rem;
+  }
+
+  .section-title-wrap {
+    margin-bottom: 1.75rem;
+  }
+
+  .section-heading {
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 0.5rem 0 0.5rem 0;
+  }
+
+  .section-sub {
+    font-size: 1.05rem;
+    color: #555555;
+    max-width: 850px;
+    margin: 0;
+  }
+
+  .dossiers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .dossier-card {
+    background: #ffffff;
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 2.25rem;
+    scroll-margin-top: 5rem;
+  }
+
+  .infra-card {
+    border-style: dashed;
+    background: #fafafa;
+  }
+
+  .badge-infra {
+    background: #555555;
+  }
+
+  .dossier-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .dh-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .d-badge {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .d-org {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555555;
+  }
+
+  .d-license {
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: #f0f0f0;
+    border: 1px solid #1a1a1a;
+    padding: 0.15rem 0.4rem;
+  }
+
+  .dossier-core-name {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.01em;
+  }
+
+  .dossier-lead {
+    font-size: 1.05rem;
+    color: #333333;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .dossier-specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    background: #fbfbfb;
+    border: 1px solid #1a1a1a;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .dossier-specs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ds-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .ds-table th, .ds-table td {
+    padding: 0.4rem 0.5rem;
+    text-align: left;
+  }
+
+  .ds-table th {
+    width: 38%;
+    color: #666666;
+    font-weight: 700;
+  }
+
+  .ds-table td {
+    font-weight: 600;
+  }
+
+  .dossier-assessment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .dossier-assessment-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .assess-item {
+    border: 2px solid #1a1a1a;
+    padding: 1rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .assess-item.strength { background: #edfcee; }
+  .assess-item.limitation { background: #fffbe6; }
+
+  .dossier-repro-box {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #1a1a1a;
+  }
+
+  .repro-title {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #7ed957;
+    margin-bottom: 0.5rem;
+  }
+
+  .repro-cmd-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .cmd-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+  }
+
+  .cmd-tag {
+    color: #999999;
+  }
+
+  .cmd-item code {
+    background: #000000;
+    color: #7ed957;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .dossier-files-summary {
+    font-size: 0.85rem;
+    color: #444444;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .file-tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .file-tag {
+    background: #eeeeee;
+    border: 1px solid #cccccc;
+    padding: 0.15rem 0.4rem;
+    font-size: 0.75rem;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .file-more {
+    font-size: 0.75rem;
+    color: #888888;
+    font-style: italic;
+  }
+
+  .dossier-details-block {
+    background: #fbfbfb;
+    border: 1px solid #1a1a1a;
+    margin-top: 1rem;
+  }
+
+  .details-summary-btn {
+    padding: 0.85rem 1.25rem;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background: #f0f0f0;
+    border-bottom: 1px solid #dddddd;
+  }
+
+  .details-readme-body {
+    padding: 1.5rem;
+    max-height: 450px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    background: #ffffff;
   }
 </style>

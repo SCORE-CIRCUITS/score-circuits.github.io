@@ -14,6 +14,16 @@ const categoryLinks: Record<number, string> = {
   3: "/vector-coprocessors/",
   4: "/soc-multicore/",
 };
+
+function getToolUrl(tool: any) {
+  switch (tool.categoryNumber) {
+    case 1: return `/mcu-scalar/#core-${tool.slug}`;
+    case 2: return `/app-cores/#core-${tool.slug}`;
+    case 3: return `/vector-coprocessors/#core-${tool.slug}`;
+    case 4: return `/soc-multicore/#core-${tool.slug}`;
+    default: return `/soc-multicore/#core-${tool.slug}`;
+  }
+}
 ---
 
 <BaseLayout 
@@ -167,7 +177,7 @@ const categoryLinks: Record<number, string> = {
             <span class="tool-lang">{tool.language}</span>
           </div>
           <h3 class="tool-name">
-            <a href={`/tools/${tool.slug}`}>{tool.name}</a>
+            <a href={getToolUrl(tool)}>{tool.name}</a>
           </h3>
           <p class="tool-sub">{tool.subtitle}</p>
           
@@ -187,7 +197,7 @@ const categoryLinks: Record<number, string> = {
           </div>
 
           <div class="tool-actions">
-            <a href={`/tools/${tool.slug}`} class="btn-sm btn-outline">Architecture Deep Dive &rarr;</a>
+            <a href={getToolUrl(tool)} class="btn-sm btn-outline">Architecture Deep Dive &rarr;</a>
             {tool.benchmarks.length > 0 && (
               <span class="bench-tag">&#10003; {tool.benchmarks.length} Measured Runs</span>
             )}

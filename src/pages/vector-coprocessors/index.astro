@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import db from "../../data/score_db.json";
-import { formatNumber } from "../../lib/content";
+import { renderMarkdown, formatNumber } from "../../lib/content";
 
 const cat3Tools = db.tools.filter(t => t.categoryNumber === 3);
 
@@ -22,6 +22,14 @@ const vectorRuns = (db.benchmarks.soc?.results || []).filter(r =>
     <p class="page-lead">
       Scalable RISC-V Vector 1.0 (RVV) coprocessors, tightly-coupled vector execution units, and systolic matrix multiplication arrays designed to maximize arithmetic density and FLOPS per watt. Evaluated under the <code>vector_verilator</code> profile.
     </p>
+
+    <!-- Quick Navigation Jump to Cores -->
+    <div class="core-jump-bar">
+      <span class="jump-label">Jump to Architecture:</span>
+      {cat3Tools.map((t) => (
+        <a href={`#core-${t.slug}`} class="core-jump-pill">{t.name.split(' ')[0]}</a>
+      ))}
+    </div>
   </div>
 
   <!-- Microarchitectural Design Space -->
@@ -139,7 +147,7 @@ const vectorRuns = (db.benchmarks.soc?.results || []).filter(r =>
         <tbody>
           {vectorRuns.map((row) => (
             <tr>
-              <td><strong>{row.core}</strong></td>
+              <td><strong><a href={`#core-${row.core?.toLowerCase()}`}>{row.core}</a></strong></td>
               <td><code>{row.workload}</code></td>
               <td><small>{row.config}</small></td>
               <td>{formatNumber(row.metrics?.execution_cycles)}</td>
@@ -183,42 +191,135 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     </div>
   </section>
 
-  <!-- Evaluated Category 3 Engines Directory -->
-  <section class="content-block">
-    <div class="block-header-flex">
-      <div>
-        <h2 class="block-title">Evaluated Acceleration Engines ({cat3Tools.length})</h2>
-        <p class="block-desc">
-          Complete hardware implementations with synthesizable RTL and automated simulation testbenches in <code>tools/</code>.
-        </p>
-      </div>
+  <!-- DETAILED ARCHITECTURAL DOSSIERS FOR ALL CATEGORY 3 ENGINES -->
+  <section class="dossiers-container">
+    <div class="section-title-wrap">
+      <div class="badge badge-primary">DETAILED ARCHITECTURAL DOSSIERS</div>
+      <h2 class="section-heading">Deep-Dive on All {cat3Tools.length} Category 3 Engines</h2>
+      <p class="section-sub">
+        In-depth microarchitectural specifications, vector lane banking, coprocessor interfaces, silicon verification evidence, reproduction commands, and complete technical documentation.
+      </p>
     </div>
 
-    <div class="tools-grid-inline">
-      {cat3Tools.map((tool) => (
-        <div class="tool-card-cat">
-          <div class="tool-card-head">
-            <span class="tool-title-link">
-              <a href={`/tools/${tool.slug}`}>{tool.name}</a>
-            </span>
-            <span class="tool-lang-pill">{tool.language}</span>
-          </div>
-          <p class="tool-desc-short">{tool.subtitle}</p>
+    <div class="dossiers-list">
+      {cat3Tools.map((tool) => {
+        const renderedMd = tool.readmeContent ? renderMarkdown(tool.readmeContent) : null;
+        return (
+          <article class="dossier-card" id={`core-${tool.slug}`}>
+            <!-- Dossier Header -->
+            <div class="dossier-header">
+              <div class="dh-left">
+                <span class="d-badge">{tool.language}</span>
+                <span class="d-org">{tool.organization}</span>
+              </div>
+              <div class="dh-right">
+                <span class="d-license">{tool.license.split('(')[0]?.trim()}</span>
+              </div>
+            </div>
 
-          <div class="tool-spec-table">
-            <div class="spec-cell"><strong>ISA:</strong> <code>{tool.isa}</code></div>
-            <div class="spec-cell"><strong>Bus:</strong> {tool.bus}</div>
-            <div class="spec-cell"><strong>Silicon Evidence:</strong> {tool.siliconEvidence.split('(')[0]?.trim()}</div>
-          </div>
+            <h3 class="dossier-core-name">{tool.name}</h3>
+            <p class="dossier-lead">{tool.subtitle}</p>
 
-          <div class="tool-card-actions">
-            <a href={`/tools/${tool.slug}`} class="btn btn-outline btn-xs">Explore RTL &amp; Specs &rarr;</a>
-            {tool.scripts.run && (
-              <span class="script-badge">run_{tool.slug}.sh</span>
+            <!-- Specifications Grid -->
+            <div class="dossier-specs-grid">
+              <div class="ds-col">
+                <table class="ds-table">
+                  <tbody>
+                    <tr><th>Target ISA:</th><td><code>{tool.isa}</code></td></tr>
+                    <tr><th>Bus Protocol:</th><td>{tool.bus}</td></tr>
+                    <tr><th>HDL Language:</th><td>{tool.language}</td></tr>
+                    <tr><th>Verification Rigor:</th><td>{tool.verificationEvidence}</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="ds-col">
+                <table class="ds-table">
+                  <tbody>
+                    <tr><th>Silicon Evidence:</th><td>{tool.siliconEvidence}</td></tr>
+                    <tr><th>FPGA Readiness:</th><td>{tool.fpgaEvidence}</td></tr>
+                    <tr><th>Repository Path:</th><td><code>tools/{tool.slug}/</code></td></tr>
+                    <tr><th>Files on Disk:</th><td>{tool.fileCount} source files</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Architectural Assessment -->
+            <div class="dossier-assessment-grid">
+              <div class="assess-item strength">
+                <strong>&#10003; Strengths:</strong> {tool.notableStrengths}
+              </div>
+              <div class="assess-item limitation">
+                <strong>&#9888; Trade-offs:</strong> {tool.notableLimitations}
+              </div>
+            </div>
+
+            <!-- Reproduction Scripts -->
+            <div class="dossier-repro-box">
+              <span class="repro-title">Reproduction &amp; Verification Commands:</span>
+              <div class="repro-cmd-row">
+                {tool.scripts.run && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Run Simulation:</span>
+                    <code>./{tool.scripts.run}</code>
+                  </div>
+                )}
+                {tool.scripts.generate && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Generate RTL:</span>
+                    <code>./{tool.scripts.generate}</code>
+                  </div>
+                )}
+                {tool.scripts.install && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Install Setup:</span>
+                    <code>./{tool.scripts.install}</code>
+                  </div>
+                )}
+                {tool.scripts.env && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Environment:</span>
+                    <code>source ./{tool.scripts.env}</code>
+                  </div>
+                )}
+                {!tool.scripts.run && !tool.scripts.generate && !tool.scripts.install && (
+                  <div class="cmd-item">
+                    <span class="cmd-tag">Harness:</span>
+                    <code>./scripts/benchmark_vector_suite.sh --target={tool.slug}</code>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <!-- Key Directory Files -->
+            {tool.topFiles.length > 0 && (
+              <div class="dossier-files-summary">
+                <strong>Key Files in <code>tools/{tool.slug}/</code>:</strong>
+                <div class="file-tags-wrap">
+                  {tool.topFiles.slice(0, 10).map((f) => (
+                    <span class="file-tag">{f}</span>
+                  ))}
+                  {tool.topFiles.length > 10 && (
+                    <span class="file-more">+{tool.topFiles.length - 10} more</span>
+                  )}
+                </div>
+              </div>
             )}
-          </div>
-        </div>
-      ))}
+
+            <!-- Interactive README Reader -->
+            {renderedMd && (
+              <details class="dossier-details-block">
+                <summary class="details-summary-btn">
+                  &#128196; View Technical Documentation / README (tools/{tool.slug}/README.md)
+                </summary>
+                <div class="details-readme-body">
+                  <Fragment set:html={renderedMd} />
+                </div>
+              </details>
+            )}
+          </article>
+        );
+      })}
     </div>
   </section>
 </BaseLayout>
@@ -261,7 +362,7 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     margin-bottom: 2rem;
   }
 
-  .page-header.accent-coral { background: #fff0eb; }
+  .page-header.accent-coral { background: #fff0f0; }
 
   .page-title {
     font-size: 2.5rem;
@@ -276,7 +377,42 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     color: #444444;
     line-height: 1.6;
     max-width: 900px;
-    margin: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .core-jump-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed #cccccc;
+  }
+
+  .jump-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #333333;
+    margin-right: 0.25rem;
+  }
+
+  .core-jump-pill {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: all 0.1s ease;
+  }
+
+  .core-jump-pill:hover {
+    background: #ff5252;
+    color: #ffffff;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 #1a1a1a;
   }
 
   .content-block {
@@ -332,7 +468,7 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   .f-badge {
     font-size: 0.7rem;
     font-weight: 800;
-    background: #ff914d;
+    background: #ff5252;
     color: #ffffff;
     border: 1px solid #1a1a1a;
     padding: 0.15rem 0.4rem;
@@ -353,6 +489,30 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     margin: 0;
   }
 
+  /* Collapse Callout */
+  .callout {
+    border: 2px solid #1a1a1a;
+    padding: 1.5rem;
+  }
+
+  .callout-warning {
+    background: #fff8f6;
+    border-left: 6px solid #ff5252;
+  }
+
+  .callout-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .callout-title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin: 0;
+  }
+
   .collapse-bars {
     display: flex;
     flex-direction: column;
@@ -361,43 +521,50 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .c-bar-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.88rem;
   }
 
-  .c-lbl {
-    font-size: 0.85rem;
-    font-weight: 700;
+  @media (max-width: 640px) {
+    .c-bar-item {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
   }
 
   .c-track {
-    background: #e0e0e0;
-    border: 1px solid #1a1a1a;
-    height: 24px;
+    background: #eeeeee;
+    border: 1.5px solid #1a1a1a;
+    height: 26px;
+    width: 100%;
+    overflow: hidden;
   }
 
   .c-fill {
     height: 100%;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.75rem;
     display: flex;
     align-items: center;
     padding-left: 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: #1a1a1a;
+    white-space: nowrap;
   }
 
-  .fill-green { background: #7ed957; }
-  .fill-yellow { background: #ffde59; }
-  .fill-coral { background: #ff914d; }
-  .fill-red { background: #ff5757; color: #ffffff; }
+  .fill-green { background: #00c853; color: #000000; }
+  .fill-yellow { background: #ffd600; color: #000000; }
+  .fill-coral { background: #ff9100; color: #000000; }
+  .fill-red { background: #d50000; color: #ffffff; }
 
   .collapse-explanation {
     background: #ffffff;
     border: 1px solid #1a1a1a;
     padding: 1rem;
     font-size: 0.9rem;
-    line-height: 1.55;
+    line-height: 1.5;
     margin-top: 1rem;
   }
 
@@ -429,93 +596,22 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .score-badge {
-    background: #ffde59;
+    background: #fff0f0;
     padding: 0.15rem 0.45rem;
     font-weight: 800;
     border: 1px solid #1a1a1a;
   }
 
   .util-badge {
-    background: #eefbee;
-    border: 1px solid #7ed957;
-    color: #0b6b38;
-    padding: 0.15rem 0.4rem;
+    background: #ffffff;
+    border: 1px solid #1a1a1a;
+    padding: 0.15rem 0.45rem;
     font-weight: 800;
   }
 
   .btn-xs {
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
-  }
-
-  .tools-grid-inline {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .tool-card-cat {
-    background: #fafafa;
-    border: 2px solid #1a1a1a;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 3px 3px 0 #1a1a1a;
-  }
-
-  .tool-card-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .tool-title-link a {
-    font-size: 1.15rem;
-    font-weight: 900;
-    color: #1a1a1a;
-    text-decoration: none;
-  }
-
-  .tool-title-link a:hover {
-    text-decoration: underline;
-  }
-
-  .tool-lang-pill {
-    font-size: 0.72rem;
-    font-family: var(--noc-font-mono, monospace);
-    color: #666666;
-  }
-
-  .tool-desc-short {
-    font-size: 0.85rem;
-    color: #444444;
-    line-height: 1.45;
-    margin-bottom: 0.85rem;
-    flex-grow: 1;
-  }
-
-  .tool-spec-table {
-    background: #ffffff;
-    border: 1px solid #dddddd;
-    padding: 0.5rem;
-    font-size: 0.78rem;
-    margin-bottom: 0.85rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .tool-card-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .script-badge {
-    font-size: 0.7rem;
-    color: #0b6b38;
-    font-weight: 700;
   }
 
   .latex-export-box {
@@ -528,7 +624,7 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   .latex-head {
     display: flex;
     justify-content: space-between;
-    color: #ffde59;
+    color: #ff8a80;
     font-size: 0.85rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
@@ -549,5 +645,246 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     font-size: 0.82rem;
     color: #a8ffb2;
     overflow-x: auto;
+  }
+
+  /* Dossiers Styles */
+  .dossiers-container {
+    margin-bottom: 3rem;
+  }
+
+  .section-title-wrap {
+    margin-bottom: 1.75rem;
+  }
+
+  .section-heading {
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 0.5rem 0 0.5rem 0;
+  }
+
+  .section-sub {
+    font-size: 1.05rem;
+    color: #555555;
+    max-width: 850px;
+    margin: 0;
+  }
+
+  .dossiers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .dossier-card {
+    background: #ffffff;
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 2.25rem;
+    scroll-margin-top: 5rem;
+  }
+
+  .dossier-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .dh-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .d-badge {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .d-org {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555555;
+  }
+
+  .d-license {
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: #f0f0f0;
+    border: 1px solid #1a1a1a;
+    padding: 0.15rem 0.4rem;
+  }
+
+  .dossier-core-name {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.01em;
+  }
+
+  .dossier-lead {
+    font-size: 1.05rem;
+    color: #333333;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .dossier-specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    background: #fbfbfb;
+    border: 1px solid #1a1a1a;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .dossier-specs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .ds-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .ds-table th, .ds-table td {
+    padding: 0.4rem 0.5rem;
+    text-align: left;
+  }
+
+  .ds-table th {
+    width: 38%;
+    color: #666666;
+    font-weight: 700;
+  }
+
+  .ds-table td {
+    font-weight: 600;
+  }
+
+  .dossier-assessment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .dossier-assessment-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .assess-item {
+    border: 2px solid #1a1a1a;
+    padding: 1rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .assess-item.strength { background: #edfcee; }
+  .assess-item.limitation { background: #fffbe6; }
+
+  .dossier-repro-box {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid #1a1a1a;
+  }
+
+  .repro-title {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: #ff8a80;
+    margin-bottom: 0.5rem;
+  }
+
+  .repro-cmd-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .cmd-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+  }
+
+  .cmd-tag {
+    color: #999999;
+  }
+
+  .cmd-item code {
+    background: #000000;
+    color: #7ed957;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .dossier-files-summary {
+    font-size: 0.85rem;
+    color: #444444;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .file-tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .file-tag {
+    background: #eeeeee;
+    border: 1px solid #cccccc;
+    padding: 0.15rem 0.4rem;
+    font-size: 0.75rem;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .file-more {
+    font-size: 0.75rem;
+    color: #888888;
+    font-style: italic;
+  }
+
+  .dossier-details-block {
+    background: #fbfbfb;
+    border: 1px solid #1a1a1a;
+    margin-top: 1rem;
+  }
+
+  .details-summary-btn {
+    padding: 0.85rem 1.25rem;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background: #f0f0f0;
+    border-bottom: 1px solid #dddddd;
+  }
+
+  .details-readme-body {
+    padding: 1.5rem;
+    max-height: 450px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    background: #ffffff;
   }
 </style>
