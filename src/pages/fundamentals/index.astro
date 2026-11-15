@@ -176,6 +176,55 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </div>
         </div>
       </div>
+
+      <!-- INTERACTIVE RISC-V INSTRUCTION DISSECTOR -->
+      <div class="interactive-widget-box" id="isaWidget">
+        <div class="widget-header">
+          <span class="widget-badge">INTERACTIVE MACHINE CODE DISSECTOR</span>
+          <h3 class="widget-title">Anatomy of a 32-bit RISC-V Instruction</h3>
+          <p class="widget-desc">
+            How does raw assembly code translate into physical bits that control silicon transistors? Select an instruction to decode its 32-bit binary format and see which hardware datapath activates:
+          </p>
+        </div>
+
+        <div class="isa-btn-group">
+          <button class="isa-sel-btn active" data-ins="add">1. ADD (R-Type Arithmetic)</button>
+          <button class="isa-sel-btn" data-ins="lw">2. LW (I-Type Memory Load)</button>
+          <button class="isa-sel-btn" data-ins="beq">3. BEQ (B-Type Conditional Branch)</button>
+          <button class="isa-sel-btn" data-ins="vadd">4. VADD.VV (V-Type Vector Arithmetic)</button>
+        </div>
+
+        <div class="isa-preview-bar">
+          <div class="isa-code-chip">
+            <span class="isa-label">Assembly:</span>
+            <code id="isaAsmTxt">add x3, x1, x2</code>
+          </div>
+          <div class="isa-code-chip">
+            <span class="isa-label">C Language Equivalent:</span>
+            <code id="isaCEqTxt">x3 = x1 + x2;</code>
+          </div>
+          <div class="isa-code-chip">
+            <span class="isa-label">Hex Machine Word:</span>
+            <code id="isaHexTxt">0x002081B3</code>
+          </div>
+        </div>
+
+        <!-- Dynamic Bitfield Grid -->
+        <div class="bitfield-container" id="isaBitfields">
+          <!-- Populated by script -->
+        </div>
+
+        <!-- Hardware Datapath Activation Flow -->
+        <div class="hw-activation-box">
+          <span class="ctrl-label">Activated Hardware Datapath:</span>
+          <div class="hw-flow-stream" id="isaHwFlow">
+            <!-- Populated by script -->
+          </div>
+          <div class="hw-detail-note" id="isaHwNote">
+            <!-- Populated by script -->
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- SECTION 3: The Laundry Assembly Line (Pipelining) -->
@@ -494,6 +543,52 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </ul>
         </div>
       </div>
+
+      <!-- INTERACTIVE 4-LEVEL BENCHMARKING LADDER -->
+      <div class="interactive-widget-box" id="benchLevelWidget" style="margin-top: 2rem;">
+        <div class="widget-header">
+          <span class="widget-badge">SCORE BENCHMARKING METHODOLOGY</span>
+          <h3 class="widget-title">The 4-Level Evaluation Ladder</h3>
+          <p class="widget-desc">
+            Computer architecture research cannot rely on a single benchmark. SCORE evaluates processors across 4 aligned verification tiers to isolate bottlenecks at each abstraction layer. Click a level to inspect workloads, simulation targets, and next-generation architectural insights:
+          </p>
+        </div>
+
+        <div class="bench-level-buttons">
+          <button class="bench-lvl-btn active" data-blvl="1">Level 1: Scalar Pipeline (Cat 1: MCU)</button>
+          <button class="bench-lvl-btn" data-blvl="2">Level 2: Memory &amp; OS (Cat 2: App Cores)</button>
+          <button class="bench-lvl-btn" data-blvl="3">Level 3: Vector Intensity (Cat 3: Vector)</button>
+          <button class="bench-lvl-btn" data-blvl="4">Level 4: Interconnect &amp; Clusters (Cat 4: SoCs)</button>
+        </div>
+
+        <div class="bench-level-card" id="benchLevelCard">
+          <div class="blc-header">
+            <div>
+              <span class="blc-badge" id="blcBadge">LEVEL 01 &bull; SCALAR EFFICIENCY</span>
+              <h4 class="blc-title" id="blcTitle">Microcontroller &amp; In-Order Pipeline Optimization</h4>
+            </div>
+            <div class="blc-scope-tag" id="blcScopeTag">Scope: Single-Net / Single-Threaded Core</div>
+          </div>
+
+          <div class="blc-grid">
+            <div class="blc-col">
+              <span class="blc-col-lbl">Verification Target</span>
+              <p id="blcTarget">Instruction fetch throughput, branch prediction accuracy, ALU execution latency, and load-use hazard stalls in cycle-accurate Verilator simulations.</p>
+              
+              <span class="blc-col-lbl" style="margin-top: 0.75rem;">Standard Workloads</span>
+              <p id="blcWorkloads"><code>Dhrystone 2.1</code> (DMIPS/MHz) and <code>CoreMark 1.0</code> (CoreMark/MHz).</p>
+            </div>
+
+            <div class="blc-col blc-contrast-col">
+              <span class="blc-col-lbl">Key Empirical Bottleneck Identified</span>
+              <p id="blcBottleneck" class="blc-bottleneck-txt">Branch misprediction penalty incurs 1 to 2 idle pipeline bubbles on tight loops. Load-use dependencies stall simple 2-stage cores (e.g. Ibex) unless forwarding paths are expanded.</p>
+              
+              <span class="blc-col-lbl" style="margin-top: 0.75rem;">Next-Generation Architectural Remedy</span>
+              <p id="blcRemedy" class="blc-remedy-txt">&rarr; Dual-issue in-order pipelines with static branch hints and zero-cycle hardware loop controllers (e.g. VeeR EL2, CV32E40P).</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </BaseLayout>
@@ -769,6 +864,237 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         if (hsIcon) hsIcon.textContent = info.icon;
         if (latencyBarFill) latencyBarFill.style.width = info.width;
       }
+    });
+  });
+
+  // ==========================================
+  // WIDGET 4: RISC-V 32-BIT MACHINE CODE DISSECTOR
+  // ==========================================
+  interface IsaField {
+    name: string;
+    bits: string;
+    val: string;
+    desc: string;
+    color: string;
+  }
+  interface IsaEntry {
+    asm: string;
+    cEq: string;
+    hex: string;
+    fields: IsaField[];
+    flow: Array<{ step: string; active: boolean; label: string }>;
+    note: string;
+  }
+
+  const isaData: Record<string, IsaEntry> = {
+    add: {
+      asm: "add x3, x1, x2",
+      cEq: "x3 = x1 + x2;",
+      hex: "0x002081B3",
+      fields: [
+        { name: "funct7", bits: "[31:25] 7b", val: "0000000", desc: "Integer ADD", color: "#e3f2fd" },
+        { name: "rs2", bits: "[24:20] 5b", val: "00010 (x2)", desc: "Source 2", color: "#e8f5e9" },
+        { name: "rs1", bits: "[19:15] 5b", val: "00001 (x1)", desc: "Source 1", color: "#e8f5e9" },
+        { name: "funct3", bits: "[14:12] 3b", val: "000", desc: "ADD/SUB", color: "#fff3e0" },
+        { name: "rd", bits: "[11:7] 5b", val: "00011 (x3)", desc: "Destination", color: "#fce4ec" },
+        { name: "opcode", bits: "[6:0] 7b", val: "0110011", desc: "OP (Reg-Reg)", color: "#f3e5f5" },
+      ],
+      flow: [
+        { step: "1. RegFile", active: true, label: "Read Ports x1 & x2" },
+        { step: "2. ALU", active: true, label: "32-bit Adder (x1 + x2)" },
+        { step: "3. Mem/Bus", active: false, label: "Bypassed (No Memory)" },
+        { step: "4. Writeback", active: true, label: "Commit Result to x3" },
+      ],
+      note: "<strong>Microarchitectural Flow:</strong> Pure integer execution. Register File outputs operands <code>x1</code> and <code>x2</code> in single-cycle combinatorial logic. The integer ALU completes addition, and the result is forwarded to the writeback multiplexer directly into <code>x3</code> without touching memory caches."
+    },
+    lw: {
+      asm: "lw x5, 4(x10)",
+      cEq: "x5 = *(int*)(x10 + 4);",
+      hex: "0x00452283",
+      fields: [
+        { name: "imm[11:0]", bits: "[31:20] 12b", val: "000000000100 (+4)", desc: "Byte Offset", color: "#fff9c4" },
+        { name: "rs1", bits: "[19:15] 5b", val: "01010 (x10)", desc: "Base Address", color: "#e8f5e9" },
+        { name: "funct3", bits: "[14:12] 3b", val: "010", desc: "Word (32-bit)", color: "#fff3e0" },
+        { name: "rd", bits: "[11:7] 5b", val: "00101 (x5)", desc: "Destination", color: "#fce4ec" },
+        { name: "opcode", bits: "[6:0] 7b", val: "0000011", desc: "LOAD (Memory)", color: "#f3e5f5" },
+      ],
+      flow: [
+        { step: "1. RegFile", active: true, label: "Read Base Reg x10" },
+        { step: "2. ALU", active: true, label: "Compute Addr (x10 + 4)" },
+        { step: "3. Mem/Bus", active: true, label: "Query L1 Data Cache" },
+        { step: "4. Writeback", active: true, label: "Commit Data to x5" },
+      ],
+      note: "<strong>Microarchitectural Flow:</strong> Memory load flow. The ALU computes the effective physical byte address (<code>x10 + 4</code>), issues a 32-bit read request to the L1 Data Cache or bus master, and loads the returning word into register <code>x5</code> upon cache hit."
+    },
+    beq: {
+      asm: "beq x1, x2, offset",
+      cEq: "if (x1 == x2) PC += offset;",
+      hex: "0x00208863",
+      fields: [
+        { name: "imm[12|10:5]", bits: "[31:25] 7b", val: "0000000", desc: "Target Offset", color: "#fff9c4" },
+        { name: "rs2", bits: "[24:20] 5b", val: "00010 (x2)", desc: "Compare Reg 2", color: "#e8f5e9" },
+        { name: "rs1", bits: "[19:15] 5b", val: "00001 (x1)", desc: "Compare Reg 1", color: "#e8f5e9" },
+        { name: "funct3", bits: "[14:12] 3b", val: "000", desc: "BEQ (Equal)", color: "#fff3e0" },
+        { name: "imm[4:1|11]", bits: "[11:7] 5b", val: "10000", desc: "Target Offset", color: "#fff9c4" },
+        { name: "opcode", bits: "[6:0] 7b", val: "1100011", desc: "BRANCH", color: "#f3e5f5" },
+      ],
+      flow: [
+        { step: "1. RegFile", active: true, label: "Read x1 & x2" },
+        { step: "2. Comparator", active: true, label: "Subtractor (x1 == x2)" },
+        { step: "3. Branch Adder", active: true, label: "Target (PC + offset)" },
+        { step: "4. PC Mux", active: true, label: "Redirect Fetch Engine" },
+      ],
+      note: "<strong>Microarchitectural Flow:</strong> Control hazard branch. The branch comparator compares registers <code>x1</code> and <code>x2</code>. If equal, the PC multiplexer takes the branch target. In pipelined designs without branch prediction, this introduces a 1–2 cycle stall bubble."
+    },
+    vadd: {
+      asm: "vadd.vv v3, v1, v2",
+      cEq: "for(i=0; i<VLEN; i++) v3[i]=v1[i]+v2[i];",
+      hex: "0x022081D7",
+      fields: [
+        { name: "funct6", bits: "[31:26] 6b", val: "000000", desc: "VADD Vector Op", color: "#e3f2fd" },
+        { name: "vm", bits: "[25] 1b", val: "1", desc: "Unmasked", color: "#ffe0b2" },
+        { name: "vs2", bits: "[24:20] 5b", val: "00010 (v2)", desc: "Vector Source 2", color: "#e8f5e9" },
+        { name: "vs1", bits: "[19:15] 5b", val: "00001 (v1)", desc: "Vector Source 1", color: "#e8f5e9" },
+        { name: "funct3", bits: "[14:12] 3b", val: "000", desc: "OPIVV (Int Vector)", color: "#fff3e0" },
+        { name: "vd", bits: "[11:7] 5b", val: "00011 (v3)", desc: "Vector Dest", color: "#fce4ec" },
+        { name: "opcode", bits: "[6:0] 7b", val: "1010111", desc: "OP-V (Vector)", color: "#f3e5f5" },
+      ],
+      flow: [
+        { step: "1. VRF Banks", active: true, label: "Multi-bank VRF Read" },
+        { step: "2. Vector Lanes", active: true, label: "Parallel SIMD ALUs (4-16 lanes)" },
+        { step: "3. Reduction", active: false, label: "Bypassed (Element-wise)" },
+        { step: "4. VRF Write", active: true, label: "Multi-bank VRF Commit" },
+      ],
+      note: "<strong>Microarchitectural Flow:</strong> Data-parallel SIMD vector execution. A single 32-bit instruction triggers parallel vector lanes (e.g. 4 lanes in Ara or 8 in Spatz) to compute up to 16 arithmetic operations per clock cycle, demanding high VRF banking bandwidth."
+    }
+  };
+
+  const isaAsmTxt = document.getElementById("isaAsmTxt");
+  const isaCEqTxt = document.getElementById("isaCEqTxt");
+  const isaHexTxt = document.getElementById("isaHexTxt");
+  const isaBitfields = document.getElementById("isaBitfields");
+  const isaHwFlow = document.getElementById("isaHwFlow");
+  const isaHwNote = document.getElementById("isaHwNote");
+
+  function renderIsaWidget(key: string) {
+    const item = isaData[key];
+    if (!item) return;
+
+    if (isaAsmTxt) isaAsmTxt.textContent = item.asm;
+    if (isaCEqTxt) isaCEqTxt.textContent = item.cEq;
+    if (isaHexTxt) isaHexTxt.textContent = item.hex;
+    if (isaHwNote) isaHwNote.innerHTML = item.note;
+
+    if (isaBitfields) {
+      isaBitfields.innerHTML = item.fields.map(f => `
+        <div class="bitfield-col" style="background: ${f.color};">
+          <span class="bf-bits">${f.bits}</span>
+          <span class="bf-name">${f.name}</span>
+          <span class="bf-val">${f.val}</span>
+          <span class="bf-desc">${f.desc}</span>
+        </div>
+      `).join("");
+    }
+
+    if (isaHwFlow) {
+      isaHwFlow.innerHTML = item.flow.map(s => `
+        <div class="hw-stage-card ${s.active ? 'stage-active' : 'stage-inactive'}">
+          <span class="hw-s-name">${s.step}</span>
+          <span class="hw-s-label">${s.label}</span>
+        </div>
+      `).join("");
+    }
+  }
+
+  document.querySelectorAll(".isa-sel-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".isa-sel-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const key = btn.getAttribute("data-ins") || "add";
+      renderIsaWidget(key);
+    });
+  });
+
+  // Initial render of ISA Dissector
+  renderIsaWidget("add");
+
+  // ==========================================
+  // WIDGET 5: 4-LEVEL BENCHMARKING LADDER
+  // ==========================================
+  const benchData: Record<string, {
+    badge: string;
+    title: string;
+    scope: string;
+    target: string;
+    workloads: string;
+    bottleneck: string;
+    remedy: string;
+  }> = {
+    "1": {
+      badge: "LEVEL 01 • SCALAR EFFICIENCY",
+      title: "Microcontroller & In-Order Pipeline Optimization",
+      scope: "Scope: Single-Net / Single-Threaded Core",
+      target: "Instruction fetch throughput, branch prediction accuracy, ALU execution latency, and load-use hazard stalls in cycle-accurate Verilator simulations.",
+      workloads: "<code>Dhrystone 2.1</code> (DMIPS/MHz) and <code>CoreMark 1.0</code> (CoreMark/MHz).",
+      bottleneck: "Branch misprediction penalty incurs 1 to 2 idle pipeline bubbles on tight loops. Load-use dependencies stall simple 2-stage cores (e.g. Ibex) unless forwarding paths are expanded.",
+      remedy: "→ Dual-issue in-order pipelines with static branch hints and zero-cycle hardware loop controllers (e.g. VeeR EL2, CV32E40P)."
+    },
+    "2": {
+      badge: "LEVEL 02 • MEMORY & OS SUBSYSTEMS",
+      title: "64-bit Linux Memory Wall & Virtual Memory Translation",
+      scope: "Scope: Application Cores with MMU & Caches",
+      target: "L1/L2 cache hit rates, hardware page-table walk latency (Sv39/Sv48 TLB misses), and full Linux boot time.",
+      workloads: "<code>Embench-IoT</code>, SPEC CPU-style memory stress, and Debian Linux 6.1 boot sequence.",
+      bottleneck: "Hardware page-table walk stalls freeze the execution pipeline for dozens of cycles upon Translation Lookaside Buffer (TLB) misses. In-order application cores (e.g. CVA6) stall completely on L1 D-Cache misses.",
+      remedy: "→ Non-blocking multi-banked L1/L2 caches with hardware stream prefetchers, out-of-order execution (BOOM / OpenXiangShan), and 2-level TLBs."
+    },
+    "3": {
+      badge: "LEVEL 03 • DATA-PARALLEL ACCELERATION",
+      title: "Vector Arithmetic Density & VRF Contention",
+      scope: "Scope: Vector Coprocessors & Systolic Arrays",
+      target: "Floating-point and integer vector MAC utilization, Vector Register File (VRF) port contention, and Roofline arithmetic intensity.",
+      workloads: "RVV 1.0 dense matrix multiplication (<code>fmatmul</code>), Fast Fourier Transform (<code>fft</code>), 2D Convolution (<code>conv2d</code>), and <code>softmax</code>.",
+      bottleneck: "On dense fmatmul, vector utilization reaches 98.4%. But on strided memory access and reductions (softmax, fft), utilization collapses to 23.0% due to scalar issue serialization and VRF bank conflicts.",
+      remedy: "→ Decoupled Access-Execute (DAE) command queues, asynchronous vector load units, and multi-ported banked VRFs (e.g. Ara / AraXL)."
+    },
+    "4": {
+      badge: "LEVEL 04 • INTERCONNECT & MANY-CORE CLUSTERS",
+      title: "Multi-Core Scaling & On-Chip Interconnects",
+      scope: "Scope: Shared-Memory Clusters & Full SoCs",
+      target: "Multi-core parallel speedup, hardware barrier synchronization latency, AXI4/NoC crossbar bandwidth saturation, and DMA transfer latency.",
+      workloads: "MemPool 256-core parallel GEMM, Snitch multi-cluster barriers, and Cheshire full-SoC Linux DMA transfers.",
+      bottleneck: "Software spinlocks degrade exponentially beyond 64 cores as atomic memory operations (AMO) saturate the shared memory interconnect. Small DMA transfers (<128B) incur high MMIO configuration latency.",
+      remedy: "→ In-network single-cycle hardware synchronization barriers (FractalSync) and instruction-triggered streaming DMA controllers."
+    }
+  };
+
+  const blcBadge = document.getElementById("blcBadge");
+  const blcTitle = document.getElementById("blcTitle");
+  const blcScopeTag = document.getElementById("blcScopeTag");
+  const blcTarget = document.getElementById("blcTarget");
+  const blcWorkloads = document.getElementById("blcWorkloads");
+  const blcBottleneck = document.getElementById("blcBottleneck");
+  const blcRemedy = document.getElementById("blcRemedy");
+
+  function renderBenchWidget(lvl: string) {
+    const item = benchData[lvl];
+    if (!item) return;
+
+    if (blcBadge) blcBadge.textContent = item.badge;
+    if (blcTitle) blcTitle.textContent = item.title;
+    if (blcScopeTag) blcScopeTag.textContent = item.scope;
+    if (blcTarget) blcTarget.textContent = item.target;
+    if (blcWorkloads) blcWorkloads.innerHTML = item.workloads;
+    if (blcBottleneck) blcBottleneck.textContent = item.bottleneck;
+    if (blcRemedy) blcRemedy.textContent = item.remedy;
+  }
+
+  document.querySelectorAll(".bench-lvl-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".bench-lvl-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const lvl = btn.getAttribute("data-blvl") || "1";
+      renderBenchWidget(lvl);
     });
   });
 </script>
@@ -1492,5 +1818,276 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     line-height: 1.5;
     color: #444444;
     margin: 0;
+  }
+
+  /* ========================================= */
+  /* ISA DISSECTOR WIDGET STYLES               */
+  /* ========================================= */
+  .isa-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .isa-sel-btn {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .isa-sel-btn.active {
+    background: #1a1a1a;
+    color: #ffffff;
+    box-shadow: 2px 2px 0 #00f2fe;
+  }
+
+  .isa-preview-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .isa-code-chip {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .isa-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #777777;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .isa-code-chip code {
+    font-family: var(--noc-font-mono, monospace);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .bitfield-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .bitfield-col {
+    border: 1.5px solid #1a1a1a;
+    padding: 0.65rem 0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 0 #1a1a1a;
+  }
+
+  .bf-bits {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #555555;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .bf-name {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    margin: 0.2rem 0;
+  }
+
+  .bf-val {
+    font-size: 0.78rem;
+    font-weight: 800;
+    font-family: var(--noc-font-mono, monospace);
+    color: #004d40;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 0.15rem 0.25rem;
+    border-radius: 2px;
+    margin-bottom: 0.25rem;
+  }
+
+  .bf-desc {
+    font-size: 0.72rem;
+    color: #666666;
+    font-weight: 600;
+  }
+
+  .hw-activation-box {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    padding: 1.25rem;
+  }
+
+  .hw-flow-stream {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .hw-stage-card {
+    border: 1.5px solid #1a1a1a;
+    padding: 0.75rem;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stage-active {
+    background: #e8f5e9;
+    border-color: #2e7d32;
+  }
+
+  .stage-inactive {
+    background: #f5f5f5;
+    opacity: 0.55;
+  }
+
+  .hw-s-name {
+    font-size: 0.85rem;
+    font-weight: 900;
+    color: #1a1a1a;
+  }
+
+  .hw-s-label {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #444444;
+  }
+
+  .hw-detail-note {
+    background: #fffdf0;
+    border-left: 4px solid #ffc107;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* ========================================= */
+  /* 4-LEVEL BENCHMARKING LADDER STYLES        */
+  /* ========================================= */
+  .bench-level-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .bench-lvl-btn {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .bench-lvl-btn.active {
+    background: #1a1a1a;
+    color: #ffffff;
+    box-shadow: 3px 3px 0 #ff5252;
+  }
+
+  .bench-level-card {
+    background: #ffffff;
+    border: 2px solid #1a1a1a;
+    box-shadow: 4px 4px 0 #1a1a1a;
+    padding: 1.5rem;
+  }
+
+  .blc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 1.5px solid #eeeeee;
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .blc-badge {
+    display: inline-block;
+    background: #ff5252;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .blc-title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin: 0;
+  }
+
+  .blc-scope-tag {
+    font-size: 0.78rem;
+    font-weight: 800;
+    background: #f0f0f0;
+    border: 1px solid #cccccc;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .blc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .blc-grid { grid-template-columns: 1fr; }
+  }
+
+  .blc-col-lbl {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #666666;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.35rem;
+  }
+
+  .blc-col p {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #333333;
+    margin: 0;
+  }
+
+  .blc-contrast-col {
+    background: #fffdf5;
+    border-left: 3px solid #ff5252;
+    padding-left: 1.25rem;
+  }
+
+  .blc-bottleneck-txt {
+    color: #c62828 !important;
+    font-weight: 600;
+  }
+
+  .blc-remedy-txt {
+    color: #1565c0 !important;
+    font-weight: 700;
   }
 </style>
