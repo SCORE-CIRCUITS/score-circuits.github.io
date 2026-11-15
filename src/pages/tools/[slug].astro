@@ -1,0 +1,639 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import db from "../../data/score_db.json";
+import { renderMarkdown, formatNumber } from "../../lib/content";
+
+export async function getStaticPaths() {
+  return db.tools.map((tool) => ({
+    params: { slug: tool.slug },
+    props: { tool },
+  }));
+}
+
+const { tool } = Astro.props;
+
+// Render README or paper analysis markdown if available
+const renderedReadme = tool.readmeContent ? renderMarkdown(tool.readmeContent) : null;
+
+// Find matched project details
+const matchedProject = db.projects.find(p => p.slug === tool.matchedProjectSlug || p.slug === tool.slug);
+---
+
+<BaseLayout
+  title={tool.name}
+  activeTab="tools"
+  description={`Microarchitectural specifications, benchmark results, and reproduction commands for ${tool.name}.`}
+>
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    <a href="/tools">&larr; Back to All Tools</a>
+    <span class="sep">/</span>
+    <span class="crumb-cat">{tool.categoryName}</span>
+    <span class="sep">/</span>
+    <span class="crumb-current">{tool.name}</span>
+  </div>
+
+  <!-- Header Card -->
+  <section class="tool-header-card">
+    <div class="tool-header-top">
+      <div class="badges-row">
+        <span class={`cat-badge-large cat-badge-${tool.categoryNumber}`}>
+          {tool.categoryNumber === 0 ? "Infrastructure & Tooling" : `Category ${tool.categoryNumber}`}
+        </span>
+        <span class="badge badge-accent">{tool.categoryBadge}</span>
+        <span class="badge badge-neutral">{tool.language}</span>
+      </div>
+
+      <div class="header-org-meta">
+        <strong>Org:</strong> {tool.organization} &bull; <strong>License:</strong> {tool.license.split('(')[0]?.trim()}
+      </div>
+    </div>
+
+    <h1 class="tool-title">{tool.name}</h1>
+    <p class="tool-lead">{tool.subtitle}</p>
+
+    <div class="tool-quick-links">
+      {tool.scripts.run && (
+        <a href="#reproduction" class="btn btn-primary btn-sm">Reproduce Simulation &rarr;</a>
+      )}
+      {tool.benchmarks.length > 0 && (
+        <a href="#benchmarks" class="btn btn-secondary btn-sm">Measured Benchmarks ({tool.benchmarks.length})</a>
+      )}
+      {matchedProject?.repository_url && (
+        <a href={matchedProject.repository_url} target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+          Upstream Repository &#8599;
+        </a>
+      )}
+      <a href="#readme" class="btn btn-outline btn-sm">README Documentation</a>
+    </div>
+  </section>
+
+  <!-- Two-Column Architecture Overview -->
+  <div class="tool-grid-layout">
+    <!-- Main Left Column -->
+    <div class="tool-main-col">
+      <!-- Specifications Table -->
+      <div class="content-block">
+        <h2 class="block-title">Architectural Specifications</h2>
+        
+        <table class="specs-data-table">
+          <tbody>
+            <tr>
+              <th scope="row">Target ISA &amp; Extensions</th>
+              <td><code>{tool.isa}</code></td>
+            </tr>
+            <tr>
+              <th scope="row">Interconnect / Bus Protocol</th>
+              <td>{tool.bus}</td>
+            </tr>
+            <tr>
+              <th scope="row">Hardware Description Language</th>
+              <td>{tool.language}</td>
+            </tr>
+            <tr>
+              <th scope="row">Evaluation Category</th>
+              <td><strong>{tool.categoryName}</strong> ({tool.categoryBadge})</td>
+            </tr>
+            <tr>
+              <th scope="row">Verification Rigor</th>
+              <td>{tool.verificationEvidence}</td>
+            </tr>
+            <tr>
+              <th scope="row">Silicon Evidence</th>
+              <td>{tool.siliconEvidence}</td>
+            </tr>
+            <tr>
+              <th scope="row">FPGA Readiness</th>
+              <td>{tool.fpgaEvidence}</td>
+            </tr>
+            <tr>
+              <th scope="row">Software Stack Support</th>
+              <td>{matchedProject?.software_stack_support || "Baremetal GCC toolchains, newlib, FreeRTOS"}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Strengths & Limitations -->
+      <div class="content-block">
+        <h2 class="block-title">Design Assessment &amp; Trade-offs</h2>
+        <div class="assessment-grid">
+          <div class="assessment-card strength">
+            <h3 class="assessment-title">&#10003; Key Architectural Strengths</h3>
+            <p>{tool.notableStrengths}</p>
+          </div>
+          <div class="assessment-card limitation">
+            <h3 class="assessment-title">&#9888; Limitations &amp; Overheads</h3>
+            <p>{tool.notableLimitations}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Measured Benchmarks Section (If Available) -->
+      {tool.benchmarks.length > 0 && (
+        <div class="content-block" id="benchmarks">
+          <div class="block-header-flex">
+            <h2 class="block-title">Measured Empirical Benchmarks ({tool.benchmarks.length})</h2>
+            <span class="badge badge-accent">SCORE VERILATOR LOGS</span>
+          </div>
+          <p class="block-desc">
+            Cycle-accurate Verilator simulation measurements conducted directly on this architecture within the SCORE testbed.
+          </p>
+
+          <div class="benchmarks-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Workload</th>
+                  <th>Configuration</th>
+                  <th>Execution Cycles</th>
+                  <th>Performance Metric</th>
+                  <th>Vector / HW Util.</th>
+                  <th>Wall Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tool.benchmarks.map((b) => (
+                  <tr>
+                    <td><strong><code>{b.workload}</code></strong></td>
+                    <td><small>{b.config || "default"}</small></td>
+                    <td>{formatNumber(b.metrics?.execution_cycles || b.metrics?.cycles)}</td>
+                    <td>
+                      {b.metrics?.performance_ops_per_cycle ? (
+                        <span class="metric-highlight">{formatNumber(b.metrics.performance_ops_per_cycle)} Ops/Cycle</span>
+                      ) : b.metrics?.bandwidth_mb_s ? (
+                        <span>{formatNumber(b.metrics.bandwidth_mb_s)} MB/s</span>
+                      ) : (
+                        <span>Verified</span>
+                      )}
+                    </td>
+                    <td>
+                      {b.metrics?.vector_utilization_pct ? (
+                        <span class="util-badge">
+                          {formatNumber(b.metrics.vector_utilization_pct)}%
+                        </span>
+                      ) : (
+                        <span>&mdash;</span>
+                      )}
+                    </td>
+                    <td>{b.metrics?.wall_time_s ? `${formatNumber(b.metrics.wall_time_s)}s` : "&mdash;"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      <!-- Reproduction Commands -->
+      <div class="content-block" id="reproduction">
+        <h2 class="block-title">Reproduction &amp; Execution Commands</h2>
+        <p class="block-desc">
+          Automated scripts are provided in the SCORE root repository to reproduce the simulation of this tool from scratch:
+        </p>
+
+        <div class="scripts-box">
+          {tool.scripts.run && (
+            <div class="script-item">
+              <span class="script-label">Execute Verilator Simulation:</span>
+              <pre class="code-line"><code>./{tool.scripts.run}</code></pre>
+            </div>
+          )}
+
+          {tool.scripts.generate && (
+            <div class="script-item">
+              <span class="script-label">Regenerate Hardware RTL &amp; IP:</span>
+              <pre class="code-line"><code>./{tool.scripts.generate}</code></pre>
+            </div>
+          )}
+
+          {tool.scripts.install && (
+            <div class="script-item">
+              <span class="script-label">Install Dependencies &amp; Submodules:</span>
+              <pre class="code-line"><code>./{tool.scripts.install}</code></pre>
+            </div>
+          )}
+
+          {tool.scripts.env && (
+            <div class="script-item">
+              <span class="script-label">Source Shell Environment:</span>
+              <pre class="code-line"><code>source ./{tool.scripts.env}</code></pre>
+            </div>
+          )}
+
+          {!tool.scripts.run && !tool.scripts.generate && !tool.scripts.install && (
+            <div class="script-item">
+              <span class="script-label">Simulate via Universal Harness:</span>
+              <pre class="code-line"><code>./scripts/benchmark_core_suite.sh --target={tool.slug}</code></pre>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <!-- README / Documentation Reader -->
+      <div class="content-block" id="readme">
+        <div class="block-header-flex">
+          <h2 class="block-title">Technical Documentation</h2>
+          <span class="badge badge-neutral"><code>tools/{tool.slug}/{tool.readmeFile || "README.md"}</code></span>
+        </div>
+
+        {renderedReadme ? (
+          <div class="readme-content-body prose-content" set:html={renderedReadme} />
+        ) : (
+          <div class="empty-readme">
+            <p>No README.md found in <code>tools/{tool.slug}/</code>. Refer to upstream repository documentation.</p>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- Sidebar Column -->
+    <div class="tool-side-col">
+      <!-- File Inventory -->
+      <div class="sidebar-block">
+        <h3 class="side-title">Directory Layout</h3>
+        <p class="side-meta">Total files on disk: <strong>{tool.fileCount}</strong></p>
+        <div class="files-tree">
+          <div class="tree-root">&#128193; tools/{tool.slug}/</div>
+          {tool.topFiles.map((f) => (
+            <div class="tree-item">&nbsp;&nbsp;&#9500;&#9472;&#9472; {f}</div>
+          ))}
+          {tool.fileCount > tool.topFiles.length && (
+            <div class="tree-more">&nbsp;&nbsp;&#9492;&#9472;&#9472; ... and {tool.fileCount - tool.topFiles.length} more files</div>
+          )}
+        </div>
+      </div>
+
+      <!-- Category Navigation -->
+      <div class="sidebar-block">
+        <h3 class="side-title">More in {tool.categoryName.split(':')[0]}</h3>
+        <div class="side-links-list">
+          {db.tools.filter(t => t.categoryNumber === tool.categoryNumber && t.slug !== tool.slug).slice(0, 8).map(sibling => (
+            <a href={`/tools/${sibling.slug}`} class="side-link-item">
+              &rarr; {sibling.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .breadcrumbs a {
+    color: #1a1a1a;
+    text-decoration: none;
+    border-bottom: 2px solid #1a1a1a;
+  }
+
+  .breadcrumbs a:hover {
+    background: #ffde59;
+  }
+
+  .sep {
+    color: #888888;
+  }
+
+  .crumb-cat {
+    color: #555555;
+  }
+
+  .crumb-current {
+    color: #1a1a1a;
+  }
+
+  .tool-header-card {
+    background: #ffffff;
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .tool-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .cat-badge-large {
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 0.25rem 0.6rem;
+    border: 2px solid #1a1a1a;
+  }
+
+  .cat-badge-1 { background: #fffbe6; }
+  .cat-badge-2 { background: #e6fcfd; }
+  .cat-badge-3 { background: #fff0eb; }
+  .cat-badge-4 { background: #edfcee; }
+  .cat-badge-0 { background: #f0f0f0; }
+
+  .header-org-meta {
+    font-size: 0.85rem;
+    color: #555555;
+  }
+
+  .tool-title {
+    font-size: 2.75rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .tool-lead {
+    font-size: 1.2rem;
+    color: #444444;
+    line-height: 1.5;
+    max-width: 900px;
+    margin-bottom: 1.75rem;
+  }
+
+  .tool-quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .tool-grid-layout {
+    display: grid;
+    grid-template-columns: 2.6fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (max-width: 960px) {
+    .tool-grid-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .content-block {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .block-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .block-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .block-desc {
+    font-size: 0.95rem;
+    color: #555555;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .specs-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  .specs-data-table th, .specs-data-table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+  }
+
+  .specs-data-table th {
+    background: #fbfbfb;
+    width: 32%;
+    font-weight: 800;
+    color: #333333;
+  }
+
+  .specs-data-table tr:nth-child(even) td {
+    background: #fafafa;
+  }
+
+  .assessment-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .assessment-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .assessment-card {
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+  }
+
+  .assessment-card.strength {
+    background: #edfcee;
+    border-color: #2e7d32;
+  }
+
+  .assessment-card.limitation {
+    background: #fff8e1;
+    border-color: #d4a017;
+  }
+
+  .assessment-title {
+    font-size: 1.05rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .assessment-card p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #222222;
+    margin: 0;
+  }
+
+  .benchmarks-table-wrap {
+    overflow-x: auto;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .data-table th, .data-table td {
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #1a1a1a;
+    text-align: left;
+  }
+
+  .data-table th {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .metric-highlight {
+    font-weight: 800;
+    color: #0b6b38;
+  }
+
+  .util-badge {
+    background: #ffde59;
+    padding: 0.15rem 0.4rem;
+    font-weight: 800;
+    border: 1px solid #1a1a1a;
+  }
+
+  .scripts-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .script-item {
+    background: #fcfcfc;
+    border: 1px solid #1a1a1a;
+    padding: 1rem;
+  }
+
+  .script-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: #333333;
+  }
+
+  .code-line {
+    background: #1a1a1a;
+    color: #7ed957;
+    padding: 0.75rem 1rem;
+    margin: 0;
+    font-family: var(--noc-font-mono, monospace);
+    font-size: 0.9rem;
+    overflow-x: auto;
+  }
+
+  .prose-content {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #222222;
+    overflow-x: auto;
+  }
+
+  .prose-content h1, .prose-content h2, .prose-content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 900;
+  }
+
+  .prose-content pre {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 1rem;
+    overflow-x: auto;
+    border: 2px solid #1a1a1a;
+  }
+
+  .sidebar-block {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .side-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 0.35rem;
+  }
+
+  .side-meta {
+    font-size: 0.82rem;
+    color: #666666;
+    margin-bottom: 0.75rem;
+  }
+
+  .files-tree {
+    background: #fbfbfb;
+    border: 1px solid #1a1a1a;
+    padding: 0.75rem;
+    font-family: var(--noc-font-mono, monospace);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+
+  .tree-root {
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 0.25rem;
+  }
+
+  .tree-item {
+    color: #444444;
+  }
+
+  .tree-more {
+    color: #888888;
+    font-style: italic;
+  }
+
+  .side-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+
+  .side-link-item {
+    color: #1a1a1a;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid #e0e0e0;
+    transition: background 0.1s ease;
+  }
+
+  .side-link-item:hover {
+    background: #ffde59;
+    border-color: #1a1a1a;
+  }
+</style>
+

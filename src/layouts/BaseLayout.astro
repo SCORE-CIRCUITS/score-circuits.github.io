@@ -1,0 +1,191 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "SCORE: Survey & Benchmark Dataset of Open-Source Chip Repositories for EDA & Computer Architecture Research." } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const pathname = Astro.url.pathname;
+const pageTitle = title === "SCORE" ? "SCORE — Benchmark-Driven Open Architecture Platform" : `${title} · SCORE`;
+
+function isActive(href: string) {
+  const norm = href.endsWith("/") ? href : `${href}/`;
+  return pathname === norm || pathname.startsWith(norm);
+}
+---
+
+<!doctype html>
+<html lang="en" data-md-color-scheme="default">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+    <link rel="stylesheet" href={`${base}stylesheets/palette.css`} />
+    <link rel="stylesheet" href={`${base}stylesheets/main.css`} />
+    <link rel="stylesheet" href={`${base}stylesheets/extra.css`} />
+    <title>{pageTitle}</title>
+    <style>
+      /* Custom Neo-Brutalist Layout Shell */
+      .score-navbar {
+        background: var(--paper, #f6f0dc);
+        border-bottom: 2px solid var(--ink, #151b20);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 0 rgba(21, 27, 32, 0.08);
+      }
+      .score-navbar-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .score-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: var(--ink, #151b20);
+      }
+      .score-brand-badge {
+        background: var(--ink, #151b20);
+        color: var(--yellow, #ffc83e);
+        font-family: var(--md-code-font, monospace);
+        font-weight: 800;
+        font-size: 1.15rem;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        border: 2px solid var(--ink, #151b20);
+        box-shadow: 2px 2px 0px var(--yellow, #ffc83e);
+      }
+      .score-brand-text {
+        display: flex;
+        flex-direction: column;
+      }
+      .score-brand-title {
+        font-family: var(--md-text-font, sans-serif);
+        font-weight: 800;
+        font-size: 1.1rem;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+      }
+      .score-brand-sub {
+        font-size: 0.75rem;
+        color: var(--ink-light, #242c33);
+        font-weight: 500;
+      }
+      .score-nav-links {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .score-nav-link {
+        font-family: var(--md-text-font, sans-serif);
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: var(--ink, #151b20);
+        text-decoration: none;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        border: 1.5px solid transparent;
+        transition: all 0.15s ease;
+      }
+      .score-nav-link:hover {
+        background: var(--paper-deep, #eee4c8);
+        border-color: var(--ink, #151b20);
+      }
+      .score-nav-link.active {
+        background: var(--cream, #fffaf0);
+        border-color: var(--ink, #151b20);
+        box-shadow: 2px 2px 0px var(--ink, #151b20);
+      }
+      .score-nav-cta {
+        background: var(--cyan, #22bfd7) !important;
+        color: var(--ink, #151b20) !important;
+        border: 2px solid var(--ink, #151b20) !important;
+        box-shadow: 2px 2px 0px var(--ink, #151b20);
+      }
+      .score-nav-cta:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 3px 3px 0px var(--ink, #151b20);
+      }
+      .score-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+        min-height: 80vh;
+      }
+      .score-footer {
+        background: var(--paper-deep, #eee4c8);
+        border-top: 2px solid var(--ink, #151b20);
+        padding: 2.5rem 1.5rem;
+        margin-top: 3rem;
+      }
+      .score-footer-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        font-size: 0.88rem;
+      }
+    </style>
+  </head>
+  <body class="md-typeset">
+    <header class="score-navbar">
+      <div class="score-navbar-inner">
+        <a class="score-brand" href={base}>
+          <div class="score-brand-badge">SCORE</div>
+          <div class="score-brand-text">
+            <span class="score-brand-title">Open Chip Repositories</span>
+            <span class="score-brand-sub">Benchmark-Driven SoC Dataset & Survey</span>
+          </div>
+        </a>
+        <nav class="score-nav-links" aria-label="Primary Navigation">
+          <a class={`score-nav-link ${isActive(`${base}`) ? 'active' : ''}`} href={base}>Home</a>
+          <a class={`score-nav-link ${isActive(`${base}categories`) ? 'active' : ''}`} href={`${base}categories/`}>Categories (1–4)</a>
+          <a class={`score-nav-link ${isActive(`${base}tools`) ? 'active' : ''}`} href={`${base}tools/`}>Tools & Architectures</a>
+          <a class={`score-nav-link ${isActive(`${base}benchmarks`) ? 'active' : ''}`} href={`${base}benchmarks/`}>Leaderboard</a>
+          <a class={`score-nav-link ${isActive(`${base}updates`) ? 'active' : ''}`} href={`${base}updates/`}>Changelog</a>
+          <a class="score-nav-link score-nav-cta" href="https://github.com/score-circuits/score" target="_blank" rel="noopener">GitHub ↗</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="score-content">
+      <slot />
+    </main>
+
+    <footer class="score-footer">
+      <div class="score-footer-inner">
+        <div>
+          <strong>SCORE (Survey of Open-Source Chip Repositories)</strong> — An open community dataset for reproducible EDA and architecture research.
+          <div style="font-size: 0.8rem; color: var(--ink-light); margin-top: 0.35rem;">
+            Source of truth: <code class="mono">publications/papers/projects.csv</code> &middot; Automated Verilog snapshots under <code class="mono">datasets/</code>.
+          </div>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <a href="https://github.com/SCORE-CIRCUITS/score" target="_blank" rel="noopener" style="font-weight: 700;">GitHub Repository</a>
+          <span>&middot;</span>
+          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0 License</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+

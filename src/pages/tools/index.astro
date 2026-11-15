@@ -1,0 +1,380 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import db from "../../data/score_db.json";
+
+const tools = db.tools;
+const counts = db.counts;
+---
+
+<BaseLayout
+  title="Hardware Tools & Cores"
+  activeTab="tools"
+  description="Interactive directory of all 51 open-source RISC-V tools, processor cores, and platforms evaluated in SCORE."
+>
+  <div class="page-header">
+    <div class="badge badge-primary">EVALUATED ARTIFACTS</div>
+    <h1 class="page-title">Tools &amp; Hardware Directory</h1>
+    <p class="page-lead">
+      Browse all <strong>51 open-source RISC-V tools</strong>, cores, coprocessors, and platforms evaluated in SCORE. Every entry is backed by verified RTL, build recipes, and simulation scripts located in <code>tools/</code>.
+    </p>
+
+    <!-- Controls Row -->
+    <div class="tools-controls">
+      <div class="search-wrap">
+        <input 
+          type="text" 
+          id="toolSearch" 
+          placeholder="Search by core name, ISA (e.g. RV64GC, RVV), bus (AXI4, OBI), or language..." 
+          class="search-input"
+        />
+      </div>
+
+      <div class="filter-pills" id="categoryFilter">
+        <button class="filter-pill active" data-cat="all">All ({tools.length})</button>
+        <button class="filter-pill cat-1-btn" data-cat="1">Cat 1: MCU ({counts.category1Tools})</button>
+        <button class="filter-pill cat-2-btn" data-cat="2">Cat 2: 64-bit App ({counts.category2Tools})</button>
+        <button class="filter-pill cat-3-btn" data-cat="3">Cat 3: Vector ({counts.category3Tools})</button>
+        <button class="filter-pill cat-4-btn" data-cat="4">Cat 4: SoCs ({counts.category4Tools})</button>
+        <button class="filter-pill cat-0-btn" data-cat="0">Infra ({counts.infraTools})</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tools Grid -->
+  <div class="tools-directory-grid" id="toolsGrid">
+    {tools.map((tool) => (
+      <div 
+        class="tool-card-full" 
+        data-cat={tool.categoryNumber}
+        data-search={`${tool.name} ${tool.slug} ${tool.isa} ${tool.bus} ${tool.language} ${tool.license} ${tool.subtitle}`.toLowerCase()}
+      >
+        <div class="card-top-row">
+          <span class={`cat-tag cat-tag-${tool.categoryNumber}`}>
+            {tool.categoryNumber === 0 ? "Infrastructure" : `Cat ${tool.categoryNumber}`}
+          </span>
+          <span class="lang-tag">{tool.language}</span>
+        </div>
+
+        <h2 class="card-tool-name">
+          <a href={`/tools/${tool.slug}`}>{tool.name}</a>
+        </h2>
+        <p class="card-tool-sub">{tool.subtitle}</p>
+
+        <div class="card-specs-table">
+          <div class="card-spec-row">
+            <span class="label">ISA:</span>
+            <span class="val"><code>{tool.isa}</code></span>
+          </div>
+          <div class="card-spec-row">
+            <span class="label">Bus / NoC:</span>
+            <span class="val">{tool.bus}</span>
+          </div>
+          <div class="card-spec-row">
+            <span class="label">License:</span>
+            <span class="val">{tool.license.split('(')[0]?.trim()}</span>
+          </div>
+          <div class="card-spec-row">
+            <span class="label">Verification:</span>
+            <span class="val">{tool.verificationEvidence.split(',')[0]}</span>
+          </div>
+        </div>
+
+        <div class="card-footer-row">
+          <a href={`/tools/${tool.slug}`} class="btn btn-outline btn-card">
+            Architecture Details &rarr;
+          </a>
+          <div class="card-indicators">
+            {tool.scripts.run && (
+              <span class="indicator-pill" title="Has automated run script in scripts/">Run Script</span>
+            )}
+            {tool.benchmarks.length > 0 && (
+              <span class="indicator-pill bench-pill" title="Empirical benchmark data available">
+                {tool.benchmarks.length} Runs
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div id="noResults" class="no-results-msg" style="display: none;">
+    <h3>No matching tools found</h3>
+    <p>Try clearing your search query or switching categories.</p>
+  </div>
+</BaseLayout>
+
+<script>
+  // Client-side search and category filtering
+  const searchInput = document.getElementById("toolSearch") as HTMLInputElement;
+  const categoryFilter = document.getElementById("categoryFilter");
+  const cards = document.querySelectorAll(".tool-card-full") as NodeListOf<HTMLElement>;
+  const noResults = document.getElementById("noResults");
+
+  let currentCat = "all";
+  let currentSearch = "";
+
+  function filterCards() {
+    let visibleCount = 0;
+    cards.forEach((card) => {
+      const cardCat = card.getAttribute("data-cat");
+      const searchData = card.getAttribute("data-search") || "";
+
+      const matchesCat = (currentCat === "all") || (cardCat === currentCat);
+      const matchesSearch = !currentSearch || searchData.includes(currentSearch);
+
+      if (matchesCat && matchesSearch) {
+        card.style.display = "flex";
+        visibleCount++;
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    if (noResults) {
+      noResults.style.display = visibleCount === 0 ? "block" : "none";
+    }
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      currentSearch = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      filterCards();
+    });
+  }
+
+  if (categoryFilter) {
+    categoryFilter.addEventListener("click", (e) => {
+      const target = (e.target as HTMLElement).closest(".filter-pill") as HTMLElement;
+      if (!target) return;
+
+      document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+      target.classList.add("active");
+
+      currentCat = target.getAttribute("data-cat") || "all";
+      filterCards();
+    });
+  }
+</script>
+
+<style>
+  .page-header {
+    background: #ffffff;
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-lead {
+    font-size: 1.15rem;
+    color: #444444;
+    line-height: 1.6;
+    max-width: 850px;
+    margin-bottom: 2rem;
+  }
+
+  .tools-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    font-size: 1rem;
+    border: 2px solid #1a1a1a;
+    box-shadow: 3px 3px 0 #1a1a1a;
+    background: #ffffff;
+    font-family: inherit;
+  }
+
+  .search-input:focus {
+    outline: none;
+    background: #fffdf0;
+  }
+
+  .filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filter-pill {
+    background: #ffffff;
+    border: 2px solid #1a1a1a;
+    padding: 0.45rem 0.9rem;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    transition: all 0.1s ease;
+  }
+
+  .filter-pill:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .filter-pill.active {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .cat-1-btn.active { background: #d4a017; color: #1a1a1a; }
+  .cat-2-btn.active { background: #008080; color: #ffffff; }
+  .cat-3-btn.active { background: #d9534f; color: #ffffff; }
+  .cat-4-btn.active { background: #2e7d32; color: #ffffff; }
+  .cat-0-btn.active { background: #555555; color: #ffffff; }
+
+  .tools-directory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .tool-card-full {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+
+  .tool-card-full:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 #1a1a1a;
+  }
+
+  .card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .cat-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid #1a1a1a;
+  }
+
+  .cat-tag-1 { background: #fffbe6; }
+  .cat-tag-2 { background: #e6fcfd; }
+  .cat-tag-3 { background: #fff0eb; }
+  .cat-tag-4 { background: #edfcee; }
+  .cat-tag-0 { background: #f0f0f0; }
+
+  .lang-tag {
+    font-size: 0.75rem;
+    font-family: var(--noc-font-mono, monospace);
+    color: #666666;
+  }
+
+  .card-tool-name {
+    font-size: 1.35rem;
+    font-weight: 900;
+    margin-bottom: 0.35rem;
+    line-height: 1.25;
+  }
+
+  .card-tool-name a {
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .card-tool-name a:hover {
+    text-decoration: underline;
+  }
+
+  .card-tool-sub {
+    font-size: 0.88rem;
+    color: #555555;
+    line-height: 1.45;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+
+  .card-specs-table {
+    background: #fbfbfb;
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.82rem;
+  }
+
+  .card-spec-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+  }
+
+  .card-spec-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .card-spec-row .label {
+    color: #666666;
+  }
+
+  .card-spec-row .val {
+    font-weight: 600;
+    text-align: right;
+    max-width: 65%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-card {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.85rem;
+  }
+
+  .card-indicators {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .indicator-pill {
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: #f0f0f0;
+    border: 1px solid #999999;
+    padding: 0.15rem 0.4rem;
+  }
+
+  .bench-pill {
+    background: #eefbee;
+    border-color: #7ed957;
+    color: #0b6b38;
+  }
+
+  .no-results-msg {
+    background: #ffffff;
+    border: 2px solid #1a1a1a;
+    box-shadow: 4px 4px 0 #1a1a1a;
+    padding: 3rem;
+    text-align: center;
+  }
+</style>

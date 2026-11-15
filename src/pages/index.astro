@@ -1,0 +1,585 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import db from "../data/score_db.json";
+
+const counts = db.counts;
+const categories = db.categories;
+const featuredTools = db.tools.filter(t => 
+  ["cva6", "ara", "snitch-cluster", "cheshire", "ibex", "gemmini", "mempool", "hazard3"].includes(t.slug)
+);
+---
+
+<BaseLayout 
+  title="Home" 
+  activeTab="home"
+  description="Survey and empirical benchmarking platform across 51 open-source RISC-V tools, 4 architecture categories, and 4 verification levels."
+>
+  <!-- Hero Section -->
+  <section class="score-hero">
+    <div class="score-hero-badge">SCORE PLATFORM & RESEARCH REPOSITORY</div>
+    <h1 class="score-hero-title">
+      Open-Source RISC-V Hardware: <span class="score-highlight">From Transistors to Clusters</span>
+    </h1>
+    <p class="score-hero-lead">
+      A systematic empirical survey and reproducible benchmarking suite spanning <strong>51 open hardware tools</strong> and architectures across <strong>4 categories</strong>—from sub-10 kGE microcontroller cores up to 432-core heterogeneous compute platforms.
+    </p>
+
+    <div class="score-hero-actions">
+      <a href="/tools" class="btn btn-primary">Browse 51 Tools &rarr;</a>
+      <a href="/benchmarks" class="btn btn-secondary">View Leaderboards</a>
+      <a href="/categories" class="btn btn-outline">Architecture Guide</a>
+      <a href="/updates" class="btn btn-outline">Changelog</a>
+    </div>
+  </section>
+
+  <!-- Key Metrics Grid -->
+  <section class="score-section">
+    <div class="score-stats-grid">
+      <div class="score-stat-card">
+        <div class="score-stat-num">{counts.tools}</div>
+        <div class="score-stat-label">Evaluated Tools & Cores</div>
+        <div class="score-stat-desc">Complete RTL & scripts in tools/</div>
+      </div>
+      <div class="score-stat-card accent-yellow">
+        <div class="score-stat-num">4</div>
+        <div class="score-stat-label">Architecture Categories</div>
+        <div class="score-stat-desc">MCU, Application, Vector, SoC</div>
+      </div>
+      <div class="score-stat-card accent-coral">
+        <div class="score-stat-num">{counts.measuredRuns}</div>
+        <div class="score-stat-label">Aggregated Benchmark Runs</div>
+        <div class="score-stat-desc">Cycle-accurate Verilator traces</div>
+      </div>
+      <div class="score-stat-card accent-teal">
+        <div class="score-stat-num">{counts.projects}</div>
+        <div class="score-stat-label">Literature Projects</div>
+        <div class="score-stat-desc">Indexed from IEEE / ACM / arXiv</div>
+      </div>
+      <div class="score-stat-card accent-green">
+        <div class="score-stat-num">100%</div>
+        <div class="score-stat-label">Open Silicon Evidence</div>
+        <div class="score-stat-desc">TSMC 16nm to SkyWater 130nm</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 Categories Architecture Framework -->
+  <section class="score-section">
+    <div class="section-header">
+      <div class="badge badge-primary">EVALUATION METHODOLOGY</div>
+      <h2 class="section-title">The 4 Architecture Categories</h2>
+      <p class="section-subtitle">
+        Unlike generic literature reviews, SCORE evaluates architectures within an aligned 4-tier benchmarking framework designed to isolate bottlenecks at each layer of abstraction.
+      </p>
+    </div>
+
+    <div class="categories-grid">
+      {categories.map((cat) => (
+        <div class="category-card">
+          <div class="cat-card-header">
+            <span class="cat-num">0{cat.number}</span>
+            <span class="cat-badge">{cat.badge}</span>
+          </div>
+          <h3 class="cat-title">{cat.title}</h3>
+          <p class="cat-desc">{cat.description}</p>
+          
+          <div class="cat-meta-block">
+            <div class="cat-meta-item">
+              <strong>Evaluation Profile:</strong> <code>{cat.profile}</code>
+            </div>
+            <div class="cat-meta-item">
+              <strong>Standard Workloads:</strong> {cat.workloads.join(", ")}
+            </div>
+            <div class="cat-meta-item">
+              <strong>Key Metrics:</strong> {cat.metrics.join(", ")}
+            </div>
+          </div>
+
+          <div class="cat-card-footer">
+            <span class="cat-tools-count"><strong>{cat.tools.length}</strong> Tools Included</span>
+            <a href={`/categories#category-${cat.number}`} class="cat-link">Deep Dive &rarr;</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Empirical Findings & Architectural Opportunities -->
+  <section class="score-section">
+    <div class="callout callout-warning">
+      <div class="callout-header">
+        <span class="badge badge-accent">EMPIRICAL BENCHMARK INSIGHTS</span>
+        <h3 class="callout-title">Key Bottlenecks Driving Next-Generation Architectures</h3>
+      </div>
+      <div class="callout-content">
+        <p>
+          Our cross-category simulations reveal three critical architectural boundaries where traditional RISC-V hardware scaling breaks down:
+        </p>
+        <div class="insights-grid">
+          <div class="insight-box">
+            <h4>1. Vector Utilization Collapse</h4>
+            <p>
+              On dense matrix multiplication (<code>fmatmul</code>), <strong>Ara (RVV 1.0)</strong> achieves up to <strong>98.4%</strong> vector execution utilization. However, on memory-strided and reduction kernels (<code>softmax</code>, <code>fft</code>), utilization collapses to <strong>23.0%</strong>. The bottleneck is not the vector lanes, but the scalar core stalled on instruction issue and VRF bank conflicts.
+            </p>
+            <div class="insight-solution">&rarr; Future Solution: Decoupled Access-Execute (DAE) vector coprocessors.</div>
+          </div>
+          <div class="insight-box">
+            <h4>2. Manycore Spinlock Wall</h4>
+            <p>
+              In shared-memory multi-core clusters (<strong>MemPool</strong> and <strong>Snitch</strong>), software barrier synchronization degrades exponentially past 64 cores. Software atomic operations (AMO) saturate the interconnect crossbar, negating speedup for fine-grained parallel kernels.
+            </p>
+            <div class="insight-solution">&rarr; Future Solution: In-network hardware collective barriers (FractalSync / Picobello).</div>
+          </div>
+          <div class="insight-box">
+            <h4>3. DMA MMIO Setup Penalty</h4>
+            <p>
+              Full SoC benchmarks (<strong>Cheshire</strong> and <strong>PULPissimo</strong>) show that transferring payloads smaller than 128 bytes via an autonomous DMA engine incurs higher latency than scalar memory copies due to MMIO register configuration overhead.
+            </p>
+            <div class="insight-solution">&rarr; Future Solution: Single-cycle instruction-triggered streaming DMA.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Tools Directory Preview -->
+  <section class="score-section">
+    <div class="section-header">
+      <div class="badge badge-neutral">TOOLS & CORE IMPLEMENTATIONS</div>
+      <h2 class="section-title">Featured Anchor Architectures</h2>
+      <p class="section-subtitle">
+        Explore representative cores and platforms evaluated in our empirical study. Every tool is backed by synthesizable RTL and automated simulation scripts in this repository.
+      </p>
+    </div>
+
+    <div class="tools-grid">
+      {featuredTools.map((tool) => (
+        <div class="tool-card">
+          <div class="tool-card-top">
+            <span class="tool-badge">Cat {tool.categoryNumber}: {tool.categoryName.split(':')[1]?.trim() || tool.categoryName}</span>
+            <span class="tool-lang">{tool.language}</span>
+          </div>
+          <h3 class="tool-name">
+            <a href={`/tools/${tool.slug}`}>{tool.name}</a>
+          </h3>
+          <p class="tool-sub">{tool.subtitle}</p>
+          
+          <div class="tool-specs">
+            <div class="spec-row">
+              <span class="spec-label">ISA:</span>
+              <span class="spec-val"><code>{tool.isa}</code></span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">Bus:</span>
+              <span class="spec-val">{tool.bus}</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label">License:</span>
+              <span class="spec-val">{tool.license.split('(')[0]?.trim()}</span>
+            </div>
+          </div>
+
+          <div class="tool-actions">
+            <a href={`/tools/${tool.slug}`} class="btn-sm btn-outline">Architecture Deep Dive &rarr;</a>
+            {tool.benchmarks.length > 0 && (
+              <span class="bench-tag">&#10003; {tool.benchmarks.length} Measured Runs</span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="center-cta" style="margin-top: 2rem;">
+      <a href="/tools" class="btn btn-primary">View All 51 Tools & Simulators &rarr;</a>
+    </div>
+  </section>
+
+  <!-- Reproduction Instructions -->
+  <section class="score-section">
+    <div class="repro-box">
+      <div class="repro-header">
+        <h3>Quick Reproducibility Commands</h3>
+        <span class="badge badge-accent">ZERO-CONFIG VERILATOR SUITE</span>
+      </div>
+      <p>Clone the repository and run the automated test harnesses directly on your host:</p>
+      <pre class="code-block"><code><span class="token-comment"># 1. Clone repository with submodules</span>
+git clone https://github.com/yongfu-li/score.git &amp;&amp; cd score
+
+<span class="token-comment"># 2. Run Category 1 MCU benchmark suite (CoreMark &amp; Dhrystone across 9 cores)</span>
+./scripts/benchmark_core_suite.sh
+
+<span class="token-comment"># 3. Simulate Category 3 Ara Vector Coprocessor (RVV 1.0 fmatmul kernel)</span>
+./scripts/run_ara.sh
+
+<span class="token-comment"># 4. Run Category 4 Full SoC simulation (Cheshire 64-bit Linux SoC)</span>
+./scripts/run_cheshire.sh</code></pre>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .score-hero {
+    background: var(--noc-bg-card, #ffffff);
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 3rem 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .score-hero-badge {
+    display: inline-block;
+    background: #ffde59;
+    border: 2px solid #1a1a1a;
+    padding: 0.35rem 0.85rem;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.25rem;
+  }
+
+  .score-hero-title {
+    font-size: 2.75rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .score-highlight {
+    background: linear-gradient(180deg, transparent 65%, #5ce1e6 65%);
+  }
+
+  .score-hero-lead {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #333333;
+    max-width: 900px;
+    margin-bottom: 2rem;
+  }
+
+  .score-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .score-section {
+    margin-bottom: 3.5rem;
+  }
+
+  .score-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .score-stat-card {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 1.5rem;
+  }
+
+  .score-stat-card.accent-yellow { background: #fffbe6; }
+  .score-stat-card.accent-coral { background: #fff0eb; }
+  .score-stat-card.accent-teal { background: #e6fcfd; }
+  .score-stat-card.accent-green { background: #edfcee; }
+
+  .score-stat-num {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .score-stat-label {
+    font-weight: 800;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .score-stat-desc {
+    font-size: 0.8rem;
+    color: #666666;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.05rem;
+    color: #555555;
+    max-width: 800px;
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .category-card {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .cat-num {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #999999;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .cat-badge {
+    background: #f0f0f0;
+    border: 1px solid #1a1a1a;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .cat-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .cat-desc {
+    font-size: 0.9rem;
+    color: #444444;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+
+  .cat-meta-block {
+    background: #f8f8f8;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0.75rem 0;
+    margin-bottom: 1.25rem;
+    font-size: 0.8rem;
+  }
+
+  .cat-meta-item {
+    margin-bottom: 0.35rem;
+  }
+
+  .cat-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+  }
+
+  .cat-tools-count {
+    color: #555555;
+  }
+
+  .cat-link {
+    font-weight: 800;
+    color: #1a1a1a;
+    text-decoration: none;
+    border-bottom: 2px solid #1a1a1a;
+  }
+
+  .cat-link:hover {
+    background: #ffde59;
+  }
+
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .insight-box {
+    background: #ffffff;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+  }
+
+  .insight-box h4 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+  }
+
+  .insight-box p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+    color: #333333;
+  }
+
+  .insight-solution {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #0b6b38;
+    background: #eefbee;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid #7ed957;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .tool-card {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tool-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .tool-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    background: #ffde59;
+    border: 1px solid #1a1a1a;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .tool-lang {
+    font-size: 0.75rem;
+    font-family: var(--noc-font-mono, monospace);
+    color: #666666;
+  }
+
+  .tool-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.35rem;
+  }
+
+  .tool-name a {
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .tool-name a:hover {
+    text-decoration: underline;
+  }
+
+  .tool-sub {
+    font-size: 0.85rem;
+    color: #555555;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+
+  .tool-specs {
+    background: #fcfcfc;
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+  }
+
+  .spec-label {
+    color: #666666;
+  }
+
+  .spec-val {
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .tool-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-sm {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .bench-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #0b6b38;
+  }
+
+  .repro-box {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 2rem;
+  }
+
+  .repro-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .repro-header h3 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin: 0;
+  }
+
+  .code-block {
+    background: #1a1a1a;
+    color: #ffffff;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    overflow-x: auto;
+    font-family: var(--noc-font-mono, monospace);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+
+  .token-comment {
+    color: #888888;
+  }
+
+  .center-cta {
+    text-align: center;
+  }
+</style>
+
