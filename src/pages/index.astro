@@ -7,11 +7,17 @@ const categories = db.categories;
 const featuredTools = db.tools.filter(t => 
   ["cva6", "ara", "snitch-cluster", "cheshire", "ibex", "gemmini", "mempool", "hazard3"].includes(t.slug)
 );
+
+const categoryLinks: Record<number, string> = {
+  1: "/mcu-scalar/",
+  2: "/app-cores/",
+  3: "/vector-coprocessors/",
+  4: "/soc-multicore/",
+};
 ---
 
 <BaseLayout 
   title="Home" 
-  activeTab="home"
   description="Survey and empirical benchmarking platform across 51 open-source RISC-V tools, 4 architecture categories, and 4 verification levels."
 >
   <!-- Hero Section -->
@@ -25,10 +31,11 @@ const featuredTools = db.tools.filter(t =>
     </p>
 
     <div class="score-hero-actions">
-      <a href="/tools" class="btn btn-primary">Browse 51 Tools &rarr;</a>
-      <a href="/benchmarks" class="btn btn-secondary">View Leaderboards</a>
-      <a href="/categories" class="btn btn-outline">Architecture Guide</a>
-      <a href="/updates" class="btn btn-outline">Changelog</a>
+      <a href="/fundamentals/" class="btn btn-primary">&sect; Architecture Fundamentals &rarr;</a>
+      <a href="/mcu-scalar/" class="btn btn-outline">01. MCU Cores</a>
+      <a href="/app-cores/" class="btn btn-outline">02. 64-bit App Cores</a>
+      <a href="/vector-coprocessors/" class="btn btn-outline">03. Vector Engines</a>
+      <a href="/soc-multicore/" class="btn btn-outline">04. SoC &amp; Clusters</a>
     </div>
   </section>
 
@@ -38,7 +45,7 @@ const featuredTools = db.tools.filter(t =>
       <div class="score-stat-card">
         <div class="score-stat-num">{counts.tools}</div>
         <div class="score-stat-label">Evaluated Tools & Cores</div>
-        <div class="score-stat-desc">Complete RTL & scripts in tools/</div>
+        <div class="score-stat-desc">Synthesizable RTL in tools/</div>
       </div>
       <div class="score-stat-card accent-yellow">
         <div class="score-stat-num">4</div>
@@ -51,14 +58,14 @@ const featuredTools = db.tools.filter(t =>
         <div class="score-stat-desc">Cycle-accurate Verilator traces</div>
       </div>
       <div class="score-stat-card accent-teal">
-        <div class="score-stat-num">{counts.projects}</div>
-        <div class="score-stat-label">Literature Projects</div>
-        <div class="score-stat-desc">Indexed from IEEE / ACM / arXiv</div>
-      </div>
-      <div class="score-stat-card accent-green">
         <div class="score-stat-num">100%</div>
         <div class="score-stat-label">Open Silicon Evidence</div>
         <div class="score-stat-desc">TSMC 16nm to SkyWater 130nm</div>
+      </div>
+      <div class="score-stat-card accent-green">
+        <div class="score-stat-num">4</div>
+        <div class="score-stat-label">Evaluation Levels</div>
+        <div class="score-stat-desc">Scalar to Full-System Scaling</div>
       </div>
     </div>
   </section>
@@ -97,7 +104,7 @@ const featuredTools = db.tools.filter(t =>
 
           <div class="cat-card-footer">
             <span class="cat-tools-count"><strong>{cat.tools.length}</strong> Tools Included</span>
-            <a href={`/categories#category-${cat.number}`} class="cat-link">Deep Dive &rarr;</a>
+            <a href={categoryLinks[cat.number]} class="cat-link">Explore Category &rarr;</a>
           </div>
         </div>
       ))}
@@ -189,8 +196,11 @@ const featuredTools = db.tools.filter(t =>
       ))}
     </div>
 
-    <div class="center-cta" style="margin-top: 2rem;">
-      <a href="/tools" class="btn btn-primary">View All 51 Tools & Simulators &rarr;</a>
+    <div class="center-cta" style="margin-top: 2rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="/mcu-scalar/" class="btn btn-outline">01. MCU Cores &rarr;</a>
+      <a href="/app-cores/" class="btn btn-outline">02. 64-bit App Cores &rarr;</a>
+      <a href="/vector-coprocessors/" class="btn btn-outline">03. Vector Engines &rarr;</a>
+      <a href="/soc-multicore/" class="btn btn-outline">04. SoC &amp; Clusters &rarr;</a>
     </div>
   </section>
 

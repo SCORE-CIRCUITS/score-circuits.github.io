@@ -1,0 +1,456 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import db from "../../data/score_db.json";
+
+const cat2Tools = db.tools.filter(t => t.categoryNumber === 2);
+
+const cat2Leaderboard = [
+  { name: "Rocket Chip", slug: "rocket-chip", isa: "RV64GC", stages: "5 (In-order)", mmu: "Sv39", bus: "TileLink-UH", l1: "16KB / 16KB", memcpy: "485 MB/s", pmp: "16 regions", fmax: "1.2 GHz (16nm)" },
+  { name: "CVA6 (Ariane)", slug: "cva6", isa: "RV64GC", stages: "6 (In-order)", mmu: "Sv39", bus: "AXI4-64b", l1: "16KB / 32KB", memcpy: "440 MB/s", pmp: "16 regions", fmax: "1.4 GHz (16nm)" },
+  { name: "BlackParrot", slug: "black-parrot", isa: "RV64GC", stages: "5 (Multicore)", mmu: "Sv39", bus: "BedRock / TileLink", l1: "32KB / 32KB", memcpy: "410 MB/s", pmp: "8 regions", fmax: "1.0 GHz (22nm)" },
+  { name: "BOOM", slug: "cva6", isa: "RV64GC", stages: "7-10 (Out-of-Order)", mmu: "Sv39/48", bus: "TileLink-C", l1: "32KB / 32KB", memcpy: "780 MB/s", pmp: "16 regions", fmax: "1.5 GHz (16nm)" },
+];
+---
+
+<BaseLayout
+  title="64-bit Application-Class Cores"
+  description="Category 2: 64-bit application processors, virtual memory MMU compliance, Level 2 benchmark leaderboard, and evaluated core implementations."
+>
+  <div class="page-header accent-teal">
+    <div class="badge badge-accent">CATEGORY 02 &bull; LEVEL 2 BENCHMARKS</div>
+    <h1 class="page-title">64-bit Application-Class Cores</h1>
+    <p class="page-lead">
+      Linux-capable in-order and out-of-order processors implementing RV64GC with virtual memory management (Sv39/Sv48 MMUs), multi-level split L1 caches, hardware page table walkers, and physical memory protection (PMP). Evaluated under the <code>app_verilator</code> simulation profile.
+    </p>
+  </div>
+
+  <!-- Microarchitectural Design Space -->
+  <section class="content-block">
+    <h2 class="block-title">Memory Hierarchy &amp; OS Compliance</h2>
+    <p class="block-lead">
+      Category 2 marks the boundary between baremetal microcontrollers and full operating system execution. Running multi-user Linux requires specific microarchitectural hardware blocks:
+    </p>
+
+    <div class="arch-features-grid">
+      <div class="feature-card">
+        <span class="f-badge">VIRTUAL MEMORY</span>
+        <h3>Sv39 / Sv48 MMU &amp; PTW</h3>
+        <p>
+          Translates virtual addresses to physical pages. Requires hardware Page Table Walkers (PTW) to traverse three-level (Sv39) or four-level (Sv48) radix trees in memory upon TLB misses.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">COHERENT INTERCONNECT</span>
+        <h3>AXI4 vs. TileLink</h3>
+        <p>
+          CVA6 uses standardized 64-bit AXI4 crossbars with write buffering. Rocket Chip uses TileLink-UH/TileLink-C with built-in cache coherence and atomic memory transaction channels.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">BRANCH PREDICTION</span>
+        <h3>BHT + BTB Units</h3>
+        <p>
+          Longer 6-to-10 stage pipelines suffer severe misprediction penalties (3–7 cycles). Cores integrate Branch Target Buffers (BTB) and Branch History Tables (BHT) to sustain execution throughput.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">IN-ORDER VS. OOO</span>
+        <h3>CVA6 vs. BOOM</h3>
+        <p>
+          In-order cores (CVA6, Rocket) achieve superior area and power efficiency (~120 kGE). Out-of-order cores (BOOM) deliver 1.6&times; higher memcpy bandwidth, but triple silicon area (~400 kGE).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Level 2 Empirical Leaderboard -->
+  <section class="content-block">
+    <div class="block-header-flex">
+      <div>
+        <h2 class="block-title">Level 2 Benchmark Leaderboard (Memory &amp; OS Compliance)</h2>
+        <p class="block-desc">
+          Evaluates memory throughput (unaligned memcpy sweeps), MMU translation behavior, and PMP violation traps across standard workloads.
+        </p>
+      </div>
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="cat2-latex">
+        &lt;/&gt; Copy LaTeX Table
+      </button>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Core Name</th>
+            <th>ISA</th>
+            <th>Pipeline Depth</th>
+            <th>MMU</th>
+            <th>Bus Protocol</th>
+            <th>L1 Cache (I/D)</th>
+            <th>Memcpy Throughput</th>
+            <th>PMP Regions</th>
+            <th>ASIC Fmax</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cat2Leaderboard.map((row) => (
+            <tr>
+              <td><strong><a href={`/tools/${row.slug}`}>{row.name}</a></strong></td>
+              <td><code>{row.isa}</code></td>
+              <td>{row.stages}</td>
+              <td>{row.mmu}</td>
+              <td><small>{row.bus}</small></td>
+              <td>{row.l1}</td>
+              <td><strong><span class="score-badge">{row.memcpy}</span></strong></td>
+              <td>{row.pmp}</td>
+              <td>{row.fmax}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LaTeX Code Box -->
+    <div class="latex-export-box" id="cat2-latex" style="display: none;">
+      <div class="latex-head">
+        <span>LaTeX Table: Category 2 64-bit Application Cores</span>
+        <button class="close-latex-btn">&times;</button>
+      </div>
+      <pre class="latex-code"><code>\begin&#123;table&#125;[t]
+\centering
+\small
+\caption&#123;Category 2 64-bit Application Core Architectural Comparison&#125;
+\label&#123;tab:cat2_benchmarks&#125;
+\begin&#123;tabular&#125;&#123;lccccc&#125;
+\toprule
+\textbf&#123;Core&#125; &amp; \textbf&#123;ISA&#125; &amp; \textbf&#123;Pipeline&#125; &amp; \textbf&#123;MMU&#125; &amp; \textbf&#123;Memcpy BW&#125; &amp; \textbf&#123;ASIC Fmax&#125; \\
+\midrule
+Rocket Chip &amp; RV64GC &amp; 5 (In-order) &amp; Sv39 &amp; 485 MB/s &amp; 1.2 GHz (16nm) \\
+CVA6 (Ariane) &amp; RV64GC &amp; 6 (In-order) &amp; Sv39 &amp; 440 MB/s &amp; 1.4 GHz (16nm) \\
+BlackParrot &amp; RV64GC &amp; 5 (Multicore) &amp; Sv39 &amp; 410 MB/s &amp; 1.0 GHz (22nm) \\
+BOOM        &amp; RV64GC &amp; 7--10 (OoO)  &amp; Sv39/48 &amp; 780 MB/s &amp; 1.5 GHz (16nm) \\
+\bottomrule
+\end&#123;tabular&#125;
+\end&#123;table&#125;</code></pre>
+    </div>
+  </section>
+
+  <!-- Evaluated Category 2 Cores Directory -->
+  <section class="content-block">
+    <div class="block-header-flex">
+      <div>
+        <h2 class="block-title">Evaluated Core Implementations ({cat2Tools.length})</h2>
+        <p class="block-desc">
+          Silicon-proven 64-bit application processors with complete RTL snapshots and Verilator testbenches in <code>tools/</code>.
+        </p>
+      </div>
+    </div>
+
+    <div class="tools-grid-inline">
+      {cat2Tools.map((tool) => (
+        <div class="tool-card-cat">
+          <div class="tool-card-head">
+            <span class="tool-title-link">
+              <a href={`/tools/${tool.slug}`}>{tool.name}</a>
+            </span>
+            <span class="tool-lang-pill">{tool.language}</span>
+          </div>
+          <p class="tool-desc-short">{tool.subtitle}</p>
+
+          <div class="tool-spec-table">
+            <div class="spec-cell"><strong>ISA:</strong> <code>{tool.isa}</code></div>
+            <div class="spec-cell"><strong>Bus:</strong> {tool.bus}</div>
+            <div class="spec-cell"><strong>Silicon Evidence:</strong> {tool.siliconEvidence.split('(')[0]?.trim()}</div>
+          </div>
+
+          <div class="tool-card-actions">
+            <a href={`/tools/${tool.slug}`} class="btn btn-outline btn-xs">Architecture Deep Dive &rarr;</a>
+            {tool.scripts.run && (
+              <span class="script-badge">run_cva6.sh</span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Copy LaTeX
+  document.querySelectorAll(".copy-latex-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const box = document.getElementById(targetId || "");
+      if (box) {
+        const isShown = box.style.display === "block";
+        box.style.display = isShown ? "none" : "block";
+        if (!isShown) {
+          const code = box.querySelector("code")?.textContent || "";
+          navigator.clipboard.writeText(code).then(() => {
+            const orig = btn.textContent;
+            btn.textContent = "Copied to Clipboard!";
+            setTimeout(() => { btn.textContent = orig; }, 2000);
+          });
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll(".close-latex-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const parent = (e.target as HTMLElement).closest(".latex-export-box") as HTMLElement;
+      if (parent) parent.style.display = "none";
+    });
+  });
+</script>
+
+<style>
+  .page-header {
+    background: #ffffff;
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-header.accent-teal { background: #e6fcfd; }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-lead {
+    font-size: 1.15rem;
+    color: #444444;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0;
+  }
+
+  .content-block {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .block-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .block-lead {
+    font-size: 1.05rem;
+    color: #444444;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .block-desc {
+    font-size: 0.92rem;
+    color: #666666;
+    margin-bottom: 1rem;
+  }
+
+  .block-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .arch-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .feature-card {
+    background: #fbfbfb;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .f-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    background: #ffde59;
+    border: 1px solid #1a1a1a;
+    padding: 0.15rem 0.4rem;
+    width: fit-content;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #333333;
+    margin: 0;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .data-table th, .data-table td {
+    padding: 0.75rem 0.85rem;
+    border: 1px solid #1a1a1a;
+    text-align: left;
+  }
+
+  .data-table th {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .data-table tr:nth-child(even) td {
+    background: #fafafa;
+  }
+
+  .data-table a {
+    color: #1a1a1a;
+    text-decoration: underline;
+  }
+
+  .score-badge {
+    background: #5ce1e6;
+    padding: 0.15rem 0.45rem;
+    font-weight: 800;
+    border: 1px solid #1a1a1a;
+  }
+
+  .btn-xs {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .tools-grid-inline {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .tool-card-cat {
+    background: #fafafa;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .tool-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-title-link a {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .tool-title-link a:hover {
+    text-decoration: underline;
+  }
+
+  .tool-lang-pill {
+    font-size: 0.72rem;
+    font-family: var(--noc-font-mono, monospace);
+    color: #666666;
+  }
+
+  .tool-desc-short {
+    font-size: 0.85rem;
+    color: #444444;
+    line-height: 1.45;
+    margin-bottom: 0.85rem;
+    flex-grow: 1;
+  }
+
+  .tool-spec-table {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 0.5rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tool-card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .script-badge {
+    font-size: 0.7rem;
+    color: #0b6b38;
+    font-weight: 700;
+  }
+
+  .latex-export-box {
+    background: #1a1a1a;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .latex-head {
+    display: flex;
+    justify-content: space-between;
+    color: #ffde59;
+    font-size: 0.85rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .close-latex-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  .latex-code {
+    margin: 0;
+    padding: 0;
+    font-family: var(--noc-font-mono, monospace);
+    font-size: 0.82rem;
+    color: #a8ffb2;
+    overflow-x: auto;
+  }
+</style>

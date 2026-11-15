@@ -1,0 +1,543 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Fundamental Learnings"
+  description="Foundational computer architecture and RISC-V concepts required to understand the 4 SCORE categories."
+>
+  <div class="page-header">
+    <div class="badge badge-primary">COMPUTER ARCHITECTURE PRIMER</div>
+    <h1 class="page-title">Fundamental Learnings</h1>
+    <p class="page-lead">
+      Essential computer architecture concepts, memory subsystem trade-offs, vector processing mechanics, and benchmarking metrics needed to navigate and understand the <strong>4 SCORE Architecture Categories</strong>.
+    </p>
+
+    <!-- Quick Section Jump -->
+    <div class="primer-nav">
+      <a href="#isa-philosophy" class="primer-jump">&sect; 1. Modular ISA</a>
+      <a href="#pipeline-tradeoffs" class="primer-jump">&sect; 2. Pipeline Trade-offs</a>
+      <a href="#memory-hierarchy" class="primer-jump">&sect; 3. Memory &amp; Privilege</a>
+      <a href="#vector-vs-systolic" class="primer-jump">&sect; 4. Vector vs. Systolic</a>
+      <a href="#interconnect-dma" class="primer-jump">&sect; 5. Interconnect &amp; DMA</a>
+      <a href="#metrics-guide" class="primer-jump">&sect; 6. Benchmarking Metrics</a>
+    </div>
+  </div>
+
+  <div class="fundamentals-stream">
+    <!-- Section 1 -->
+    <section id="isa-philosophy" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">01</span>
+        <div>
+          <span class="badge badge-accent">INSTRUCTION SET ARCHITECTURE</span>
+          <h2 class="fund-title">The RISC-V Modular Architecture Philosophy</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        Unlike legacy commercial ISAs (x86, ARM) that require implementing vast, monolithic instruction sets, RISC-V is designed around a <strong>frozen base integer ISA</strong> extended by optional, orthogonal standard extensions.
+      </p>
+
+      <div class="fund-grid">
+        <div class="fund-box">
+          <h4>Base Integer ISAs</h4>
+          <ul>
+            <li><code>RV32I</code>: Standard 32-bit integer ISA with 32 general-purpose registers (x0–x31). The workhorse for microcontrollers and embedded control.</li>
+            <li><code>RV32E</code>: Embedded subset with only 16 registers (x0–x15), slashing register file silicon area by ~50% for extreme sub-10 kGE cores (e.g., <strong>SERV</strong>, <strong>DarkRISCV</strong>).</li>
+            <li><code>RV64I</code>: 64-bit integer ISA with 64-bit registers and address space, required for modern operating systems like Linux (e.g., <strong>CVA6</strong>, <strong>Rocket Chip</strong>).</li>
+          </ul>
+        </div>
+
+        <div class="fund-box">
+          <h4>Standard Modular Extensions</h4>
+          <ul>
+            <li><code>M</code>: Integer Multiplication and Division. Adds hardware multiplier/divider units. Cores without <code>M</code> emulate multiply/divide in software, taking dozens of cycles.</li>
+            <li><code>A</code>: Atomic Instructions (Load-Reserved / Store-Conditional, AMO). Crucial for multi-threaded synchronization, mutexes, and multi-core clusters (Category 4).</li>
+            <li><code>C</code>: Compressed Instructions (16-bit encoding). Reduces compiled program code footprint by 25–35%, substantially boosting instruction cache hit rates.</li>
+            <li><code>F / D</code>: Single (32-bit) and Double (64-bit) Precision Floating Point conforming to IEEE 754.</li>
+            <li><code>V</code>: Scalable Vector Extension 1.0 (Category 3), enabling SIMD parallelism with parameterized vector lengths.</li>
+            <li><code>Zba / Zbb / Zbc / Zbs</code>: Bit Manipulation extensions that speed up hashing, bitfield operations, and cryptography.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-info" style="margin-top: 1.25rem;">
+        <strong>Category Mapping:</strong> Category 1 cores typically implement <code>RV32IMC</code> or <code>RV32E</code> for minimal silicon area. Category 2 cores implement full <code>RV64GC</code> (<code>RV64IMAFDC</code>) to support multi-user Linux environments.
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section id="pipeline-tradeoffs" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">02</span>
+        <div>
+          <span class="badge badge-accent">MICROARCHITECTURE</span>
+          <h2 class="fund-title">Pipeline Depth, Frequency &amp; Area Trade-offs</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        A processor pipeline divides instruction execution into discrete clock cycles. The choice of pipeline depth defines the fundamental balance between clock frequency (Fmax), silicon area (kGE), and cycles per instruction (CPI).
+      </p>
+
+      <div class="pipeline-comparison-grid">
+        <div class="pipe-card">
+          <div class="pipe-badge">BIT-SERIAL (1-STAGE)</div>
+          <h4>SERV (~2.1 kGE)</h4>
+          <p>
+            Computes exactly <strong>1 bit per clock cycle</strong> through a 1-bit ALU over 32 consecutive clock cycles. Extremely compact silicon footprint (consuming less than 150 FPGA LUTs), but incurs an average CPI of ~32 cycles per instruction.
+          </p>
+          <div class="pipe-meta">Target: FPGA pin controllers, satellite beacons, silicon root-of-trust.</div>
+        </div>
+
+        <div class="pipe-card">
+          <div class="pipe-badge">MULTI-CYCLE / SHARED ALU</div>
+          <h4>PicoRV32 (~9.5 kGE)</h4>
+          <p>
+            Uses a multi-cycle state machine where a single adder unit is sequentially multiplexed for instruction decode, PC increment, ALU calculation, and memory address generation over 3–5 cycles.
+          </p>
+          <div class="pipe-meta">Target: FPGA auxiliary housekeeping, low-cost microcontrollers.</div>
+        </div>
+
+        <div class="pipe-card">
+          <div class="pipe-badge">2-STAGE PIPELINE</div>
+          <h4>Ibex &amp; SCR1 (18–25 kGE)</h4>
+          <p>
+            Splits datapath into <strong>Instruction Fetch (IF)</strong> and <strong>Execute/Writeback (EX)</strong>. Branch misprediction penalty is limited to only 1 clock cycle. Achieves 2.3+ CoreMark/MHz with modest area.
+          </p>
+          <div class="pipe-meta">Target: Secure embedded smartcards, OpenTitan Root-of-Trust, IoT sensors.</div>
+        </div>
+
+        <div class="pipe-card">
+          <div class="pipe-badge">4-STAGE DUAL-ISSUE</div>
+          <h4>VeeR EL2 (~48 kGE)</h4>
+          <p>
+            Dual-issue superscalar execution pipeline capable of issuing two instructions simultaneously. Delivers <strong>3.62 CoreMark/MHz</strong> (CPI &lt; 1.0), but doubles register file read ports and hazard forwarding logic.
+          </p>
+          <div class="pipe-meta">Target: High-throughput embedded controllers (SSDs, networking).</div>
+        </div>
+
+        <div class="pipe-card">
+          <div class="pipe-badge">6-STAGE APPLICATION</div>
+          <h4>CVA6 / Ariane (~120 kGE)</h4>
+          <p>
+            6-stage in-order pipeline (Fetch, Decode, Issue, Execute, Commit, Writeback) with branch prediction (BTB + BHT) and 64-bit integer datapath. Enables frequencies above 1.0 GHz in 16nm/22nm ASIC nodes.
+          </p>
+          <div class="pipe-meta">Target: Linux SBCs, edge gateways, host coprocessors for vector engines.</div>
+        </div>
+
+        <div class="pipe-card">
+          <div class="pipe-badge">OUT-OF-ORDER SUPERSCALAR</div>
+          <h4>BOOM (~400+ kGE)</h4>
+          <p>
+            Dynamic register renaming, reorder buffer (ROB), and out-of-order execution queues. Extracts instruction-level parallelism (ILP) across memory stalls at the expense of high silicon area and power consumption.
+          </p>
+          <div class="pipe-meta">Target: High-performance workstation / server research.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section id="memory-hierarchy" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">03</span>
+        <div>
+          <span class="badge badge-accent">MEMORY &amp; PRIVILEGE MODES</span>
+          <h2 class="fund-title">Scratchpads, Caches, MMUs &amp; Protection</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        Processor compute is useless without memory feeding it operands. The memory hierarchy dictates execution determinism, latency, and whether an operating system like Linux can boot.
+      </p>
+
+      <div class="fund-grid">
+        <div class="fund-box">
+          <h4>Deterministic Scratchpads vs. Transparent Caches</h4>
+          <ul>
+            <li>
+              <strong>Tightly-Coupled Data Memory (TCDM / Scratchpad):</strong> Fast SRAM mapped directly into the core's address space. Guarantees deterministic single-cycle access latency with zero cache miss jitter. Ideal for real-time control (Category 1) and parallel compute clusters (Category 4 <strong>MemPool</strong>).
+            </li>
+            <li>
+              <strong>Hardware Caches (L1/L2):</strong> Transparently stage recently accessed memory lines. Non-deterministic (hit vs. miss latency). Requires replacement policies (LRU, PLRU) and write-back/write-through dirty line tracking.
+            </li>
+          </ul>
+        </div>
+
+        <div class="fund-box">
+          <h4>Privilege Levels &amp; Virtual Memory (MMU)</h4>
+          <ul>
+            <li>
+              <strong>Machine Mode (M-mode):</strong> Highest privilege level. Required by all RISC-V cores. Direct control over physical hardware, interrupts, and reset vectors.
+            </li>
+            <li>
+              <strong>Supervisor Mode (S-mode):</strong> Required for Unix/Linux kernels. Implements page-based virtual memory protection so processes cannot tamper with OS memory.
+            </li>
+            <li>
+              <strong>User Mode (U-mode):</strong> Unprivileged mode executing user applications.
+            </li>
+            <li>
+              <strong>Virtual Memory (Sv39 / Sv48 MMU):</strong> Translates virtual addresses to physical addresses using a multi-level page table. Includes hardware Translation Lookaside Buffers (TLB) to cache translations. Without an MMU, full multi-user Linux cannot run!
+            </li>
+            <li>
+              <strong>Physical Memory Protection (PMP):</strong> Hardware register checks that restrict access to physical address ranges even on cores without virtual memory MMUs (Category 1 &amp; 2).
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4 -->
+    <section id="vector-vs-systolic" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">04</span>
+        <div>
+          <span class="badge badge-accent">PARALLEL ACCELERATION</span>
+          <h2 class="fund-title">Data Parallelism: Scalable Vector (RVV) vs. Systolic Arrays</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        When algorithms execute massive repetitive arithmetic (linear algebra, neural networks, digital signal processing), scalar processors spend most of their time fetching and decoding loop instructions. Accelerators solve this by executing dense arithmetic across parallel datapaths.
+      </p>
+
+      <div class="fund-grid">
+        <div class="fund-box">
+          <h4>Scalable RISC-V Vector 1.0 (RVV)</h4>
+          <p>
+            Unlike traditional fixed-width SIMD (such as Intel AVX or ARM NEON) that hardcodes register widths in the ISA, RISC-V Vector 1.0 is <strong>vector-length agnostic</strong>:
+          </p>
+          <ul>
+            <li><code>VLEN</code>: Hardware vector register width in bits (e.g., 1024 or 4096 bits in <strong>Ara</strong>).</li>
+            <li><code>DLEN</code>: Datapath lane width (e.g., 64 bits per lane).</li>
+            <li><code>vsetvli</code>: Dynamically sets the active vector length ($VL$) in software. The same compiled binary executes seamlessly on a 4-lane embedded coprocessor or a 64-lane supercomputer accelerator!</li>
+            <li><strong>Banked VRF:</strong> The Vector Register File is split into multiple independent memory banks to allow simultaneous reads and writes without crossbar stalling.</li>
+          </ul>
+        </div>
+
+        <div class="fund-box">
+          <h4>Systolic Arrays (Gemmini)</h4>
+          <p>
+            Specialized for matrix multiplication ($C = A \times B + C$). Instead of reading operands from register files on every step, operands flow rhythmically through a 2D mesh of Processing Elements (PEs):
+          </p>
+          <ul>
+            <li><strong>Weight-Stationary Dataflow:</strong> Weights remain stationary inside the PE accumulators while activations stream horizontally and partial sums propagate vertically.</li>
+            <li><strong>Extreme Energy Efficiency:</strong> Memory access energy is slashed because intermediate values are reused locally between neighboring PEs rather than hitting the cache.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top: 1.25rem;">
+        <strong>The Vector Utilization Collapse:</strong> Vector coprocessors achieve stellar peak utilization (~98%) on contiguous dense matrix multiplication (<code>fmatmul</code>). However, on reduction, strided, or non-linear functions (like <code>softmax</code> or <code>fft</code>), utilization plunges to ~23% because the scalar core stalls while decoding address strides and managing scalar-vector dependencies.
+      </div>
+    </section>
+
+    <!-- Section 5 -->
+    <section id="interconnect-dma" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">05</span>
+        <div>
+          <span class="badge badge-accent">SYSTEM-ON-CHIP INTEGRATION</span>
+          <h2 class="fund-title">Interconnect Fabrics, DMA Engines &amp; Synchronization</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        In Category 4 (SoCs and Multi-Core Clusters), performance is determined not by raw ALU speed, but by how efficiently data moves across buses and how fast parallel cores synchronize.
+      </p>
+
+      <div class="fund-grid">
+        <div class="fund-box">
+          <h4>Interconnect Topologies</h4>
+          <ul>
+            <li><strong>Point-to-Point / OBI:</strong> Open Bus Interface (OBI) provides lightweight, single-cycle request/grant handshakes for embedded peripherals and tight memory interfaces.</li>
+            <li><strong>Shared Crossbar (AXI4):</strong> Full crossbar matrix connecting multiple masters to multiple slaves. Provides high bandwidth for small core counts (4–8 cores), but silicon area scales quadratically ($O(N^2)$) as core counts increase.</li>
+            <li><strong>Network-on-Chip (NoC):</strong> Packet-switched 2D mesh (e.g. <strong>FlooNoC</strong> in Occamy/Carfield, <strong>P-Mesh</strong> in OpenPiton) routing packets through routers. Scales to dozens or hundreds of cores.</li>
+          </ul>
+        </div>
+
+        <div class="fund-box">
+          <h4>DMA &amp; Synchronization Bottlenecks</h4>
+          <ul>
+            <li>
+              <strong>Direct Memory Access (DMA):</strong> Autonomous hardware engines that transfer multi-kilobyte blocks between slow peripherals/DRAM and fast SRAM scratchpads without burning CPU cycles.
+            </li>
+            <li>
+              <strong>DMA Setup Overhead:</strong> Setting up a DMA transfer requires writing several MMIO registers (source address, destination address, stride, transfer size). For payloads smaller than 128 bytes, scalar memory copies are often faster!
+            </li>
+            <li>
+              <strong>The Manycore Barrier Wall:</strong> When 256 cores synchronize using software Atomic Memory Operations (AMO) spinlocks, crossbar traffic saturates exponentially. Hardware collective barrier reduction trees (like <strong>FractalSync</strong> in Picobello) restore linear scaling.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6 -->
+    <section id="metrics-guide" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">06</span>
+        <div>
+          <span class="badge badge-accent">MEASUREMENT PRIMER</span>
+          <h2 class="fund-title">Benchmarking Metrics Demystified</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        To evaluate architectures fairly, SCORE uses normalized physical and empirical metrics across all 4 levels:
+      </p>
+
+      <table class="metrics-glossary-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Formula / Unit</th>
+            <th>What It Evaluates</th>
+            <th>Category Relevance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CPI / IPC</strong></td>
+            <td><code>Cycles / Instructions</code> or <code>Instructions / Cycle</code></td>
+            <td>Pipeline execution efficiency. How frequently the core stalls on hazards, branch mispredictions, or memory latency.</td>
+            <td>Categories 1 &amp; 2</td>
+          </tr>
+          <tr>
+            <td><strong>CoreMark/MHz</strong></td>
+            <td><code>(Iterations / sec) / MHz</code></td>
+            <td>Standardized EEMBC synthetic benchmark measuring integer compute, matrix manipulation, state machines, and CRC.</td>
+            <td>Categories 1 &amp; 2</td>
+          </tr>
+          <tr>
+            <td><strong>DMIPS/MHz</strong></td>
+            <td><code>Dhrystone Score / (1757 &times; MHz)</code></td>
+            <td>Classic Dhrystone 2.1 integer benchmark. Sensitive to compiler optimizations and string copies.</td>
+            <td>Category 1</td>
+          </tr>
+          <tr>
+            <td><strong>Silicon Area (kGE)</strong></td>
+            <td>Thousands of NAND2 Gate Equivalents</td>
+            <td>Normalizes physical cell area across different foundry process nodes (e.g. 180nm vs. 28nm vs. 16nm).</td>
+            <td>Categories 1 &amp; 2</td>
+          </tr>
+          <tr>
+            <td><strong>Ops / Cycle</strong></td>
+            <td><code>Total Ops / Execution Cycles</code></td>
+            <td>Measures raw arithmetic density achieved on parallel vector or systolic datapaths.</td>
+            <td>Category 3</td>
+          </tr>
+          <tr>
+            <td><strong>Vector Utilization %</strong></td>
+            <td><code>(Active Computing Cycles / Total Cycles) &times; 100%</code></td>
+            <td>Reveals how effectively the memory subsystem and scalar issue engine keep the vector arithmetic lanes supplied with operands.</td>
+            <td>Category 3</td>
+          </tr>
+          <tr>
+            <td><strong>Multi-Core Speedup</strong></td>
+            <td><code>Single-Core Cycles / N-Core Cycles</code></td>
+            <td>Quantifies parallel scaling efficiency and Amdahl's law saturation across 16 to 256 cores.</td>
+            <td>Category 4</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    background: #ffffff;
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-lead {
+    font-size: 1.15rem;
+    color: #444444;
+    line-height: 1.6;
+    max-width: 850px;
+    margin-bottom: 1.5rem;
+  }
+
+  .primer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .primer-jump {
+    background: #ffffff;
+    border: 2px solid #1a1a1a;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: all 0.1s ease;
+  }
+
+  .primer-jump:hover {
+    background: #ffde59;
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .fundamentals-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .fund-section-card {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 2.25rem;
+  }
+
+  .fund-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .fund-num {
+    font-size: 2.5rem;
+    font-weight: 900;
+    font-family: var(--noc-font-mono, monospace);
+    color: #999999;
+    line-height: 1;
+  }
+
+  .fund-title {
+    font-size: 1.85rem;
+    font-weight: 900;
+    margin-top: 0.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  .fund-lead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #333333;
+    margin-bottom: 1.5rem;
+  }
+
+  .fund-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .fund-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .fund-box {
+    background: #fbfbfb;
+    border: 1px solid #1a1a1a;
+    padding: 1.25rem;
+  }
+
+  .fund-box h4 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin-bottom: 0.75rem;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 0.35rem;
+  }
+
+  .fund-box ul {
+    margin: 0 0 0 1.25rem;
+    padding: 0;
+  }
+
+  .fund-box li {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-bottom: 0.6rem;
+    color: #333333;
+  }
+
+  .pipeline-comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .pipe-card {
+    background: #fafafa;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pipe-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    background: #ffde59;
+    border: 1px solid #1a1a1a;
+    padding: 0.15rem 0.4rem;
+    margin-bottom: 0.5rem;
+    width: fit-content;
+  }
+
+  .pipe-card h4 {
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .pipe-card p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #333333;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+
+  .pipe-meta {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #0b6b38;
+    background: #eefbee;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid #7ed957;
+  }
+
+  .metrics-glossary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .metrics-glossary-table th, .metrics-glossary-table td {
+    padding: 0.75rem 0.9rem;
+    border: 1px solid #1a1a1a;
+    text-align: left;
+  }
+
+  .metrics-glossary-table th {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .metrics-glossary-table tr:nth-child(even) td {
+    background: #fbfbfb;
+  }
+</style>

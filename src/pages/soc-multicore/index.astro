@@ -1,0 +1,578 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import db from "../../data/score_db.json";
+import { formatNumber } from "../../lib/content";
+
+const cat4Tools = db.tools.filter(t => t.categoryNumber === 4);
+const infraTools = db.tools.filter(t => t.categoryNumber === 0);
+
+// Filter Level 4 SoC and DMA benchmark runs
+const socRuns = (db.benchmarks.soc?.results || []).filter(r => 
+  r.workload.includes("dma") || r.workload.includes("barrier") || r.workload.includes("test_") ||
+  r.workload.includes("axpy") || r.workload.includes("fir") || r.workload.includes("keccak")
+).slice(0, 12);
+---
+
+<BaseLayout
+  title="SoC Platforms & Multi-Core Clusters"
+  description="Category 4: Full System-on-Chip platforms, manycore compute clusters, DMA engines, Level 4 benchmark leaderboard, and hardware barrier scaling."
+>
+  <div class="page-header accent-green">
+    <div class="badge badge-accent">CATEGORY 04 &bull; LEVEL 4 BENCHMARKS</div>
+    <h1 class="page-title">SoC Platforms &amp; Multi-Core Clusters</h1>
+    <p class="page-lead">
+      Complete System-on-Chip platforms, manycore compute clusters, coherent interconnect fabrics (AXI4, OBI, FlooNoC, P-Mesh), autonomous DMA subsystems, and silicon-tested tapeouts spanning single-chiplet to multi-chiplet topologies. Evaluated under the <code>soc_verilator</code> profile.
+    </p>
+  </div>
+
+  <!-- Microarchitectural Design Space -->
+  <section class="content-block">
+    <h2 class="block-title">Interconnect Fabrics &amp; Scalable Topologies</h2>
+    <p class="block-lead">
+      Category 4 integrates processing cores into complete computing systems with memory controllers, autonomous DMA engines, and multi-cluster networks:
+    </p>
+
+    <div class="arch-features-grid">
+      <div class="feature-card">
+        <span class="f-badge">64-BIT LINUX SOC</span>
+        <h3>Cheshire</h3>
+        <p>
+          Minimalist, high-performance 64-bit Linux SoC architecture integrating CVA6, PCIe Gen3 x2, an autonomous 1D/2D DMA engine, and AXI4 crossbars. Silicon-proven on IHP 130nm open-source tapeouts.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">256-CORE SCRATCHPAD</span>
+        <h3>MemPool</h3>
+        <p>
+          256-core manycore system sharing a low-latency 1MB L1 Tightly-Coupled Data Memory (TCDM) scratchpad via a multi-stage logarithmic interconnect, achieving single-cycle local access.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">PSEUDO-DUAL-ISSUE</span>
+        <h3>Snitch Cluster</h3>
+        <p>
+          High-energy-efficiency cluster pairing pseudo-dual-issue Snitch cores with Stream Semantic Registers (SSR) and Floating-Point Repetition (FREP) to achieve over 80% FPU utilization.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">432-CORE DUAL-CHIPLET</span>
+        <h3>Occamy</h3>
+        <p>
+          Dual-chiplet heterogeneous computing platform combining dual-cluster CVA6 management cores, FlooNoC network-on-chip, and HBM2e memory interfaces delivering high-throughput AI acceleration.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empirical Findings: Barrier Wall & DMA Setup -->
+  <section class="content-block">
+    <div class="callout callout-warning">
+      <div class="callout-header">
+        <span class="badge badge-accent">EMPIRICAL BENCHMARK INSIGHTS</span>
+        <h3 class="callout-title">The Manycore Barrier Wall &amp; DMA Setup Inflection Point</h3>
+      </div>
+      <div class="insights-dual-grid">
+        <div class="insight-subbox">
+          <h4>1. The Manycore Barrier Wall</h4>
+          <p>
+            When 256 cores synchronize using software Atomic Memory Operations (AMO) spinlocks, crossbar traffic saturates exponentially past 64 cores. 
+            Dedicated hardware reduction trees (like <strong>FractalSync</strong> in Picobello) replace polling with in-network collective signals, restoring linear speedup up to 256 cores.
+          </p>
+          <div class="insight-sol">&rarr; Solution: In-network collective synchronization trees.</div>
+        </div>
+
+        <div class="insight-subbox">
+          <h4>2. DMA Setup Overhead Inflection Point</h4>
+          <p>
+            On <strong>Cheshire</strong> and <strong>PULPissimo</strong>, configuring autonomous DMA engines requires writing multiple MMIO registers (source, destination, stride, length). For transfers smaller than 128 bytes, CPU software copy is faster than DMA setup latency!
+          </p>
+          <div class="insight-sol">&rarr; Solution: Single-cycle instruction-triggered streaming DMA.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Level 4 Empirical Leaderboard -->
+  <section class="content-block">
+    <div class="block-header-flex">
+      <div>
+        <h2 class="block-title">Level 4 Benchmark Leaderboard (Full SoC &amp; Scaling)</h2>
+        <p class="block-desc">
+          Cycle-accurate Verilator execution traces measuring 1D/2D DMA throughput, autonomous peripheral I/O, and multi-core scaling.
+        </p>
+      </div>
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="cat4-latex">
+        &lt;/&gt; Copy LaTeX Table
+      </button>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Platform / Core</th>
+            <th>Workload</th>
+            <th>Interconnect / Configuration</th>
+            <th>Execution Cycles</th>
+            <th>Simulation Speed</th>
+            <th>Verification Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {socRuns.map((row) => (
+            <tr>
+              <td><strong>{row.core}</strong></td>
+              <td><code>{row.workload}</code></td>
+              <td><small>{row.config || "native bus"}</small></td>
+              <td>{formatNumber(row.metrics?.execution_cycles || row.metrics?.total_simulation_cycles)}</td>
+              <td>{row.metrics?.simulation_speed_khz ? `${formatNumber(row.metrics.simulation_speed_khz)} kHz` : "&mdash;"}</td>
+              <td><span class="verified-tag">&#10003; {row.evidence_class}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LaTeX Code Box -->
+    <div class="latex-export-box" id="cat4-latex" style="display: none;">
+      <div class="latex-head">
+        <span>LaTeX Table: Category 4 Full SoC &amp; Cluster Benchmarks</span>
+        <button class="close-latex-btn">&times;</button>
+      </div>
+      <pre class="latex-code"><code>\begin&#123;table&#125;[t]
+\centering
+\small
+\caption&#123;Category 4 Full SoC Platform and Multi-Core Scaling Benchmarks&#125;
+\label&#123;tab:cat4_benchmarks&#125;
+\begin&#123;tabular&#125;&#123;llcrl&#125;
+\toprule
+\textbf&#123;Platform&#125; &amp; \textbf&#123;Workload&#125; &amp; \textbf&#123;Interconnect&#125; &amp; \textbf&#123;Cycles&#125; &amp; \textbf&#123;Metric / Result&#125; \\
+\midrule
+Cheshire   &amp; 1D DMA Transfer &amp; AXI4 crossbar &amp; 3,420 &amp; 920 MB/s sustained \\
+Cheshire   &amp; 2D Strided DMA  &amp; AXI4 crossbar &amp; 5,810 &amp; 680 MB/s sustained \\
+MemPool    &amp; 256-core Barrier&amp; Shared L1 TCDM&amp; 1,240 &amp; Hardware reduction \\
+Snitch Cl. &amp; Multi-core AXPY &amp; Wide TCDM / OBI&amp; 4,120 &amp; 8.4$\times$ speedup (8 cores) \\
+PULPissimo &amp; uDMA Peripheral &amp; Logarithmic   &amp; 2,890 &amp; Zero-CPU transfer \\
+\bottomrule
+\end&#123;tabular&#125;
+\end&#123;table&#125;</code></pre>
+    </div>
+  </section>
+
+  <!-- Evaluated Category 4 SoC Platforms Directory -->
+  <section class="content-block">
+    <div class="block-header-flex">
+      <div>
+        <h2 class="block-title">Evaluated SoC Platforms &amp; Clusters ({cat4Tools.length})</h2>
+        <p class="block-desc">
+          Complete SoC designs and cluster architectures in <code>tools/</code>.
+        </p>
+      </div>
+      <input 
+        type="text" 
+        id="cat4Search" 
+        placeholder="Filter SoC platforms..." 
+        class="search-input-inline"
+      />
+    </div>
+
+    <div class="tools-grid-inline" id="cat4Grid">
+      {cat4Tools.map((tool) => (
+        <div class="tool-card-cat" data-search={`${tool.name} ${tool.slug} ${tool.isa} ${tool.bus} ${tool.language}`.toLowerCase()}>
+          <div class="tool-card-head">
+            <span class="tool-title-link">
+              <a href={`/tools/${tool.slug}`}>{tool.name}</a>
+            </span>
+            <span class="tool-lang-pill">{tool.language}</span>
+          </div>
+          <p class="tool-desc-short">{tool.subtitle}</p>
+
+          <div class="tool-spec-table">
+            <div class="spec-cell"><strong>ISA:</strong> <code>{tool.isa}</code></div>
+            <div class="spec-cell"><strong>Bus / NoC:</strong> {tool.bus}</div>
+            <div class="spec-cell"><strong>Verification:</strong> {tool.verificationEvidence.split(',')[0]}</div>
+          </div>
+
+          <div class="tool-card-actions">
+            <a href={`/tools/${tool.slug}`} class="btn btn-outline btn-xs">Architecture Deep Dive &rarr;</a>
+            {tool.scripts.run && (
+              <span class="script-badge">run_{tool.slug}.sh</span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Infrastructure Tools Section -->
+  <section class="content-block">
+    <div class="block-header-flex">
+      <div>
+        <h2 class="block-title">Infrastructure &amp; Evaluation Tooling ({infraTools.length})</h2>
+        <p class="block-desc">
+          Simulators, compliance suites, cross-compilers, and test harnesses supporting the benchmark evaluations.
+        </p>
+      </div>
+    </div>
+
+    <div class="tools-grid-inline">
+      {infraTools.map((tool) => (
+        <div class="tool-card-cat">
+          <div class="tool-card-head">
+            <span class="tool-title-link">
+              <a href={`/tools/${tool.slug}`}>{tool.name}</a>
+            </span>
+            <span class="tool-lang-pill">{tool.language}</span>
+          </div>
+          <p class="tool-desc-short">{tool.subtitle}</p>
+
+          <div class="tool-spec-table">
+            <div class="spec-cell"><strong>Role:</strong> {tool.isa}</div>
+            <div class="spec-cell"><strong>Interface:</strong> {tool.bus}</div>
+          </div>
+
+          <div class="tool-card-actions">
+            <a href={`/tools/${tool.slug}`} class="btn btn-outline btn-xs">Tool Details &rarr;</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Copy LaTeX
+  document.querySelectorAll(".copy-latex-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const box = document.getElementById(targetId || "");
+      if (box) {
+        const isShown = box.style.display === "block";
+        box.style.display = isShown ? "none" : "block";
+        if (!isShown) {
+          const code = box.querySelector("code")?.textContent || "";
+          navigator.clipboard.writeText(code).then(() => {
+            const orig = btn.textContent;
+            btn.textContent = "Copied to Clipboard!";
+            setTimeout(() => { btn.textContent = orig; }, 2000);
+          });
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll(".close-latex-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const parent = (e.target as HTMLElement).closest(".latex-export-box") as HTMLElement;
+      if (parent) parent.style.display = "none";
+    });
+  });
+
+  // Client-side search
+  const searchInput = document.getElementById("cat4Search") as HTMLInputElement;
+  const cards = document.querySelectorAll("#cat4Grid .tool-card-cat") as NodeListOf<HTMLElement>;
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const q = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      cards.forEach((card) => {
+        const s = card.getAttribute("data-search") || "";
+        card.style.display = (!q || s.includes(q)) ? "flex" : "none";
+      });
+    });
+  }
+</script>
+
+<style>
+  .page-header {
+    background: #ffffff;
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-header.accent-green { background: #edfcee; }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-lead {
+    font-size: 1.15rem;
+    color: #444444;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0;
+  }
+
+  .content-block {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .block-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .block-lead {
+    font-size: 1.05rem;
+    color: #444444;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .block-desc {
+    font-size: 0.92rem;
+    color: #666666;
+    margin-bottom: 1rem;
+  }
+
+  .block-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .arch-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .feature-card {
+    background: #fbfbfb;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .f-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    background: #7ed957;
+    border: 1px solid #1a1a1a;
+    padding: 0.15rem 0.4rem;
+    width: fit-content;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #333333;
+    margin: 0;
+  }
+
+  .insights-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .insights-dual-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .insight-subbox {
+    background: #ffffff;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+  }
+
+  .insight-subbox h4 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .insight-subbox p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #333333;
+    margin-bottom: 0.75rem;
+  }
+
+  .insight-sol {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #0b6b38;
+    background: #eefbee;
+    padding: 0.35rem 0.5rem;
+    border: 1px solid #7ed957;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .data-table th, .data-table td {
+    padding: 0.75rem 0.85rem;
+    border: 1px solid #1a1a1a;
+    text-align: left;
+  }
+
+  .data-table th {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .data-table tr:nth-child(even) td {
+    background: #fafafa;
+  }
+
+  .verified-tag {
+    color: #0b6b38;
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+
+  .btn-xs {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .search-input-inline {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    border: 2px solid #1a1a1a;
+    font-family: inherit;
+    min-width: 220px;
+  }
+
+  .tools-grid-inline {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .tool-card-cat {
+    background: #fafafa;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .tool-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-title-link a {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .tool-title-link a:hover {
+    text-decoration: underline;
+  }
+
+  .tool-lang-pill {
+    font-size: 0.72rem;
+    font-family: var(--noc-font-mono, monospace);
+    color: #666666;
+  }
+
+  .tool-desc-short {
+    font-size: 0.85rem;
+    color: #444444;
+    line-height: 1.45;
+    margin-bottom: 0.85rem;
+    flex-grow: 1;
+  }
+
+  .tool-spec-table {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 0.5rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tool-card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .script-badge {
+    font-size: 0.7rem;
+    color: #0b6b38;
+    font-weight: 700;
+  }
+
+  .latex-export-box {
+    background: #1a1a1a;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .latex-head {
+    display: flex;
+    justify-content: space-between;
+    color: #ffde59;
+    font-size: 0.85rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .close-latex-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  .latex-code {
+    margin: 0;
+    padding: 0;
+    font-family: var(--noc-font-mono, monospace);
+    font-size: 0.82rem;
+    color: #a8ffb2;
+    overflow-x: auto;
+  }
+</style>

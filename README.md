@@ -71,3 +71,4 @@ Pushes to the `main` branch trigger `.github/workflows/deploy.yml` which builds 
 ## License
 
 Hardware catalog metadata and documentation are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+

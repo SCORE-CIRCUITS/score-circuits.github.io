@@ -11,7 +11,10 @@ const pageTitle = title === "SCORE" ? "SCORE — Benchmark-Driven Open Architect
 
 function isActive(href: string) {
   const norm = href.endsWith("/") ? href : `${href}/`;
-  return pathname === norm || pathname.startsWith(norm);
+  if (norm === "/" || norm === base) {
+    return pathname === "/" || pathname === base || pathname === "";
+  }
+  return pathname.startsWith(norm);
 }
 ---
 
@@ -158,10 +161,11 @@ function isActive(href: string) {
         </a>
         <nav class="score-nav-links" aria-label="Primary Navigation">
           <a class={`score-nav-link ${isActive(`${base}`) ? 'active' : ''}`} href={base}>Home</a>
-          <a class={`score-nav-link ${isActive(`${base}categories`) ? 'active' : ''}`} href={`${base}categories/`}>Categories (1–4)</a>
-          <a class={`score-nav-link ${isActive(`${base}tools`) ? 'active' : ''}`} href={`${base}tools/`}>Tools & Architectures</a>
-          <a class={`score-nav-link ${isActive(`${base}benchmarks`) ? 'active' : ''}`} href={`${base}benchmarks/`}>Leaderboard</a>
-          <a class={`score-nav-link ${isActive(`${base}updates`) ? 'active' : ''}`} href={`${base}updates/`}>Changelog</a>
+          <a class={`score-nav-link ${isActive(`${base}fundamentals`) ? 'active' : ''}`} href={`${base}fundamentals/`}>Fundamentals</a>
+          <a class={`score-nav-link ${isActive(`${base}mcu-scalar`) ? 'active' : ''}`} href={`${base}mcu-scalar/`}>MCU / Scalar Cores</a>
+          <a class={`score-nav-link ${isActive(`${base}app-cores`) ? 'active' : ''}`} href={`${base}app-cores/`}>64-bit Application Cores</a>
+          <a class={`score-nav-link ${isActive(`${base}vector-coprocessors`) ? 'active' : ''}`} href={`${base}vector-coprocessors/`}>Vector &amp; Coprocessors</a>
+          <a class={`score-nav-link ${isActive(`${base}soc-multicore`) ? 'active' : ''}`} href={`${base}soc-multicore/`}>SoC &amp; Multi-Core</a>
           <a class="score-nav-link score-nav-cta" href="https://github.com/score-circuits/score" target="_blank" rel="noopener">GitHub ↗</a>
         </nav>
       </div>

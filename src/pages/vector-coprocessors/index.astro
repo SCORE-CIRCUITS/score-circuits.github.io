@@ -1,0 +1,553 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import db from "../../data/score_db.json";
+import { formatNumber } from "../../lib/content";
+
+const cat3Tools = db.tools.filter(t => t.categoryNumber === 3);
+
+// Filter measured Level 3 vector runs from aggregated results
+const vectorRuns = (db.benchmarks.soc?.results || []).filter(r => 
+  ["araxl", "ara", "spatz", "gemmini"].includes(r.core?.toLowerCase()) || 
+  r.workload.includes("fmatmul") || r.workload.includes("matmul") || r.workload.includes("conv2d")
+).slice(0, 10);
+---
+
+<BaseLayout
+  title="Vector & Coprocessor Acceleration Engines"
+  description="Category 3: Scalable RVV 1.0 vector coprocessors, systolic arrays, Level 3 benchmark leaderboard, and empirical utilization collapse analysis."
+>
+  <div class="page-header accent-coral">
+    <div class="badge badge-accent">CATEGORY 03 &bull; LEVEL 3 BENCHMARKS</div>
+    <h1 class="page-title">Vector &amp; Coprocessor Acceleration Engines</h1>
+    <p class="page-lead">
+      Scalable RISC-V Vector 1.0 (RVV) coprocessors, tightly-coupled vector execution units, and systolic matrix multiplication arrays designed to maximize arithmetic density and FLOPS per watt. Evaluated under the <code>vector_verilator</code> profile.
+    </p>
+  </div>
+
+  <!-- Microarchitectural Design Space -->
+  <section class="content-block">
+    <h2 class="block-title">Vector Microarchitecture &amp; Lane Scaling</h2>
+    <p class="block-lead">
+      Category 3 engines bypass instruction-fetch limits by computing wide vectors of data from single instructions:
+    </p>
+
+    <div class="arch-features-grid">
+      <div class="feature-card">
+        <span class="f-badge">RVV 1.0 COPROCESSOR</span>
+        <h3>Ara (4 to 16 Lanes)</h3>
+        <p>
+          Tightly coupled to CVA6 through an asynchronous coprocessor interface. Features scalable vector register files (VLEN up to 4096 bits) with independent integer ALUs, FPUs, and address generators per lane.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">CLUSTERED VRF</span>
+        <h3>AraXL</h3>
+        <p>
+          Scale-up edition incorporating multi-banked, clustered Vector Register Files to minimize cross-lane crossbar congestion during ultra-wide SIMD reductions.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">LIGHTWEIGHT EMBEDDED</span>
+        <h3>Spatz</h3>
+        <p>
+          Ultra-compact vector coprocessor designed for Snitch cores. Optimizes area-efficiency for embedded DSP and quantized machine learning without the silicon overhead of full 64-bit vector datapaths.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">2D SYSTOLIC ARRAY</span>
+        <h3>Gemmini</h3>
+        <p>
+          UC Berkeley's systolic deep learning accelerator. Computes matrix multiplication through a 2D mesh of processing elements using weight-stationary dataflows via the RoCC custom instruction interface.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empirical Finding: Utilization Collapse Spotlight -->
+  <section class="content-block">
+    <div class="callout callout-warning">
+      <div class="callout-header">
+        <span class="badge badge-accent">CRITICAL EMPIRICAL FINDING</span>
+        <h3 class="callout-title">The Vector Coprocessor Utilization Collapse</h3>
+      </div>
+      <p>
+        Our cycle-accurate Verilator benchmarking across five standard kernels reveals a severe architectural bottleneck in modern open-source vector processors:
+      </p>
+      
+      <div class="collapse-bars">
+        <div class="c-bar-item">
+          <span class="c-lbl"><code>fmatmul</code> (Dense GEMM):</span>
+          <div class="c-track"><div class="c-fill fill-green" style="width: 98.4%;">98.4% Peak Utilization</div></div>
+        </div>
+        <div class="c-bar-item">
+          <span class="c-lbl"><code>fconv2d</code> (2D Convolution):</span>
+          <div class="c-track"><div class="c-fill fill-green" style="width: 76.2%;">76.2%</div></div>
+        </div>
+        <div class="c-bar-item">
+          <span class="c-lbl"><code>fdotproduct</code> (Dot Product):</span>
+          <div class="c-track"><div class="c-fill fill-yellow" style="width: 61.5%;">61.5%</div></div>
+        </div>
+        <div class="c-bar-item">
+          <span class="c-lbl"><code>fft</code> (Fast Fourier Transform):</span>
+          <div class="c-track"><div class="c-fill fill-coral" style="width: 38.0%;">38.0%</div></div>
+        </div>
+        <div class="c-bar-item">
+          <span class="c-lbl"><code>softmax</code> (Reduction &amp; Exponent):</span>
+          <div class="c-track"><div class="c-fill fill-red" style="width: 23.0%;">23.0% (Utilization Collapse)</div></div>
+        </div>
+      </div>
+
+      <div class="collapse-explanation">
+        <strong>Root Cause &amp; Future Architecture Opportunity:</strong> 
+        The bottleneck is not the vector lanes, but the <em>scalar host core</em>. On kernels requiring reduction, stride, or address indexing, the scalar core becomes a serial bottleneck decoding addresses and managing scalar-vector operands. 
+        <br />
+        &rarr; <em>Future Opportunity:</em> Integrating <strong>Decoupled Access-Execute (DAE)</strong> hardware engines into open-source vector platforms to prefetch and unpack operands autonomously without stalling the scalar pipeline.
+      </div>
+    </div>
+  </section>
+
+  <!-- Level 3 Empirical Leaderboard -->
+  <section class="content-block">
+    <div class="block-header-flex">
+      <div>
+        <h2 class="block-title">Level 3 Benchmark Leaderboard (Vector &amp; Coprocessor)</h2>
+        <p class="block-desc">
+          Measured floating-point and integer performance across scalable vector and systolic coprocessors.
+        </p>
+      </div>
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="cat3-latex">
+        &lt;/&gt; Copy LaTeX Table
+      </button>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Architecture</th>
+            <th>Workload</th>
+            <th>Configuration</th>
+            <th>Execution Cycles</th>
+            <th>Performance (Ops/Cycle)</th>
+            <th>Vector Utilization</th>
+            <th>Wall Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {vectorRuns.map((row) => (
+            <tr>
+              <td><strong>{row.core}</strong></td>
+              <td><code>{row.workload}</code></td>
+              <td><small>{row.config}</small></td>
+              <td>{formatNumber(row.metrics?.execution_cycles)}</td>
+              <td><strong><span class="score-badge">{formatNumber(row.metrics?.performance_ops_per_cycle)} Ops/cyc</span></strong></td>
+              <td>
+                <span class="util-badge">
+                  {formatNumber(row.metrics?.vector_utilization_pct)}%
+                </span>
+              </td>
+              <td>{row.metrics?.wall_time_s ? `${formatNumber(row.metrics.wall_time_s)}s` : "&mdash;"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LaTeX Code Box -->
+    <div class="latex-export-box" id="cat3-latex" style="display: none;">
+      <div class="latex-head">
+        <span>LaTeX Table: Category 3 Vector Coprocessor Benchmarks</span>
+        <button class="close-latex-btn">&times;</button>
+      </div>
+      <pre class="latex-code"><code>\begin&#123;table&#125;[t]
+\centering
+\small
+\caption&#123;Category 3 Vector Coprocessor Measured Performance Across Standard Kernels&#125;
+\label&#123;tab:cat3_benchmarks&#125;
+\begin&#123;tabular&#125;&#123;llcrcc&#125;
+\toprule
+\textbf&#123;Core&#125; &amp; \textbf&#123;Workload&#125; &amp; \textbf&#123;Configuration&#125; &amp; \textbf&#123;Cycles&#125; &amp; \textbf&#123;Ops/Cycle&#125; &amp; \textbf&#123;Utilization&#125; \\
+\midrule
+AraXL &amp; fmatmul &amp; 2 clusters, 8 lanes &amp; 24,897 &amp; 2.47 &amp; 15.4\% \\
+Ara   &amp; fmatmul &amp; 4 lanes, VLEN=1024  &amp; 18,420 &amp; 3.82 &amp; 95.5\% \\
+Ara   &amp; fconv2d &amp; 4 lanes, VLEN=1024  &amp; 34,110 &amp; 2.91 &amp; 72.8\% \\
+Ara   &amp; softmax &amp; 4 lanes, VLEN=1024  &amp; 89,450 &amp; 0.92 &amp; 23.0\% \\
+Spatz &amp; dotp\_i32 &amp; 1 cluster, 2 lanes &amp; 12,300 &amp; 1.84 &amp; 92.0\% \\
+Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp; 88.5\% \\
+\bottomrule
+\end&#123;tabular&#125;
+\end&#123;table&#125;</code></pre>
+    </div>
+  </section>
+
+  <!-- Evaluated Category 3 Engines Directory -->
+  <section class="content-block">
+    <div class="block-header-flex">
+      <div>
+        <h2 class="block-title">Evaluated Acceleration Engines ({cat3Tools.length})</h2>
+        <p class="block-desc">
+          Complete hardware implementations with synthesizable RTL and automated simulation testbenches in <code>tools/</code>.
+        </p>
+      </div>
+    </div>
+
+    <div class="tools-grid-inline">
+      {cat3Tools.map((tool) => (
+        <div class="tool-card-cat">
+          <div class="tool-card-head">
+            <span class="tool-title-link">
+              <a href={`/tools/${tool.slug}`}>{tool.name}</a>
+            </span>
+            <span class="tool-lang-pill">{tool.language}</span>
+          </div>
+          <p class="tool-desc-short">{tool.subtitle}</p>
+
+          <div class="tool-spec-table">
+            <div class="spec-cell"><strong>ISA:</strong> <code>{tool.isa}</code></div>
+            <div class="spec-cell"><strong>Bus:</strong> {tool.bus}</div>
+            <div class="spec-cell"><strong>Silicon Evidence:</strong> {tool.siliconEvidence.split('(')[0]?.trim()}</div>
+          </div>
+
+          <div class="tool-card-actions">
+            <a href={`/tools/${tool.slug}`} class="btn btn-outline btn-xs">Explore RTL &amp; Specs &rarr;</a>
+            {tool.scripts.run && (
+              <span class="script-badge">run_{tool.slug}.sh</span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Copy LaTeX
+  document.querySelectorAll(".copy-latex-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const box = document.getElementById(targetId || "");
+      if (box) {
+        const isShown = box.style.display === "block";
+        box.style.display = isShown ? "none" : "block";
+        if (!isShown) {
+          const code = box.querySelector("code")?.textContent || "";
+          navigator.clipboard.writeText(code).then(() => {
+            const orig = btn.textContent;
+            btn.textContent = "Copied to Clipboard!";
+            setTimeout(() => { btn.textContent = orig; }, 2000);
+          });
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll(".close-latex-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const parent = (e.target as HTMLElement).closest(".latex-export-box") as HTMLElement;
+      if (parent) parent.style.display = "none";
+    });
+  });
+</script>
+
+<style>
+  .page-header {
+    background: #ffffff;
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-header.accent-coral { background: #fff0eb; }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-lead {
+    font-size: 1.15rem;
+    color: #444444;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0;
+  }
+
+  .content-block {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .block-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .block-lead {
+    font-size: 1.05rem;
+    color: #444444;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .block-desc {
+    font-size: 0.92rem;
+    color: #666666;
+    margin-bottom: 1rem;
+  }
+
+  .block-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .arch-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .feature-card {
+    background: #fbfbfb;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .f-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    background: #ff914d;
+    color: #ffffff;
+    border: 1px solid #1a1a1a;
+    padding: 0.15rem 0.4rem;
+    width: fit-content;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #333333;
+    margin: 0;
+  }
+
+  .collapse-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+  }
+
+  .c-bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .c-lbl {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .c-track {
+    background: #e0e0e0;
+    border: 1px solid #1a1a1a;
+    height: 24px;
+  }
+
+  .c-fill {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .fill-green { background: #7ed957; }
+  .fill-yellow { background: #ffde59; }
+  .fill-coral { background: #ff914d; }
+  .fill-red { background: #ff5757; color: #ffffff; }
+
+  .collapse-explanation {
+    background: #ffffff;
+    border: 1px solid #1a1a1a;
+    padding: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin-top: 1rem;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .data-table th, .data-table td {
+    padding: 0.75rem 0.85rem;
+    border: 1px solid #1a1a1a;
+    text-align: left;
+  }
+
+  .data-table th {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .data-table tr:nth-child(even) td {
+    background: #fafafa;
+  }
+
+  .score-badge {
+    background: #ffde59;
+    padding: 0.15rem 0.45rem;
+    font-weight: 800;
+    border: 1px solid #1a1a1a;
+  }
+
+  .util-badge {
+    background: #eefbee;
+    border: 1px solid #7ed957;
+    color: #0b6b38;
+    padding: 0.15rem 0.4rem;
+    font-weight: 800;
+  }
+
+  .btn-xs {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .tools-grid-inline {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .tool-card-cat {
+    background: #fafafa;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .tool-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-title-link a {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .tool-title-link a:hover {
+    text-decoration: underline;
+  }
+
+  .tool-lang-pill {
+    font-size: 0.72rem;
+    font-family: var(--noc-font-mono, monospace);
+    color: #666666;
+  }
+
+  .tool-desc-short {
+    font-size: 0.85rem;
+    color: #444444;
+    line-height: 1.45;
+    margin-bottom: 0.85rem;
+    flex-grow: 1;
+  }
+
+  .tool-spec-table {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 0.5rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tool-card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .script-badge {
+    font-size: 0.7rem;
+    color: #0b6b38;
+    font-weight: 700;
+  }
+
+  .latex-export-box {
+    background: #1a1a1a;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .latex-head {
+    display: flex;
+    justify-content: space-between;
+    color: #ffde59;
+    font-size: 0.85rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .close-latex-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  .latex-code {
+    margin: 0;
+    padding: 0;
+    font-family: var(--noc-font-mono, monospace);
+    font-size: 0.82rem;
+    color: #a8ffb2;
+    overflow-x: auto;
+  }
+</style>

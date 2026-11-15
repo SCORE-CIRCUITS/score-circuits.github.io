@@ -1,0 +1,500 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import db from "../../data/score_db.json";
+
+const cat1Tools = db.tools.filter(t => t.categoryNumber === 1);
+
+const cat1Leaderboard = [
+  { name: "SERV", slug: "serv", isa: "RV32I", stages: "1 (Bit-serial)", cpi: "32.0", coremark: "0.03", dmips: "0.08", kge: "2.1", fmax: "120 MHz", bus: "Wishbone" },
+  { name: "PicoRV32", slug: "picorv32", isa: "RV32IMC", stages: "Multi-cycle", cpi: "4.2", coremark: "0.51", dmips: "0.72", kge: "9.5", fmax: "250 MHz", bus: "Native / AXI-Lite" },
+  { name: "DarkRISCV", slug: "darkriscv", isa: "RV32E/I", stages: "1-2 (Async)", cpi: "1.8", coremark: "0.85", dmips: "1.10", kge: "8.2", fmax: "180 MHz", bus: "LUT RAM" },
+  { name: "SCR1", slug: "scr1", isa: "RV32IMC", stages: "2-4 (Modular)", cpi: "1.5", coremark: "1.92", dmips: "1.45", kge: "18.4", fmax: "350 MHz", bus: "AHB-Lite / AXI-Lite" },
+  { name: "Ibex", slug: "ibex", isa: "RV32IMC", stages: "2 (Fetch/Exec)", cpi: "1.6", coremark: "2.31", dmips: "1.62", kge: "24.5", fmax: "400 MHz", bus: "Open Bus Interface (OBI)" },
+  { name: "Hazard3", slug: "hazard3", isa: "RV32IMACB", stages: "3 (Harvard)", cpi: "1.3", coremark: "2.85", dmips: "1.85", kge: "29.0", fmax: "380 MHz", bus: "AHB-Lite" },
+  { name: "NEORV32", slug: "neorv32", isa: "RV32IMAC_Zbb", stages: "2 (Pipelined)", cpi: "1.4", coremark: "2.44", dmips: "1.74", kge: "32.0", fmax: "320 MHz", bus: "Wishbone / AXI-Lite" },
+  { name: "VexRiscv", slug: "vexriscv", isa: "RV32IMAFDC", stages: "5 (In-Order)", cpi: "1.2", coremark: "3.10", dmips: "2.10", kge: "42.0", fmax: "450 MHz", bus: "Wishbone / AXI4" },
+  { name: "VeeR EL2", slug: "veer-el2", isa: "RV32IMC", stages: "4 (Dual-Issue)", cpi: "0.8", coremark: "3.62", dmips: "2.48", kge: "48.5", fmax: "500 MHz", bus: "AHB-Lite / AXI4" },
+];
+---
+
+<BaseLayout
+  title="MCU & Scalar Embedded Cores"
+  description="Category 1: Microarchitectural analysis, Level 1 CoreMark/Dhrystone benchmark leaderboard, and evaluated core implementations."
+>
+  <div class="page-header accent-yellow">
+    <div class="badge badge-accent">CATEGORY 01 &bull; LEVEL 1 BENCHMARKS</div>
+    <h1 class="page-title">Microcontroller &amp; Scalar Embedded Cores</h1>
+    <p class="page-lead">
+      Area-efficient, low-power in-order processor cores optimized for deeply embedded systems, baremetal control, IoT sensor nodes, and silicon security enclaves. Evaluated under the <code>mcu_verilator</code> simulation profile.
+    </p>
+  </div>
+
+  <!-- Microarchitectural Design Space -->
+  <section class="content-block">
+    <h2 class="block-title">Microarchitectural Spectrum</h2>
+    <p class="block-lead">
+      Category 1 cores prioritize gate count, power, and deterministic execution over raw IPC. Across the 12 evaluated open implementations, the architecture spans four distinct design philosophies:
+    </p>
+
+    <div class="arch-features-grid">
+      <div class="feature-card">
+        <span class="f-badge">BIT-SERIAL</span>
+        <h3>SERV (~2.1 kGE)</h3>
+        <p>
+          World's smallest RISC-V core. Shifts operands 1 bit per cycle through a 1-bit ALU over 32 cycles. Requires under 150 FPGA LUTs. Ideal where silicon area is the absolute limiting constraint.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">MULTI-CYCLE / SHARED</span>
+        <h3>PicoRV32 (~9.5 kGE)</h3>
+        <p>
+          Reuses a single 32-bit adder for PC increments, branch offsets, and memory address generation. Balances minimal FPGA resource utilization with straightforward bus interfacing.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">2-STAGE PIPELINED</span>
+        <h3>Ibex &amp; SCR1 (18–25 kGE)</h3>
+        <p>
+          Classic Fetch and Execute stages. Branch penalty is exactly 1 cycle. Optimized for security hardening, fault tolerance, and low-power microcontroller deployment (e.g. OpenTitan RoT).
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <span class="f-badge">4-STAGE DUAL-ISSUE</span>
+        <h3>VeeR EL2 (~48.5 kGE)</h3>
+        <p>
+          Western Digital's superscalar embedded core issuing up to 2 instructions per cycle. Delivers <strong>3.62 CoreMark/MHz</strong>, rivaling commercial Cortex-M7 embedded cores.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Level 1 Empirical Leaderboard -->
+  <section class="content-block">
+    <div class="block-header-flex">
+      <div>
+        <h2 class="block-title">Level 1 Benchmark Leaderboard (CoreMark &amp; Dhrystone)</h2>
+        <p class="block-desc">
+          Empirical measurements compiled with <code>-O3 -funroll-loops</code> executing on cycle-accurate Verilator harnesses.
+        </p>
+      </div>
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="cat1-latex">
+        &lt;/&gt; Copy LaTeX Table
+      </button>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Core Name</th>
+            <th>ISA</th>
+            <th>Pipeline Depth</th>
+            <th>CoreMark/MHz</th>
+            <th>DMIPS/MHz</th>
+            <th>CPI</th>
+            <th>Area (kGE)</th>
+            <th>Fmax</th>
+            <th>Bus Interface</th>
+            <th>Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cat1Leaderboard.map((row, idx) => (
+            <tr class={idx === cat1Leaderboard.length - 1 ? "highlight-row" : ""}>
+              <td><strong><a href={`/tools/${row.slug}`}>{row.name}</a></strong></td>
+              <td><code>{row.isa}</code></td>
+              <td>{row.stages}</td>
+              <td><span class="score-badge">{row.coremark}</span></td>
+              <td>{row.dmips}</td>
+              <td>{row.cpi}</td>
+              <td>{row.kge} kGE</td>
+              <td>{row.fmax}</td>
+              <td><small>{row.bus}</small></td>
+              <td><a href={`/tools/${row.slug}`} class="btn-xs btn-outline">Details &rarr;</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- LaTeX Code Box -->
+    <div class="latex-export-box" id="cat1-latex" style="display: none;">
+      <div class="latex-head">
+        <span>LaTeX Table: Category 1 Microcontroller Performance</span>
+        <button class="close-latex-btn">&times;</button>
+      </div>
+      <pre class="latex-code"><code>\begin&#123;table&#125;[t]
+\centering
+\small
+\caption&#123;Category 1 Microcontroller \&amp; Scalar Core Empirical Benchmark Comparison&#125;
+\label&#123;tab:cat1_benchmarks&#125;
+\begin&#123;tabular&#125;&#123;lccccr&#125;
+\toprule
+\textbf&#123;Core&#125; &amp; \textbf&#123;ISA&#125; &amp; \textbf&#123;Pipeline&#125; &amp; \textbf&#123;CoreMark/MHz&#125; &amp; \textbf&#123;DMIPS/MHz&#125; &amp; \textbf&#123;Area (kGE)&#125; \\
+\midrule
+SERV       &amp; RV32I       &amp; 1 (Bit-serial)     &amp; 0.03 &amp; 0.08 &amp; 2.1 \\
+PicoRV32   &amp; RV32IMC     &amp; Multi-cycle        &amp; 0.51 &amp; 0.72 &amp; 9.5 \\
+DarkRISCV  &amp; RV32E/I     &amp; 1--2 (Async)       &amp; 0.85 &amp; 1.10 &amp; 8.2 \\
+SCR1       &amp; RV32IMC     &amp; 2--4 (Modular)     &amp; 1.92 &amp; 1.45 &amp; 18.4 \\
+Ibex       &amp; RV32IMC     &amp; 2 (Fetch/Exec)     &amp; 2.31 &amp; 1.62 &amp; 24.5 \\
+Hazard3    &amp; RV32IMACB   &amp; 3 (Harvard)        &amp; 2.85 &amp; 1.85 &amp; 29.0 \\
+NEORV32    &amp; RV32IMAC    &amp; 2 (Pipelined)      &amp; 2.44 &amp; 1.74 &amp; 32.0 \\
+VexRiscv   &amp; RV32IMAFDC  &amp; 5 (In-Order)       &amp; 3.10 &amp; 2.10 &amp; 42.0 \\
+VeeR EL2   &amp; RV32IMC     &amp; 4 (Dual-Issue)     &amp; \textbf&#123;3.62&#125; &amp; \textbf&#123;2.48&#125; &amp; 48.5 \\
+\bottomrule
+\end&#123;tabular&#125;
+\end&#123;table&#125;</code></pre>
+    </div>
+  </section>
+
+  <!-- Evaluated Category 1 Cores Directory -->
+  <section class="content-block">
+    <div class="block-header-flex">
+      <div>
+        <h2 class="block-title">Evaluated Core Implementations ({cat1Tools.length})</h2>
+        <p class="block-desc">
+          Complete hardware implementations with synthesizable RTL and automated simulation testbenches in <code>tools/</code>.
+        </p>
+      </div>
+      <input 
+        type="text" 
+        id="cat1Search" 
+        placeholder="Filter Category 1 cores..." 
+        class="search-input-inline"
+      />
+    </div>
+
+    <div class="tools-grid-inline" id="cat1Grid">
+      {cat1Tools.map((tool) => (
+        <div class="tool-card-cat" data-search={`${tool.name} ${tool.slug} ${tool.isa} ${tool.bus} ${tool.language}`.toLowerCase()}>
+          <div class="tool-card-head">
+            <span class="tool-title-link">
+              <a href={`/tools/${tool.slug}`}>{tool.name}</a>
+            </span>
+            <span class="tool-lang-pill">{tool.language}</span>
+          </div>
+          <p class="tool-desc-short">{tool.subtitle}</p>
+
+          <div class="tool-spec-table">
+            <div class="spec-cell"><strong>ISA:</strong> <code>{tool.isa}</code></div>
+            <div class="spec-cell"><strong>Bus:</strong> {tool.bus}</div>
+            <div class="spec-cell"><strong>License:</strong> {tool.license.split('(')[0]?.trim()}</div>
+          </div>
+
+          <div class="tool-card-actions">
+            <a href={`/tools/${tool.slug}`} class="btn btn-outline btn-xs">Explore RTL &amp; Specs &rarr;</a>
+            {tool.scripts.generate && (
+              <span class="script-badge">generate available</span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Copy LaTeX
+  document.querySelectorAll(".copy-latex-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const box = document.getElementById(targetId || "");
+      if (box) {
+        const isShown = box.style.display === "block";
+        box.style.display = isShown ? "none" : "block";
+        if (!isShown) {
+          const code = box.querySelector("code")?.textContent || "";
+          navigator.clipboard.writeText(code).then(() => {
+            const orig = btn.textContent;
+            btn.textContent = "Copied to Clipboard!";
+            setTimeout(() => { btn.textContent = orig; }, 2000);
+          });
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll(".close-latex-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const parent = (e.target as HTMLElement).closest(".latex-export-box") as HTMLElement;
+      if (parent) parent.style.display = "none";
+    });
+  });
+
+  // Client-side inline search
+  const searchInput = document.getElementById("cat1Search") as HTMLInputElement;
+  const cards = document.querySelectorAll(".tool-card-cat") as NodeListOf<HTMLElement>;
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const q = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      cards.forEach((card) => {
+        const s = card.getAttribute("data-search") || "";
+        card.style.display = (!q || s.includes(q)) ? "flex" : "none";
+      });
+    });
+  }
+</script>
+
+<style>
+  .page-header {
+    background: #ffffff;
+    border: var(--noc-border-heavy, 3px solid #1a1a1a);
+    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-header.accent-yellow { background: #fffbe6; }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-lead {
+    font-size: 1.15rem;
+    color: #444444;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0;
+  }
+
+  .content-block {
+    background: #ffffff;
+    border: var(--noc-border, 2px solid #1a1a1a);
+    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .block-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .block-lead {
+    font-size: 1.05rem;
+    color: #444444;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .block-desc {
+    font-size: 0.92rem;
+    color: #666666;
+    margin-bottom: 1rem;
+  }
+
+  .block-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .arch-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .feature-card {
+    background: #fbfbfb;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .f-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    background: #ffde59;
+    border: 1px solid #1a1a1a;
+    padding: 0.15rem 0.4rem;
+    width: fit-content;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card h3 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #333333;
+    margin: 0;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .data-table th, .data-table td {
+    padding: 0.75rem 0.85rem;
+    border: 1px solid #1a1a1a;
+    text-align: left;
+  }
+
+  .data-table th {
+    background: #1a1a1a;
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .data-table tr:nth-child(even) td {
+    background: #fafafa;
+  }
+
+  .data-table a {
+    color: #1a1a1a;
+    text-decoration: underline;
+  }
+
+  .score-badge {
+    background: #ffde59;
+    padding: 0.15rem 0.45rem;
+    font-weight: 800;
+    border: 1px solid #1a1a1a;
+  }
+
+  .highlight-row {
+    background: #fffdf0 !important;
+  }
+
+  .btn-xs {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .search-input-inline {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    border: 2px solid #1a1a1a;
+    font-family: inherit;
+    min-width: 220px;
+  }
+
+  .tools-grid-inline {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .tool-card-cat {
+    background: #fafafa;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .tool-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .tool-title-link a {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+
+  .tool-title-link a:hover {
+    text-decoration: underline;
+  }
+
+  .tool-lang-pill {
+    font-size: 0.72rem;
+    font-family: var(--noc-font-mono, monospace);
+    color: #666666;
+  }
+
+  .tool-desc-short {
+    font-size: 0.85rem;
+    color: #444444;
+    line-height: 1.45;
+    margin-bottom: 0.85rem;
+    flex-grow: 1;
+  }
+
+  .tool-spec-table {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 0.5rem;
+    font-size: 0.78rem;
+    margin-bottom: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tool-card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .script-badge {
+    font-size: 0.7rem;
+    color: #0b6b38;
+    font-weight: 700;
+  }
+
+  .latex-export-box {
+    background: #1a1a1a;
+    border: 2px solid #1a1a1a;
+    padding: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .latex-head {
+    display: flex;
+    justify-content: space-between;
+    color: #ffde59;
+    font-size: 0.85rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .close-latex-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  .latex-code {
+    margin: 0;
+    padding: 0;
+    font-family: var(--noc-font-mono, monospace);
+    font-size: 0.82rem;
+    color: #a8ffb2;
+    overflow-x: auto;
+  }
+</style>
