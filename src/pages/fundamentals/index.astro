@@ -4,14 +4,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="Fundamental Learnings"
-  description="High-school accessible guide to computer architecture, silicon microprocessors, memory hierarchies, and the 4 SCORE categories."
+  description="First-principles intuitive guide to computer architecture, silicon microprocessors, memory hierarchies, and the 4 SCORE categories."
 >
   <!-- Page Header -->
   <div class="page-header accent-yellow">
     <div class="badge badge-accent">START HERE &bull; ZERO TO CHIP ARCHITECT</div>
     <h1 class="page-title">Fundamental Learnings in Computer Architecture</h1>
     <p class="page-lead">
-      How do millions of microscopic switches carved into silicon run software, stream video, and power artificial intelligence? This guide starts from absolute first principles—designed so that <strong>high school students and newcomers</strong> can understand how computer chips work and why the <strong>4 SCORE Categories</strong> exist.
+      How do millions of microscopic switches carved into silicon execute software, stream video, and accelerate artificial intelligence? This guide starts from absolute first principles—designed so that <strong>newcomers, students, and engineers alike</strong> can intuitively grasp how computer chips work and why the <strong>4 SCORE Categories</strong> exist.
     </p>
 
     <!-- Quick Navigation Jump -->
@@ -42,7 +42,77 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="analogy-banner">
         <div class="analogy-icon">&#128161;</div>
         <div class="analogy-text">
-          <strong>The Light Switch Analogy:</strong> Think of a transistor as a microscopic light switch. When electricity flows through, the switch is <strong>ON (1)</strong>. When blocked, it is <strong>OFF (0)</strong>. By connecting millions of these tiny switches together in clever patterns, we create <em>logic gates</em> that can add numbers, remember letters, and execute computer code!
+          <strong>The Light Switch Analogy:</strong> Think of a transistor as a microscopic light switch. When electricity flows through, the switch is <strong>ON (1)</strong>. When blocked, it is <strong>OFF (0)</strong>. By connecting millions of these tiny switches together in clever patterns, we create <em>logic gates</em> that can add numbers, store data, and execute programs.
+        </div>
+      </div>
+
+      <!-- INTERACTIVE TRANSISTOR / LOGIC GATE SIMULATOR -->
+      <div class="interactive-widget-box" id="gateWidget">
+        <div class="widget-header">
+          <span class="widget-badge">INTERACTIVE SIMULATION</span>
+          <h3 class="widget-title">Interactive Logic Gate &amp; Transistor Switch</h3>
+          <p class="widget-desc">
+            Toggle the inputs below to see how electrical currents pass through digital logic gates to turn on the output light!
+          </p>
+        </div>
+
+        <div class="gate-controls-row">
+          <div class="ctrl-group">
+            <span class="ctrl-label">Select Logic Gate:</span>
+            <div class="gate-btn-group">
+              <button class="gate-sel-btn active" data-gate="AND">AND</button>
+              <button class="gate-sel-btn" data-gate="OR">OR</button>
+              <button class="gate-sel-btn" data-gate="NAND">NAND (Universal)</button>
+              <button class="gate-sel-btn" data-gate="XOR">XOR (Adder)</button>
+            </div>
+          </div>
+
+          <div class="inputs-group">
+            <span class="ctrl-label">Toggle Inputs:</span>
+            <div class="switch-pair">
+              <button class="toggle-switch-btn" id="toggleInputA" data-val="1">
+                Input A: <span class="val-pill pill-on">1 (HIGH)</span>
+              </button>
+              <button class="toggle-switch-btn" id="toggleInputB" data-val="1">
+                Input B: <span class="val-pill pill-on">1 (HIGH)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="gate-visual-display">
+          <div class="gate-diagram-wrap">
+            <div class="wire-in wire-a"><span class="wire-lbl">A = <span id="wireValA">1</span></span></div>
+            <div class="wire-in wire-b"><span class="wire-lbl">B = <span id="wireValB">1</span></span></div>
+            <div class="logic-gate-box" id="gateBoxLabel">
+              <span class="gate-symbol-txt">AND</span>
+              <span class="gate-sub-txt">Logic Gate</span>
+            </div>
+            <div class="wire-out"><span class="wire-lbl">OUT = <span id="wireValOut">1</span></span></div>
+            
+            <div class="lightbulb-container" id="bulbContainer">
+              <div class="bulb-icon">&#128161;</div>
+              <span class="bulb-status" id="bulbStatusTxt">OUTPUT ON (1)</span>
+            </div>
+          </div>
+
+          <div class="gate-truth-table-wrap">
+            <span class="tt-title">Truth Table for <strong id="ttGateName">AND</strong>:</span>
+            <table class="truth-table" id="truthTableBody">
+              <thead>
+                <tr><th>A</th><th>B</th><th>Output</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <tr id="tr-00"><td>0</td><td>0</td><td class="res-cell">0</td><td class="state-cell">OFF</td></tr>
+                <tr id="tr-01"><td>0</td><td>1</td><td class="res-cell">0</td><td class="state-cell">OFF</td></tr>
+                <tr id="tr-10"><td>1</td><td>0</td><td class="res-cell">0</td><td class="state-cell">OFF</td></tr>
+                <tr id="tr-11" class="active-tr"><td>1</td><td>1</td><td class="res-cell">1</td><td class="state-cell">ACTIVE &#9733;</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="widget-insight" id="gateInsightTxt">
+          <strong>Key Architectural Insight:</strong> The <strong>NAND gate</strong> is known as a <em>universal gate</em>. Any digital circuit—from an arithmetic adder to a 64-bit multi-core CPU—can be constructed entirely from connected NAND gates!
         </div>
       </div>
 
@@ -50,22 +120,22 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         <div class="fund-box">
           <h4>Key Building Blocks</h4>
           <ul>
-            <li><strong>Bit (0 or 1):</strong> The smallest piece of information in computing.</li>
-            <li><strong>Byte (8 bits):</strong> Enough bits to represent a single letter (like 'A' = <code>01000001</code>).</li>
-            <li><strong>Clock Cycle:</strong> The "heartbeat" or metronome of the chip. Every tick of the clock, the transistors update their state. A 1 GHz processor ticks <strong>one billion times every single second</strong>!</li>
-            <li><strong>CPU (Central Processing Unit):</strong> The brain of the computer that reads instructions from memory and computes answers.</li>
+            <li><strong>Bit (0 or 1):</strong> The fundamental atomic unit of information.</li>
+            <li><strong>Byte (8 bits):</strong> Enough bits to encode a single ASCII character (e.g. 'A' = <code>01000001</code>).</li>
+            <li><strong>Clock Cycle:</strong> The synchronized heartbeat of the silicon chip. At 1.0 GHz, the clock ticks <strong>one billion times every second</strong>.</li>
+            <li><strong>CPU (Central Processing Unit):</strong> The central engine that fetches binary instructions from memory and computes results.</li>
           </ul>
         </div>
 
         <div class="fund-box">
-          <h4>From Code to Silicon</h4>
+          <h4>From Software to Silicon</h4>
           <p>
-            When you write code in Python, C++, or Java:
+            When you write software in Python, Rust, or C++:
           </p>
           <ol>
-            <li>A <strong>Compiler</strong> translates your readable English code into <strong>Assembly Instructions</strong> (simple commands like <code>ADD</code>, <code>SUB</code>, <code>LOAD</code>).</li>
-            <li>The assembler turns those commands into binary <strong>Machine Code</strong> (raw 1s and 0s).</li>
-            <li>The processor's transistors physically decode those 1s and 0s to route electrical currents and calculate results!</li>
+            <li>A <strong>Compiler</strong> converts your human-readable logic into <strong>Assembly Instructions</strong> (elementary primitives like <code>ADD</code>, <code>LW</code>, <code>BEQ</code>).</li>
+            <li>The assembler encodes those mnemonics into binary <strong>Machine Code</strong> ($32$-bit or $64$-bit words).</li>
+            <li>The processor's hardware decoders physically steer voltages across logic gates to execute the instruction!</li>
           </ol>
         </div>
       </div>
@@ -81,28 +151,28 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
       </div>
       <p class="fund-lead">
-        An <strong>Instruction Set Architecture (ISA)</strong> is the vocabulary or dictionary of commands that a processor understands. Without an ISA, software cannot communicate with hardware.
+        An <strong>Instruction Set Architecture (ISA)</strong> is the contract, or dictionary, between software and hardware. Without an ISA, software cannot communicate with silicon.
       </p>
 
       <div class="fund-grid">
         <div class="fund-box">
-          <h4>The Problem with Proprietary Chips</h4>
+          <h4>The Problem with Proprietary ISAs</h4>
           <p>
-            Historically, instruction sets were proprietary private property:
+            Historically, instruction sets were strictly guarded proprietary property:
           </p>
           <ul>
-            <li><strong>x86 (Intel / AMD):</strong> Powers desktop PCs and servers. Proprietary and closed; no outside company or student can build an x86 chip without multi-million-dollar lawsuits.</li>
-            <li><strong>ARM (Apple, Qualcomm, Raspberry Pi):</strong> Powers smartphones. Companies must pay millions in upfront licensing fees and ongoing royalties for every chip sold.</li>
+            <li><strong>x86 (Intel / AMD):</strong> Dominates desktop PCs and cloud servers. Proprietary and closed; third parties cannot build an x86 core without risking copyright litigation.</li>
+            <li><strong>ARM (Apple, Qualcomm, Raspberry Pi):</strong> Dominates mobile phones and IoT. Authors must pay substantial upfront license fees and ongoing royalties for each fabricated chip.</li>
           </ul>
         </div>
 
         <div class="fund-box">
-          <h4>The RISC-V Revolution: "The Linux of Silicon"</h4>
+          <h4>The RISC-V Open Revolution</h4>
           <p>
-            Invented at UC Berkeley in 2010, <strong>RISC-V</strong> (pronounced <em>"risk-five"</em>) is an <strong>open, royalty-free standard</strong>. Anyone—from high school students to research labs to global tech companies—can design, fabricate, and sell RISC-V chips without asking for permission or paying royalties!
+            Invented at UC Berkeley in 2010, <strong>RISC-V</strong> (pronounced <em>"risk-five"</em>) is an <strong>open, royalty-free standard</strong>. Anyone—from students and independent researchers to global technology corporations—can design, simulate, tape out, and commercialize RISC-V chips freely without licensing fees.
           </p>
           <div class="highlight-callout">
-            <strong>Modular LEGO-like Design:</strong> Start with a tiny integer base (<code>RV32I</code>), and snap on modular extensions like LEGO bricks: <code>M</code> (Multiply), <code>A</code> (Atomics), <code>C</code> (Compressed code), <code>F/D</code> (Floating-Point), and <code>V</code> (Vector acceleration).
+            <strong>Modular Extension Architecture:</strong> Start with a compact integer base (<code>RV32I</code> or <code>RV64I</code>), and snap on modular extensions like building blocks: <code>M</code> (Multiply/Divide), <code>A</code> (Atomics), <code>C</code> (Compressed 16-bit code), <code>F/D</code> (Floating-Point), and <code>V</code> (Vector acceleration).
           </div>
         </div>
       </div>
@@ -118,18 +188,67 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
       </div>
       <p class="fund-lead">
-        Executing a single instruction requires multiple steps: <strong>Fetch</strong> the instruction from memory &rarr; <strong>Decode</strong> what it means &rarr; <strong>Execute</strong> the math &rarr; <strong>Access Memory</strong> &rarr; <strong>Write Back</strong> the answer. If a chip waited for one instruction to finish all 5 steps before starting the next, it would be painfully slow!
+        Executing an instruction requires five sequential operations: <strong>Fetch (IF)</strong> &rarr; <strong>Decode (ID)</strong> &rarr; <strong>Execute (EX)</strong> &rarr; <strong>Memory Access (MEM)</strong> &rarr; <strong>Writeback (WB)</strong>. If a processor waited for an instruction to finish all five stages before beginning the next, execution units would sit idle 80% of the time!
       </p>
 
       <div class="analogy-banner">
         <div class="analogy-icon">&#129530;</div>
         <div class="analogy-text">
           <strong>The Classic Laundry Analogy:</strong><br />
-          Imagine doing 4 loads of laundry with a Washer (30 mins), a Dryer (30 mins), and Folding (30 mins):
+          Imagine doing 4 loads of laundry using a Washer (30 min), Dryer (30 min), and Folding table (30 min):
           <ul>
-            <li><strong>Without Pipelining:</strong> Wash load 1 &rarr; Dry load 1 &rarr; Fold load 1 (90 mins total). Then start load 2. Total time for 4 loads = <strong>360 minutes (6 hours)</strong>!</li>
-            <li><strong>With Pipelining:</strong> As soon as load 1 moves into the dryer, throw load 2 into the washer! When load 1 is folding, load 2 is drying, and load 3 is washing. Total time for 4 loads = <strong>180 minutes (3 hours)</strong>! After the pipe fills, a new clean load finishes every 30 minutes!</li>
+            <li><strong>Without Pipelining (Sequential):</strong> Wash Load 1 &rarr; Dry Load 1 &rarr; Fold Load 1 (90 mins total). Then start Load 2. Total time for 4 loads = <strong>360 minutes (6 hours)</strong>!</li>
+            <li><strong>With Pipelining (Overlapped):</strong> As soon as Load 1 moves to the dryer, throw Load 2 into the washer! All three appliances operate simultaneously. Total time for 4 loads drops to <strong>180 minutes (3 hours)</strong>—completing 1 fresh load every 30 minutes!</li>
           </ul>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE PIPELINE VISUALIZER -->
+      <div class="interactive-widget-box" id="pipelineWidget">
+        <div class="widget-header">
+          <span class="widget-badge">INTERACTIVE VISUALIZER</span>
+          <h3 class="widget-title">Interactive Pipeline Speedup Simulator</h3>
+          <p class="widget-desc">
+            Toggle between non-pipelined sequential execution and a 5-stage pipelined processor to witness the dramatic reduction in total clock cycles!
+          </p>
+        </div>
+
+        <div class="pipe-toggle-row">
+          <button class="pipe-mode-btn" id="btnPipeSeq" data-mode="seq">
+            Sequential (No Pipeline)
+          </button>
+          <button class="pipe-mode-btn active" id="btnPipePipe" data-mode="pipe">
+            5-Stage Pipelined (Overlapped)
+          </button>
+        </div>
+
+        <div class="pipe-metrics-summary">
+          <div class="pm-box">
+            <span class="pm-lbl">Total Clock Cycles:</span>
+            <span class="pm-val" id="pmCycles">8 Cycles</span>
+          </div>
+          <div class="pm-box">
+            <span class="pm-lbl">Throughput (Instructions / Cycle):</span>
+            <span class="pm-val" id="pmThroughput">0.50 IPC (Max 1.0)</span>
+          </div>
+          <div class="pm-box highlight-box">
+            <span class="pm-lbl">Speedup Factor:</span>
+            <span class="pm-val highlight-val" id="pmSpeedup">2.50&times; Faster</span>
+          </div>
+        </div>
+
+        <div class="pipe-grid-container">
+          <div class="pipe-grid" id="pipeVisualGrid">
+            <!-- Rendered dynamically by script -->
+          </div>
+        </div>
+
+        <div class="pipe-stage-legend">
+          <span class="legend-item"><span class="stage-color-chip chip-if"></span> IF: Fetch</span>
+          <span class="legend-item"><span class="stage-color-chip chip-id"></span> ID: Decode</span>
+          <span class="legend-item"><span class="stage-color-chip chip-ex"></span> EX: Execute</span>
+          <span class="legend-item"><span class="stage-color-chip chip-mem"></span> MEM: Memory</span>
+          <span class="legend-item"><span class="stage-color-chip chip-wb"></span> WB: Writeback</span>
         </div>
       </div>
 
@@ -138,7 +257,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <span class="pipe-badge">1-STAGE / BIT-SERIAL</span>
           <h4>SERV (~2.1 kGE)</h4>
           <p>
-            Does laundry <strong>one sock at a time</strong>. Processes exactly 1 bit per clock cycle over 32 cycles. Incredibly slow, but takes up virtually zero space (fits on the head of a pin).
+            Does laundry <strong>one sock at a time</strong>. Processes 1 bit per cycle over 32 cycles. Minimizes silicon footprint to fit in the smallest FPGA or ASIC budgets.
           </p>
         </div>
 
@@ -146,7 +265,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <span class="pipe-badge">2-STAGE PIPELINE</span>
           <h4>Ibex (~24.5 kGE)</h4>
           <p>
-            Two stages: Fetch and Execute. Very fast branch recovery (if you guess wrong, you only waste 1 cycle). Perfect for secure smartcards and microcontrollers.
+            Two stages: Fetch and Execute. Features low branch penalties (only 1 bubble on mispredictions), making it an industrial standard for embedded microcontrollers.
           </p>
         </div>
 
@@ -154,15 +273,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <span class="pipe-badge">4-STAGE DUAL-ISSUE</span>
           <h4>VeeR EL2 (~48.5 kGE)</h4>
           <p>
-            Two washers and two dryers! Fetches and executes <strong>two instructions simultaneously</strong> every clock cycle. High performance, but requires more wires and transistors.
+            Dual-pipe parallel assembly lines! Decodes and issues <strong>two instructions simultaneously</strong> per clock cycle to reach superscalar IPC (CoreMark = 3.62/MHz).
           </p>
         </div>
 
         <div class="pipe-card">
           <span class="pipe-badge">6-STAGE APPLICATION</span>
-          <h4>CVA6 (~120 kGE)</h4>
+          <h4>CVA6 (~148 kGE)</h4>
           <p>
-            Deep 6-stage assembly line (Fetch, Decode, Issue, Execute, Commit, Writeback). Can run at high frequencies (> 1 GHz) and boot a full Linux operating system.
+            Deep 6-stage pipeline (Fetch, Decode, Issue, Execute, Commit, Writeback) operating at >1.4 GHz with Sv39 virtual memory for full Linux operating systems.
           </p>
         </div>
       </div>
@@ -194,24 +313,69 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
       </div>
 
+      <!-- INTERACTIVE MEMORY LATENCY SCALE WIDGET -->
+      <div class="interactive-widget-box" id="memoryWidget">
+        <div class="widget-header">
+          <span class="widget-badge">INTERACTIVE LATENCY COMPARISON</span>
+          <h3 class="widget-title">The Memory Latency Gap (Human Scale)</h3>
+          <p class="widget-desc">
+            If 1 CPU clock cycle was scaled to <strong>1 second</strong> in human time, how long would the CPU wait for each memory level? Select a level to compare:
+          </p>
+        </div>
+
+        <div class="mem-level-selector">
+          <button class="mem-level-btn active" data-level="reg">1. CPU Registers (0.5 ns)</button>
+          <button class="mem-level-btn" data-level="l1">2. L1 Cache (1.5 ns)</button>
+          <button class="mem-level-btn" data-level="dram">3. Main DRAM (60 ns)</button>
+          <button class="mem-level-btn" data-level="ssd">4. NVMe SSD (50,000 ns)</button>
+        </div>
+
+        <div class="mem-detail-card">
+          <div class="mdc-top">
+            <span class="mdc-title" id="memTitle">CPU Register File (32 Registers)</span>
+            <span class="mdc-latency" id="memLatency">Latency: &lt; 0.5 nanoseconds (0 cycles)</span>
+          </div>
+
+          <div class="human-scale-box">
+            <div class="hs-icon" id="hsIcon">&#9997;</div>
+            <div class="hs-text">
+              <strong id="hsTimeText">Human Equivalent: 1 Second</strong>
+              <p id="hsDescText">
+                Like picking up a pencil already sitting in your hand. The processor computes immediately with zero stalls.
+              </p>
+            </div>
+          </div>
+
+          <div class="latency-bar-track">
+            <div class="latency-bar-fill" id="latencyBarFill" style="width: 2%;"></div>
+          </div>
+          <div class="latency-scale-labels">
+            <span>Instant (Registers)</span>
+            <span>Seconds (L1 Cache)</span>
+            <span>Minutes (Main Memory)</span>
+            <span>Months (SSD Storage)</span>
+          </div>
+        </div>
+      </div>
+
       <div class="fund-grid" style="margin-top: 1.5rem;">
         <div class="fund-box">
-          <h4>Scratchpad vs. Cache</h4>
+          <h4>Scratchpad SRAM vs. Hardware Cache</h4>
           <ul>
-            <li><strong>Tightly-Coupled Scratchpad (TCDM):</strong> Dedicated fast SRAM with guaranteed 1-cycle access time. The programmer controls exactly what is stored. Used in real-time embedded systems (Category 1) and manycore clusters (Category 4 <strong>MemPool</strong>).</li>
-            <li><strong>Hardware Cache:</strong> Automatically guesses what data you'll need next. If it guesses right, it's a <em>Cache Hit</em> (fast). If it misses, it's a <em>Cache Miss</em> and the CPU must pause and wait.</li>
+            <li><strong>Tightly-Coupled Scratchpad (TCDM):</strong> Dedicated, low-latency SRAM with guaranteed 1-cycle access. The software programmer explicitly allocates memory buffers. Used extensively in real-time embedded systems (Category 1) and parallel manycore clusters (Category 4 <strong>MemPool</strong>).</li>
+            <li><strong>Hardware Cache:</strong> Automatically monitors memory access patterns to prefetch data. A successful look-up is a <em>Cache Hit</em>; a miss stalls the processor while fetching from slower external memory.</li>
           </ul>
         </div>
 
         <div class="fund-box">
-          <h4>Virtual Memory &amp; The MMU (Memory Management Unit)</h4>
+          <h4>Virtual Memory &amp; The MMU</h4>
           <p>
-            When you run multiple apps on your computer (like a browser and a game), how do they not overwrite each other's memory?
+            When running multi-tasking operating systems with multiple processes:
           </p>
           <ul>
-            <li>The <strong>MMU</strong> gives every program its own private "virtual address book".</li>
-            <li>A program thinks it has the whole memory to itself, while the MMU translates virtual addresses to actual physical RAM locations behind the scenes.</li>
-            <li><strong>Linux requires an MMU</strong> (Category 2). Microcontrollers without an MMU run simpler "baremetal" code (Category 1).</li>
+            <li>The <strong>Memory Management Unit (MMU)</strong> grants each software process an isolated virtual address space.</li>
+            <li>Hardware Page Table Walkers (PTW) automatically translate virtual addresses to physical DRAM pages.</li>
+            <li><strong>Linux requires an MMU</strong> (Category 2). Microcontrollers operate without an MMU, executing baremetal firmware directly on physical addresses (Category 1).</li>
           </ul>
         </div>
       </div>
@@ -227,7 +391,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
       </div>
       <p class="fund-lead">
-        Why does SCORE categorize open-source chips into 4 categories? Because you wouldn't use a 50-car freight train to buy milk, nor could you haul 1,000 tons of steel on a bicycle. Different tasks demand fundamentally different chip architectures!
+        Why does SCORE categorize open-source chips into 4 categories? Because you wouldn't use a 50-car freight train to buy milk, nor could you haul 1,000 tons of steel on a bicycle. Different computational tasks demand fundamentally different chip architectures!
       </p>
 
       <div class="vehicle-grid">
@@ -237,7 +401,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <h3>The Electric Bicycle</h3>
           <div class="v-subtitle">Microcontroller &amp; Scalar Cores</div>
           <p>
-            Tiny, lightweight, highly efficient, and cheap. Ideal for simple tasks: checking battery levels, reading temperature sensors, and securing smartcards. Consumes microwatts of power.
+            Ultra-compact, highly efficient, and cheap. Ideal for dedicated control loops: monitoring sensors, battery management, and security root-of-trust controllers. Consumes microwatts of power.
           </p>
           <div class="v-examples">Examples: SERV, PicoRV32, Ibex, Hazard3</div>
           <a href="/mcu-scalar/" class="btn btn-outline btn-xs" style="margin-top: 0.75rem;">Explore Category 1 &rarr;</a>
@@ -249,7 +413,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <h3>The Passenger Sedan</h3>
           <div class="v-subtitle">64-bit Application Cores</div>
           <p>
-            Comfortable, full-featured daily driver. Has an MMU, multi-level caches, and 64-bit addresses. Capable of running a full Linux operating system, web servers, and user software.
+            Comfortable, full-featured daily driver. Integrates an MMU, multi-level caches, and 64-bit addresses. Capable of hosting full Linux distributions, network stacks, and user software.
           </p>
           <div class="v-examples">Examples: CVA6 (Ariane), Rocket Chip, BOOM</div>
           <a href="/app-cores/" class="btn btn-outline btn-xs" style="margin-top: 0.75rem;">Explore Category 2 &rarr;</a>
@@ -261,7 +425,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <h3>The Heavy Cargo Train</h3>
           <div class="v-subtitle">Vector &amp; Coprocessor Engines</div>
           <p>
-            Built for massive bulk data. Instead of computing 1 number at a time, its parallel lanes compute dozens of numbers in a single cycle. Perfect for AI matrix math, computer vision, and audio filters.
+            Built for massive bulk data. Rather than computing one number at a time, parallel vector lanes process dozens of data points simultaneously. Essential for AI matrix multiplication, vision, and signal processing.
           </p>
           <div class="v-examples">Examples: Ara (RVV 1.0), AraXL, Gemmini</div>
           <a href="/vector-coprocessors/" class="btn btn-outline btn-xs" style="margin-top: 0.75rem;">Explore Category 3 &rarr;</a>
@@ -270,10 +434,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         <div class="v-card cat4-v">
           <div class="v-icon">&#127970;</div>
           <span class="v-badge">CATEGORY 04</span>
-          <h3>The Entire City Transit System</h3>
+          <h3>The Complete City Transit System</h3>
           <div class="v-subtitle">SoC Platforms &amp; Multi-Core Clusters</div>
           <p>
-            Not just one vehicle, but a complete urban network! Contains highways (buses/NoC), traffic dispatchers (arbiters), autonomous delivery trucks (DMA engines), and hundreds of coordinated cores (up to 432 cores).
+            Not just an isolated vehicle, but an entire metropolitan transport network! Features multi-lane expressways (AXI4/NoC), traffic dispatchers (arbiters), autonomous delivery trucks (DMA engines), and hundreds of parallel cores (up to 432 cores).
           </p>
           <div class="v-examples">Examples: MemPool (256 cores), Cheshire, Occamy</div>
           <a href="/soc-multicore/" class="btn btn-outline btn-xs" style="margin-top: 0.75rem;">Explore Category 4 &rarr;</a>
@@ -291,7 +455,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
       </div>
       <p class="fund-lead">
-        You can't just ask "which chip is the fastest?" You have to ask: <em>Fastest at what cost?</em> How much silicon area does it burn? How much energy does it consume? Here is how to read the scoreboard:
+        Evaluating a processor is never as simple as asking "which core is fastest?" Architecture requires balancing performance against silicon area, energy, and design complexity:
       </p>
 
       <div class="fund-grid">
@@ -299,16 +463,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <h4>Efficiency &amp; Speed Metrics</h4>
           <ul>
             <li>
-              <strong>CPI (Cycles per Instruction):</strong> Average clock ticks per instruction. Lower is better. A CPI of 1.0 means 1 instruction finishes every clock tick. Superscalar cores achieve CPI &lt; 1.0!
+              <strong>CPI (Cycles per Instruction):</strong> Average clock cycles required to retire an instruction. Lower is better. A CPI of 1.0 indicates one instruction completes per cycle. Superscalar dual-issue cores achieve CPI &lt; 1.0!
             </li>
             <li>
-              <strong>CoreMark / MHz:</strong> The standard SAT-exam for embedded processors. Measures how much real integer computing work the chip accomplishes for each tick of its clock.
+              <strong>CoreMark / MHz:</strong> The standard industry benchmark for embedded cores. Measures integer compute capability per megahertz of operating frequency.
             </li>
             <li>
-              <strong>Ops / Cycle:</strong> Operations completed per clock tick. Vector processors and systolic arrays achieve 4 to 30+ Ops/Cycle by computing numbers in parallel!
+              <strong>Ops / Cycle:</strong> Operations completed per clock tick. Vector processors and systolic arrays reach 4 to 30+ Ops/Cycle by evaluating SIMD lanes in parallel.
             </li>
             <li>
-              <strong>Vector Utilization (%):</strong> How often the heavy math units are actually calculating numbers vs. sitting idle waiting for memory.
+              <strong>Vector Utilization (%):</strong> The percentage of cycles that arithmetic execution units are actively calculating numbers vs. sitting idle waiting for memory.
             </li>
           </ul>
         </div>
@@ -317,15 +481,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <h4>Physical Silicon Metrics</h4>
           <ul>
             <li>
-              <strong>Gate Count (kGE - Kilo Gate Equivalents):</strong> How many thousands of standard logic gates (NAND2 gates) the chip requires.
+              <strong>Gate Count (kGE - Kilo Gate Equivalents):</strong> Standardized silicon area measured in thousands of two-input NAND gates (NAND2):
               <br />
-              &bull; <code>SERV</code> = ~2.1 kGE (tiny)<br />
-              &bull; <code>Ibex</code> = ~24.5 kGE (compact)<br />
-              &bull; <code>CVA6</code> = ~120 kGE (medium application core)<br />
-              &bull; <code>BOOM</code> = ~400+ kGE (large high-performance)
+              &bull; <code>SERV</code> = ~2.1 kGE (ultra-compact bit-serial)<br />
+              &bull; <code>Ibex</code> = ~24.5 kGE (balanced embedded core)<br />
+              &bull; <code>CVA6</code> = ~148 kGE (64-bit Linux application core)<br />
+              &bull; <code>BOOM</code> = ~420 kGE (superscalar out-of-order)
             </li>
             <li>
-              <strong>Process Node (nm):</strong> The manufacturing technology (e.g. 130nm, 28nm, 16nm). Smaller nanometers allow packing more transistors into less space, running faster at lower voltages.
+              <strong>Process Node (nm):</strong> The fabrication technology (e.g. 130nm, 28nm, 16nm). Smaller nodes pack more transistors into smaller footprints, operating at higher frequencies and lower voltages.
             </li>
           </ul>
         </div>
@@ -333,6 +497,281 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     </section>
   </div>
 </BaseLayout>
+
+<script>
+  // ==========================================
+  // WIDGET 1: LOGIC GATE & TRANSISTOR SWITCH
+  // ==========================================
+  let currentGate = "AND";
+  let inputA = 1;
+  let inputB = 1;
+
+  const btnA = document.getElementById("toggleInputA");
+  const btnB = document.getElementById("toggleInputB");
+  const wireValA = document.getElementById("wireValA");
+  const wireValB = document.getElementById("wireValB");
+  const wireValOut = document.getElementById("wireValOut");
+  const gateBoxLabel = document.getElementById("gateBoxLabel")?.querySelector(".gate-symbol-txt");
+  const bulbContainer = document.getElementById("bulbContainer");
+  const bulbStatusTxt = document.getElementById("bulbStatusTxt");
+  const ttGateName = document.getElementById("ttGateName");
+  const gateInsightTxt = document.getElementById("gateInsightTxt");
+
+  function evaluateGate(gate: string, a: number, b: number): number {
+    switch (gate) {
+      case "AND": return a && b ? 1 : 0;
+      case "OR": return a || b ? 1 : 0;
+      case "NAND": return !(a && b) ? 1 : 0;
+      case "XOR": return a !== b ? 1 : 0;
+      default: return 0;
+    }
+  }
+
+  function updateGateWidget() {
+    const out = evaluateGate(currentGate, inputA, inputB);
+
+    if (wireValA) wireValA.textContent = String(inputA);
+    if (wireValB) wireValB.textContent = String(inputB);
+    if (wireValOut) wireValOut.textContent = String(out);
+    if (gateBoxLabel) gateBoxLabel.textContent = currentGate;
+    if (ttGateName) ttGateName.textContent = currentGate;
+
+    // Update Input buttons UI
+    if (btnA) {
+      btnA.innerHTML = `Input A: <span class="val-pill ${inputA ? 'pill-on' : 'pill-off'}">${inputA} (${inputA ? 'HIGH' : 'LOW'})</span>`;
+    }
+    if (btnB) {
+      btnB.innerHTML = `Input B: <span class="val-pill ${inputB ? 'pill-on' : 'pill-off'}">${inputB} (${inputB ? 'HIGH' : 'LOW'})</span>`;
+    }
+
+    // Update bulb
+    if (bulbContainer && bulbStatusTxt) {
+      if (out === 1) {
+        bulbContainer.classList.add("bulb-active");
+        bulbStatusTxt.textContent = "OUTPUT ON (1)";
+      } else {
+        bulbContainer.classList.remove("bulb-active");
+        bulbStatusTxt.textContent = "OUTPUT OFF (0)";
+      }
+    }
+
+    // Update Truth table
+    const rows = [
+      { id: "tr-00", a: 0, b: 0 },
+      { id: "tr-01", a: 0, b: 1 },
+      { id: "tr-10", a: 1, b: 0 },
+      { id: "tr-11", a: 1, b: 1 },
+    ];
+
+    rows.forEach(r => {
+      const rowEl = document.getElementById(r.id);
+      if (rowEl) {
+        const rowOut = evaluateGate(currentGate, r.a, r.b);
+        const resCell = rowEl.querySelector(".res-cell");
+        const stateCell = rowEl.querySelector(".state-cell");
+        if (resCell) resCell.textContent = String(rowOut);
+        if (stateCell) stateCell.textContent = rowOut ? "ON (1)" : "OFF (0)";
+
+        if (r.a === inputA && r.b === inputB) {
+          rowEl.classList.add("active-tr");
+          if (stateCell) stateCell.textContent = rowOut ? "ACTIVE ★ (1)" : "ACTIVE ★ (0)";
+        } else {
+          rowEl.classList.remove("active-tr");
+        }
+      }
+    });
+
+    // Update insight
+    if (gateInsightTxt) {
+      if (currentGate === "NAND") {
+        gateInsightTxt.innerHTML = "<strong>Key Architectural Insight:</strong> The <strong>NAND gate</strong> is functionally universal. Every digital system—from single-cycle ALUs to 64-bit multi-core processors—can be fabricated entirely using interconnected NAND gates!";
+      } else if (currentGate === "XOR") {
+        gateInsightTxt.innerHTML = "<strong>Key Architectural Insight:</strong> The <strong>XOR gate</strong> is the core arithmetic engine of computer addition! It computes binary addition ($1 + 1 = 0$ with carry), forming the foundation of every CPU's Arithmetic Logic Unit (ALU).";
+      } else if (currentGate === "AND") {
+        gateInsightTxt.innerHTML = "<strong>Key Architectural Insight:</strong> An <strong>AND gate</strong> outputs $1$ only when both control gates receive voltage. CPUs use AND gates to check conditional flags and enable memory write operations.";
+      } else {
+        gateInsightTxt.innerHTML = "<strong>Key Architectural Insight:</strong> An <strong>OR gate</strong> outputs $1$ if either input is active. Microprocessors use OR gates to multiplex data buses and handle shared interrupt request lines.";
+      }
+    }
+  }
+
+  // Gate selection buttons
+  document.querySelectorAll(".gate-sel-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".gate-sel-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentGate = btn.getAttribute("data-gate") || "AND";
+      updateGateWidget();
+    });
+  });
+
+  btnA?.addEventListener("click", () => {
+    inputA = inputA === 1 ? 0 : 1;
+    updateGateWidget();
+  });
+
+  btnB?.addEventListener("click", () => {
+    inputB = inputB === 1 ? 0 : 1;
+    updateGateWidget();
+  });
+
+  // ==========================================
+  // WIDGET 2: PIPELINING LAUNDRY SIMULATOR
+  // ==========================================
+  let pipeMode = "pipe"; // "seq" or "pipe"
+
+  const btnSeq = document.getElementById("btnPipeSeq");
+  const btnPipe = document.getElementById("btnPipePipe");
+  const pmCycles = document.getElementById("pmCycles");
+  const pmThroughput = document.getElementById("pmThroughput");
+  const pmSpeedup = document.getElementById("pmSpeedup");
+  const gridContainer = document.getElementById("pipeVisualGrid");
+
+  const stages = [
+    { name: "IF", cls: "chip-if" },
+    { name: "ID", cls: "chip-id" },
+    { name: "EX", cls: "chip-ex" },
+    { name: "MEM", cls: "chip-mem" },
+    { name: "WB", cls: "chip-wb" },
+  ];
+
+  function renderPipeline() {
+    if (!gridContainer) return;
+
+    if (pipeMode === "seq") {
+      // 4 instructions * 5 stages = 20 cycles
+      if (pmCycles) pmCycles.textContent = "20 Cycles";
+      if (pmThroughput) pmThroughput.textContent = "0.20 IPC (Stalled)";
+      if (pmSpeedup) pmSpeedup.textContent = "1.00× (Baseline)";
+
+      let html = `<div class="p-row p-head"><div class="p-cell p-label">Instruction</div>`;
+      for (let c = 1; c <= 20; c++) {
+        html += `<div class="p-cell p-col-hdr">C${c}</div>`;
+      }
+      html += `</div>`;
+
+      for (let inst = 0; inst < 4; inst++) {
+        html += `<div class="p-row"><div class="p-cell p-label">Inst ${inst + 1}</div>`;
+        const startCycle = inst * 5;
+        for (let c = 0; c < 20; c++) {
+          if (c >= startCycle && c < startCycle + 5) {
+            const stIdx = c - startCycle;
+            html += `<div class="p-cell p-stage ${stages[stIdx].cls}">${stages[stIdx].name}</div>`;
+          } else {
+            html += `<div class="p-cell p-empty">&middot;</div>`;
+          }
+        }
+        html += `</div>`;
+      }
+      gridContainer.innerHTML = html;
+    } else {
+      // Pipelined: 4 instructions overlap across 8 cycles
+      if (pmCycles) pmCycles.textContent = "8 Cycles";
+      if (pmThroughput) pmThroughput.textContent = "0.50 IPC (Peak 1.0)";
+      if (pmSpeedup) pmSpeedup.textContent = "2.50× Faster!";
+
+      let html = `<div class="p-row p-head"><div class="p-cell p-label">Instruction</div>`;
+      for (let c = 1; c <= 8; c++) {
+        html += `<div class="p-cell p-col-hdr">C${c}</div>`;
+      }
+      html += `</div>`;
+
+      for (let inst = 0; inst < 4; inst++) {
+        html += `<div class="p-row"><div class="p-cell p-label">Inst ${inst + 1}</div>`;
+        const startCycle = inst; // 0, 1, 2, 3
+        for (let c = 0; c < 8; c++) {
+          if (c >= startCycle && c < startCycle + 5) {
+            const stIdx = c - startCycle;
+            html += `<div class="p-cell p-stage ${stages[stIdx].cls}">${stages[stIdx].name}</div>`;
+          } else {
+            html += `<div class="p-cell p-empty">&middot;</div>`;
+          }
+        }
+        html += `</div>`;
+      }
+      gridContainer.innerHTML = html;
+    }
+  }
+
+  btnSeq?.addEventListener("click", () => {
+    pipeMode = "seq";
+    btnSeq.classList.add("active");
+    btnPipe?.classList.remove("active");
+    renderPipeline();
+  });
+
+  btnPipe?.addEventListener("click", () => {
+    pipeMode = "pipe";
+    btnPipe.classList.add("active");
+    btnSeq?.classList.remove("active");
+    renderPipeline();
+  });
+
+  // Initial render
+  renderPipeline();
+
+  // ==========================================
+  // WIDGET 3: MEMORY LATENCY SCALE WIDGET
+  // ==========================================
+  const memData: Record<string, { title: string; latency: string; timeText: string; desc: string; icon: string; width: string }> = {
+    reg: {
+      title: "CPU Register File (32 Registers, e.g. x0–x31)",
+      latency: "Latency: < 0.5 nanoseconds (0 stall cycles)",
+      timeText: "Human Scale: 1 Second",
+      desc: "Like picking up a pencil already sitting in your hand. The processor computes immediately with zero stalls.",
+      icon: "✍️",
+      width: "3%"
+    },
+    l1: {
+      title: "Level 1 Cache (16 KB - 64 KB SRAM)",
+      latency: "Latency: ~1.5 nanoseconds (1–2 clock cycles)",
+      timeText: "Human Scale: 3 Seconds",
+      desc: "Like reaching for a cookbook sitting right on your kitchen counter. Ultra-fast, near-zero execution impact.",
+      icon: "📖",
+      width: "15%"
+    },
+    dram: {
+      title: "Main Memory / DDR4 DRAM (8 GB - 64 GB)",
+      latency: "Latency: ~60 nanoseconds (60–200 clock cycles)",
+      timeText: "Human Scale: 4 Minutes",
+      desc: "Like leaving your desk, walking downstairs, and searching through a pantry. The processor must pause execution and wait.",
+      icon: "🚶",
+      width: "55%"
+    },
+    ssd: {
+      title: "Solid State Storage / NVMe SSD (1 TB - 4 TB)",
+      latency: "Latency: ~50,000 nanoseconds (50,000+ clock cycles)",
+      timeText: "Human Scale: 2.3 Months!",
+      desc: "Like boarding a cargo sailboat and traveling across the ocean to pick up a single ingredient. The CPU switches to other processes entirely.",
+      icon: "⛵",
+      width: "100%"
+    }
+  };
+
+  const memTitle = document.getElementById("memTitle");
+  const memLatency = document.getElementById("memLatency");
+  const hsTimeText = document.getElementById("hsTimeText");
+  const hsDescText = document.getElementById("hsDescText");
+  const hsIcon = document.getElementById("hsIcon");
+  const latencyBarFill = document.getElementById("latencyBarFill");
+
+  document.querySelectorAll(".mem-level-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".mem-level-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const lvl = btn.getAttribute("data-level") || "reg";
+      const info = memData[lvl];
+      if (info) {
+        if (memTitle) memTitle.textContent = info.title;
+        if (memLatency) memLatency.textContent = info.latency;
+        if (hsTimeText) hsTimeText.textContent = info.timeText;
+        if (hsDescText) hsDescText.textContent = info.desc;
+        if (hsIcon) hsIcon.textContent = info.icon;
+        if (latencyBarFill) latencyBarFill.style.width = info.width;
+      }
+    });
+  });
+</script>
 
 <style>
   .page-header {
@@ -401,7 +840,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   .fund-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 1.25rem;
     margin-bottom: 1rem;
   }
@@ -409,38 +848,36 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .fund-num {
     font-size: 2.5rem;
     font-weight: 900;
-    font-family: var(--noc-font-mono, monospace);
-    color: #999999;
+    color: #ffde59;
+    -webkit-text-stroke: 2px #1a1a1a;
     line-height: 1;
   }
 
   .fund-title {
-    font-size: 1.85rem;
+    font-size: 1.8rem;
     font-weight: 900;
-    margin-top: 0.25rem;
-    letter-spacing: -0.01em;
+    margin: 0.25rem 0 0 0;
   }
 
   .fund-lead {
-    font-size: 1.05rem;
-    line-height: 1.6;
+    font-size: 1.1rem;
     color: #333333;
-    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
   }
 
   .analogy-banner {
-    background: #fbfbfb;
+    background: #fffdf0;
     border: 2px solid #1a1a1a;
     padding: 1.25rem;
     display: flex;
+    gap: 1.25rem;
     align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    box-shadow: 3px 3px 0 #1a1a1a;
+    margin-bottom: 1.5rem;
   }
 
   .analogy-icon {
-    font-size: 2rem;
+    font-size: 2.5rem;
     line-height: 1;
   }
 
@@ -455,10 +892,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     padding: 0;
   }
 
-  .analogy-text li {
-    margin-bottom: 0.35rem;
-  }
-
   .fund-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -466,145 +899,598 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   @media (max-width: 768px) {
-    .fund-grid {
-      grid-template-columns: 1fr;
-    }
+    .fund-grid { grid-template-columns: 1fr; }
   }
 
   .fund-box {
     background: #fbfbfb;
-    border: 1px solid #1a1a1a;
+    border: 1.5px solid #1a1a1a;
     padding: 1.25rem;
   }
 
   .fund-box h4 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 900;
     margin-bottom: 0.75rem;
-    border-bottom: 2px solid #1a1a1a;
-    padding-bottom: 0.35rem;
   }
 
-  .fund-box ul, .fund-box ol {
-    margin: 0 0 0 1.25rem;
-    padding: 0;
-  }
-
-  .fund-box li {
-    font-size: 0.92rem;
-    line-height: 1.55;
-    margin-bottom: 0.6rem;
-    color: #333333;
+  .fund-box p, .fund-box ul, .fund-box ol {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #444444;
   }
 
   .highlight-callout {
-    background: #fffdf0;
-    border: 1px solid #ffde59;
+    background: #fffbe6;
+    border-left: 4px solid #ffde59;
     padding: 0.75rem;
-    font-size: 0.85rem;
-    margin-top: 0.75rem;
-    line-height: 1.5;
-  }
-
-  .pipeline-comparison-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .pipe-card {
-    background: #fafafa;
-    border: 2px solid #1a1a1a;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .pipe-badge {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 800;
-    background: #ffde59;
-    border: 1px solid #1a1a1a;
-    padding: 0.15rem 0.4rem;
-    margin-bottom: 0.5rem;
-    width: fit-content;
-  }
-
-  .pipe-card h4 {
-    font-size: 1.2rem;
-    font-weight: 900;
-    margin-bottom: 0.5rem;
-  }
-
-  .pipe-card p {
+    margin-top: 1rem;
     font-size: 0.88rem;
     line-height: 1.5;
-    color: #333333;
-    margin: 0;
   }
 
+  /* ========================================= */
+  /* INTERACTIVE WIDGET STYLES                */
+  /* ========================================= */
+  .interactive-widget-box {
+    background: #f4fbf4;
+    border: 2.5px solid #1a1a1a;
+    box-shadow: 4px 4px 0 #1a1a1a;
+    padding: 1.75rem;
+    margin: 1.75rem 0;
+  }
+
+  .widget-badge {
+    background: #1a1a1a;
+    color: #7ed957;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .widget-title {
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin: 0 0 0.35rem 0;
+  }
+
+  .widget-desc {
+    font-size: 0.92rem;
+    color: #444444;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Gate Widget */
+  .gate-controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ctrl-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #666666;
+    margin-bottom: 0.35rem;
+  }
+
+  .gate-btn-group, .switch-pair {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .gate-sel-btn, .toggle-switch-btn {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .gate-sel-btn.active {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .toggle-switch-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .val-pill {
+    padding: 0.15rem 0.4rem;
+    font-size: 0.75rem;
+    border-radius: 3px;
+  }
+
+  .pill-on { background: #7ed957; color: #000000; font-weight: 900; }
+  .pill-off { background: #dddddd; color: #555555; font-weight: 900; }
+
+  .gate-visual-display {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1.5rem;
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .gate-visual-display { grid-template-columns: 1fr; }
+  }
+
+  .gate-diagram-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: #fdfdfd;
+    border: 1px dashed #cccccc;
+  }
+
+  .wire-in, .wire-out {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: var(--noc-font-mono, monospace);
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+
+  .logic-gate-box {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 1rem 1.25rem;
+    text-align: center;
+    border: 2px solid #1a1a1a;
+    box-shadow: 3px 3px 0 #7ed957;
+  }
+
+  .gate-symbol-txt {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #7ed957;
+  }
+
+  .gate-sub-txt {
+    font-size: 0.7rem;
+    color: #aaaaaa;
+  }
+
+  .lightbulb-container {
+    text-align: center;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid #1a1a1a;
+    background: #eeeeee;
+    transition: all 0.2s ease;
+  }
+
+  .bulb-icon {
+    font-size: 2.2rem;
+    line-height: 1;
+    filter: grayscale(100%);
+    opacity: 0.4;
+    transition: all 0.2s ease;
+  }
+
+  .bulb-status {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 900;
+    margin-top: 0.25rem;
+    color: #555555;
+  }
+
+  .bulb-active {
+    background: #fffde6;
+    border-color: #ffd600;
+    box-shadow: 0 0 15px rgba(255, 214, 0, 0.6);
+  }
+
+  .bulb-active .bulb-icon {
+    filter: none;
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .bulb-active .bulb-status {
+    color: #d50000;
+  }
+
+  .truth-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin-top: 0.5rem;
+  }
+
+  .truth-table th, .truth-table td {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid #1a1a1a;
+    text-align: center;
+  }
+
+  .truth-table th { background: #1a1a1a; color: #ffffff; }
+
+  .active-tr {
+    background: #fffde6 !important;
+    font-weight: 900;
+  }
+
+  .widget-insight {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-top: 1rem;
+  }
+
+  /* Pipelining Widget */
+  .pipe-toggle-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .pipe-mode-btn {
+    background: #ffffff;
+    border: 2px solid #1a1a1a;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    padding: 0.5rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .pipe-mode-btn.active {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .pipe-metrics-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .pipe-metrics-summary { grid-template-columns: 1fr; }
+  }
+
+  .pm-box {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    padding: 0.75rem 1rem;
+  }
+
+  .pm-lbl {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #666666;
+  }
+
+  .pm-val {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #1a1a1a;
+  }
+
+  .highlight-box {
+    background: #fffbe6;
+    border-color: #ffde59;
+  }
+
+  .highlight-val {
+    color: #d50000;
+  }
+
+  .pipe-grid-container {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  .pipe-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 650px;
+  }
+
+  .p-row {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .p-cell {
+    width: 38px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    border: 1px solid #cccccc;
+  }
+
+  .p-label {
+    width: 95px;
+    justify-content: flex-start;
+    padding-left: 0.4rem;
+    background: #f0f0f0;
+    border-color: #1a1a1a;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .p-col-hdr {
+    background: #1a1a1a;
+    color: #ffffff;
+    border-color: #1a1a1a;
+  }
+
+  .p-stage {
+    color: #ffffff;
+    border-color: #1a1a1a;
+  }
+
+  .p-empty {
+    color: #bbbbbb;
+    background: #fafafa;
+  }
+
+  .chip-if { background: #00bcd4; }
+  .chip-id { background: #ff9800; }
+  .chip-ex { background: #4caf50; }
+  .chip-mem { background: #9c27b0; }
+  .chip-wb { background: #e91e63; }
+
+  .pipe-stage-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .stage-color-chip {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    border: 1px solid #1a1a1a;
+  }
+
+  /* Memory Scale Widget */
+  .mem-level-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .mem-level-btn {
+    background: #ffffff;
+    border: 2px solid #1a1a1a;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .mem-level-btn.active {
+    background: #ffde59;
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .mem-detail-card {
+    background: #ffffff;
+    border: 1.5px solid #1a1a1a;
+    padding: 1.5rem;
+  }
+
+  .mdc-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px dashed #dddddd;
+    padding-bottom: 0.75rem;
+  }
+
+  .mdc-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+  }
+
+  .mdc-latency {
+    font-size: 0.85rem;
+    font-weight: 800;
+    background: #1a1a1a;
+    color: #7ed957;
+    padding: 0.2rem 0.5rem;
+    font-family: var(--noc-font-mono, monospace);
+  }
+
+  .human-scale-box {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    background: #fffdf0;
+    border: 1.5px solid #1a1a1a;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hs-icon {
+    font-size: 2.5rem;
+  }
+
+  .hs-text strong {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #d50000;
+    margin-bottom: 0.25rem;
+  }
+
+  .hs-text p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: #333333;
+    line-height: 1.5;
+  }
+
+  .latency-bar-track {
+    background: #eeeeee;
+    border: 1.5px solid #1a1a1a;
+    height: 20px;
+    overflow: hidden;
+  }
+
+  .latency-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7ed957, #ff5252);
+    transition: width 0.3s ease;
+  }
+
+  .latency-scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #777777;
+    margin-top: 0.35rem;
+  }
+
+  /* Vehicle Cards */
   .vehicle-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
-    margin-top: 1rem;
   }
 
   .v-card {
     border: 2px solid #1a1a1a;
     box-shadow: 4px 4px 0 #1a1a1a;
     padding: 1.5rem;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
   }
 
-  .cat1-v { background: #fffbe6; }
-  .cat2-v { background: #e6fcfd; }
-  .cat3-v { background: #fff0eb; }
-  .cat4-v { background: #edfcee; }
+  .v-card.cat1-v { border-top: 8px solid #ffde59; }
+  .v-card.cat2-v { border-top: 8px solid #00f2fe; }
+  .v-card.cat3-v { border-top: 8px solid #ff5252; }
+  .v-card.cat4-v { border-top: 8px solid #7ed957; }
 
   .v-icon {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
     margin-bottom: 0.5rem;
   }
 
   .v-badge {
     font-size: 0.7rem;
     font-weight: 800;
+    background: #1a1a1a;
+    color: #ffffff;
     padding: 0.15rem 0.4rem;
-    border: 1px solid #1a1a1a;
     width: fit-content;
-    background: #ffffff;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
   }
 
   .v-card h3 {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
     font-weight: 900;
-    margin-bottom: 0.2rem;
+    margin: 0.25rem 0;
   }
 
   .v-subtitle {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: #555555;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #666666;
     margin-bottom: 0.75rem;
   }
 
   .v-card p {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     line-height: 1.5;
-    color: #222222;
-    margin-bottom: 0.75rem;
+    color: #333333;
+    margin-bottom: 1rem;
     flex-grow: 1;
   }
 
   .v-examples {
     font-size: 0.78rem;
+    font-weight: 700;
+    background: #f5f5f5;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid #dddddd;
+  }
+
+  .pipeline-comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .pipe-card {
+    background: #fbfbfb;
+    border: 1.5px solid #1a1a1a;
+    padding: 1.25rem;
+  }
+
+  .pipe-badge {
+    font-size: 0.68rem;
     font-weight: 800;
+    background: #ffde59;
+    border: 1px solid #1a1a1a;
+    padding: 0.15rem 0.35rem;
+    width: fit-content;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .pipe-card h4 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin: 0.2rem 0 0.5rem 0;
+  }
+
+  .pipe-card p {
+    font-size: 0.85rem;
+    line-height: 1.5;
     color: #444444;
-    border-top: 1px dashed #bbbbbb;
-    padding-top: 0.5rem;
+    margin: 0;
   }
 </style>
