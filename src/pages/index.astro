@@ -40,10 +40,10 @@ function getToolUrl(tool: any) {
 
     <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem;">
       <a href="/fundamentals/" class="noc-sim-btn" style="background: var(--yellow);">📖 Architecture Fundamentals →</a>
-      <a href="/mcu-scalar/" class="noc-sim-btn secondary">01. MCU Cores</a>
-      <a href="/app-cores/" class="noc-sim-btn secondary">02. 64-bit App Cores</a>
-      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">03. Vector Engines</a>
-      <a href="/soc-multicore/" class="noc-sim-btn secondary">04. SoC &amp; Clusters</a>
+      <a href="/mcu-scalar/" class="noc-sim-btn secondary">MCU / Scalar Cores</a>
+      <a href="/app-cores/" class="noc-sim-btn secondary">64-bit Application Cores</a>
+      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Vector &amp; Coprocessors</a>
+      <a href="/soc-multicore/" class="noc-sim-btn secondary">SoC &amp; Multi-Core</a>
     </div>
   </div>
 
@@ -85,7 +85,6 @@ function getToolUrl(tool: any) {
       {categories.map((cat) => (
         <div class={`category-card cat-card-${cat.number}`}>
           <div class="cat-card-header">
-            <span class="cat-num">0{cat.number}</span>
             <span class="cat-badge">{cat.badge}</span>
           </div>
           <h3 class="cat-title">{cat.title}</h3>
@@ -197,10 +196,10 @@ function getToolUrl(tool: any) {
     </div>
 
     <div class="center-cta" style="margin-top: 2rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
-      <a href="/mcu-scalar/" class="noc-sim-btn secondary">01. MCU Cores &rarr;</a>
-      <a href="/app-cores/" class="noc-sim-btn secondary">02. 64-bit App Cores &rarr;</a>
-      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">03. Vector Engines &rarr;</a>
-      <a href="/soc-multicore/" class="noc-sim-btn secondary">04. SoC &amp; Clusters &rarr;</a>
+      <a href="/mcu-scalar/" class="noc-sim-btn secondary">MCU / Scalar Cores &rarr;</a>
+      <a href="/app-cores/" class="noc-sim-btn secondary">64-bit Application Cores &rarr;</a>
+      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Vector &amp; Coprocessors &rarr;</a>
+      <a href="/soc-multicore/" class="noc-sim-btn secondary">SoC &amp; Multi-Core &rarr;</a>
     </div>
   </section>
 
