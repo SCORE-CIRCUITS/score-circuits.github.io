@@ -60,7 +60,7 @@
     {
       "id": "category-2",
       "number": 2,
-      "title": "64-bit Application-Class Cores",
+      "title": "Application Cores",
       "badge": "Level 2: Memory & OS Compliance",
       "description": "Linux-capable in-order and out-of-order processors implementing RV64GC with Sv39/Sv48 MMUs, caches, and physical memory protection.",
       "profile": "app_verilator",
