@@ -63,12 +63,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
           <!-- COMBINED: LIVE INTERACTIVE SCHEMATIC & SWITCHING POWER EXPLORER -->
           <!-- ALL-IN-ONE EMBEDDED INTERACTIVE CMOS WORKBENCH -->
+          <!-- ALL-IN-ONE EMBEDDED INTERACTIVE CMOS WORKBENCH -->
           <div class="sub-interactive-card" id="cmosPowerWidget">
             <div class="sub-widget-header">
               <span class="sub-w-tag">ALL-IN-ONE INTERACTIVE EDA BENCH</span>
-              <h4 class="sub-w-title">CMOS Inverter — Embedded Switch, Instruments &amp; Dynamic Power</h4>
+              <h4 class="sub-w-title">CMOS Inverter — Dynamic Switching, Capacitive Load &amp; Transient Timing</h4>
               <p class="sub-w-desc">
-                All simulation controls are embedded directly in the figure: click the <strong>SPDT Switch</strong> on the circuit to flip between Ground (0V) and <em>V<sub>DD</sub></em>, or use the <strong>Bottom Instrument Deck</strong> to tune supply voltage and clock frequency.
+                All simulation controls are embedded directly in the figure: flip the <strong>SPDT Switch</strong> on the circuit to toggle input voltage, and use the <strong>Bottom Instrument Deck</strong> to tune load capacitance <em>C<sub>L</sub></em> and clock frequency <em>f</em>. Watch dynamic power recalculate and observe the rise/fall exponential transition curves on the oscilloscope reticle stretch in real time as capacitive loading increases.
               </p>
             </div>
 
@@ -95,24 +96,33 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <!-- Top status banner inside frame -->
                 <rect x="2" y="2" width="756" height="24" fill="#0f172a" rx="6"/>
                 <circle cx="16" cy="14" r="4" fill="#22c55e"/>
-                <text x="26" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • CMOS INVERTER LIVE SIMULATOR</text>
-                <text x="746" y="18" font-size="8.5" font-weight="700" fill="#94a3b8" font-family="monospace" text-anchor="end">TECH: 45nm CMOS • BSIM4 MODEL</text>
+                <text x="26" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • CMOS INVERTER DYNAMIC SWITCHING SIMULATOR</text>
 
                 <!-- Vertical divider separating Schematic and Analysis Panel -->
                 <line x1="416" y1="26" x2="416" y2="424" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 4"/>
 
                 <!-- ══════════════════════════════════════════════════════ -->
-                <!--  VDD POWER SUPPLY TERMINAL (Top Rail)                  -->
+                <!--  VDD POWER SUPPLY TERMINAL (Top Rail with Stepper)     -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <line x1="190" y1="46" x2="250" y2="46" stroke="#b91c1c" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="160" y1="46" x2="280" y2="46" stroke="#b91c1c" stroke-width="2.5" stroke-linecap="round"/>
                 <circle cx="220" cy="46" r="3" fill="#b91c1c"/>
-                <text x="220" y="38" font-size="10.5" font-weight="900" fill="#b91c1c" font-family="monospace" text-anchor="middle">VDD = <tspan id="svgVddLabel">1.00</tspan> V</text>
+
+                <!-- VDD Stepper Controls directly at Top Rail -->
+                <g id="btnVddDown" cursor="pointer" role="button" aria-label="Decrease VDD">
+                  <rect x="156" y="30" width="18" height="15" rx="2.5" fill="#1e293b" stroke="#334155"/>
+                  <text x="165" y="41" font-size="11" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">&#8722;</text>
+                </g>
+                <text x="220" y="41" font-size="10.5" font-weight="900" fill="#b91c1c" font-family="monospace" text-anchor="middle">VDD = <tspan id="svgVddLabel">1.00</tspan> V</text>
+                <g id="btnVddUp" cursor="pointer" role="button" aria-label="Increase VDD">
+                  <rect x="266" y="30" width="18" height="15" rx="2.5" fill="#1e293b" stroke="#334155"/>
+                  <text x="275" y="41" font-size="11" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">+</text>
+                </g>
 
                 <!-- Wire from VDD rail down to pMOS Source -->
                 <line id="vddStem" x1="220" y1="46" x2="220" y2="92" stroke="#16a34a" stroke-width="2.5"/>
 
                 <!-- Wire from VDD rail left to SPDT switch top contact -->
-                <line x1="190" y1="46" x2="55" y2="46" stroke="#b91c1c" stroke-width="1.5"/>
+                <line x1="160" y1="46" x2="55" y2="46" stroke="#b91c1c" stroke-width="1.5"/>
                 <line x1="55" y1="46" x2="55" y2="165" stroke="#b91c1c" stroke-width="1.5"/>
                 <line x1="55" y1="165" x2="71" y2="165" stroke="#b91c1c" stroke-width="1.5"/>
 
@@ -127,13 +137,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <rect id="svgSwitchBtnBg" x="24" y="124" width="86" height="24" rx="4" fill="#15803d" stroke="#16a34a" stroke-width="1.5"/>
                   <text id="svgSwitchBtnTxt" x="67" y="140" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">&#8644; SW: 0V (LOW)</text>
 
-                  <!-- Top Contact: VDD (1.0V) -->
+                  <!-- Top Contact: VDD -->
                   <circle cx="75" cy="165" r="4.5" fill="#b91c1c"/>
-                  <text x="64" y="168" font-size="8" font-weight="900" fill="#b91c1c" font-family="monospace" text-anchor="end">1.0V</text>
+                  <text x="64" y="168" font-size="8" font-weight="900" fill="#b91c1c" font-family="monospace" text-anchor="end">VDD</text>
 
-                  <!-- Bottom Contact: GND (0.0V) -->
+                  <!-- Bottom Contact: GND -->
                   <circle cx="75" cy="255" r="4.5" fill="#1e3a8a"/>
-                  <text x="64" y="258" font-size="8" font-weight="900" fill="#1e3a8a" font-family="monospace" text-anchor="end">0.0V</text>
+                  <text x="64" y="258" font-size="8" font-weight="900" fill="#1e3a8a" font-family="monospace" text-anchor="end">GND</text>
 
                   <!-- Center Pivot Pole -->
                   <circle cx="75" cy="210" r="5" fill="#eab308" stroke="#0f172a" stroke-width="1.5"/>
@@ -141,7 +151,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <!-- Dynamic Switch Blade (Pivots between VDD and GND) -->
                   <line id="svgSwitchBlade" x1="75" y1="210" x2="75" y2="252" stroke="#eab308" stroke-width="4" stroke-linecap="round"/>
 
-                  <!-- Subtitle helper -->
                   <text x="67" y="274" font-size="7.5" font-weight="700" fill="#64748b" font-family="sans-serif" text-anchor="middle">[Click to flip]</text>
                 </g>
 
@@ -235,16 +244,17 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <rect x="340" y="180" width="68" height="18" rx="3" fill="#0284c7"/>
                 <text id="svgVoutLabel" x="374" y="193" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">1.00 V (H)</text>
 
-                <!-- Load Capacitor CL -->
+                <!-- Load Capacitor CL (Dynamic label) -->
                 <circle cx="300" cy="210" r="3" fill="#0284c7"/>
                 <line x1="300" y1="210" x2="300" y2="265" stroke="#475569" stroke-width="1.5"/>
+                <!-- Capacitor Plates -->
                 <line x1="286" y1="265" x2="314" y2="265" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
                 <line x1="286" y1="273" x2="314" y2="273" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
                 <line x1="300" y1="273" x2="300" y2="305" stroke="#475569" stroke-width="1.5"/>
                 <line x1="290" y1="305" x2="310" y2="305" stroke="#475569" stroke-width="2"/>
                 <line x1="294" y1="309" x2="306" y2="309" stroke="#475569" stroke-width="1.5"/>
 
-                <text x="320" y="268" font-size="9.5" font-weight="800" fill="#475569" font-family="sans-serif">C<tspan font-size="7.5" dy="2">L</tspan><tspan dy="-2"> = 5.0 fF</tspan></text>
+                <text id="svgCapSchematicLabel" x="320" y="268" font-size="9.5" font-weight="800" fill="#475569" font-family="sans-serif">CL = 5.0 fF</text>
                 <text id="svgCapLabel" x="320" y="282" font-size="8.5" font-weight="800" fill="#16a34a" font-family="sans-serif">CHARGED</text>
 
                 <!-- ══════════════════════════════════════════════════════ -->
@@ -302,18 +312,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <text x="444" y="206" font-size="8.5" font-weight="900" fill="#0f172a" font-family="monospace">DC Static Current: I_static &#8776; 0.00 &#956;A</text>
                 <text x="444" y="218" font-size="8" fill="#64748b" font-family="sans-serif">No direct VDD&#8209;to&#8209;GND path &bull; One FET is always OFF</text>
 
-                <!-- Sub-card: Transient Scope Window -->
+                <!-- Sub-card: Transient Scope Window (Reticle) -->
                 <rect x="426" y="238" width="320" height="178" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1.5"/>
                 <rect x="434" y="256" width="304" height="152" fill="url(#scopeGrid)"/>
                 <line x1="434" y1="332" x2="738" y2="332" stroke="#334155" stroke-width="1" stroke-dasharray="2 2"/>
                 <line x1="586" y1="256" x2="586" y2="408" stroke="#334155" stroke-width="1" stroke-dasharray="2 2"/>
 
-                <text x="436" y="250" font-size="8.5" font-weight="900" fill="#38bdf8" font-family="monospace">TRANSIENT RESPONSE (50 ps/div)</text>
-                <text x="668" y="250" font-size="8" font-weight="700" fill="#94a3b8" font-family="monospace">CL = 5 fF</text>
+                <text x="436" y="250" font-size="8.5" font-weight="900" fill="#38bdf8" font-family="monospace">TRANSIENT TIMING (50 ps/div)</text>
+                <text id="svgScopeInfo" x="668" y="250" font-size="8" font-weight="700" fill="#94a3b8" font-family="monospace">CL = 5.0 fF</text>
 
-                <!-- Waveform Traces -->
+                <!-- Waveform Traces (Dynamically calculated based on CL and VDD!) -->
                 <path id="scopeTraceVin" d="M 440 286 L 530 286 L 536 376 L 730 376" fill="none" stroke="#eab308" stroke-width="2"/>
-                <path id="scopeTraceVout" d="M 440 376 L 536 376 Q 550 326 580 290 L 730 286" fill="none" stroke="#06b6d4" stroke-width="2.5"/>
+                <path id="scopeTraceVout" d="M 440 376 L 530 376 Q 544 320 582 286 L 730 286" fill="none" stroke="#06b6d4" stroke-width="2.5"/>
 
                 <circle cx="445" cy="268" r="3.5" fill="#eab308"/>
                 <text x="453" y="271" font-size="7.5" font-weight="800" fill="#eab308" font-family="monospace">CH1: Vin</text>
@@ -321,60 +331,63 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <circle cx="510" cy="268" r="3.5" fill="#06b6d4"/>
                 <text x="518" y="271" font-size="7.5" font-weight="800" fill="#06b6d4" font-family="monospace">CH2: Vout</text>
 
-                <text x="548" y="400" font-size="7.5" fill="#f8fafc" font-family="monospace">tp &#8776; 11.5 ps</text>
-                <text x="640" y="400" font-size="7.5" fill="#94a3b8" font-family="monospace">tPLH &#8776; tPHL</text>
+                <!-- Live Transition Time Readouts -->
+                <text id="svgScopeTr" x="442" y="400" font-size="7.5" font-weight="800" fill="#38bdf8" font-family="monospace">tr &#8776; 14.0 ps</text>
+                <text id="svgScopeTf" x="532" y="400" font-size="7.5" font-weight="800" fill="#38bdf8" font-family="monospace">tf &#8776; 12.5 ps</text>
+                <text id="svgScopeTp" x="622" y="400" font-size="7.5" font-weight="900" fill="#f8fafc" font-family="monospace">tp &#8776; 13.3 ps</text>
 
                 <!-- ══════════════════════════════════════════════════════ -->
-                <!--  BOTTOM INSTRUMENT RACK (EMBEDDED CONTROLS & POWER)    -->
+                <!--  BOTTOM INSTRUMENT RACK (CL, FREQ & DYNAMIC POWER)     -->
                 <!-- ══════════════════════════════════════════════════════ -->
                 <rect x="6" y="424" width="748" height="70" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
 
-                <!-- MODULE 1: DC SUPPLY (VDD) -->
-                <text x="16" y="439" font-size="8.5" font-weight="900" fill="#94a3b8" font-family="monospace">DC SUPPLY (VDD)</text>
+                <!-- MODULE 1: LOAD CAPACITANCE (CL) -->
+                <text x="16" y="439" font-size="8.5" font-weight="900" fill="#94a3b8" font-family="monospace">LOAD CAPACITANCE (CL)</text>
 
-                <g id="btnVddDown" cursor="pointer" role="button" aria-label="Decrease VDD">
+                <g id="btnCapDown" cursor="pointer" role="button" aria-label="Decrease capacitance">
                   <rect x="16" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
                   <text x="28" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">&#8722;</text>
                 </g>
 
-                <rect x="44" y="446" width="60" height="22" rx="3" fill="#020617" stroke="#38bdf8"/>
-                <text id="svgVddDisplay" x="74" y="461" font-size="11" font-weight="900" fill="#38bdf8" font-family="monospace" text-anchor="middle">1.00 V</text>
+                <rect x="44" y="446" width="66" height="22" rx="3" fill="#020617" stroke="#38bdf8"/>
+                <text id="svgCapDisplay" x="77" y="461" font-size="11" font-weight="900" fill="#38bdf8" font-family="monospace" text-anchor="middle">5.0 fF</text>
 
-                <g id="btnVddUp" cursor="pointer" role="button" aria-label="Increase VDD">
-                  <rect x="108" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
-                  <text x="120" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">+</text>
+                <g id="btnCapUp" cursor="pointer" role="button" aria-label="Increase capacitance">
+                  <rect x="114" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+                  <text x="126" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">+</text>
                 </g>
 
-                <!-- Presets -->
-                <g id="btnVddPreset08" cursor="pointer" role="button"><rect id="pillVdd08" x="140" y="446" width="30" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="155" y="460" font-size="8" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">0.8V</text></g>
-                <g id="btnVddPreset10" cursor="pointer" role="button"><rect id="pillVdd10" x="174" y="446" width="30" height="22" rx="3" fill="#0284c7" stroke="#38bdf8"/><text x="189" y="460" font-size="8" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">1.0V</text></g>
-                <g id="btnVddPreset12" cursor="pointer" role="button"><rect id="pillVdd12" x="208" y="446" width="30" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="223" y="460" font-size="8" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">1.2V</text></g>
-                <text x="16" y="484" font-size="7.5" fill="#64748b" font-family="sans-serif">Quadratic energy scale: P &#8733; VDD&#178;</text>
+                <!-- Capacitance Presets -->
+                <g id="btnCapPreset02" cursor="pointer" role="button"><rect id="pillCap02" x="144" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="156" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">2fF</text></g>
+                <g id="btnCapPreset05" cursor="pointer" role="button"><rect id="pillCap05" x="172" y="446" width="24" height="22" rx="3" fill="#0284c7" stroke="#38bdf8"/><text x="184" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">5fF</text></g>
+                <g id="btnCapPreset10" cursor="pointer" role="button"><rect id="pillCap10" x="200" y="446" width="26" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="213" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">10fF</text></g>
+                <g id="btnCapPreset20" cursor="pointer" role="button"><rect id="pillCap20" x="230" y="446" width="26" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="243" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">20fF</text></g>
+                <text x="16" y="484" font-size="7.5" fill="#64748b" font-family="sans-serif">Scales rise/fall times &amp; Pdyn</text>
 
                 <!-- Divider -->
-                <line x1="250" y1="430" x2="250" y2="488" stroke="#1e293b" stroke-width="1"/>
+                <line x1="262" y1="430" x2="262" y2="488" stroke="#1e293b" stroke-width="1"/>
 
-                <!-- MODULE 2: CLOCK GENERATOR (f) -->
-                <text x="262" y="439" font-size="8.5" font-weight="900" fill="#94a3b8" font-family="monospace">CLOCK FREQ (f)</text>
+                <!-- MODULE 2: CLOCK FREQUENCY (f) -->
+                <text x="274" y="439" font-size="8.5" font-weight="900" fill="#94a3b8" font-family="monospace">CLOCK FREQ (f)</text>
 
                 <g id="btnFreqDown" cursor="pointer" role="button" aria-label="Decrease frequency">
-                  <rect x="262" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
-                  <text x="274" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">&#8722;</text>
+                  <rect x="274" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+                  <text x="286" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">&#8722;</text>
                 </g>
 
-                <rect x="290" y="446" width="78" height="22" rx="3" fill="#020617" stroke="#38bdf8"/>
-                <text id="svgFreqDisplay" x="329" y="461" font-size="10.5" font-weight="900" fill="#38bdf8" font-family="monospace" text-anchor="middle">1000 MHz</text>
+                <rect x="302" y="446" width="76" height="22" rx="3" fill="#020617" stroke="#38bdf8"/>
+                <text id="svgFreqDisplay" x="340" y="461" font-size="10.5" font-weight="900" fill="#38bdf8" font-family="monospace" text-anchor="middle">1000 MHz</text>
 
                 <g id="btnFreqUp" cursor="pointer" role="button" aria-label="Increase frequency">
-                  <rect x="372" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
-                  <text x="384" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">+</text>
+                  <rect x="382" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+                  <text x="394" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">+</text>
                 </g>
 
-                <!-- Presets -->
-                <g id="btnFreqPreset500" cursor="pointer" role="button"><rect id="pillFreq500" x="404" y="446" width="30" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="419" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">500M</text></g>
-                <g id="btnFreqPreset1000" cursor="pointer" role="button"><rect id="pillFreq1000" x="438" y="446" width="30" height="22" rx="3" fill="#0284c7" stroke="#38bdf8"/><text x="453" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">1.0G</text></g>
-                <g id="btnFreqPreset2500" cursor="pointer" role="button"><rect id="pillFreq2500" x="472" y="446" width="30" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="487" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">2.5G</text></g>
-                <text x="262" y="484" font-size="7.5" fill="#64748b" font-family="sans-serif">Linear power scale: P &#8733; f</text>
+                <!-- Frequency Presets -->
+                <g id="btnFreqPreset500" cursor="pointer" role="button"><rect id="pillFreq500" x="412" y="446" width="28" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="426" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">500M</text></g>
+                <g id="btnFreqPreset1000" cursor="pointer" role="button"><rect id="pillFreq1000" x="444" y="446" width="28" height="22" rx="3" fill="#0284c7" stroke="#38bdf8"/><text x="458" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">1.0G</text></g>
+                <g id="btnFreqPreset2500" cursor="pointer" role="button"><rect id="pillFreq2500" x="476" y="446" width="28" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="490" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">2.5G</text></g>
+                <text x="274" y="484" font-size="7.5" fill="#64748b" font-family="sans-serif">Linear power scale: P &#8733; f</text>
 
                 <!-- Divider -->
                 <line x1="512" y1="430" x2="512" y2="488" stroke="#1e293b" stroke-width="1"/>
@@ -389,14 +402,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <rect x="644" y="449" width="98" height="16" rx="3" fill="#1e293b"/>
                 <rect id="svgPowerBar" x="646" y="451" width="30" height="12" rx="2" fill="#f59e0b"/>
 
-                <text x="524" y="484" font-size="7.5" fill="#94a3b8" font-family="sans-serif">P = &alpha;&middot;C<tspan font-size="6" dy="1">L</tspan><tspan dy="-1">&middot;V</tspan><tspan font-size="6" dy="1">DD</tspan><tspan dy="-1">&#178;&middot;f (1,000 gates &bull; 5 fF)</tspan></text>
+                <text x="524" y="484" font-size="7.5" fill="#94a3b8" font-family="sans-serif">P = &alpha;&middot;C<tspan font-size="6" dy="1">L</tspan><tspan dy="-1">&middot;V</tspan><tspan font-size="6" dy="1">DD</tspan><tspan dy="-1">&#178;&middot;f (1,000 gates)</tspan></text>
               </svg>
             </div>
 
             <!-- Figure Caption -->
             <div class="schematic-caption">
-              <strong>Figure 1.1:</strong> Interactive all-in-one CMOS inverter CAD workbench (IEEE 315-1975 standard).
-              <strong>How to interact:</strong> Click the input <strong>SPDT Switch</strong> directly on the circuit diagram to flip between Ground (0V) and <span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span>. Observe the physical switch blade pivot, the active transistor channel glow (green for pMOS pull-up, blue for nMOS pull-down), and the animated charge/discharge current flow. Use the <strong>bottom instrument deck</strong> to step or select preset supply voltages (<span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span>) and clock frequencies (<em>f</em>) to observe real-time quadratic voltage scaling and linear frequency scaling on dynamic power dissipation.
+              <strong>Figure 1.1:</strong> Interactive all-in-one CMOS inverter CAD workbench with dynamic transient timing simulation.
+              <strong>How to interact:</strong> Click the input <strong>SPDT Switch</strong> directly on the circuit diagram to flip between Ground (0V) and <span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span>. Use the <strong>bottom instrument deck</strong> to step or select presets for load capacitance (<em>C<sub>L</sub></em> = 2 to 20 fF) and clock frequency (<em>f</em> = 100 to 3000 MHz). Notice how:
+              (1) Increasing <em>C<sub>L</sub></em> directly broadens the exponential transition curve on the oscilloscope reticle, increasing rise time (<em>t<sub>r</sub></em>) and fall time (<em>t<sub>f</sub></em>) proportionally to <em>R&middot;C<sub>L</sub></em>;
+              (2) Dynamic power dissipation scales linearly with both capacitive load and switching frequency (<span style="white-space: nowrap;"><em>P<sub>dyn</sub></em> = &alpha;&middot;<em>C<sub>L</sub></em>&middot;<em>V<sub>DD</sub></em><sup>2</sup>&middot;<em>f</em></span>).
             </div>
           </div>
 
@@ -3040,23 +3055,29 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   const svgSwitchBtnBg = document.getElementById("svgSwitchBtnBg");
   const svgSwitchBtnTxt = document.getElementById("svgSwitchBtnTxt");
 
-  // Instrument Deck Elements
+  // VDD Controls at Top Rail
   const btnVddDown = document.getElementById("btnVddDown");
   const btnVddUp = document.getElementById("btnVddUp");
-  const svgVddDisplay = document.getElementById("svgVddDisplay");
   const svgVddLabel = document.getElementById("svgVddLabel");
 
-  const btnVddPreset08 = document.getElementById("btnVddPreset08");
-  const btnVddPreset10 = document.getElementById("btnVddPreset10");
-  const btnVddPreset12 = document.getElementById("btnVddPreset12");
-  const pillVdd08 = document.getElementById("pillVdd08");
-  const pillVdd10 = document.getElementById("pillVdd10");
-  const pillVdd12 = document.getElementById("pillVdd12");
+  // Capacitance Controls in Instrument Deck
+  const btnCapDown = document.getElementById("btnCapDown");
+  const btnCapUp = document.getElementById("btnCapUp");
+  const svgCapDisplay = document.getElementById("svgCapDisplay");
+  const svgCapSchematicLabel = document.getElementById("svgCapSchematicLabel");
+  const btnCapPreset02 = document.getElementById("btnCapPreset02");
+  const btnCapPreset05 = document.getElementById("btnCapPreset05");
+  const btnCapPreset10 = document.getElementById("btnCapPreset10");
+  const btnCapPreset20 = document.getElementById("btnCapPreset20");
+  const pillCap02 = document.getElementById("pillCap02");
+  const pillCap05 = document.getElementById("pillCap05");
+  const pillCap10 = document.getElementById("pillCap10");
+  const pillCap20 = document.getElementById("pillCap20");
 
+  // Frequency Controls in Instrument Deck
   const btnFreqDown = document.getElementById("btnFreqDown");
   const btnFreqUp = document.getElementById("btnFreqUp");
   const svgFreqDisplay = document.getElementById("svgFreqDisplay");
-
   const btnFreqPreset500 = document.getElementById("btnFreqPreset500");
   const btnFreqPreset1000 = document.getElementById("btnFreqPreset1000");
   const btnFreqPreset2500 = document.getElementById("btnFreqPreset2500");
@@ -3064,8 +3085,17 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   const pillFreq1000 = document.getElementById("pillFreq1000");
   const pillFreq2500 = document.getElementById("pillFreq2500");
 
+  // Power Readouts
   const svgPowerDisplay = document.getElementById("svgPowerDisplay");
   const svgPowerBar = document.getElementById("svgPowerBar");
+
+  // Scope Timing Readouts
+  const svgScopeInfo = document.getElementById("svgScopeInfo");
+  const svgScopeTr = document.getElementById("svgScopeTr");
+  const svgScopeTf = document.getElementById("svgScopeTf");
+  const svgScopeTp = document.getElementById("svgScopeTp");
+  const scopeTraceVin = document.getElementById("scopeTraceVin");
+  const scopeTraceVout = document.getElementById("scopeTraceVout");
 
   // Schematic Wire & Node Elements
   const vddStem = document.getElementById("vddStem");
@@ -3105,44 +3135,53 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   const svgNmosRon = document.getElementById("svgNmosRon");
   const svgStatePath = document.getElementById("svgStatePath");
 
-  // Scope traces
-  const scopeTraceVin = document.getElementById("scopeTraceVin");
-  const scopeTraceVout = document.getElementById("scopeTraceVout");
-
   // Simulator State
   let cmosVin = 0;
-  let cmosVdd = 1.0;
-  let cmosFreq = 1000;
+  let cmosVdd = 1.0;     // Supply Voltage in V
+  let cmosCl = 5.0;      // Capacitance in fF
+  let cmosFreq = 1000;   // Frequency in MHz
 
   function updateCmosSim() {
     // 1. Dynamic Power Calculation
-    // Total capacitance for 1000 gates: C_total = 1000 * 5 fF = 5 pF
-    const cTotal = 5.0e-12;
+    // Total capacitance for 1000 gates: C_total = 1000 * (cmosCl * 1e-15)
+    const cTotal = 1000 * (cmosCl * 1.0e-15);
     const pDynMw = (0.5 * cTotal * (cmosVdd * cmosVdd) * (cmosFreq * 1.0e6) * 1000).toFixed(2);
 
-    // 2. Instrument Deck Displays
-    if (svgVddDisplay) svgVddDisplay.textContent = `${cmosVdd.toFixed(2)} V`;
+    // 2. Realistic Rise/Fall Timing Calculations (45nm Standard Cell Model)
+    // tr ≈ 2.2 * Rp * CL + intrinsic delay
+    // tf ≈ 2.2 * Rn * CL + intrinsic delay
+    const vScale = 1.0 / cmosVdd;
+    const trVal = ((5.0 + 1.8 * cmosCl) * vScale).toFixed(1);
+    const tfVal = ((4.5 + 1.6 * cmosCl) * vScale).toFixed(1);
+    const tpVal = (((parseFloat(trVal) + parseFloat(tfVal)) / 2)).toFixed(1);
+
+    // 3. Instrument Deck Displays
     if (svgVddLabel) svgVddLabel.textContent = cmosVdd.toFixed(2);
+    if (svgCapDisplay) svgCapDisplay.textContent = `${cmosCl.toFixed(1)} fF`;
+    if (svgCapSchematicLabel) svgCapSchematicLabel.textContent = `CL = ${cmosCl.toFixed(1)} fF`;
     if (svgFreqDisplay) svgFreqDisplay.textContent = `${cmosFreq} MHz`;
     if (svgPowerDisplay) svgPowerDisplay.textContent = `${pDynMw} mW`;
 
-    // Power gauge bar (scale 0..8 mW to 0..96 px width)
+    // Power gauge bar (scale 0..8 mW to 0..94 px width)
     if (svgPowerBar) {
       const pVal = parseFloat(pDynMw);
-      const barW = Math.min(96, Math.max(4, (pVal / 8.0) * 96));
+      const barW = Math.min(94, Math.max(4, (pVal / 8.0) * 94));
       svgPowerBar.setAttribute("width", String(barW.toFixed(1)));
     }
 
-    // Highlight VDD Presets
-    const isVdd08 = Math.abs(cmosVdd - 0.8) < 0.01;
-    const isVdd10 = Math.abs(cmosVdd - 1.0) < 0.01;
-    const isVdd12 = Math.abs(cmosVdd - 1.2) < 0.01;
-    pillVdd08?.setAttribute("fill", isVdd08 ? "#0284c7" : "#1e293b");
-    pillVdd08?.setAttribute("stroke", isVdd08 ? "#38bdf8" : "#334155");
-    pillVdd10?.setAttribute("fill", isVdd10 ? "#0284c7" : "#1e293b");
-    pillVdd10?.setAttribute("stroke", isVdd10 ? "#38bdf8" : "#334155");
-    pillVdd12?.setAttribute("fill", isVdd12 ? "#0284c7" : "#1e293b");
-    pillVdd12?.setAttribute("stroke", isVdd12 ? "#38bdf8" : "#334155");
+    // Highlight Capacitance Presets
+    const isCap02 = Math.abs(cmosCl - 2.0) < 0.1;
+    const isCap05 = Math.abs(cmosCl - 5.0) < 0.1;
+    const isCap10 = Math.abs(cmosCl - 10.0) < 0.1;
+    const isCap20 = Math.abs(cmosCl - 20.0) < 0.1;
+    pillCap02?.setAttribute("fill", isCap02 ? "#0284c7" : "#1e293b");
+    pillCap02?.setAttribute("stroke", isCap02 ? "#38bdf8" : "#334155");
+    pillCap05?.setAttribute("fill", isCap05 ? "#0284c7" : "#1e293b");
+    pillCap05?.setAttribute("stroke", isCap05 ? "#38bdf8" : "#334155");
+    pillCap10?.setAttribute("fill", isCap10 ? "#0284c7" : "#1e293b");
+    pillCap10?.setAttribute("stroke", isCap10 ? "#38bdf8" : "#334155");
+    pillCap20?.setAttribute("fill", isCap20 ? "#0284c7" : "#1e293b");
+    pillCap20?.setAttribute("stroke", isCap20 ? "#38bdf8" : "#334155");
 
     // Highlight Frequency Presets
     const isFreq500 = cmosFreq === 500;
@@ -3155,12 +3194,25 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     pillFreq2500?.setAttribute("fill", isFreq2500 ? "#0284c7" : "#1e293b");
     pillFreq2500?.setAttribute("stroke", isFreq2500 ? "#38bdf8" : "#334155");
 
-    // 3. Switch & Circuit Conduction State
+    // 4. Update Scope Numerical Readouts
+    if (svgScopeInfo) svgScopeInfo.textContent = `CL = ${cmosCl.toFixed(1)} fF`;
+    if (svgScopeTr) svgScopeTr.textContent = `tr ≈ ${trVal} ps`;
+    if (svgScopeTf) svgScopeTf.textContent = `tf ≈ ${tfVal} ps`;
+    if (svgScopeTp) svgScopeTp.textContent = `tp ≈ ${tpVal} ps`;
+
+    // 5. Dynamic Transient Waveform Curve Generator
+    // tauPx scales with capacitive load: 2fF -> 25px; 20fF -> 135px
+    const tauPx = Math.max(18, Math.min(135, cmosCl * 6.5));
+    const xTrig = 530;
+    const xEnd = 730;
+    const xKnee = xTrig + tauPx * 0.42;
+    const xSettle = Math.min(xEnd, xTrig + tauPx * 1.6);
+
+    // 6. Switch & Circuit Conduction State
     if (cmosVin === 0) {
       // ══════════════════════════════════════════════════════
       // VIN = 0 (GND / 0.0V) -> pMOS ON (Pull-up), nMOS OFF
       // ══════════════════════════════════════════════════════
-      // SPDT switch lever points DOWN to GND contact
       if (svgSwitchBlade) {
         svgSwitchBlade.setAttribute("y2", "252");
       }
@@ -3216,15 +3268,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       if (svgNmosRon) { svgNmosRon.textContent = "> 10 GΩ"; svgNmosRon.setAttribute("fill", "#dc2626"); }
       if (svgStatePath) { svgStatePath.textContent = "VDD → MP1 → CL (Pull-Up Active)"; svgStatePath.setAttribute("fill", "#15803d"); }
 
-      // Scope Waveform (Low to High Output)
-      if (scopeTraceVin) scopeTraceVin.setAttribute("d", "M 440 286 L 530 286 L 536 376 L 730 376");
-      if (scopeTraceVout) scopeTraceVout.setAttribute("d", "M 440 376 L 536 376 Q 550 326 580 290 L 730 286");
+      // Scope Waveform (Low-to-High Output Step Response)
+      if (scopeTraceVin) scopeTraceVin.setAttribute("d", `M 440 286 L ${xTrig} 286 L ${xTrig+6} 376 L ${xEnd} 376`);
+      if (scopeTraceVout) scopeTraceVout.setAttribute("d", `M 440 376 L ${xTrig} 376 Q ${xKnee.toFixed(1)} 320 ${xSettle.toFixed(1)} 286 L ${xEnd} 286`);
 
     } else {
       // ══════════════════════════════════════════════════════
       // VIN = 1 (VDD / 1.0V) -> pMOS OFF, nMOS ON (Pull-down)
       // ══════════════════════════════════════════════════════
-      // SPDT switch lever points UP to VDD contact
       if (svgSwitchBlade) {
         svgSwitchBlade.setAttribute("y2", "168");
       }
@@ -3280,9 +3331,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       if (svgNmosRon) { svgNmosRon.textContent = "≈ 105 Ω"; svgNmosRon.setAttribute("fill", "#15803d"); }
       if (svgStatePath) { svgStatePath.textContent = "CL → MN1 → GND (Pull-Down Active)"; svgStatePath.setAttribute("fill", "#1d4ed8"); }
 
-      // Scope Waveform (High to Low Output)
-      if (scopeTraceVin) scopeTraceVin.setAttribute("d", "M 440 376 L 530 376 L 536 286 L 730 286");
-      if (scopeTraceVout) scopeTraceVout.setAttribute("d", "M 440 286 L 536 286 Q 550 336 580 372 L 730 376");
+      // Scope Waveform (High-to-Low Output Step Response)
+      if (scopeTraceVin) scopeTraceVin.setAttribute("d", `M 440 376 L ${xTrig} 376 L ${xTrig+6} 286 L ${xEnd} 286`);
+      if (scopeTraceVout) scopeTraceVout.setAttribute("d", `M 440 286 L ${xTrig} 286 Q ${xKnee.toFixed(1)} 340 ${xSettle.toFixed(1)} 376 L ${xEnd} 376`);
     }
   }
 
@@ -3292,7 +3343,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     updateCmosSim();
   });
 
-  // VDD Steppers & Presets
+  // VDD Steppers at Top Rail
   btnVddDown?.addEventListener("click", () => {
     cmosVdd = Math.max(0.6, parseFloat((cmosVdd - 0.1).toFixed(2)));
     updateCmosSim();
@@ -3301,9 +3352,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     cmosVdd = Math.min(1.2, parseFloat((cmosVdd + 0.1).toFixed(2)));
     updateCmosSim();
   });
-  btnVddPreset08?.addEventListener("click", () => { cmosVdd = 0.8; updateCmosSim(); });
-  btnVddPreset10?.addEventListener("click", () => { cmosVdd = 1.0; updateCmosSim(); });
-  btnVddPreset12?.addEventListener("click", () => { cmosVdd = 1.2; updateCmosSim(); });
+
+  // Capacitance Steppers & Presets
+  btnCapDown?.addEventListener("click", () => {
+    cmosCl = Math.max(1.0, parseFloat((cmosCl - 1.0).toFixed(1)));
+    updateCmosSim();
+  });
+  btnCapUp?.addEventListener("click", () => {
+    cmosCl = Math.min(30.0, parseFloat((cmosCl + 1.0).toFixed(1)));
+    updateCmosSim();
+  });
+  btnCapPreset02?.addEventListener("click", () => { cmosCl = 2.0; updateCmosSim(); });
+  btnCapPreset05?.addEventListener("click", () => { cmosCl = 5.0; updateCmosSim(); });
+  btnCapPreset10?.addEventListener("click", () => { cmosCl = 10.0; updateCmosSim(); });
+  btnCapPreset20?.addEventListener("click", () => { cmosCl = 20.0; updateCmosSim(); });
 
   // Frequency Steppers & Presets
   btnFreqDown?.addEventListener("click", () => {
