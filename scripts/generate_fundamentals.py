@@ -93,7 +93,7 @@ sec1 = """<!-- ============================================================ -->
                 <defs>
                   <!-- EDA CAD Dot Grid -->
                   <pattern id="edaGrid" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <circle cx="2" cy="2" r="1" fill="#151b20" opacity="0.6"/>
+                    <circle cx="2" cy="2" r="1" fill="#151b20" opacity="0.12"/>
                   </pattern>
                   <!-- Reticle for scope -->
                   <pattern id="scopeGrid" width="24" height="24" patternUnits="userSpaceOnUse">
@@ -104,7 +104,7 @@ sec1 = """<!-- ============================================================ -->
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  MAIN WORKBENCH FRAME & CAD GRID                       -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect width="758" height="498" x="1" y="1" rx="8" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+                <rect width="758" height="498" x="1" y="1" rx="8" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
                 <rect width="756" height="422" x="2" y="2" rx="7" fill="url(#edaGrid)"/>
 
                 <!-- Top status banner inside frame -->
@@ -149,7 +149,7 @@ sec1 = """<!-- ============================================================ -->
                 <!-- Clickable Interactive Switch Lever Area -->
                 <g id="btnSvgSwitch" cursor="pointer" role="button" aria-label="Click to toggle input switch">
                   <rect id="svgSwitchBtnBg" x="24" y="124" width="86" height="24" rx="4" fill="#b7df69" stroke="#b7df69" stroke-width="1.5"/>
-                  <text id="svgSwitchBtnTxt" x="67" y="140" font-size="8.5" font-weight="900" fill="#fffaf0af0af0" font-family="monospace" text-anchor="middle">&#8644; SW: 0V (LOW)</text>
+                  <text id="svgSwitchBtnTxt" x="67" y="140" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace" text-anchor="middle">&#8644; SW: 0V (LOW)</text>
 
                   <!-- Top Contact: VDD -->
                   <circle cx="75" cy="165" r="4.5" fill="#f38469"/>
@@ -190,7 +190,7 @@ sec1 = """<!-- ============================================================ -->
                 <!--  pMOS TRANSISTOR (MP1) — Standard IEEE Symbol          -->
                 <!-- ══════════════════════════════════════════════════════ -->
                 <line x1="130" y1="110" x2="178" y2="110" stroke="#151b20" stroke-width="2"/>
-                <circle cx="183" cy="110" r="5" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="2"/>
+                <circle cx="183" cy="110" r="5" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
                 <line x1="191" y1="92" x2="191" y2="128" stroke="#151b20" stroke-width="2.5"/>
 
                 <!-- Channel bar -->
@@ -205,8 +205,8 @@ sec1 = """<!-- ============================================================ -->
                 <!-- Device annotations -->
                 <text x="234" y="98" font-size="11.5" font-weight="900" fill="#f38469" font-family="sans-serif">MP1 (pMOS)</text>
                 <text x="234" y="112" font-size="9.5" fill="#242c33" font-family="monospace">W/L = 1.00µm / 45nm</text>
-                <rect id="pBadge" x="234" y="118" width="70" height="17" rx="3.5" fill="#b7df69"/>
-                <text id="pBadgeTxt" x="269" y="130" font-size="8.5" font-weight="900" fill="#fffaf0af0af0" text-anchor="middle" font-family="sans-serif">ON (Pull-up)</text>
+                <rect id="pBadge" x="234" y="118" width="70" height="17" rx="3.5" fill="#b7df69" stroke="#151b20"/>
+                <text id="pBadgeTxt" x="269" y="130" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle" font-family="sans-serif">ON (Pull-up)</text>
 
                 <text x="225" y="93"  font-size="8" fill="#151b20" font-family="monospace" font-weight="700">S</text>
                 <text x="225" y="135" font-size="8" fill="#151b20" font-family="monospace" font-weight="700">D</text>
@@ -222,7 +222,7 @@ sec1 = """<!-- ============================================================ -->
                 <line id="nch" x1="197" y1="290" x2="197" y2="330" stroke="#242c33" stroke-width="3.5" stroke-dasharray="3 2" stroke-linecap="square"/>
                 <line id="nDrainTab" x1="197" y1="296" x2="220" y2="296" stroke="#242c33" stroke-width="2"/>
                 <line id="nSourceTab" x1="197" y1="324" x2="220" y2="324" stroke="#242c33" stroke-width="2"/>
-                <polygon id="nSourceArrow" points="201,324 211,319 211,329" fill="#242c33"/>
+                <polygon id="nSourceArrow" points="201,324 211,319 211,329" fill="#151b20"/>
 
                 <line id="nDrainWire" x1="220" y1="210" x2="220" y2="296" stroke="#242c33" stroke-width="2"/>
                 <line id="gndStem" x1="220" y1="324" x2="220" y2="385" stroke="#242c33" stroke-width="2"/>
@@ -230,8 +230,8 @@ sec1 = """<!-- ============================================================ -->
                 <!-- Device annotations -->
                 <text x="234" y="298" font-size="11.5" font-weight="900" fill="#22bfd7" font-family="sans-serif">MN1 (nMOS)</text>
                 <text x="234" y="312" font-size="9.5" fill="#242c33" font-family="monospace">W/L = 0.40µm / 45nm</text>
-                <rect id="nBadge" x="234" y="318" width="70" height="17" rx="3.5" fill="#242c33"/>
-                <text id="nBadgeTxt" x="269" y="330" font-size="8.5" font-weight="900" fill="#fffaf0af0af0" text-anchor="middle" font-family="sans-serif">OFF (Cut-off)</text>
+                <rect id="nBadge" x="234" y="318" width="70" height="17" rx="3.5" fill="#eee4c8" stroke="#151b20"/>
+                <text id="nBadgeTxt" x="269" y="330" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle" font-family="sans-serif">OFF (Cut-off)</text>
 
                 <text x="225" y="293" font-size="8" fill="#151b20" font-family="monospace" font-weight="700">D</text>
                 <text x="225" y="335" font-size="8" fill="#151b20" font-family="monospace" font-weight="700">S</text>
@@ -256,7 +256,7 @@ sec1 = """<!-- ============================================================ -->
 
                 <!-- Voltage Probe Flag on Output Wire -->
                 <rect x="340" y="180" width="68" height="18" rx="3" fill="#22bfd7"/>
-                <text id="svgVoutLabel" x="374" y="193" font-size="9" font-weight="900" fill="#fffaf0af0af0" font-family="monospace" text-anchor="middle">1.00 V (H)</text>
+                <text id="svgVoutLabel" x="374" y="193" font-size="9" font-weight="900" fill="#fffaf0" font-family="monospace" text-anchor="middle">1.00 V (H)</text>
 
                 <!-- Load Capacitor CL (Dynamic label) -->
                 <circle cx="300" cy="210" r="3" fill="#22bfd7"/>
@@ -363,7 +363,7 @@ sec1 = """<!-- ============================================================ -->
                   <text x="28" y="461" font-size="13" font-weight="900" fill="#151b20" font-family="sans-serif" text-anchor="middle">&#8722;</text>
                 </g>
 
-                <rect x="44" y="446" width="66" height="22" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="44" y="446" width="66" height="22" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
                 <text id="svgCapDisplay" x="77" y="461" font-size="11" font-weight="900" fill="#22bfd7" font-family="monospace" text-anchor="middle">5.0 fF</text>
 
                 <g id="btnCapUp" cursor="pointer" role="button" aria-label="Increase capacitance">
@@ -389,7 +389,7 @@ sec1 = """<!-- ============================================================ -->
                   <text x="286" y="461" font-size="13" font-weight="900" fill="#151b20" font-family="sans-serif" text-anchor="middle">&#8722;</text>
                 </g>
 
-                <rect x="302" y="446" width="76" height="22" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="302" y="446" width="76" height="22" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
                 <text id="svgFreqDisplay" x="340" y="461" font-size="10.5" font-weight="900" fill="#22bfd7" font-family="monospace" text-anchor="middle">1000 MHz</text>
 
                 <g id="btnFreqUp" cursor="pointer" role="button" aria-label="Increase frequency">
@@ -409,7 +409,7 @@ sec1 = """<!-- ============================================================ -->
                 <!-- MODULE 3: DYNAMIC POWER METER -->
                 <text x="524" y="439" font-size="8.5" font-weight="900" fill="#ffc83e" font-family="monospace">DYNAMIC POWER (Pdyn)</text>
 
-                <rect x="524" y="446" width="112" height="22" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="524" y="446" width="112" height="22" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
                 <text id="svgPowerDisplay" x="580" y="462" font-size="12" font-weight="900" fill="#ffc83e" font-family="monospace" text-anchor="middle">2.50 mW</text>
 
                 <!-- Power Bar Indicator -->
@@ -473,7 +473,7 @@ sec1 = """<!-- ============================================================ -->
               </p>
             </div>
 
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg id="nandNorSvg" viewBox="0 0 760 525" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!-- TOP WORKBENCH STATUS BANNER                           -->
@@ -526,7 +526,7 @@ sec1 = """<!-- ============================================================ -->
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!-- LEFT PANEL: CMOS NAND2 SCHEMATIC                      -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect x="10" y="78" width="365" height="318" rx="8" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="2"/>
+                <rect x="10" y="78" width="365" height="318" rx="8" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
                 <!-- Header Badge -->
                 <rect x="18" y="86" width="349" height="24" rx="4" fill="#b7df69" stroke="#151b20" stroke-width="1.5"/>
                 <text x="26" y="102" font-size="10.5" font-weight="900" fill="#151b20" font-family="monospace">CMOS NAND2 (REFERENCE STANDARD: 1.00 GE)</text>
@@ -555,7 +555,7 @@ sec1 = """<!-- ============================================================ -->
                 <circle cx="105" cy="126" r="2.5" fill="#f38469"/>
                 <line id="nandMpA_ch" x1="113" y1="142" x2="113" y2="170" stroke="#b7df69" stroke-width="5"/>
                 <line x1="105" y1="144" x2="105" y2="168" stroke="#151b20" stroke-width="2.5"/>
-                <circle cx="98" cy="155" r="3.5" fill="#fffaf0af0af0" stroke="#f38469" stroke-width="1.5"/>
+                <circle cx="98" cy="155" r="3.5" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
                 <polygon points="113,155 119,152 119,158" fill="#f38469"/>
                 <line x1="113" y1="170" x2="105" y2="170" stroke="#f38469" stroke-width="2"/>
                 <line x1="105" y1="170" x2="105" y2="188" stroke="#f38469" stroke-width="2"/>
@@ -568,7 +568,7 @@ sec1 = """<!-- ============================================================ -->
                 <circle cx="205" cy="126" r="2.5" fill="#f38469"/>
                 <line id="nandMpB_ch" x1="197" y1="142" x2="197" y2="170" stroke="#b7df69" stroke-width="5"/>
                 <line x1="205" y1="144" x2="205" y2="168" stroke="#151b20" stroke-width="2.5"/>
-                <circle cx="212" cy="155" r="3.5" fill="#fffaf0af0af0" stroke="#f38469" stroke-width="1.5"/>
+                <circle cx="212" cy="155" r="3.5" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
                 <polygon points="197,155 191,152 191,158" fill="#f38469"/>
                 <line x1="197" y1="170" x2="205" y2="170" stroke="#f38469" stroke-width="2"/>
                 <line x1="205" y1="170" x2="205" y2="188" stroke="#f38469" stroke-width="2"/>
@@ -630,7 +630,7 @@ sec1 = """<!-- ============================================================ -->
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!-- RIGHT PANEL: CMOS NOR2 SCHEMATIC                      -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect x="385" y="78" width="365" height="318" rx="8" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="2"/>
+                <rect x="385" y="78" width="365" height="318" rx="8" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
                 <!-- Header Badge -->
                 <rect x="393" y="86" width="349" height="24" rx="4" fill="#f38469" stroke="#151b20" stroke-width="1.5"/>
                 <text x="401" y="102" font-size="10.5" font-weight="900" fill="#151b20" font-family="monospace">CMOS NOR2 (SERIES pMOS CARRIER BOTTLENECK)</text>
@@ -659,7 +659,7 @@ sec1 = """<!-- ============================================================ -->
                 <line x1="530" y1="136" x2="538" y2="136" stroke="#f38469" stroke-width="2"/>
                 <line id="norMpA_ch" x1="538" y1="136" x2="538" y2="164" stroke="#f38469" stroke-width="4"/>
                 <line x1="530" y1="138" x2="530" y2="162" stroke="#151b20" stroke-width="2.5"/>
-                <circle cx="523" cy="150" r="3.5" fill="#fffaf0af0af0" stroke="#f38469" stroke-width="1.5"/>
+                <circle cx="523" cy="150" r="3.5" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
                 <polygon points="538,150 544,147 544,153" fill="#f38469"/>
                 <line x1="538" y1="164" x2="530" y2="164" stroke="#f38469" stroke-width="2"/>
                 <line x1="530" y1="164" x2="530" y2="181" stroke="#f38469" stroke-width="2"/>
@@ -671,7 +671,7 @@ sec1 = """<!-- ============================================================ -->
                 <line x1="530" y1="181" x2="538" y2="181" stroke="#f38469" stroke-width="2"/>
                 <line id="norMpB_ch" x1="538" y1="181" x2="538" y2="209" stroke="#f38469" stroke-width="4"/>
                 <line x1="530" y1="183" x2="530" y2="207" stroke="#151b20" stroke-width="2.5"/>
-                <circle cx="523" cy="195" r="3.5" fill="#fffaf0af0af0" stroke="#f38469" stroke-width="1.5"/>
+                <circle cx="523" cy="195" r="3.5" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
                 <polygon points="538,195 544,192 544,198" fill="#f38469"/>
                 <line x1="538" y1="209" x2="530" y2="209" stroke="#f38469" stroke-width="2"/>
                 <line id="norPullUpFlow" x1="530" y1="209" x2="530" y2="227" stroke="#f38469" stroke-width="3"/>
@@ -951,7 +951,7 @@ sec2 = """<!-- ============================================================ -->
               </p>
             </div>
 
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg id="adderSvg" viewBox="0 0 760 520" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Status Banner -->
                 <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -1015,7 +1015,7 @@ sec2 = """<!-- ============================================================ -->
                 </g>
 
                 <!-- Middle Visualization Canvas -->
-                <rect x="8" y="86" width="744" height="308" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="8" y="86" width="744" height="308" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
                 <!-- Reticle & Header -->
                 <text id="adderCanvasTitle" x="22" y="106" font-size="9.5" font-weight="900" fill="#22bfd7" font-family="monospace">TOPOLOGY: KOGGE-STONE PARALLEL PREFIX TREE (32-BIT DATAPATH)</text>
@@ -1030,21 +1030,21 @@ sec2 = """<!-- ============================================================ -->
                   <text x="32" y="147" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">STAGE 0: BIT GENERATE (G = A&#183;B) &amp; PROPAGATE (P = A&#8853;B)</text>
 
                   <!-- Col 0..7 -->
-                  <circle cx="80" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0af0af0" stroke-width="1.5"/>
+                  <circle cx="80" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0" stroke-width="1.5"/>
                   <text x="80" y="176" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle" font-family="monospace">P0,G0</text>
-                  <circle cx="160" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0af0af0" stroke-width="1.5"/>
+                  <circle cx="160" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0" stroke-width="1.5"/>
                   <text x="160" y="176" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle" font-family="monospace">P1,G1</text>
-                  <circle cx="240" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0af0af0" stroke-width="1.5"/>
+                  <circle cx="240" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0" stroke-width="1.5"/>
                   <text x="240" y="176" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle" font-family="monospace">P2,G2</text>
-                  <circle cx="320" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0af0af0" stroke-width="1.5"/>
+                  <circle cx="320" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0" stroke-width="1.5"/>
                   <text x="320" y="176" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle" font-family="monospace">P3,G3</text>
-                  <circle cx="400" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0af0af0" stroke-width="1.5"/>
+                  <circle cx="400" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0" stroke-width="1.5"/>
                   <text x="400" y="176" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle" font-family="monospace">P4,G4</text>
-                  <circle cx="480" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0af0af0" stroke-width="1.5"/>
+                  <circle cx="480" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0" stroke-width="1.5"/>
                   <text x="480" y="176" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle" font-family="monospace">P5,G5</text>
-                  <circle cx="560" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0af0af0" stroke-width="1.5"/>
+                  <circle cx="560" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0" stroke-width="1.5"/>
                   <text x="560" y="176" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle" font-family="monospace">P6,G6</text>
-                  <circle cx="640" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0af0af0" stroke-width="1.5"/>
+                  <circle cx="640" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0" stroke-width="1.5"/>
                   <text x="640" y="176" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle" font-family="monospace">P7,G7</text>
 
                   <!-- Level 1 (Stride 1) -->
@@ -1139,12 +1139,12 @@ sec2 = """<!-- ============================================================ -->
                   <text x="565" y="210" font-size="8" fill="#151b20">Must wait for all 31 preceding carries!</text>
                   <text x="565" y="225" font-size="8.5" font-weight="800" fill="#22bfd7">Sum: S[31], Cout</text>
                   <rect x="565" y="235" width="145" height="18" rx="3" fill="#f38469"/>
-                  <text id="rcaTotalDelayBadge" x="570" y="248" font-size="8" font-weight="900" fill="#fffaf0af0af0">TOTAL DELAY: 32 GATE DELAYS!</text>
+                  <text id="rcaTotalDelayBadge" x="570" y="248" font-size="8" font-weight="900" fill="#fffaf0">TOTAL DELAY: 32 GATE DELAYS!</text>
 
                   <rect x="25" y="285" width="710" height="65" rx="5" fill="#ffd8ce" stroke="#f38469" stroke-width="1.5"/>
                   <text x="35" y="305" font-size="9" font-weight="900" fill="#f38469" font-family="monospace">&#9888; SEVERE CRITICAL PATH CHOKE: LINEAR O(N) PROPAGATION DELAY</text>
                   <text x="35" y="322" font-size="8" fill="#151b20" font-family="sans-serif">&#8226; In 32-bit addition, Bit 31 cannot produce its sum until the carry ripples sequentially through all 31 stages.</text>
-                  <text x="35" y="336" font-size="8" fill="#fffaf0af0af0" font-family="sans-serif">&#8226; Total delay: 32 &#215; t_carry &#8776; 750 ps in 16nm, limiting maximum CPU clock frequency to under 450 MHz!</text>
+                  <text x="35" y="336" font-size="8" fill="#fffaf0" font-family="sans-serif">&#8226; Total delay: 32 &#215; t_carry &#8776; 750 ps in 16nm, limiting maximum CPU clock frequency to under 450 MHz!</text>
                 </g>
 
                 <!-- ======================================================= -->
@@ -1160,7 +1160,7 @@ sec2 = """<!-- ============================================================ -->
                   <text x="45" y="242" font-size="8.5" font-weight="900" fill="#151b20">Shift Register B [31:0]</text>
                   <text x="45" y="255" font-size="7.5" fill="#242c33">Shifts 1 bit/clock to FA input</text>
 
-                  <rect x="260" y="175" width="180" height="95" rx="6" fill="#fffaf0af00b9" stroke="#151b20" stroke-width="2"/>
+                  <rect x="260" y="175" width="180" height="95" rx="6" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
                   <text x="275" y="200" font-size="11" font-weight="900" fill="#151b20">SINGLE 1-BIT FULL ADDER</text>
                   <text x="275" y="218" font-size="8" fill="#151b20">Calculates 1 bit per clock edge</text>
                   <text x="275" y="235" font-size="8" font-weight="800" fill="#151b20">Silicon Footprint: Only 28 GE!</text>
@@ -1185,21 +1185,21 @@ sec2 = """<!-- ============================================================ -->
 
                 <!-- Module 1: Critical Path Delay -->
                 <text x="22" y="420" font-size="8.5" font-weight="900" fill="#22bfd7" font-family="monospace">CRITICAL PATH DELAY</text>
-                <rect x="22" y="428" width="220" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="22" y="428" width="220" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
                 <text id="svgAdderDelayVal" x="132" y="446" font-size="12" font-weight="900" fill="#22bfd7" font-family="monospace" text-anchor="middle">5 Gate Delays</text>
                 <text id="svgAdderDelaySub" x="22" y="470" font-size="7.5" fill="#242c33" font-family="sans-serif">O(log2 N) logarithmic depth (&#8776; 90 ps at 16nm)</text>
                 <text id="svgAdderSpeedup" x="22" y="485" font-size="7.5" font-weight="800" fill="#b7df69" font-family="sans-serif">Speedup: 6.4&#215; faster than Ripple-Carry</text>
 
                 <!-- Module 2: Silicon Area & Routing Tracks -->
                 <text x="265" y="420" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">SILICON AREA &amp; WIRING TRACKS</text>
-                <rect x="265" y="428" width="220" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="265" y="428" width="220" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
                 <text id="svgAdderAreaVal" x="375" y="446" font-size="12" font-weight="900" fill="#ffc83e" font-family="monospace" text-anchor="middle">340 GE</text>
                 <text id="svgAdderAreaSub" x="265" y="470" font-size="7.5" fill="#242c33" font-family="sans-serif">Prefix area O(N log N) &#8226; High wiring density</text>
                 <text id="svgAdderWireNote" x="265" y="485" font-size="7.5" fill="#242c33" font-family="sans-serif">Requires multiple metal layers (M3-M5 routing)</text>
 
                 <!-- Module 3: SCORE Processor Mapping -->
                 <text x="508" y="420" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">SCORE ARCHITECTURE DEPLOYMENT</text>
-                <rect x="508" y="428" width="232" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="508" y="428" width="232" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
                 <text id="svgAdderCoreName" x="624" y="446" font-size="12" font-weight="900" fill="#b7df69" font-family="monospace" text-anchor="middle">CVA6 &amp; BOOM</text>
                 <text id="svgAdderCoreDesc" x="508" y="470" font-size="7.5" fill="#242c33" font-family="sans-serif">Category 3/4 high-performance cores (&gt;1.5 GHz)</text>
                 <text id="svgAdderFreqNote" x="508" y="485" font-size="7.5" font-weight="800" fill="#22bfd7" font-family="sans-serif">Est. Peak Frequency: &#8776; 1,800 MHz (16nm)</text>
@@ -1277,7 +1277,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
               </p>
             </div>
 
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg id="adderSubSvg" viewBox="0 0 760 480" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -1323,20 +1323,20 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   </g>
 
   <!-- Circuit Diagram Canvas -->
-  <rect x="8" y="84" width="744" height="286" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="84" width="744" height="286" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- sub_ctrl Control Wire -->
   <line id="subCtrlWire" x1="30" y1="108" x2="600" y2="108" stroke="#242c33" stroke-width="2.5" stroke-dasharray="3 3"/>
-  <circle id="subCtrlWireOrigin" cx="30" cy="108" r="4.5" fill="#242c33"/>
+  <circle id="subCtrlWireOrigin" cx="30" cy="108" r="4.5" fill="#eee4c8" stroke="#151b20"/>
   <text id="subCtrlStatusTxt" x="40" y="103" font-size="9" font-weight="900" fill="#242c33" font-family="monospace">sub_ctrl = 0 (Ground / Low): ADDITION MODE</text>
 
   <!-- Tap down to XOR array -->
   <line id="subCtrlXorTap" x1="225" y1="108" x2="225" y2="198" stroke="#242c33" stroke-width="1.5" stroke-dasharray="2 2"/>
-  <circle id="subCtrlXorDot" cx="225" cy="108" r="3" fill="#242c33"/>
+  <circle id="subCtrlXorDot" cx="225" cy="108" r="3" fill="#151b20"/>
 
   <!-- Tap down to Adder Cin -->
   <line id="subCtrlCinTap" x1="345" y1="108" x2="345" y2="145" stroke="#242c33" stroke-width="2"/>
-  <circle id="subCtrlCinDot" cx="345" cy="108" r="3.5" fill="#242c33"/>
+  <circle id="subCtrlCinDot" cx="345" cy="108" r="3.5" fill="#151b20"/>
   <text id="subCtrlCinTxt" x="355" y="132" font-size="8.5" font-weight="900" fill="#242c33" font-family="monospace">Cin = 0</text>
 
   <!-- Operand A Input Box & Bus -->
@@ -1362,10 +1362,10 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <line x1="260" y1="232" x2="275" y2="232" stroke="#151b20" stroke-width="3"/>
 
   <!-- Unified 32-Bit Adder Block -->
-  <rect x="275" y="145" width="185" height="135" rx="8" fill="#fffaf0af00b9" stroke="#151b20" stroke-width="2"/>
+  <rect x="275" y="145" width="185" height="135" rx="8" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
   <text x="367" y="170" font-size="11.5" font-weight="900" fill="#151b20" text-anchor="middle">32-BIT PARALLEL ADDER</text>
   <text id="svgAdderOpText" x="367" y="190" font-size="8.5" font-weight="800" fill="#151b20" text-anchor="middle">Computes: A + B_eff + Cin</text>
-  <rect x="287" y="202" width="161" height="36" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1"/>
+  <rect x="287" y="202" width="161" height="36" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
   <text id="svgAdderEq" x="367" y="224" font-size="9.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">45 + 18 + 0 = 63</text>
   <text id="svgAdderNote" x="367" y="260" font-size="7.5" font-weight="700" fill="#151b20" text-anchor="middle">Standard binary addition datapath</text>
 
@@ -1477,7 +1477,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
               </p>
             </div>
 
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg id="barrelSvg" viewBox="0 0 760 480" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -1508,7 +1508,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
     <rect x="325" y="36" width="20" height="18" rx="3" fill="#eee4c8" stroke="#151b20"/>
     <text x="335" y="49" font-size="11" font-weight="900" fill="#151b20" text-anchor="middle">&#8722;</text>
   </g>
-  <rect x="349" y="36" width="62" height="18" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="349" y="36" width="62" height="18" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text id="txtShamtVal" x="380" y="49" font-size="9" font-weight="900" fill="#0d9488" font-family="monospace" text-anchor="middle">shamt = 13</text>
   <g id="btnShamtInc" cursor="pointer" role="button">
     <rect x="415" y="36" width="20" height="18" rx="3" fill="#eee4c8" stroke="#151b20"/>
@@ -1530,7 +1530,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <text id="txtShamtBinBits" x="95" y="73" font-size="8" font-weight="800" fill="#8275e8" font-family="monospace">shamt[4:0] = 01101 &#8594; b4(16b)=0, b3(8b)=1, b2(4b)=1, b1(2b)=0, b0(1b)=1 (8 + 4 + 1 = 13)</text>
 
   <!-- Circuit Diagram Canvas -->
-  <rect x="8" y="86" width="744" height="286" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="86" width="744" height="286" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Input Port -->
   <rect x="18" y="150" width="82" height="60" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.5"/>
@@ -1790,7 +1790,7 @@ sec3 = """<!-- ============================================================ -->
               <span class="schematic-tag">ARCHITECTURAL CONTRAST</span>
               <span class="schematic-title">CISC Memory-to-Memory vs. RISC-V Decoupled Load-Store Execution</span>
             </div>
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg viewBox="0 0 760 330" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -1798,9 +1798,9 @@ sec3 = """<!-- ============================================================ -->
   <text x="26" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE ARCHITECTURAL COMPARISON • CISC MEMORY-TO-MEMORY vs. RISC-V LOAD-STORE DECOUPLING</text>
 
   <!-- Left: CISC Complex Execution -->
-  <rect x="10" y="32" width="365" height="288" rx="6" fill="#fffaf0af0af0" stroke="#f38469" stroke-width="2"/>
+  <rect x="10" y="32" width="365" height="288" rx="6" fill="#fffaf0" stroke="#f38469" stroke-width="2"/>
   <rect x="10" y="32" width="365" height="32" rx="5" fill="#f38469"/>
-  <text x="22" y="52" font-size="10.5" font-weight="900" fill="#fffaf0af0af0" font-family="monospace">CISC: ADD [EAX + 0x10], EBX</text>
+  <text x="22" y="52" font-size="10.5" font-weight="900" fill="#fffaf0" font-family="monospace">CISC: ADD [EAX + 0x10], EBX</text>
   <text x="22" y="78" font-size="8.5" font-weight="800" fill="#f38469">Single complex microcoded instruction (x86)</text>
 
   <!-- CISC Execution Timeline -->
@@ -1826,7 +1826,7 @@ sec3 = """<!-- ============================================================ -->
   <text x="22" y="300" font-size="7.5" fill="#242c33">&#8226; Decoder Overhead: Requires heavy microcode ROM and complex multi-byte decoding.</text>
 
   <!-- Right: RISC-V Load-Store Decoupling -->
-  <rect x="385" y="32" width="365" height="288" rx="6" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="2"/>
+  <rect x="385" y="32" width="365" height="288" rx="6" fill="#fffaf0" stroke="#b7df69" stroke-width="2"/>
   <rect x="385" y="32" width="365" height="32" rx="5" fill="#b7df69"/>
   <text x="397" y="52" font-size="10.5" font-weight="900" fill="#151b20" font-family="monospace">RISC-V: DECOUPLED LOAD-STORE PIPELINE</text>
   <text x="397" y="78" font-size="8.5" font-weight="800" fill="#b7df69">Three clean, uniform, single-cycle RISC instructions</text>
@@ -1853,7 +1853,7 @@ sec3 = """<!-- ============================================================ -->
   <rect x="397" y="246" width="341" height="64" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
   <text x="407" y="262" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">&#10004; ZERO MEMORY STALLS ON ARITHMETIC PIPELINE</text>
   <text x="407" y="276" font-size="7.5" fill="#b7df69">&#8226; Arithmetic execution never touches external memory buses.</text>
-  <text x="407" y="289" font-size="7.5" fill="#fffaf0af0af0">&#8226; 32-bit fixed instruction format decodes in less than 1 gate delay!</text>
+  <text x="407" y="289" font-size="7.5" fill="#fffaf0">&#8226; 32-bit fixed instruction format decodes in less than 1 gate delay!</text>
 </svg>
             </div>
             <div class="schematic-caption">
@@ -1906,7 +1906,7 @@ sec3 = """<!-- ============================================================ -->
               </p>
             </div>
 
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg id="regFileSvg" viewBox="0 0 760 460" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -1938,7 +1938,7 @@ sec3 = """<!-- ============================================================ -->
   </g>
 
   <!-- Circuit Diagram Canvas -->
-  <rect x="8" y="84" width="744" height="276" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="84" width="744" height="276" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Read Port 1 Address Bus -->
   <line x1="25" y1="125" x2="230" y2="125" stroke="#22bfd7" stroke-width="2.5"/>
@@ -1956,7 +1956,7 @@ sec3 = """<!-- ============================================================ -->
   <text x="35" y="280" font-size="8" fill="#242c33">Synchronous Write at Clock Edge</text>
 
   <!-- Central Register File SRAM Core -->
-  <rect x="230" y="105" width="260" height="195" rx="8" fill="#fffaf0af00b9" stroke="#151b20" stroke-width="2"/>
+  <rect x="230" y="105" width="260" height="195" rx="8" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
   <text x="360" y="130" font-size="12" font-weight="900" fill="#151b20" text-anchor="middle">32 &#215; 32-BIT SRAM REGISTER ARRAY</text>
   <text x="360" y="145" font-size="8.5" fill="#151b20" text-anchor="middle">General Purpose Registers x0 to x31</text>
 
@@ -2263,7 +2263,7 @@ sec4 = """<!-- ============================================================ -->
             <text x="135" y="65" font-weight="900" font-size="11" fill="#151b20">2. DECODE</text>
             <rect x="133" y="75" width="65" height="30" rx="3" fill="#ffd8ce"/>
             <text x="145" y="94" font-size="9" font-weight="800" fill="#f38469">Decoder</text>
-            <rect x="133" y="110" width="65" height="30" rx="3" fill="#fffaf0af00b9"/>
+            <rect x="133" y="110" width="65" height="30" rx="3" fill="#fff0b9"/>
             <text x="142" y="129" font-size="9" font-weight="800" fill="#151b20">RegFile</text>
 
             <!-- Register ID/EX -->
@@ -2283,7 +2283,7 @@ sec4 = """<!-- ============================================================ -->
             <!-- Stage 4: MEM -->
             <rect x="341" y="40" width="85" height="110" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
             <text x="355" y="65" font-weight="900" font-size="11" fill="#151b20">4. MEMORY</text>
-            <rect x="351" y="85" width="65" height="45" rx="3" fill="#fffaf0af00b9" stroke="#f38469" stroke-width="1"/>
+            <rect x="351" y="85" width="65" height="45" rx="3" fill="#fff0b9" stroke="#f38469" stroke-width="1"/>
             <text x="362" y="110" font-size="9" font-weight="800" fill="#242c33">D-Cache</text>
 
             <!-- Register MEM/WB -->
@@ -2365,7 +2365,7 @@ sec4 = """<!-- ============================================================ -->
               </p>
             </div>
 
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg id="forwardingSvg" viewBox="0 0 760 520" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -2411,15 +2411,15 @@ sec4 = """<!-- ============================================================ -->
   <text id="fwdCodePreview" x="500" y="72" font-size="8.5" font-weight="900" fill="#0d9488" font-family="monospace">add x1, x2, x3 &#8594; sub x4, x1, x5</text>
 
   <!-- Middle: 5-Stage Datapath with Bypass Network (y=88 to 295) -->
-  <rect x="8" y="88" width="744" height="205" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="88" width="744" height="205" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Stage IF -->
   <rect x="18" y="105" width="85" height="115" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
   <rect x="18" y="105" width="85" height="20" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/>
   <text x="60" y="119" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">1. FETCH (IF)</text>
-  <rect x="25" y="135" width="70" height="30" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1"/>
+  <rect x="25" y="135" width="70" height="30" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
   <text x="60" y="153" font-size="8" font-weight="800" fill="#151b20" text-anchor="middle">Prog Counter</text>
-  <rect x="25" y="172" width="70" height="40" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+  <rect x="25" y="172" width="70" height="40" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="60" y="195" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">I-Cache</text>
 
   <!-- Register IF/ID -->
@@ -2430,9 +2430,9 @@ sec4 = """<!-- ============================================================ -->
   <rect x="130" y="105" width="105" height="115" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
   <rect x="130" y="105" width="105" height="20" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/>
   <text x="182" y="119" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">2. DECODE (ID)</text>
-  <rect x="137" y="132" width="90" height="26" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1"/>
+  <rect x="137" y="132" width="90" height="26" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
   <text x="182" y="148" font-size="8" font-weight="800" fill="#151b20" text-anchor="middle">Control Decoder</text>
-  <rect x="137" y="164" width="90" height="48" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="137" y="164" width="90" height="48" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="182" y="184" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">RegFile (2R1W)</text>
   <text x="182" y="198" font-size="7" fill="#242c33" text-anchor="middle">rs1, rs2 Read Ports</text>
 
@@ -2446,17 +2446,17 @@ sec4 = """<!-- ============================================================ -->
   <text x="330" y="119" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">3. EXECUTE (EX)</text>
 
   <!-- Mux A (3:1) -->
-  <rect id="boxMuxA" x="270" y="132" width="28" height="34" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect id="boxMuxA" x="270" y="132" width="28" height="34" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="284" y="146" font-size="7" font-weight="900" fill="#151b20" text-anchor="middle">MUX A</text>
   <text id="txtMuxASel" x="284" y="158" font-size="6.5" font-weight="900" fill="#0d9488" text-anchor="middle">Sel: 10</text>
 
   <!-- Mux B (3:1) -->
-  <rect id="boxMuxB" x="270" y="174" width="28" height="34" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect id="boxMuxB" x="270" y="174" width="28" height="34" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="284" y="188" font-size="7" font-weight="900" fill="#151b20" text-anchor="middle">MUX B</text>
   <text id="txtMuxBSel" x="284" y="200" font-size="6.5" font-weight="900" fill="#242c33" text-anchor="middle">Sel: 00</text>
 
   <!-- ALU Symbol -->
-  <path d="M 312 135 L 362 150 L 362 170 L 312 185 Z" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="2"/>
+  <path d="M 312 135 L 362 150 L 362 170 L 312 185 Z" fill="#fffaf0" stroke="#b7df69" stroke-width="2"/>
   <text x="332" y="163" font-size="10" font-weight="900" fill="#b7df69" text-anchor="middle">ALU</text>
 
   <!-- Register EX/MEM -->
@@ -2467,7 +2467,7 @@ sec4 = """<!-- ============================================================ -->
   <rect x="426" y="105" width="105" height="115" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
   <rect x="426" y="105" width="105" height="20" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/>
   <text x="478" y="119" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">4. MEMORY (MEM)</text>
-  <rect x="434" y="140" width="90" height="60" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="434" y="140" width="90" height="60" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="478" y="168" font-size="8.5" font-weight="900" fill="#ffc83e" text-anchor="middle">D-Cache (RAM)</text>
   <text id="txtMemStageVal" x="478" y="185" font-size="7" fill="#242c33" text-anchor="middle">ALU Result Bypass</text>
 
@@ -2479,7 +2479,7 @@ sec4 = """<!-- ============================================================ -->
   <rect x="560" y="105" width="85" height="115" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
   <rect x="560" y="105" width="85" height="20" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/>
   <text x="602" y="119" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">5. WRITE (WB)</text>
-  <rect x="568" y="140" width="70" height="35" rx="3" fill="#fffaf0af0af0" stroke="#8275e8" stroke-width="1.5"/>
+  <rect x="568" y="140" width="70" height="35" rx="3" fill="#fffaf0" stroke="#8275e8" stroke-width="1.5"/>
   <text x="603" y="160" font-size="8" font-weight="900" fill="#8275e8" text-anchor="middle">WB Mux &#8594; rd</text>
 
   <!-- Forwarding Unit Control Box (Bottom Center) -->
@@ -2523,17 +2523,17 @@ sec4 = """<!-- ============================================================ -->
   <!-- Row 1: Inst 1 -->
   <text id="tblInst1Name" x="18" y="362" font-size="8" font-weight="900" fill="#0d9488" font-family="monospace">1. add x1, x2, x3</text>
   <rect x="175" y="348" width="55" height="20" rx="3" fill="#c9f3f4" stroke="#22bfd7"/><text x="202" y="361" font-size="8" font-weight="800" fill="#22bfd7" text-anchor="middle">IF</text>
-  <rect x="255" y="348" width="55" height="20" rx="3" fill="#fffaf0af00b9" stroke="#ffc83e"/><text x="282" y="361" font-size="8" font-weight="800" fill="#ffc83e" text-anchor="middle">ID</text>
+  <rect x="255" y="348" width="55" height="20" rx="3" fill="#fff0b9" stroke="#ffc83e"/><text x="282" y="361" font-size="8" font-weight="800" fill="#ffc83e" text-anchor="middle">ID</text>
   <rect id="cellInst1Ex" x="335" y="348" width="55" height="20" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="2"/><text x="362" y="361" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">EX [x1 ready]</text>
-  <rect x="415" y="348" width="55" height="20" rx="3" fill="#fffaf0af00b9" stroke="#ffc83e"/><text x="442" y="361" font-size="8" font-weight="800" fill="#ffc83e" text-anchor="middle">MEM</text>
+  <rect x="415" y="348" width="55" height="20" rx="3" fill="#fff0b9" stroke="#ffc83e"/><text x="442" y="361" font-size="8" font-weight="800" fill="#ffc83e" text-anchor="middle">MEM</text>
   <rect x="495" y="348" width="55" height="20" rx="3" fill="#e2dfff" stroke="#8275e8"/><text x="522" y="361" font-size="8" font-weight="800" fill="#8275e8" text-anchor="middle">WB</text>
 
   <!-- Row 2: Inst 2 -->
   <text id="tblInst2Name" x="18" y="388" font-size="8" font-weight="900" fill="#ffc83e" font-family="monospace">2. sub x4, x1, x5</text>
   <rect x="255" y="374" width="55" height="20" rx="3" fill="#c9f3f4" stroke="#22bfd7"/><text x="282" y="387" font-size="8" font-weight="800" fill="#22bfd7" text-anchor="middle">IF</text>
-  <rect x="335" y="374" width="55" height="20" rx="3" fill="#fffaf0af00b9" stroke="#ffc83e"/><text x="362" y="387" font-size="8" font-weight="800" fill="#ffc83e" text-anchor="middle">ID [Read x1]</text>
+  <rect x="335" y="374" width="55" height="20" rx="3" fill="#fff0b9" stroke="#ffc83e"/><text x="362" y="387" font-size="8" font-weight="800" fill="#ffc83e" text-anchor="middle">ID [Read x1]</text>
   <rect id="cellInst2Ex" x="415" y="374" width="55" height="20" rx="3" fill="#e7f4c8" stroke="#0d9488" stroke-width="2"/><text id="txtInst2Ex" x="442" y="387" font-size="8" font-weight="900" fill="#0d9488" text-anchor="middle">EX (Bypassed)</text>
-  <rect id="cellInst2Mem" x="495" y="374" width="55" height="20" rx="3" fill="#fffaf0af00b9" stroke="#ffc83e"/><text x="522" y="387" font-size="8" font-weight="800" fill="#ffc83e" text-anchor="middle">MEM</text>
+  <rect id="cellInst2Mem" x="495" y="374" width="55" height="20" rx="3" fill="#fff0b9" stroke="#ffc83e"/><text x="522" y="387" font-size="8" font-weight="800" fill="#ffc83e" text-anchor="middle">MEM</text>
   <rect id="cellInst2Wb" x="575" y="374" width="55" height="20" rx="3" fill="#e2dfff" stroke="#8275e8"/><text x="602" y="387" font-size="8" font-weight="800" fill="#8275e8" text-anchor="middle">WB</text>
 
   <!-- Bottom Instrument Rack (Light Theme) -->
@@ -2541,21 +2541,21 @@ sec4 = """<!-- ============================================================ -->
 
   <!-- Col 1: Forwarding Status -->
   <text x="18" y="426" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">DATA FORWARDING STATUS</text>
-  <rect x="18" y="434" width="225" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="18" y="434" width="225" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text id="svgFwdStatusVal" x="130" y="451" font-size="11" font-weight="900" fill="#0d9488" font-family="monospace" text-anchor="middle">EX-to-EX BYPASS ACTIVE</text>
   <text id="svgFwdStatusSub" x="18" y="475" font-size="7.5" fill="#242c33">ALU result bypassed directly from EX/MEM to Mux A</text>
   <text id="svgFwdStatusNote" x="18" y="490" font-size="7.5" font-weight="800" fill="#b7df69">Execution latency: 0 idle stall cycles! (CPI = 1.0)</text>
 
   <!-- Col 2: Pipeline Performance Impact -->
   <text x="260" y="426" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">HAZARD STALL PENALTY</text>
-  <rect x="260" y="434" width="220" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="260" y="434" width="220" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text id="svgFwdStallVal" x="370" y="451" font-size="12" font-weight="900" fill="#ffc83e" font-family="monospace" text-anchor="middle">0 STALL BUBBLES</text>
   <text id="svgFwdCpiNote" x="260" y="475" font-size="7.5" fill="#242c33">Without forwarding: Would require 2 stalls (CPI = 3.0)</text>
   <text id="svgFwdSpeedupNote" x="260" y="490" font-size="7.5" font-weight="800" fill="#22bfd7">Effective Speedup vs No-Forwarding: 2.1&#215;</text>
 
   <!-- Col 3: Hardware Cost & Timing -->
   <text x="498" y="426" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">CRITICAL PATH &amp; AREA COST</text>
-  <rect x="498" y="434" width="244" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="498" y="434" width="244" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text id="svgFwdAreaVal" x="620" y="451" font-size="11" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">~280 GE &#8226; +35 ps Mux Delay</text>
   <text x="498" y="475" font-size="7.5" fill="#242c33">4x 5-bit register comparators + 64x 3:1 MUX gates</text>
   <text x="498" y="490" font-size="7.5" font-weight="800" fill="#8275e8">SCORE Mapping: Ibex, CV32E40P, CVA6 (All Cat 2-4)</text>
@@ -2653,7 +2653,7 @@ sec4 = """<!-- ============================================================ -->
               </p>
             </div>
 
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg id="bpuSvg" viewBox="0 0 760 480" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -2697,7 +2697,7 @@ sec4 = """<!-- ============================================================ -->
   <text id="txtBpuHistory" x="280" y="72" font-size="8" font-weight="800" fill="#242c33" font-family="monospace">Recent Stream: [Initialized to 00: Strongly Not Taken]</text>
 
   <!-- Middle: 4-State Diagram (y=88 to 285) -->
-  <rect x="8" y="88" width="744" height="195" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="88" width="744" height="195" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Left Half Zone: Predict NOT TAKEN (States 00, 01) -->
   <rect x="18" y="96" width="350" height="24" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
@@ -2717,7 +2717,7 @@ sec4 = """<!-- ============================================================ -->
 
   <!-- Self-loop 00 (NT) -->
   <path d="M 70 165 C 40 145, 40 225, 70 205" fill="none" stroke="#242c33" stroke-width="1.5"/>
-  <polygon points="70,205 60,208 63,200" fill="#242c33"/>
+  <polygon points="70,205 60,208 63,200" fill="#151b20"/>
   <text x="35" y="188" font-size="7.5" font-weight="800" fill="#242c33">NT</text>
 
   <!-- Transition 00 -> 01 (Taken) -->
@@ -2732,7 +2732,7 @@ sec4 = """<!-- ============================================================ -->
 
   <!-- STATE 01: Weakly Not Taken -->
   <g id="nodeState01" cursor="pointer">
-    <circle id="bgState01" cx="280" cy="185" r="38" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+    <circle id="bgState01" cx="280" cy="185" r="38" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
     <text x="280" y="178" font-size="12" font-weight="900" fill="#151b20" text-anchor="middle">01</text>
     <text x="280" y="193" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">WEAKLY</text>
     <text x="280" y="205" font-size="7.5" font-weight="800" fill="#242c33" text-anchor="middle">Not Taken</text>
@@ -2751,7 +2751,7 @@ sec4 = """<!-- ============================================================ -->
 
   <!-- STATE 10: Weakly Taken -->
   <g id="nodeState10" cursor="pointer">
-    <circle id="bgState10" cx="480" cy="185" r="38" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+    <circle id="bgState10" cx="480" cy="185" r="38" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
     <text x="480" y="178" font-size="12" font-weight="900" fill="#151b20" text-anchor="middle">10</text>
     <text x="480" y="193" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">WEAKLY</text>
     <text x="480" y="205" font-size="7.5" font-weight="800" fill="#242c33" text-anchor="middle">Taken</text>
@@ -2769,7 +2769,7 @@ sec4 = """<!-- ============================================================ -->
 
   <!-- STATE 11: Strongly Taken -->
   <g id="nodeState11" cursor="pointer">
-    <circle id="bgState11" cx="660" cy="185" r="38" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+    <circle id="bgState11" cx="660" cy="185" r="38" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
     <text x="660" y="178" font-size="12" font-weight="900" fill="#151b20" text-anchor="middle">11</text>
     <text x="660" y="193" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">STRONGLY</text>
     <text x="660" y="205" font-size="7.5" font-weight="800" fill="#242c33" text-anchor="middle">Taken</text>
@@ -2777,7 +2777,7 @@ sec4 = """<!-- ============================================================ -->
 
   <!-- Self-loop 11 (Taken) -->
   <path d="M 690 165 C 720 145, 720 225, 690 205" fill="none" stroke="#242c33" stroke-width="1.5"/>
-  <polygon points="690,165 698,172 701,164" fill="#242c33"/>
+  <polygon points="690,165 698,172 701,164" fill="#151b20"/>
   <text x="715" y="188" font-size="7.5" font-weight="800" fill="#242c33">T</text>
 
   <!-- Hysteresis Callout Note -->
@@ -2791,7 +2791,7 @@ sec4 = """<!-- ============================================================ -->
   <text id="txtBpuOutcomeTitle" x="133" y="336" font-size="10" font-weight="900" fill="#151b20" text-anchor="middle">&#10003; PREDICTION HIT (CORRECT)</text>
   <text id="txtBpuOutcomeSub" x="133" y="352" font-size="8" font-weight="700" fill="#b7df69" text-anchor="middle">0 Bubbles Injected &#8226; Pipeline Continues</text>
 
-  <rect x="260" y="318" width="480" height="46" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1"/>
+  <rect x="260" y="318" width="480" height="46" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
   <text x="270" y="334" font-size="8" font-weight="900" fill="#151b20">Pipeline Penalty Deconstruction:</text>
   <text id="txtBpuPenaltyExplain" x="270" y="347" font-size="7.5" fill="#242c33">Branch predicted correctly: Zero stall penalty. Instructions fetched in IF/ID execute without interruption.</text>
   <text id="txtBpuLoopFlutterNote" x="270" y="359" font-size="7.5" font-weight="800" fill="#0d9488">1-bit vs 2-bit Advantage: In a loop of 10, 1-bit predictor mispredicts 2x; 2-bit predictor mispredicts only 1x!</text>
@@ -2801,21 +2801,21 @@ sec4 = """<!-- ============================================================ -->
 
   <!-- Col 1: Accuracy Counter -->
   <text x="18" y="398" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">PREDICTOR ACCURACY</text>
-  <rect x="18" y="406" width="225" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="18" y="406" width="225" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text id="svgBpuAccuracyVal" x="130" y="423" font-size="12" font-weight="900" fill="#0d9488" font-family="monospace" text-anchor="middle">100.0% (1 / 1)</text>
   <text id="svgBpuHitsVal" x="18" y="445" font-size="7.5" fill="#242c33">Hits: 1 &#8226; Misses: 0</text>
   <text x="18" y="458" font-size="7.5" font-weight="800" fill="#b7df69">Target: &gt;90% accuracy in compiled C loops</text>
 
   <!-- Col 2: Misprediction Cost -->
   <text x="260" y="398" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">MISPREDICTION FLUSH PENALTY</text>
-  <rect x="260" y="406" width="220" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="260" y="406" width="220" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="370" y="423" font-size="12" font-weight="900" fill="#ffc83e" font-family="monospace" text-anchor="middle">2 Clock Cycles (IF+ID)</text>
   <text x="260" y="445" font-size="7.5" fill="#242c33">Branch resolved at EX stage &#8594; Flushes 2 young instructions</text>
   <text x="260" y="458" font-size="7.5" font-weight="800" fill="#f38469">Unpredicted Branches: Drops IPC from 1.0 down to 0.7</text>
 
   <!-- Col 3: Hardware Implementation -->
   <text x="498" y="398" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">SILICON FOOTPRINT</text>
-  <rect x="498" y="406" width="244" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="498" y="406" width="244" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="620" y="423" font-size="11" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">2 Bits / Table Entry (BHT)</text>
   <text x="498" y="445" font-size="7.5" fill="#242c33">1,024-entry BHT requires only 256 Bytes of dedicated SRAM</text>
   <text x="498" y="458" font-size="7.5" font-weight="800" fill="#8275e8">SCORE Mapping: Ibex (Cat 2), CVA6 (Cat 3), BOOM (Cat 4)</text>
@@ -2927,7 +2927,7 @@ sec5 = """<!-- ============================================================ -->
               </p>
             </div>
 
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg id="ptwSvg" viewBox="0 0 760 500" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -2959,12 +2959,12 @@ sec5 = """<!-- ============================================================ -->
   <text id="txtPtwVaHex" x="180" y="72" font-size="8.5" font-weight="900" fill="#0d9488" font-family="monospace">0x0000_0001_0040_2000 (Binary: VPN[2]=0x000, VPN[1]=0x002, VPN[0]=0x001, Offset=0x000)</text>
 
   <!-- Middle: Virtual Address Deconstruction & Translation Grid (y=88 to 395) -->
-  <rect x="8" y="88" width="744" height="305" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="88" width="744" height="305" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- VA Partition Strip -->
   <rect x="18" y="98" width="724" height="32" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
   <rect x="22" y="102" width="160" height="24" rx="3" fill="#c9f3f4" stroke="#22bfd7"/><text x="102" y="117" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">VPN[2] (Bits 38:30 &#8226; 9b)</text>
-  <rect x="186" y="102" width="160" height="24" rx="3" fill="#fffaf0af00b9" stroke="#ffc83e"/><text x="266" y="117" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">VPN[1] (Bits 29:21 &#8226; 9b)</text>
+  <rect x="186" y="102" width="160" height="24" rx="3" fill="#fff0b9" stroke="#ffc83e"/><text x="266" y="117" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">VPN[1] (Bits 29:21 &#8226; 9b)</text>
   <rect x="350" y="102" width="160" height="24" rx="3" fill="#e7f4c8" stroke="#b7df69"/><text x="430" y="117" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">VPN[0] (Bits 20:12 &#8226; 9b)</text>
   <rect x="514" y="102" width="224" height="24" rx="3" fill="#e2dfff" stroke="#8275e8"/><text x="626" y="117" font-size="8" font-weight="900" fill="#8275e8" text-anchor="middle">Page Offset [11:0] (12b &#8226; 4 KiB)</text>
 
@@ -2973,7 +2973,7 @@ sec5 = """<!-- ============================================================ -->
     <rect id="boxTlb" x="18" y="140" width="724" height="55" rx="5" fill="#e7f4c8" stroke="#b7df69" stroke-width="2"/>
     <text x="30" y="160" font-size="9" font-weight="900" fill="#151b20">HARDWARE TRANSLATION LOOKASIDE BUFFER (TLB) &#8226; FULLY ASSOCIATIVE CAM</text>
     <text id="txtTlbStatus" x="30" y="176" font-size="8" font-weight="800" fill="#b7df69">&#10003; TLB HIT: Virtual Page Number tag matched in 1 clock cycle (0.5 ns). Direct PPN translation ready!</text>
-    <rect x="550" y="148" width="180" height="38" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+    <rect x="550" y="148" width="180" height="38" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
     <text x="640" y="164" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">1-CYCLE FAST TRANSLATION</text>
     <text x="640" y="178" font-size="7.5" font-weight="800" fill="#0d9488" text-anchor="middle">0 DRAM Lookups &#8226; CPI = 1.0</text>
   </g>
@@ -2984,7 +2984,7 @@ sec5 = """<!-- ============================================================ -->
     <text x="30" y="222" font-size="8.5" font-weight="900" fill="#151b20">3-LEVEL HARDWARE PAGE TABLE WALK (DRAM RADIX-256 TREE):</text>
 
     <!-- Step 1: satp + VPN[2] -->
-    <rect id="boxPtwL2" x="25" y="232" width="220" height="82" rx="4" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+    <rect id="boxPtwL2" x="25" y="232" width="220" height="82" rx="4" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
     <rect x="25" y="232" width="220" height="18" rx="3" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1"/>
     <text x="135" y="244" font-size="7.5" font-weight="900" fill="#22bfd7" text-anchor="middle">LEVEL 2 ROOT TABLE (satp.PPN)</text>
     <text x="35" y="262" font-size="7.5" fill="#151b20">Base: satp.PPN &#215; 4096</text>
@@ -2996,8 +2996,8 @@ sec5 = """<!-- ============================================================ -->
     <path d="M 245 273 L 265 273" stroke="#22bfd7" stroke-width="2"/>
 
     <!-- Step 2: Level 1 Table -->
-    <rect id="boxPtwL1" x="270" y="232" width="220" height="82" rx="4" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
-    <rect x="270" y="232" width="220" height="18" rx="3" fill="#fffaf0af00b9" stroke="#ffc83e" stroke-width="1"/>
+    <rect id="boxPtwL1" x="270" y="232" width="220" height="82" rx="4" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
+    <rect x="270" y="232" width="220" height="18" rx="3" fill="#fff0b9" stroke="#ffc83e" stroke-width="1"/>
     <text x="380" y="244" font-size="7.5" font-weight="900" fill="#ffc83e" text-anchor="middle">LEVEL 1 DIRECTORY TABLE</text>
     <text x="280" y="262" font-size="7.5" fill="#151b20">Base: Level 1 PPN &#215; 4096</text>
     <text x="280" y="275" font-size="7.5" fill="#151b20">Index: + (VPN[1] &#215; 8 Bytes)</text>
@@ -3008,7 +3008,7 @@ sec5 = """<!-- ============================================================ -->
     <path d="M 490 273 L 510 273" stroke="#ffc83e" stroke-width="2"/>
 
     <!-- Step 3: Level 0 Leaf PTE -->
-    <rect id="boxPtwL0" x="515" y="232" width="220" height="82" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+    <rect id="boxPtwL0" x="515" y="232" width="220" height="82" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
     <rect x="515" y="232" width="220" height="18" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/>
     <text x="625" y="244" font-size="7.5" font-weight="900" fill="#b7df69" text-anchor="middle">LEVEL 0 LEAF PTE (4 KiB PAGE)</text>
     <text x="525" y="262" font-size="7.5" fill="#151b20">Index: + (VPN[0] &#215; 8 Bytes)</text>
@@ -3018,7 +3018,7 @@ sec5 = """<!-- ============================================================ -->
   </g>
 
   <!-- Output 56-Bit Physical Address (Bottom Row) -->
-  <rect x="18" y="335" width="724" height="48" rx="5" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="2"/>
+  <rect x="18" y="335" width="724" height="48" rx="5" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
   <text x="30" y="352" font-size="8.5" font-weight="900" fill="#151b20">TRANSLATED 56-BIT PHYSICAL ADDRESS (PA):</text>
   <rect x="30" y="358" width="460" height="18" rx="3" fill="#e7f4c8" stroke="#b7df69"/>
   <text id="txtPtwPaPpn" x="260" y="371" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Physical Page Number: PPN[43:0] = 0x0000_8004_2</text>
@@ -3030,21 +3030,21 @@ sec5 = """<!-- ============================================================ -->
 
   <!-- Col 1: Translation Latency -->
   <text x="18" y="416" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">TRANSLATION TIME PENALTY</text>
-  <rect x="18" y="424" width="225" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="18" y="424" width="225" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text id="svgPtwLatencyVal" x="130" y="441" font-size="12" font-weight="900" fill="#0d9488" font-family="monospace" text-anchor="middle">1 Clock Cycle (~0.5 ns)</text>
   <text id="svgPtwLatencySub" x="18" y="465" font-size="7.5" fill="#242c33">TLB Hit: Zero memory bus wait-states</text>
   <text x="18" y="478" font-size="7.5" font-weight="800" fill="#b7df69">99% TLB Hit Rate keeps effective memory latency &lt;1.5 cycles</text>
 
   <!-- Col 2: Memory Bus Traffic -->
   <text x="260" y="416" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">DRAM BUS TRAFFIC</text>
-  <rect x="260" y="424" width="220" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="260" y="424" width="220" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text id="svgPtwTrafficVal" x="370" y="441" font-size="12" font-weight="900" fill="#ffc83e" font-family="monospace" text-anchor="middle">0 Bytes DRAM Traffic</text>
   <text id="svgPtwTrafficSub" x="260" y="465" font-size="7.5" fill="#242c33">On TLB Miss: Requires 3&#215; 64-bit PTE fetches = 24 Bytes</text>
   <text x="260" y="478" font-size="7.5" font-weight="800" fill="#f38469">Page walk stalls core completely for ~180 clock cycles!</text>
 
   <!-- Col 3: Hardware Architecture -->
   <text x="498" y="416" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">MMU ARCHITECTURE</text>
-  <rect x="498" y="424" width="244" height="26" rx="4" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="498" y="424" width="244" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="620" y="441" font-size="11" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">L1 TLB: 32 Entries &#8226; L2 TLB: 512</text>
   <text x="498" y="465" font-size="7.5" fill="#242c33">Hardware Page Table Walker FSM embedded in MMU</text>
   <text x="498" y="478" font-size="7.5" font-weight="800" fill="#8275e8">SCORE Mapping: CVA6 (Cat 3), BOOM &amp; Ara (Cat 4)</text>
@@ -3144,7 +3144,7 @@ sec5 = """<!-- ============================================================ -->
               <span class="schematic-tag">CORE MICROARCHITECTURE</span>
               <span class="schematic-title">Modern Out-of-Order Execution, Register Renaming &amp; Reorder Buffer (ROB)</span>
             </div>
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -3152,26 +3152,26 @@ sec5 = """<!-- ============================================================ -->
   <text x="26" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE ARCHITECTURE &#8226; MODERN OUT-OF-ORDER SUPERSCALAR CORE (CVA6 / BOOM CLASS)</text>
 
   <!-- Frame Background -->
-  <rect x="8" y="30" width="744" height="342" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="30" width="744" height="342" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Zone 1: In-Order Frontend (x=16 to 180) -->
   <rect x="16" y="38" width="165" height="280" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
   <rect x="16" y="38" width="165" height="22" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/>
   <text x="98" y="53" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">1. IN-ORDER FRONTEND</text>
 
-  <rect x="24" y="68" width="149" height="36" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+  <rect x="24" y="68" width="149" height="36" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="98" y="84" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Branch Target Buffer (BTB)</text>
   <text x="98" y="96" font-size="7" fill="#242c33" text-anchor="middle">TAGE / Return Address Stack</text>
 
-  <rect x="24" y="112" width="149" height="42" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+  <rect x="24" y="112" width="149" height="42" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="98" y="130" font-size="8.5" font-weight="900" fill="#22bfd7" text-anchor="middle">L1 I-Cache &amp; Fetch Engine</text>
   <text x="98" y="144" font-size="7" fill="#242c33" text-anchor="middle">4 Instructions / Clock Cycle</text>
 
-  <rect x="24" y="162" width="149" height="36" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1"/>
+  <rect x="24" y="162" width="149" height="36" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
   <text x="98" y="178" font-size="8" font-weight="800" fill="#151b20" text-anchor="middle">4-Wide Instruction Decoder</text>
   <text x="98" y="190" font-size="7" fill="#242c33" text-anchor="middle">Compressed RV32C Expander</text>
 
-  <rect x="24" y="206" width="149" height="40" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="24" y="206" width="149" height="40" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="98" y="224" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">Instruction Queue (FIFO)</text>
   <text x="98" y="238" font-size="7" fill="#242c33" text-anchor="middle">16 Decoded Micro-Ops</text>
 
@@ -3180,16 +3180,16 @@ sec5 = """<!-- ============================================================ -->
   <rect x="190" y="38" width="145" height="22" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/>
   <text x="262" y="53" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">2. RENAME &amp; ALLOCATE</text>
 
-  <rect x="198" y="68" width="129" height="65" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="198" y="68" width="129" height="65" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="262" y="86" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">Register Alias Table (RAT)</text>
   <text x="262" y="100" font-size="7" fill="#151b20" text-anchor="middle">Maps 32 Arch &#8594; 128 Phys</text>
   <text x="262" y="114" font-size="7" font-weight="800" fill="#ffc83e" text-anchor="middle">Eliminates WAR &amp; WAW Hazards!</text>
 
-  <rect x="198" y="142" width="129" height="45" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1"/>
+  <rect x="198" y="142" width="129" height="45" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
   <text x="262" y="160" font-size="8" font-weight="800" fill="#151b20" text-anchor="middle">Physical RegFile Free List</text>
   <text x="262" y="174" font-size="7" fill="#242c33" text-anchor="middle">Reclaims committed registers</text>
 
-  <rect x="198" y="196" width="129" height="50" rx="3" fill="#fffaf0af0af0" stroke="#8275e8" stroke-width="1.5"/>
+  <rect x="198" y="196" width="129" height="50" rx="3" fill="#fffaf0" stroke="#8275e8" stroke-width="1.5"/>
   <text x="262" y="214" font-size="8" font-weight="900" fill="#8275e8" text-anchor="middle">Physical RegFile (PRF)</text>
   <text x="262" y="228" font-size="7" fill="#242c33" text-anchor="middle">128 Registers &#215; 64-Bit</text>
   <text x="262" y="240" font-size="7" fill="#8275e8" text-anchor="middle">Multi-ported SRAM (8R4W)</text>
@@ -3199,24 +3199,24 @@ sec5 = """<!-- ============================================================ -->
   <rect x="345" y="38" width="220" height="22" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/>
   <text x="455" y="53" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">3. OUT-OF-ORDER EXECUTION ENGINE</text>
 
-  <rect x="353" y="68" width="204" height="45" rx="3" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+  <rect x="353" y="68" width="204" height="45" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
   <text x="455" y="86" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">Unified Issue Queue / Reservation Stations</text>
   <text x="455" y="100" font-size="7" fill="#b7df69" text-anchor="middle">Wakeup &amp; Select logic dispatches when operands ready!</text>
 
   <!-- Execution Units Grid -->
-  <rect x="353" y="122" width="48" height="55" rx="3" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+  <rect x="353" y="122" width="48" height="55" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
   <text x="377" y="142" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">ALU 0</text>
   <text x="377" y="156" font-size="6.5" fill="#242c33" text-anchor="middle">Int / Shift</text>
 
-  <rect x="405" y="122" width="48" height="55" rx="3" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+  <rect x="405" y="122" width="48" height="55" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
   <text x="429" y="142" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">ALU 1</text>
   <text x="429" y="156" font-size="6.5" fill="#242c33" text-anchor="middle">Int / Logic</text>
 
-  <rect x="457" y="122" width="48" height="55" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="457" y="122" width="48" height="55" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="481" y="142" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">Branch</text>
   <text x="481" y="156" font-size="6.5" fill="#242c33" text-anchor="middle">Cond Exec</text>
 
-  <rect x="509" y="122" width="48" height="55" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="509" y="122" width="48" height="55" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="533" y="142" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">LSU</text>
   <text x="533" y="156" font-size="6.5" fill="#242c33" text-anchor="middle">Load/Store</text>
 
@@ -3230,7 +3230,7 @@ sec5 = """<!-- ============================================================ -->
   <rect x="575" y="38" width="169" height="22" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/>
   <text x="659" y="53" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">4. IN-ORDER COMMIT &amp; ROB</text>
 
-  <rect x="583" y="68" width="153" height="120" rx="4" fill="#fffaf0af0af0" stroke="#f38469" stroke-width="1.5"/>
+  <rect x="583" y="68" width="153" height="120" rx="4" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
   <text x="659" y="86" font-size="8.5" font-weight="900" fill="#f38469" text-anchor="middle">Reorder Buffer (ROB)</text>
   <text x="659" y="100" font-size="7" fill="#242c33" text-anchor="middle">Circular FIFO Queue &#8226; 64 Entries</text>
 
@@ -3238,7 +3238,7 @@ sec5 = """<!-- ============================================================ -->
   <rect x="591" y="130" width="137" height="18" rx="2" fill="#f6f0dc" stroke="#151b20"/><text x="659" y="142" font-size="7" fill="#242c33" text-anchor="middle">Inst #43 [Waiting ALU 0]</text>
   <rect x="591" y="152" width="137" height="18" rx="2" fill="#f6f0dc" stroke="#151b20"/><text x="659" y="164" font-size="7" fill="#242c33" text-anchor="middle">Tail: Inst #44 [Allocated]</text>
 
-  <rect x="583" y="196" width="153" height="48" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="583" y="196" width="153" height="48" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="659" y="214" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Architectural State Commit</text>
   <text x="659" y="228" font-size="7" fill="#b7df69" text-anchor="middle">&#10003; Guarantees Precise Interrupts!</text>
   <text x="659" y="238" font-size="6.5" fill="#242c33" text-anchor="middle">Flushes speculative state on branch miss</text>
@@ -3382,7 +3382,7 @@ sec6 = """<!-- ============================================================ -->
               <span class="schematic-tag">VECTOR ARCHITECTURE</span>
               <span class="schematic-title">Decoupled Multi-Lane Vector Coprocessor (Ara Architecture)</span>
             </div>
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg viewBox="0 0 760 360" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -3390,22 +3390,22 @@ sec6 = """<!-- ============================================================ -->
   <text x="26" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE ARCHITECTURE &#8226; DECOUPLED MULTI-LANE VECTOR ACCELERATOR (ARA CLASS)</text>
 
   <!-- Frame Background -->
-  <rect x="8" y="30" width="744" height="322" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="30" width="744" height="322" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Left: Host Scalar Core (CVA6 / Ariane) -->
   <rect x="18" y="42" width="165" height="230" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
   <rect x="18" y="42" width="165" height="22" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/>
   <text x="100" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">HOST SCALAR CORE (CVA6)</text>
 
-  <rect x="26" y="72" width="149" height="42" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+  <rect x="26" y="72" width="149" height="42" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="100" y="90" font-size="8.5" font-weight="900" fill="#22bfd7" text-anchor="middle">Scalar Pipeline (6-Stage)</text>
   <text x="100" y="104" font-size="7" fill="#242c33" text-anchor="middle">RV64GC Instruction Fetch</text>
 
-  <rect x="26" y="122" width="149" height="42" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="26" y="122" width="149" height="42" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="100" y="140" font-size="8.5" font-weight="900" fill="#ffc83e" text-anchor="middle">Scalar Register File (XRF)</text>
   <text x="100" y="154" font-size="7" fill="#242c33" text-anchor="middle">32 Registers &#215; 64-Bit</text>
 
-  <rect x="26" y="172" width="149" height="45" rx="3" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+  <rect x="26" y="172" width="149" height="45" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
   <text x="100" y="190" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">Vector Offload Interface</text>
   <text x="100" y="204" font-size="7" fill="#242c33" text-anchor="middle">Asynchronous Dual-Clock FIFO</text>
 
@@ -3421,15 +3421,15 @@ sec6 = """<!-- ============================================================ -->
   <rect x="215" y="42" width="130" height="22" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/>
   <text x="280" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">VECTOR CONTROLLER</text>
 
-  <rect x="223" y="72" width="114" height="42" rx="3" fill="#fffaf0af0af0" stroke="#8275e8" stroke-width="1.5"/>
+  <rect x="223" y="72" width="114" height="42" rx="3" fill="#fffaf0" stroke="#8275e8" stroke-width="1.5"/>
   <text x="280" y="90" font-size="8" font-weight="900" fill="#8275e8" text-anchor="middle">Vector Sequencer</text>
   <text x="280" y="104" font-size="7" fill="#242c33" text-anchor="middle">Expands VLEN into uops</text>
 
-  <rect x="223" y="122" width="114" height="42" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="223" y="122" width="114" height="42" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="280" y="140" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">CSR &amp; Config Engine</text>
   <text x="280" y="154" font-size="7" fill="#242c33" text-anchor="middle">vtype, vl, vstart, vcsr</text>
 
-  <rect x="223" y="172" width="114" height="45" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="223" y="172" width="114" height="45" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="280" y="190" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">Vector Load/Store (VLSU)</text>
   <text x="280" y="204" font-size="7" fill="#242c33" text-anchor="middle">Strided &amp; Indexed Gather/Scatter</text>
 
@@ -3439,32 +3439,32 @@ sec6 = """<!-- ============================================================ -->
   <text x="549" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">4 PARALLEL VECTOR EXECUTION LANES (4 &#215; 64-BIT = 256 BITS/CYCLE)</text>
 
   <!-- Lane 0 -->
-  <rect x="365" y="72" width="85" height="190" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+  <rect x="365" y="72" width="85" height="190" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
   <rect x="365" y="72" width="85" height="18" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/><text x="407" y="85" font-size="7.5" font-weight="900" fill="#151b20" text-anchor="middle">LANE 0</text>
-  <rect x="372" y="96" width="71" height="45" rx="3" fill="#fffaf0af0af0" stroke="#8275e8" stroke-width="1.5"/><text x="407" y="114" font-size="7.5" font-weight="900" fill="#8275e8" text-anchor="middle">VRF Bank 0</text><text x="407" y="126" font-size="6.5" fill="#242c33" text-anchor="middle">64-bit slice</text>
-  <rect x="372" y="148" width="71" height="50" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/><text x="407" y="168" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">V-FMA 0</text><text x="407" y="182" font-size="6.5" fill="#242c33" text-anchor="middle">FP64 / 2&#215;FP32</text>
-  <rect x="372" y="204" width="71" height="50" rx="3" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/><text x="407" y="224" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">V-ALU 0</text><text x="407" y="238" font-size="6.5" fill="#242c33" text-anchor="middle">Int SIMD 64b</text>
+  <rect x="372" y="96" width="71" height="45" rx="3" fill="#fffaf0" stroke="#8275e8" stroke-width="1.5"/><text x="407" y="114" font-size="7.5" font-weight="900" fill="#8275e8" text-anchor="middle">VRF Bank 0</text><text x="407" y="126" font-size="6.5" fill="#242c33" text-anchor="middle">64-bit slice</text>
+  <rect x="372" y="148" width="71" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/><text x="407" y="168" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">V-FMA 0</text><text x="407" y="182" font-size="6.5" fill="#242c33" text-anchor="middle">FP64 / 2&#215;FP32</text>
+  <rect x="372" y="204" width="71" height="50" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="407" y="224" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">V-ALU 0</text><text x="407" y="238" font-size="6.5" fill="#242c33" text-anchor="middle">Int SIMD 64b</text>
 
   <!-- Lane 1 -->
-  <rect x="458" y="72" width="85" height="190" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+  <rect x="458" y="72" width="85" height="190" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
   <rect x="458" y="72" width="85" height="18" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/><text x="500" y="85" font-size="7.5" font-weight="900" fill="#151b20" text-anchor="middle">LANE 1</text>
-  <rect x="465" y="96" width="71" height="45" rx="3" fill="#fffaf0af0af0" stroke="#8275e8" stroke-width="1.5"/><text x="500" y="114" font-size="7.5" font-weight="900" fill="#8275e8" text-anchor="middle">VRF Bank 1</text><text x="500" y="126" font-size="6.5" fill="#242c33" text-anchor="middle">64-bit slice</text>
-  <rect x="465" y="148" width="71" height="50" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/><text x="500" y="168" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">V-FMA 1</text><text x="500" y="182" font-size="6.5" fill="#242c33" text-anchor="middle">FP64 / 2&#215;FP32</text>
-  <rect x="465" y="204" width="71" height="50" rx="3" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/><text x="500" y="224" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">V-ALU 1</text><text x="500" y="238" font-size="6.5" fill="#242c33" text-anchor="middle">Int SIMD 64b</text>
+  <rect x="465" y="96" width="71" height="45" rx="3" fill="#fffaf0" stroke="#8275e8" stroke-width="1.5"/><text x="500" y="114" font-size="7.5" font-weight="900" fill="#8275e8" text-anchor="middle">VRF Bank 1</text><text x="500" y="126" font-size="6.5" fill="#242c33" text-anchor="middle">64-bit slice</text>
+  <rect x="465" y="148" width="71" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/><text x="500" y="168" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">V-FMA 1</text><text x="500" y="182" font-size="6.5" fill="#242c33" text-anchor="middle">FP64 / 2&#215;FP32</text>
+  <rect x="465" y="204" width="71" height="50" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="500" y="224" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">V-ALU 1</text><text x="500" y="238" font-size="6.5" fill="#242c33" text-anchor="middle">Int SIMD 64b</text>
 
   <!-- Lane 2 -->
-  <rect x="551" y="72" width="85" height="190" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+  <rect x="551" y="72" width="85" height="190" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
   <rect x="551" y="72" width="85" height="18" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/><text x="593" y="85" font-size="7.5" font-weight="900" fill="#151b20" text-anchor="middle">LANE 2</text>
-  <rect x="558" y="96" width="71" height="45" rx="3" fill="#fffaf0af0af0" stroke="#8275e8" stroke-width="1.5"/><text x="593" y="114" font-size="7.5" font-weight="900" fill="#8275e8" text-anchor="middle">VRF Bank 2</text><text x="593" y="126" font-size="6.5" fill="#242c33" text-anchor="middle">64-bit slice</text>
-  <rect x="558" y="148" width="71" height="50" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/><text x="593" y="168" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">V-FMA 2</text><text x="593" y="182" font-size="6.5" fill="#242c33" text-anchor="middle">FP64 / 2&#215;FP32</text>
-  <rect x="558" y="204" width="71" height="50" rx="3" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/><text x="593" y="224" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">V-ALU 2</text><text x="593" y="238" font-size="6.5" fill="#242c33" text-anchor="middle">Int SIMD 64b</text>
+  <rect x="558" y="96" width="71" height="45" rx="3" fill="#fffaf0" stroke="#8275e8" stroke-width="1.5"/><text x="593" y="114" font-size="7.5" font-weight="900" fill="#8275e8" text-anchor="middle">VRF Bank 2</text><text x="593" y="126" font-size="6.5" fill="#242c33" text-anchor="middle">64-bit slice</text>
+  <rect x="558" y="148" width="71" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/><text x="593" y="168" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">V-FMA 2</text><text x="593" y="182" font-size="6.5" fill="#242c33" text-anchor="middle">FP64 / 2&#215;FP32</text>
+  <rect x="558" y="204" width="71" height="50" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="593" y="224" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">V-ALU 2</text><text x="593" y="238" font-size="6.5" fill="#242c33" text-anchor="middle">Int SIMD 64b</text>
 
   <!-- Lane 3 -->
-  <rect x="644" y="72" width="85" height="190" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+  <rect x="644" y="72" width="85" height="190" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
   <rect x="644" y="72" width="85" height="18" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/><text x="686" y="85" font-size="7.5" font-weight="900" fill="#151b20" text-anchor="middle">LANE 3</text>
-  <rect x="651" y="96" width="71" height="45" rx="3" fill="#fffaf0af0af0" stroke="#8275e8" stroke-width="1.5"/><text x="686" y="114" font-size="7.5" font-weight="900" fill="#8275e8" text-anchor="middle">VRF Bank 3</text><text x="686" y="126" font-size="6.5" fill="#242c33" text-anchor="middle">64-bit slice</text>
-  <rect x="651" y="148" width="71" height="50" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/><text x="686" y="168" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">V-FMA 3</text><text x="686" y="182" font-size="6.5" fill="#242c33" text-anchor="middle">FP64 / 2&#215;FP32</text>
-  <rect x="651" y="204" width="71" height="50" rx="3" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/><text x="686" y="224" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">V-ALU 3</text><text x="686" y="238" font-size="6.5" fill="#242c33" text-anchor="middle">Int SIMD 64b</text>
+  <rect x="651" y="96" width="71" height="45" rx="3" fill="#fffaf0" stroke="#8275e8" stroke-width="1.5"/><text x="686" y="114" font-size="7.5" font-weight="900" fill="#8275e8" text-anchor="middle">VRF Bank 3</text><text x="686" y="126" font-size="6.5" fill="#242c33" text-anchor="middle">64-bit slice</text>
+  <rect x="651" y="148" width="71" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/><text x="686" y="168" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">V-FMA 3</text><text x="686" y="182" font-size="6.5" fill="#242c33" text-anchor="middle">FP64 / 2&#215;FP32</text>
+  <rect x="651" y="204" width="71" height="50" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="686" y="224" font-size="8" font-weight="900" fill="#b7df69" text-anchor="middle">V-ALU 3</text><text x="686" y="238" font-size="6.5" fill="#242c33" text-anchor="middle">Int SIMD 64b</text>
 
   <!-- High-Bandwidth AXI5 Memory Bus across bottom -->
   <rect x="18" y="280" width="726" height="34" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
@@ -3589,7 +3589,7 @@ sec6 = """<!-- ============================================================ -->
               <span class="schematic-tag">SPATIAL ACCELERATOR</span>
               <span class="schematic-title">2D Systolic Array Matrix Multiplication Engine (Gemmini Class)</span>
             </div>
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg viewBox="0 0 760 360" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -3597,20 +3597,20 @@ sec6 = """<!-- ============================================================ -->
   <text x="26" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE ARCHITECTURE &#8226; 2D SYSTOLIC ARRAY MATRIX ACCELERATOR (GEMMINI / TPU CLASS)</text>
 
   <!-- Frame Background -->
-  <rect x="8" y="30" width="744" height="322" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="30" width="744" height="322" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Matrix A Activation Stream (From Left) -->
   <rect x="18" y="45" width="135" height="195" rx="5" fill="#f6f0dc" stroke="#22bfd7" stroke-width="1.5"/>
   <rect x="18" y="45" width="135" height="20" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1"/><text x="85" y="59" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">MATRIX A STREAM (IN)</text>
   <text x="85" y="85" font-size="8" font-weight="800" fill="#151b20" text-anchor="middle">Skewed Wavefront:</text>
-  <rect x="28" y="100" width="115" height="22" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7"/><text x="85" y="115" font-size="7.5" font-weight="900" fill="#22bfd7" text-anchor="middle">Row 0: a00, a01, a02 &#8594;</text>
-  <rect x="28" y="130" width="115" height="22" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7"/><text x="85" y="145" font-size="7.5" font-weight="900" fill="#22bfd7" text-anchor="middle">Row 1: [D] a10, a11 &#8594;</text>
-  <rect x="28" y="160" width="115" height="22" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7"/><text x="85" y="175" font-size="7.5" font-weight="900" fill="#22bfd7" text-anchor="middle">Row 2: [2D] a20, a21 &#8594;</text>
-  <rect x="28" y="190" width="115" height="22" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7"/><text x="85" y="205" font-size="7.5" font-weight="900" fill="#22bfd7" text-anchor="middle">Row 3: [3D] a30, a31 &#8594;</text>
+  <rect x="28" y="100" width="115" height="22" rx="3" fill="#fffaf0" stroke="#22bfd7"/><text x="85" y="115" font-size="7.5" font-weight="900" fill="#22bfd7" text-anchor="middle">Row 0: a00, a01, a02 &#8594;</text>
+  <rect x="28" y="130" width="115" height="22" rx="3" fill="#fffaf0" stroke="#22bfd7"/><text x="85" y="145" font-size="7.5" font-weight="900" fill="#22bfd7" text-anchor="middle">Row 1: [D] a10, a11 &#8594;</text>
+  <rect x="28" y="160" width="115" height="22" rx="3" fill="#fffaf0" stroke="#22bfd7"/><text x="85" y="175" font-size="7.5" font-weight="900" fill="#22bfd7" text-anchor="middle">Row 2: [2D] a20, a21 &#8594;</text>
+  <rect x="28" y="190" width="115" height="22" rx="3" fill="#fffaf0" stroke="#22bfd7"/><text x="85" y="205" font-size="7.5" font-weight="900" fill="#22bfd7" text-anchor="middle">Row 3: [3D] a30, a31 &#8594;</text>
 
   <!-- Matrix B Weight Stream (From Top) -->
   <rect x="175" y="45" width="280" height="42" rx="4" fill="#f6f0dc" stroke="#ffc83e" stroke-width="1.5"/>
-  <rect x="175" y="45" width="280" height="18" rx="3" fill="#fffaf0af00b9" stroke="#ffc83e" stroke-width="1"/><text x="315" y="58" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">MATRIX B STREAM &#8595; (TOP-DOWN SKEWED WAVEFRONT)</text>
+  <rect x="175" y="45" width="280" height="18" rx="3" fill="#fff0b9" stroke="#ffc83e" stroke-width="1"/><text x="315" y="58" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">MATRIX B STREAM &#8595; (TOP-DOWN SKEWED WAVEFRONT)</text>
   <text x="315" y="80" font-size="7.5" font-weight="800" fill="#151b20" text-anchor="middle">Col 0 (b00) &#8226; Col 1 (D, b01) &#8226; Col 2 (2D, b02) &#8226; Col 3 (3D, b03)</text>
 
   <!-- 4x4 Systolic Array of PEs (x=175 to 455, y=95 to 275) -->
@@ -3642,12 +3642,12 @@ sec6 = """<!-- ============================================================ -->
   <rect x="465" y="45" width="279" height="235" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
   <rect x="465" y="45" width="279" height="22" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/><text x="604" y="60" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">PROCESSING ELEMENT (PE) INNER ANATOMY</text>
 
-  <rect x="480" y="78" width="249" height="70" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/>
+  <rect x="480" y="78" width="249" height="70" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
   <text x="604" y="98" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">Multiply-Accumulate (MAC) Circuit</text>
   <text x="604" y="114" font-size="7.5" fill="#151b20" text-anchor="middle">C_out = C_in + (A_in &#215; B_in)</text>
   <text x="604" y="130" font-size="7" font-weight="800" fill="#0d9488" text-anchor="middle">Output Stationary / Weight Stationary Registers</text>
 
-  <rect x="480" y="158" width="249" height="50" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+  <rect x="480" y="158" width="249" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="604" y="178" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Zero External Memory Traffic</text>
   <text x="604" y="192" font-size="7" fill="#242c33" text-anchor="middle">Activations pass rightwards; weights pass downwards</text>
 
@@ -3771,7 +3771,7 @@ sec7 = """<!-- ============================================================ -->
               <span class="schematic-tag">FABRIC ARCHITECTURE</span>
               <span class="schematic-title">Architectural Evolution of On-Chip Interconnect Fabrics</span>
             </div>
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg viewBox="0 0 760 340" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -3779,17 +3779,17 @@ sec7 = """<!-- ============================================================ -->
   <text x="26" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE ARCHITECTURE &#8226; ON-CHIP FABRIC EVOLUTION: SHARED BUS vs. CROSSBAR vs. 2D MESH NOC</text>
 
   <!-- Frame Background -->
-  <rect x="8" y="30" width="744" height="302" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="30" width="744" height="302" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Topology 1: Shared Bus (x=18 to 250) -->
   <rect x="18" y="42" width="232" height="235" rx="5" fill="#f6f0dc" stroke="#f38469" stroke-width="1.5"/>
   <rect x="18" y="42" width="232" height="22" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/><text x="134" y="57" font-size="8.5" font-weight="900" fill="#f38469" text-anchor="middle">1. SHARED BUS (WISHBONE / APB)</text>
 
   <!-- 4 Cores sharing bus -->
-  <rect x="28" y="75" width="45" height="32" rx="3" fill="#fffaf0af0af0" stroke="#151b20"/><text x="50" y="95" font-size="7.5" font-weight="900" text-anchor="middle">Core 0</text>
-  <rect x="80" y="75" width="45" height="32" rx="3" fill="#fffaf0af0af0" stroke="#151b20"/><text x="102" y="95" font-size="7.5" font-weight="900" text-anchor="middle">Core 1</text>
-  <rect x="132" y="75" width="45" height="32" rx="3" fill="#fffaf0af0af0" stroke="#151b20"/><text x="154" y="95" font-size="7.5" font-weight="900" text-anchor="middle">Core 2</text>
-  <rect x="184" y="75" width="45" height="32" rx="3" fill="#fffaf0af0af0" stroke="#151b20"/><text x="206" y="95" font-size="7.5" font-weight="900" text-anchor="middle">Core 3</text>
+  <rect x="28" y="75" width="45" height="32" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="50" y="95" font-size="7.5" font-weight="900" text-anchor="middle">Core 0</text>
+  <rect x="80" y="75" width="45" height="32" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="102" y="95" font-size="7.5" font-weight="900" text-anchor="middle">Core 1</text>
+  <rect x="132" y="75" width="45" height="32" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="154" y="95" font-size="7.5" font-weight="900" text-anchor="middle">Core 2</text>
+  <rect x="184" y="75" width="45" height="32" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="206" y="95" font-size="7.5" font-weight="900" text-anchor="middle">Core 3</text>
 
   <!-- Shared Bus Backbone -->
   <rect x="28" y="130" width="201" height="18" rx="3" fill="#ffd8ce" stroke="#f38469" stroke-width="1.5"/>
@@ -3803,14 +3803,14 @@ sec7 = """<!-- ============================================================ -->
 
   <!-- Shared Memory Slave -->
   <line x1="128" y1="148" x2="128" y2="175" stroke="#f38469" stroke-width="2"/>
-  <rect x="68" y="175" width="120" height="30" rx="3" fill="#fffaf0af0af0" stroke="#151b20"/><text x="128" y="194" font-size="8" font-weight="900" text-anchor="middle">Shared Memory / Slave</text>
+  <rect x="68" y="175" width="120" height="30" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="128" y="194" font-size="8" font-weight="900" text-anchor="middle">Shared Memory / Slave</text>
 
   <text x="134" y="235" font-size="8" font-weight="900" fill="#f38469" text-anchor="middle">&#10007; Serial Bottleneck: Max 4 Cores</text>
   <text x="134" y="248" font-size="7" fill="#242c33" text-anchor="middle">Arbitration serializes all requests</text>
 
   <!-- Topology 2: Full Crossbar (x=260 to 495) -->
   <rect x="260" y="42" width="235" height="235" rx="5" fill="#f6f0dc" stroke="#ffc83e" stroke-width="1.5"/>
-  <rect x="260" y="42" width="235" height="22" rx="4" fill="#fffaf0af00b9" stroke="#ffc83e" stroke-width="1"/><text x="377" y="57" font-size="8.5" font-weight="900" fill="#ffc83e" text-anchor="middle">2. FULL CROSSBAR (AXI4 / TILELINK)</text>
+  <rect x="260" y="42" width="235" height="22" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1"/><text x="377" y="57" font-size="8.5" font-weight="900" fill="#ffc83e" text-anchor="middle">2. FULL CROSSBAR (AXI4 / TILELINK)</text>
 
   <!-- Crossbar Matrix Grid -->
   <text x="270" y="80" font-size="7.5" font-weight="800" fill="#151b20">4 Masters (Cores):</text>
@@ -3839,10 +3839,10 @@ sec7 = """<!-- ============================================================ -->
   <rect x="505" y="42" width="237" height="22" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/><text x="623" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">3. 2D MESH NOC (SNITCH / CHESHIRE)</text>
 
   <!-- 4 Tile Routers arranged in 2x2 or 3x3 -->
-  <rect x="530" y="80" width="75" height="45" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/><text x="567" y="100" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Tile (0,0)</text><text x="567" y="114" font-size="7" fill="#242c33" text-anchor="middle">Core + Router</text>
-  <rect x="635" y="80" width="75" height="45" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/><text x="672" y="100" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Tile (0,1)</text><text x="672" y="114" font-size="7" fill="#242c33" text-anchor="middle">Core + Router</text>
-  <rect x="530" y="145" width="75" height="45" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/><text x="567" y="165" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Tile (1,0)</text><text x="567" y="179" font-size="7" fill="#242c33" text-anchor="middle">Core + Router</text>
-  <rect x="635" y="145" width="75" height="45" rx="4" fill="#fffaf0af0af0" stroke="#b7df69" stroke-width="1.5"/><text x="672" y="165" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Tile (1,1)</text><text x="672" y="179" font-size="7" fill="#242c33" text-anchor="middle">Core + Router</text>
+  <rect x="530" y="80" width="75" height="45" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="567" y="100" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Tile (0,0)</text><text x="567" y="114" font-size="7" fill="#242c33" text-anchor="middle">Core + Router</text>
+  <rect x="635" y="80" width="75" height="45" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="672" y="100" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Tile (0,1)</text><text x="672" y="114" font-size="7" fill="#242c33" text-anchor="middle">Core + Router</text>
+  <rect x="530" y="145" width="75" height="45" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="567" y="165" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Tile (1,0)</text><text x="567" y="179" font-size="7" fill="#242c33" text-anchor="middle">Core + Router</text>
+  <rect x="635" y="145" width="75" height="45" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="672" y="165" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">Tile (1,1)</text><text x="672" y="179" font-size="7" fill="#242c33" text-anchor="middle">Core + Router</text>
 
   <!-- Mesh Bidirectional Links -->
   <line x1="605" y1="102" x2="635" y2="102" stroke="#b7df69" stroke-width="2.5"/>
@@ -3946,7 +3946,7 @@ sec7 = """<!-- ============================================================ -->
               <span class="schematic-tag">SYNCHRONIZATION SCHEMATIC</span>
               <span class="schematic-title">Software Memory Spinlock Wall vs. 1-Cycle Hardware Barrier Reduction Tree</span>
             </div>
-            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+            <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
               <svg viewBox="0 0 760 300" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -3954,7 +3954,7 @@ sec7 = """<!-- ============================================================ -->
   <text x="26" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE ARCHITECTURE &#8226; SYNCHRONIZATION CONTRAST: MEMORY SPINLOCK vs. 1-CYCLE BARRIER TREE</text>
 
   <!-- Frame Background -->
-  <rect x="8" y="30" width="744" height="262" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="30" width="744" height="262" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Left: Software Atomic Spinlock (x=18 to 365) -->
   <rect x="18" y="42" width="347" height="200" rx="5" fill="#f6f0dc" stroke="#f38469" stroke-width="1.5"/>
@@ -3962,11 +3962,11 @@ sec7 = """<!-- ============================================================ -->
 
   <!-- Cores spinning -->
   <text x="30" y="80" font-size="8" font-weight="800" fill="#151b20">256 Cores Hammering Shared Lock Address:</text>
-  <rect x="30" y="90" width="55" height="30" rx="3" fill="#fffaf0af0af0" stroke="#f38469"/><text x="57" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 0</text>
-  <rect x="95" y="90" width="55" height="30" rx="3" fill="#fffaf0af0af0" stroke="#f38469"/><text x="122" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 1</text>
-  <rect x="160" y="90" width="55" height="30" rx="3" fill="#fffaf0af0af0" stroke="#f38469"/><text x="187" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 2</text>
+  <rect x="30" y="90" width="55" height="30" rx="3" fill="#fffaf0" stroke="#f38469"/><text x="57" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 0</text>
+  <rect x="95" y="90" width="55" height="30" rx="3" fill="#fffaf0" stroke="#f38469"/><text x="122" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 1</text>
+  <rect x="160" y="90" width="55" height="30" rx="3" fill="#fffaf0" stroke="#f38469"/><text x="187" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 2</text>
   <text x="235" y="108" font-size="12" font-weight="900" fill="#f38469">&#8226;&#8226;&#8226;</text>
-  <rect x="270" y="90" width="65" height="30" rx="3" fill="#fffaf0af0af0" stroke="#f38469"/><text x="302" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 255</text>
+  <rect x="270" y="90" width="65" height="30" rx="3" fill="#fffaf0" stroke="#f38469"/><text x="302" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 255</text>
 
   <!-- Polling Traffic Arrows -->
   <path d="M 57 120 L 57 150 L 191 150 L 191 165" stroke="#f38469" stroke-width="2"/>
@@ -3985,10 +3985,10 @@ sec7 = """<!-- ============================================================ -->
 
   <!-- Dedicated Barrier Wires -->
   <text x="400" y="80" font-size="8" font-weight="800" fill="#151b20">Dedicated Combinational "Arrive" Wires:</text>
-  <rect x="400" y="90" width="55" height="30" rx="3" fill="#fffaf0af0af0" stroke="#b7df69"/><text x="427" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 0</text>
-  <rect x="465" y="90" width="55" height="30" rx="3" fill="#fffaf0af0af0" stroke="#b7df69"/><text x="492" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 1</text>
+  <rect x="400" y="90" width="55" height="30" rx="3" fill="#fffaf0" stroke="#b7df69"/><text x="427" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 0</text>
+  <rect x="465" y="90" width="55" height="30" rx="3" fill="#fffaf0" stroke="#b7df69"/><text x="492" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 1</text>
   <text x="540" y="108" font-size="12" font-weight="900" fill="#b7df69">&#8226;&#8226;&#8226;</text>
-  <rect x="580" y="90" width="65" height="30" rx="3" fill="#fffaf0af0af0" stroke="#b7df69"/><text x="612" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 255</text>
+  <rect x="580" y="90" width="65" height="30" rx="3" fill="#fffaf0" stroke="#b7df69"/><text x="612" y="109" font-size="8" font-weight="800" text-anchor="middle">Core 255</text>
 
   <!-- Wires to Combinational AND Tree -->
   <line x1="427" y1="120" x2="563" y2="150" stroke="#b7df69" stroke-width="2"/>
@@ -4167,7 +4167,7 @@ sec8 = """<!-- ============================================================ -->
           <span class="schematic-tag">BENCHMARKING METHODOLOGY</span>
           <h3 class="schematic-title">The 4-Tier Aligned Benchmarking Ladder (Categories 1–4)</h3>
         </div>
-        <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0af0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
+        <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
           <svg viewBox="0 0 760 320" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
@@ -4175,39 +4175,39 @@ sec8 = """<!-- ============================================================ -->
   <text x="26" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE METHODOLOGY &#8226; 4-TIER ALIGNED BENCHMARKING LADDER (CATEGORY 1 TO 4 MAPPING)</text>
 
   <!-- Frame Background -->
-  <rect x="8" y="30" width="744" height="282" rx="6" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="8" y="30" width="744" height="282" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
   <!-- Tier 1: Scalar Pipeline (x=18 to 190) -->
   <rect x="18" y="42" width="172" height="215" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
   <rect x="18" y="42" width="172" height="22" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/><text x="104" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">TIER 1: SCALAR PIPELINE</text>
 
-  <rect x="26" y="72" width="156" height="50" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+  <rect x="26" y="72" width="156" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="104" y="90" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Verification Target</text>
   <text x="104" y="104" font-size="7" fill="#242c33" text-anchor="middle">ALU latency &#8226; Branch bubbles</text>
   <text x="104" y="115" font-size="7" fill="#242c33" text-anchor="middle">Load-use hazard stalls</text>
 
-  <rect x="26" y="128" width="156" height="40" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="26" y="128" width="156" height="40" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="104" y="146" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">Standard Workloads</text>
   <text x="104" y="159" font-size="7" fill="#242c33" text-anchor="middle">CoreMark 1.0 &#8226; Dhrystone 2.1</text>
 
-  <rect x="26" y="174" width="156" height="38" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="26" y="174" width="156" height="38" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="104" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Category 1:</text>
   <text x="104" y="204" font-size="7" fill="#0d9488" text-anchor="middle">MCU / Scalar Cores (SERV, Ibex)</text>
 
   <!-- Tier 2: Memory & OS (x=200 to 372) -->
   <rect x="200" y="42" width="172" height="215" rx="5" fill="#f6f0dc" stroke="#ffc83e" stroke-width="1.5"/>
-  <rect x="200" y="42" width="172" height="22" rx="4" fill="#fffaf0af00b9" stroke="#ffc83e" stroke-width="1"/><text x="286" y="57" font-size="8.5" font-weight="900" fill="#ffc83e" text-anchor="middle">TIER 2: MEMORY &amp; OS</text>
+  <rect x="200" y="42" width="172" height="22" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1"/><text x="286" y="57" font-size="8.5" font-weight="900" fill="#ffc83e" text-anchor="middle">TIER 2: MEMORY &amp; OS</text>
 
-  <rect x="208" y="72" width="156" height="50" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+  <rect x="208" y="72" width="156" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="286" y="90" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Verification Target</text>
   <text x="286" y="104" font-size="7" fill="#242c33" text-anchor="middle">L1/L2 miss latency &#8226; TLB hit rate</text>
   <text x="286" y="115" font-size="7" fill="#242c33" text-anchor="middle">Sv39 hardware page table walks</text>
 
-  <rect x="208" y="128" width="156" height="40" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="208" y="128" width="156" height="40" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="286" y="146" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">Standard Workloads</text>
   <text x="286" y="159" font-size="7" fill="#242c33" text-anchor="middle">Linux 6.1 Boot &#8226; Embench</text>
 
-  <rect x="208" y="174" width="156" height="38" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="208" y="174" width="156" height="38" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="286" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Category 2:</text>
   <text x="286" y="204" font-size="7" fill="#ffc83e" text-anchor="middle">Application Cores (CVA6, BOOM)</text>
 
@@ -4215,16 +4215,16 @@ sec8 = """<!-- ============================================================ -->
   <rect x="382" y="42" width="172" height="215" rx="5" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
   <rect x="382" y="42" width="172" height="22" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/><text x="468" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">TIER 3: VECTOR INTENSITY</text>
 
-  <rect x="390" y="72" width="156" height="50" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+  <rect x="390" y="72" width="156" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="468" y="90" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Verification Target</text>
   <text x="468" y="104" font-size="7" fill="#242c33" text-anchor="middle">Lane compute utilization &#8226; VRF</text>
   <text x="468" y="115" font-size="7" fill="#242c33" text-anchor="middle">Bank conflict rate &#8226; Roofline knee</text>
 
-  <rect x="390" y="128" width="156" height="40" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="390" y="128" width="156" height="40" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="468" y="146" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">Standard Workloads</text>
   <text x="468" y="159" font-size="7" fill="#242c33" text-anchor="middle">GEMM, 2D-FFT, Conv2D</text>
 
-  <rect x="390" y="174" width="156" height="38" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="390" y="174" width="156" height="38" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="468" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Category 3:</text>
   <text x="468" y="204" font-size="7" fill="#151b20" text-anchor="middle">Vector Coprocessors (Ara, Spatz)</text>
 
@@ -4232,16 +4232,16 @@ sec8 = """<!-- ============================================================ -->
   <rect x="564" y="42" width="178" height="215" rx="5" fill="#f6f0dc" stroke="#8275e8" stroke-width="1.5"/>
   <rect x="564" y="42" width="178" height="22" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1"/><text x="653" y="57" font-size="8.5" font-weight="900" fill="#8275e8" text-anchor="middle">TIER 4: SOC CLUSTERS</text>
 
-  <rect x="572" y="72" width="162" height="50" rx="3" fill="#fffaf0af0af0" stroke="#22bfd7" stroke-width="1.5"/>
+  <rect x="572" y="72" width="162" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="653" y="90" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Verification Target</text>
   <text x="653" y="104" font-size="7" fill="#242c33" text-anchor="middle">NoC bisection bandwidth &#8226; DMA</text>
   <text x="653" y="115" font-size="7" fill="#242c33" text-anchor="middle">Concurrency &#8226; Barrier latency</text>
 
-  <rect x="572" y="128" width="162" height="40" rx="3" fill="#fffaf0af0af0" stroke="#ffc83e" stroke-width="1.5"/>
+  <rect x="572" y="128" width="162" height="40" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1.5"/>
   <text x="653" y="146" font-size="8" font-weight="900" fill="#ffc83e" text-anchor="middle">Standard Workloads</text>
   <text x="653" y="159" font-size="7" fill="#242c33" text-anchor="middle">SPLASH-2, PARSEC, ResNet-50</text>
 
-  <rect x="572" y="174" width="162" height="38" rx="3" fill="#fffaf0af0af0" stroke="#151b20" stroke-width="1.5"/>
+  <rect x="572" y="174" width="162" height="38" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="653" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Category 4:</text>
   <text x="653" y="204" font-size="7" fill="#8275e8" text-anchor="middle">SoC Fabrics (Snitch, Cheshire)</text>
 
@@ -4498,18 +4498,19 @@ scripts = """<script>
       if (pDrainWire) { pDrainWire.setAttribute("stroke", "#b7df69"); pDrainWire.setAttribute("stroke-width", "2.5"); }
       if (pAnimFlow) pAnimFlow.setAttribute("opacity", "1");
       if (pBadge) pBadge.setAttribute("fill", "#b7df69");
-      if (pBadgeTxt) pBadgeTxt.textContent = "ON (Pull-up)";
+      if (pBadgeTxt) { pBadgeTxt.textContent = "ON (Pull-up)"; pBadgeTxt.setAttribute("fill", "#151b20"); }
+      if (pBadge) { pBadge.setAttribute("fill", "#b7df69"); pBadge.setAttribute("stroke", "#151b20"); }
 
-      // nMOS: OFF (inactive gray, thin dashed channel, open)
-      if (nDrainWire) { nDrainWire.setAttribute("stroke", "#242c33"); nDrainWire.setAttribute("stroke-width", "1.5"); }
-      if (nch) { nch.setAttribute("stroke", "#242c33"); nch.setAttribute("stroke-width", "3"); nch.setAttribute("stroke-dasharray", "3 2"); }
-      if (nDrainTab) nDrainTab.setAttribute("stroke", "#242c33");
-      if (nSourceTab) nSourceTab.setAttribute("stroke", "#242c33");
-      if (nSourceArrow) nSourceArrow.setAttribute("fill", "#242c33");
-      if (gndStem) { gndStem.setAttribute("stroke", "#242c33"); gndStem.setAttribute("stroke-width", "1.5"); }
+      // nMOS: OFF (inactive, thin dashed channel, open)
+      if (nDrainWire) { nDrainWire.setAttribute("stroke", "#151b20"); nDrainWire.setAttribute("stroke-width", "1.5"); }
+      if (nch) { nch.setAttribute("stroke", "#151b20"); nch.setAttribute("stroke-width", "3"); nch.setAttribute("stroke-dasharray", "3 2"); }
+      if (nDrainTab) nDrainTab.setAttribute("stroke", "#151b20");
+      if (nSourceTab) nSourceTab.setAttribute("stroke", "#151b20");
+      if (nSourceArrow) nSourceArrow.setAttribute("fill", "#151b20");
+      if (gndStem) { gndStem.setAttribute("stroke", "#151b20"); gndStem.setAttribute("stroke-width", "1.5"); }
       if (nAnimFlow) nAnimFlow.setAttribute("opacity", "0");
-      if (nBadge) nBadge.setAttribute("fill", "#242c33");
-      if (nBadgeTxt) nBadgeTxt.textContent = "OFF (Cut-off)";
+      if (nBadge) { nBadge.setAttribute("fill", "#eee4c8"); nBadge.setAttribute("stroke", "#151b20"); }
+      if (nBadgeTxt) { nBadgeTxt.textContent = "OFF (Cut-off)"; nBadgeTxt.setAttribute("fill", "#151b20"); }
 
       // Output wire & Capacitor
       if (voutDot) voutDot.setAttribute("fill", "#22bfd7");
@@ -4552,16 +4553,16 @@ scripts = """<script>
       if (svgVinLabel) svgVinLabel.textContent = `${cmosVdd.toFixed(1)}V (H)`;
       if (svgVoutLabel) svgVoutLabel.textContent = "0.00 V (L)";
 
-      // pMOS: OFF (inactive gray, thin dashed channel, open)
-      if (vddStem) { vddStem.setAttribute("stroke", "#242c33"); vddStem.setAttribute("stroke-width", "1.5"); }
-      if (pch) { pch.setAttribute("stroke", "#242c33"); pch.setAttribute("stroke-width", "3"); pch.setAttribute("stroke-dasharray", "3 2"); }
-      if (pSourceTab) pSourceTab.setAttribute("stroke", "#242c33");
-      if (pSourceArrow) pSourceArrow.setAttribute("fill", "#242c33");
-      if (pDrainTab) pDrainTab.setAttribute("stroke", "#242c33");
-      if (pDrainWire) { pDrainWire.setAttribute("stroke", "#242c33"); pDrainWire.setAttribute("stroke-width", "1.5"); }
+      // pMOS: OFF (inactive, thin dashed channel, open)
+      if (vddStem) { vddStem.setAttribute("stroke", "#151b20"); vddStem.setAttribute("stroke-width", "1.5"); }
+      if (pch) { pch.setAttribute("stroke", "#151b20"); pch.setAttribute("stroke-width", "3"); pch.setAttribute("stroke-dasharray", "3 2"); }
+      if (pSourceTab) pSourceTab.setAttribute("stroke", "#151b20");
+      if (pSourceArrow) pSourceArrow.setAttribute("fill", "#151b20");
+      if (pDrainTab) pDrainTab.setAttribute("stroke", "#151b20");
+      if (pDrainWire) { pDrainWire.setAttribute("stroke", "#151b20"); pDrainWire.setAttribute("stroke-width", "1.5"); }
       if (pAnimFlow) pAnimFlow.setAttribute("opacity", "0");
-      if (pBadge) pBadge.setAttribute("fill", "#242c33");
-      if (pBadgeTxt) pBadgeTxt.textContent = "OFF (Cut-off)";
+      if (pBadge) { pBadge.setAttribute("fill", "#eee4c8"); pBadge.setAttribute("stroke", "#151b20"); }
+      if (pBadgeTxt) { pBadgeTxt.textContent = "OFF (Cut-off)"; pBadgeTxt.setAttribute("fill", "#151b20"); }
 
       // nMOS: ON (active blue, thick channel, conducting wires)
       if (nDrainWire) { nDrainWire.setAttribute("stroke", "#22bfd7"); nDrainWire.setAttribute("stroke-width", "2.5"); }
@@ -4572,7 +4573,8 @@ scripts = """<script>
       if (gndStem) { gndStem.setAttribute("stroke", "#22bfd7"); gndStem.setAttribute("stroke-width", "2.5"); }
       if (nAnimFlow) nAnimFlow.setAttribute("opacity", "1");
       if (nBadge) nBadge.setAttribute("fill", "#22bfd7");
-      if (nBadgeTxt) nBadgeTxt.textContent = "ON (Pull-down)";
+      if (nBadgeTxt) { nBadgeTxt.textContent = "ON (Pull-down)"; nBadgeTxt.setAttribute("fill", "#151b20"); }
+      if (nBadge) { nBadge.setAttribute("fill", "#22bfd7"); nBadge.setAttribute("stroke", "#151b20"); }
 
       // Output wire & Capacitor
       if (voutDot) voutDot.setAttribute("fill", "#22bfd7");
@@ -4741,47 +4743,47 @@ scripts = """<script>
 
     // --- NAND2 Circuit Updates ---
     if (nandMpA_ch) {
-      nandMpA_ch.setAttribute("stroke", mpA_on ? "#b7df69" : "#242c33");
+      nandMpA_ch.setAttribute("stroke", mpA_on ? "#b7df69" : "#151b20");
       nandMpA_ch.setAttribute("stroke-width", mpA_on ? "5" : "2");
       if (mpA_on) nandMpA_ch.removeAttribute("stroke-dasharray");
       else nandMpA_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (nandMpA_badge) {
       nandMpA_badge.textContent = mpA_on ? "ON" : "OFF";
-      nandMpA_badge.setAttribute("fill", mpA_on ? "#b7df69" : "#242c33");
+      nandMpA_badge.setAttribute("fill", mpA_on ? "#b7df69" : "#151b20");
     }
 
     if (nandMpB_ch) {
-      nandMpB_ch.setAttribute("stroke", mpB_on ? "#b7df69" : "#242c33");
+      nandMpB_ch.setAttribute("stroke", mpB_on ? "#b7df69" : "#151b20");
       nandMpB_ch.setAttribute("stroke-width", mpB_on ? "5" : "2");
       if (mpB_on) nandMpB_ch.removeAttribute("stroke-dasharray");
       else nandMpB_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (nandMpB_badge) {
       nandMpB_badge.textContent = mpB_on ? "ON" : "OFF";
-      nandMpB_badge.setAttribute("fill", mpB_on ? "#b7df69" : "#242c33");
+      nandMpB_badge.setAttribute("fill", mpB_on ? "#b7df69" : "#151b20");
     }
 
     if (nandMnA_ch) {
-      nandMnA_ch.setAttribute("stroke", mnA_on ? "#22bfd7" : "#242c33");
+      nandMnA_ch.setAttribute("stroke", mnA_on ? "#22bfd7" : "#151b20");
       nandMnA_ch.setAttribute("stroke-width", mnA_on ? "5" : "2");
       if (mnA_on) nandMnA_ch.removeAttribute("stroke-dasharray");
       else nandMnA_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (nandMnA_badge) {
       nandMnA_badge.textContent = mnA_on ? "ON" : "OFF";
-      nandMnA_badge.setAttribute("fill", mnA_on ? "#22bfd7" : "#242c33");
+      nandMnA_badge.setAttribute("fill", mnA_on ? "#22bfd7" : "#151b20");
     }
 
     if (nandMnB_ch) {
-      nandMnB_ch.setAttribute("stroke", mnB_on ? "#22bfd7" : "#242c33");
+      nandMnB_ch.setAttribute("stroke", mnB_on ? "#22bfd7" : "#151b20");
       nandMnB_ch.setAttribute("stroke-width", mnB_on ? "5" : "2");
       if (mnB_on) nandMnB_ch.removeAttribute("stroke-dasharray");
       else nandMnB_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (nandMnB_badge) {
       nandMnB_badge.textContent = mnB_on ? "ON" : "OFF";
-      nandMnB_badge.setAttribute("fill", mnB_on ? "#22bfd7" : "#242c33");
+      nandMnB_badge.setAttribute("fill", mnB_on ? "#22bfd7" : "#151b20");
     }
 
     // NAND Output & Conduction paths
@@ -4826,47 +4828,47 @@ scripts = """<script>
     // --- NOR2 Circuit Updates ---
     const norWpWidth = isMatch ? "8" : "4";
     if (norMpA_ch) {
-      norMpA_ch.setAttribute("stroke", mpA_on ? "#f38469" : "#242c33");
+      norMpA_ch.setAttribute("stroke", mpA_on ? "#f38469" : "#151b20");
       norMpA_ch.setAttribute("stroke-width", mpA_on ? norWpWidth : "2");
       if (mpA_on) norMpA_ch.removeAttribute("stroke-dasharray");
       else norMpA_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (norMpA_badge) {
       norMpA_badge.textContent = mpA_on ? (isMatch ? "ON (4x)" : "ON (1x)") : "OFF";
-      norMpA_badge.setAttribute("fill", mpA_on ? "#f38469" : "#242c33");
+      norMpA_badge.setAttribute("fill", mpA_on ? "#f38469" : "#151b20");
     }
 
     if (norMpB_ch) {
-      norMpB_ch.setAttribute("stroke", mpB_on ? "#f38469" : "#242c33");
+      norMpB_ch.setAttribute("stroke", mpB_on ? "#f38469" : "#151b20");
       norMpB_ch.setAttribute("stroke-width", mpB_on ? norWpWidth : "2");
       if (mpB_on) norMpB_ch.removeAttribute("stroke-dasharray");
       else norMpB_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (norMpB_badge) {
       norMpB_badge.textContent = mpB_on ? (isMatch ? "ON (4x)" : "ON (1x)") : "OFF";
-      norMpB_badge.setAttribute("fill", mpB_on ? "#f38469" : "#242c33");
+      norMpB_badge.setAttribute("fill", mpB_on ? "#f38469" : "#151b20");
     }
 
     if (norMnA_ch) {
-      norMnA_ch.setAttribute("stroke", mnA_on ? "#22bfd7" : "#242c33");
+      norMnA_ch.setAttribute("stroke", mnA_on ? "#22bfd7" : "#151b20");
       norMnA_ch.setAttribute("stroke-width", mnA_on ? "4.5" : "2");
       if (mnA_on) norMnA_ch.removeAttribute("stroke-dasharray");
       else norMnA_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (norMnA_badge) {
       norMnA_badge.textContent = mnA_on ? "ON" : "OFF";
-      norMnA_badge.setAttribute("fill", mnA_on ? "#22bfd7" : "#242c33");
+      norMnA_badge.setAttribute("fill", mnA_on ? "#22bfd7" : "#151b20");
     }
 
     if (norMnB_ch) {
-      norMnB_ch.setAttribute("stroke", mnB_on ? "#22bfd7" : "#242c33");
+      norMnB_ch.setAttribute("stroke", mnB_on ? "#22bfd7" : "#151b20");
       norMnB_ch.setAttribute("stroke-width", mnB_on ? "4.5" : "2");
       if (mnB_on) norMnB_ch.removeAttribute("stroke-dasharray");
       else norMnB_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (norMnB_badge) {
       norMnB_badge.textContent = mnB_on ? "ON" : "OFF";
-      norMnB_badge.setAttribute("fill", mnB_on ? "#22bfd7" : "#242c33");
+      norMnB_badge.setAttribute("fill", mnB_on ? "#22bfd7" : "#151b20");
     }
 
     // NOR Output & Conduction paths
@@ -5448,25 +5450,25 @@ scripts = """<script>
     if (bgSubCtrlToggle) bgSubCtrlToggle.setAttribute("fill", isSub ? "#8275e8" : "#eee4c8");
     if (txtSubCtrlToggle) {
       txtSubCtrlToggle.textContent = isSub ? "MODE: SUB (sub_ctrl = 1)" : "MODE: ADD (sub_ctrl = 0)";
-      txtSubCtrlToggle.setAttribute("fill", isSub ? "#fffaf0af0" : "#151b20");
+      txtSubCtrlToggle.setAttribute("fill", isSub ? "#fffaf0" : "#151b20");
     }
 
     if (subCtrlWire) {
-      subCtrlWire.setAttribute("stroke", isSub ? "#8275e8" : "#242c33");
+      subCtrlWire.setAttribute("stroke", isSub ? "#8275e8" : "#151b20");
       subCtrlWire.setAttribute("stroke-width", isSub ? "3" : "2.5");
       subCtrlWire.setAttribute("stroke-dasharray", isSub ? "none" : "3 3");
     }
-    if (subCtrlWireOrigin) subCtrlWireOrigin.setAttribute("fill", isSub ? "#8275e8" : "#242c33");
+    if (subCtrlWireOrigin) { subCtrlWireOrigin.setAttribute("fill", isSub ? "#8275e8" : "#eee4c8"); subCtrlWireOrigin.setAttribute("stroke", "#151b20"); }
     if (subCtrlStatusTxt) {
       subCtrlStatusTxt.textContent = isSub
         ? "sub_ctrl = 1 (VDD / High): TWO'S COMPLEMENT SUBTRACTION MODE"
         : "sub_ctrl = 0 (Ground / Low): ADDITION MODE";
-      subCtrlStatusTxt.setAttribute("fill", isSub ? "#8275e8" : "#242c33");
+      subCtrlStatusTxt.setAttribute("fill", isSub ? "#8275e8" : "#151b20");
     }
 
     // XOR Inversion Array state
-    if (subCtrlXorTap) subCtrlXorTap.setAttribute("stroke", isSub ? "#8275e8" : "#242c33");
-    if (subCtrlXorDot) subCtrlXorDot.setAttribute("fill", isSub ? "#8275e8" : "#242c33");
+    if (subCtrlXorTap) subCtrlXorTap.setAttribute("stroke", isSub ? "#8275e8" : "#151b20");
+    if (subCtrlXorDot) subCtrlXorDot.setAttribute("fill", isSub ? "#8275e8" : "#151b20");
     if (svgXorBox) {
       svgXorBox.setAttribute("fill", isSub ? "#e2dfff" : "#f6f0dc");
       svgXorBox.setAttribute("stroke", isSub ? "#8275e8" : "#151b20");
@@ -5475,11 +5477,11 @@ scripts = """<script>
     if (svgXorSub) svgXorSub.textContent = isSub ? "Invert Bits" : "Pass-Through";
 
     // Carry-in line state
-    if (subCtrlCinTap) subCtrlCinTap.setAttribute("stroke", isSub ? "#8275e8" : "#242c33");
-    if (subCtrlCinDot) subCtrlCinDot.setAttribute("fill", isSub ? "#8275e8" : "#242c33");
+    if (subCtrlCinTap) subCtrlCinTap.setAttribute("stroke", isSub ? "#8275e8" : "#151b20");
+    if (subCtrlCinDot) subCtrlCinDot.setAttribute("fill", isSub ? "#8275e8" : "#151b20");
     if (subCtrlCinTxt) {
       subCtrlCinTxt.textContent = isSub ? "Cin = 1 (+1)" : "Cin = 0";
-      subCtrlCinTxt.setAttribute("fill", isSub ? "#8275e8" : "#242c33");
+      subCtrlCinTxt.setAttribute("fill", isSub ? "#8275e8" : "#151b20");
     }
 
     // Operand Displays
@@ -5518,10 +5520,10 @@ scripts = """<script>
     function updateFlag(box: HTMLElement | null, txt: HTMLElement | null, val: number, activeColor: string) {
       if (txt) {
         txt.textContent = String(val);
-        txt.setAttribute("fill", val === 1 ? activeColor : "#242c33");
+        txt.setAttribute("fill", val === 1 ? activeColor : "#151b20");
       }
       if (box) {
-        box.setAttribute("fill", val === 1 ? "#f6f0dc" : "#fffaf0af0");
+        box.setAttribute("fill", val === 1 ? "#f6f0dc" : "#fffaf0");
         box.setAttribute("stroke", val === 1 ? activeColor : "#151b20");
         box.setAttribute("stroke-width", val === 1 ? "2" : "1");
       }
@@ -5619,10 +5621,13 @@ scripts = """<script>
           bg.setAttribute("fill", "#b7df69");
           bg.setAttribute("stroke-width", "2");
         }
-        if (badge) badge.setAttribute("fill", "#151b20");
+        if (badge) {
+          badge.setAttribute("fill", "#eee4c8");
+          badge.setAttribute("stroke", "#151b20");
+        }
         if (txt) {
           txt.textContent = `ACTIVE (+${span}b)`;
-          txt.setAttribute("fill", "#b7df69");
+          txt.setAttribute("fill", "#151b20");
         }
 
         // Apply shift
@@ -5639,10 +5644,13 @@ scripts = """<script>
           bg.setAttribute("fill", "#f6f0dc");
           bg.setAttribute("stroke-width", "1.5");
         }
-        if (badge) badge.setAttribute("fill", "#eee4c8");
+        if (badge) {
+          badge.setAttribute("fill", "#eee4c8");
+          badge.setAttribute("stroke", "#151b20");
+        }
         if (txt) {
           txt.textContent = "BYPASS (+0b)";
-          txt.setAttribute("fill", "#242c33");
+          txt.setAttribute("fill", "#151b20");
         }
       }
 
@@ -6797,7 +6805,7 @@ styles = """<style>
   }
 
   .fund-section-card {
-    background: var(--cream, #fffaf0af0);
+    background: var(--cream, #fffaf0);
     border: 2px solid var(--ink, #151b20);
     border-radius: 14px;
     box-shadow: 5px 5px 0px var(--ink, #151b20);
@@ -7044,7 +7052,7 @@ styles = """<style>
   }
 
   .schematic-svg-wrap {
-    background: #fffaf0af0;
+    background: #fffaf0;
     border: 1.5px solid var(--ink);
     border-radius: 8px;
     padding: 0.5rem;
@@ -7075,7 +7083,7 @@ styles = """<style>
   /* PROBLEM & DESIGN TRADE-OFF BOX                               */
   /* ============================================================ */
   .tradeoff-box {
-    background: #fffaf00b9;
+    background: #fff0b9;
     border: 2px solid var(--ink);
     border-radius: 10px;
     padding: 1.25rem;
@@ -7303,7 +7311,7 @@ styles = """<style>
   }
 
   .cell-detail-card {
-    background: var(--cream, #fffaf0af0);
+    background: var(--cream, #fffaf0);
     border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
     padding: 1.25rem;
@@ -7318,7 +7326,7 @@ styles = """<style>
   }
 
   .cd-item {
-    background: #fffaf0af0;
+    background: #fffaf0;
     border: 1.5px solid var(--ink, #151b20);
     border-radius: 8px;
     padding: 0.85rem 1rem;
@@ -7760,7 +7768,7 @@ styles = """<style>
   }
 
   .gate-box-art {
-    background: var(--cream, #fffaf0af0);
+    background: var(--cream, #fffaf0);
     color: var(--ink, #151b20);
     border: 2px solid var(--ink, #151b20);
     border-radius: 8px;
@@ -7813,8 +7821,8 @@ styles = """<style>
   }
 
   .bulb-lamp.off {
-    background: #151b20;
-    color: #242c33;
+    background: var(--paper-deep, #eee4c8);
+    color: var(--ink, #151b20);
   }
 
   .bulb-lamp.on {
@@ -8121,7 +8129,7 @@ styles = """<style>
   }
 
   .isa-ribbon-container {
-    background: var(--cream, #fffaf0af0);
+    background: var(--cream, #fffaf0);
     border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
     padding: 1rem;
@@ -8163,7 +8171,7 @@ styles = """<style>
   .b-funct7  { background: #ffd8ce; color: #151b20; }
   .b-rs2     { background: #e7f4c8; color: #151b20; }
   .b-rs1     { background: #c9f3f4; color: #151b20; }
-  .b-funct3  { background: #fffaf00b9; color: #151b20; }
+  .b-funct3  { background: #fff0b9; color: #151b20; }
   .b-rd      { background: #ffd8ce; color: #151b20; }
   .b-opcode  { background: #e2dfff; color: #151b20; }
 
@@ -8264,7 +8272,7 @@ styles = """<style>
 
   .h-badge {
     background: var(--coral);
-    color: #fffaf0af0;
+    color: #fffaf0;
     font-size: 0.7rem;
     font-weight: 800;
     padding: 0.15rem 0.4rem;
