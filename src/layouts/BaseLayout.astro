@@ -103,6 +103,51 @@ function isActive(href: string) {
         gap: 0.75rem;
       }
 
+      .score-star-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: var(--yellow, #ffc83e);
+        color: var(--ink, #151b20) !important;
+        border: 2px solid var(--ink, #151b20);
+        border-radius: 999px;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.82rem;
+        font-weight: 800;
+        text-decoration: none !important;
+        box-shadow: 2.5px 2.5px 0px var(--ink, #151b20);
+        transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+      }
+      .score-star-btn:hover {
+        background: #ffe066;
+        transform: translate(-1px, -1px);
+        box-shadow: 3.5px 3.5px 0px var(--ink, #151b20);
+      }
+      .score-star-btn:active {
+        transform: translate(1px, 1px);
+        box-shadow: 1.5px 1.5px 0px var(--ink, #151b20);
+      }
+      .star-icon {
+        font-size: 0.95rem;
+        line-height: 1;
+      }
+      .star-text {
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+      .star-count {
+        background: var(--cream, #fffaf0);
+        color: var(--ink, #151b20);
+        border: 1.5px solid var(--ink, #151b20);
+        border-radius: 999px;
+        padding: 0.05rem 0.45rem;
+        font-size: 0.75rem;
+        font-weight: 800;
+        font-family: var(--md-code-font, monospace);
+        min-width: 18px;
+        text-align: center;
+      }
+
       /* 2-tier Horizontal Navigation Tabs Bar */
       .score-tabs-bar {
         background: var(--cream, #fffaf0);
@@ -189,7 +234,18 @@ function isActive(href: string) {
         </a>
 
         <div class="score-header-right">
-          <!-- Header Right Actions -->
+          <a
+            href="https://github.com/SCORE-CIRCUITS/score-circuits.github.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="score-star-btn"
+            title="Star SCORE on GitHub"
+            aria-label="Star SCORE on GitHub"
+          >
+            <span class="star-icon">⭐</span>
+            <span class="star-text">Star</span>
+            <span class="star-count" id="github-star-count">★</span>
+          </a>
         </div>
       </div>
     </header>
@@ -233,6 +289,21 @@ function isActive(href: string) {
         </div>
       </div>
     </footer>
+
+    <script>
+      (function fetchStars() {
+        const countEl = document.getElementById("github-star-count");
+        if (!countEl) return;
+        fetch("https://api.github.com/repos/SCORE-CIRCUITS/score-circuits.github.io")
+          .then((res) => (res.ok ? res.json() : null))
+          .then((data) => {
+            if (data && typeof data.stargazers_count === "number") {
+              countEl.textContent = String(data.stargazers_count);
+            }
+          })
+          .catch(() => {});
+      })();
+    </script>
   </body>
 </html>
 
