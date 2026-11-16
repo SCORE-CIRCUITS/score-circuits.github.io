@@ -442,30 +442,7 @@ def get_section_1():
               </tbody>
             </table>
           </div>
-<!-- THE PROBLEM & DESIGN TRADE-OFF: HARDWARE BARRIERS -->
-          <div class="tradeoff-box">
-            <div class="tradeoff-badge">THE PROBLEM &amp; DESIGN TRADE-OFF</div>
-            <div class="tradeoff-grid">
-              <div class="tradeoff-col">
-                <span class="to-label">&#9889; The Engineering Problem</span>
-                <p>
-                  Amdahl's Law dictates that if 256 cores spend even 2% of their time waiting at software barrier synchronization points, speedup collapses from 256&times; down to &lt;35&times;. Software atomic spinlocks saturate the shared interconnect, creating exponential serialization delays.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#9878; The Silicon Trade-off</span>
-                <p>
-                  <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
-                </p>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -947,30 +924,7 @@ def get_section_2():
 
         <div class="alu-explanation-box">
           <strong>Microarchitectural Insight (SERV vs. Ibex):</strong> In Category 1, the ultra-compact <code>SERV</code> core implements a <strong>bit-serial ALU</strong>—it calculates 32-bit addition with a <em>single 1-bit full adder</em> over 32 clock cycles, shrinking the entire core to a record <strong>2.1 kGE</strong>! Meanwhile, balanced cores like <code>Ibex</code> use a full 32-bit parallel carry-lookahead adder to finish in 1 cycle, spending ~24 kGE of silicon.
-<!-- THE PROBLEM & DESIGN TRADE-OFF: HARDWARE BARRIERS -->
-          <div class="tradeoff-box">
-            <div class="tradeoff-badge">THE PROBLEM &amp; DESIGN TRADE-OFF</div>
-            <div class="tradeoff-grid">
-              <div class="tradeoff-col">
-                <span class="to-label">&#9889; The Engineering Problem</span>
-                <p>
-                  Amdahl's Law dictates that if 256 cores spend even 2% of their time waiting at software barrier synchronization points, speedup collapses from 256&times; down to &lt;35&times;. Software atomic spinlocks saturate the shared interconnect, creating exponential serialization delays.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#9878; The Silicon Trade-off</span>
-                <p>
-                  <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
-                </p>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -1318,30 +1272,7 @@ def get_section_3():
             <span class="imc-lbl">Semantic Operation</span>
             <span class="imc-val" id="isaSemantics">R[x1] &larr; R[x2] + R[x3]</span>
           </div>
-<!-- THE PROBLEM & DESIGN TRADE-OFF: HARDWARE BARRIERS -->
-          <div class="tradeoff-box">
-            <div class="tradeoff-badge">THE PROBLEM &amp; DESIGN TRADE-OFF</div>
-            <div class="tradeoff-grid">
-              <div class="tradeoff-col">
-                <span class="to-label">&#9889; The Engineering Problem</span>
-                <p>
-                  Amdahl's Law dictates that if 256 cores spend even 2% of their time waiting at software barrier synchronization points, speedup collapses from 256&times; down to &lt;35&times;. Software atomic spinlocks saturate the shared interconnect, creating exponential serialization delays.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#9878; The Silicon Trade-off</span>
-                <p>
-                  <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
-                </p>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -1775,30 +1706,7 @@ def get_section_4():
               <span class="m-sub">As <em>N</em> &rarr; &infin;, Speedup approaches <strong>5.0&times;</strong> (CPI &rarr; 1.0)</span>
             </div>
           </div>
-<!-- THE PROBLEM & DESIGN TRADE-OFF: HARDWARE BARRIERS -->
-          <div class="tradeoff-box">
-            <div class="tradeoff-badge">THE PROBLEM &amp; DESIGN TRADE-OFF</div>
-            <div class="tradeoff-grid">
-              <div class="tradeoff-col">
-                <span class="to-label">&#9889; The Engineering Problem</span>
-                <p>
-                  Amdahl's Law dictates that if 256 cores spend even 2% of their time waiting at software barrier synchronization points, speedup collapses from 256&times; down to &lt;35&times;. Software atomic spinlocks saturate the shared interconnect, creating exponential serialization delays.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#9878; The Silicon Trade-off</span>
-                <p>
-                  <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
-                </p>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -2126,30 +2034,7 @@ def get_section_5():
               </tr>
             </tbody>
           </table>
-<!-- THE PROBLEM & DESIGN TRADE-OFF: HARDWARE BARRIERS -->
-          <div class="tradeoff-box">
-            <div class="tradeoff-badge">THE PROBLEM &amp; DESIGN TRADE-OFF</div>
-            <div class="tradeoff-grid">
-              <div class="tradeoff-col">
-                <span class="to-label">&#9889; The Engineering Problem</span>
-                <p>
-                  Amdahl's Law dictates that if 256 cores spend even 2% of their time waiting at software barrier synchronization points, speedup collapses from 256&times; down to &lt;35&times;. Software atomic spinlocks saturate the shared interconnect, creating exponential serialization delays.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#9878; The Silicon Trade-off</span>
-                <p>
-                  <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
-                </p>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -2482,30 +2367,7 @@ def get_section_6():
               <strong>Advantage:</strong> Only 5 instructions fetched! 4 vector lanes calculate 4 elements per clock cycle in parallel.
             </div>
           </div>
-<!-- THE PROBLEM & DESIGN TRADE-OFF: HARDWARE BARRIERS -->
-          <div class="tradeoff-box">
-            <div class="tradeoff-badge">THE PROBLEM &amp; DESIGN TRADE-OFF</div>
-            <div class="tradeoff-grid">
-              <div class="tradeoff-col">
-                <span class="to-label">&#9889; The Engineering Problem</span>
-                <p>
-                  Amdahl's Law dictates that if 256 cores spend even 2% of their time waiting at software barrier synchronization points, speedup collapses from 256&times; down to &lt;35&times;. Software atomic spinlocks saturate the shared interconnect, creating exponential serialization delays.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#9878; The Silicon Trade-off</span>
-                <p>
-                  <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
-                </p>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -2986,30 +2848,7 @@ def get_section_8():
               <p id="blcRemedy" class="blc-remedy-txt">&rarr; Dual-issue in-order pipelines with static branch hints and zero-cycle hardware loop controllers (e.g. VeeR EL2, CV32E40P).</p>
             </div>
           </div>
-<!-- THE PROBLEM & DESIGN TRADE-OFF: HARDWARE BARRIERS -->
-          <div class="tradeoff-box">
-            <div class="tradeoff-badge">THE PROBLEM &amp; DESIGN TRADE-OFF</div>
-            <div class="tradeoff-grid">
-              <div class="tradeoff-col">
-                <span class="to-label">&#9889; The Engineering Problem</span>
-                <p>
-                  Amdahl's Law dictates that if 256 cores spend even 2% of their time waiting at software barrier synchronization points, speedup collapses from 256&times; down to &lt;35&times;. Software atomic spinlocks saturate the shared interconnect, creating exponential serialization delays.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#9878; The Silicon Trade-off</span>
-                <p>
-                  <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
-                </p>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -4655,6 +4494,34 @@ def get_styles():
     color: var(--ink, #151b20);
     border-top: 1.5px dashed var(--line, #cbd5e1);
     padding-top: 0.85rem;
+  }
+
+  
+  /* Enforce clean inline rendering for prose inline formatting tags */
+  p em,
+  p strong,
+  p code,
+  p sub,
+  p sup,
+  .concept-step-card p em,
+  .fund-section-card p em {
+    display: inline !important;
+    text-align: inherit !important;
+    margin: 0 !important;
+    color: inherit !important;
+    font-size: inherit !important;
+  }
+
+  p em {
+    font-style: italic;
+  }
+
+  p strong,
+  .concept-step-card p strong,
+  .fund-section-card p strong {
+    font-style: normal;
+    font-weight: 850;
+    color: var(--ink, #151b20);
   }
 
   /* Pill Button Group */
