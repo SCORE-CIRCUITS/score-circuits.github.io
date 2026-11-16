@@ -346,22 +346,22 @@ def get_section_1():
                 <div class="cd-item">
                   <span class="cd-lbl">Transistor Count</span>
                   <div class="cd-val" id="cellTransCount">
-                    <span class="cd-primary">4 Transistors</span>
-                    <span class="cd-sub">(2 pMOS + 2 nMOS)</span>
+                    <span class="cd-primary" id="cellTransPrimary">4 Transistors</span>
+                    <span class="cd-sub" id="cellTransSub">(2 pMOS + 2 nMOS)</span>
                   </div>
                 </div>
                 <div class="cd-item">
                   <span class="cd-lbl">Area Benchmark</span>
                   <div class="cd-val highlight" id="cellGeVal">
-                    <span class="cd-primary">1.00 GE</span>
-                    <span class="cd-sub">(Reference Standard)</span>
+                    <span class="cd-primary" id="cellGePrimary">1.00 GE</span>
+                    <span class="cd-sub" id="cellGeSub">(Reference Standard)</span>
                   </div>
                 </div>
                 <div class="cd-item">
                   <span class="cd-lbl">Typ. Propagation Delay</span>
                   <div class="cd-val" id="cellDelayVal">
-                    <span class="cd-primary">&approx; 18 picoseconds</span>
-                    <span class="cd-sub">(16nm FinFET Typical)</span>
+                    <span class="cd-primary" id="cellDelayPrimary">&approx; 18 picoseconds</span>
+                    <span class="cd-sub" id="cellDelaySub">(16nm FinFET Typical)</span>
                   </div>
                 </div>
               </div>
@@ -3181,9 +3181,12 @@ def get_scripts():
     }
   };
 
-  const cellTransCount = document.getElementById("cellTransCount");
-  const cellGeVal = document.getElementById("cellGeVal");
-  const cellDelayVal = document.getElementById("cellDelayVal");
+  const cellTransPrimary = document.getElementById("cellTransPrimary");
+  const cellTransSub = document.getElementById("cellTransSub");
+  const cellGePrimary = document.getElementById("cellGePrimary");
+  const cellGeSub = document.getElementById("cellGeSub");
+  const cellDelayPrimary = document.getElementById("cellDelayPrimary");
+  const cellDelaySub = document.getElementById("cellDelaySub");
   const cellDescText = document.getElementById("cellDescText");
 
   document.querySelectorAll(".cell-btn").forEach((btn) => {
@@ -3194,18 +3197,13 @@ def get_scripts():
       const data = cellData[key];
       if (!data) return;
 
-      if (cellTransCount) {
-        cellTransCount.innerHTML = `<span class="cd-primary">${data.transPrimary}</span><span class="cd-sub">${data.transSub}</span>`;
-      }
-      if (cellGeVal) {
-        cellGeVal.innerHTML = `<span class="cd-primary">${data.gePrimary}</span><span class="cd-sub">${data.geSub}</span>`;
-      }
-      if (cellDelayVal) {
-        cellDelayVal.innerHTML = `<span class="cd-primary">${data.delayPrimary}</span><span class="cd-sub">${data.delaySub}</span>`;
-      }
-      if (cellDescText) {
-        cellDescText.innerHTML = data.desc;
-      }
+      if (cellTransPrimary) cellTransPrimary.textContent = data.transPrimary;
+      if (cellTransSub) cellTransSub.textContent = data.transSub;
+      if (cellGePrimary) cellGePrimary.textContent = data.gePrimary;
+      if (cellGeSub) cellGeSub.textContent = data.geSub;
+      if (cellDelayPrimary) cellDelayPrimary.textContent = data.delayPrimary;
+      if (cellDelaySub) cellDelaySub.textContent = data.delaySub;
+      if (cellDescText) cellDescText.innerHTML = data.desc;
     });
   });
 
@@ -4628,7 +4626,8 @@ def get_styles():
     gap: 0.25rem;
   }
 
-  .cd-primary {
+  .cd-primary,
+  :global(.cd-primary) {
     font-size: 1.15rem;
     font-weight: 900;
     line-height: 1.25;
@@ -4636,11 +4635,13 @@ def get_styles():
     font-family: var(--md-code-font, monospace);
   }
 
-  .cd-val.highlight .cd-primary {
+  .cd-val.highlight .cd-primary,
+  :global(.cd-val.highlight .cd-primary) {
     color: #b45309;
   }
 
-  .cd-sub {
+  .cd-sub,
+  :global(.cd-sub) {
     font-size: 0.82rem;
     font-weight: 700;
     color: #4b5563;
