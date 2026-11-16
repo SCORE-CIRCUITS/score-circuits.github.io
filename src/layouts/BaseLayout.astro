@@ -36,26 +36,26 @@ function isActive(href: string) {
     <link rel="stylesheet" href={`${base}stylesheets/extra.css`} />
     <title>{pageTitle}</title>
     <style>
-      /* Custom Neo-Brutalist Layout Shell */
-      .score-navbar {
-        background: var(--paper, #f6f0dc);
-        border-bottom: 2px solid var(--ink, #151b20);
+      /* Layout Refinements aligned with EDA Floorplanning / Dataset Fundamentals */
+      .score-header-bar {
+        background-color: rgba(246, 240, 220, 0.92) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 2px solid var(--ink, #151b20) !important;
         position: sticky;
         top: 0;
         z-index: 1000;
-        box-shadow: 0 4px 0 rgba(21, 27, 32, 0.08);
       }
-      .score-navbar-inner {
-        max-width: 1280px;
+      .score-header-inner {
+        max-width: 1220px;
         margin: 0 auto;
-        padding: 0.75rem 1.5rem;
+        padding: 0.65rem 1.25rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        flex-wrap: wrap;
         gap: 1rem;
       }
-      .score-brand {
+      .score-brand-group {
         display: flex;
         align-items: center;
         gap: 0.75rem;
@@ -63,117 +63,170 @@ function isActive(href: string) {
         color: var(--ink, #151b20);
       }
       .score-brand-badge {
-        background: var(--ink, #151b20);
-        color: var(--yellow, #ffc83e);
+        background: var(--yellow, #ffc83e);
+        color: var(--ink, #151b20);
         font-family: var(--md-code-font, monospace);
-        font-weight: 800;
-        font-size: 1.15rem;
-        padding: 0.25rem 0.6rem;
+        font-weight: 900;
+        font-size: 1.1rem;
+        padding: 0.2rem 0.55rem;
         border-radius: 6px;
         border: 2px solid var(--ink, #151b20);
-        box-shadow: 2px 2px 0px var(--yellow, #ffc83e);
+        box-shadow: 2px 2px 0px var(--ink, #151b20);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
       }
-      .score-brand-text {
+      .score-brand-badge svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+      }
+      .score-brand-meta {
         display: flex;
         flex-direction: column;
       }
-      .score-brand-title {
-        font-family: var(--md-text-font, sans-serif);
+      .score-brand-name {
         font-weight: 800;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         letter-spacing: -0.02em;
         line-height: 1.2;
+        color: var(--ink, #151b20);
       }
       .score-brand-sub {
         font-size: 0.75rem;
         color: var(--ink-light, #242c33);
         font-weight: 500;
       }
-      .score-nav-links {
+      .score-header-right {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        flex-wrap: wrap;
+        gap: 0.75rem;
       }
-      .score-nav-link {
+
+      /* 2-tier Horizontal Navigation Tabs Bar */
+      .score-tabs-bar {
+        background: var(--cream, #fffaf0);
+        border-bottom: 2px solid var(--ink, #151b20);
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      .score-tabs-inner {
+        max-width: 1220px;
+        margin: 0 auto;
+        padding: 0.35rem 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .score-tab-item {
         font-family: var(--md-text-font, sans-serif);
         font-weight: 600;
-        font-size: 0.88rem;
-        color: var(--ink, #151b20);
+        font-size: 13.5px;
+        color: rgba(21, 27, 32, 0.75);
         text-decoration: none;
-        padding: 0.35rem 0.75rem;
-        border-radius: 6px;
-        border: 1.5px solid transparent;
+        padding: 5px 14px;
+        border-radius: 999px;
         transition: all 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        border: 1.5px solid transparent;
       }
-      .score-nav-link:hover {
-        background: var(--paper-deep, #eee4c8);
-        border-color: var(--ink, #151b20);
+      .score-tab-item:hover {
+        color: var(--ink, #151b20);
+        background: rgba(21, 27, 32, 0.06);
       }
-      .score-nav-link.active {
-        background: var(--cream, #fffaf0);
-        border-color: var(--ink, #151b20);
-        box-shadow: 2px 2px 0px var(--ink, #151b20);
-      }
-      .score-nav-cta {
-        background: var(--cyan, #22bfd7) !important;
+      .score-tab-item.active {
         color: var(--ink, #151b20) !important;
-        border: 2px solid var(--ink, #151b20) !important;
-        box-shadow: 2px 2px 0px var(--ink, #151b20);
+        background-color: var(--yellow, #ffc83e) !important;
+        border: 1.5px solid var(--ink, #151b20) !important;
+        border-radius: 999px !important;
+        font-weight: 800 !important;
+        box-shadow: 2px 2px 0px var(--ink, #151b20) !important;
       }
-      .score-nav-cta:hover {
-        transform: translate(-1px, -1px);
-        box-shadow: 3px 3px 0px var(--ink, #151b20);
-      }
-      .score-content {
-        max-width: 1280px;
+
+      /* Content Area Container */
+      .md-container {
+        max-width: 1220px;
         margin: 0 auto;
-        padding: 2rem 1.5rem;
+        padding: 2rem 1.25rem 4rem 1.25rem;
         min-height: 80vh;
       }
+
+      /* Footer */
       .score-footer {
         background: var(--paper-deep, #eee4c8);
         border-top: 2px solid var(--ink, #151b20);
-        padding: 2.5rem 1.5rem;
-        margin-top: 3rem;
+        padding: 2.25rem 1.25rem;
+        margin-top: 4rem;
       }
       .score-footer-inner {
-        max-width: 1280px;
+        max-width: 1220px;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 1.5rem;
+        gap: 1.25rem;
         font-size: 0.88rem;
       }
     </style>
   </head>
   <body class="md-typeset">
-    <header class="score-navbar">
-      <div class="score-navbar-inner">
-        <a class="score-brand" href={base}>
-          <div class="score-brand-badge">SCORE</div>
-          <div class="score-brand-text">
-            <span class="score-brand-title">Open Chip Repositories</span>
-            <span class="score-brand-sub">Benchmark-Driven SoC Dataset & Survey</span>
+    <!-- Header Tier 1: Frosted Top Bar -->
+    <header class="score-header-bar">
+      <div class="score-header-inner">
+        <a class="score-brand-group" href={base}>
+          <div class="score-brand-badge">
+            <svg viewBox="0 0 24 24"><path d="M6 2v2H4a2 2 0 0 0-2 2v2h2v2H2v2h2v2H2v2h2a2 2 0 0 0 2 2v2h2v-2h2v2h2v-2h2v2h2v-2h2a2 2 0 0 0 2-2v-2h2v-2h-2v-2h2v-2h-2V6a2 2 0 0 0-2-2h-2V2h-2v2h-2V2h-2v2H8V2H6m2 4h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2m1 2v8h6V8H9z"/></svg>
+            <span>SCORE</span>
+          </div>
+          <div class="score-brand-meta">
+            <span class="score-brand-name">Open Chip Repositories</span>
+            <span class="score-brand-sub">Benchmark-Driven SoC Dataset &amp; Survey</span>
           </div>
         </a>
-        <nav class="score-nav-links" aria-label="Primary Navigation">
-          <a class={`score-nav-link ${isActive(`${base}`) ? 'active' : ''}`} href={base}>Home</a>
-          <a class={`score-nav-link ${isActive(`${base}fundamentals`) ? 'active' : ''}`} href={`${base}fundamentals/`}>Fundamentals</a>
-          <a class={`score-nav-link ${isActive(`${base}mcu-scalar`) ? 'active' : ''}`} href={`${base}mcu-scalar/`}>MCU / Scalar Cores</a>
-          <a class={`score-nav-link ${isActive(`${base}app-cores`) ? 'active' : ''}`} href={`${base}app-cores/`}>64-bit Application Cores</a>
-          <a class={`score-nav-link ${isActive(`${base}vector-coprocessors`) ? 'active' : ''}`} href={`${base}vector-coprocessors/`}>Vector &amp; Coprocessors</a>
-          <a class={`score-nav-link ${isActive(`${base}soc-multicore`) ? 'active' : ''}`} href={`${base}soc-multicore/`}>SoC &amp; Multi-Core</a>
-          <a class="score-nav-link score-nav-cta" href="https://github.com/score-circuits/score" target="_blank" rel="noopener">GitHub ↗</a>
-        </nav>
+
+        <div class="score-header-right">
+          <a
+            href="https://github.com/SCORE-CIRCUITS/score"
+            target="_blank"
+            rel="noopener"
+            class="noc-sim-btn secondary"
+            style="padding: 5px 12px; font-size: 0.8rem; text-decoration: none;"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="width: 16px; height: 16px; fill: currentColor;"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+            <span>GitHub ↗</span>
+          </a>
+        </div>
       </div>
     </header>
 
-    <main class="score-content">
-      <slot />
-    </main>
+    <!-- Header Tier 2: Horizontal Navigation Tabs Bar -->
+    <nav class="score-tabs-bar" aria-label="Primary Navigation">
+      <div class="score-tabs-inner">
+        <a class={`score-tab-item ${isActive(`${base}`) ? 'active' : ''}`} href={base}>Home</a>
+        <a class={`score-tab-item ${isActive(`${base}fundamentals`) ? 'active' : ''}`} href={`${base}fundamentals/`}>Fundamentals</a>
+        <a class={`score-tab-item ${isActive(`${base}mcu-scalar`) ? 'active' : ''}`} href={`${base}mcu-scalar/`}>01. MCU Cores</a>
+        <a class={`score-tab-item ${isActive(`${base}app-cores`) ? 'active' : ''}`} href={`${base}app-cores/`}>02. 64-bit App Cores</a>
+        <a class={`score-tab-item ${isActive(`${base}vector-coprocessors`) ? 'active' : ''}`} href={`${base}vector-coprocessors/`}>03. Vector Engines</a>
+        <a class={`score-tab-item ${isActive(`${base}soc-multicore`) ? 'active' : ''}`} href={`${base}soc-multicore/`}>04. SoC &amp; Clusters</a>
+      </div>
+    </nav>
+
+    <!-- Content Shell -->
+    <div class="md-container">
+      <main class="md-main">
+        <div class="md-main__inner md-grid">
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              <slot />
+            </article>
+          </div>
+        </div>
+      </main>
+    </div>
 
     <footer class="score-footer">
       <div class="score-footer-inner">
@@ -184,9 +237,9 @@ function isActive(href: string) {
           </div>
         </div>
         <div style="display: flex; gap: 1rem; align-items: center;">
-          <a href="https://github.com/SCORE-CIRCUITS/score" target="_blank" rel="noopener" style="font-weight: 700;">GitHub Repository</a>
+          <a href="https://github.com/SCORE-CIRCUITS/score" target="_blank" rel="noopener" style="font-weight: 700; color: var(--ink);">GitHub Repository</a>
           <span>&middot;</span>
-          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0 License</a>
+          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color: var(--ink);">CC BY 4.0 License</a>
         </div>
       </div>
     </footer>

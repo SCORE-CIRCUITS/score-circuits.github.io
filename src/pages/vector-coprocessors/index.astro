@@ -355,14 +355,17 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
 
 <style>
   .page-header {
-    background: #ffffff;
-    border: var(--noc-border-heavy, 3px solid #1a1a1a);
-    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 6px 6px 0px var(--coral, #ff6b6b);
     padding: 2.5rem;
     margin-bottom: 2rem;
   }
 
-  .page-header.accent-coral { background: #fff0f0; }
+  .page-header.accent-coral {
+    background: var(--cream, #fffaf0);
+  }
 
   .page-title {
     font-size: 2.5rem;
@@ -370,11 +373,12 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     margin-top: 0.5rem;
     margin-bottom: 0.75rem;
     letter-spacing: -0.02em;
+    color: var(--ink);
   }
 
   .page-lead {
     font-size: 1.15rem;
-    color: #444444;
+    color: var(--ink-light);
     line-height: 1.6;
     max-width: 900px;
     margin-bottom: 1.25rem;
@@ -386,39 +390,41 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     align-items: center;
     gap: 0.4rem;
     padding-top: 0.75rem;
-    border-top: 1px dashed #cccccc;
+    border-top: 1px dashed var(--line);
   }
 
   .jump-label {
     font-size: 0.8rem;
     font-weight: 800;
-    color: #333333;
+    color: var(--ink);
     margin-right: 0.25rem;
   }
 
   .core-jump-pill {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
-    box-shadow: 2px 2px 0 #1a1a1a;
-    padding: 0.25rem 0.6rem;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    box-shadow: 2px 2px 0 var(--ink);
+    padding: 0.25rem 0.65rem;
     font-size: 0.78rem;
     font-weight: 800;
-    color: #1a1a1a;
+    color: var(--ink);
     text-decoration: none;
     transition: all 0.1s ease;
   }
 
   .core-jump-pill:hover {
-    background: #ff5252;
+    background: var(--coral);
     color: #ffffff;
     transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0 #1a1a1a;
+    box-shadow: 3px 3px 0 var(--ink);
   }
 
   .content-block {
-    background: #ffffff;
-    border: var(--noc-border, 2px solid #1a1a1a);
-    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0px var(--ink, #151b20);
     padding: 2rem;
     margin-bottom: 2.5rem;
   }
@@ -427,18 +433,19 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     font-size: 1.6rem;
     font-weight: 900;
     margin-bottom: 0.5rem;
+    color: var(--ink);
   }
 
   .block-lead {
     font-size: 1.05rem;
-    color: #444444;
+    color: var(--ink-light);
     line-height: 1.6;
     margin-bottom: 1.5rem;
   }
 
   .block-desc {
     font-size: 0.92rem;
-    color: #666666;
+    color: var(--ink-light);
     margin-bottom: 1rem;
   }
 
@@ -458,8 +465,9 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .feature-card {
-    background: #fbfbfb;
-    border: 2px solid #1a1a1a;
+    background: var(--paper, #f6f0dc);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 10px;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -468,9 +476,10 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   .f-badge {
     font-size: 0.7rem;
     font-weight: 800;
-    background: #ff5252;
+    background: var(--coral);
     color: #ffffff;
-    border: 1px solid #1a1a1a;
+    border: 1px solid var(--ink);
+    border-radius: 4px;
     padding: 0.15rem 0.4rem;
     width: fit-content;
     margin-bottom: 0.5rem;
@@ -485,19 +494,20 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   .feature-card p {
     font-size: 0.88rem;
     line-height: 1.5;
-    color: #333333;
+    color: var(--ink-light);
     margin: 0;
   }
 
   /* Collapse Callout */
   .callout {
-    border: 2px solid #1a1a1a;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
     padding: 1.5rem;
   }
 
   .callout-warning {
-    background: #fff8f6;
-    border-left: 6px solid #ff5252;
+    background: var(--paper);
+    border-left: 8px solid var(--coral);
   }
 
   .callout-header {
@@ -511,6 +521,7 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     font-size: 1.3rem;
     font-weight: 900;
     margin: 0;
+    color: var(--ink);
   }
 
   .collapse-bars {
@@ -536,8 +547,9 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .c-track {
-    background: #eeeeee;
-    border: 1.5px solid #1a1a1a;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
     height: 26px;
     width: 100%;
     overflow: hidden;
@@ -560,8 +572,9 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   .fill-red { background: #d50000; color: #ffffff; }
 
   .collapse-explanation {
-    background: #ffffff;
-    border: 1px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
     padding: 1rem;
     font-size: 0.9rem;
     line-height: 1.5;
@@ -581,30 +594,33 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
 
   .data-table th, .data-table td {
     padding: 0.75rem 0.85rem;
-    border: 1px solid #1a1a1a;
+    border: 1px solid var(--ink, #151b20);
     text-align: left;
   }
 
   .data-table th {
-    background: #1a1a1a;
+    background: var(--ink, #151b20);
     color: #ffffff;
     font-weight: 800;
   }
 
   .data-table tr:nth-child(even) td {
-    background: #fafafa;
+    background: rgba(0, 0, 0, 0.03);
   }
 
   .score-badge {
-    background: #fff0f0;
+    background: var(--coral);
+    color: #ffffff;
     padding: 0.15rem 0.45rem;
     font-weight: 800;
-    border: 1px solid #1a1a1a;
+    border: 1px solid var(--ink);
+    border-radius: 4px;
   }
 
   .util-badge {
-    background: #ffffff;
-    border: 1px solid #1a1a1a;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
     padding: 0.15rem 0.45rem;
     font-weight: 800;
   }
@@ -615,8 +631,9 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .latex-export-box {
-    background: #1a1a1a;
-    border: 2px solid #1a1a1a;
+    background: var(--ink, #151b20);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
     padding: 1.25rem;
     margin-top: 1rem;
   }
@@ -624,7 +641,7 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   .latex-head {
     display: flex;
     justify-content: space-between;
-    color: #ff8a80;
+    color: var(--coral);
     font-size: 0.85rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
@@ -641,7 +658,7 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   .latex-code {
     margin: 0;
     padding: 0;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
     font-size: 0.82rem;
     color: #a8ffb2;
     overflow-x: auto;
@@ -676,9 +693,10 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .dossier-card {
-    background: #ffffff;
-    border: var(--noc-border-heavy, 3px solid #1a1a1a);
-    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0px var(--ink, #151b20);
     padding: 2.25rem;
     scroll-margin-top: 5rem;
   }
@@ -697,26 +715,29 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .d-badge {
-    background: #1a1a1a;
+    background: var(--ink);
     color: #ffffff;
     font-size: 0.75rem;
     font-weight: 800;
     padding: 0.2rem 0.5rem;
-    font-family: var(--noc-font-mono, monospace);
+    border-radius: 4px;
+    font-family: var(--md-code-font, monospace);
   }
 
   .d-org {
     font-size: 0.85rem;
     font-weight: 700;
-    color: #555555;
+    color: var(--ink-light);
   }
 
   .d-license {
     font-size: 0.8rem;
     font-weight: 700;
-    background: #f0f0f0;
-    border: 1px solid #1a1a1a;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
     padding: 0.15rem 0.4rem;
+    color: var(--ink);
   }
 
   .dossier-core-name {
@@ -724,11 +745,12 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     font-weight: 900;
     margin-bottom: 0.35rem;
     letter-spacing: -0.01em;
+    color: var(--ink);
   }
 
   .dossier-lead {
     font-size: 1.05rem;
-    color: #333333;
+    color: var(--ink-light);
     line-height: 1.5;
     margin-bottom: 1.5rem;
   }
@@ -737,8 +759,9 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
-    background: #fbfbfb;
-    border: 1px solid #1a1a1a;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
     padding: 1.25rem;
     margin-bottom: 1.25rem;
   }
@@ -784,28 +807,30 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .assess-item {
-    border: 2px solid #1a1a1a;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
     padding: 1rem;
     font-size: 0.88rem;
     line-height: 1.5;
   }
 
-  .assess-item.strength { background: #edfcee; }
-  .assess-item.limitation { background: #fffbe6; }
+  .assess-item.strength { background: rgba(168, 255, 178, 0.25); }
+  .assess-item.limitation { background: rgba(255, 230, 109, 0.25); }
 
   .dossier-repro-box {
-    background: #1a1a1a;
+    background: var(--ink, #151b20);
     color: #ffffff;
     padding: 1rem 1.25rem;
     margin-bottom: 1.25rem;
-    border: 2px solid #1a1a1a;
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
   }
 
   .repro-title {
     display: block;
     font-size: 0.82rem;
     font-weight: 800;
-    color: #ff8a80;
+    color: var(--coral);
     margin-bottom: 0.5rem;
   }
 
@@ -823,7 +848,7 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .cmd-tag {
-    color: #999999;
+    color: #cccccc;
   }
 
   .cmd-item code {
@@ -831,12 +856,12 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     color: #7ed957;
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
   }
 
   .dossier-files-summary {
     font-size: 0.85rem;
-    color: #444444;
+    color: var(--ink-light);
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -851,22 +876,25 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
   }
 
   .file-tag {
-    background: #eeeeee;
-    border: 1px solid #cccccc;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
     padding: 0.15rem 0.4rem;
     font-size: 0.75rem;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
   }
 
   .file-more {
     font-size: 0.75rem;
-    color: #888888;
+    color: var(--ink-light);
     font-style: italic;
   }
 
   .dossier-details-block {
-    background: #fbfbfb;
-    border: 1px solid #1a1a1a;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    overflow: hidden;
     margin-top: 1rem;
   }
 
@@ -875,8 +903,8 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     font-weight: 800;
     font-size: 0.9rem;
     cursor: pointer;
-    background: #f0f0f0;
-    border-bottom: 1px solid #dddddd;
+    background: rgba(0, 0, 0, 0.04);
+    border-bottom: 1px solid var(--line);
   }
 
   .details-readme-body {
@@ -885,6 +913,6 @@ Gemmini &amp; matmul\_ws &amp; 16$\times$16 systolic &amp; 8,240 &amp; 15.2 &amp
     overflow-y: auto;
     font-size: 0.9rem;
     line-height: 1.6;
-    background: #ffffff;
+    background: var(--cream, #fffaf0);
   }
 </style>

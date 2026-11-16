@@ -7,21 +7,21 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   description="First-principles intuitive guide to computer architecture, silicon microprocessors, memory hierarchies, and the 4 SCORE categories."
 >
   <!-- Page Header -->
-  <div class="page-header accent-yellow">
-    <div class="badge badge-accent">START HERE &bull; ZERO TO CHIP ARCHITECT</div>
-    <h1 class="page-title">Fundamental Learnings in Computer Architecture</h1>
-    <p class="page-lead">
+  <div class="noc-hero">
+    <div class="noc-track-badge">✨ START HERE &bull; ZERO TO CHIP ARCHITECT</div>
+    <h1>Fundamental Learnings in Computer Architecture</h1>
+    <p class="subtitle">
       How do millions of microscopic switches carved into silicon execute software, stream video, and accelerate artificial intelligence? This guide starts from absolute first principles—designed so that <strong>newcomers, students, and engineers alike</strong> can intuitively grasp how computer chips work and why the <strong>4 SCORE Categories</strong> exist.
     </p>
 
     <!-- Quick Navigation Jump -->
-    <div class="primer-nav">
-      <a href="#what-is-a-chip" class="primer-jump">&sect; 1. What is a Chip?</a>
-      <a href="#what-is-riscv" class="primer-jump">&sect; 2. What is RISC-V?</a>
-      <a href="#pipeline-laundry" class="primer-jump">&sect; 3. The Laundry Assembly Line</a>
-      <a href="#kitchen-memory" class="primer-jump">&sect; 4. The Chef's Kitchen (Memory)</a>
-      <a href="#vehicle-analogy" class="primer-jump">&sect; 5. The 4 Categories Explained</a>
-      <a href="#benchmarking-101" class="primer-jump">&sect; 6. How We Score Chips</a>
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem;">
+      <a href="#what-is-a-chip" class="noc-sim-btn secondary">&sect; 1. What is a Chip?</a>
+      <a href="#what-is-riscv" class="noc-sim-btn secondary">&sect; 2. What is RISC-V?</a>
+      <a href="#pipeline-laundry" class="noc-sim-btn secondary">&sect; 3. The Laundry Assembly Line</a>
+      <a href="#kitchen-memory" class="noc-sim-btn secondary">&sect; 4. The Chef's Kitchen (Memory)</a>
+      <a href="#vehicle-analogy" class="noc-sim-btn secondary">&sect; 5. The 4 Categories Explained</a>
+      <a href="#benchmarking-101" class="noc-sim-btn secondary">&sect; 6. How We Score Chips</a>
     </div>
   </div>
 
@@ -1100,56 +1100,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 </script>
 
 <style>
-  .page-header {
-    background: #ffffff;
-    border: var(--noc-border-heavy, 3px solid #1a1a1a);
-    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
-    padding: 2.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .page-header.accent-yellow { background: #fffbe6; }
-
-  .page-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin-top: 0.5rem;
-    margin-bottom: 0.75rem;
-    letter-spacing: -0.02em;
-  }
-
-  .page-lead {
-    font-size: 1.15rem;
-    color: #444444;
-    line-height: 1.6;
-    max-width: 900px;
-    margin-bottom: 1.5rem;
-  }
-
-  .primer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .primer-jump {
-    background: #ffffff;
-    border: 2px solid #1a1a1a;
-    box-shadow: 2px 2px 0 #1a1a1a;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: #1a1a1a;
-    text-decoration: none;
-    transition: all 0.1s ease;
-  }
-
-  .primer-jump:hover {
-    background: #ffde59;
-    transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0 #1a1a1a;
-  }
-
   .fundamentals-stream {
     display: flex;
     flex-direction: column;
@@ -1158,9 +1108,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .fund-section-card {
-    background: #ffffff;
-    border: var(--noc-border, 2px solid #1a1a1a);
-    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0px var(--ink, #151b20);
     padding: 2.25rem;
   }
 
@@ -1174,27 +1125,32 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .fund-num {
     font-size: 2.5rem;
     font-weight: 900;
-    color: #ffde59;
-    -webkit-text-stroke: 2px #1a1a1a;
+    color: var(--yellow, #ffc83e);
+    -webkit-text-stroke: 1.5px var(--ink, #151b20);
     line-height: 1;
+    font-family: var(--md-code-font, monospace);
   }
 
   .fund-title {
     font-size: 1.8rem;
     font-weight: 900;
     margin: 0.25rem 0 0 0;
+    color: var(--ink);
+    letter-spacing: -0.02em;
   }
 
   .fund-lead {
     font-size: 1.1rem;
-    color: #333333;
+    color: var(--ink-light);
     line-height: 1.6;
     margin-bottom: 1.5rem;
   }
 
   .analogy-banner {
-    background: #fffdf0;
-    border: 2px solid #1a1a1a;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 3px 3px 0px var(--yellow);
     padding: 1.25rem;
     display: flex;
     gap: 1.25rem;
@@ -1210,7 +1166,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .analogy-text {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: #222222;
+    color: var(--ink);
   }
 
   .analogy-text ul {
@@ -1229,8 +1185,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .fund-box {
-    background: #fbfbfb;
-    border: 1.5px solid #1a1a1a;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 12px;
     padding: 1.25rem;
   }
 
@@ -1238,40 +1195,45 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     font-size: 1.1rem;
     font-weight: 900;
     margin-bottom: 0.75rem;
+    color: var(--ink);
   }
 
   .fund-box p, .fund-box ul, .fund-box ol {
     font-size: 0.9rem;
-    line-height: 1.5;
-    color: #444444;
+    line-height: 1.55;
+    color: var(--ink-light);
   }
 
   .highlight-callout {
-    background: #fffbe6;
-    border-left: 4px solid #ffde59;
-    padding: 0.75rem;
+    background: var(--yellow-soft);
+    border-left: 4px solid var(--yellow);
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem 1rem;
     margin-top: 1rem;
     font-size: 0.88rem;
     line-height: 1.5;
+    color: var(--ink);
   }
 
   /* ========================================= */
   /* INTERACTIVE WIDGET STYLES                */
   /* ========================================= */
   .interactive-widget-box {
-    background: #f4fbf4;
-    border: 2.5px solid #1a1a1a;
-    box-shadow: 4px 4px 0 #1a1a1a;
+    background: var(--paper, #f6f0dc);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0px var(--cyan);
     padding: 1.75rem;
     margin: 1.75rem 0;
   }
 
   .widget-badge {
-    background: #1a1a1a;
-    color: #7ed957;
+    background: var(--ink);
+    color: var(--lime);
     font-size: 0.72rem;
     font-weight: 800;
     padding: 0.2rem 0.5rem;
+    border-radius: 6px;
     display: inline-block;
     margin-bottom: 0.5rem;
   }
@@ -1280,12 +1242,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     font-size: 1.4rem;
     font-weight: 900;
     margin: 0 0 0.35rem 0;
+    color: var(--ink);
   }
 
   .widget-desc {
     font-size: 0.92rem;
-    color: #444444;
+    color: var(--ink-light);
     margin-bottom: 1.25rem;
+    line-height: 1.5;
   }
 
   /* Gate Widget */
@@ -1295,8 +1259,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     align-items: center;
     flex-wrap: wrap;
     gap: 1.25rem;
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
     padding: 1rem 1.25rem;
     margin-bottom: 1.25rem;
   }
@@ -1305,7 +1270,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     display: block;
     font-size: 0.8rem;
     font-weight: 800;
-    color: #666666;
+    color: var(--ink-light);
     margin-bottom: 0.35rem;
   }
 
@@ -1316,19 +1281,22 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .gate-sel-btn, .toggle-switch-btn {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
-    box-shadow: 2px 2px 0 #1a1a1a;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    box-shadow: 2px 2px 0 var(--ink);
     padding: 0.35rem 0.75rem;
     font-size: 0.82rem;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.1s ease;
+    color: var(--ink);
   }
 
   .gate-sel-btn.active {
-    background: #1a1a1a;
+    background: var(--ink);
     color: #ffffff;
+    box-shadow: 2px 2px 0 var(--cyan);
   }
 
   .toggle-switch-btn {
@@ -1340,18 +1308,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .val-pill {
     padding: 0.15rem 0.4rem;
     font-size: 0.75rem;
-    border-radius: 3px;
+    border-radius: 4px;
+    border: 1px solid var(--ink);
   }
 
-  .pill-on { background: #7ed957; color: #000000; font-weight: 900; }
+  .pill-on { background: var(--lime); color: var(--ink); font-weight: 900; }
   .pill-off { background: #dddddd; color: #555555; font-weight: 900; }
 
   .gate-visual-display {
     display: grid;
     grid-template-columns: 1.4fr 1fr;
     gap: 1.5rem;
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
     padding: 1.5rem;
   }
 
@@ -1365,33 +1335,36 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     justify-content: center;
     gap: 0.75rem;
     padding: 1rem;
-    background: #fdfdfd;
-    border: 1px dashed #cccccc;
+    background: var(--paper);
+    border: 1.5px dashed var(--ink);
+    border-radius: 8px;
   }
 
   .wire-in, .wire-out {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
     font-size: 0.85rem;
     font-weight: 800;
+    color: var(--ink);
   }
 
   .logic-gate-box {
-    background: #1a1a1a;
+    background: var(--ink);
     color: #ffffff;
     padding: 1rem 1.25rem;
     text-align: center;
-    border: 2px solid #1a1a1a;
-    box-shadow: 3px 3px 0 #7ed957;
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    box-shadow: 3px 3px 0 var(--lime);
   }
 
   .gate-symbol-txt {
     display: block;
     font-size: 1.3rem;
     font-weight: 900;
-    color: #7ed957;
+    color: var(--lime);
   }
 
   .gate-sub-txt {
@@ -1402,7 +1375,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .lightbulb-container {
     text-align: center;
     padding: 0.5rem 0.75rem;
-    border: 2px solid #1a1a1a;
+    border: 2px solid var(--ink);
+    border-radius: 8px;
     background: #eeeeee;
     transition: all 0.2s ease;
   }
@@ -1424,9 +1398,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .bulb-active {
-    background: #fffde6;
-    border-color: #ffd600;
-    box-shadow: 0 0 15px rgba(255, 214, 0, 0.6);
+    background: var(--yellow-soft);
+    border-color: var(--yellow);
+    box-shadow: 0 0 15px rgba(255, 200, 62, 0.6);
   }
 
   .bulb-active .bulb-icon {
@@ -1436,7 +1410,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .bulb-active .bulb-status {
-    color: #d50000;
+    color: #b45309;
   }
 
   .truth-table {
@@ -1448,24 +1422,26 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   .truth-table th, .truth-table td {
     padding: 0.35rem 0.5rem;
-    border: 1px solid #1a1a1a;
+    border: 1px solid var(--ink);
     text-align: center;
   }
 
-  .truth-table th { background: #1a1a1a; color: #ffffff; }
+  .truth-table th { background: var(--ink); color: #ffffff; }
 
   .active-tr {
-    background: #fffde6 !important;
+    background: var(--yellow-soft) !important;
     font-weight: 900;
   }
 
   .widget-insight {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
     padding: 0.75rem 1rem;
     font-size: 0.85rem;
     line-height: 1.5;
     margin-top: 1rem;
+    color: var(--ink);
   }
 
   /* Pipelining Widget */
@@ -1476,19 +1452,22 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .pipe-mode-btn {
-    background: #ffffff;
-    border: 2px solid #1a1a1a;
-    box-shadow: 2px 2px 0 #1a1a1a;
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    box-shadow: 2px 2px 0 var(--ink);
     padding: 0.5rem 1rem;
     font-size: 0.88rem;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.1s ease;
+    color: var(--ink);
   }
 
   .pipe-mode-btn.active {
-    background: #1a1a1a;
+    background: var(--ink);
     color: #ffffff;
+    box-shadow: 3px 3px 0 var(--yellow);
   }
 
   .pipe-metrics-summary {
@@ -1503,8 +1482,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .pm-box {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 var(--ink);
     padding: 0.75rem 1rem;
   }
 
@@ -1512,27 +1493,28 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     display: block;
     font-size: 0.75rem;
     font-weight: 800;
-    color: #666666;
+    color: var(--ink-light);
   }
 
   .pm-val {
     font-size: 1.2rem;
     font-weight: 900;
-    color: #1a1a1a;
+    color: var(--ink);
   }
 
   .highlight-box {
-    background: #fffbe6;
-    border-color: #ffde59;
+    background: var(--yellow-soft);
+    border-color: var(--ink);
   }
 
   .highlight-val {
-    color: #d50000;
+    color: #b45309;
   }
 
   .pipe-grid-container {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
     padding: 1rem;
     overflow-x: auto;
   }
@@ -1557,39 +1539,42 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     justify-content: center;
     font-size: 0.75rem;
     font-weight: 800;
-    border: 1px solid #cccccc;
+    border: 1px solid var(--line);
+    border-radius: 4px;
   }
 
   .p-label {
     width: 95px;
     justify-content: flex-start;
     padding-left: 0.4rem;
-    background: #f0f0f0;
-    border-color: #1a1a1a;
-    font-family: var(--noc-font-mono, monospace);
+    background: var(--paper);
+    border-color: var(--ink);
+    font-family: var(--md-code-font, monospace);
+    color: var(--ink);
   }
 
   .p-col-hdr {
-    background: #1a1a1a;
+    background: var(--ink);
     color: #ffffff;
-    border-color: #1a1a1a;
+    border-color: var(--ink);
   }
 
   .p-stage {
-    color: #ffffff;
-    border-color: #1a1a1a;
+    color: var(--ink);
+    font-weight: 900;
+    border-color: var(--ink);
   }
 
   .p-empty {
     color: #bbbbbb;
-    background: #fafafa;
+    background: rgba(21, 27, 32, 0.03);
   }
 
-  .chip-if { background: #00bcd4; }
-  .chip-id { background: #ff9800; }
-  .chip-ex { background: #4caf50; }
-  .chip-mem { background: #9c27b0; }
-  .chip-wb { background: #e91e63; }
+  .chip-if { background: var(--cyan); color: var(--ink); }
+  .chip-id { background: var(--yellow); color: var(--ink); }
+  .chip-ex { background: var(--lime); color: var(--ink); }
+  .chip-mem { background: var(--purple-soft); color: var(--ink); }
+  .chip-wb { background: var(--coral-soft); color: var(--ink); }
 
   .pipe-stage-legend {
     display: flex;
@@ -1610,7 +1595,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     width: 14px;
     height: 14px;
     display: inline-block;
-    border: 1px solid #1a1a1a;
+    border: 1px solid var(--ink);
+    border-radius: 3px;
   }
 
   /* Memory Scale Widget */
@@ -1622,24 +1608,28 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .mem-level-btn {
-    background: #ffffff;
-    border: 2px solid #1a1a1a;
-    box-shadow: 2px 2px 0 #1a1a1a;
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    box-shadow: 2px 2px 0 var(--ink);
     padding: 0.45rem 0.85rem;
     font-size: 0.82rem;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.1s ease;
+    color: var(--ink);
   }
 
   .mem-level-btn.active {
-    background: #ffde59;
-    box-shadow: 3px 3px 0 #1a1a1a;
+    background: var(--yellow);
+    box-shadow: 3px 3px 0 var(--ink);
   }
 
   .mem-detail-card {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 var(--ink);
     padding: 1.5rem;
   }
 
@@ -1650,30 +1640,33 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1rem;
-    border-bottom: 1px dashed #dddddd;
+    border-bottom: 1px dashed var(--ink);
     padding-bottom: 0.75rem;
   }
 
   .mdc-title {
     font-size: 1.15rem;
     font-weight: 900;
+    color: var(--ink);
   }
 
   .mdc-latency {
     font-size: 0.85rem;
     font-weight: 800;
-    background: #1a1a1a;
-    color: #7ed957;
+    background: var(--ink);
+    color: var(--lime);
+    border-radius: 4px;
     padding: 0.2rem 0.5rem;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
   }
 
   .human-scale-box {
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    background: #fffdf0;
-    border: 1.5px solid #1a1a1a;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
     padding: 1.25rem;
     margin-bottom: 1.25rem;
   }
@@ -1686,27 +1679,28 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     display: block;
     font-size: 1.1rem;
     font-weight: 900;
-    color: #d50000;
+    color: #b45309;
     margin-bottom: 0.25rem;
   }
 
   .hs-text p {
     margin: 0;
     font-size: 0.88rem;
-    color: #333333;
+    color: var(--ink-light);
     line-height: 1.5;
   }
 
   .latency-bar-track {
-    background: #eeeeee;
-    border: 1.5px solid #1a1a1a;
+    background: var(--paper-deep);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
     height: 20px;
     overflow: hidden;
   }
 
   .latency-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #7ed957, #ff5252);
+    background: linear-gradient(90deg, var(--lime), var(--coral));
     transition: width 0.3s ease;
   }
 
@@ -1715,7 +1709,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     justify-content: space-between;
     font-size: 0.75rem;
     font-weight: 800;
-    color: #777777;
+    color: var(--ink-light);
     margin-top: 0.35rem;
   }
 
@@ -1727,18 +1721,25 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .v-card {
-    border: 2px solid #1a1a1a;
-    box-shadow: 4px 4px 0 #1a1a1a;
+    border: 2px solid var(--ink);
+    border-radius: 14px;
+    box-shadow: 4px 4px 0 var(--ink);
     padding: 1.5rem;
-    background: #ffffff;
+    background: var(--cream);
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .v-card.cat1-v { border-top: 8px solid #ffde59; }
-  .v-card.cat2-v { border-top: 8px solid #00f2fe; }
-  .v-card.cat3-v { border-top: 8px solid #ff5252; }
-  .v-card.cat4-v { border-top: 8px solid #7ed957; }
+  .v-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--yellow);
+  }
+
+  .v-card.cat1-v { border-top: 8px solid var(--yellow); }
+  .v-card.cat2-v { border-top: 8px solid var(--cyan); }
+  .v-card.cat3-v { border-top: 8px solid var(--coral); }
+  .v-card.cat4-v { border-top: 8px solid var(--lime); }
 
   .v-icon {
     font-size: 2.5rem;
@@ -1748,8 +1749,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .v-badge {
     font-size: 0.7rem;
     font-weight: 800;
-    background: #1a1a1a;
+    background: var(--ink);
     color: #ffffff;
+    border-radius: 6px;
     padding: 0.15rem 0.4rem;
     width: fit-content;
     margin-bottom: 0.35rem;
@@ -1759,19 +1761,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     font-size: 1.3rem;
     font-weight: 900;
     margin: 0.25rem 0;
+    color: var(--ink);
   }
 
   .v-subtitle {
     font-size: 0.85rem;
     font-weight: 800;
-    color: #666666;
+    color: var(--ink-light);
     margin-bottom: 0.75rem;
   }
 
   .v-card p {
     font-size: 0.88rem;
-    line-height: 1.5;
-    color: #333333;
+    line-height: 1.55;
+    color: var(--ink-light);
     margin-bottom: 1rem;
     flex-grow: 1;
   }
@@ -1779,9 +1782,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .v-examples {
     font-size: 0.78rem;
     font-weight: 700;
-    background: #f5f5f5;
-    padding: 0.3rem 0.5rem;
-    border: 1px solid #dddddd;
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--line);
+    color: var(--ink);
   }
 
   .pipeline-comparison-grid {
@@ -1791,32 +1796,37 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .pipe-card {
-    background: #fbfbfb;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 var(--ink);
     padding: 1.25rem;
   }
 
   .pipe-badge {
     font-size: 0.68rem;
     font-weight: 800;
-    background: #ffde59;
-    border: 1px solid #1a1a1a;
+    background: var(--yellow);
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
     padding: 0.15rem 0.35rem;
     width: fit-content;
     display: inline-block;
     margin-bottom: 0.5rem;
+    color: var(--ink);
   }
 
   .pipe-card h4 {
     font-size: 1.1rem;
     font-weight: 900;
     margin: 0.2rem 0 0.5rem 0;
+    color: var(--ink);
   }
 
   .pipe-card p {
     font-size: 0.85rem;
     line-height: 1.5;
-    color: #444444;
+    color: var(--ink-light);
     margin: 0;
   }
 
@@ -1831,28 +1841,31 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .isa-sel-btn {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
-    box-shadow: 2px 2px 0 #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    box-shadow: 2px 2px 0 var(--ink);
     padding: 0.4rem 0.85rem;
     font-size: 0.82rem;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.1s ease;
+    color: var(--ink);
   }
 
   .isa-sel-btn.active {
-    background: #1a1a1a;
+    background: var(--ink);
     color: #ffffff;
-    box-shadow: 2px 2px 0 #00f2fe;
+    box-shadow: 2px 2px 0 var(--cyan);
   }
 
   .isa-preview-bar {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
     padding: 0.85rem 1.25rem;
     margin-bottom: 1.25rem;
   }
@@ -1866,16 +1879,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .isa-label {
     font-size: 0.72rem;
     font-weight: 800;
-    color: #777777;
+    color: var(--ink-light);
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
 
   .isa-code-chip code {
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
     font-size: 0.95rem;
     font-weight: 800;
-    color: #1a1a1a;
+    color: var(--ink);
   }
 
   .bitfield-container {
@@ -1886,48 +1899,50 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .bitfield-col {
-    border: 1.5px solid #1a1a1a;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
     padding: 0.65rem 0.5rem;
     text-align: center;
     display: flex;
     flex-direction: column;
-    box-shadow: 2px 2px 0 #1a1a1a;
+    box-shadow: 2px 2px 0 var(--ink);
   }
 
   .bf-bits {
     font-size: 0.7rem;
     font-weight: 800;
     color: #555555;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
   }
 
   .bf-name {
     font-size: 0.95rem;
     font-weight: 900;
-    color: #1a1a1a;
+    color: var(--ink);
     margin: 0.2rem 0;
   }
 
   .bf-val {
     font-size: 0.78rem;
     font-weight: 800;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
     color: #004d40;
     background: rgba(255, 255, 255, 0.7);
     padding: 0.15rem 0.25rem;
-    border-radius: 2px;
+    border-radius: 4px;
     margin-bottom: 0.25rem;
   }
 
   .bf-desc {
     font-size: 0.72rem;
-    color: #666666;
+    color: var(--ink-light);
     font-weight: 600;
   }
 
   .hw-activation-box {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 12px;
     padding: 1.25rem;
   }
 
@@ -1940,42 +1955,45 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .hw-stage-card {
-    border: 1.5px solid #1a1a1a;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
     padding: 0.75rem;
-    box-shadow: 2px 2px 0 #1a1a1a;
+    box-shadow: 2px 2px 0 var(--ink);
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
   }
 
   .stage-active {
-    background: #e8f5e9;
-    border-color: #2e7d32;
+    background: var(--lime-soft);
+    border-color: var(--ink);
   }
 
   .stage-inactive {
-    background: #f5f5f5;
+    background: var(--paper-deep);
     opacity: 0.55;
   }
 
   .hw-s-name {
     font-size: 0.85rem;
     font-weight: 900;
-    color: #1a1a1a;
+    color: var(--ink);
   }
 
   .hw-s-label {
     font-size: 0.76rem;
     font-weight: 700;
-    color: #444444;
+    color: var(--ink-light);
   }
 
   .hw-detail-note {
-    background: #fffdf0;
-    border-left: 4px solid #ffc107;
+    background: var(--yellow-soft);
+    border-left: 4px solid var(--yellow);
+    border-radius: 0 8px 8px 0;
     padding: 0.65rem 0.85rem;
     font-size: 0.85rem;
     line-height: 1.5;
+    color: var(--ink);
   }
 
   /* ========================================= */
@@ -1989,27 +2007,30 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .bench-lvl-btn {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
-    box-shadow: 2px 2px 0 #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    box-shadow: 2px 2px 0 var(--ink);
     padding: 0.65rem 0.85rem;
     font-size: 0.82rem;
     font-weight: 800;
     text-align: left;
     cursor: pointer;
     transition: all 0.1s ease;
+    color: var(--ink);
   }
 
   .bench-lvl-btn.active {
-    background: #1a1a1a;
+    background: var(--ink);
     color: #ffffff;
-    box-shadow: 3px 3px 0 #ff5252;
+    box-shadow: 3px 3px 0 var(--coral);
   }
 
   .bench-level-card {
-    background: #ffffff;
-    border: 2px solid #1a1a1a;
-    box-shadow: 4px 4px 0 #1a1a1a;
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--ink);
     padding: 1.5rem;
   }
 
@@ -2019,18 +2040,19 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 1rem;
-    border-bottom: 1.5px solid #eeeeee;
+    border-bottom: 1.5px solid var(--line);
     padding-bottom: 1rem;
     margin-bottom: 1.25rem;
   }
 
   .blc-badge {
     display: inline-block;
-    background: #ff5252;
+    background: var(--coral);
     color: #ffffff;
     font-size: 0.72rem;
     font-weight: 800;
     padding: 0.2rem 0.5rem;
+    border-radius: 4px;
     margin-bottom: 0.35rem;
   }
 
@@ -2038,14 +2060,17 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     font-size: 1.3rem;
     font-weight: 900;
     margin: 0;
+    color: var(--ink);
   }
 
   .blc-scope-tag {
     font-size: 0.78rem;
     font-weight: 800;
-    background: #f0f0f0;
-    border: 1px solid #cccccc;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
     padding: 0.3rem 0.6rem;
+    color: var(--ink);
   }
 
   .blc-grid {
@@ -2063,7 +2088,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     font-size: 0.78rem;
     font-weight: 900;
     text-transform: uppercase;
-    color: #666666;
+    color: var(--ink-light);
     letter-spacing: 0.04em;
     margin-bottom: 0.35rem;
   }
@@ -2071,23 +2096,24 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .blc-col p {
     font-size: 0.88rem;
     line-height: 1.55;
-    color: #333333;
+    color: var(--ink);
     margin: 0;
   }
 
   .blc-contrast-col {
-    background: #fffdf5;
-    border-left: 3px solid #ff5252;
-    padding-left: 1.25rem;
+    background: var(--yellow-soft);
+    border-left: 3px solid var(--coral);
+    border-radius: 0 8px 8px 0;
+    padding: 0.85rem 1.25rem;
   }
 
   .blc-bottleneck-txt {
-    color: #c62828 !important;
-    font-weight: 600;
+    color: #b91c1c !important;
+    font-weight: 700;
   }
 
   .blc-remedy-txt {
-    color: #1565c0 !important;
-    font-weight: 700;
+    color: #0369a1 !important;
+    font-weight: 800;
   }
 </style>

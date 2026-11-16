@@ -517,14 +517,15 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
 
 <style>
   .page-header {
-    background: #ffffff;
-    border: var(--noc-border-heavy, 3px solid #1a1a1a);
-    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 6px 6px 0px var(--lime, #a8ffb2);
     padding: 2.5rem;
     margin-bottom: 2rem;
   }
 
-  .page-header.accent-green { background: #eefbee; }
+  .page-header.accent-green { background: var(--cream, #fffaf0); }
 
   .page-title {
     font-size: 2.5rem;
@@ -532,11 +533,12 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     margin-top: 0.5rem;
     margin-bottom: 0.75rem;
     letter-spacing: -0.02em;
+    color: var(--ink);
   }
 
   .page-lead {
     font-size: 1.15rem;
-    color: #444444;
+    color: var(--ink-light);
     line-height: 1.6;
     max-width: 900px;
     margin-bottom: 1.25rem;
@@ -548,43 +550,46 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     align-items: center;
     gap: 0.4rem;
     padding-top: 0.75rem;
-    border-top: 1px dashed #cccccc;
+    border-top: 1px dashed var(--line);
   }
 
   .jump-label {
     font-size: 0.8rem;
     font-weight: 800;
-    color: #333333;
+    color: var(--ink);
     margin-right: 0.25rem;
   }
 
   .core-jump-pill {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
-    box-shadow: 2px 2px 0 #1a1a1a;
-    padding: 0.25rem 0.6rem;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    box-shadow: 2px 2px 0 var(--ink);
+    padding: 0.25rem 0.65rem;
     font-size: 0.78rem;
     font-weight: 800;
-    color: #1a1a1a;
+    color: var(--ink);
     text-decoration: none;
     transition: all 0.1s ease;
   }
 
   .core-jump-pill:hover {
-    background: #7ed957;
+    background: var(--lime);
+    color: var(--ink);
     transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0 #1a1a1a;
+    box-shadow: 3px 3px 0 var(--ink);
   }
 
   .pill-infra {
-    background: #f0f0f0;
+    background: rgba(0, 0, 0, 0.05);
     border-style: dashed;
   }
 
   .content-block {
-    background: #ffffff;
-    border: var(--noc-border, 2px solid #1a1a1a);
-    box-shadow: var(--noc-shadow, 4px 4px 0 #1a1a1a);
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0px var(--ink, #151b20);
     padding: 2rem;
     margin-bottom: 2.5rem;
   }
@@ -593,18 +598,19 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     font-size: 1.6rem;
     font-weight: 900;
     margin-bottom: 0.5rem;
+    color: var(--ink);
   }
 
   .block-lead {
     font-size: 1.05rem;
-    color: #444444;
+    color: var(--ink-light);
     line-height: 1.6;
     margin-bottom: 1.5rem;
   }
 
   .block-desc {
     font-size: 0.92rem;
-    color: #666666;
+    color: var(--ink-light);
     margin-bottom: 1rem;
   }
 
@@ -624,8 +630,9 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .feature-card {
-    background: #fbfbfb;
-    border: 2px solid #1a1a1a;
+    background: var(--paper, #f6f0dc);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 10px;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
@@ -634,8 +641,10 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   .f-badge {
     font-size: 0.7rem;
     font-weight: 800;
-    background: #7ed957;
-    border: 1px solid #1a1a1a;
+    background: var(--lime);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
     padding: 0.15rem 0.4rem;
     width: fit-content;
     margin-bottom: 0.5rem;
@@ -650,19 +659,20 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   .feature-card p {
     font-size: 0.88rem;
     line-height: 1.5;
-    color: #333333;
+    color: var(--ink-light);
     margin: 0;
   }
 
   /* Callout & Insights */
   .callout {
-    border: 2px solid #1a1a1a;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
     padding: 1.5rem;
   }
 
   .callout-warning {
-    background: #fdfdf0;
-    border-left: 6px solid #ffde59;
+    background: var(--paper);
+    border-left: 8px solid var(--yellow);
   }
 
   .callout-header {
@@ -676,6 +686,7 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     font-size: 1.3rem;
     font-weight: 900;
     margin: 0;
+    color: var(--ink);
   }
 
   .insights-dual-grid {
@@ -692,8 +703,9 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .insight-subbox {
-    background: #ffffff;
-    border: 1.5px solid #1a1a1a;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
     padding: 1.25rem;
   }
 
@@ -706,17 +718,18 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   .insight-subbox p {
     font-size: 0.88rem;
     line-height: 1.5;
-    color: #444444;
+    color: var(--ink-light);
     margin-bottom: 0.75rem;
   }
 
   .insight-sol {
     font-size: 0.82rem;
     font-weight: 800;
-    color: #1a1a1a;
-    background: #eefbee;
+    color: var(--ink);
+    background: var(--paper);
     padding: 0.3rem 0.5rem;
-    border: 1px solid #7ed957;
+    border: 1px solid var(--ink);
+    border-radius: 4px;
   }
 
   /* Search & Filter Panel */
@@ -745,27 +758,30 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     font-size: 0.9rem;
     font-weight: 800;
     white-space: nowrap;
+    color: var(--ink);
   }
 
   .form-control {
     width: 100%;
     padding: 0.6rem 0.85rem;
-    border: 2px solid #1a1a1a;
+    border: 2px solid var(--ink);
+    border-radius: 8px;
     font-size: 0.9rem;
     font-family: inherit;
-    background: #fdfdfd;
+    background: var(--paper);
+    color: var(--ink);
   }
 
   .form-control:focus {
     outline: none;
-    background: #ffffff;
-    box-shadow: 3px 3px 0 #1a1a1a;
+    background: var(--cream);
+    box-shadow: 3px 3px 0 var(--ink);
   }
 
   .filter-count {
     font-size: 0.85rem;
     font-weight: 800;
-    color: #555555;
+    color: var(--ink-light);
   }
 
   .table-scroll {
@@ -781,32 +797,34 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
 
   .data-table th, .data-table td {
     padding: 0.75rem 0.85rem;
-    border: 1px solid #1a1a1a;
+    border: 1px solid var(--ink, #151b20);
     text-align: left;
   }
 
   .data-table th {
-    background: #1a1a1a;
+    background: var(--ink, #151b20);
     color: #ffffff;
     font-weight: 800;
   }
 
   .data-table tr:nth-child(even) td {
-    background: #fafafa;
+    background: rgba(0, 0, 0, 0.03);
   }
 
   .verified-tag {
-    background: #eefbee;
-    color: #1a1a1a;
-    border: 1px solid #7ed957;
+    background: var(--lime);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
     font-weight: 800;
     font-size: 0.78rem;
     padding: 0.15rem 0.4rem;
   }
 
   .latex-export-box {
-    background: #1a1a1a;
-    border: 2px solid #1a1a1a;
+    background: var(--ink, #151b20);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
     padding: 1.25rem;
     margin-top: 1rem;
   }
@@ -814,7 +832,7 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   .latex-head {
     display: flex;
     justify-content: space-between;
-    color: #7ed957;
+    color: var(--lime);
     font-size: 0.85rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
@@ -831,7 +849,7 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   .latex-code {
     margin: 0;
     padding: 0;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
     font-size: 0.82rem;
     color: #a8ffb2;
     overflow-x: auto;
@@ -866,20 +884,21 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .dossier-card {
-    background: #ffffff;
-    border: var(--noc-border-heavy, 3px solid #1a1a1a);
-    box-shadow: var(--noc-shadow-heavy, 6px 6px 0 #1a1a1a);
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0px var(--ink, #151b20);
     padding: 2.25rem;
     scroll-margin-top: 5rem;
   }
 
   .infra-card {
     border-style: dashed;
-    background: #fafafa;
+    background: var(--paper);
   }
 
   .badge-infra {
-    background: #555555;
+    background: var(--ink);
   }
 
   .dossier-header {
@@ -896,26 +915,29 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .d-badge {
-    background: #1a1a1a;
+    background: var(--ink);
     color: #ffffff;
     font-size: 0.75rem;
     font-weight: 800;
     padding: 0.2rem 0.5rem;
-    font-family: var(--noc-font-mono, monospace);
+    border-radius: 4px;
+    font-family: var(--md-code-font, monospace);
   }
 
   .d-org {
     font-size: 0.85rem;
     font-weight: 700;
-    color: #555555;
+    color: var(--ink-light);
   }
 
   .d-license {
     font-size: 0.8rem;
     font-weight: 700;
-    background: #f0f0f0;
-    border: 1px solid #1a1a1a;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
     padding: 0.15rem 0.4rem;
+    color: var(--ink);
   }
 
   .dossier-core-name {
@@ -923,11 +945,12 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     font-weight: 900;
     margin-bottom: 0.35rem;
     letter-spacing: -0.01em;
+    color: var(--ink);
   }
 
   .dossier-lead {
     font-size: 1.05rem;
-    color: #333333;
+    color: var(--ink-light);
     line-height: 1.5;
     margin-bottom: 1.5rem;
   }
@@ -936,8 +959,9 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
-    background: #fbfbfb;
-    border: 1px solid #1a1a1a;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
     padding: 1.25rem;
     margin-bottom: 1.25rem;
   }
@@ -983,28 +1007,30 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .assess-item {
-    border: 2px solid #1a1a1a;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
     padding: 1rem;
     font-size: 0.88rem;
     line-height: 1.5;
   }
 
-  .assess-item.strength { background: #edfcee; }
-  .assess-item.limitation { background: #fffbe6; }
+  .assess-item.strength { background: rgba(168, 255, 178, 0.25); }
+  .assess-item.limitation { background: rgba(255, 230, 109, 0.25); }
 
   .dossier-repro-box {
-    background: #1a1a1a;
+    background: var(--ink, #151b20);
     color: #ffffff;
     padding: 1rem 1.25rem;
     margin-bottom: 1.25rem;
-    border: 2px solid #1a1a1a;
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
   }
 
   .repro-title {
     display: block;
     font-size: 0.82rem;
     font-weight: 800;
-    color: #7ed957;
+    color: var(--lime);
     margin-bottom: 0.5rem;
   }
 
@@ -1022,7 +1048,7 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .cmd-tag {
-    color: #999999;
+    color: #cccccc;
   }
 
   .cmd-item code {
@@ -1030,12 +1056,12 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     color: #7ed957;
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
   }
 
   .dossier-files-summary {
     font-size: 0.85rem;
-    color: #444444;
+    color: var(--ink-light);
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -1050,22 +1076,25 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .file-tag {
-    background: #eeeeee;
-    border: 1px solid #cccccc;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
     padding: 0.15rem 0.4rem;
     font-size: 0.75rem;
-    font-family: var(--noc-font-mono, monospace);
+    font-family: var(--md-code-font, monospace);
   }
 
   .file-more {
     font-size: 0.75rem;
-    color: #888888;
+    color: var(--ink-light);
     font-style: italic;
   }
 
   .dossier-details-block {
-    background: #fbfbfb;
-    border: 1px solid #1a1a1a;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    overflow: hidden;
     margin-top: 1rem;
   }
 
@@ -1074,8 +1103,8 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     font-weight: 800;
     font-size: 0.9rem;
     cursor: pointer;
-    background: #f0f0f0;
-    border-bottom: 1px solid #dddddd;
+    background: rgba(0, 0, 0, 0.04);
+    border-bottom: 1px solid var(--line);
   }
 
   .details-readme-body {
@@ -1084,6 +1113,6 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     overflow-y: auto;
     font-size: 0.9rem;
     line-height: 1.6;
-    background: #ffffff;
+    background: var(--cream, #fffaf0);
   }
 </style>
