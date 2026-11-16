@@ -62,18 +62,19 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </ul>
 
           <!-- COMBINED: LIVE INTERACTIVE SCHEMATIC & SWITCHING POWER EXPLORER -->
+          <!-- ALL-IN-ONE EMBEDDED INTERACTIVE CMOS WORKBENCH -->
           <div class="sub-interactive-card" id="cmosPowerWidget">
             <div class="sub-widget-header">
-              <span class="sub-w-tag">LIVE INTERACTIVE SCHEMATIC &amp; SIMULATOR</span>
-              <h4 class="sub-w-title">CMOS Inverter — Dynamic Conduction Paths &amp; Power Dissipation</h4>
+              <span class="sub-w-tag">ALL-IN-ONE INTERACTIVE EDA BENCH</span>
+              <h4 class="sub-w-title">CMOS Inverter — Embedded Switch, Instruments &amp; Dynamic Power</h4>
               <p class="sub-w-desc">
-                Click <strong>Toggle Vin</strong> or adjust supply voltage <em>V<sub>DD</sub></em> and frequency <em>f</em>. Watch the complementary transistors switch between conducting (ON) and cut-off (OFF), trace the animated charge/discharge current paths, and observe real-time dynamic switching power.
+                All simulation controls are embedded directly in the figure: click the <strong>SPDT Switch</strong> on the circuit to flip between Ground (0V) and <em>V<sub>DD</sub></em>, or use the <strong>Bottom Instrument Deck</strong> to tune supply voltage and clock frequency.
               </p>
             </div>
 
-            <!-- Live Animated Schematic SVG -->
+            <!-- Integrated CAD Schematic & Instrument Deck SVG -->
             <div class="schematic-svg-wrap">
-              <svg id="cmosLiveSvg" viewBox="0 0 740 435" class="schematic-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Professional CAD-grade CMOS Inverter Schematic">
+              <svg id="cmosLiveSvg" viewBox="0 0 760 500" class="schematic-svg" xmlns="http://www.w3.org/2000/svg" aria-label="All-in-one Interactive CMOS Inverter Schematic and Instrument Workbench">
                 <defs>
                   <!-- EDA CAD Dot Grid -->
                   <pattern id="edaGrid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -86,125 +87,76 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 </defs>
 
                 <!-- ══════════════════════════════════════════════════════ -->
-                <!--  BACKGROUND CANVAS & EDA CAD GRID                      -->
+                <!--  MAIN WORKBENCH FRAME & CAD GRID                       -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect width="738" height="433" x="1" y="1" rx="8" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
-                <rect width="736" height="431" x="2" y="2" rx="7" fill="url(#edaGrid)"/>
+                <rect width="758" height="498" x="1" y="1" rx="8" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+                <rect width="756" height="422" x="2" y="2" rx="7" fill="url(#edaGrid)"/>
+
+                <!-- Top status banner inside frame -->
+                <rect x="2" y="2" width="756" height="24" fill="#0f172a" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#22c55e"/>
+                <text x="26" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • CMOS INVERTER LIVE SIMULATOR</text>
+                <text x="746" y="18" font-size="8.5" font-weight="700" fill="#94a3b8" font-family="monospace" text-anchor="end">TECH: 45nm CMOS • BSIM4 MODEL</text>
 
                 <!-- Vertical divider separating Schematic and Analysis Panel -->
-                <line x1="416" y1="2" x2="416" y2="433" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 4"/>
-
-                <!-- CAD Title Block in lower-left corner -->
-                <text x="14" y="420" font-size="8.5" font-family="monospace" fill="#94a3b8">CELL: INV_X1 • TECH: 45nm CMOS • STANDARD IEEE 315-1975</text>
+                <line x1="416" y1="26" x2="416" y2="424" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 4"/>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  VDD POWER SUPPLY TERMINAL (Top Rail)                  -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <!-- Top supply terminal arrow & bar -->
-                <line x1="190" y1="36" x2="250" y2="36" stroke="#b91c1c" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="220" cy="36" r="3" fill="#b91c1c"/>
-                <text x="220" y="22" font-size="12" font-weight="900" fill="#b91c1c" font-family="monospace" text-anchor="middle">VDD</text>
-                <text x="220" y="32" font-size="9.5" font-weight="700" fill="#b91c1c" font-family="monospace" text-anchor="middle"><tspan id="svgVddLabel">1.00</tspan> V</text>
+                <line x1="190" y1="46" x2="250" y2="46" stroke="#b91c1c" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="220" cy="46" r="3" fill="#b91c1c"/>
+                <text x="220" y="38" font-size="10.5" font-weight="900" fill="#b91c1c" font-family="monospace" text-anchor="middle">VDD = <tspan id="svgVddLabel">1.00</tspan> V</text>
 
-                <!-- Wire from VDD down to pMOS Source -->
-                <line id="vddStem" x1="220" y1="36" x2="220" y2="92" stroke="#16a34a" stroke-width="2.5"/>
+                <!-- Wire from VDD rail down to pMOS Source -->
+                <line id="vddStem" x1="220" y1="46" x2="220" y2="92" stroke="#16a34a" stroke-width="2.5"/>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  pMOS TRANSISTOR (MP1) — Standard IEEE Symbol          -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!-- Gate lead from bus to bubble -->
-                <line x1="130" y1="110" x2="178" y2="110" stroke="#0f172a" stroke-width="2"/>
-                <!-- Inversion bubble on gate (active-low) -->
-                <circle cx="183" cy="110" r="5" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
-                <!-- Gate plate (thin vertical conductive plate) -->
-                <line x1="191" y1="92" x2="191" y2="128" stroke="#0f172a" stroke-width="2.5"/>
-
-                <!-- Insulating oxide gap (x = 191 to 197, gap = 6px) -->
-
-                <!-- pMOS Channel bar (semiconductor inversion layer) -->
-                <line id="pch" x1="197" y1="90" x2="197" y2="130" stroke="#16a34a" stroke-width="5" stroke-linecap="square"/>
-
-                <!-- Source tab (top horizontal branch) -->
-                <line id="pSourceTab" x1="197" y1="96" x2="220" y2="96" stroke="#16a34a" stroke-width="2.5"/>
-                <!-- Source arrow (pointing RIGHT = out of channel, p-type holes) -->
-                <polygon id="pSourceArrow" points="214,96 204,91 204,101" fill="#16a34a"/>
-
-                <!-- Drain tab (bottom horizontal branch) -->
-                <line id="pDrainTab" x1="197" y1="124" x2="220" y2="124" stroke="#16a34a" stroke-width="2.5"/>
-
-                <!-- Source pin wire connection -->
-                <line x1="220" y1="92" x2="220" y2="96" stroke="#16a34a" stroke-width="2.5"/>
-                <!-- Drain pin wire down to output node -->
-                <line id="pDrainWire" x1="220" y1="124" x2="220" y2="210" stroke="#16a34a" stroke-width="2.5"/>
-
-                <!-- pMOS Device Annotations & Sizing -->
-                <text x="234" y="98" font-size="11.5" font-weight="900" fill="#b91c1c" font-family="sans-serif">MP1 (pMOS)</text>
-                <text x="234" y="112" font-size="9.5" fill="#475569" font-family="monospace">W/L = 1.00µm / 45nm</text>
-                <rect id="pBadge" x="234" y="118" width="70" height="17" rx="3.5" fill="#16a34a"/>
-                <text id="pBadgeTxt" x="269" y="130" font-size="8.5" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="sans-serif">ON (Pull-up)</text>
-
-                <!-- Pin identifiers -->
-                <text x="225" y="93"  font-size="8" fill="#9f1239" font-family="monospace" font-weight="700">S</text>
-                <text x="225" y="135" font-size="8" fill="#9f1239" font-family="monospace" font-weight="700">D</text>
-                <text x="170" y="105" font-size="8" fill="#64748b" font-family="monospace">G</text>
+                <!-- Wire from VDD rail left to SPDT switch top contact -->
+                <line x1="190" y1="46" x2="55" y2="46" stroke="#b91c1c" stroke-width="1.5"/>
+                <line x1="55" y1="46" x2="55" y2="165" stroke="#b91c1c" stroke-width="1.5"/>
+                <line x1="55" y1="165" x2="71" y2="165" stroke="#b91c1c" stroke-width="1.5"/>
 
                 <!-- ══════════════════════════════════════════════════════ -->
-                <!--  nMOS TRANSISTOR (MN1) — Standard IEEE Symbol          -->
+                <!--  INTERACTIVE SPDT INPUT SWITCH (ON THE CIRCUIT WIRE)   -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <!-- Gate lead from bus to gate plate -->
-                <line x1="130" y1="310" x2="191" y2="310" stroke="#0f172a" stroke-width="2"/>
-                <!-- Gate plate -->
-                <line x1="191" y1="292" x2="191" y2="328" stroke="#0f172a" stroke-width="2.5"/>
+                <rect x="18" y="100" width="98" height="180" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+                <text x="67" y="116" font-size="8.5" font-weight="900" fill="#475569" font-family="monospace" text-anchor="middle">SPDT INPUT SW</text>
 
-                <!-- Insulating oxide gap (x = 191 to 197) -->
+                <!-- Clickable Interactive Switch Lever Area -->
+                <g id="btnSvgSwitch" cursor="pointer" role="button" aria-label="Click to toggle input switch">
+                  <rect id="svgSwitchBtnBg" x="24" y="124" width="86" height="24" rx="4" fill="#15803d" stroke="#16a34a" stroke-width="1.5"/>
+                  <text id="svgSwitchBtnTxt" x="67" y="140" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">&#8644; SW: 0V (LOW)</text>
 
-                <!-- nMOS Channel bar -->
-                <line id="nch" x1="197" y1="290" x2="197" y2="330" stroke="#94a3b8" stroke-width="3.5" stroke-dasharray="3 2" stroke-linecap="square"/>
+                  <!-- Top Contact: VDD (1.0V) -->
+                  <circle cx="75" cy="165" r="4.5" fill="#b91c1c"/>
+                  <text x="64" y="168" font-size="8" font-weight="900" fill="#b91c1c" font-family="monospace" text-anchor="end">1.0V</text>
 
-                <!-- Drain tab (top horizontal branch) -->
-                <line id="nDrainTab" x1="197" y1="296" x2="220" y2="296" stroke="#94a3b8" stroke-width="2"/>
-                <!-- Source tab (bottom horizontal branch) -->
-                <line id="nSourceTab" x1="197" y1="324" x2="220" y2="324" stroke="#94a3b8" stroke-width="2"/>
-                <!-- Source arrow (pointing LEFT = into channel, n-type electrons) -->
-                <polygon id="nSourceArrow" points="201,324 211,319 211,329" fill="#94a3b8"/>
+                  <!-- Bottom Contact: GND (0.0V) -->
+                  <circle cx="75" cy="255" r="4.5" fill="#1e3a8a"/>
+                  <text x="64" y="258" font-size="8" font-weight="900" fill="#1e3a8a" font-family="monospace" text-anchor="end">0.0V</text>
 
-                <!-- Drain pin wire up from output node -->
-                <line id="nDrainWire" x1="220" y1="210" x2="220" y2="296" stroke="#94a3b8" stroke-width="2"/>
-                <!-- Source pin wire down to ground -->
-                <line id="gndStem" x1="220" y1="324" x2="220" y2="385" stroke="#94a3b8" stroke-width="2"/>
+                  <!-- Center Pivot Pole -->
+                  <circle cx="75" cy="210" r="5" fill="#eab308" stroke="#0f172a" stroke-width="1.5"/>
 
-                <!-- nMOS Device Annotations & Sizing -->
-                <text x="234" y="298" font-size="11.5" font-weight="900" fill="#1e40af" font-family="sans-serif">MN1 (nMOS)</text>
-                <text x="234" y="312" font-size="9.5" fill="#475569" font-family="monospace">W/L = 0.40µm / 45nm</text>
-                <rect id="nBadge" x="234" y="318" width="70" height="17" rx="3.5" fill="#94a3b8"/>
-                <text id="nBadgeTxt" x="269" y="330" font-size="8.5" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="sans-serif">OFF (Cut-off)</text>
+                  <!-- Dynamic Switch Blade (Pivots between VDD and GND) -->
+                  <line id="svgSwitchBlade" x1="75" y1="210" x2="75" y2="252" stroke="#eab308" stroke-width="4" stroke-linecap="round"/>
 
-                <!-- Pin identifiers -->
-                <text x="225" y="293" font-size="8" fill="#1e3a8a" font-family="monospace" font-weight="700">D</text>
-                <text x="225" y="335" font-size="8" fill="#1e3a8a" font-family="monospace" font-weight="700">S</text>
-                <text x="170" y="305" font-size="8" fill="#64748b" font-family="monospace">G</text>
+                  <!-- Subtitle helper -->
+                  <text x="67" y="274" font-size="7.5" font-weight="700" fill="#64748b" font-family="sans-serif" text-anchor="middle">[Click to flip]</text>
+                </g>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  GND TERMINAL (Bottom) — Standard Earth Ground Symbol  -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <line x1="206" y1="385" x2="234" y2="385" stroke="#1e3a8a" stroke-width="2.5"/>
-                <line x1="211" y1="391" x2="229" y2="391" stroke="#1e3a8a" stroke-width="2"/>
-                <line x1="216" y1="397" x2="224" y2="397" stroke="#1e3a8a" stroke-width="1.5"/>
-                <text x="220" y="412" font-size="11" font-weight="900" fill="#1e3a8a" font-family="monospace" text-anchor="middle">GND</text>
+                <!-- Wire from GND rail left to SPDT switch bottom contact -->
+                <line x1="55" y1="255" x2="71" y2="255" stroke="#1e3a8a" stroke-width="1.5"/>
+                <line x1="55" y1="255" x2="55" y2="385" stroke="#1e3a8a" stroke-width="1.5"/>
+                <line x1="55" y1="385" x2="206" y2="385" stroke="#1e3a8a" stroke-width="1.5"/>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  INPUT PORT & GATE BUS (IN)                            -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!-- CAD Input Port Pin -->
-                <polygon points="32,202 70,202 78,210 70,218 32,218" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
-                <text x="50" y="214" font-size="10" font-weight="900" fill="#166534" font-family="monospace" text-anchor="middle">IN</text>
-                <!-- Voltage Probe Flag -->
-                <rect x="25" y="180" width="62" height="18" rx="3" fill="#16a34a"/>
-                <text id="svgVinLabel" x="56" y="193" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">0.00 V (L)</text>
-
-                <!-- Wire from Input pin to Bus -->
-                <line id="vinStem" x1="78" y1="210" x2="130" y2="210" stroke="#0f172a" stroke-width="2"/>
+                <!-- Wire from Switch Pivot to Inverter Gate Bus -->
+                <line id="vinStem" x1="75" y1="210" x2="130" y2="210" stroke="#0f172a" stroke-width="2"/>
                 <circle id="vinDot" cx="130" cy="210" r="3.5" fill="#0f172a"/>
+
+                <!-- Voltage Probe Flag on Input Wire -->
+                <polygon points="86,192 120,192 126,200 120,208 86,208" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+                <text id="svgVinLabel" x="104" y="203" font-size="8.5" font-weight="900" fill="#166534" font-family="monospace" text-anchor="middle">0.0V (L)</text>
 
                 <!-- Vertical gate bus -->
                 <line id="gateBus" x1="130" y1="110" x2="130" y2="310" stroke="#0f172a" stroke-width="2"/>
@@ -212,43 +164,96 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <circle cx="130" cy="310" r="3" fill="#0f172a"/>
 
                 <!-- ══════════════════════════════════════════════════════ -->
+                <!--  pMOS TRANSISTOR (MP1) — Standard IEEE Symbol          -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <line x1="130" y1="110" x2="178" y2="110" stroke="#0f172a" stroke-width="2"/>
+                <circle cx="183" cy="110" r="5" fill="#ffffff" stroke="#0f172a" stroke-width="2"/>
+                <line x1="191" y1="92" x2="191" y2="128" stroke="#0f172a" stroke-width="2.5"/>
+
+                <!-- Channel bar -->
+                <line id="pch" x1="197" y1="90" x2="197" y2="130" stroke="#16a34a" stroke-width="5" stroke-linecap="square"/>
+                <line id="pSourceTab" x1="197" y1="96" x2="220" y2="96" stroke="#16a34a" stroke-width="2.5"/>
+                <polygon id="pSourceArrow" points="214,96 204,91 204,101" fill="#16a34a"/>
+                <line id="pDrainTab" x1="197" y1="124" x2="220" y2="124" stroke="#16a34a" stroke-width="2.5"/>
+
+                <line x1="220" y1="92" x2="220" y2="96" stroke="#16a34a" stroke-width="2.5"/>
+                <line id="pDrainWire" x1="220" y1="124" x2="220" y2="210" stroke="#16a34a" stroke-width="2.5"/>
+
+                <!-- Device annotations -->
+                <text x="234" y="98" font-size="11.5" font-weight="900" fill="#b91c1c" font-family="sans-serif">MP1 (pMOS)</text>
+                <text x="234" y="112" font-size="9.5" fill="#475569" font-family="monospace">W/L = 1.00µm / 45nm</text>
+                <rect id="pBadge" x="234" y="118" width="70" height="17" rx="3.5" fill="#16a34a"/>
+                <text id="pBadgeTxt" x="269" y="130" font-size="8.5" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="sans-serif">ON (Pull-up)</text>
+
+                <text x="225" y="93"  font-size="8" fill="#9f1239" font-family="monospace" font-weight="700">S</text>
+                <text x="225" y="135" font-size="8" fill="#9f1239" font-family="monospace" font-weight="700">D</text>
+                <text x="170" y="105" font-size="8" fill="#64748b" font-family="monospace">G</text>
+
+                <!-- ══════════════════════════════════════════════════════ -->
+                <!--  nMOS TRANSISTOR (MN1) — Standard IEEE Symbol          -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <line x1="130" y1="310" x2="191" y2="310" stroke="#0f172a" stroke-width="2"/>
+                <line x1="191" y1="292" x2="191" y2="328" stroke="#0f172a" stroke-width="2.5"/>
+
+                <!-- Channel bar -->
+                <line id="nch" x1="197" y1="290" x2="197" y2="330" stroke="#94a3b8" stroke-width="3.5" stroke-dasharray="3 2" stroke-linecap="square"/>
+                <line id="nDrainTab" x1="197" y1="296" x2="220" y2="296" stroke="#94a3b8" stroke-width="2"/>
+                <line id="nSourceTab" x1="197" y1="324" x2="220" y2="324" stroke="#94a3b8" stroke-width="2"/>
+                <polygon id="nSourceArrow" points="201,324 211,319 211,329" fill="#94a3b8"/>
+
+                <line id="nDrainWire" x1="220" y1="210" x2="220" y2="296" stroke="#94a3b8" stroke-width="2"/>
+                <line id="gndStem" x1="220" y1="324" x2="220" y2="385" stroke="#94a3b8" stroke-width="2"/>
+
+                <!-- Device annotations -->
+                <text x="234" y="298" font-size="11.5" font-weight="900" fill="#1e40af" font-family="sans-serif">MN1 (nMOS)</text>
+                <text x="234" y="312" font-size="9.5" fill="#475569" font-family="monospace">W/L = 0.40µm / 45nm</text>
+                <rect id="nBadge" x="234" y="318" width="70" height="17" rx="3.5" fill="#94a3b8"/>
+                <text id="nBadgeTxt" x="269" y="330" font-size="8.5" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="sans-serif">OFF (Cut-off)</text>
+
+                <text x="225" y="293" font-size="8" fill="#1e3a8a" font-family="monospace" font-weight="700">D</text>
+                <text x="225" y="335" font-size="8" fill="#1e3a8a" font-family="monospace" font-weight="700">S</text>
+                <text x="170" y="305" font-size="8" fill="#64748b" font-family="monospace">G</text>
+
+                <!-- ══════════════════════════════════════════════════════ -->
+                <!--  GND TERMINAL — Standard Earth Ground Symbol           -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <line x1="206" y1="385" x2="234" y2="385" stroke="#1e3a8a" stroke-width="2.5"/>
+                <line x1="211" y1="391" x2="229" y2="391" stroke="#1e3a8a" stroke-width="2"/>
+                <line x1="216" y1="397" x2="224" y2="397" stroke="#1e3a8a" stroke-width="1.5"/>
+                <text x="220" y="410" font-size="10" font-weight="900" fill="#1e3a8a" font-family="monospace" text-anchor="middle">GND (0V)</text>
+
+                <!-- ══════════════════════════════════════════════════════ -->
                 <!--  OUTPUT NODE & LOAD CAPACITOR (OUT)                    -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <!-- Center Output Junction -->
                 <circle id="voutDot" cx="220" cy="210" r="4.5" fill="#0284c7"/>
                 <line id="voutWire" x1="220" y1="210" x2="360" y2="210" stroke="#0284c7" stroke-width="2.5"/>
 
-                <!-- CAD Output Port Pin -->
                 <polygon points="350,202 388,202 396,210 388,218 350,218" fill="#eff6ff" stroke="#0284c7" stroke-width="1.5"/>
                 <text x="369" y="214" font-size="10" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">OUT</text>
-                <!-- Output Voltage Probe Flag -->
+
+                <!-- Voltage Probe Flag on Output Wire -->
                 <rect x="340" y="180" width="68" height="18" rx="3" fill="#0284c7"/>
                 <text id="svgVoutLabel" x="374" y="193" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">1.00 V (H)</text>
 
-                <!-- Load Capacitor CL (downward branch) -->
+                <!-- Load Capacitor CL -->
                 <circle cx="300" cy="210" r="3" fill="#0284c7"/>
                 <line x1="300" y1="210" x2="300" y2="265" stroke="#475569" stroke-width="1.5"/>
-                <!-- Capacitor Plates -->
                 <line x1="286" y1="265" x2="314" y2="265" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
                 <line x1="286" y1="273" x2="314" y2="273" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
-                <!-- Connection to capacitor GND -->
                 <line x1="300" y1="273" x2="300" y2="305" stroke="#475569" stroke-width="1.5"/>
                 <line x1="290" y1="305" x2="310" y2="305" stroke="#475569" stroke-width="2"/>
                 <line x1="294" y1="309" x2="306" y2="309" stroke="#475569" stroke-width="1.5"/>
-                <line x1="297" y1="313" x2="303" y2="313" stroke="#475569" stroke-width="1"/>
 
-                <text x="320" y="268" font-size="10" font-weight="800" fill="#475569" font-family="sans-serif">C<tspan font-size="8" dy="2">L</tspan><tspan dy="-2"> = 5.0 fF</tspan></text>
+                <text x="320" y="268" font-size="9.5" font-weight="800" fill="#475569" font-family="sans-serif">C<tspan font-size="7.5" dy="2">L</tspan><tspan dy="-2"> = 5.0 fF</tspan></text>
                 <text id="svgCapLabel" x="320" y="282" font-size="8.5" font-weight="800" fill="#16a34a" font-family="sans-serif">CHARGED</text>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  ANIMATED DYNAMIC CURRENT FLOW PATHS                   -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <!-- Pull-up Charging Current Path (VDD -> MP1 -> OUT -> CL) -->
-                <path id="pAnimFlow" d="M 220 36 L 220 210 L 300 210 L 300 263" stroke="#22c55e" stroke-width="3.5" stroke-dasharray="6 4" fill="none" opacity="1">
+                <path id="pAnimFlow" d="M 220 46 L 220 210 L 300 210 L 300 263" stroke="#22c55e" stroke-width="3.5" stroke-dasharray="6 4" fill="none" opacity="1">
                   <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="0.4s" repeatCount="indefinite"/>
                 </path>
 
-                <!-- Pull-down Discharging Current Path (CL -> OUT -> MN1 -> GND) -->
                 <path id="nAnimFlow" d="M 300 263 L 300 210 L 220 210 L 220 385" stroke="#3b82f6" stroke-width="3.5" stroke-dasharray="6 4" fill="none" opacity="0">
                   <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="0.4s" repeatCount="indefinite"/>
                 </path>
@@ -256,130 +261,145 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  RIGHT-SIDE ANALYSIS & TIMING PANEL                    -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <!-- Header of Analysis Panel -->
-                <rect x="426" y="12" width="300" height="24" rx="4" fill="#0f172a"/>
-                <text x="436" y="28" font-size="10.5" font-weight="900" fill="#f8fafc" font-family="monospace">EDA ANALYSIS: DC OPERATING POINT &amp; SCOPE</text>
+                <rect x="426" y="32" width="320" height="22" rx="4" fill="#0f172a"/>
+                <text x="436" y="47" font-size="9.5" font-weight="900" fill="#f8fafc" font-family="monospace">EDA ANALYSIS: DC OPERATING POINT &amp; SCOPE</text>
 
-                <!-- Sub-card: DC Operating Point Table -->
-                <rect id="stateCardBg" x="426" y="42" width="300" height="190" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+                <!-- DC Operating Point Table Card -->
+                <rect id="stateCardBg" x="426" y="58" width="320" height="175" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
 
                 <!-- Active State Banner -->
-                <rect x="434" y="50" width="284" height="22" rx="3" fill="#e2e8f0"/>
-                <text id="svgStateTitle" x="442" y="65" font-size="10.5" font-weight="900" fill="#15803d" font-family="sans-serif">● OPERATING STATE: Vin = 0 (Logic 0 / LOW)</text>
+                <rect x="434" y="66" width="304" height="20" rx="3" fill="#e2e8f0"/>
+                <text id="svgStateTitle" x="442" y="80" font-size="9.5" font-weight="900" fill="#15803d" font-family="sans-serif">&#9679; OPERATING STATE: Vin = 0 (Logic 0 / LOW)</text>
 
                 <!-- Table Header -->
-                <text x="442" y="90" font-size="9" font-weight="900" fill="#64748b" font-family="monospace">PARAMETER</text>
-                <text x="548" y="90" font-size="9" font-weight="900" fill="#b91c1c" font-family="monospace">pMOS (MP1)</text>
-                <text x="642" y="90" font-size="9" font-weight="900" fill="#1e40af" font-family="monospace">nMOS (MN1)</text>
-                <line x1="436" y1="96" x2="716" y2="96" stroke="#cbd5e1" stroke-width="1"/>
+                <text x="442" y="102" font-size="8.5" font-weight="900" fill="#64748b" font-family="monospace">PARAMETER</text>
+                <text x="552" y="102" font-size="8.5" font-weight="900" fill="#b91c1c" font-family="monospace">pMOS (MP1)</text>
+                <text x="652" y="102" font-size="8.5" font-weight="900" fill="#1e40af" font-family="monospace">nMOS (MN1)</text>
+                <line x1="436" y1="108" x2="736" y2="108" stroke="#cbd5e1" stroke-width="1"/>
 
                 <!-- Row 1: V_GS -->
-                <text x="442" y="112" font-size="9.5" fill="#334155" font-family="sans-serif">Gate-Source (V<tspan font-size="7.5" dy="1">GS</tspan><tspan dy="-1">)</tspan></text>
-                <text id="svgPmosVgs" x="548" y="112" font-size="9.5" font-weight="800" fill="#15803d" font-family="monospace">&#8722;1.00 V</text>
-                <text id="svgNmosVgs" x="642" y="112" font-size="9.5" font-weight="800" fill="#dc2626" font-family="monospace">0.00 V</text>
+                <text x="442" y="123" font-size="9" fill="#334155" font-family="sans-serif">Gate-Source (V<tspan font-size="7" dy="1">GS</tspan><tspan dy="-1">)</tspan></text>
+                <text id="svgPmosVgs" x="552" y="123" font-size="9" font-weight="800" fill="#15803d" font-family="monospace">&#8722;1.00 V</text>
+                <text id="svgNmosVgs" x="652" y="123" font-size="9" font-weight="800" fill="#dc2626" font-family="monospace">0.00 V</text>
 
                 <!-- Row 2: Conduction Mode -->
-                <text x="442" y="132" font-size="9.5" fill="#334155" font-family="sans-serif">Channel Mode</text>
-                <text id="svgPmosMode" x="548" y="132" font-size="9.5" font-weight="800" fill="#15803d" font-family="sans-serif">Triode (ON)</text>
-                <text id="svgNmosMode" x="642" y="132" font-size="9.5" font-weight="800" fill="#dc2626" font-family="sans-serif">Cut-off (OFF)</text>
+                <text x="442" y="141" font-size="9" fill="#334155" font-family="sans-serif">Channel Mode</text>
+                <text id="svgPmosMode" x="552" y="141" font-size="9" font-weight="800" fill="#15803d" font-family="sans-serif">Triode (ON)</text>
+                <text id="svgNmosMode" x="652" y="141" font-size="9" font-weight="800" fill="#dc2626" font-family="sans-serif">Cut-off (OFF)</text>
 
                 <!-- Row 3: Channel Resistance -->
-                <text x="442" y="152" font-size="9.5" fill="#334155" font-family="sans-serif">Channel R<tspan font-size="7.5" dy="1">DS</tspan><tspan dy="-1"></tspan></text>
-                <text id="svgPmosRon" x="548" y="152" font-size="9.5" font-weight="700" fill="#15803d" font-family="monospace">&#8776; 240 &#937;</text>
-                <text id="svgNmosRon" x="642" y="152" font-size="9.5" font-weight="700" fill="#dc2626" font-family="monospace">&gt; 10 G&#937;</text>
+                <text x="442" y="159" font-size="9" fill="#334155" font-family="sans-serif">Channel R<tspan font-size="7" dy="1">DS</tspan><tspan dy="-1"></tspan></text>
+                <text id="svgPmosRon" x="552" y="159" font-size="9" font-weight="700" fill="#15803d" font-family="monospace">&#8776; 240 &#937;</text>
+                <text id="svgNmosRon" x="652" y="159" font-size="9" font-weight="700" fill="#dc2626" font-family="monospace">&gt; 10 G&#937;</text>
 
                 <!-- Row 4: Path Summary -->
-                <line x1="436" y1="162" x2="716" y2="162" stroke="#e2e8f0" stroke-width="1"/>
-                <text x="442" y="178" font-size="9.5" font-weight="800" fill="#0f172a" font-family="sans-serif">Active Path:</text>
-                <text id="svgStatePath" x="506" y="178" font-size="9.5" font-weight="800" fill="#15803d" font-family="sans-serif">VDD &#8594; MP1 &#8594; CL (Pull-Up)</text>
+                <line x1="436" y1="168" x2="736" y2="168" stroke="#e2e8f0" stroke-width="1"/>
+                <text x="442" y="183" font-size="9" font-weight="800" fill="#0f172a" font-family="sans-serif">Active Path:</text>
+                <text id="svgStatePath" x="506" y="183" font-size="9" font-weight="800" fill="#15803d" font-family="sans-serif">VDD &#8594; MP1 &#8594; CL (Pull-Up Active)</text>
 
                 <!-- Static DC Power Confirmation -->
-                <rect x="436" y="188" width="280" height="34" rx="4" fill="#f1f5f9"/>
-                <text x="444" y="202" font-size="9" font-weight="900" fill="#0f172a" font-family="monospace">DC Static Current: I_static &#8776; 0.00 &#956;A</text>
-                <text x="444" y="215" font-size="8.5" fill="#64748b" font-family="sans-serif">No direct VDD&#8209;to&#8209;GND path &bull; One FET is always OFF</text>
+                <rect x="436" y="193" width="300" height="32" rx="4" fill="#f1f5f9"/>
+                <text x="444" y="206" font-size="8.5" font-weight="900" fill="#0f172a" font-family="monospace">DC Static Current: I_static &#8776; 0.00 &#956;A</text>
+                <text x="444" y="218" font-size="8" fill="#64748b" font-family="sans-serif">No direct VDD&#8209;to&#8209;GND path &bull; One FET is always OFF</text>
 
                 <!-- Sub-card: Transient Scope Window -->
-                <rect x="426" y="240" width="300" height="184" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1.5"/>
-                <!-- Scope Grid Reticle -->
-                <rect x="434" y="260" width="284" height="154" fill="url(#scopeGrid)"/>
-                <line x1="434" y1="337" x2="718" y2="337" stroke="#334155" stroke-width="1" stroke-dasharray="2 2"/>
-                <line x1="576" y1="260" x2="576" y2="414" stroke="#334155" stroke-width="1" stroke-dasharray="2 2"/>
+                <rect x="426" y="238" width="320" height="178" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1.5"/>
+                <rect x="434" y="256" width="304" height="152" fill="url(#scopeGrid)"/>
+                <line x1="434" y1="332" x2="738" y2="332" stroke="#334155" stroke-width="1" stroke-dasharray="2 2"/>
+                <line x1="586" y1="256" x2="586" y2="408" stroke="#334155" stroke-width="1" stroke-dasharray="2 2"/>
 
-                <!-- Scope Title Bar -->
-                <text x="436" y="253" font-size="9" font-weight="900" fill="#38bdf8" font-family="monospace">TRANSIENT RESPONSE (50 ps/div)</text>
-                <text x="648" y="253" font-size="8" font-weight="700" fill="#94a3b8" font-family="monospace">CL = 5 fF</text>
+                <text x="436" y="250" font-size="8.5" font-weight="900" fill="#38bdf8" font-family="monospace">TRANSIENT RESPONSE (50 ps/div)</text>
+                <text x="668" y="250" font-size="8" font-weight="700" fill="#94a3b8" font-family="monospace">CL = 5 fF</text>
 
                 <!-- Waveform Traces -->
-                <!-- CH1: Input Vin (Yellow Step) -->
-                <path id="scopeTraceVin" d="M 440 380 L 530 380 L 536 290 L 710 290" fill="none" stroke="#eab308" stroke-width="2"/>
-                <!-- CH2: Output Vout (Cyan Inverted with RC curve) -->
-                <path id="scopeTraceVout" d="M 440 290 L 536 290 Q 550 340 580 376 L 710 380" fill="none" stroke="#06b6d4" stroke-width="2.5"/>
+                <path id="scopeTraceVin" d="M 440 286 L 530 286 L 536 376 L 730 376" fill="none" stroke="#eab308" stroke-width="2"/>
+                <path id="scopeTraceVout" d="M 440 376 L 536 376 Q 550 326 580 290 L 730 286" fill="none" stroke="#06b6d4" stroke-width="2.5"/>
 
-                <!-- Scope Channel Badges -->
-                <circle cx="445" cy="272" r="3.5" fill="#eab308"/>
-                <text x="453" y="275" font-size="8" font-weight="800" fill="#eab308" font-family="monospace">CH1: Vin</text>
+                <circle cx="445" cy="268" r="3.5" fill="#eab308"/>
+                <text x="453" y="271" font-size="7.5" font-weight="800" fill="#eab308" font-family="monospace">CH1: Vin</text>
 
-                <circle cx="510" cy="272" r="3.5" fill="#06b6d4"/>
-                <text x="518" y="275" font-size="8" font-weight="800" fill="#06b6d4" font-family="monospace">CH2: Vout</text>
+                <circle cx="510" cy="268" r="3.5" fill="#06b6d4"/>
+                <text x="518" y="271" font-size="7.5" font-weight="800" fill="#06b6d4" font-family="monospace">CH2: Vout</text>
 
-                <!-- Timing annotation callouts -->
-                <line x1="536" y1="260" x2="536" y2="414" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="1 2" opacity="0.6"/>
-                <line x1="558" y1="260" x2="558" y2="414" stroke="#e2e8f0" stroke-width="0.75" stroke-dasharray="1 2" opacity="0.6"/>
-                <text x="538" y="405" font-size="7.5" fill="#f8fafc" font-family="monospace">tp &#8776; 11.5 ps</text>
-                <text x="620" y="405" font-size="7.5" fill="#94a3b8" font-family="monospace">tPLH &#8776; tPHL</text>
+                <text x="548" y="400" font-size="7.5" fill="#f8fafc" font-family="monospace">tp &#8776; 11.5 ps</text>
+                <text x="640" y="400" font-size="7.5" fill="#94a3b8" font-family="monospace">tPLH &#8776; tPHL</text>
+
+                <!-- ══════════════════════════════════════════════════════ -->
+                <!--  BOTTOM INSTRUMENT RACK (EMBEDDED CONTROLS & POWER)    -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <rect x="6" y="424" width="748" height="70" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+
+                <!-- MODULE 1: DC SUPPLY (VDD) -->
+                <text x="16" y="439" font-size="8.5" font-weight="900" fill="#94a3b8" font-family="monospace">DC SUPPLY (VDD)</text>
+
+                <g id="btnVddDown" cursor="pointer" role="button" aria-label="Decrease VDD">
+                  <rect x="16" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+                  <text x="28" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">&#8722;</text>
+                </g>
+
+                <rect x="44" y="446" width="60" height="22" rx="3" fill="#020617" stroke="#38bdf8"/>
+                <text id="svgVddDisplay" x="74" y="461" font-size="11" font-weight="900" fill="#38bdf8" font-family="monospace" text-anchor="middle">1.00 V</text>
+
+                <g id="btnVddUp" cursor="pointer" role="button" aria-label="Increase VDD">
+                  <rect x="108" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+                  <text x="120" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">+</text>
+                </g>
+
+                <!-- Presets -->
+                <g id="btnVddPreset08" cursor="pointer" role="button"><rect id="pillVdd08" x="140" y="446" width="30" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="155" y="460" font-size="8" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">0.8V</text></g>
+                <g id="btnVddPreset10" cursor="pointer" role="button"><rect id="pillVdd10" x="174" y="446" width="30" height="22" rx="3" fill="#0284c7" stroke="#38bdf8"/><text x="189" y="460" font-size="8" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">1.0V</text></g>
+                <g id="btnVddPreset12" cursor="pointer" role="button"><rect id="pillVdd12" x="208" y="446" width="30" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="223" y="460" font-size="8" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">1.2V</text></g>
+                <text x="16" y="484" font-size="7.5" fill="#64748b" font-family="sans-serif">Quadratic energy scale: P &#8733; VDD&#178;</text>
+
+                <!-- Divider -->
+                <line x1="250" y1="430" x2="250" y2="488" stroke="#1e293b" stroke-width="1"/>
+
+                <!-- MODULE 2: CLOCK GENERATOR (f) -->
+                <text x="262" y="439" font-size="8.5" font-weight="900" fill="#94a3b8" font-family="monospace">CLOCK FREQ (f)</text>
+
+                <g id="btnFreqDown" cursor="pointer" role="button" aria-label="Decrease frequency">
+                  <rect x="262" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+                  <text x="274" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">&#8722;</text>
+                </g>
+
+                <rect x="290" y="446" width="78" height="22" rx="3" fill="#020617" stroke="#38bdf8"/>
+                <text id="svgFreqDisplay" x="329" y="461" font-size="10.5" font-weight="900" fill="#38bdf8" font-family="monospace" text-anchor="middle">1000 MHz</text>
+
+                <g id="btnFreqUp" cursor="pointer" role="button" aria-label="Increase frequency">
+                  <rect x="372" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/>
+                  <text x="384" y="461" font-size="13" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">+</text>
+                </g>
+
+                <!-- Presets -->
+                <g id="btnFreqPreset500" cursor="pointer" role="button"><rect id="pillFreq500" x="404" y="446" width="30" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="419" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">500M</text></g>
+                <g id="btnFreqPreset1000" cursor="pointer" role="button"><rect id="pillFreq1000" x="438" y="446" width="30" height="22" rx="3" fill="#0284c7" stroke="#38bdf8"/><text x="453" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">1.0G</text></g>
+                <g id="btnFreqPreset2500" cursor="pointer" role="button"><rect id="pillFreq2500" x="472" y="446" width="30" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="487" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">2.5G</text></g>
+                <text x="262" y="484" font-size="7.5" fill="#64748b" font-family="sans-serif">Linear power scale: P &#8733; f</text>
+
+                <!-- Divider -->
+                <line x1="512" y1="430" x2="512" y2="488" stroke="#1e293b" stroke-width="1"/>
+
+                <!-- MODULE 3: DYNAMIC POWER METER -->
+                <text x="524" y="439" font-size="8.5" font-weight="900" fill="#f59e0b" font-family="monospace">DYNAMIC POWER (Pdyn)</text>
+
+                <rect x="524" y="446" width="112" height="22" rx="3" fill="#020617" stroke="#f59e0b"/>
+                <text id="svgPowerDisplay" x="580" y="462" font-size="12" font-weight="900" fill="#fbbf24" font-family="monospace" text-anchor="middle">2.50 mW</text>
+
+                <!-- Power Bar Indicator -->
+                <rect x="644" y="449" width="98" height="16" rx="3" fill="#1e293b"/>
+                <rect id="svgPowerBar" x="646" y="451" width="30" height="12" rx="2" fill="#f59e0b"/>
+
+                <text x="524" y="484" font-size="7.5" fill="#94a3b8" font-family="sans-serif">P = &alpha;&middot;C<tspan font-size="6" dy="1">L</tspan><tspan dy="-1">&middot;V</tspan><tspan font-size="6" dy="1">DD</tspan><tspan dy="-1">&#178;&middot;f (1,000 gates &bull; 5 fF)</tspan></text>
               </svg>
             </div>
 
             <!-- Figure Caption -->
             <div class="schematic-caption">
-              <strong>Figure 1.1:</strong> Interactive IEEE-standard transistor-level schematic of the static CMOS inverter.
-              The gate <em>insulator gap</em> represents the thin SiO<sub>2</sub> dielectric oxide.
-              The <em>inversion bubble</em> on pMOS indicates active-LOW gate conduction (conducts when <span style="white-space: nowrap;"><em>V<sub>GS</sub></em> &lt; &minus;|<em>V<sub>tp</sub></em>|</span>).
-              The source <em>arrow</em> on pMOS points outward (p-type holes exit toward channel/source); on nMOS it points inward (electrons enter).
-              Because hole mobility is lower (<span style="white-space: nowrap;">&mu;<sub>p</sub> &approx; 250</span> vs <span style="white-space: nowrap;">&mu;<sub>n</sub> &approx; 480 cm<sup>2</sup>/(V&middot;s)</span>), pMOS channel width <em>W</em> is sized ~2.5&times; wider to equalize switching rise and fall times (<span style="white-space: nowrap;"><em>t<sub>PLH</sub></em> &asymp; <em>t<sub>PHL</sub></em></span>).
-              <strong>Zero Static Power:</strong> In both logic states, exactly one transistor is fully cut off, completely blocking continuous DC current between <span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span> and Ground.
-            </div>
-
-            <!-- Controls row -->
-            <div class="cmos-ctrl-row" style="margin-top: 1rem;">
-              <div class="cmos-toggle-wrap">
-                <span class="ctrl-label">Input Switch (Vin):</span>
-                <button class="toggle-btn" id="btnCmosVin" data-vin="0">&#8644; Toggle Vin: 0.0V (Logic 0)</button>
-              </div>
-              <div class="slider-ctrl">
-                <label for="cmosVddSlider" class="ctrl-label">Supply Voltage (<span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span>): <span id="cmosVddVal" class="val-mono">1.00 V</span></label>
-                <input type="range" id="cmosVddSlider" min="0.6" max="1.2" step="0.05" value="1.0" class="sim-slider"/>
-              </div>
-              <div class="slider-ctrl">
-                <label for="cmosFreqSlider" class="ctrl-label">Clock Frequency (<em>f</em>): <span id="cmosFreqVal" class="val-mono">1000 MHz</span></label>
-                <input type="range" id="cmosFreqSlider" min="100" max="3000" step="50" value="1000" class="sim-slider"/>
-              </div>
-            </div>
-
-            <!-- Metrics grid -->
-            <div class="cmos-metrics-grid">
-              <div class="cmos-m-card">
-                <span class="m-caption">pMOS Conduction</span>
-                <span class="m-status on" id="cmosPmosState">CONDUCTING (ON)</span>
-                <span class="m-detail">Pulls output to <span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span></span>
-              </div>
-              <div class="cmos-m-card">
-                <span class="m-caption">nMOS Conduction</span>
-                <span class="m-status off" id="cmosNmosState">ISOLATED (OFF)</span>
-                <span class="m-detail">Zero DC path to Ground</span>
-              </div>
-              <div class="cmos-m-card">
-                <span class="m-caption">Output Voltage (Vout)</span>
-                <span class="m-status vout" id="cmosVoutVal">1.00 V (Logic 1)</span>
-                <span class="m-detail">Capacitor C<sub>L</sub> charged</span>
-              </div>
-              <div class="cmos-m-card highlight">
-                <span class="m-caption">Dynamic Power (P<sub>dyn</sub> = &alpha;&middot;C<sub>L</sub>&middot;V<sub>DD</sub>²&middot;f)</span>
-                <span class="m-status power" id="cmosPowerVal">2.50 mW</span>
-                <span class="m-detail">1,000 gates &middot; 5 fF &middot; &alpha;=0.5</span>
-              </div>
+              <strong>Figure 1.1:</strong> Interactive all-in-one CMOS inverter CAD workbench (IEEE 315-1975 standard).
+              <strong>How to interact:</strong> Click the input <strong>SPDT Switch</strong> directly on the circuit diagram to flip between Ground (0V) and <span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span>. Observe the physical switch blade pivot, the active transistor channel glow (green for pMOS pull-up, blue for nMOS pull-down), and the animated charge/discharge current flow. Use the <strong>bottom instrument deck</strong> to step or select preset supply voltages (<span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span>) and clock frequencies (<em>f</em>) to observe real-time quadratic voltage scaling and linear frequency scaling on dynamic power dissipation.
             </div>
           </div>
+
 
           <!-- THE PROBLEM & DESIGN TRADE-OFF: CMOS -->
           <div class="tradeoff-box">
@@ -3012,23 +3032,42 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 <script>
   // ==========================================
-  // 1. CMOS INVERTER DYNAMIC POWER & CAD SCHEMATIC SIMULATOR
+  // 1. CMOS INVERTER ALL-IN-ONE EMBEDDED CAD SIMULATOR
   // ==========================================
-  const btnCmosVin = document.getElementById("btnCmosVin");
-  const cmosVddSlider = document.getElementById("cmosVddSlider") as HTMLInputElement;
-  const cmosVddVal = document.getElementById("cmosVddVal");
-  const cmosFreqSlider = document.getElementById("cmosFreqSlider") as HTMLInputElement;
-  const cmosFreqVal = document.getElementById("cmosFreqVal");
-  const cmosPmosState = document.getElementById("cmosPmosState");
-  const cmosNmosState = document.getElementById("cmosNmosState");
-  const cmosVoutVal = document.getElementById("cmosVoutVal");
-  const cmosPowerVal = document.getElementById("cmosPowerVal");
+  // Circuit Switch Elements
+  const btnSvgSwitch = document.getElementById("btnSvgSwitch");
+  const svgSwitchBlade = document.getElementById("svgSwitchBlade");
+  const svgSwitchBtnBg = document.getElementById("svgSwitchBtnBg");
+  const svgSwitchBtnTxt = document.getElementById("svgSwitchBtnTxt");
 
-  // SVG Elements for live schematic
+  // Instrument Deck Elements
+  const btnVddDown = document.getElementById("btnVddDown");
+  const btnVddUp = document.getElementById("btnVddUp");
+  const svgVddDisplay = document.getElementById("svgVddDisplay");
   const svgVddLabel = document.getElementById("svgVddLabel");
-  const svgVinLabel = document.getElementById("svgVinLabel");
-  const svgVoutLabel = document.getElementById("svgVoutLabel");
-  const svgCapLabel = document.getElementById("svgCapLabel");
+
+  const btnVddPreset08 = document.getElementById("btnVddPreset08");
+  const btnVddPreset10 = document.getElementById("btnVddPreset10");
+  const btnVddPreset12 = document.getElementById("btnVddPreset12");
+  const pillVdd08 = document.getElementById("pillVdd08");
+  const pillVdd10 = document.getElementById("pillVdd10");
+  const pillVdd12 = document.getElementById("pillVdd12");
+
+  const btnFreqDown = document.getElementById("btnFreqDown");
+  const btnFreqUp = document.getElementById("btnFreqUp");
+  const svgFreqDisplay = document.getElementById("svgFreqDisplay");
+
+  const btnFreqPreset500 = document.getElementById("btnFreqPreset500");
+  const btnFreqPreset1000 = document.getElementById("btnFreqPreset1000");
+  const btnFreqPreset2500 = document.getElementById("btnFreqPreset2500");
+  const pillFreq500 = document.getElementById("pillFreq500");
+  const pillFreq1000 = document.getElementById("pillFreq1000");
+  const pillFreq2500 = document.getElementById("pillFreq2500");
+
+  const svgPowerDisplay = document.getElementById("svgPowerDisplay");
+  const svgPowerBar = document.getElementById("svgPowerBar");
+
+  // Schematic Wire & Node Elements
   const vddStem = document.getElementById("vddStem");
   const pch = document.getElementById("pch");
   const pSourceTab = document.getElementById("pSourceTab");
@@ -3051,9 +3090,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   const voutDot = document.getElementById("voutDot");
   const voutWire = document.getElementById("voutWire");
-  const vinStem = document.getElementById("vinStem");
-  const vinDot = document.getElementById("vinDot");
-  const gateBus = document.getElementById("gateBus");
+  const svgVinLabel = document.getElementById("svgVinLabel");
+  const svgVoutLabel = document.getElementById("svgVoutLabel");
+  const svgCapLabel = document.getElementById("svgCapLabel");
 
   // Analysis table elements
   const stateCardBg = document.getElementById("stateCardBg");
@@ -3070,45 +3109,72 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   const scopeTraceVin = document.getElementById("scopeTraceVin");
   const scopeTraceVout = document.getElementById("scopeTraceVout");
 
+  // Simulator State
   let cmosVin = 0;
+  let cmosVdd = 1.0;
+  let cmosFreq = 1000;
 
-  function updateCmosPowerSim() {
-    const vdd = parseFloat(cmosVddSlider?.value || "1.0");
-    const freq = parseInt(cmosFreqSlider?.value || "1000", 10);
+  function updateCmosSim() {
+    // 1. Dynamic Power Calculation
+    // Total capacitance for 1000 gates: C_total = 1000 * 5 fF = 5 pF
+    const cTotal = 5.0e-12;
+    const pDynMw = (0.5 * cTotal * (cmosVdd * cmosVdd) * (cmosFreq * 1.0e6) * 1000).toFixed(2);
 
-    if (cmosVddVal) cmosVddVal.textContent = `${vdd.toFixed(2)} V`;
-    if (cmosFreqVal) cmosFreqVal.textContent = `${freq} MHz`;
-    if (svgVddLabel) svgVddLabel.textContent = vdd.toFixed(2);
+    // 2. Instrument Deck Displays
+    if (svgVddDisplay) svgVddDisplay.textContent = `${cmosVdd.toFixed(2)} V`;
+    if (svgVddLabel) svgVddLabel.textContent = cmosVdd.toFixed(2);
+    if (svgFreqDisplay) svgFreqDisplay.textContent = `${cmosFreq} MHz`;
+    if (svgPowerDisplay) svgPowerDisplay.textContent = `${pDynMw} mW`;
 
-    // Dynamic power for 1000 gates: P = 0.5 * 1000 * 5fF * Vdd^2 * f
-    const cTotal = 5.0e-12; // 5 pF total
-    const pDynMw = (0.5 * cTotal * (vdd * vdd) * (freq * 1.0e6) * 1000).toFixed(2);
+    // Power gauge bar (scale 0..8 mW to 0..96 px width)
+    if (svgPowerBar) {
+      const pVal = parseFloat(pDynMw);
+      const barW = Math.min(96, Math.max(4, (pVal / 8.0) * 96));
+      svgPowerBar.setAttribute("width", String(barW.toFixed(1)));
+    }
 
-    if (cmosPowerVal) cmosPowerVal.textContent = `${pDynMw} mW`;
+    // Highlight VDD Presets
+    const isVdd08 = Math.abs(cmosVdd - 0.8) < 0.01;
+    const isVdd10 = Math.abs(cmosVdd - 1.0) < 0.01;
+    const isVdd12 = Math.abs(cmosVdd - 1.2) < 0.01;
+    pillVdd08?.setAttribute("fill", isVdd08 ? "#0284c7" : "#1e293b");
+    pillVdd08?.setAttribute("stroke", isVdd08 ? "#38bdf8" : "#334155");
+    pillVdd10?.setAttribute("fill", isVdd10 ? "#0284c7" : "#1e293b");
+    pillVdd10?.setAttribute("stroke", isVdd10 ? "#38bdf8" : "#334155");
+    pillVdd12?.setAttribute("fill", isVdd12 ? "#0284c7" : "#1e293b");
+    pillVdd12?.setAttribute("stroke", isVdd12 ? "#38bdf8" : "#334155");
 
+    // Highlight Frequency Presets
+    const isFreq500 = cmosFreq === 500;
+    const isFreq1000 = cmosFreq === 1000;
+    const isFreq2500 = cmosFreq === 2500;
+    pillFreq500?.setAttribute("fill", isFreq500 ? "#0284c7" : "#1e293b");
+    pillFreq500?.setAttribute("stroke", isFreq500 ? "#38bdf8" : "#334155");
+    pillFreq1000?.setAttribute("fill", isFreq1000 ? "#0284c7" : "#1e293b");
+    pillFreq1000?.setAttribute("stroke", isFreq1000 ? "#38bdf8" : "#334155");
+    pillFreq2500?.setAttribute("fill", isFreq2500 ? "#0284c7" : "#1e293b");
+    pillFreq2500?.setAttribute("stroke", isFreq2500 ? "#38bdf8" : "#334155");
+
+    // 3. Switch & Circuit Conduction State
     if (cmosVin === 0) {
       // ══════════════════════════════════════════════════════
-      // VIN = 0 (LOW / GND) -> pMOS ON (Pull-up), nMOS OFF
+      // VIN = 0 (GND / 0.0V) -> pMOS ON (Pull-up), nMOS OFF
       // ══════════════════════════════════════════════════════
-      if (btnCmosVin) {
-        btnCmosVin.textContent = "⇄ Toggle Vin: 0.0V (Logic 0)";
-        btnCmosVin.classList.remove("is-on");
+      // SPDT switch lever points DOWN to GND contact
+      if (svgSwitchBlade) {
+        svgSwitchBlade.setAttribute("y2", "252");
       }
-      if (cmosPmosState) {
-        cmosPmosState.textContent = "CONDUCTING (ON)";
-        cmosPmosState.className = "m-status on";
+      if (svgSwitchBtnBg) {
+        svgSwitchBtnBg.setAttribute("fill", "#15803d");
+        svgSwitchBtnBg.setAttribute("stroke", "#16a34a");
       }
-      if (cmosNmosState) {
-        cmosNmosState.textContent = "ISOLATED (OFF)";
-        cmosNmosState.className = "m-status off";
-      }
-      if (cmosVoutVal) {
-        cmosVoutVal.textContent = `${vdd.toFixed(2)} V (Logic 1)`;
+      if (svgSwitchBtnTxt) {
+        svgSwitchBtnTxt.textContent = "⇄ SW: 0V (LOW)";
       }
 
       // Input & Output Port Probe Badges
-      if (svgVinLabel) svgVinLabel.textContent = "0.00 V (L)";
-      if (svgVoutLabel) svgVoutLabel.textContent = `${vdd.toFixed(2)} V (H)`;
+      if (svgVinLabel) svgVinLabel.textContent = "0.0V (L)";
+      if (svgVoutLabel) svgVoutLabel.textContent = `${cmosVdd.toFixed(2)} V (H)`;
 
       // pMOS: ON (active green, thick channel, conducting wires)
       if (vddStem) { vddStem.setAttribute("stroke", "#16a34a"); vddStem.setAttribute("stroke-width", "2.5"); }
@@ -3142,7 +3208,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         svgStateTitle.textContent = "● OPERATING STATE: Vin = 0 (Logic 0 / LOW)";
         svgStateTitle.setAttribute("fill", "#15803d");
       }
-      if (svgPmosVgs) { svgPmosVgs.textContent = `−${vdd.toFixed(2)} V`; svgPmosVgs.setAttribute("fill", "#15803d"); }
+      if (svgPmosVgs) { svgPmosVgs.textContent = `−${cmosVdd.toFixed(2)} V`; svgPmosVgs.setAttribute("fill", "#15803d"); }
       if (svgNmosVgs) { svgNmosVgs.textContent = "0.00 V"; svgNmosVgs.setAttribute("fill", "#dc2626"); }
       if (svgPmosMode) { svgPmosMode.textContent = "Triode (ON)"; svgPmosMode.setAttribute("fill", "#15803d"); }
       if (svgNmosMode) { svgNmosMode.textContent = "Cut-off (OFF)"; svgNmosMode.setAttribute("fill", "#dc2626"); }
@@ -3151,31 +3217,27 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       if (svgStatePath) { svgStatePath.textContent = "VDD → MP1 → CL (Pull-Up Active)"; svgStatePath.setAttribute("fill", "#15803d"); }
 
       // Scope Waveform (Low to High Output)
-      if (scopeTraceVin) scopeTraceVin.setAttribute("d", "M 440 290 L 530 290 L 536 380 L 710 380");
-      if (scopeTraceVout) scopeTraceVout.setAttribute("d", "M 440 380 L 536 380 Q 550 330 580 294 L 710 290");
+      if (scopeTraceVin) scopeTraceVin.setAttribute("d", "M 440 286 L 530 286 L 536 376 L 730 376");
+      if (scopeTraceVout) scopeTraceVout.setAttribute("d", "M 440 376 L 536 376 Q 550 326 580 290 L 730 286");
 
     } else {
       // ══════════════════════════════════════════════════════
-      // VIN = 1 (HIGH / VDD) -> pMOS OFF, nMOS ON (Pull-down)
+      // VIN = 1 (VDD / 1.0V) -> pMOS OFF, nMOS ON (Pull-down)
       // ══════════════════════════════════════════════════════
-      if (btnCmosVin) {
-        btnCmosVin.textContent = `⇄ Toggle Vin: ${vdd.toFixed(1)}V (Logic 1)`;
-        btnCmosVin.classList.add("is-on");
+      // SPDT switch lever points UP to VDD contact
+      if (svgSwitchBlade) {
+        svgSwitchBlade.setAttribute("y2", "168");
       }
-      if (cmosPmosState) {
-        cmosPmosState.textContent = "ISOLATED (OFF)";
-        cmosPmosState.className = "m-status off";
+      if (svgSwitchBtnBg) {
+        svgSwitchBtnBg.setAttribute("fill", "#1d4ed8");
+        svgSwitchBtnBg.setAttribute("stroke", "#2563eb");
       }
-      if (cmosNmosState) {
-        cmosNmosState.textContent = "CONDUCTING (ON)";
-        cmosNmosState.className = "m-status on";
-      }
-      if (cmosVoutVal) {
-        cmosVoutVal.textContent = "0.00 V (Logic 0 / GND)";
+      if (svgSwitchBtnTxt) {
+        svgSwitchBtnTxt.textContent = `⇄ SW: ${cmosVdd.toFixed(1)}V (HI)`;
       }
 
       // Input & Output Port Probe Badges
-      if (svgVinLabel) svgVinLabel.textContent = `${vdd.toFixed(2)} V (H)`;
+      if (svgVinLabel) svgVinLabel.textContent = `${cmosVdd.toFixed(1)}V (H)`;
       if (svgVoutLabel) svgVoutLabel.textContent = "0.00 V (L)";
 
       // pMOS: OFF (inactive gray, thin dashed channel, open)
@@ -3211,7 +3273,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         svgStateTitle.setAttribute("fill", "#1d4ed8");
       }
       if (svgPmosVgs) { svgPmosVgs.textContent = "0.00 V"; svgPmosVgs.setAttribute("fill", "#dc2626"); }
-      if (svgNmosVgs) { svgNmosVgs.textContent = `+${vdd.toFixed(2)} V`; svgNmosVgs.setAttribute("fill", "#15803d"); }
+      if (svgNmosVgs) { svgNmosVgs.textContent = `+${cmosVdd.toFixed(2)} V`; svgNmosVgs.setAttribute("fill", "#15803d"); }
       if (svgPmosMode) { svgPmosMode.textContent = "Cut-off (OFF)"; svgPmosMode.setAttribute("fill", "#dc2626"); }
       if (svgNmosMode) { svgNmosMode.textContent = "Linear (ON)"; svgNmosMode.setAttribute("fill", "#15803d"); }
       if (svgPmosRon) { svgPmosRon.textContent = "> 10 GΩ"; svgPmosRon.setAttribute("fill", "#dc2626"); }
@@ -3219,22 +3281,45 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       if (svgStatePath) { svgStatePath.textContent = "CL → MN1 → GND (Pull-Down Active)"; svgStatePath.setAttribute("fill", "#1d4ed8"); }
 
       // Scope Waveform (High to Low Output)
-      if (scopeTraceVin) scopeTraceVin.setAttribute("d", "M 440 380 L 530 380 L 536 290 L 710 290");
-      if (scopeTraceVout) scopeTraceVout.setAttribute("d", "M 440 290 L 536 290 Q 550 340 580 376 L 710 380");
+      if (scopeTraceVin) scopeTraceVin.setAttribute("d", "M 440 376 L 530 376 L 536 286 L 730 286");
+      if (scopeTraceVout) scopeTraceVout.setAttribute("d", "M 440 286 L 536 286 Q 550 336 580 372 L 730 376");
     }
   }
 
-  btnCmosVin?.addEventListener("click", () => {
+  // Event Listeners for Embedded Switch and Instruments
+  btnSvgSwitch?.addEventListener("click", () => {
     cmosVin = cmosVin === 0 ? 1 : 0;
-    btnCmosVin.setAttribute("data-vin", String(cmosVin));
-    updateCmosPowerSim();
+    updateCmosSim();
   });
 
-  cmosVddSlider?.addEventListener("input", updateCmosPowerSim);
-  cmosFreqSlider?.addEventListener("input", updateCmosPowerSim);
+  // VDD Steppers & Presets
+  btnVddDown?.addEventListener("click", () => {
+    cmosVdd = Math.max(0.6, parseFloat((cmosVdd - 0.1).toFixed(2)));
+    updateCmosSim();
+  });
+  btnVddUp?.addEventListener("click", () => {
+    cmosVdd = Math.min(1.2, parseFloat((cmosVdd + 0.1).toFixed(2)));
+    updateCmosSim();
+  });
+  btnVddPreset08?.addEventListener("click", () => { cmosVdd = 0.8; updateCmosSim(); });
+  btnVddPreset10?.addEventListener("click", () => { cmosVdd = 1.0; updateCmosSim(); });
+  btnVddPreset12?.addEventListener("click", () => { cmosVdd = 1.2; updateCmosSim(); });
+
+  // Frequency Steppers & Presets
+  btnFreqDown?.addEventListener("click", () => {
+    cmosFreq = Math.max(100, cmosFreq - 200);
+    updateCmosSim();
+  });
+  btnFreqUp?.addEventListener("click", () => {
+    cmosFreq = Math.min(3000, cmosFreq + 200);
+    updateCmosSim();
+  });
+  btnFreqPreset500?.addEventListener("click", () => { cmosFreq = 500; updateCmosSim(); });
+  btnFreqPreset1000?.addEventListener("click", () => { cmosFreq = 1000; updateCmosSim(); });
+  btnFreqPreset2500?.addEventListener("click", () => { cmosFreq = 2500; updateCmosSim(); });
 
   // Initialize immediately on load
-  updateCmosPowerSim();
+  updateCmosSim();
   // ==========================================
   // 2. STANDARD CELL GE EXPLORER
   // ==========================================
