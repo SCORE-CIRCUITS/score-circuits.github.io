@@ -3,9 +3,9 @@
   "generatedAt": "2026-11-15T23:08:15.357Z",
   "counts": {
     "projects": 46,
-    "tools": 51,
+    "tools": 59,
     "category1Tools": 12,
-    "category2Tools": 3,
+    "category2Tools": 6,
     "category3Tools": 4,
     "category4Tools": 23,
     "infraTools": 9,
@@ -5014,7 +5014,7 @@
       "hasReadme": false,
       "readmeContent": "",
       "scripts": {
-        "run": null,
+        "run": "scripts/run_black_parrot.sh",
         "generate": "scripts/generate_black_parrot.sh",
         "install": "scripts/install_black_parrot.sh",
         "env": null
@@ -7972,6 +7972,120 @@
       },
       "benchmarks": [],
       "matchedProjectSlug": "vortex"
+    },
+    {
+      "slug": "c906",
+      "name": "T-Head OpenC906",
+      "subtitle": "5-Stage Single-Issue In-Order RV64GCV Application Core with Integrated Vector Unit",
+      "categoryNumber": 2,
+      "categoryName": "Category 2: 64-bit Application-Class Cores",
+      "categoryBadge": "Level 2: Memory & OS Compliance",
+      "isa": "RV64GCV",
+      "bus": "AXI4 (64-bit)",
+      "language": "Verilog-2001",
+      "license": "Apache-2.0",
+      "organization": "T-Head Semiconductor (Alibaba)",
+      "verificationEvidence": "SCORE: run_c906.sh; cycle-accurate smart_run simulation; commercial tapeout validation",
+      "siliconEvidence": "Mass production in Allwinner D1, Sipeed Lichee RV, and MangoPi MQ-Pro",
+      "fpgaEvidence": "README: FPGA implementation scripts under smart_run/impl",
+      "notableStrengths": "Ultra-compact Linux-capable RV64 core (~138 kGE) with integrated 128-bit vector processing unit (VPU)",
+      "notableLimitations": "Pre-ratified RVV 0.7.1 vector specification; single-issue scalar limits compute-bound IPC",
+      "fileCount": 6,
+      "topFiles": [
+        "C906_RTL_FACTORY",
+        "LICENSE",
+        "README.md",
+        "doc",
+        "smart_run"
+      ],
+      "hasReadme": true,
+      "readmeFile": "README.md",
+      "readmeContent": "# IP Readme\n\n  Welcome to C906! Some key directories are shown below.\n```\n|--C906_RTL_FACRORY/\n  |--gen_rtl/     ##the source verilog code of C906 \n  |--setup/       ##set the environment variables\n|--smart_run/     ##the RTL simulation environment\n  |--impl/        ##sdc file\n  |--logical/     ##the SoC demo and test bench to run the simulation \n  |--setup/       ##GNU tool chain setting\n  |--tests/       ##include the test suit, linker file, boot code and so on\n  |--work/        ##the working directory\n  |--Makefile     ##the simulation script\n|--doc/           ##the user and integration manual of C906\n```\n  \n\n## Usage\n\n  Step1: Get Started\n```\n$ cd C906_RTL_FACTORY\n$ source setup/setup.csh\n$ cd ../smart_run\n$ make help\nTo gain more information about how to use smart testbench.\n```    \n\n  Step2: Download and install C/C++ Compiler\n\n```\nYou can download the GNU tool chain compiled by T-HEAD from the url below:\nhttps://occ.t-head.cn/community/download?id=3948120165480468480\n$ cd ./smart_run\nGNU tool chain (specific riscv version) must be installed and specified before\ncompiling *.c/*.v tests of the smart environment. Please refer to the following\nsetup file about how to specify it: \n    ./smart_run/setup/example_setup.csh\n```\n\n \n## Notes\n    \n```\nThe testbench supports iverilog, vcs and irun to run simulation and you can use Gtkwave or verdi \nto open the waveform under ./smart_run/work/ directory.\n\nYou can get the debugger, IDE and SDK from the url:https://occ.t-head.cn/community/download?id=575997419775328256\n```\n\n\n## Discussion\n    If you are interested in participating in discussions or improving the \"openXuantie\" cores, you can scan the DingDing QR code below to join the discussion group.\n<img src=\"https://github.com/T-head-Semi/opene902/blob/main/doc/QR_code_openXuantie.png\" />\n\n\n#/*Copyright 2020-2021 T-Head Semiconductor Co., Ltd.\n#\n#Licensed under the Apache License, Version 2.0 (the \"License\");\n#you may not use this file except in compliance with the License.\n#You may obtain a copy of the License at\n#\n###    http://www.apache.org/licenses/LICENSE-2.0\n#\n#Unless required by applicable law or agreed to in writing, software\n#distributed under the License is distributed on an \"AS IS\" BASIS,\n#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n#See the License for the specific language governing permissions and\n#limitations under the License.\n#*/\n",
+      "scripts": {
+        "run": "scripts/run_c906.sh",
+        "generate": "scripts/generate_c906.sh",
+        "install": "scripts/install_c906.sh",
+        "env": null
+      },
+      "benchmarks": [],
+      "matchedProjectSlug": "c906"
+    },
+    {
+      "slug": "c910",
+      "name": "T-Head OpenC910",
+      "subtitle": "12-Stage 3-Issue Out-of-Order RV64GCV Processor with Dual Vector Units",
+      "categoryNumber": 2,
+      "categoryName": "Category 2: 64-bit Application-Class Cores",
+      "categoryBadge": "Level 2: Memory & OS Compliance",
+      "isa": "RV64GCV",
+      "bus": "AXI4-128b Dual Master",
+      "language": "Verilog-2001",
+      "license": "Apache-2.0",
+      "organization": "T-Head Semiconductor (Alibaba)",
+      "verificationEvidence": "SCORE: run_c910.sh; smart_run simulation; commercial multi-million-unit mass production",
+      "siliconEvidence": "Commercial mass production in Alibaba TH1520 SoC, BeagleV-Ahead, and Lichee Pi 4A",
+      "fpgaEvidence": "README: FPGA implementation scripts under smart_run/impl",
+      "notableStrengths": "Commercial high-performance out-of-order 3-issue engine with dual 128-bit VPUs and 64-entry ROB",
+      "notableLimitations": "Large die footprint (~550 kGE) and complex hierarchy; RVV 0.7.1 in hardware",
+      "fileCount": 6,
+      "topFiles": [
+        "C910_RTL_FACTORY",
+        "LICENSE",
+        "README.md",
+        "doc",
+        "smart_run"
+      ],
+      "hasReadme": true,
+      "readmeFile": "README.md",
+      "readmeContent": "# IP Readme\n\n  Welcome to C910! Some key directories are shown below.\n```\n|--C910_RTL_FACTORY/\n  |--gen_rtl/     ## Verilog source code of C910\n  |--setup/       ## Script to set the environment variables\n|--smart_run/     ## RTL simulation environment\n  |--impl/        ## SDC file, scripts and file lists for implementation\n  |--logical/     ## SoC demo and test bench to run the simulation\n  |--setup/       ## GNU tool chain setting\n  |--tests/       ## Test driver and test cases\n  |--work/        ## Working directory for builds\n  |--Makefile     ## Makefile for building and running sim targets\n|--doc/           ## The user and integration manual of C910\n```\n\n\n## Usage\n\n  Step1: Get Started\n\n```\n$ cd C910_RTL_FACTORY\n$ source setup/setup.csh\n$ cd ../smart_run\n$ make help\nTo gain more information about how to use smart testbench.\n```\n\n  Step2: Download and install C/C++ Compiler\n\n```\nYou can download the GNU tool chain compiled by T-HEAD from the url below:\nhttps://occ.t-head.cn/community/download?id=3948120165480468480\n\n$ cd ./smart_run\nGNU tool chain (specific riscv version) must be installed and specified before\ncompiling *.c/*.v tests of the smart environment. Please refer to the following\nsetup file about how to specify it:\n    ./smart_run/setup/example_setup.csh\n```\n\n\n## Notes\n\n```\nThe testbench supports Verilator(version is better newer than 4.215),iverilog, vcs and irun to run simulation and you can use Gtkwave or verdi\nto open the waveform under ./smart_run/work/ directory.\n\nYou can get the debugger, IDE and SDK from the url:https://occ.t-head.cn/community/download?id=575997419775328256\n```\n\n\n## Discussion\n    If you are interested in participating in discussions or improving the \"openXuantie\" cores, you can scan the DingDing QR code below to join the discussion group.\n<img src=\"https://github.com/T-head-Semi/opene902/blob/main/doc/QR_code_openXuantie.png\" />\n\n\n/*Copyright 2019-2021 T-Head Semiconductor Co., Ltd.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n\n*/\n",
+      "scripts": {
+        "run": "scripts/run_c910.sh",
+        "generate": "scripts/generate_c910.sh",
+        "install": "scripts/install_c910.sh",
+        "env": null
+      },
+      "benchmarks": [],
+      "matchedProjectSlug": "c910"
+    },
+    {
+      "slug": "nutshell",
+      "name": "NutShell (Min-Cai)",
+      "subtitle": "Dual-Issue In-Order RV64GC Application Core with Difftest Co-Simulation",
+      "categoryNumber": 2,
+      "categoryName": "Category 2: 64-bit Application-Class Cores",
+      "categoryBadge": "Level 2: Memory & OS Compliance",
+      "isa": "RV64GC",
+      "bus": "AXI4 (64-bit)",
+      "language": "Chisel (Scala)",
+      "license": "Mulan PSL v2",
+      "organization": "UCAS / ICT (OSCPU)",
+      "verificationEvidence": "SCORE: run_nutshell.sh; Verilator emulator with 10 MicroBench tests; Difftest Spike co-simulation",
+      "siliconEvidence": "Fabricated in TSMC 28nm under UCAS 'One Student One Chip' initiative",
+      "fpgaEvidence": "README: Running Debian on Xilinx FPGA demo included in repository",
+      "notableStrengths": "Clean dual-issue pipeline with turnkey Verilator C++ testbench and Difftest verification framework",
+      "notableLimitations": "In-order dual issue; single outstanding miss MSHR limits DDR latency tolerance",
+      "fileCount": 22,
+      "topFiles": [
+        ".gitmodules",
+        "LICENSE",
+        "Makefile",
+        "README.md",
+        "build.mill",
+        "difftest",
+        "ready-to-run",
+        "src"
+      ],
+      "hasReadme": true,
+      "readmeFile": "README.md",
+      "readmeContent": "# NutShell (\u679c\u58f3)\n\nNutShell is a processor developed by the OSCPU (Open Source Chip Project by University) team.\n\nCurrently it supports riscv64/32.\n\nSee [here](https://github.com/OSCPU/NutShell-doc) for the documents.\n\nSee [the History and Naming section](#history) for naming issue.\n\n## Demo: [Running Debian on FPGA](debian_on_fpga.gif)\n\n![](debian_on_fpga.gif)\n\n## Compile chisel code\n\n* Install `mill`. Refer to [the Manual section in this guide][mill].\n* Run `make` to generate verilog code. The output file is `build/TopMain.v`.\n\n[mill]: https://com-lihaoyi.github.io/mill/ \n\n## Run programs by simulation\n\nYou can either use our ready-to-run image for simulation or build image yourself.\n\nTo use ready-to run image (recommended) :\n\n* Run `make emu` to launch simulation. Default image is linux kernel.\n* Run `make IMAGE=yourimage.bin emu` to specify your image file. We have provided some in ./ready-to-run.\n\nTo build image yourself:\n\n* Set a new environment variable `NEMU_HOME` to the **absolute path** of the [NEMU project](https://github.com/OpenXiangShan/NEMU).\n* Set a new environment variable `NUTSHELL_HOME` to the **absolute path** of the NutShell project.\n* Clone the [AM project](https://github.com/OSCPU/nexus-am.git).\n* Set a new environment variable `AM_HOME` to the **absolute path** of the AM project.\n* Run the application in the AM project by `make ARCH=riscv64-nutshell run`.\n```\ncd nexus-am/apps/microbench\nmake ARCH=riscv64-nutshell mainargs=test run\n```\n\n## Run on FPGA\n\n### Sub-directories Overview\n```\nfpga\n\u251c\u2500\u2500 board              # supported FPGA boards and files to build a Vivado project\n\u251c\u2500\u2500 boot               # PS boot flow of zynq and zynqmp\n\u251c\u2500\u2500 lib                # HDL sources shared by different boards\n\u251c\u2500\u2500 Makefile\n\u251c\u2500\u2500 Makefile.check\n\u2514\u2500\u2500 NutShell.tcl       # wrapper of NutShell core in the Vivado project\n```\n\n### Build a Vivado project\n\n* Install Vivado 2019.1, and source the setting of Vivado and SDK\n* Run the following command to build a Vivado project\n```\ncd fpga\nmake PRJ=myproject BOARD=pynq STANDALONE=true\n```\nChange `pynq` to the target board you want. Supported boards are listed under `board/`.\nThe project will be created under `board/pynq/build/myproject-pynq`. Please note that STANDALONE mode is only used in `pynq` board.\n\n* Open the project with Vivado and generate bitstream.\n\n### Prepare SD card\n\nRefer to the instructions of [fpga/boot/README.md](fpga/boot/README.md).\n\nNOTE: Remember to put the bitstream into BOOT.BIN, since the guide is going to boot everything from SD card.\n\n### Set your board to SD boot mode\n\nPlease refer to the user guide of your board.\n* [zedboard](http://www.zedboard.org/sites/default/files/ZedBoard_HW_UG_v1_1.pdf)\n* [zcu102](https://www.xilinx.com/support/documentation/boards_and_kits/zcu102/ug1182-zcu102-eval-bd.pdf)\n* [sidewinder](http://sidewinder.fidus.com)\n* ultraZ (currently not avaliable to the public)\n* axu3cg (currently not avaliable to the public)\n\n### Boot linux in PS\n\nJust insert the SD card into the board, open a serial terminal and powerup the board.\n\n### Boot NutShell (the RISC-V subsystem)\n\nTo boot the RISC-V subsystem\n* Send `fpga/resource/ddr-loader/ddr-loader.c` to PS.\nThis can be achieved by either copying the file to SD card,\nor by sending the file with `scp` if you have your board connected to your host by network.\n* Compile the loader by gcc on PS.\n```\ngcc -O2 -o ddr-loader ddr-loader.c\n```\n* Send the RISC-V program (bin file, should start at 0x80000000) to PS.\n* Open minicom on PS to connect to the UART of NutShell.\nNote that you can connect to PS via `ssh` and use `tmux` to get multiple terminals.\n```\nminicom -D /dev/ttyUL1\n```\n* Use the loader to load the program to NutShell memory and start running NutShell.\n```\n./ddr-loader $(YOUR_BOARD) bin-file\n```\n* To shutdown the board, first run `poweroff` in PS.\n\n## <a name=\"history\"></a> History and Naming\n\n**Is NutShell developed from scratch?**\n\nNo.\nNutShell is originally based on the NOOP project, an educational RV32 SoC designed by Nanjing University (NJU).\nAt 2019/08/27, the OSCPU team decided to start a new project based on a fork of NOOP.\n\n**Why was there only one contributor in this repo before 2019/08/27?**\n\nNOOP was maintained by [sashimi-yzh](https://github.com/sashimi-yzh) on behalf of NJU before 2019/08/27.\n\n**What is the different between NutShell and NOOP?**\n\nUndergraduate students in the OSCPU team planned to enhance the educational SoC to a fully functional RV64 SoC,\non behalf of University of Chinese Academy of Sciences (UCAS, \u4e2d\u56fd\u79d1\u5b66\u9662\u5927\u5b66).\nThe goal was to boot Linux + Debian and tapeout the chip.\nStudents have put a lot of effort into achieving such a goal.\n\n**Where can I find the original NOOP repo?**\n\nNOOP is designed as a programming assignment for educational purpose.\nIt is still unstable and may be redesigned every year.\nTherefore there is no official release for NOOP yet.\n\nBut here are some reference implementations:\n* Code in this NutShell repo before 2019/08/27 can be considered as NOOP designed in 2019.\n* [Here](https://github.com/nju-mips/noop-lo) is an implementation of NOOP designed by students in NJU at 2018.\nThis is the CPU design which won the 2nd prize in LoongsonCup18.\nIt is designed with Chisel, too.\nBut note that the ISA is mips32, since the contest is held by Loongson.\nAlso the implementation is very different from the one above.\n\n**Why can I still find the name NOOP in the code as well as the commit logs after 2019/08/27?**\n\nDuring the development, the OSCPU team has not yet thought of a good name for the SoC.\nBefore this repo is available to the public, they finally decide to name the SoC NutShell.\nIn Chinese, NutShell (\u679c\u58f3) and the nickname of UCAS (\u56fd\u79d1\u5927) are similar in pronunciation.\nThe name NutShell is welcomed by every student in UCAS.\n\n**I found a name Argo in the code as well as the commit logs. What is it?**\n\nArgo is the name of a dual-issued OoO core designed by [AugustusWillisWang](https://github.com/AugustusWillisWang).\nAugustusWillisWang is one of the students who develop NutShell.\nArgo is designed based on NutShell, and they share the same SoC architecture.\n\n**I found a name COOSCA in the commit logs. What is it?**\n\nCOOSCA is an internal name of the SoC.\nStudents in the team want a better name, so there comes NutShell.\nThe name COOSCA should be rarely presented in the repo.\n",
+      "scripts": {
+        "run": "scripts/run_nutshell.sh",
+        "generate": "scripts/generate_nutshell.sh",
+        "install": "scripts/install_nutshell.sh",
+        "env": null
+      },
+      "benchmarks": [],
+      "matchedProjectSlug": "nutshell"
     }
   ],
   "benchmarks": {
@@ -8209,6 +8323,53 @@
             "pmp": {
               "status": "implemented",
               "runner": "scripts/benchmarks/run_cva6_benchmarks.sh pmp"
+            }
+          }
+        },
+        {
+          "score_tool": "c906",
+          "profile": "app_iverilog",
+          "architecture": "rv64gcv",
+          "config": "c906fd_sv39",
+          "description": "T-Head XuanTie OpenC906 64-bit 5-stage in-order application core with integrated vector unit and AXI4 bus",
+          "workloads": {
+            "csr": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_c906_benchmarks.sh csr"
+            },
+            "coremark": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_c906_benchmarks.sh coremark"
+            }
+          }
+        },
+        {
+          "score_tool": "c910",
+          "profile": "app_iverilog",
+          "architecture": "rv64gcv",
+          "config": "c910_12stage_ooo",
+          "description": "T-Head XuanTie OpenC910 64-bit 12-stage 3-issue out-of-order superscalar application processor with dual vector units",
+          "workloads": {
+            "hello_world": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_c910_benchmarks.sh hello_world"
+            },
+            "coremark": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_c910_benchmarks.sh coremark"
+            }
+          }
+        },
+        {
+          "score_tool": "nutshell",
+          "profile": "app_verilator",
+          "architecture": "rv64gc",
+          "config": "nutshell_inorder_sim",
+          "description": "OSCPU NutShell 64-bit dual-issue in-order application core with Difftest co-simulation and MicroBench suite",
+          "workloads": {
+            "microbench": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_nutshell_benchmarks.sh microbench"
             }
           }
         }

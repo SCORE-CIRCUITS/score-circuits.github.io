@@ -14,7 +14,7 @@ const categoryFeaturedTiers = [
     borderClass: "tier-border-yellow",
     title: "Microcontroller & Scalar Embedded Cores",
     scope: "Single-Threaded In-Order Embedded Pipelines",
-    ctaText: "Explore Category 1 (12 Cores)",
+    ctaText: "Explore Category 1 (13 Cores)",
     href: "/mcu-scalar/",
     connectorText: "Scale from Single-Issue Microcontrollers to Virtual Memory (Sv39/Sv48 MMU) & Multi-Level Caches",
     slugs: ["ibex", "hazard3", "serv"]
@@ -26,10 +26,10 @@ const categoryFeaturedTiers = [
     borderClass: "tier-border-cyan",
     title: "Application Cores",
     scope: "Linux-Capable In-Order & Out-of-Order Superscalar Cores",
-    ctaText: "Explore Category 2 (3 Processors)",
+    ctaText: "Explore Category 2 (8 Processors)",
     href: "/app-cores/",
     connectorText: "Scale from Memory-Bound Scalar Pipelines to Data-Parallel RVV 1.0 Vector Engines & Systolic Arrays",
-    slugs: ["cva6", "rocket-chip", "black-parrot"]
+    slugs: ["c910", "boom", "cva6", "rocket-chip"]
   },
   {
     catNum: 3,
@@ -38,7 +38,7 @@ const categoryFeaturedTiers = [
     borderClass: "tier-border-coral",
     title: "Vector & Coprocessor Acceleration Engines",
     scope: "Data-Parallel SIMD / RVV 1.0 & Systolic Accelerators",
-    ctaText: "Explore Category 3 (4 Engines)",
+    ctaText: "Explore Category 3 (8 Engines & Archetypes)",
     href: "/vector-coprocessors/",
     connectorText: "Scale from Coprocessor Accelerators to Many-Core Clusters (up to 432 Cores), NoC Fabrics & DMA Engines",
     slugs: ["ara", "gemmini", "spatz"]
@@ -85,7 +85,7 @@ const categoryDetails: Record<number, {
     colorVar: "var(--yellow)",
     bottleneck: "Branch misprediction penalty incurs 1–2 idle bubble cycles on tight loops. Load-use dependencies stall simple 2-stage cores (e.g. Ibex) unless forwarding paths are expanded.",
     remedy: "Dual-issue in-order execution with static branch hints and zero-overhead hardware loop controllers (e.g. VeeR EL2, CV32E40P).",
-    keyTools: "SERV (1-bit serial), PicoRV32, DarkRISCV, Ibex (2-stage), Hazard3 (3-stage), SCR1, VexRiscv (5-stage), VeeR EL2 (dual-issue)",
+    keyTools: "SERV (1-bit serial), PicoRV32, DarkRISCV, Ibex (2-stage), Hazard3 (3-stage), SCR1, VexRiscv (5-stage), VeeR EL2 (dual-issue), CV32E40P, NEORV32, RV12, RISC-V VHDL",
     ctaText: "Explore Level 1 MCU / Scalar Cores",
     transitionText: "Scale from Single-Issue Microcontrollers to Virtual Memory (Sv39/Sv48 MMU) & Multi-Level Caches",
   },
@@ -98,7 +98,7 @@ const categoryDetails: Record<number, {
     colorVar: "var(--cyan)",
     bottleneck: "Memory Wall latency (50–100 ns DRAM) on L1/L2 cache misses and serialized 3-level page table walk latency upon TLB misses.",
     remedy: "Non-blocking split L1/L2 caches with MSHRs, hardware stream prefetchers, and out-of-order superscalar execution (BOOM).",
-    keyTools: "CVA6 (6-stage in-order RV64GC), Rocket Chip (TileLink-UH), BlackParrot (BedRock coherent), BOOM (7–10 stage OoO)",
+    keyTools: "SonicBOOM (OoO), XuanTie C910 (3-issue OoO + VPU), CVA6 (6-stage in-order), XuanTie C906 (5-stage + VPU), Rocket Chip, NutShell (dual-issue), BlackParrot (BedRock multicore), OpenPiton (manycore)",
     ctaText: "Explore Level 2 Application Cores",
     transitionText: "Scale from Memory-Bound Scalar Pipelines to Data-Parallel RVV 1.0 Vector Engines & Systolic Arrays",
   },
@@ -111,7 +111,7 @@ const categoryDetails: Record<number, {
     colorVar: "var(--coral)",
     bottleneck: "Vector lane utilization collapses from 98.4% on GEMM down to 23.0% on strided/reduction kernels (FFT, Softmax) due to scalar issue serialization and VRF bank conflicts.",
     remedy: "Decoupled Access-Execute (DAE) vector coprocessors with multi-bank conflict-free VRFs and systolic weight-stationary matrix tiles (Ara, Gemmini).",
-    keyTools: "Ara (scalable 4–16 lanes RVV 1.0), AraXL (AXI bus), Gemmini (systolic GEMM array), Spatz (compact float coprocessor)",
+    keyTools: "Ara (scalable 4–16 lanes RVV 1.0), AraXL (AXI bus), Gemmini (systolic GEMM array), Spatz (compact float coprocessor), Vicuna (Zve32f), Vortex (GPGPU)",
     ctaText: "Explore Level 3 Vector & Coprocessors",
     transitionText: "Scale from Coprocessor Accelerators to Many-Core Clusters (up to 432 Cores), NoC Fabrics & DMA Engines",
   },
@@ -142,7 +142,7 @@ function getToolUrl(tool: any) {
 
 <BaseLayout 
   title="Home" 
-  description="Survey and empirical benchmarking platform across 51 open-source RISC-V architectures, 4 categories, and 4 verification levels."
+  description="Survey and empirical benchmarking platform across 47 open-source RISC-V architectures, 9 verification & simulation tools, and 4 verification levels."
 >
   <!-- Hero Section -->
   <div class="noc-hero">
@@ -154,6 +154,7 @@ function getToolUrl(tool: any) {
       <a href="/app-cores/" class="noc-sim-btn secondary">Cat 2: Application Cores</a>
       <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Cat 3: Vector &amp; Coprocessors</a>
       <a href="/soc-multicore/" class="noc-sim-btn secondary">Cat 4: SoC &amp; Multi-Core</a>
+      <a href="/soc-multicore/#infra-section" class="noc-sim-btn secondary" style="border-style: dashed;">Cat 0: Verification &amp; Tooling</a>
     </div>
   </div>
 
@@ -498,6 +499,7 @@ function getToolUrl(tool: any) {
       <a href="/app-cores/" class="noc-sim-btn secondary">Cat 2: Application Cores &rarr;</a>
       <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Cat 3: Vector &amp; Coprocessors &rarr;</a>
       <a href="/soc-multicore/" class="noc-sim-btn secondary">Cat 4: SoC &amp; Multi-Core &rarr;</a>
+      <a href="/soc-multicore/#infra-section" class="noc-sim-btn secondary" style="border-style: dashed;">Cat 0: Verification &amp; Tooling &rarr;</a>
     </div>
   </section>
 

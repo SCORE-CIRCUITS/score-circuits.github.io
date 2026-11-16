@@ -1,9 +1,5 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import db from "../../data/score_db.json";
-import {renderMarkdown, formatNumber} from "../../lib/content";
-
-const cat3Tools = db.tools.filter(t => t.categoryNumber === 3);
 
 // Master Empirical Benchmark Leaderboard: Exact figures measured under SCORE cycle-accurate simulation profiles
 const vectorLeaderboard = [
@@ -871,6 +867,20 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
       <p class="page-lead">
         Comprehensive comparative study of open-source RISC-V Vector 1.0 (RVV) coprocessors, tightly-coupled embedded execution units, 2D spatial systolic matrix accelerators, decoupled streaming engines, and many-core SIMT GPGPUs. Evaluated under cycle-accurate Verilator simulation profiles with exact hardware execution cycles, arithmetic density, and empirical utilization collapse analysis.
       </p>
+
+      <!-- Quick Navigation Jump Bars -->
+      <div class="core-jump-bar" style="margin-bottom: 0.5rem;">
+        <span class="jump-label">Jump to Section:</span>
+        <div class="jump-pills-wrap">
+          <a href="#core-foundations" class="core-jump-pill">&sect; 1. Foundations</a>
+          <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. Archetype Ladder</a>
+          <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Master Taxonomy</a>
+          <a href="#microarchitectural-differences" class="core-jump-pill">&sect; 4. Synthesis PPA</a>
+          <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Leaderboard</a>
+          <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Sensitivity</a>
+          <a href="#core-dossiers" class="core-jump-pill">&sect; 7. Native Dossiers</a>
+        </div>
+      </div>
 
       <!-- Quick Navigation Jump to Cores -->
       <div class="core-jump-bar">
@@ -4228,7 +4238,17 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
 
   </section>
 
-
+  <!-- Category Navigation Pager -->
+  <div class="score-pager">
+    <a href="/app-cores/" class="score-pager-btn prev">
+      <span class="pager-dir">&larr; Previous Category</span>
+      <span class="pager-title">Category 2: 64-Bit Application Cores</span>
+    </a>
+    <a href="/soc-multicore/" class="score-pager-btn next">
+      <span class="pager-dir">Next Category &rarr;</span>
+      <span class="pager-title">Category 4: SoC &amp; Multi-Core Clusters</span>
+    </a>
+  </div>
 
   <!-- ========================================================================= -->
   <!-- CLIENT JAVASCRIPT LOGIC                                                   -->
@@ -4447,10 +4467,12 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <!-- ========================================================================= -->
   <style>
     .page-header {
-      background: #fffdfa;
-      border-bottom: 2px solid var(--ink, #151b20);
-      padding: 2.5rem 1.5rem 2rem;
-      margin-bottom: 2rem;
+      background: var(--cream, #fffaf0);
+      border: 2px solid var(--ink, #151b20);
+      border-radius: 14px;
+      box-shadow: 6px 6px 0px var(--coral, #f38469);
+      padding: 2.25rem;
+      margin-bottom: 2.25rem;
     }
 
     .header-inner {
@@ -5396,11 +5418,11 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
     }
 
     .core-dossier-card {
-      background: #ffffff;
+      background: var(--cream, #fffaf0);
       border: 2px solid var(--ink, #151b20);
-      border-radius: 12px;
-      box-shadow: 4px 4px 0 var(--ink, #151b20);
-      padding: 1.75rem;
+      border-radius: 14px;
+      box-shadow: 5px 5px 0 var(--ink, #151b20);
+      padding: 2rem;
     }
 
     .dossier-header {
@@ -5695,6 +5717,48 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
       border-radius: 6px;
       padding: 0.75rem 1rem;
       margin-top: 0.75rem;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 1.5rem 1.15rem;
+        margin-bottom: 1.5rem;
+      }
+      .page-title {
+        font-size: 1.65rem;
+      }
+      .core-jump-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .dossier-specs-grid {
+        grid-template-columns: 1fr;
+      }
+      .table-scroll {
+        overflow-x: auto;
+      }
+      .dossier-subsystems-stack {
+        grid-template-columns: 1fr !important;
+      }
+      .dossier-pros-cons {
+        grid-template-columns: 1fr !important;
+      }
+      .paradigm-step-card {
+        padding: 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header {
+        padding: 1.15rem 0.85rem;
+      }
+      .page-title {
+        font-size: 1.4rem;
+      }
+      .core-dossier-card {
+        padding: 1.15rem 0.85rem;
+      }
     }
   </style>
 </BaseLayout>

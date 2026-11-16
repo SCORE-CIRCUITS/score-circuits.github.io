@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import db from "../../data/score_db.json";
 
 // Master Empirical Benchmark Leaderboard: Exact figures measured under SCORE cycle-accurate simulation profiles
 const masterBenchmarkData = [
@@ -6157,7 +6156,9 @@ const bespokeDossiers = [
           Empirical measurements generated from cycle-accurate Verilator 5.022, CXXRTL, Icarus, and GHDL simulation profiles. Compiled with <code>-O3 -funroll-loops</code>.
         </p>
       </div>
-      
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="cat1-latex">
+        &lt;/&gt; Copy LaTeX Table
+      </button>
     </div>
 
     <!-- Quick Scoreboard KPI Summary Strip -->
@@ -6856,6 +6857,36 @@ const bespokeDossiers = [
       *Note on SERV: Raw execution requires 32 clock cycles per instruction (0.03 CoreMark/MHz raw IPC); scaled timer ratio on servant SoC maps to 0.9696. RV12 and RISC-V VHDL pass SCORE lint/structural checksuites; full simulation requires commercial EDA testbench.
     </p>
 
+    <!-- LaTeX Code Box -->
+    <div class="latex-export-box" id="cat1-latex" style="display: none;">
+      <div class="latex-head">
+        <span>LaTeX Table: Category 1 Microcontroller &amp; Scalar Cores (SCORE Dataset)</span>
+        <button class="close-latex-btn">&times;</button>
+      </div>
+      <pre class="latex-code"><code>\begin&#123;table&#125;[t]
+\centering
+\small
+\caption&#123;Category 1 Microcontroller and Scalar Embedded Core Empirical Leaderboard (SCORE Dataset)&#125;
+\label&#123;tab:cat1_mcu_benchmarks&#125;
+\begin&#123;tabular&#125;&#123;llccccccr&#125;
+\toprule
+\textbf&#123;Core&#125; &amp; \textbf&#123;Archetype&#125; &amp; \textbf&#123;ISA&#125; &amp; \textbf&#123;CoreMark/MHz&#125; &amp; \textbf&#123;DMIPS/MHz&#125; &amp; \textbf&#123;CPI&#125; &amp; \textbf&#123;Area (kGE)&#125; &amp; \textbf&#123;Fmax (MHz)&#125; &amp; \textbf&#123;Bus&#125; \\
+\midrule
+Ibex &amp; 2-Stage Decoupled &amp; RV32IMC &amp; 3.23 &amp; 1.58 &amp; 1.35 &amp; 24.5 &amp; 350 &amp; OBI \\
+VeeR EL2 &amp; Dual-Issue In-Order &amp; RV32IMC &amp; 3.15 &amp; 1.62 &amp; 1.03 &amp; 58.0 &amp; 400 &amp; AXI4-Lite \\
+CV32E40P &amp; 4-Stage + HW-Loop &amp; RV32IMFC\_Xpulp &amp; 3.12 &amp; 1.52 &amp; 1.38 &amp; 38.5 &amp; 350 &amp; OBI \\
+VexRiscv &amp; 5-Stage Interlocked &amp; RV32IMAC &amp; 2.85 &amp; 1.45 &amp; 1.42 &amp; 32.0 &amp; 300 &amp; Wishbone \\
+Hazard3 &amp; 3-Stage Forwarded &amp; RV32IMC\_Zcb &amp; 2.78 &amp; 1.38 &amp; 1.45 &amp; 18.2 &amp; 320 &amp; AHB5 \\
+SCR1 &amp; 3-Stage Pipeline &amp; RV32IMC &amp; 2.65 &amp; 1.32 &amp; 1.48 &amp; 22.0 &amp; 350 &amp; AXI4-Lite \\
+NEORV32 &amp; 2-Stage Multi-Cycle &amp; RV32IMC &amp; 2.45 &amp; 1.25 &amp; 1.55 &amp; 21.0 &amp; 200 &amp; Wishbone \\
+DarkRISCV &amp; 2-Stage Minimal &amp; RV32E &amp; 1.20 &amp; 0.65 &amp; 2.20 &amp; 11.5 &amp; 250 &amp; Native \\
+PicoRV32 &amp; Multi-Cycle FSM &amp; RV32IMC &amp; 0.90 &amp; 0.41 &amp; 3.85 &amp; 9.5 &amp; 250 &amp; Native/AXI \\
+SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 2.1 &amp; 300 &amp; Wishbone \\
+\bottomrule
+\end&#123;tabular&#125;
+\end&#123;table&#125;</code></pre>
+    </div>
+
     </section>
 
   <!-- SECTION 6: CONFIGURATION SENSITIVITY DEEP-DIVE -->
@@ -6932,7 +6963,8 @@ const bespokeDossiers = [
 
     <div class="dossiers-list">
       {bespokeDossiers.map((core) => (
-        <article class="dossier-card" id={`dossier-${core.slug}`}>
+        <article class="dossier-card" id={`core-${core.slug}`}>
+          <span id={`dossier-${core.slug}`} style="position: absolute; margin-top: -5rem;"></span>
           <!-- Dossier Header -->
           <div class="dossier-header">
             <div class="dh-left">
@@ -7054,6 +7086,18 @@ const bespokeDossiers = [
       ))}
     </div>
   </section>
+
+  <!-- Category Navigation Pager -->
+  <div class="score-pager">
+    <a href="/fundamentals/" class="score-pager-btn prev">
+      <span class="pager-dir">&larr; Previous</span>
+      <span class="pager-title">Computer Architecture Fundamentals</span>
+    </a>
+    <a href="/app-cores/" class="score-pager-btn next">
+      <span class="pager-dir">Next Category &rarr;</span>
+      <span class="pager-title">Category 2: 64-Bit Application Cores</span>
+    </a>
+  </div>
 </BaseLayout>
 
 <script>

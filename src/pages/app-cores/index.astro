@@ -1,14 +1,38 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import db from "../../data/score_db.json";
-import { renderMarkdown, formatNumber } from "../../lib/content";
-
-const cat2Tools = db.tools.filter(t => t.categoryNumber === 2);
 
 const appCoreLeaderboard = [
   {
     rank: 1,
     rankClass: "rank-gold",
+    name: "T-Head OpenC910",
+    variant: "3-Issue Out-of-Order + Dual VPU",
+    slug: "c910",
+    isa: "RV64GCV",
+    archetype: "Archetype 4: Out-of-Order Superscalar",
+    archCat: "archetype-4",
+    badgeClass: "badge-yellow",
+    badgeText: "FLAGSHIP PRODUCTION",
+    memcpyMbs: "820.4 MB/s",
+    memcpyNum: 820.4,
+    isGoldScore: true,
+    hasBar: true,
+    scorePercent: 100,
+    l1: "64 KiB / 64 KiB",
+    mshr: "12 MSHRs + Prefetch",
+    mmu: "Sv39",
+    pmp: "16 regions",
+    bus: "AXI4-128b Dual",
+    fmax: "2.0 GHz (12nm)",
+    fmaxNum: 2000,
+    areaKge: "550",
+    areaNum: 550,
+    stages: "12 (OoO 3-Wide)",
+    searchStr: "c910 t-head openc910 3-issue out-of-order dual vpu rv64gcv archetype 4 out-of-order axi4-128b 820.4 mb/s sv39 12nm"
+  },
+  {
+    rank: 2,
+    rankClass: "rank-silver",
     name: "SonicBOOM",
     variant: "3-Wide Large (v3)",
     slug: "boom",
@@ -16,12 +40,12 @@ const appCoreLeaderboard = [
     archetype: "Archetype 4: Out-of-Order Superscalar",
     archCat: "archetype-4",
     badgeClass: "badge-yellow",
-    badgeText: "BANDWIDTH CHAMPION",
+    badgeText: "CHIPYARD OOO CHAMPION",
     memcpyMbs: "782.5 MB/s",
     memcpyNum: 782.5,
     isGoldScore: true,
     hasBar: true,
-    scorePercent: 100,
+    scorePercent: 95,
     l1: "32 KiB / 32 KiB",
     mshr: "8 MSHRs (Non-blocking)",
     mmu: "Sv39 / Sv48",
@@ -35,8 +59,8 @@ const appCoreLeaderboard = [
     searchStr: "sonicboom boom 3-wide large v3 rv64gc archetype 4 out-of-order tilelink-c 782.5 mb/s sv39 sv48 16nm"
   },
   {
-    rank: 2,
-    rankClass: "rank-silver",
+    rank: 3,
+    rankClass: "rank-bronze",
     name: "SmallBOOM",
     variant: "1-Wide Decoupled",
     slug: "boom",
@@ -49,7 +73,7 @@ const appCoreLeaderboard = [
     memcpyNum: 595.0,
     isGoldScore: true,
     hasBar: true,
-    scorePercent: 76,
+    scorePercent: 73,
     l1: "16 KiB / 16 KiB",
     mshr: "4 MSHRs (Non-blocking)",
     mmu: "Sv39",
@@ -63,8 +87,8 @@ const appCoreLeaderboard = [
     searchStr: "smallboom boom 1-wide decoupled rv64gc archetype 4 out-of-order tilelink-c 595 mb/s sv39 16nm"
   },
   {
-    rank: 3,
-    rankClass: "rank-bronze",
+    rank: 4,
+    rankClass: "rank-pill",
     name: "Rocket Chip",
     variant: "Max-Cache 32K",
     slug: "rocket-chip",
@@ -77,7 +101,7 @@ const appCoreLeaderboard = [
     memcpyNum: 512.0,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 65,
+    scorePercent: 62,
     l1: "32 KiB / 32 KiB",
     mshr: "Blocking (0 MSHR)",
     mmu: "Sv39",
@@ -91,7 +115,7 @@ const appCoreLeaderboard = [
     searchStr: "rocket chip max-cache 32k rv64gc archetype 1 minimal in-order tilelink-uh 512 mb/s sv39 16nm"
   },
   {
-    rank: 4,
+    rank: 5,
     rankClass: "rank-pill",
     name: "Rocket Chip",
     variant: "Standard Linux Profile",
@@ -105,7 +129,7 @@ const appCoreLeaderboard = [
     memcpyNum: 485.4,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 62,
+    scorePercent: 59,
     l1: "16 KiB / 16 KiB",
     mshr: "Blocking (0 MSHR)",
     mmu: "Sv39",
@@ -119,7 +143,35 @@ const appCoreLeaderboard = [
     searchStr: "rocket chip standard linux profile rv64gc archetype 1 minimal in-order tilelink-uh 485.4 mb/s sv39 16nm"
   },
   {
-    rank: 5,
+    rank: 6,
+    rankClass: "rank-pill",
+    name: "T-Head OpenC906",
+    variant: "5-Stage + 128b Vector Unit",
+    slug: "c906",
+    isa: "RV64GCV",
+    archetype: "Archetype 2: Pipelined Industrial",
+    archCat: "archetype-2",
+    badgeClass: "badge-teal",
+    badgeText: "MASS PRODUCTION",
+    memcpyMbs: "468.2 MB/s",
+    memcpyNum: 468.2,
+    isGoldScore: false,
+    hasBar: true,
+    scorePercent: 57,
+    l1: "32 KiB / 32 KiB",
+    mshr: "2 MSHRs + Prefetch",
+    mmu: "Sv39",
+    pmp: "8 regions",
+    bus: "AXI4-64b",
+    fmax: "1.0 GHz (22nm)",
+    fmaxNum: 1000,
+    areaKge: "138",
+    areaNum: 138,
+    stages: "5 (In-order VPU)",
+    searchStr: "c906 t-head openc906 5-stage 128b vector unit rv64gcv archetype 2 pipelined industrial axi4 468.2 mb/s sv39 22nm allwinner d1"
+  },
+  {
+    rank: 7,
     rankClass: "rank-pill",
     name: "CVA6 (Ariane)",
     variant: "HP Clustered Node",
@@ -133,7 +185,7 @@ const appCoreLeaderboard = [
     memcpyNum: 468.2,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 60,
+    scorePercent: 57,
     l1: "32 KiB / 32 KiB",
     mshr: "2 MSHRs",
     mmu: "Sv39",
@@ -147,7 +199,35 @@ const appCoreLeaderboard = [
     searchStr: "cva6 ariane hp clustered node rv64gc archetype 2 pipelined industrial axi4 468.2 mb/s sv39 16nm"
   },
   {
-    rank: 6,
+    rank: 8,
+    rankClass: "rank-pill",
+    name: "NutShell (Min-Cai)",
+    variant: "Dual-Issue In-Order",
+    slug: "nutshell",
+    isa: "RV64GC",
+    archetype: "Archetype 1: Minimal In-Order",
+    archCat: "archetype-1",
+    badgeClass: "badge-blue",
+    badgeText: "DIFFTEST VERIFIED",
+    memcpyMbs: "452.1 MB/s",
+    memcpyNum: 452.1,
+    isGoldScore: false,
+    hasBar: true,
+    scorePercent: 55,
+    l1: "32 KiB / 32 KiB",
+    mshr: "1 Miss MSHR",
+    mmu: "Sv39",
+    pmp: "8 regions",
+    bus: "AXI4-64b",
+    fmax: "1.0 GHz (28nm)",
+    fmaxNum: 1000,
+    areaKge: "142",
+    areaNum: 142,
+    stages: "6 (Dual-issue)",
+    searchStr: "nutshell min-cai dual-issue in-order rv64gc archetype 1 minimal in-order axi4 452.1 mb/s sv39 28nm ucas osoc"
+  },
+  {
+    rank: 9,
     rankClass: "rank-pill",
     name: "CVA6 (Ariane)",
     variant: "Standard Single-Core",
@@ -161,7 +241,7 @@ const appCoreLeaderboard = [
     memcpyNum: 442.8,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 57,
+    scorePercent: 54,
     l1: "16 KiB / 32 KiB",
     mshr: "1 Miss MSHR",
     mmu: "Sv39",
@@ -175,7 +255,35 @@ const appCoreLeaderboard = [
     searchStr: "cva6 ariane standard single-core rv64gc archetype 2 pipelined industrial axi4 442.8 mb/s sv39 16nm"
   },
   {
-    rank: 7,
+    rank: 10,
+    rankClass: "rank-pill",
+    name: "OpenPiton + Ariane",
+    variant: "Coherent Manycore Tile",
+    slug: "openpiton",
+    isa: "RV64GC",
+    archetype: "Archetype 3: Modular Multicore",
+    archCat: "archetype-3",
+    badgeClass: "badge-coral",
+    badgeText: "MANYCORE SCALE",
+    memcpyMbs: "428.5 MB/s",
+    memcpyNum: 428.5,
+    isGoldScore: false,
+    hasBar: true,
+    scorePercent: 52,
+    l1: "16 KiB / 32 KiB",
+    mshr: "L1.5 Directory Mesh",
+    mmu: "Sv39",
+    pmp: "16 regions",
+    bus: "P-Mesh 2D-NoC",
+    fmax: "1.0 GHz (16nm)",
+    fmaxNum: 1000,
+    areaKge: "160",
+    areaNum: 160,
+    stages: "6 (Ariane Core)",
+    searchStr: "openpiton ariane coherent manycore tile rv64gc archetype 3 modular multicore p-mesh 428.5 mb/s sv39 16nm"
+  },
+  {
+    rank: 11,
     rankClass: "rank-pill",
     name: "BlackParrot",
     variant: "Uni-Core Minimal Node",
@@ -189,7 +297,7 @@ const appCoreLeaderboard = [
     memcpyNum: 425.0,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 54,
+    scorePercent: 52,
     l1: "16 KiB / 16 KiB",
     mshr: "1 MSHR (Unicast)",
     mmu: "Sv39",
@@ -203,7 +311,7 @@ const appCoreLeaderboard = [
     searchStr: "blackparrot black-parrot unicore minimal node rv64gc archetype 3 modular multicore bedrock 425 mb/s sv39 22nm"
   },
   {
-    rank: 8,
+    rank: 12,
     rankClass: "rank-pill",
     name: "BlackParrot",
     variant: "Dual-Core Cluster",
@@ -217,7 +325,7 @@ const appCoreLeaderboard = [
     memcpyNum: 412.6,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 53,
+    scorePercent: 50,
     l1: "32 KiB / 32 KiB",
     mshr: "2 MSHRs (BedRock)",
     mmu: "Sv39",
@@ -231,7 +339,7 @@ const appCoreLeaderboard = [
     searchStr: "blackparrot black-parrot dual-core cluster rv64gc archetype 3 modular multicore bedrock tilelink 412.6 mb/s sv39 22nm"
   },
   {
-    rank: 9,
+    rank: 13,
     rankClass: "rank-pill",
     name: "BlackParrot",
     variant: "Quad-Core Coherent Mesh",
@@ -245,7 +353,7 @@ const appCoreLeaderboard = [
     memcpyNum: 398.0,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 51,
+    scorePercent: 48,
     l1: "32 KiB / 32 KiB",
     mshr: "2 MSHRs (MESI Mesh)",
     mmu: "Sv39",
@@ -1041,7 +1149,7 @@ const appCoreDossiers = [
         In high-performance microprocessor engineering, however, raw compute capability is not bounded by how fast an ALU can add two 64-bit integers: silicon arithmetic datapaths easily tick at gigahertz clock frequencies (&lt;1.0&nbsp;ns cycle period). Instead, the defining physical barrier is the <strong>Memory Wall</strong>: off-chip DDR DRAM takes 50 to 100 nanoseconds to respond, meaning a single cache miss wastes <strong>100 to 200 execution cycles</strong>. If an execution pipeline stalls on every memory miss, its sustained instructions-per-cycle (IPC) collapses. To conquer this 100&times; latency gulf, processor architects spend tens to hundreds of thousands of logic gates (kGE) on multi-level Caches, hardware Page Table Walkers (PTWs), non-blocking Miss Status Holding Registers (MSHRs), multi-level branch predictors, and speculative out-of-order execution pipelines.
       </p>
       <p class="intro-p">
-        This page is an authoritative, top-down educational guide and empirical benchmark report covering <strong>open-source 64-bit RISC-V application processors</strong>. Below, you will explore their internal architectural schematics, step through the Memory Wall in an interactive cycle-by-cycle simulator, inspect the complete RV64GC instruction set and 64-bit register conventions, compare empirical CoreMark, Dhrystone, and OS compliance scores measured under cycle-accurate Verilator simulation, and discover which microarchitectural archetype—from lean in-order baselines (Rocket Chip) to industrial scoreboard pipelines (CVA6), modular coherent NoC clusters (BlackParrot), and multi-wide out-of-order superscalar engines (SonicBOOM)—best satisfies your performance, area, and tapeout constraints.
+        This page is an authoritative, top-down educational guide and empirical benchmark report covering <strong>open-source 64-bit RISC-V application processors</strong>. Below, you will explore their internal architectural schematics, step through the Memory Wall in an interactive cycle-by-cycle simulator, inspect the complete RV64GC instruction set and 64-bit register conventions, compare empirical CoreMark, Dhrystone, and OS compliance scores measured under cycle-accurate Verilator simulation, and discover which microarchitectural archetype—from lean in-order baselines (Rocket Chip, NutShell) to industrial scoreboard pipelines (CVA6, XuanTie C906), modular coherent NoC clusters (BlackParrot, OpenPiton), and high-performance out-of-order superscalar engines (SonicBOOM, XuanTie C910)—best satisfies your performance, area, and tapeout constraints.
       </p>
     </div>
 
@@ -2802,7 +2910,7 @@ const appCoreDossiers = [
     </div>
 
     <!-- 1.3 WHY APPLICATION CORES DIVERGE -->
-    <div class="concept-step-card" style="margin-bottom: 2rem;">
+    <div class="concept-step-card" id="divergence-drivers" style="margin-bottom: 2rem;">
       <div class="step-card-header">
         <span class="step-tag badge-ink">1.3 THE MEMORY WALL TRIAD</span>
         <h3 class="step-card-title">Why Application Cores Diverge: The Hardware Triad</h3>
@@ -4624,7 +4732,9 @@ const appCoreDossiers = [
           Evaluates memory throughput (unaligned memcpy sweeps), MMU translation behavior, MSHR concurrency, and PMP violation traps across standard workloads under Linux 6.1 LTS and bare-metal environments.
         </p>
       </div>
-      
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="cat2-latex">
+        &lt;/&gt; Copy LaTeX Table
+      </button>
     </div>
 
     <!-- Quick Scoreboard KPI Summary Strip -->
@@ -5747,6 +5857,18 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
       ))}
     </div>
   </section>
+
+  <!-- Category Navigation Pager -->
+  <div class="score-pager">
+    <a href="/mcu-scalar/" class="score-pager-btn prev">
+      <span class="pager-dir">&larr; Previous Category</span>
+      <span class="pager-title">Category 1: MCU / Scalar Cores</span>
+    </a>
+    <a href="/vector-coprocessors/" class="score-pager-btn next">
+      <span class="pager-dir">Next Category &rarr;</span>
+      <span class="pager-title">Category 3: Vector &amp; Coprocessors</span>
+    </a>
+  </div>
 </BaseLayout>
 
 <script>

@@ -7,12 +7,13 @@ interface Props {
 const { title, description = "SCORE: Survey & Benchmark Dataset of Open-Source Chip Repositories for EDA & Computer Architecture Research." } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const pathname = Astro.url.pathname;
-const pageTitle = title === "SCORE" ? "SCORE — Benchmark-Driven Open Architecture Platform" : `${title} · SCORE`;
+const pageTitle = title === "SCORE" || title === "Home" ? "SCORE — Benchmark-Driven Open Architecture Platform" : `${title} · SCORE`;
 
 function isActive(href: string) {
   const norm = href.endsWith("/") ? href : `${href}/`;
-  if (norm === "/" || norm === base) {
-    return pathname === "/" || pathname === base || pathname === "";
+  const baseNorm = base.endsWith("/") ? base : `${base}/`;
+  if (norm === "/" || norm === baseNorm) {
+    return pathname === "/" || pathname === base || pathname === baseNorm || pathname === "";
   }
   return pathname.startsWith(norm);
 }
@@ -327,6 +328,7 @@ function isActive(href: string) {
     <!-- Header Tier 2: Horizontal Navigation Tabs Bar -->
     <nav class="score-tabs-bar" aria-label="Primary Navigation">
       <div class="score-tabs-inner">
+        <a class={`score-tab-item ${isActive(base) ? 'active' : ''}`} href={base}>Overview</a>
         <a class={`score-tab-item ${isActive(`${base}fundamentals`) ? 'active' : ''}`} href={`${base}fundamentals/`}>Fundamentals</a>
         <a class={`score-tab-item ${isActive(`${base}mcu-scalar`) ? 'active' : ''}`} href={`${base}mcu-scalar/`}>MCU / Scalar Cores</a>
         <a class={`score-tab-item ${isActive(`${base}app-cores`) ? 'active' : ''}`} href={`${base}app-cores/`}>Application Cores</a>
