@@ -1265,35 +1265,98 @@ const appCoreDossiers = [
         The answer lies in how different engineering teams balance the eternal <strong>Application Hardware Triad</strong>:
       </p>
 
-      <div class="triad-cards-grid">
-        <div class="triad-card">
-          <div class="triad-card-head">
-            <span class="triad-pill badge-yellow">AXIS 1</span>
-            <h4>Silicon Area &amp; Energy Budget</h4>
+      <div class="triad-cards-topdown">
+        <!-- Axis 1 -->
+        <div class="triad-step-card axis-1-border">
+          <div class="triad-step-header">
+            <div class="triad-pill-badge badge-yellow">AXIS 1</div>
+            <div class="triad-title-block">
+              <h4 class="triad-title">Silicon Area &amp; Energy Budget</h4>
+              <span class="triad-archetype-tag">Representative: Rocket Chip &bull; ~135 kGE</span>
+            </div>
+            <div class="triad-kpi-chip">
+              <span class="kpi-chip-label">Target Area:</span>
+              <span class="kpi-chip-val">&lt;150 kGE</span>
+            </div>
           </div>
-          <p>
-            When processors are deployed in edge gateways or battery-powered IoT clusters, die area must remain sub-150 kGE (&lt;0.2 mm&sup2; in 22nm). These designs adopt lean 5-stage in-order pipelines (e.g. Rocket Chip), accepting memory stall bubbles to achieve 15+ mW ultra-low power consumption.
-          </p>
+          <div class="triad-step-body">
+            <p>
+              When processors are deployed in edge gateways or battery-powered IoT clusters, die area must remain sub-150 kGE (&lt;0.2 mm&sup2; in 22nm). These designs adopt lean 5-stage in-order pipelines (e.g. Rocket Chip), accepting memory stall bubbles to achieve 15+ mW ultra-low power consumption.
+            </p>
+            <div class="triad-specs-row">
+              <span class="triad-spec-item"><strong>Pipeline:</strong> 5-Stage In-Order Single-Issue</span>
+              <span class="triad-spec-item"><strong>Memory Model:</strong> Blocking L1 (0 MSHR)</span>
+              <span class="triad-spec-item"><strong>Power Target:</strong> &lt;20 mW @ 1 GHz</span>
+            </div>
+          </div>
         </div>
 
-        <div class="triad-card">
-          <div class="triad-card-head">
-            <span class="triad-pill badge-cyan">AXIS 2</span>
-            <h4>Memory Hierarchy &amp; Cache Coherence</h4>
+        <!-- Connector 1 -> 2 -->
+        <div class="triad-connector">
+          <div class="connector-line"></div>
+          <div class="connector-pill">
+            <span>&darr; Trade-off Shift: Add Multicore Coherence &amp; MSHR Concurrency (+30 kGE)</span>
           </div>
-          <p>
-            In multi-core clusters, memory throughput dominates. Teams invest silicon in multi-banked non-blocking L1 caches, 4 to 8 MSHRs, and directory-based MESI coherence controllers (e.g. BlackParrot). This increases area to 165 kGE but prevents bus crossbar saturation.
-          </p>
+          <div class="connector-line"></div>
         </div>
 
-        <div class="triad-card">
-          <div class="triad-card-head">
-            <span class="triad-pill badge-coral">AXIS 3</span>
-            <h4>Instruction-Level Parallelism (ILP)</h4>
+        <!-- Axis 2 -->
+        <div class="triad-step-card axis-2-border">
+          <div class="triad-step-header">
+            <div class="triad-pill-badge badge-cyan">AXIS 2</div>
+            <div class="triad-title-block">
+              <h4 class="triad-title">Memory Hierarchy &amp; Cache Coherence</h4>
+              <span class="triad-archetype-tag">Representative: BlackParrot &bull; ~165 kGE</span>
+            </div>
+            <div class="triad-kpi-chip">
+              <span class="kpi-chip-label">Concurrency:</span>
+              <span class="kpi-chip-val">Non-Blocking L1</span>
+            </div>
           </div>
-          <p>
-            When raw single-thread throughput is paramount (desktop, server, edge AI), in-order processors hit an insurmountable CPI ceiling (~1.25). Out-of-order engines (e.g. SonicBOOM) triple silicon area to 420 kGE to implement 128-entry Reorder Buffers, register renaming, and multi-issue dispatch, driving CPI below 0.85.
-          </p>
+          <div class="triad-step-body">
+            <p>
+              In multi-core clusters, memory throughput dominates. Teams invest silicon in multi-banked non-blocking L1 caches, 4 to 8 MSHRs, and directory-based MESI coherence controllers (e.g. BlackParrot). This increases area to 165 kGE but prevents bus crossbar saturation.
+            </p>
+            <div class="triad-specs-row">
+              <span class="triad-spec-item"><strong>Pipeline:</strong> Modular 3-Partition (FE/BE/ME)</span>
+              <span class="triad-spec-item"><strong>Memory Model:</strong> 2&ndash;8 MSHRs + BedRock MESI NoC</span>
+              <span class="triad-spec-item"><strong>Scale Target:</strong> 1&ndash;64 Coherent Cores</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector 2 -> 3 -->
+        <div class="triad-connector">
+          <div class="connector-line"></div>
+          <div class="connector-pill">
+            <span>&darr; Trade-off Shift: Break In-Order CPI Ceiling with Speculative Out-of-Order (+255 kGE)</span>
+          </div>
+          <div class="connector-line"></div>
+        </div>
+
+        <!-- Axis 3 -->
+        <div class="triad-step-card axis-3-border">
+          <div class="triad-step-header">
+            <div class="triad-pill-badge badge-coral">AXIS 3</div>
+            <div class="triad-title-block">
+              <h4 class="triad-title">Instruction-Level Parallelism (ILP)</h4>
+              <span class="triad-archetype-tag">Representative: SonicBOOM &bull; ~420 kGE</span>
+            </div>
+            <div class="triad-kpi-chip">
+              <span class="kpi-chip-label">Throughput:</span>
+              <span class="kpi-chip-val">Sustained CPI &lt; 0.85</span>
+            </div>
+          </div>
+          <div class="triad-step-body">
+            <p>
+              When raw single-thread throughput is paramount (desktop, server, edge AI), in-order processors hit an insurmountable CPI ceiling (~1.25). Out-of-order engines (e.g. SonicBOOM) triple silicon area to 420 kGE to implement 128-entry Reorder Buffers, register renaming, and multi-issue dispatch, driving CPI below 0.85.
+            </p>
+            <div class="triad-specs-row">
+              <span class="triad-spec-item"><strong>Pipeline:</strong> 3-Wide Superscalar Out-of-Order</span>
+              <span class="triad-spec-item"><strong>Memory Model:</strong> 8-Entry MSHR + Speculative LSQ</span>
+              <span class="triad-spec-item"><strong>Renaming:</strong> 128 PRF + 96&ndash;128 RoB</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -4523,55 +4586,140 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
     background: rgba(34, 191, 215, 0.05);
   }
 
-  /* Triad Cards Grid */
-  .triad-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.25rem;
+  /* Triad Cards Top-Down Progressive Flow */
+  .triad-cards-topdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     margin-top: 1.25rem;
   }
 
-  .triad-card {
+  .triad-step-card {
     background: #ffffff;
     border: 2px solid var(--ink, #151b20);
-    border-radius: 10px;
-    box-shadow: 3px 3px 0 var(--ink, #151b20);
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+    padding: 1.5rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .triad-card p {
-    font-size: 0.9rem;
-    line-height: 1.55;
-    color: var(--ink-light, #151b20);
-    margin: 0;
+  .triad-step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 var(--ink, #151b20);
   }
 
-  .triad-card-head {
+  .triad-step-card.axis-1-border {
+    border-left: 8px solid var(--yellow, #ffc83e) !important;
+  }
+
+  .triad-step-card.axis-2-border {
+    border-left: 8px solid var(--cyan, #22bfd7) !important;
+  }
+
+  .triad-step-card.axis-3-border {
+    border-left: 8px solid var(--coral, #f38469) !important;
+  }
+
+  .triad-step-header {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
     border-bottom: 1.5px dashed var(--line, #eee4c8);
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.75rem;
   }
 
-  .triad-card-head h4 {
-    font-size: 1.05rem;
+  .triad-pill-badge {
+    font-size: 0.8rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--ink, #151b20);
+    box-shadow: 1.5px 1.5px 0 var(--ink, #151b20);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .triad-title-block {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .triad-title {
+    font-size: 1.2rem;
     font-weight: 900;
     color: var(--ink, #151b20);
+    margin: 0 0 0.2rem 0;
+  }
+
+  .triad-archetype-tag {
+    font-size: 0.78rem;
+    font-family: var(--md-code-font, monospace);
+    font-weight: 700;
+    color: var(--ink-light, #242c33);
+  }
+
+  .triad-kpi-chip {
+    background: var(--paper, #fffaf0);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    box-shadow: 1.5px 1.5px 0 var(--ink, #151b20);
+  }
+
+  .kpi-chip-label {
+    color: var(--ink-light, #242c33);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .kpi-chip-val {
+    color: var(--ink, #151b20);
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .triad-step-body p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--ink-light, #242c33);
     margin: 0;
   }
 
-  .triad-pill {
-    font-size: 0.7rem;
-    font-weight: 900;
-    font-family: var(--md-code-font, monospace);
-    padding: 0.15rem 0.45rem;
-    border-radius: 4px;
+  .triad-specs-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--line, #eee4c8);
+    font-size: 0.8rem;
+  }
+
+  .triad-spec-item {
+    background: var(--paper-deep, #eee4c8);
     border: 1px solid var(--ink, #151b20);
-    display: inline-block;
+    border-radius: 4px;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.75rem;
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .triad-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 0;
   }
 
   /* Archetype Preview Deck */
@@ -4634,7 +4782,6 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
       text-align: left;
     }
 
-    .triad-cards-grid,
     .archetype-preview-deck {
       grid-template-columns: 1fr;
     }
