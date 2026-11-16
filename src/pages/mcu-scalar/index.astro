@@ -685,7 +685,9 @@ const bespokeDossiers = [
     <!-- Quick Navigation Jump Bar -->
     <div class="core-jump-bar">
       <span class="jump-label">Jump to Section:</span>
-      <a href="#core-foundations" class="core-jump-pill">&sect; 1. Core Anatomy &amp; Divergence</a>
+      <a href="#core-foundations" class="core-jump-pill">&sect; 1. Core Anatomy</a>
+      <a href="#isa-spectrum" class="core-jump-pill">&sect; 1.2 Modular ISA</a>
+      <a href="#divergence-drivers" class="core-jump-pill">&sect; 1.3 Divergence Drivers</a>
       <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. The Four Archetypes</a>
       <a href="#archetype-1-deepdive" class="core-jump-pill">&sect; 2.1 Archetype 1 Deep-Dive</a>
       <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Shared DNA (Similarities)</a>
@@ -1099,10 +1101,325 @@ const bespokeDossiers = [
       </div>
     </div>
 
-    <!-- 1.2 WHY ARE THERE DIFFERENT VARIANTS? -->
-    <div class="concept-step-card" style="margin-bottom: 2rem;">
+    <!-- 1.2 THE MODULAR RISC-V ISA SPECTRUM & EXTENSION TRADE-OFFS -->
+    <div id="isa-spectrum" class="concept-step-card" style="margin-bottom: 2rem;">
       <div class="step-card-header">
-        <span class="step-tag badge-teal">1.2 THE DIVERGENCE DRIVERS</span>
+        <span class="step-tag badge-purple">1.2 THE MODULAR RISC-V ISA SPECTRUM</span>
+        <h3 class="step-card-title">Why Different Cores Implement Different ISAs: Architectural Trade-offs</h3>
+      </div>
+      <p class="step-card-lead">
+        A common point of confusion when evaluating open-source processors is why different cores implement different instruction set subsets: why does <strong>SERV</strong> implement only <code>RV32I</code> or <code>RV32E</code>, while <strong>Ibex</strong> uses <code>RV32IMC</code>, and <strong>Hazard3</strong> adds <code>RV32IMCB</code>? Unlike legacy monolithic architectures (such as x86 or ARM Cortex-M where hardware capabilities are fixed in stone by the architecture profile), RISC-V is <strong>modular by specification</strong>.
+      </p>
+      <p class="ladder-narrative" style="margin-bottom: 1.5rem;">
+        An embedded CPU architect never implements "all of RISC-V". Instead, every architectural extension is an explicit engineering trade-off: <strong>spending physical silicon area (kGE or FPGA LUTs) to eliminate software execution cycles or shrink system-level SRAM die cost</strong>.
+      </p>
+
+      <!-- Sub-part A: Base Integer ISA: RV32I vs RV32E -->
+      <div class="isa-subtopic-block" style="margin-bottom: 1.75rem;">
+        <h4 class="isa-subtopic-title">
+          <span class="pill-badge badge-ink">BASE ISA</span>
+          The Register File Dilemma: RV32I vs. RV32E
+        </h4>
+        <p class="isa-subtopic-text">
+          Every 32-bit RISC-V core must pick one of two base integer ISAs: standard <strong>RV32I</strong> or embedded <strong>RV32E</strong>. The sole architectural difference is the number of registers:
+        </p>
+
+        <!-- Top-down comparison cards -->
+        <div class="isa-base-grid">
+          <div class="isa-base-card isa-rv32i">
+            <div class="isa-base-card-header">
+              <span class="isa-code-pill">RV32I</span>
+              <span class="isa-card-title-text">Standard Base &bull; 32 General-Purpose Registers (<code>x0 &ndash; x31</code>)</span>
+            </div>
+            <div class="isa-base-card-body">
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Hardware Footprint:</span>
+                <span class="isa-metric-val"><strong>1,024 flip-flop bits</strong> + dual 32-to-1 read multiplexers. Consumes <strong>30% &ndash; 50% of total core area</strong> in compact scalar microcontrollers.</span>
+              </div>
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Software Advantage:</span>
+                <span class="isa-metric-val">Standard <code>ilp32</code> ABI. Rich register file allows compiler to keep function arguments, loop counters, and local variables in fast registers without stack spills.</span>
+              </div>
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Target Niche:</span>
+                <span class="isa-metric-val">General-purpose RTOS (FreeRTOS, Zephyr), compute algorithms, and Linux-capable pipelines (Ibex, SCR1, VeeR EL2).</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="isa-base-card isa-rv32e">
+            <div class="isa-base-card-header">
+              <span class="isa-code-pill">RV32E</span>
+              <span class="isa-card-title-text">Embedded Subset &bull; 16 General-Purpose Registers (<code>x0 &ndash; x15</code>)</span>
+            </div>
+            <div class="isa-base-card-body">
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Hardware Footprint:</span>
+                <span class="isa-metric-val"><strong>512 flip-flop bits</strong> + dual 16-to-1 read multiplexers. <strong>Slashes register file area by 50%</strong> and eliminates routing congestion.</span>
+              </div>
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Software Trade-off:</span>
+                <span class="isa-metric-val">Uses <code>ilp32e</code> ABI. High register pressure forces GCC to spill local variables to the stack in memory, resulting in ~5% &ndash; 10% more memory instructions.</span>
+              </div>
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Target Niche:</span>
+                <span class="isa-metric-val">Ultra-compact silicon envelopes, IoT sensor nodes, and tiny FPGA soft-cores (SERV, DarkRISCV, NEORV32-E).</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-part B: Standard Modular Extensions -->
+      <div class="isa-subtopic-block" style="margin-bottom: 1.75rem;">
+        <h4 class="isa-subtopic-title">
+          <span class="pill-badge badge-teal">MODULAR EXTENSIONS</span>
+          Silicon Cost vs. Software Benefit of Standard Extensions
+        </h4>
+        <p class="isa-subtopic-text">
+          Once the base integer ISA is chosen, hardware architects selectively attach modular extensions. Each extension demands an explicit silicon area budget to unlock specific software speedups:
+        </p>
+
+        <div class="isa-extensions-flow">
+          <!-- Extension M -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-coral">EXTENSION 'M'</span>
+                <span class="isa-ext-name">Integer Hardware Multiplication &amp; Division</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +3.0 &ndash; 6.0 kGE (or 1&ndash;4 DSP Slices)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Adds 8 instructions (<code>MUL</code>, <code>MULH</code>, <code>DIV</code>, <code>REM</code>, etc.). Hardware can range from a slow 34-cycle bit-serial shift-and-add circuit (PicoRV32), to an iterative Radix-4 divider (Ibex, SCR1), up to a fully-pipelined single-cycle multiplier (VeeR EL2).
+              </p>
+              <p>
+                <strong>Software Payoff:</strong> <strong>15&times; to 35&times; acceleration</strong> over GCC software emulation routines (<code>__mulsi3</code>, <code>__divsi3</code>). Essential for digital filtering, motor control, and CoreMark benchmarking.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Omitted in pure housekeeping cores (SERV) to preserve zero-silicon footprint; mandatory for compute &amp; control microcontrollers (Hazard3, SCR1, VeeR).
+              </div>
+            </div>
+          </div>
+
+          <!-- Extension C -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-lime">EXTENSION 'C'</span>
+                <span class="isa-ext-name">Compressed 16-Bit Instructions (Code Density)</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +600 &ndash; 1,200 Gates (Pre-decoder Logic)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Re-encodes the most common 32-bit instructions (loads, stores, branches, integer arithmetic) into 16-bit equivalents. Requires a small 16-to-32-bit instruction expander in the Fetch/Decode stage and unaligned instruction fetch handling.
+              </p>
+              <p>
+                <strong>The Memory Die Area Paradox:</strong> Reduces compiled firmware size by <strong>25% &ndash; 35%</strong>. In a microcontroller SoC, on-chip SRAM/ROM typically consumes <strong>60% to 80% of total silicon die area</strong>. Spending ~800 gates of core logic to shrink SRAM from 64 KB to 48 KB drastically reduces total chip cost!
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Virtually universal in commercial production MCUs (Ibex, NEORV32, Hazard3, SCR1, VeeR EL2).
+              </div>
+            </div>
+          </div>
+
+          <!-- Extension B -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-yellow">EXTENSION 'B'</span>
+                <span class="isa-ext-name">Bit Manipulation (Zba, Zbb, Zbc, Zbs)</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +1.5 &ndash; 3.0 kGE (ALU Additions)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Accelerates bitwise operations: address generation (<code>Zba</code>: <code>sh1add</code>, <code>sh2add</code>), bitfield operations (<code>Zbb</code>: <code>clz</code>, <code>ctz</code>, <code>cpop</code>, <code>rol</code>, <code>ror</code>), carryless multiply (<code>Zbc</code>: CRC acceleration), and single-bit set/clear/extract (<code>Zbs</code>: <code>bset</code>, <code>bclr</code>, <code>binv</code>, <code>bext</code>).
+              </p>
+              <p>
+                <strong>Software Payoff:</strong> Replaces 5 to 15 instructions of masking, shifting, and branching with a single 1-cycle instruction. Slashes cryptographic hashing, peripheral register bit-flipping, and CRC calculation overhead.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Deployed in <strong>Hazard3</strong> (the RISC-V core in the Raspberry Pi RP2350 microcontroller) to deliver exceptional peripheral control and protocol processing.
+              </div>
+            </div>
+          </div>
+
+          <!-- Extension A -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-teal">EXTENSION 'A'</span>
+                <span class="isa-ext-name">Atomic Memory Operations (AMO &amp; LR/SC)</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +1.0 &ndash; 2.5 kGE + Bus Lock Hardware</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Provides Load-Reserved/Store-Conditional (<code>lr.w</code>/<code>sc.w</code>) and Atomic Read-Modify-Write instructions (<code>amoadd</code>, <code>amoswap</code>, etc.). Requires bus-level reservation monitors and exclusive bus transaction support.
+              </p>
+              <p>
+                <strong>Software Payoff:</strong> Enables lock-free multi-threading, inter-process communication, and mutex primitives in multi-core SoCs or SMP operating systems.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Unnecessary overhead in isolated single-core sensor controllers (PicoRV32, SERV); essential in Linux or multi-core environments (VexRiscv GenFull, NEORV32 multi-core).
+              </div>
+            </div>
+          </div>
+
+          <!-- Extension Zfinx / F -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-purple">EXTENSION 'Zfinx'</span>
+                <span class="isa-ext-name">Floating-Point in Integer Registers</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: FPU Logic Only (Zero Extra RF Area)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Standard <code>F</code> extension mandates 32 dedicated 32-bit floating-point registers (<code>f0 &ndash; f31</code>), doubling register file area and RTOS context-switch latency. <code>Zfinx</code> executes all IEEE-754 single-precision operations directly using the existing integer register file (<code>x0 &ndash; x31</code>).
+              </p>
+              <p>
+                <strong>Software Payoff:</strong> Delivers true hardware IEEE-754 float acceleration for sensor fusion, PID motor loops, and audio DSP without paying the silicon penalty of a secondary register file.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Supported by <strong>NEORV32</strong> and <strong>VexRiscv</strong> for embedded DSP applications where area is constrained.
+              </div>
+            </div>
+          </div>
+
+          <!-- Privileged Architecture & PMP -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-ink">PRIVILEGED &amp; PMP</span>
+                <span class="isa-ext-name">Privileged Modes (M/U) &amp; Physical Memory Protection</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +1.5 &ndash; 5.0 kGE (Comparators &amp; CSRs)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Separates Machine Mode (<code>M</code>, baremetal supervisor) from User Mode (<code>U</code>, unprivileged app). Physical Memory Protection (PMP) implements programmable address checking registers (typically 4, 8, or 16 regions) that enforce Read/Write/Execute rules on every memory access.
+              </p>
+              <p>
+                <strong>Hardware Security Payoff:</strong> Prevents buffer overflows or malicious code from accessing private cryptographic keys or critical peripheral control registers. Enables hardware roots-of-trust and isolated enclaves.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Central to <strong>Ibex</strong> in Google's OpenTitan silicon root-of-trust, combined with Dual-Core Lockstep (DCLS) for fault detection.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-part C: Cross-Core Architectural Decision Matrix -->
+      <div class="isa-subtopic-block">
+        <h4 class="isa-subtopic-title">
+          <span class="pill-badge badge-yellow">ARCHITECTURAL DECISION MATRIX</span>
+          Why Evaluated Cores Selected Their Specific ISA Configurations
+        </h4>
+        <p class="isa-subtopic-text">
+          The table below correlates the ISA configuration of each evaluated open-source core with its underlying design rationale and target silicon mission:
+        </p>
+
+        <div class="table-scroll" style="margin-top: 1rem;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="min-width: 140px;">Core Name</th>
+                <th style="min-width: 130px;">Default ISA String</th>
+                <th style="min-width: 130px;">Multiplier (M) HW</th>
+                <th style="min-width: 80px;">'C' Ext</th>
+                <th style="min-width: 140px;">Key Advanced Exts</th>
+                <th style="min-width: 260px;">Architectural Motive &amp; Target Niche</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>SERV</strong></td>
+                <td><code>RV32I</code> / <code>RV32E</code></td>
+                <td>None (SW lib)</td>
+                <td>No</td>
+                <td>Bit-serial M-mode</td>
+                <td><strong>Absolute minimal gate count (~2.1 kGE / 150 LUTs).</strong> Any multiplier or extra register would defeat its role as a tiny FPGA housekeeping &amp; power sequencer.</td>
+              </tr>
+              <tr>
+                <td><strong>DarkRISCV</strong></td>
+                <td><code>RV32E</code> / <code>RV32I</code></td>
+                <td>None / Simple 32-cyc</td>
+                <td>No</td>
+                <td>Async LUT-RAM</td>
+                <td><strong>Minimal 1&ndash;2 stage pipeline for low-cost FPGAs.</strong> Employs RV32E to halve register storage and exploit distributed LUT-RAM for instant single-cycle execution.</td>
+              </tr>
+              <tr>
+                <td><strong>PicoRV32</strong></td>
+                <td><code>RV32IMC</code></td>
+                <td>Shift-and-add (34 cyc)</td>
+                <td>Configurable</td>
+                <td>Formally-verified CSRs</td>
+                <td><strong>Robust SoC bus controller (~9.5 kGE).</strong> Uses multi-cycle state machines to share a single ALU across execution and address calculation without complex pipeline hazards.</td>
+              </tr>
+              <tr>
+                <td><strong>Ibex</strong></td>
+                <td><code>RV32IMC</code> / <code>RV32EMC</code></td>
+                <td>Single-cycle / Fast 3-cyc</td>
+                <td>Yes</td>
+                <td>16-region PMP, U-mode, DCLS</td>
+                <td><strong>Silicon Root-of-Trust (OpenTitan) &amp; IoT Security.</strong> Combines compressed code density with comprehensive memory protection and lockstep safety for secure enclaves.</td>
+              </tr>
+              <tr>
+                <td><strong>NEORV32</strong></td>
+                <td><code>RV32[I/E]MACU_Zfinx_Zbb</code></td>
+                <td>DSP / Iterative</td>
+                <td>Yes</td>
+                <td>Zfinx (Float in Int RF), Zbb, A</td>
+                <td><strong>Turnkey Modular FPGA SoC.</strong> VHDL generics allow engineers to customize every extension from an ultra-small RV32E microcontroller to an audio DSP with hardware floating point.</td>
+              </tr>
+              <tr>
+                <td><strong>Hazard3</strong></td>
+                <td><code>RV32IMCB_Zba_Zbb_Zbc_Zbs</code></td>
+                <td>1&ndash;2 cycle DSP</td>
+                <td>Yes</td>
+                <td>Full B-Extension, PMP</td>
+                <td><strong>High-Efficiency Microcontroller (RP2350).</strong> Optimized for real-time peripheral control, fast branch resolution, and bitfield extraction in consumer microcontrollers.</td>
+              </tr>
+              <tr>
+                <td><strong>SCR1 (Syntacore)</strong></td>
+                <td><code>RV32IMC</code></td>
+                <td>Radix-4 Multiplier</td>
+                <td>Yes</td>
+                <td>Industrial M-mode, Custom</td>
+                <td><strong>Commercial Mass-Production ASIC IP.</strong> Optimized for high timing margin and industrial automotive sensor nodes with predictable deterministic interrupt response.</td>
+              </tr>
+              <tr>
+                <td><strong>VexRiscv (GenFull)</strong></td>
+                <td><code>RV32IMAFDC</code></td>
+                <td>1-cycle Pipelined</td>
+                <td>Yes</td>
+                <td>Atomics (A), FPU (F/D), MMU</td>
+                <td><strong>SpinalHDL Metaprogrammed Architecture.</strong> Capable of scaling from a minimal embedded controller up to a full MMU Linux-capable workstation with hardware FP.</td>
+              </tr>
+              <tr>
+                <td><strong>VeeR EL2</strong></td>
+                <td><code>RV32IMC</code></td>
+                <td>Pipelined 1-cycle</td>
+                <td>Yes</td>
+                <td>Dual-Issue ALU, 512-entry BTB</td>
+                <td><strong>High-Throughput Enterprise Storage (NVMe SSD).</strong> Maximizes instruction throughput per clock cycle to prevent PCIe flash storage bottlenecks.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.3 WHY ARE THERE DIFFERENT VARIANTS? -->
+    <div id="divergence-drivers" class="concept-step-card" style="margin-bottom: 2rem;">
+      <div class="step-card-header">
+        <span class="step-tag badge-teal">1.3 THE DIVERGENCE DRIVERS</span>
         <h3 class="step-card-title">Why Are There So Many Open-Source Cores?</h3>
       </div>
       <p class="step-card-lead">
@@ -1160,10 +1477,10 @@ const bespokeDossiers = [
       </div>
     </div>
 
-    <!-- 1.3 THE CLASSIFICATION LOGIC -->
-    <div class="concept-step-card">
+    <!-- 1.4 THE CLASSIFICATION LOGIC -->
+    <div id="classification-logic" class="concept-step-card">
       <div class="step-card-header">
-        <span class="step-tag badge-yellow">1.3 THE CLASSIFICATION LOGIC</span>
+        <span class="step-tag badge-yellow">1.4 THE CLASSIFICATION LOGIC</span>
         <h3 class="step-card-title">Why Four Archetypes? The Microarchitectural Phase Transitions</h3>
       </div>
       <p class="step-card-lead">
@@ -2882,7 +3199,198 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     }
   }
 
-  /* Section 1.2: Divergence Drivers */
+  /* Section 1.2: Modular ISA Spectrum */
+  .isa-subtopic-block {
+    margin-bottom: 1.5rem;
+  }
+
+  .isa-subtopic-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    margin: 0 0 0.5rem 0;
+    flex-wrap: wrap;
+  }
+
+  .isa-subtopic-text {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-light, #242c33);
+    margin: 0 0 1rem 0;
+  }
+
+  .isa-base-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .isa-base-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .isa-base-card.isa-rv32i {
+    border-left: 6px solid var(--teal, #0d9488);
+  }
+
+  .isa-base-card.isa-rv32e {
+    border-left: 6px solid var(--coral, #f38469);
+  }
+
+  .isa-base-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .isa-code-pill {
+    font-family: var(--md-code-font, monospace);
+    font-weight: 900;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--ink, #151b20);
+  }
+
+  .isa-rv32i .isa-code-pill {
+    background: var(--teal, #0d9488);
+    color: #ffffff;
+  }
+
+  .isa-rv32e .isa-code-pill {
+    background: var(--coral, #f38469);
+    color: #ffffff;
+  }
+
+  .isa-card-title-text {
+    font-weight: 800;
+    font-size: 0.96rem;
+    color: var(--ink, #151b20);
+  }
+
+  .isa-base-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .isa-metric-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-light, #242c33);
+  }
+
+  .isa-metric-label {
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    font-size: 0.8rem;
+    font-family: var(--md-code-font, monospace);
+    text-transform: uppercase;
+  }
+
+  .isa-metric-val {
+    color: var(--ink-light, #242c33);
+  }
+
+  /* Modular Extensions Flow */
+  .isa-extensions-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .isa-ext-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .isa-ext-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-bottom: 1px dashed var(--line, #e2d9c8);
+    padding-bottom: 0.65rem;
+  }
+
+  .isa-ext-badge-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .isa-ext-badge {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+  }
+
+  .isa-ext-name {
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+  }
+
+  .isa-cost-pill {
+    font-size: 0.78rem;
+    font-family: var(--md-code-font, monospace);
+    font-weight: 800;
+    background: var(--paper-deep, #eee4c8);
+    color: var(--ink, #151b20);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--ink, #151b20);
+  }
+
+  .isa-ext-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.91rem;
+    line-height: 1.55;
+    color: var(--ink-light, #242c33);
+  }
+
+  .isa-ext-body p {
+    margin: 0;
+  }
+
+  .isa-adoption-note {
+    background: var(--paper, #fdfbf7);
+    border-left: 3px solid var(--ink, #151b20);
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.86rem;
+    color: var(--ink, #151b20);
+    margin-top: 0.25rem;
+  }
+
+  /* Section 1.3: Divergence Drivers */
   .drivers-grid {
     display: flex;
     flex-direction: column;
@@ -4238,6 +4746,11 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     .live-metrics-strip {
       grid-template-columns: 1fr 1fr;
     }
+
+    .isa-metric-item {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
   }
 
   .assess-item {
@@ -4258,6 +4771,7 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   .badge-teal { background: var(--teal, #0d9488) !important; color: #ffffff !important; border: 1px solid var(--ink, #151b20); }
   .badge-lime { background: var(--lime, #b7df69) !important; color: var(--ink, #151b20) !important; border: 1px solid var(--ink, #151b20); }
   .badge-yellow { background: var(--yellow, #ffc83e) !important; color: var(--ink, #151b20) !important; border: 1px solid var(--ink, #151b20); }
+  .badge-purple { background: var(--purple, #8275e8) !important; color: #ffffff !important; border: 1px solid var(--ink, #151b20); }
   .badge-paper { background: var(--paper-deep, #eee4c8) !important; color: var(--ink, #151b20) !important; border: 1px solid var(--ink, #151b20); }
 
   .text-muted { color: #666; }
