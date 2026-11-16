@@ -685,19 +685,350 @@ const bespokeDossiers = [
     <!-- Quick Navigation Jump Bar -->
     <div class="core-jump-bar">
       <span class="jump-label">Jump to Section:</span>
-      <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 1. Spectrum Archetypes &amp; Section 1.1</a>
-      <a href="#architectural-similarities" class="core-jump-pill">&sect; 2. Shared DNA (Similarities)</a>
-      <a href="#microarchitectural-differences" class="core-jump-pill">&sect; 3. Differences &amp; Taxonomy</a>
-      <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 4. Empirical Leaderboard</a>
-      <a href="#configuration-scaling" class="core-jump-pill">&sect; 5. Configuration Sensitivity</a>
-      <a href="#core-dossiers" class="core-jump-pill">&sect; 6. Native Core Dossiers</a>
+      <a href="#core-foundations" class="core-jump-pill">&sect; 1. Core Anatomy &amp; Divergence</a>
+      <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. The Four Archetypes</a>
+      <a href="#archetype-1-deepdive" class="core-jump-pill">&sect; 2.1 Archetype 1 Deep-Dive</a>
+      <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Shared DNA (Similarities)</a>
+      <a href="#microarchitectural-differences" class="core-jump-pill">&sect; 4. Differences &amp; Taxonomy</a>
+      <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Empirical Leaderboard</a>
+      <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Configuration Sensitivity</a>
+      <a href="#core-dossiers" class="core-jump-pill">&sect; 7. Native Core Dossiers</a>
     </div>
   </div>
 
-  <!-- SECTION 1: MICROARCHITECTURAL SPECTRUM & DEEP TAXONOMY -->
+  <!-- ============================================================ -->
+  <!-- SECTION 1: ARCHITECTURAL FOUNDATIONS & CORE ANATOMY -->
+  <!-- ============================================================ -->
+  <section id="core-foundations" class="content-block">
+    <div class="block-header-wrap">
+      <div class="badge badge-primary">&sect; 1. ARCHITECTURAL FOUNDATIONS: CORE ANATOMY &amp; DESIGN DIVERGENCE</div>
+      <h2 class="block-title">The Anatomy of a Scalar Core &amp; Why Open-Source Designs Diverge</h2>
+      <p class="block-lead">
+        Before comparing specific microcontroller cores or classifying them into archetypes, we must establish two fundamental truths: <strong>what a scalar processor core is physically made of</strong>, and <strong>why different engineering teams chose radically divergent paths</strong> to implement the exact same RISC-V specification.
+      </p>
+    </div>
+
+    <!-- 1.1 UNIVERSAL BUILDING BLOCKS -->
+    <div class="concept-step-card" style="margin-bottom: 2rem;">
+      <div class="step-card-header">
+        <span class="step-tag" style="background: var(--ink); color: #fff;">1.1 THE SIX UNIVERSAL BUILDING BLOCKS</span>
+        <h3 class="step-card-title">Anatomy of an Embedded Scalar RISC-V Core</h3>
+      </div>
+      <p class="step-card-lead">
+        At the architectural level, every 32-bit scalar RISC-V processor (whether consuming 2 kGE or 50 kGE) executes instructions using an interconnected loop of six primary hardware primitives. The fundamental differences between cores lie not in <em>what</em> blocks exist, but in <em>how wide</em> they are, <em>how many clock cycles</em> they take, and <em>how many are executed concurrently</em>:
+      </p>
+
+      <div class="primitives-grid">
+        <div class="primitive-card">
+          <div class="prim-num">1</div>
+          <div class="prim-content">
+            <h4>Instruction Fetch &amp; Program Counter (IF &amp; PC)</h4>
+            <p>Maintains the 32-bit memory address of the current instruction word. On every instruction cycle, the PC increments by 4 bytes (or 2 bytes when compressed <code>RVC</code> instructions are enabled). On a branch, jump, or exception, the PC multiplexer redirects execution to the target address.</p>
+          </div>
+        </div>
+
+        <div class="primitive-card">
+          <div class="prim-num">2</div>
+          <div class="prim-content">
+            <h4>Instruction Decoder &amp; Immediate Generator (ID)</h4>
+            <p>Slices the 32-bit instruction word into source register indices (<code>rs1</code>, <code>rs2</code>), the destination register index (<code>rd</code>), and the opcode. It signs-extends immediate offsets (I, S, B, U, J formats) and generates internal control signals for the ALU, memory bus, and writeback logic.</p>
+          </div>
+        </div>
+
+        <div class="primitive-card">
+          <div class="prim-num">3</div>
+          <div class="prim-content">
+            <h4>General-Purpose Register File (RF)</h4>
+            <p>Houses thirty-two 32-bit registers (<code>x0&ndash;x31</code>) under the <code>RV32I</code> standard, or sixteen registers (<code>x0&ndash;x15</code>) under <code>RV32E</code>. Register <code>x0</code> is permanently hardwired to constant 0. Crucially, single-cycle execution requires <strong>two simultaneous read ports</strong> (to fetch <code>rs1</code> and <code>rs2</code>) and <strong>one write port</strong> (for <code>rd</code>)—consuming up to 40% of the entire silicon area in compact cores.</p>
+          </div>
+        </div>
+
+        <div class="primitive-card">
+          <div class="prim-num">4</div>
+          <div class="prim-content">
+            <h4>Arithmetic Logic Unit &amp; Comparator (ALU)</h4>
+            <p>The core computational engine. Performs addition/subtraction, bitwise operations (<code>AND</code>, <code>OR</code>, <code>XOR</code>), shifts (<code>SLL</code>, <code>SRL</code>, <code>SRA</code>), and signed/unsigned magnitude comparisons (<code>SLT</code>, <code>SLTU</code>) for conditional branch resolution.</p>
+          </div>
+        </div>
+
+        <div class="primitive-card">
+          <div class="prim-num">5</div>
+          <div class="prim-content">
+            <h4>Load/Store Unit &amp; Interconnect Bus (LSU)</h4>
+            <p>Interfaces with physical SRAM or memory-mapped peripherals. Translates word, half-word, and byte loads (<code>lw</code>, <code>lh</code>, <code>lb</code>) and stores (<code>sw</code>, <code>sh</code>, <code>sb</code>) into bus handshakes (AHB, AXI, Wishbone, or OBI), managing byte masks and memory alignment.</p>
+          </div>
+        </div>
+
+        <div class="primitive-card">
+          <div class="prim-num">6</div>
+          <div class="prim-content">
+            <h4>Privileged Control &amp; CSR Controller</h4>
+            <p>Manages hardware interrupts (timer ticks, UART/sensor interrupts), synchronous exceptions (illegal instruction, ecall), and Machine-mode status registers (<code>mstatus</code>, <code>mtvec</code>, <code>mepc</code>, <code>mcause</code>) ensuring deterministic interrupt latency.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Figure 1.0: Universal Baseline Scalar RISC-V Microarchitecture -->
+      <div class="schematic-container" style="margin-top: 1.75rem;">
+        <div class="schematic-header">
+          <span class="schematic-tag">FIGURE 1.0 ARCHITECTURAL FOUNDATION</span>
+          <h4 class="schematic-title">Universal Baseline Scalar RISC-V Microarchitecture</h4>
+        </div>
+        <div class="schematic-svg-wrap">
+          <svg viewBox="0 0 760 410" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="cadGridBaseline" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+              </pattern>
+              <marker id="arrowBase" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+              </marker>
+              <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+              </marker>
+              <marker id="arrowRedBase" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#ff6b4a"/>
+              </marker>
+            </defs>
+
+            <!-- Frame -->
+            <rect width="758" height="408" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+            <rect width="756" height="374" x="2" y="2" rx="7" fill="url(#cadGridBaseline)"/>
+
+            <!-- Top Banner -->
+            <rect x="2" y="2" width="756" height="26" fill="var(--ink, #151b20)" rx="6"/>
+            <circle cx="16" cy="15" r="4" fill="#22c55e"/>
+            <text x="28" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • UNIVERSAL BASELINE SCALAR RISC-V DATAPATH TOPOLOGY</text>
+
+            <!-- 1. PC Logic -->
+            <rect x="30" y="70" width="105" height="70" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+            <rect x="30" y="70" width="105" height="20" rx="5" fill="#f4eee1"/>
+            <text x="38" y="84" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">1. PC REG [31:0]</text>
+            <text x="38" y="108" font-size="11" font-weight="700" fill="#151b20">Program Counter</text>
+            <text x="38" y="125" font-size="9" fill="#666">Next PC = PC+4 / Target</text>
+
+            <!-- PC to IMEM bus -->
+            <line x1="135" y1="105" x2="165" y2="105" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
+            <text x="138" y="98" font-size="8" font-weight="800" font-family="monospace">Addr</text>
+
+            <!-- 2. Instruction Memory -->
+            <rect x="165" y="70" width="115" height="70" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+            <rect x="165" y="70" width="115" height="20" rx="5" fill="#f4eee1"/>
+            <text x="173" y="84" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">2. IMEM / I-BUS</text>
+            <text x="173" y="108" font-size="11" font-weight="700" fill="#151b20">Instruction Cache</text>
+            <text x="173" y="125" font-size="9" fill="#666">SRAM / Flash 32b</text>
+
+            <!-- IMEM to Decoder -->
+            <line x1="280" y1="105" x2="310" y2="105" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
+            <text x="282" y="98" font-size="8" font-weight="800" font-family="monospace">Inst[31:0]</text>
+
+            <!-- 3. Decoder & ImmGen -->
+            <rect x="310" y="60" width="140" height="95" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+            <rect x="310" y="60" width="140" height="20" rx="5" fill="#f4eee1"/>
+            <text x="318" y="74" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">3. DECODER &amp; FSM</text>
+            <text x="318" y="98" font-size="11" font-weight="700" fill="#151b20">Control &amp; ImmGen</text>
+            <text x="318" y="115" font-size="9" fill="#666">Opcode / Funct3 / Funct7</text>
+            <text x="318" y="130" font-size="9" fill="#666">Immediate Unpack (32b)</text>
+
+            <!-- Decoder down to RegFile -->
+            <path d="M 350 155 L 350 200 L 265 200 L 265 220" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
+            <text x="272" y="195" font-size="8" font-weight="800" font-family="monospace">rs1/rs2/rd index</text>
+
+            <!-- 4. Register File -->
+            <rect x="180" y="220" width="170" height="95" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+            <rect x="180" y="220" width="170" height="20" rx="5" fill="#f4eee1"/>
+            <text x="188" y="234" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">4. REG FILE (x0-x31)</text>
+            <text x="188" y="258" font-size="11" font-weight="700" fill="#151b20">Dual-Read / 1-Write</text>
+            <text x="188" y="275" font-size="9" fill="#666">Read: rs1_data, rs2_data</text>
+            <text x="188" y="292" font-size="9" fill="#666">Write: rd_data (at clk)</text>
+
+            <!-- RegFile to ALU -->
+            <line x1="350" y1="245" x2="420" y2="245" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
+            <text x="355" y="238" font-size="8" font-weight="800" font-family="monospace">Operand A (rs1)</text>
+
+            <!-- ImmGen to ALU Mux -->
+            <path d="M 430 155 L 430 270 L 410 270" fill="none" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <text x="435" y="180" font-size="8" font-weight="800" fill="#0d9488" font-family="monospace">Imm[31:0]</text>
+
+            <!-- Operand B Mux -->
+            <polygon points="405,260 420,270 405,280" fill="#ffc83e" stroke="#151b20" stroke-width="1.5"/>
+            <line x1="350" y1="275" x2="405" y2="275" stroke="#151b20" stroke-width="1.5"/>
+            <line x1="420" y1="270" x2="445" y2="270" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
+            <text x="355" y="288" font-size="8" font-weight="800" font-family="monospace">rs2 / imm</text>
+
+            <!-- 5. Arithmetic Logic Unit (ALU) -->
+            <polygon points="445,230 495,245 495,275 445,290 445,268 455,260 445,252" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+            <text x="455" y="263" font-size="11" font-weight="900" fill="#151b20" font-family="monospace">ALU</text>
+
+            <!-- ALU result line -->
+            <line x1="495" y1="260" x2="570" y2="260" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
+            <text x="502" y="253" font-size="8" font-weight="800" font-family="monospace">ALU_Result[31:0]</text>
+
+            <!-- Branch target loopback to PC -->
+            <path d="M 470 230 L 470 40 L 80 40 L 80 70" fill="none" stroke="#ff6b4a" stroke-width="2" marker-end="url(#arrowRedBase)"/>
+            <text x="230" y="35" font-size="9" font-weight="900" fill="#ff6b4a" font-family="monospace">Branch Taken Redirect: PC &larr; Target Address</text>
+
+            <!-- 6. Data Memory / LSU -->
+            <rect x="570" y="220" width="150" height="85" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+            <rect x="570" y="220" width="150" height="20" rx="5" fill="#f4eee1"/>
+            <text x="578" y="234" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">5. DMEM / LSU BUS</text>
+            <text x="578" y="258" font-size="11" font-weight="700" fill="#151b20">Load / Store Unit</text>
+            <text x="578" y="275" font-size="9" fill="#666">Addr = ALU_Result</text>
+            <text x="578" y="292" font-size="9" fill="#666">Data In = rs2_data</text>
+
+            <!-- Writeback Mux -->
+            <rect x="500" y="340" width="110" height="40" rx="5" fill="#ffc83e" stroke="#151b20" stroke-width="1.5"/>
+            <text x="508" y="355" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">6. WRITEBACK MUX</text>
+            <text x="508" y="370" font-size="9" fill="#151b20">ALU / Mem / PC+4</text>
+
+            <!-- Lines to WB Mux -->
+            <path d="M 530 260 L 530 340" fill="none" stroke="#151b20" stroke-width="1.5"/>
+            <path d="M 645 305 L 645 360 L 610 360" fill="none" stroke="#151b20" stroke-width="1.5" marker-end="url(#arrowBase)"/>
+
+            <!-- Writeback to RegFile Loopback -->
+            <path d="M 500 360 L 140 360 L 140 280 L 180 280" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowBlue)"/>
+            <text x="250" y="355" font-size="9" font-weight="900" fill="#0d9488" font-family="monospace">Writeback Data (rd_data) &rarr; Register File [rd]</text>
+
+            <!-- Bottom Flow Legend Strip -->
+            <rect x="15" y="385" width="730" height="20" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+            <text x="25" y="399" font-size="8.5" font-weight="700" fill="#334155" font-family="monospace">DATAPATH FLOW: [1] PC Fetch &rarr; [2] Decode Opcode &rarr; [3] Read Registers rs1/rs2 &rarr; [4] ALU Exec &rarr; [5] Memory Load/Store &rarr; [6] Register Writeback</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.2 WHY ARE THERE DIFFERENT VARIANTS? -->
+    <div class="concept-step-card" style="margin-bottom: 2rem;">
+      <div class="step-card-header">
+        <span class="step-tag" style="background: var(--teal); color: #fff;">1.2 THE DIVERGENCE DRIVERS</span>
+        <h3 class="step-card-title">Why Are There So Many Open-Source Cores?</h3>
+      </div>
+      <p class="step-card-lead">
+        If every core executes the exact same unprivileged RISC-V RV32I instruction set, why didn't the open-source hardware community unite around a single "perfect" CPU? Why do SERV, PicoRV32, DarkRISCV, Ibex, NEORV32, Hazard3, SCR1, VexRiscv, and VeeR EL2 all exist simultaneously?
+      </p>
+      <p class="ladder-narrative" style="margin-bottom: 1.25rem;">
+        The answer lies in the nature of RISC-V: <strong>the ISA is an open specification contract, not an implementation</strong>. The specification dictates <em>what</em> an <code>add</code> or <code>lw</code> instruction does to architectural state, but deliberately leaves every single microarchitectural decision—datapath width, pipeline stages, memory bus topology, and physical silicon gates—completely open. Different engineering teams face radically different physical constraints:
+      </p>
+
+      <div class="drivers-grid">
+        <!-- Driver 1 -->
+        <div class="driver-card driver-substrate">
+          <div class="driver-top-badge">DRIVER 1 &bull; SILICON SUBSTRATE</div>
+          <h4>FPGA Architecture vs. ASIC Standard Cells</h4>
+          <p>
+            An <strong>FPGA</strong> is built from pre-fabricated Look-Up Tables (LUTs) and synchronous Block RAMs (BRAMs). On an FPGA, wide parallel adders and dual-ported SRAMs consume precious logic fabric. Cores like <strong>DarkRISCV</strong> were engineered specifically to exploit asynchronous distributed LUT-RAM for single-cycle execution, while <strong>SERV</strong> strips the CPU down to bit-serial shift registers to fit into fewer than 150 LUTs, allowing hundreds of cores on a single board.
+          </p>
+          <p>
+            Conversely, an <strong>ASIC</strong> is synthesized from standard cell logic gates (AND, NAND, flip-flops) with dedicated static timing analysis (STA). An ASIC designer cannot use asynchronous memory tricks; they need clean synchronous clock boundaries and balanced pipeline stages. Cores like <strong>Ibex</strong> and <strong>VeeR EL2</strong> are tailored for ASIC timing closure and high foundry yield.
+          </p>
+        </div>
+
+        <!-- Driver 2 -->
+        <div class="driver-card driver-language">
+          <div class="driver-top-badge">DRIVER 2 &bull; HDL &amp; VERIFICATION CULTURE</div>
+          <h4>Toolchain Portability vs. Enterprise Verification</h4>
+          <p>
+            <strong>Verilog-2001 (SERV, PicoRV32, DarkRISCV):</strong> Deliberately written in minimalist, classic Verilog so that any engineer can compile, simulate, and synthesize them using 100% open-source tools (Icarus Verilog, Verilator, Yosys) with zero commercial tool licenses.
+          </p>
+          <p>
+            <strong>SystemVerilog (Ibex, SCR1, VeeR EL2):</strong> Deployed in high-stakes commercial silicon tapeouts. They mandate enterprise verification infrastructure: Universal Verification Methodology (UVM), SystemVerilog Assertions (SVA), and constrained-random instruction generators (Google RISCV-DV).
+          </p>
+          <p>
+            <strong>VHDL-2008 (NEORV32):</strong> Strictly typed, portable, and heavily favored in European aerospace, defense, and safety-critical FPGA systems where formal code certification is required.
+          </p>
+          <p>
+            <strong>SpinalHDL / Scala (VexRiscv):</strong> Uses software metaprogramming so that pipeline stages, branch predictors, caches, and MMUs are hardware plugins generated dynamically at compile time.
+          </p>
+        </div>
+
+        <!-- Driver 3 -->
+        <div class="driver-card driver-mission">
+          <div class="driver-top-badge">DRIVER 3 &bull; TARGET MISSION PROFILE</div>
+          <h4>Housekeeping Glue vs. Silicon Root-of-Trust vs. Storage IOPS</h4>
+          <p>
+            <strong>Housekeeping &amp; Glue Logic:</strong> An FPGA designer managing board power sequencing or reading a temperature sensor once per millisecond needs an ultra-low gate count. Throughput is completely irrelevant. SERV (~2.1 kGE) is the ideal choice.
+          </p>
+          <p>
+            <strong>Silicon Root-of-Trust (RoT):</strong> A cryptographic security processor (e.g. Google / lowRISC OpenTitan) must resist physical side-channel attacks and fault injection. It needs Dual-Core Lockstep (DCLS) redundancy and constant-time execution paths (Ibex).
+          </p>
+          <p>
+            <strong>High-Performance Storage:</strong> An enterprise NVMe SSD controller handling gigabytes-per-second of PCIe flash data requires hundreds of thousands of IOPS. A single-issue core would bottleneck the flash arrays; it requires a dual-issue superscalar pipeline (Western Digital VeeR EL2).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.3 THE CLASSIFICATION LOGIC -->
+    <div class="concept-step-card">
+      <div class="step-card-header">
+        <span class="step-tag" style="background: var(--yellow); color: var(--ink);">1.3 THE CLASSIFICATION LOGIC</span>
+        <h3 class="step-card-title">Why Four Archetypes? The Microarchitectural Phase Transitions</h3>
+      </div>
+      <p class="step-card-lead">
+        The four archetypes presented on this page are not arbitrary marketing labels. They represent <strong>four distinct physical phase transitions</strong> governed by the universal CPU performance equation:
+      </p>
+
+      <div class="formula-callout-box">
+        <div class="formula-line">
+          <code>Execution Time = (Instructions / Program) &times; CPI &times; (1 / <em>F</em><sub>max</sub>)</code>
+        </div>
+        <div class="formula-explanation">
+          <p>To reduce execution time, an architect can only pull two hardware levers: <strong>decrease CPI</strong> (execute instructions in fewer clock cycles) or <strong>increase <em>F</em><sub>max</sub></strong> (shorten the critical path so the clock ticks faster). However, pulling either lever requires spending <strong>silicon area (kGE)</strong>.</p>
+        </div>
+      </div>
+
+      <div class="archetypes-rationale-table-wrap" style="margin-top: 1.25rem;">
+        <table class="ds-table" style="background: #ffffff; border: 1.5px solid var(--ink); border-radius: 8px;">
+          <thead>
+            <tr style="background: var(--paper-deep); border-bottom: 2px solid var(--ink);">
+              <th style="padding: 0.6rem 0.75rem;">Archetype</th>
+              <th style="padding: 0.6rem 0.75rem;">Governing Physical Philosophy</th>
+              <th style="padding: 0.6rem 0.75rem;">Typical Area</th>
+              <th style="padding: 0.6rem 0.75rem;">CPI Target</th>
+              <th style="padding: 0.6rem 0.75rem;">Key Microarchitectural Technique</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Archetype 1</strong><br /><small class="text-muted">Minimalist State Machines</small></td>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Area is the hard ceiling.</strong> Trade time for silicon by reusing a tiny datapath over multiple clock cycles.</td>
+              <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-coral">1.0 &ndash; 9.5 kGE</span></td>
+              <td style="padding: 0.6rem 0.75rem;"><code>1.6 &ndash; 32.0</code></td>
+              <td style="padding: 0.6rem 0.75rem;">Bit-serial 1-bit ALU (SERV) or single shared 32-bit adder multiplexed over FSM states (PicoRV32).</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Archetype 2</strong><br /><small class="text-muted">Balanced 2-Stage Harvard</small></td>
+              <td style="padding: 0.6rem 0.75rem;"><strong>1-cycle ALU execution without forwarding logic.</strong> Overlap instruction fetch with combined decode/execute.</td>
+              <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-teal">18 &ndash; 32 kGE</span></td>
+              <td style="padding: 0.6rem 0.75rem;"><code>1.18 &ndash; 1.69</code></td>
+              <td style="padding: 0.6rem 0.75rem;">Separate instruction and data buses; branches take strictly 1 penalty cycle (Ibex, NEORV32).</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Archetype 3</strong><br /><small class="text-muted">Deep Pipelined Harvard</small></td>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Break the 400 MHz critical-path barrier.</strong> Insert pipeline registers between decode, execute, and memory.</td>
+              <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-lime">28 &ndash; 42 kGE</span></td>
+              <td style="padding: 0.6rem 0.75rem;"><code>1.15 &ndash; 1.30</code></td>
+              <td style="padding: 0.6rem 0.75rem;">3 to 5 decoupled stages with full operand forwarding networks to prevent data hazard stalls (Hazard3, SCR1 MAX).</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Archetype 4</strong><br /><small class="text-muted">Superscalar Dual-Issue</small></td>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Break the single-issue CPI floor of 1.0.</strong> Fetch and execute multiple instructions simultaneously in parallel pipelines.</td>
+              <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-yellow">~48.5 kGE</span></td>
+              <td style="padding: 0.6rem 0.75rem;"><code>~1.03</code></td>
+              <td style="padding: 0.6rem 0.75rem;">Dual instruction dispatch, 4 parallel execution units, 512-entry BTB, and dynamic Gshare branch prediction (VeeR EL2).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: THE FOUR ARCHETYPES & THE PROGRESSIVE LADDER -->
+  <!-- ============================================================ -->
   <section id="microarchitectural-spectrum" class="content-block">
     <div class="block-header-wrap">
-      <div class="badge badge-primary">&sect; 1. ARCHITECTURAL SPECTRUM &amp; THE FOUR ARCHETYPES</div>
+      <div class="badge badge-primary">&sect; 2. THE FOUR ARCHETYPES &amp; PROGRESSIVE LADDER</div>
       <h2 class="block-title">The Scalar Processor Design Space: A Top-Down Progression</h2>
       <p class="block-lead">
         In deeply embedded computing, the central engineering challenge is balancing the eternal hardware triad: <strong>Silicon Area</strong> (<em>A</em>, in kGE or LUTs), <strong>Operating Frequency</strong> (<em>F</em><sub>max</sub>), and <strong>Execution Efficiency</strong> (CPI, CoreMark/MHz). The evaluated open-source scalar implementations span four distinct microarchitectural philosophies, organized below as a top-down progression from the smallest possible silicon footprint up to high-throughput dual-issue execution.
@@ -883,12 +1214,12 @@ const bespokeDossiers = [
     </div>
 
     <!-- ============================================================ -->
-    <!-- SUBSECTION 1.1: ARCHETYPE 1 DEEP-DIVE -->
+    <!-- SUBSECTION 2.1: ARCHETYPE 1 DEEP-DIVE -->
     <!-- ============================================================ -->
-    <div class="concept-stream" style="margin-top: 2.5rem;">
+    <div id="archetype-1-deepdive" class="concept-stream" style="margin-top: 2.5rem;">
       <div class="concept-step-card archetype-coral-border">
         <div class="step-card-header">
-          <span class="step-tag" style="background: var(--coral); color: #fff;">1.1 ARCHITECTURAL DEEP-DIVE</span>
+          <span class="step-tag" style="background: var(--coral); color: #fff;">2.1 ARCHITECTURAL DEEP-DIVE</span>
           <h3 class="step-card-title">Archetype 1: Ultra-Compact Minimalist Datapaths (SERV, PicoRV32 &amp; DarkRISCV)</h3>
         </div>
         <p class="step-card-lead">
@@ -1323,10 +1654,10 @@ const bespokeDossiers = [
     </div>
   </section>
 
-  <!-- SECTION 2: ARCHITECTURAL SIMILARITIES -->
+  <!-- SECTION 3: ARCHITECTURAL SIMILARITIES -->
   <section id="architectural-similarities" class="content-block">
     <div class="block-header-wrap">
-      <div class="badge badge-accent">&sect; 2. COMMON ARCHITECTURAL DNA</div>
+      <div class="badge badge-accent">&sect; 3. COMMON ARCHITECTURAL DNA</div>
       <h2 class="block-title">Cross-Core Similarities: The Shared RISC-V Foundation</h2>
       <p class="block-lead">
         Despite massive differences in pipeline depths and gate counts, all evaluated scalar cores share an identical theoretical and practical foundation. This architectural convergence is what guarantees software portability across open silicon.
@@ -1400,10 +1731,10 @@ const bespokeDossiers = [
     </div>
   </section>
 
-  <!-- SECTION 3: MICROARCHITECTURAL DIFFERENCES -->
+  <!-- SECTION 4: MICROARCHITECTURAL DIFFERENCES -->
   <section id="microarchitectural-differences" class="content-block">
     <div class="block-header-wrap">
-      <div class="badge badge-coral">&sect; 3. MICROARCHITECTURAL DIVERSITY</div>
+      <div class="badge badge-coral">&sect; 4. MICROARCHITECTURAL DIVERSITY</div>
       <h2 class="block-title">Cross-Core Differences: Engineering Trade-Offs</h2>
       <p class="block-lead">
         While ISA compliance guarantees software compatibility, the physical hardware implementations differ wildly across pipeline depths, multiplier hardware, branch prediction, and memory interconnects.
@@ -1649,11 +1980,11 @@ const bespokeDossiers = [
     </div>
   </section>
 
-  <!-- SECTION 4: MASTER EMPIRICAL BENCHMARK LEADERBOARD -->
+  <!-- SECTION 5: MASTER EMPIRICAL BENCHMARK LEADERBOARD -->
   <section id="benchmark-leaderboard" class="content-block">
     <div class="block-header-flex">
       <div>
-        <div class="badge badge-primary">&sect; 4. EMPIRICAL BENCHMARK DATA</div>
+        <div class="badge badge-primary">&sect; 5. EMPIRICAL BENCHMARK DATA</div>
         <h2 class="block-title">Level 1 Benchmark Leaderboard: CoreMark &amp; Dhrystone</h2>
         <p class="block-desc">
           Empirical measurements generated from cycle-accurate Verilator 5.022, CXXRTL, Icarus, and GHDL simulation profiles. Zero mock data. Compiled with <code>-O3 -funroll-loops</code>.
@@ -1743,10 +2074,10 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     </div>
   </section>
 
-  <!-- SECTION 5: CONFIGURATION SENSITIVITY DEEP-DIVE -->
+  <!-- SECTION 6: CONFIGURATION SENSITIVITY DEEP-DIVE -->
   <section id="configuration-scaling" class="content-block">
     <div class="block-header-wrap">
-      <div class="badge badge-accent">&sect; 5. CONFIGURATION SENSITIVITY</div>
+      <div class="badge badge-accent">&sect; 6. CONFIGURATION SENSITIVITY</div>
       <h2 class="block-title">Multi-Configuration Scaling: Architectural Tuning Impact</h2>
       <p class="block-lead">
         A processor core is not a static point in design space. Parametric switches—such as swapping a 32-cycle serial multiplier for single-cycle DSP blocks or adding dynamic branch prediction—dramatically transform performance.
@@ -1797,10 +2128,10 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     </div>
   </section>
 
-  <!-- SECTION 6: NATIVE DETAILED ARCHITECTURAL DOSSIERS (NO MD LINKS) -->
+  <!-- SECTION 7: NATIVE DETAILED ARCHITECTURAL DOSSIERS (NO MD LINKS) -->
   <section id="core-dossiers" class="dossiers-container">
     <div class="section-title-wrap">
-      <div class="badge badge-primary">&sect; 6. NATIVE ARCHITECTURAL SPECIFICATIONS</div>
+      <div class="badge badge-primary">&sect; 7. NATIVE ARCHITECTURAL SPECIFICATIONS</div>
       <h2 class="section-heading">Detailed Native Core Dossiers</h2>
       <p class="section-sub">
         Comprehensive native microarchitectural breakdowns, memory bus specifications, silicon and FPGA deployment evidence, verified empirical benchmark metrics, and engineering trade-offs.
@@ -2206,6 +2537,139 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     color: var(--ink, #151b20);
     border-left: 4px solid var(--yellow, #ffc83e);
     padding-left: 1rem;
+  }
+
+  /* Section 1: Primitives & Foundations */
+  .primitives-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .primitive-card {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.15rem;
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+  }
+
+  .prim-num {
+    background: var(--ink, #151b20);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .prim-content h4 {
+    font-size: 0.98rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0 0 0.35rem 0;
+  }
+
+  .prim-content p {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--ink-light, #333);
+    margin: 0;
+  }
+
+  .drivers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .driver-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.25rem;
+  }
+
+  .driver-top-badge {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  .driver-substrate .driver-top-badge { background: var(--coral, #ff6b4a); color: #fff; }
+  .driver-language .driver-top-badge { background: var(--teal, #0d9488); color: #fff; }
+  .driver-mission .driver-top-badge { background: var(--yellow, #ffc83e); color: var(--ink); }
+
+  .driver-card h4 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .driver-card p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ink-light, #333);
+    margin: 0 0 0.6rem 0;
+  }
+
+  .driver-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .formula-callout-box {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-left: 6px solid var(--yellow, #ffc83e);
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    margin-bottom: 1.25rem;
+  }
+
+  .formula-line {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    margin-bottom: 0.5rem;
+  }
+
+  .formula-line code {
+    background: var(--paper-deep, #f4eee1);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--ink, #151b20);
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .formula-explanation p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink-light, #333);
+    margin: 0;
+  }
+
+  .archetypes-rationale-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Top-Down Progressive Architectural Ladder */
@@ -3387,6 +3851,30 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
 
     .concept-step-card {
       padding: 1.15rem;
+    }
+
+    .primitives-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .primitive-card {
+      padding: 0.95rem;
+    }
+
+    .driver-card {
+      padding: 1rem;
+    }
+
+    .driver-card h4 {
+      font-size: 1.05rem;
+    }
+
+    .formula-callout-box {
+      padding: 1rem;
+    }
+
+    .formula-line {
+      font-size: 0.92rem;
     }
 
     .sub-topic-card {
