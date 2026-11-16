@@ -3162,7 +3162,7 @@ const bespokeDossiers = [
               <h4 class="schematic-title">Ibex: 2-Stage Decoupled Harvard Datapath &amp; OBI Bus Architecture</h4>
             </div>
             <div class="schematic-svg-wrap">
-                            <svg viewBox="0 0 960 550" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+              <svg viewBox="0 0 960 550" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <pattern id="cadGridIbex" width="20" height="20" patternUnits="userSpaceOnUse">
                     <circle cx="2" cy="2" r="1" fill="#151b20" opacity="0.12"/>
@@ -3179,14 +3179,14 @@ const bespokeDossiers = [
                   <marker id="arrowRedIbex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
                   </marker>
-                  <marker id="arrowCrimsonIbex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
-                  </marker>
                   <marker id="arrowPurpleIbex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
                   </marker>
                   <marker id="arrowAmberIbex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706"/>
+                  </marker>
+                  <marker id="arrowGreenIbex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a"/>
                   </marker>
                 </defs>
 
@@ -3197,231 +3197,326 @@ const bespokeDossiers = [
                 <!-- Status Header Banner -->
                 <rect x="2" y="2" width="956" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
                 <circle cx="16" cy="15" r="4.5" fill="#0d9488"/>
-                <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • IBEX 2-STAGE DECOUPLED HARVARD TOPOLOGY (OBI BUS INTERCONNECT)</text>
+                <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • IBEX 2-STAGE DECOUPLED HARVARD TOPOLOGY (OBI BUS &amp; OPENTITAN SECURITY ARCHITECTURE)</text>
 
                 <!-- ============================================================ -->
-                <!-- TOP DEDICATED CONTROL REDIRECTION HIGHWAYS -->
+                <!-- PIPELINE STAGE ZONE HEADERS (y=30 to y=48) -->
                 <!-- ============================================================ -->
-                <!-- Highway 1 (y=44): Branch Target Redirection (Crimson) -->
-                <path d="M 610 108 L 610 44 L 14 44 L 14 200 L 38 200" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRedIbex)"/>
-                <polygon points="500,41 494,44 500,47" fill="#dc2626"/>
-                <polygon points="340,41 334,44 340,47" fill="#dc2626"/>
-                <polygon points="180,41 174,44 180,47" fill="#dc2626"/>
-                <!-- Callout Banner -->
-                <rect x="150" y="35" width="370" height="18" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
-                <circle cx="160" cy="44" r="3" fill="#dc2626"/>
-                <text x="170" y="47.5" font-size="7" font-weight="900" fill="#dc2626" font-family="monospace">BRANCH REDIRECT: [FROM ID/EX: ALU &amp; BRANCH EVAL] → PC MUX [1] • Strictly 1-Cycle Penalty</text>
+                <rect x="20" y="30" width="260" height="18" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-dasharray="2,2"/>
+                <text x="32" y="42.5" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace">STAGE 1: FETCH, PREFETCH &amp; SECURITY (IF)</text>
 
-                <!-- Highway 2 (y=70): Trap Vector Redirection (Purple) -->
-                <path d="M 730 108 L 730 70 L 22 70 L 22 225 L 38 225" fill="none" stroke="#7c3aed" stroke-width="1.8" marker-end="url(#arrowPurpleIbex)"/>
-                <polygon points="480,67 474,70 480,73" fill="#7c3aed"/>
-                <polygon points="280,67 274,70 280,73" fill="#7c3aed"/>
-                <!-- Callout Banner -->
-                <rect x="130" y="61" width="350" height="18" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
-                <circle cx="140" cy="70" r="3" fill="#7c3aed"/>
-                <text x="150" y="73.5" font-size="6.8" font-weight="900" fill="#7c3aed" font-family="monospace">TRAP REDIRECT: [FROM PRIVILEGED CSR UNIT: mtvec] → PC MUX [2] • Fast Direct/Vectored Mode</text>
+                <rect x="285" y="30" width="28" height="18" rx="3" fill="#eee4c8" stroke="#242c33"/>
+                <text x="289" y="42.5" font-size="7.5" font-weight="900" fill="#242c33" font-family="monospace">REG</text>
+
+                <rect x="320" y="30" width="622" height="18" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-dasharray="2,2"/>
+                <text x="380" y="42.5" font-size="8.5" font-weight="900" fill="#0d9488" font-family="monospace">STAGE 2: COMBINED DECODE, EXECUTE, CSR &amp; LOAD-STORE UNIT (ID/EX)</text>
 
                 <!-- ============================================================ -->
-                <!-- PIPELINE STAGE ZONE HEADERS (y=96) -->
+                <!-- TOP DEDICATED CONTROL REDIRECTION HIGHWAYS (y=50 to y=118) -->
                 <!-- ============================================================ -->
-                <rect x="25" y="96" width="255" height="18" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-dasharray="2,2"/>
-                <text x="40" y="108.5" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace">STAGE 1: INSTRUCTION FETCH &amp; PREFETCH (IF)</text>
+                <!-- Highway 1 (y=58): Branch Target Redirection (Crimson) -->
+                <path d="M 610 107 L 610 58 L 475 58" fill="none" stroke="#dc2626" stroke-width="2.2"/>
+                <polygon points="530,55 524,58 530,61" fill="#dc2626"/>
+                <!-- Inline Transceiver Banner (x=135 to 475) -->
+                <rect x="135" y="50" width="340" height="16" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
+                <circle cx="145" cy="58" r="3" fill="#dc2626"/>
+                <text x="155" y="61.5" font-size="6.8" font-weight="900" fill="#dc2626" font-family="monospace">BRANCH REDIRECT: [FROM ID/EX: ALU] → PC MUX [1] • 1-Cycle Penalty</text>
+                <!-- Westbound segment into Next PC Mux [1] -->
+                <path d="M 135 58 L 14 58 L 14 198 L 38 198" fill="none" stroke="#dc2626" stroke-width="2.2" marker-end="url(#arrowRedIbex)"/>
+                <polygon points="70,55 64,58 70,61" fill="#dc2626"/>
 
-                <rect x="285" y="96" width="28" height="18" rx="3" fill="#eee4c8" stroke="#242c33"/>
-                <text x="290" y="108.5" font-size="7.5" font-weight="900" fill="#242c33" font-family="monospace">REG</text>
+                <!-- Highway 2 (y=78): Trap Vector Redirection (Purple) -->
+                <path d="M 725 107 L 725 78 L 435 78" fill="none" stroke="#7c3aed" stroke-width="2"/>
+                <!-- Inline Transceiver Banner (x=110 to 435) -->
+                <rect x="110" y="70" width="325" height="16" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
+                <circle cx="120" cy="78" r="3" fill="#7c3aed"/>
+                <text x="130" y="81.5" font-size="6.8" font-weight="900" fill="#7c3aed" font-family="monospace">TRAP REDIRECT: [FROM CSR: mtvec] → PC MUX [2] • Vectored Trap</text>
+                <!-- Westbound segment into Next PC Mux [2] -->
+                <path d="M 110 78 L 24 78 L 24 220 L 38 220" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowPurpleIbex)"/>
+                <polygon points="60,75 54,78 60,81" fill="#7c3aed"/>
 
-                <rect x="320" y="96" width="615" height="18" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-dasharray="2,2"/>
-                <text x="390" y="108.5" font-size="8.5" font-weight="900" fill="#0d9488" font-family="monospace">STAGE 2: COMBINED INSTRUCTION DECODE, EXECUTE &amp; LSU (ID/EX)</text>
+                <!-- Highway 3 (y=98): Next Sequential PC (+4/+2) Sequencing Bus (Cyan) -->
+                <path d="M 108 168 L 108 98 L 95 98" fill="none" stroke="#0284c7" stroke-width="1.6"/>
+                <rect x="45" y="90" width="50" height="16" rx="3" fill="#e0f2fe" stroke="#0284c7" stroke-width="1"/>
+                <text x="70" y="101" font-size="6.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">+4 / +2</text>
+                <path d="M 45 98 L 30 98 L 30 176 L 38 176" fill="none" stroke="#0284c7" stroke-width="1.6" marker-end="url(#arrowBlueIbex)"/>
 
                 <!-- ============================================================ -->
-                <!-- STAGE 1: INSTRUCTION FETCH (IF) -->
+                <!-- STAGE 1: INSTRUCTION FETCH, PREFETCH & SECURITY (IF) -->
                 <!-- ============================================================ -->
                 <!-- Next PC Multiplexer -->
                 <polygon points="38,155 66,165 66,240 38,250" fill="#eee4c8" stroke="#151b20" stroke-width="2"/>
                 <text x="52" y="198" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">PC<tspan x="52" dy="9">MUX</tspan></text>
                 <!-- Input Pins -->
-                <circle cx="38" cy="175" r="2.5" fill="#0284c7"/>
+                <circle cx="38" cy="176" r="2.5" fill="#0284c7"/>
                 <text x="42" y="174" font-size="6.5" font-weight="900" fill="#0284c7" font-family="monospace">[0]</text>
-                <circle cx="38" cy="200" r="2.5" fill="#dc2626"/>
-                <text x="42" y="196" font-size="6.5" font-weight="900" fill="#dc2626" font-family="monospace">[1]</text>
-                <circle cx="38" cy="225" r="2.5" fill="#7c3aed"/>
-                <text x="42" y="222" font-size="6.5" font-weight="900" fill="#7c3aed" font-family="monospace">[2]</text>
+                <circle cx="38" cy="198" r="2.5" fill="#dc2626"/>
+                <text x="42" y="195" font-size="6.5" font-weight="900" fill="#dc2626" font-family="monospace">[1]</text>
+                <circle cx="38" cy="220" r="2.5" fill="#7c3aed"/>
+                <text x="42" y="217" font-size="6.5" font-weight="900" fill="#7c3aed" font-family="monospace">[2]</text>
 
                 <!-- PC Mux to PC Register -->
-                <line x1="66" y1="200" x2="80" y2="200" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+                <line x1="66" y1="198" x2="80" y2="198" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
 
                 <!-- Program Counter Register -->
-                <rect x="80" y="170" width="58" height="60" rx="5" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
-                <rect x="80" y="170" width="58" height="16" rx="4" fill="#eee4c8"/>
-                <text x="84" y="182" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">PC REG</text>
-                <text x="84" y="202" font-size="8.5" font-weight="800" fill="#151b20">PC[31:0]</text>
-                <text x="84" y="218" font-size="6.8" fill="#242c33">Clocked</text>
+                <rect x="80" y="168" width="58" height="60" rx="5" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+                <rect x="80" y="168" width="58" height="16" rx="4" fill="#eee4c8"/>
+                <text x="84" y="180" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">PC REG</text>
+                <text x="84" y="200" font-size="8.5" font-weight="800" fill="#151b20">PC[31:0]</text>
+                <text x="84" y="216" font-size="6.8" fill="#242c33">Clocked</text>
 
-                <!-- PC Incrementer (+4 / +2) Loop -->
-                <path d="M 108 170 L 108 130 L 52 130 L 52 160" fill="none" stroke="#0284c7" stroke-width="1.6" marker-end="url(#arrowBlueIbex)"/>
-                <rect x="66" y="122" width="36" height="14" rx="2" fill="#e0f2fe" stroke="#0284c7" stroke-width="0.8"/>
-                <text x="70" y="132" font-size="6.5" font-weight="900" fill="#0284c7" font-family="monospace">+4 / +2</text>
+                <!-- PC out into Prefetch Buffer & Bus -->
+                <line x1="138" y1="198" x2="148" y2="198" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
 
                 <!-- 2-Entry Decoupled Prefetch Buffer -->
-                <rect x="148" y="135" width="115" height="100" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
-                <rect x="148" y="135" width="115" height="16" rx="5" fill="#eee4c8"/>
-                <text x="154" y="147" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">PREFETCH BUFFER</text>
+                <rect x="148" y="122" width="118" height="114" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+                <rect x="148" y="122" width="118" height="16" rx="5" fill="#eee4c8"/>
+                <text x="154" y="134" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">PREFETCH BUFFER</text>
 
-                <rect x="154" y="157" width="103" height="20" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="158" y="167" font-size="6.5" font-weight="900" fill="#0d9488" font-family="monospace">FIFO Entry 0: Active</text>
-                <text x="158" y="174" font-size="5.8" fill="#242c33">Drives ID/EX Stage</text>
+                <rect x="154" y="144" width="106" height="20" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
+                <text x="158" y="154" font-size="6.5" font-weight="900" fill="#0d9488" font-family="monospace">FIFO Entry 0: Active</text>
+                <text x="158" y="161" font-size="5.8" fill="#242c33">Drives ID/EX Stage</text>
 
-                <rect x="154" y="181" width="103" height="20" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="158" y="191" font-size="6.5" font-weight="900" fill="#d97706" font-family="monospace">FIFO Entry 1: Prefetch</text>
-                <text x="158" y="198" font-size="5.8" fill="#242c33">RVC 16-bit Decompress</text>
+                <rect x="154" y="168" width="106" height="20" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
+                <text x="158" y="178" font-size="6.5" font-weight="900" fill="#d97706" font-family="monospace">FIFO Entry 1: Prefetch</text>
+                <text x="158" y="185" font-size="5.8" fill="#242c33">RVC 16-bit Decompress</text>
 
-                <text x="154" y="217" font-size="6.2" fill="#242c33">• Decouples memory latency</text>
-                <text x="154" y="228" font-size="6.2" fill="#242c33">• Non-blocking instruction stream</text>
-
-                <line x1="138" y1="200" x2="148" y2="200" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+                <text x="154" y="202" font-size="6.2" fill="#242c33">• Decouples memory latency</text>
+                <text x="154" y="213" font-size="6.2" fill="#242c33">• Cross-word unaligned aligner</text>
+                <text x="154" y="224" font-size="6.2" font-weight="800" fill="#0d9488">• Non-blocking fetch stream</text>
 
                 <!-- Open Bus Interface (OBI) Instruction Master Interface -->
-                <rect x="25" y="252" width="245" height="118" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
-                <rect x="25" y="252" width="245" height="18" rx="5" fill="#ccfbf1"/>
-                <text x="32" y="265" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">OBI INSTRUCTION MASTER (IBUS)</text>
+                <rect x="20" y="244" width="246" height="110" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+                <rect x="20" y="244" width="246" height="18" rx="5" fill="#ccfbf1"/>
+                <text x="28" y="257" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">OBI INSTRUCTION MASTER (IBUS)</text>
 
                 <!-- External Off-Chip IBUS Pin -->
-                <rect x="4" y="294" width="21" height="18" rx="2" fill="#0d9488" stroke="#042f2e" stroke-width="1"/>
-                <text x="14.5" y="306" font-size="6.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">OBI_I◄</text>
-                <line x1="25" y1="303" x2="4" y2="303" stroke="#0d9488" stroke-width="2"/>
+                <rect x="4" y="284" width="20" height="18" rx="2" fill="#0d9488" stroke="#042f2e" stroke-width="1"/>
+                <text x="14" y="296" font-size="6.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">IBUS</text>
 
-                <text x="32" y="282" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">▲ OUT: instr_req, instr_addr [31:0]</text>
-                <text x="32" y="295" font-size="7" fill="#242c33">Instruction Fetch Request &amp; Word Address</text>
+                <text x="28" y="274" font-size="7.2" font-weight="900" fill="#0d9488" font-family="monospace">▲ OUT: instr_req, instr_addr [31:0]</text>
+                <text x="28" y="286" font-size="6.8" fill="#242c33">Instruction Fetch Request &amp; Word Address</text>
 
-                <text x="32" y="309" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace">▼ IN:  instr_gnt, instr_rvalid, instr_rdata [31:0]</text>
-                <text x="32" y="321" font-size="7" fill="#242c33">Protocol Handshake &amp; 32b Fetched Instruction</text>
+                <text x="28" y="299" font-size="7.2" font-weight="900" fill="#d97706" font-family="monospace">▼ IN:  instr_gnt, instr_rvalid, instr_rdata [31:0]</text>
+                <text x="28" y="311" font-size="6.8" fill="#242c33">Protocol Handshake &amp; 32b Fetched Instruction</text>
 
-                <rect x="30" y="328" width="235" height="34" rx="3" fill="#fffaf0" stroke="#0d9488" stroke-width="1"/>
-                <text x="34" y="340" font-size="6.8" font-weight="800" fill="#151b20">Pipelined OBI Handshake: req/gnt followed by rvalid</text>
-                <text x="34" y="352" font-size="6.5" fill="#242c33">Dedicated bus eliminates Harvard code/data contention</text>
-
-                <path d="M 205 235 L 205 252" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowIbex)"/>
+                <rect x="26" y="320" width="234" height="28" rx="3" fill="#fffaf0" stroke="#0d9488" stroke-width="1"/>
+                <text x="30" y="331" font-size="6.5" font-weight="800" fill="#151b20">Pipelined OBI Handshake: req/gnt followed by rvalid</text>
+                <text x="30" y="341" font-size="6.2" fill="#242c33">Dedicated bus eliminates Harvard code/data contention</text>
 
                 <!-- ============================================================ -->
-                <!-- PIPELINE LATCH 1: IF / ID REGISTER -->
+                <!-- OPENTITAN SECURITY HARDENING & ROOT-OF-TRUST SUBSYSTEM (y=362 to y=438) -->
+                <!-- Fills lower-left canvas space with authentic Ibex security hardware -->
                 <!-- ============================================================ -->
-                <rect x="285" y="122" width="28" height="248" rx="4" fill="#eee4c8" stroke="#242c33" stroke-width="1.8"/>
-                <line x1="289" y1="246" x2="299" y2="251" stroke="#242c33" stroke-width="1.5"/>
-                <line x1="299" y1="251" x2="309" y2="246" stroke="#242c33" stroke-width="1.5"/>
+                <rect x="20" y="362" width="246" height="76" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8"/>
+                <rect x="20" y="362" width="246" height="17" rx="5" fill="#dcfce7"/>
+                <circle cx="28" cy="370.5" r="3" fill="#16a34a"/>
+                <text x="36" y="374" font-size="7.5" font-weight="900" fill="#166534" font-family="monospace">OPENTITAN SECURITY &amp; HARDENING</text>
+
+                <text x="26" y="391" font-size="6.8" font-weight="800" fill="#151b20">• Dummy Instruction Insertion (DII):</text>
+                <text x="26" y="401" font-size="6.2" fill="#242c33">Randomized execution jitter defeats CPA side-channel</text>
+
+                <text x="26" y="414" font-size="6.8" font-weight="800" fill="#166534">• Dual-Core Lockstep (DCLS) Comparator:</text>
+                <text x="26" y="424" font-size="6.2" fill="#242c33">Cycle-by-cycle output check traps laser/glitch faults</text>
+                <text x="26" y="433" font-size="6" font-weight="700" fill="#15803d">SRAM Scrambling Key Register • Ephemeral Nonces</text>
+
+                <!-- Security FSM interconnect up to Prefetch (along clear margin at x=272) -->
+                <path d="M 266 400 L 274 400 L 274 200 L 266 200" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrowGreenIbex)"/>
+                <text x="256" y="407" font-size="5.8" font-weight="800" fill="#16a34a" font-family="monospace">DII</text>
+
+                <!-- ============================================================ -->
+                <!-- PIPELINE LATCH 1: IF / ID REGISTER (x=285 to 313) -->
+                <!-- ============================================================ -->
+                <rect x="285" y="122" width="28" height="316" rx="4" fill="#eee4c8" stroke="#242c33" stroke-width="1.8"/>
+                <line x1="289" y1="270" x2="299" y2="275" stroke="#242c33" stroke-width="1.5"/>
+                <line x1="299" y1="275" x2="309" y2="270" stroke="#242c33" stroke-width="1.5"/>
                 <text x="295" y="160" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" transform="rotate(-90 295 160)">IF/ID PIPELINE REG</text>
-                <text x="295" y="330" font-size="6.8" font-weight="800" fill="#242c33" font-family="monospace" transform="rotate(-90 295 330)">instr[31:0] • pc[31:0]</text>
+                <text x="292" y="330" font-size="6.5" font-weight="800" fill="#242c33" font-family="monospace">IF/ID</text>
 
-                <line x1="263" y1="180" x2="320" y2="180" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+                <!-- Prefetch into Pipeline Reg -->
+                <line x1="266" y1="179" x2="285" y2="179" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
 
                 <!-- ============================================================ -->
-                <!-- STAGE 2: COMBINED DECODE, EXECUTE & LSU (ID/EX) -->
+                <!-- STAGE 2: COMBINED DECODE, OPERAND STEERING & ALU (ID/EX) -->
                 <!-- ============================================================ -->
-                <!-- Instruction Decoder & Controller -->
-                <rect x="325" y="122" width="140" height="75" rx="6" fill="#fef3c7" stroke="#151b20" stroke-width="2"/>
-                <rect x="325" y="122" width="140" height="16" rx="5" fill="#fef3c7"/>
-                <text x="330" y="134" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">DECODER &amp; CONTROLLER</text>
-                <text x="330" y="149" font-size="7.2" font-weight="800" fill="#151b20">RISC-V Control Logic</text>
-                <text x="330" y="160" font-size="6.5" fill="#242c33">• RV32I/E, M, C, B Decoders</text>
-                <text x="330" y="171" font-size="6.5" fill="#242c33">• Immediate Generation (imm[31:0])</text>
-                <text x="330" y="183" font-size="6.5" font-weight="800" fill="#0d9488">• Controller FSM &amp; Stall Engine</text>
+                <!-- Instruction Decoder & Controller FSM (x=325 to 455, y=122 to 206) -->
+                <rect x="325" y="122" width="130" height="84" rx="6" fill="#fef3c7" stroke="#151b20" stroke-width="2"/>
+                <rect x="325" y="122" width="130" height="16" rx="5" fill="#fef3c7"/>
+                <text x="330" y="134" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">DECODER &amp; FSM</text>
+                <text x="330" y="149" font-size="7" font-weight="800" fill="#151b20">RISC-V Control Logic</text>
+                <text x="330" y="160" font-size="6.2" fill="#242c33">• RV32I/E, M, C, B Decoders</text>
+                <text x="330" y="171" font-size="6.2" fill="#242c33">• ImmGen (imm[31:0])</text>
+                <text x="330" y="182" font-size="6.2" fill="#242c33">• Addr rs1, rs2, rd</text>
+                <text x="330" y="194" font-size="6.2" font-weight="800" fill="#0d9488">• Controller Stall FSM</text>
 
-                <!-- 32x32 Register File -->
-                <rect x="325" y="206" width="245" height="164" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
-                <rect x="325" y="206" width="245" height="18" rx="5" fill="#eee4c8"/>
-                <text x="333" y="219" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">REGISTER FILE (32x32 GPRs • RV32I/E)</text>
+                <!-- Pipeline Reg into Decoder -->
+                <line x1="313" y1="164" x2="325" y2="164" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
 
-                <text x="333" y="235" font-size="7.5" font-weight="800" fill="#151b20">Dual Read Ports (2R):</text>
-                <text x="333" y="247" font-size="7" fill="#242c33">• Port A: <code>rs1_data [31:0]</code> → ALU Operand A</text>
-                <text x="333" y="259" font-size="7" fill="#242c33">• Port B: <code>rs2_data [31:0]</code> → ALU Operand B / Store</text>
+                <!-- Decoder rs1/rs2/rd address lines down to Register File -->
+                <path d="M 370 206 L 370 216" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowIbex)"/>
+                <text x="375" y="213" font-size="5.8" font-weight="900" fill="#151b20" font-family="monospace">rs1/rs2/rd</text>
 
-                <text x="333" y="274" font-size="7.5" font-weight="800" fill="#0d9488">Single Writeback Port (1W):</text>
-                <text x="333" y="285" font-size="7" fill="#242c33">• Port W: <code>rd_data [31:0]</code> • Commits from EX RES MUX</text>
+                <!-- 32x32 General Purpose Register File (x=325 to 455, y=216 to 395) -->
+                <rect x="325" y="216" width="130" height="179" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+                <rect x="325" y="216" width="130" height="18" rx="5" fill="#eee4c8"/>
+                <text x="330" y="229" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">REGISTER FILE (32x32)</text>
 
-                <rect x="330" y="292" width="235" height="38" rx="3" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
-                <text x="335" y="304" font-size="6.8" font-weight="900" fill="#0d9488">LOCKSTEP REGISTER SHADOWING:</text>
-                <text x="335" y="315" font-size="6.5" fill="#151b20">Optional redundant register file in Ibex Secure mode.</text>
-                <text x="335" y="325" font-size="6.5" font-weight="800" fill="#0d9488">Dual-rail lockstep comparison detects fault injection.</text>
+                <text x="330" y="246" font-size="7" font-weight="800" fill="#151b20">Dual Read Ports (2R):</text>
+                <text x="330" y="258" font-size="6.5" fill="#242c33">Port A: <code>rs1_data</code></text>
+                <text x="330" y="270" font-size="6.5" fill="#242c33">Port B: <code>rs2_data</code></text>
 
-                <text x="333" y="345" font-size="6.8" fill="#242c33">Single-cycle register read-after-write bypass forwarding</text>
-                <text x="333" y="358" font-size="6.8" fill="#242c33">Eliminates RAW dependency stalls across 2-stage pipeline</text>
+                <text x="330" y="286" font-size="7" font-weight="800" fill="#0d9488">Sync Write Port (1W):</text>
+                <text x="330" y="298" font-size="6.5" fill="#242c33">Port W: <code>rd_data</code></text>
 
+                <rect x="328" y="306" width="124" height="42" rx="3" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
+                <text x="332" y="318" font-size="6.5" font-weight="900" fill="#0d9488">LOCKSTEP SHADOW:</text>
+                <text x="332" y="328" font-size="5.8" fill="#151b20">Redundant regfile in secure mode</text>
+                <text x="332" y="338" font-size="5.8" font-weight="800" fill="#0d9488">Dual-rail comparison traps faults</text>
+
+                <text x="330" y="360" font-size="6.2" fill="#242c33">1-cycle RAW bypass</text>
+                <text x="330" y="372" font-size="6.2" fill="#242c33">Zero bubble back-to-back</text>
+                <text x="330" y="384" font-size="6.2" font-weight="800" fill="#0d9488">Near-unity CPI (1.18)</text>
+
+                <!-- ============================================================ -->
+                <!-- DUAL OPERAND STEERING MULTIPLEXERS (x=475 to 550, y=122 to 206) -->
+                <!-- Completely fills the former empty space between Decoder and ALU! -->
+                <!-- ============================================================ -->
+                <!-- Operand A Selection MUX (OP A MUX) -->
+                <polygon points="475,126 498,132 498,168 475,174" fill="#fef3c7" stroke="#151b20" stroke-width="1.8"/>
+                <text x="479" y="148" font-size="5.8" font-weight="900" fill="#151b20">OP A<tspan x="479" dy="7">MUX</tspan></text>
+
+                <!-- Operand B Selection MUX (OP B MUX) -->
+                <polygon points="525,126 548,132 548,168 525,174" fill="#fef3c7" stroke="#151b20" stroke-width="1.8"/>
+                <text x="529" y="148" font-size="5.8" font-weight="900" fill="#151b20">OP B<tspan x="529" dy="7">MUX</tspan></text>
+
+                <!-- Wiring into Operand MUXes -->
+                <!-- rs1_data wire from RegFile Port A to OP A MUX Input [0] -->
+                <path d="M 455 258 L 468 258 L 468 135 L 475 135" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowIbex)"/>
+                <text x="472" y="248" font-size="6" font-weight="800" fill="#151b20" font-family="monospace">rs1</text>
+
+                <!-- pc wire from Pipeline Reg into OP A MUX Input [1] -->
+                <path d="M 313 130 L 320 130 L 320 114 L 470 114 L 470 149 L 475 149" fill="none" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrowBlueIbex)"/>
+
+                <!-- imm wire from Decoder into OP B MUX Input [1] -->
+                <path d="M 455 171 L 512 171 L 512 149 L 525 149" fill="none" stroke="#d97706" stroke-width="1.6" marker-end="url(#arrowAmberIbex)"/>
+                <text x="470" y="180" font-size="6" font-weight="900" fill="#d97706" font-family="monospace">imm[31:0]</text>
+
+                <!-- rs2_data wire from RegFile Port B to OP B MUX Input [0] and down to LSU -->
+                <path d="M 455 270 L 518 270 L 518 135 L 525 135" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowIbex)"/>
+                <circle cx="518" cy="270" r="2.5" fill="#151b20"/>
+                <text x="470" y="266" font-size="6" font-weight="800" fill="#151b20" font-family="monospace">rs2_data</text>
+
+                <!-- rs2_data tap to LSU Store Data (mem_wdata) at y=320 -->
+                <path d="M 518 270 L 518 320 L 580 320" fill="none" stroke="#d97706" stroke-width="1.6" marker-end="url(#arrowAmberIbex)"/>
+
+                <!-- OP A MUX output (operand_a) into Primary ALU Input A -->
+                <path d="M 498 150 L 565 150 L 565 140 L 585 140" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+                <text x="566" y="136" font-size="6" font-weight="900" font-family="monospace">op_a</text>
+
+                <!-- OP B MUX output (operand_b) into Primary ALU Input B -->
+                <path d="M 548 150 L 572 150 L 572 170 L 585 170" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+                <text x="573" y="166" font-size="6" font-weight="900" font-family="monospace">op_b</text>
+
+                <!-- alu_op decoded control from Decoder to ALU -->
+                <path d="M 455 138 L 465 138 L 465 116 L 575 116 L 575 128 L 585 128" fill="none" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrowPurpleIbex)"/>
+                <text x="478" y="113" font-size="6" font-weight="900" fill="#7c3aed" font-family="monospace">alu_op[3:0]</text>
+
+                <!-- ============================================================ -->
+                <!-- EXECUTION CO-PROCESSORS (ALU, MULDIV, CSRs) -->
+                <!-- ============================================================ -->
                 <!-- Primary ALU & Branch Evaluator -->
                 <polygon points="585,124 645,144 645,204 585,224 585,189 595,174 585,159" fill="#ccfbf1" stroke="#0d9488" stroke-width="2.5"/>
                 <text x="602" y="167" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">PRIMARY</text>
                 <text x="612" y="181" font-size="11" font-weight="900" fill="#0d9488" font-family="monospace">ALU</text>
-                <text x="599" y="193" font-size="6.5" font-weight="700" fill="#0d9488">Add/Sub/Logic</text>
+                <text x="602" y="196" font-size="6.2" font-weight="700" fill="#0d9488">Add/Sub/Logic</text>
 
-                <!-- Illuminated Chip BR_TGT on ALU -->
-                <rect x="580" y="106" width="60" height="14" rx="3" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
-                <text x="610" y="116.5" font-size="6.8" font-weight="900" fill="#dc2626" font-family="monospace" text-anchor="middle">▲ BR_TGT</text>
+                <!-- Illuminated Chip BR_TGT on ALU (x=580 to 640, y=107 to 122) -->
+                <rect x="580" y="107" width="60" height="15" rx="3" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
+                <text x="610" y="117.5" font-size="6.8" font-weight="900" fill="#dc2626" font-family="monospace" text-anchor="middle">▲ BR_TGT</text>
+                <circle cx="610" cy="107" r="2.5" fill="#dc2626"/>
 
                 <!-- Mult / Div Co-Processor -->
-                <rect x="655" y="122" width="115" height="48" rx="5" fill="#fef3c7" stroke="#151b20" stroke-width="1.8"/>
+                <rect x="655" y="122" width="118" height="48" rx="5" fill="#fef3c7" stroke="#151b20" stroke-width="1.8"/>
                 <text x="660" y="134" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">MULT / DIV UNIT</text>
                 <text x="660" y="146" font-size="6.8" font-weight="800" fill="#151b20">RV32M Math Engine</text>
                 <text x="660" y="157" font-size="6.2" fill="#242c33">3-cycle fast mul • Non-restoring div</text>
 
                 <!-- Privileged CSR Unit -->
-                <rect x="655" y="176" width="115" height="68" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
-                <rect x="655" y="176" width="115" height="15" rx="4" fill="#ede9fe"/>
+                <rect x="655" y="176" width="118" height="68" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+                <rect x="655" y="176" width="118" height="15" rx="4" fill="#ede9fe"/>
                 <text x="660" y="187" font-size="7.2" font-weight="900" fill="#7c3aed" font-family="monospace">PRIVILEGED CSRs</text>
                 <text x="660" y="201" font-size="6.8" font-weight="800" fill="#151b20">mtvec, mepc, mcause</text>
                 <text x="660" y="212" font-size="6.2" fill="#242c33">Interrupt &amp; Trap Controller</text>
                 <text x="660" y="223" font-size="6.2" fill="#242c33">Physical Memory Protection (PMP)</text>
 
-                <!-- Illuminated Chip MTVEC on CSR Unit -->
-                <rect x="670" y="106" width="60" height="14" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
-                <text x="700" y="116.5" font-size="6.8" font-weight="900" fill="#7c3aed" font-family="monospace" text-anchor="middle">▲ MTVEC</text>
+                <!-- Illuminated Chip MTVEC on CSR Unit (x=695 to 755, y=107 to 122) -->
+                <rect x="695" y="107" width="60" height="15" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
+                <text x="725" y="117.5" font-size="6.8" font-weight="900" fill="#7c3aed" font-family="monospace" text-anchor="middle">▲ MTVEC</text>
+                <circle cx="725" cy="107" r="2.5" fill="#7c3aed"/>
 
                 <!-- Result Multiplexer (EX RES MUX) -->
-                <rect x="785" y="122" width="135" height="138" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.8"/>
-                <text x="795" y="137" font-size="7.2" font-weight="900" font-family="monospace">EX RES MUX</text>
-                <text x="792" y="153" font-size="6.5" fill="#0d9488">[0] Primary ALU Result</text>
-                <text x="792" y="166" font-size="6.5" fill="#d97706">[1] Mult/Div Result</text>
-                <text x="792" y="179" font-size="6.5" fill="#7c3aed">[2] CSR Read Data</text>
-                <text x="792" y="192" font-size="6.5" fill="#0284c7">[3] OBI Load Data (DBUS)</text>
-                <text x="792" y="209" font-size="6.5" font-weight="800" fill="#0d9488">→ Drives Forwarding</text>
-                <text x="792" y="222" font-size="6.5" font-weight="800" fill="#0d9488">&amp; Synchronous Commit</text>
+                <rect x="790" y="122" width="135" height="138" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.8"/>
+                <text x="800" y="137" font-size="7.5" font-weight="900" font-family="monospace">EX RES MUX</text>
+                <text x="796" y="153" font-size="6.5" fill="#0d9488">[0] Primary ALU Result</text>
+                <text x="796" y="166" font-size="6.5" fill="#d97706">[1] Mult/Div Result</text>
+                <text x="796" y="179" font-size="6.5" fill="#7c3aed">[2] CSR Read Data</text>
+                <text x="796" y="192" font-size="6.5" fill="#0284c7">[3] OBI Load Data (DBUS)</text>
+                <text x="796" y="209" font-size="6.5" font-weight="800" fill="#0d9488">→ Drives Forwarding</text>
+                <text x="796" y="222" font-size="6.5" font-weight="800" fill="#0d9488">&amp; Synchronous Commit</text>
 
                 <!-- Connections to EX RES MUX -->
-                <line x1="645" y1="174" x2="785" y2="153" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowIbex)"/>
-                <line x1="770" y1="146" x2="785" y2="166" stroke="#d97706" stroke-width="1.6" marker-end="url(#arrowIbex)"/>
-                <line x1="770" y1="210" x2="785" y2="179" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#arrowIbex)"/>
+                <line x1="645" y1="174" x2="790" y2="153" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowIbex)"/>
+                <line x1="773" y1="146" x2="790" y2="166" stroke="#d97706" stroke-width="1.6" marker-end="url(#arrowIbex)"/>
+                <line x1="773" y1="210" x2="790" y2="179" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#arrowIbex)"/>
 
-                <!-- OBI Data Master Interface (DBUS) with Off-Chip Pin -->
-                <rect x="580" y="278" width="345" height="92" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
-                <rect x="580" y="278" width="345" height="18" rx="5" fill="#ccfbf1"/>
-                <text x="588" y="291" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">OBI DATA MASTER &amp; LOAD-STORE UNIT (DBUS)</text>
+                <!-- OBI Data Master Interface (DBUS) (x=580 to 830, y=256 to 395) -->
+                <!-- Width scaled to 250 so x=830..940 remains an open vertical channel for Commit Highway! -->
+                <rect x="580" y="256" width="245" height="139" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+                <rect x="580" y="256" width="245" height="18" rx="5" fill="#ccfbf1"/>
+                <text x="586" y="269" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">OBI DATA MASTER &amp; LSU (DBUS)</text>
 
-                <!-- External Off-Chip DBUS Pin -->
-                <rect x="930" y="314" width="26" height="20" rx="2" fill="#0d9488" stroke="#042f2e" stroke-width="1"/>
-                <text x="943" y="327" font-size="7" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">OBI_D►</text>
-                <line x1="925" y1="324" x2="930" y2="324" stroke="#0d9488" stroke-width="2"/>
+                <text x="586" y="284" font-size="6.8" font-weight="900" fill="#0d9488" font-family="monospace">▲ OUT: data_req, data_we, data_be[3:0]</text>
+                <text x="586" y="295" font-size="6.5" fill="#242c33">data_addr [31:0], data_wdata [31:0]</text>
 
-                <text x="588" y="308" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">▲ OUT: data_req, data_we, data_be [3:0], data_addr [31:0], data_wdata [31:0]</text>
-                <text x="588" y="321" font-size="7" fill="#242c33">Load/Store Address, Byte Enable, Write Data Word</text>
+                <text x="586" y="309" font-size="6.8" font-weight="900" fill="#d97706" font-family="monospace">▼ IN:  data_gnt, data_rvalid, data_rdata</text>
+                <text x="586" y="320" font-size="6.5" fill="#242c33">Pipelined Transfer Grant &amp; Valid Flag</text>
 
-                <text x="588" y="335" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace">▼ IN:  data_gnt, data_rvalid, data_rdata [31:0], data_err</text>
-                <text x="588" y="347" font-size="7" fill="#242c33">Pipelined Transfer Grant, Valid Flag, Read Data Word</text>
-
-                <text x="588" y="362" font-size="6.5" fill="#242c33">Dedicated Harvard data bus eliminates stalls between instruction stream &amp; memory operands.</text>
+                <rect x="584" y="328" width="237" height="60" rx="3" fill="#fffaf0" stroke="#0d9488" stroke-width="1"/>
+                <text x="588" y="340" font-size="6.5" font-weight="800" fill="#151b20">Pipelined OBI Data Protocol:</text>
+                <text x="588" y="351" font-size="6.2" fill="#242c33">• 1-cycle request grant with zero wait-states</text>
+                <text x="588" y="362" font-size="6.2" fill="#242c33">• Harvard bus eliminates code/data stalls</text>
+                <text x="588" y="373" font-size="6.2" font-weight="800" fill="#0d9488">• Load-to-use: Strictly 1 cycle on local SPM</text>
+                <text x="588" y="383" font-size="6" fill="#242c33">Non-blocking load pipeline enables high Fmax</text>
 
                 <!-- Connection from ALU address to OBI Data Master -->
-                <path d="M 645 190 L 652 190 L 652 278" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowIbex)"/>
+                <path d="M 645 204 L 645 256" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowIbex)"/>
+                <text x="648" y="248" font-size="6" font-weight="900" font-family="monospace">data_addr</text>
+
+                <!-- OBI DBUS load data return to EX RES MUX Input [3] -->
+                <path d="M 825 310 L 928 310 L 928 192 L 925 192" fill="none" stroke="#0284c7" stroke-width="1.6" marker-end="url(#arrowBlueIbex)"/>
+                <text x="882" y="306" font-size="6" font-weight="900" fill="#0284c7" font-family="monospace">data_rdata</text>
+
+                <!-- External Off-Chip DBUS Pin (placed cleanly at far right x=932) -->
+                <rect x="932" y="314" width="24" height="20" rx="2" fill="#0d9488" stroke="#042f2e" stroke-width="1"/>
+                <text x="944" y="327" font-size="7" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">DBUS</text>
+                <line x1="825" y1="324" x2="932" y2="324" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="3,3"/>
 
                 <!-- ============================================================ -->
-                <!-- SYNCHRONOUS REGISTER COMMIT HIGHWAY (TEAL) -->
+                <!-- SYNCHRONOUS REGISTER COMMIT HIGHWAY (TEAL) (y=418) -->
+                <!-- Drops down in open corridor x=870, runs west to RegFile Port W -->
                 <!-- ============================================================ -->
-                <path d="M 852 260 L 852 418 L 380 418 L 380 370" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowTealIbex)"/>
-                <!-- Chevrons -->
-                <polygon points="520,415 514,418 520,421" fill="#0d9488"/>
-                <polygon points="700,415 694,418 700,421" fill="#0d9488"/>
-                <rect x="400" y="409" width="380" height="18" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
-                <circle cx="408" cy="418" r="3" fill="#0d9488"/>
-                <text x="415" y="421.5" font-size="7.2" font-weight="900" fill="#0d9488" font-family="monospace">SYNCHRONOUS COMMIT: [EX RES MUX] → REGFILE PORT W • Cycle-Boundary Register Update</text>
+                <path d="M 870 260 L 870 418 L 740 418" fill="none" stroke="#0d9488" stroke-width="2.6"/>
+                <!-- Inline Transceiver Banner (x=360 to 740) -->
+                <rect x="360" y="410" width="380" height="16" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
+                <circle cx="370" cy="418" r="3" fill="#0d9488"/>
+                <text x="380" y="421.5" font-size="7" font-weight="900" fill="#0d9488" font-family="monospace">SYNCHRONOUS COMMIT: [EX RES MUX] → REGFILE PORT W • Cycle-Boundary Commit</text>
+                <!-- Highway Westbound Return into Register File Port W -->
+                <path d="M 360 418 L 322 418 L 322 298 L 325 298" fill="none" stroke="#0d9488" stroke-width="2.6" marker-end="url(#arrowTealIbex)"/>
+                <polygon points="330,415 324,418 330,421" fill="#0d9488"/>
+                <polygon points="760,415 754,418 760,421" fill="#0d9488"/>
 
                 <!-- ============================================================ -->
-                <!-- DUAL-ROW LEGEND & SPECIFICATION STRIP -->
+                <!-- DUAL-ROW LEGEND & SPECIFICATION STRIP (y=446 to y=540) -->
                 <!-- ============================================================ -->
                 <!-- Row 1: Protocol Key -->
                 <rect x="20" y="446" width="920" height="40" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
@@ -3434,8 +3529,8 @@ const bespokeDossiers = [
                 <text x="404" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Teal: OBI Harvard Bus &amp; Commit</text>
                 <circle cx="595" cy="474" r="4" fill="#d97706"/>
                 <text x="604" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Gold: RV32M Mult/Div Engine</text>
-                <circle cx="780" cy="474" r="4" fill="#22bfd7"/>
-                <text x="789" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Slate: IF/ID Pipeline Latch</text>
+                <circle cx="780" cy="474" r="4" fill="#16a34a"/>
+                <text x="789" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Green: OpenTitan Security DII</text>
 
                 <!-- Row 2: Silicon Provenance & Measured Metrics -->
                 <rect x="20" y="492" width="920" height="48" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
@@ -3452,7 +3547,7 @@ const bespokeDossiers = [
           </div>
         </div>
 
-        <!-- 2.2.2 NEORV32 DEEP-DIVE -->
+                <!-- 2.2.2 NEORV32 DEEP-DIVE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
             <div class="sub-topic-title-group">
