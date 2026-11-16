@@ -3,9 +3,58 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import db from "../data/score_db.json";
 
 const categories = db.categories;
-const featuredTools = db.tools.filter(t => 
-  ["cva6", "ara", "snitch-cluster", "cheshire", "ibex", "gemmini", "mempool", "hazard3"].includes(t.slug)
-);
+
+const toolsBySlug = Object.fromEntries(db.tools.map(t => [t.slug, t]));
+
+const categoryFeaturedTiers = [
+  {
+    catNum: 1,
+    badge: "CATEGORY 01 • LEVEL 1",
+    badgeClass: "badge-yellow",
+    borderClass: "tier-border-yellow",
+    title: "Microcontroller & Scalar Embedded Cores",
+    scope: "Single-Threaded In-Order Embedded Pipelines",
+    ctaText: "Explore Category 1 (12 Cores)",
+    href: "/mcu-scalar/",
+    connectorText: "Scale from Single-Issue Microcontrollers to Virtual Memory (Sv39/Sv48 MMU) & Multi-Level Caches",
+    slugs: ["ibex", "hazard3", "serv"]
+  },
+  {
+    catNum: 2,
+    badge: "CATEGORY 02 • LEVEL 2",
+    badgeClass: "badge-cyan",
+    borderClass: "tier-border-cyan",
+    title: "Application Cores",
+    scope: "Linux-Capable In-Order & Out-of-Order Superscalar Cores",
+    ctaText: "Explore Category 2 (3 Processors)",
+    href: "/app-cores/",
+    connectorText: "Scale from Memory-Bound Scalar Pipelines to Data-Parallel RVV 1.0 Vector Engines & Systolic Arrays",
+    slugs: ["cva6", "rocket-chip", "black-parrot"]
+  },
+  {
+    catNum: 3,
+    badge: "CATEGORY 03 • LEVEL 3",
+    badgeClass: "badge-coral",
+    borderClass: "tier-border-coral",
+    title: "Vector & Coprocessor Acceleration Engines",
+    scope: "Data-Parallel SIMD / RVV 1.0 & Systolic Accelerators",
+    ctaText: "Explore Category 3 (4 Engines)",
+    href: "/vector-coprocessors/",
+    connectorText: "Scale from Coprocessor Accelerators to Many-Core Clusters (up to 432 Cores), NoC Fabrics & DMA Engines",
+    slugs: ["ara", "gemmini", "spatz"]
+  },
+  {
+    catNum: 4,
+    badge: "CATEGORY 04 • LEVEL 4",
+    badgeClass: "badge-lime",
+    borderClass: "tier-border-lime",
+    title: "Full SoC Platforms & Multi-Core Clusters",
+    scope: "Many-Core Compute Clusters & Complete Tapeout SoCs",
+    ctaText: "Explore Category 4 (23 Systems)",
+    href: "/soc-multicore/",
+    slugs: ["snitch-cluster", "cheshire", "mempool"]
+  }
+];
 
 const categoryLinks: Record<number, string> = {
   1: "/mcu-scalar/",
@@ -101,10 +150,10 @@ function getToolUrl(tool: any) {
 
     <div class="hero-action-group">
       <a href="/fundamentals/" class="noc-sim-btn" style="background: var(--yellow);">📖 Architecture Fundamentals →</a>
-      <a href="/mcu-scalar/" class="noc-sim-btn secondary">MCU / Scalar Cores</a>
-      <a href="/app-cores/" class="noc-sim-btn secondary">Application Cores</a>
-      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Vector &amp; Coprocessors</a>
-      <a href="/soc-multicore/" class="noc-sim-btn secondary">SoC &amp; Multi-Core</a>
+      <a href="/mcu-scalar/" class="noc-sim-btn secondary">Cat 1: MCU / Scalar Cores</a>
+      <a href="/app-cores/" class="noc-sim-btn secondary">Cat 2: Application Cores</a>
+      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Cat 3: Vector &amp; Coprocessors</a>
+      <a href="/soc-multicore/" class="noc-sim-btn secondary">Cat 4: SoC &amp; Multi-Core</a>
     </div>
   </div>
 
@@ -194,95 +243,263 @@ function getToolUrl(tool: any) {
     </div>
   </section>
 
-  <!-- Empirical Findings & Architectural Opportunities -->
+  <!-- Empirical Findings & Architectural Opportunities (Top-Down Progressive Flow) -->
   <section class="score-section">
-    <div class="noc-book-banner" style="display: block; padding: 24px; box-shadow: 6px 6px 0px var(--coral);">
-      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.75rem;">
+    <div class="noc-book-banner" style="display: block; padding: 24px; box-shadow: 6px 6px 0px var(--coral); background: var(--cream, #fffaf0); border: 2px solid var(--ink, #151b20); border-radius: 14px;">
+      <div class="insights-section-header">
         <span class="noc-track-badge" style="background: var(--coral); color: #ffffff; margin-bottom: 0;">EMPIRICAL BENCHMARK INSIGHTS</span>
-        <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--ink);">Key Bottlenecks Driving Next-Generation Architectures</h3>
+        <h3 class="insights-main-title">Key Bottlenecks Driving Next-Generation Architectures</h3>
       </div>
-      <p style="margin-bottom: 1.25rem; color: var(--ink-light); font-size: 0.95rem; line-height: 1.6;">
-        Our cross-category cycle-accurate simulations reveal three critical architectural boundaries where traditional RISC-V hardware scaling breaks down:
+      <p class="insights-intro-lead">
+        Our cross-category cycle-accurate simulations reveal three critical architectural boundaries where traditional RISC-V hardware scaling breaks down. Each bottleneck is explored in depth within its respective subpage:
       </p>
       
-      <div class="insights-grid">
-        <div class="insight-box">
-          <h4>1. Vector Utilization Collapse</h4>
-          <p>
-            On dense matrix multiplication (<code>fmatmul</code>), <strong>Ara (RVV 1.0)</strong> achieves up to <strong>98.4%</strong> vector execution utilization. However, on memory-strided and reduction kernels (<code>softmax</code>, <code>fft</code>), utilization collapses to <strong>23.0%</strong> due to scalar issue serialization and VRF bank conflicts.
-          </p>
-          <div class="insight-solution">&rarr; Next-Gen Remedy: Decoupled Access-Execute (DAE) vector coprocessors.</div>
+      <div class="insights-topdown">
+        <!-- Step 1: Vector Utilization Collapse -->
+        <article class="insight-step-card insight-border-coral">
+          <div class="insight-step-header">
+            <div class="insight-step-badge badge-coral">01</div>
+            <div class="insight-step-meta">
+              <div class="insight-eyebrow">INSIGHT 01 &bull; VECTOR ARITHMETIC INTENSITY</div>
+              <h4 class="insight-title">1. Vector Utilization Collapse: Scalar Issue Serialization &amp; VRF Bank Conflicts</h4>
+            </div>
+            <a href="/vector-coprocessors/" class="insight-cat-link cat-coral">
+              <span>Cat 3: Vector &amp; Coprocessor Acceleration Engines</span>
+              <span class="cat-link-arrow">&rarr;</span>
+            </a>
+          </div>
+
+          <div class="insight-step-body">
+            <p class="insight-narrative">
+              On dense matrix multiplication (<code>fmatmul</code>), <strong>Ara (RVV 1.0)</strong> achieves up to <strong>98.4%</strong> vector execution utilization. However, on memory-strided and reduction kernels (<code>softmax</code>, <code>fft</code>), utilization collapses to <strong>23.0%</strong> due to scalar issue serialization, vector register file (VRF) bank conflicts, and lane starvation.
+            </p>
+
+            <div class="insight-metrics-grid">
+              <div class="img-cell">
+                <span class="img-label">Peak Workload</span>
+                <span class="img-val highlight-green"><code>fmatmul: 98.4%</code></span>
+              </div>
+              <div class="img-cell">
+                <span class="img-label">Strided Collapse</span>
+                <span class="img-val highlight-coral"><code>softmax / fft: 23.0%</code></span>
+              </div>
+              <div class="img-cell">
+                <span class="img-label">Evaluated Hardware</span>
+                <span class="img-val">Ara (RVV 1.0, 4–16 Lanes), Spatz</span>
+              </div>
+              <div class="img-cell">
+                <span class="img-label">Root Cause</span>
+                <span class="img-val">Scalar Issue Serialization &amp; VRF Contention</span>
+              </div>
+            </div>
+
+            <div class="insight-remedy-box">
+              <span class="remedy-tag">&rarr; Next-Gen Remedy</span>
+              <span class="remedy-text">Decoupled Access-Execute (DAE) vector coprocessors with multi-bank conflict-free VRFs and systolic weight-stationary matrix tiles.</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Connector 1 -> 2 -->
+        <div class="ladder-connector">
+          <div class="connector-line"></div>
+          <div class="connector-pill">
+            <span>&darr; Architectural Scale: From Vector Execution to Shared-Memory Multi-Core Clusters</span>
+          </div>
+          <div class="connector-line"></div>
         </div>
-        <div class="insight-box">
-          <h4>2. Manycore Spinlock Wall</h4>
-          <p>
-            In shared-memory multi-core clusters (<strong>MemPool</strong> and <strong>Snitch</strong>), software barrier synchronization degrades exponentially past 64 cores. Software atomic operations (AMO) saturate the interconnect crossbar, negating speedup for fine-grained parallel kernels.
-          </p>
-          <div class="insight-solution">&rarr; Next-Gen Remedy: In-network hardware collective barriers (FractalSync).</div>
+
+        <!-- Step 2: Manycore Spinlock Wall -->
+        <article class="insight-step-card insight-border-lime">
+          <div class="insight-step-header">
+            <div class="insight-step-badge badge-lime">02</div>
+            <div class="insight-step-meta">
+              <div class="insight-eyebrow">INSIGHT 02 &bull; MULTI-CORE CLUSTER SYNCHRONIZATION</div>
+              <h4 class="insight-title">2. Manycore Spinlock Wall: Interconnect Saturation Under Software Barriers</h4>
+            </div>
+            <a href="/soc-multicore/" class="insight-cat-link cat-lime">
+              <span>Cat 4: Full SoC Platforms &amp; Multi-Core Clusters</span>
+              <span class="cat-link-arrow">&rarr;</span>
+            </a>
+          </div>
+
+          <div class="insight-step-body">
+            <p class="insight-narrative">
+              In shared-memory multi-core clusters (<strong>MemPool</strong> and <strong>Snitch</strong>), software barrier synchronization degrades exponentially past 64 cores. Software atomic memory operations (AMO) saturate the interconnect logarithmic crossbar, turning speedup negative on fine-grained parallel kernels.
+            </p>
+
+            <div class="insight-metrics-grid">
+              <div class="img-cell">
+                <span class="img-label">Linear Scaling</span>
+                <span class="img-val highlight-green">Up to 64 Cores</span>
+              </div>
+              <div class="img-cell">
+                <span class="img-label">Saturation Wall</span>
+                <span class="img-val highlight-coral">256–432 Cores (AMO Saturation)</span>
+              </div>
+              <div class="img-cell">
+                <span class="img-label">Evaluated Hardware</span>
+                <span class="img-val">MemPool (256/432 Cores), Snitch Cluster</span>
+              </div>
+              <div class="img-cell">
+                <span class="img-label">Root Cause</span>
+                <span class="img-val">Interconnect Polling &amp; Crossbar Congestion</span>
+              </div>
+            </div>
+
+            <div class="insight-remedy-box">
+              <span class="remedy-tag">&rarr; Next-Gen Remedy</span>
+              <span class="remedy-text">In-network hardware collective barriers (FractalSync) and dedicated hierarchical reduction trees.</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Connector 2 -> 3 -->
+        <div class="ladder-connector">
+          <div class="connector-line"></div>
+          <div class="connector-pill">
+            <span>&darr; Architectural Scale: From Cluster Synchronization Networks to Full-SoC Streaming DMA Engines</span>
+          </div>
+          <div class="connector-line"></div>
         </div>
-        <div class="insight-box">
-          <h4>3. DMA MMIO Setup Penalty</h4>
-          <p>
-            Full SoC benchmarks (<strong>Cheshire</strong> and <strong>PULPissimo</strong>) show that transferring payloads smaller than 128 bytes via an autonomous DMA engine incurs higher latency than scalar memory copies due to MMIO register configuration overhead.
-          </p>
-          <div class="insight-solution">&rarr; Next-Gen Remedy: Single-cycle instruction-triggered streaming DMA.</div>
-        </div>
+
+        <!-- Step 3: DMA MMIO Setup Penalty -->
+        <article class="insight-step-card insight-border-teal">
+          <div class="insight-step-header">
+            <div class="insight-step-badge badge-teal">03</div>
+            <div class="insight-step-meta">
+              <div class="insight-eyebrow">INSIGHT 03 &bull; FULL-SOC DATA MOVEMENT &amp; I/O</div>
+              <h4 class="insight-title">3. DMA MMIO Setup Penalty: Configuration Latency on Fine-Grained Transfers</h4>
+            </div>
+            <a href="/soc-multicore/" class="insight-cat-link cat-teal">
+              <span>Cat 4: Full SoC Platforms &amp; Multi-Core Clusters</span>
+              <span class="cat-link-arrow">&rarr;</span>
+            </a>
+          </div>
+
+          <div class="insight-step-body">
+            <p class="insight-narrative">
+              Full SoC benchmarks (<strong>Cheshire</strong> and <strong>PULPissimo</strong>) show that transferring payloads smaller than 128 bytes via an autonomous DMA engine incurs higher latency than scalar CPU memory copies due to multi-register MMIO configuration setup overhead.
+            </p>
+
+            <div class="insight-metrics-grid">
+              <div class="img-cell">
+                <span class="img-label">Break-Even Threshold</span>
+                <span class="img-val highlight-coral">&lt; 128 Bytes (CPU Faster than DMA)</span>
+              </div>
+              <div class="img-cell">
+                <span class="img-label">Optimal Payload</span>
+                <span class="img-val highlight-green">&gt; 1 KB (DMA Throughput Dominates)</span>
+              </div>
+              <div class="img-cell">
+                <span class="img-label">Evaluated Hardware</span>
+                <span class="img-val">Cheshire (64-bit Linux SoC), PULPissimo</span>
+              </div>
+              <div class="img-cell">
+                <span class="img-label">Root Cause</span>
+                <span class="img-val">MMIO Register Handshake Latency</span>
+              </div>
+            </div>
+
+            <div class="insight-remedy-box">
+              <span class="remedy-tag">&rarr; Next-Gen Remedy</span>
+              <span class="remedy-text">Single-cycle instruction-triggered streaming DMA engines and zero-overhead DMA descriptors.</span>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Featured Tools Directory Preview -->
+  <!-- Featured Tools Directory Preview (Ordered Top-Down by Category 1 -> 4) -->
   <section class="score-section">
     <div class="section-header">
       <div class="noc-track-badge" style="background: var(--yellow); margin-bottom: 0.5rem;">TOOLS &amp; HARDWARE DOSSIERS</div>
       <h2 class="section-title">Featured Anchor Architectures</h2>
       <p class="section-subtitle">
-        Explore representative cores and platforms evaluated in our empirical study. Every tool is backed by synthesizable RTL and automated simulation scripts in this repository.
+        Representative open-source silicon-proven cores and clusters evaluated in our empirical study, ordered top-down across the 4 architecture categories. Every design is backed by synthesizable RTL and automated simulation scripts in this repository.
       </p>
     </div>
 
-    <div class="tools-grid">
-      {featuredTools.map((tool) => (
-        <div class="tool-card">
-          <div class="tool-card-top">
-            <span class="tool-badge">Cat {tool.categoryNumber}: {tool.categoryName.split(':')[1]?.trim() || tool.categoryName}</span>
-            <span class="tool-lang">{tool.language}</span>
-          </div>
-          <h3 class="tool-name">
-            <a href={getToolUrl(tool)}>{tool.name}</a>
-          </h3>
-          <p class="tool-sub">{tool.subtitle}</p>
-          
-          <div class="tool-specs">
-            <div class="spec-row">
-              <span class="spec-label">ISA:</span>
-              <span class="spec-val"><code>{tool.isa}</code></span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-label">Bus:</span>
-              <span class="spec-val">{tool.bus}</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-label">License:</span>
-              <span class="spec-val">{tool.license.split('(')[0]?.trim()}</span>
-            </div>
-          </div>
+    <div class="category-tiers-topdown">
+      {categoryFeaturedTiers.map((tier, tIdx) => {
+        const isLastTier = tIdx === categoryFeaturedTiers.length - 1;
+        return (
+          <div class="tier-block-wrapper">
+            <div class={`category-tier-block ${tier.borderClass}`}>
+              <div class="tier-header">
+                <div class="tier-title-group">
+                  <span class={`tier-badge ${tier.badgeClass}`}>{tier.badge}</span>
+                  <h3 class="tier-heading">{tier.title}</h3>
+                  <span class="tier-scope">{tier.scope}</span>
+                </div>
+                <a href={tier.href} class="tier-explore-btn">
+                  <span>{tier.ctaText}</span>
+                  <span class="btn-arrow">&rarr;</span>
+                </a>
+              </div>
 
-          <div class="tool-actions">
-            <a href={getToolUrl(tool)} class="noc-sim-btn secondary" style="font-size: 0.8rem; padding: 6px 12px;">Architecture Deep Dive &rarr;</a>
-            {tool.benchmarks.length > 0 && (
-              <span class="bench-tag">&#10003; {tool.benchmarks.length} Traces</span>
+              <div class="tier-tools-grid">
+                {tier.slugs.map((slug) => {
+                  const tool = toolsBySlug[slug];
+                  if (!tool) return null;
+                  return (
+                    <div class="tool-card">
+                      <div class="tool-card-top">
+                        <span class={`tool-badge ${tier.badgeClass}`}>Cat {tool.categoryNumber}: {tool.categoryName.split(':')[1]?.trim() || tool.categoryName}</span>
+                        <span class="tool-lang">{tool.language}</span>
+                      </div>
+                      <h4 class="tool-name">
+                        <a href={getToolUrl(tool)}>{tool.name}</a>
+                      </h4>
+                      <p class="tool-sub">{tool.subtitle}</p>
+                      
+                      <div class="tool-specs">
+                        <div class="spec-row">
+                          <span class="spec-label">ISA:</span>
+                          <span class="spec-val"><code>{tool.isa}</code></span>
+                        </div>
+                        <div class="spec-row">
+                          <span class="spec-label">Bus:</span>
+                          <span class="spec-val">{tool.bus}</span>
+                        </div>
+                        <div class="spec-row">
+                          <span class="spec-label">License:</span>
+                          <span class="spec-val">{tool.license.split('(')[0]?.trim()}</span>
+                        </div>
+                      </div>
+
+                      <div class="tool-actions">
+                        <a href={getToolUrl(tool)} class="noc-sim-btn secondary" style="font-size: 0.8rem; padding: 6px 12px;">Architecture Deep Dive &rarr;</a>
+                        {tool.benchmarks.length > 0 && (
+                          <span class="bench-tag">&#10003; {tool.benchmarks.length} Traces</span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {!isLastTier && tier.connectorText && (
+              <div class="ladder-connector">
+                <div class="connector-line"></div>
+                <div class="connector-pill">
+                  <span>&darr; {tier.connectorText}</span>
+                </div>
+                <div class="connector-line"></div>
+              </div>
             )}
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
 
-    <div class="center-cta" style="margin-top: 2rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
-      <a href="/mcu-scalar/" class="noc-sim-btn secondary">MCU / Scalar Cores &rarr;</a>
-      <a href="/app-cores/" class="noc-sim-btn secondary">Application Cores &rarr;</a>
-      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Vector &amp; Coprocessors &rarr;</a>
-      <a href="/soc-multicore/" class="noc-sim-btn secondary">SoC &amp; Multi-Core &rarr;</a>
+    <div class="center-cta" style="margin-top: 2.5rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+      <a href="/mcu-scalar/" class="noc-sim-btn secondary">Cat 1: MCU / Scalar Cores &rarr;</a>
+      <a href="/app-cores/" class="noc-sim-btn secondary">Cat 2: Application Cores &rarr;</a>
+      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Cat 3: Vector &amp; Coprocessors &rarr;</a>
+      <a href="/soc-multicore/" class="noc-sim-btn secondary">Cat 4: SoC &amp; Multi-Core &rarr;</a>
     </div>
   </section>
 
@@ -603,49 +820,348 @@ function getToolUrl(tool: any) {
     line-height: 1.4;
   }
 
-  .insights-grid {
+  /* Insights Top-Down Progressive Ladder */
+  .insights-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .insights-main-title {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    letter-spacing: -0.01em;
+  }
+
+  .insights-intro-lead {
+    margin-bottom: 1.5rem;
+    color: var(--ink-light, #242c33);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .insights-topdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .insight-step-card {
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0px var(--ink, #151b20);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .insight-step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 7px 7px 0px var(--ink, #151b20);
+  }
+
+  .insight-border-coral { border-left: 8px solid var(--coral, #f38469) !important; }
+  .insight-border-lime  { border-left: 8px solid var(--lime, #b7df69) !important; }
+  .insight-border-teal  { border-left: 8px solid #2a9d8f !important; }
+
+  .badge-teal { background: #2a9d8f !important; color: #ffffff !important; }
+
+  .insight-step-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.15rem;
+    flex-wrap: wrap;
+  }
+
+  .insight-step-badge {
+    font-size: 1.25rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 2px solid var(--ink, #151b20);
+    box-shadow: 2px 2px 0px var(--ink, #151b20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .insight-step-meta {
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .insight-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.04em;
+    color: var(--ink-light, #242c33);
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+  }
+
+  .insight-title {
+    font-size: 1.18rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .insight-cat-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    background: var(--paper, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    text-decoration: none;
+    box-shadow: 2px 2px 0px var(--ink, #151b20);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    white-space: nowrap;
+    margin-left: auto;
+  }
+
+  .insight-cat-link:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3.5px 3.5px 0px var(--ink, #151b20);
+  }
+
+  .insight-cat-link.cat-coral:hover { background: #ffd8ce; }
+  .insight-cat-link.cat-lime:hover  { background: var(--lime-soft, #e7f4c8); }
+  .insight-cat-link.cat-teal:hover  { background: #d0f0eb; }
+
+  .cat-link-arrow {
+    font-size: 0.95rem;
+    transition: transform 0.15s ease;
+  }
+
+  .insight-cat-link:hover .cat-link-arrow {
+    transform: translateX(3px);
+  }
+
+  .insight-step-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .insight-narrative {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--ink-light, #242c33);
+    margin: 0;
+  }
+
+  .insight-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.65rem;
+    background: var(--paper, #fffaf0);
+    border: 1.5px solid var(--line, #eee4c8);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+  }
+
+  .img-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .img-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    color: rgba(21, 27, 32, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .img-val {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ink, #151b20);
+  }
+
+  .img-val code {
+    background: var(--cream, #fffaf0);
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 4px;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .highlight-green {
+    color: #1e7025 !important;
+    font-weight: 800;
+  }
+
+  .highlight-coral {
+    color: #c93b20 !important;
+    font-weight: 800;
+  }
+
+  .insight-remedy-box {
+    background: var(--lime-soft, #e7f4c8);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 0.65rem 0.9rem;
+    box-shadow: 2px 2px 0px var(--ink, #151b20);
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .remedy-tag {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    background: #ffffff;
+    color: var(--ink, #151b20);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+
+  .remedy-text {
+    font-weight: 600;
+    color: var(--ink, #151b20);
+  }
+
+  /* Category Tiers Top-Down Hierarchy */
+  .category-tiers-topdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .tier-block-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .category-tier-block {
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0px var(--ink, #151b20);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .category-tier-block:hover {
+    box-shadow: 7px 7px 0px var(--ink, #151b20);
+  }
+
+  .tier-border-yellow { border-left: 8px solid var(--yellow, #ffc83e) !important; }
+  .tier-border-cyan   { border-left: 8px solid var(--cyan, #22bfd7) !important; }
+  .tier-border-coral  { border-left: 8px solid var(--coral, #f38469) !important; }
+  .tier-border-lime   { border-left: 8px solid var(--lime, #b7df69) !important; }
+
+  .tier-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-bottom: 0.85rem;
+    border-bottom: 1.5px solid var(--line, #eee4c8);
+  }
+
+  .tier-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .tier-badge {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.03em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--ink, #151b20);
+    box-shadow: 1.5px 1.5px 0px var(--ink, #151b20);
+  }
+
+  .tier-heading {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .tier-scope {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ink-light, #242c33);
+    background: var(--paper, #fffaf0);
+    border: 1.5px solid var(--line, #eee4c8);
+    border-radius: 999px;
+    padding: 0.15rem 0.65rem;
+  }
+
+  .tier-explore-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    background: var(--yellow, #ffc83e);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.4rem 1.05rem;
+    text-decoration: none;
+    box-shadow: 2px 2px 0px var(--ink, #151b20);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+
+  .tier-explore-btn:hover {
+    background: #fff0b9;
+    transform: translate(-1px, -1px);
+    box-shadow: 3.5px 3.5px 0px var(--ink, #151b20);
+  }
+
+  .tier-explore-btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  .tier-tools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.25rem;
-    margin-top: 1.25rem;
-  }
-
-  .insight-box {
-    background: var(--cream);
-    border: 2px solid var(--ink);
-    border-radius: 12px;
-    box-shadow: 4px 4px 0px var(--ink);
-    padding: 1.25rem;
-  }
-
-  .insight-box h4 {
-    font-size: 1.05rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    color: var(--ink);
-  }
-
-  .insight-box p {
-    font-size: 0.88rem;
-    line-height: 1.55;
-    margin-bottom: 0.75rem;
-    color: var(--ink-light);
-  }
-
-  .insight-solution {
-    font-size: 0.8rem;
-    font-weight: 800;
-    color: #151b20;
-    background: var(--lime-soft);
-    border: 1.5px solid var(--ink);
-    border-radius: 6px;
-    padding: 0.35rem 0.55rem;
-  }
-
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
   }
 
   .tool-card {
@@ -861,12 +1377,42 @@ function getToolUrl(tool: any) {
       max-width: 96%;
     }
 
-    .insights-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
+    .insight-step-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
     }
 
-    .tools-grid {
+    .insight-cat-link {
+      margin-left: 0;
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .insight-metrics-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tier-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .tier-title-group {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    .tier-explore-btn {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .tier-tools-grid {
       grid-template-columns: 1fr;
       gap: 1.25rem;
     }
