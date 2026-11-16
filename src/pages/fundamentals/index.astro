@@ -24,6 +24,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <a href="#vector-parallelism" class="noc-sim-btn secondary">&sect; 6. Vector &amp; SIMD Engines</a>
       <a href="#soc-interconnects" class="noc-sim-btn secondary">&sect; 7. SoC Fabrics &amp; Clusters</a>
       <a href="#benchmarking-metrics" class="noc-sim-btn secondary">&sect; 8. Benchmarking Metrics</a>
+      <a href="#archetype-methodology" class="noc-sim-btn secondary">&sect; 8.3 Archetype Methodology</a>
     </div>
   </div>
 
@@ -4278,6 +4279,120 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- 8.3 THE SCORE MICROARCHITECTURAL ARCHETYPE METHODOLOGY -->
+      <!-- ============================================================ -->
+      <div id="archetype-methodology" class="schematic-container" style="margin-top: 3rem; margin-bottom: 2rem;">
+        <div class="schematic-header">
+          <span class="schematic-tag">TAXONOMICAL RIGOR &amp; CLASSIFICATION METHODOLOGY</span>
+          <h3 class="schematic-title">Why Archetype Counts Differ Across Domains: The SCORE Methodology</h3>
+        </div>
+        
+        <p style="font-size: 0.95rem; line-height: 1.65; color: var(--ink, #151b20); margin-bottom: 1.25rem;">
+          A fundamental question in hardware evaluation is: <em>Why does SCORE classify 4 archetypes for Scalar Cores, 4 for Application Cores, 8 for Vector Coprocessors, and 5 for SoCs? Shouldn't a taxonomical framework force a uniform number (such as 6 or 8) across every domain for visual symmetry?</em>
+        </p>
+
+        <p style="font-size: 0.95rem; line-height: 1.65; color: var(--ink, #151b20); margin-bottom: 1.5rem;">
+          The answer lies in <strong>methodological consistency over superficial symmetry</strong>. In SCORE, an <strong>Archetype</strong> is strictly defined by three universal microarchitectural qualification criteria derived from first principles:
+        </p>
+
+        <!-- 3 Universal Qualification Criteria Cards -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+          <div style="background: var(--paper-deep, #eee4c8); border: 1.5px solid var(--ink, #151b20); border-radius: 8px; padding: 1.15rem;">
+            <span class="badge badge-yellow" style="font-size: 0.72rem; font-weight: 800; display: inline-block; margin-bottom: 0.5rem;">CRITERION 1</span>
+            <h4 style="font-size: 0.95rem; font-weight: 900; margin: 0 0 0.5rem 0; color: var(--ink, #151b20);">Physical Phase Transition</h4>
+            <p style="font-size: 0.85rem; line-height: 1.5; color: #242c33; margin: 0;">
+              Must represent a qualitative structural leap in datapath organization—<strong>not quantitative parameter tuning</strong>. Resizing an L1 cache or retiming a pipeline from 3 to 4 stages is parameter optimization; removing forwarding multiplexers or introducing dynamic register renaming is an archetype phase transition.
+            </p>
+          </div>
+
+          <div style="background: var(--paper-deep, #eee4c8); border: 1.5px solid var(--ink, #151b20); border-radius: 8px; padding: 1.15rem;">
+            <span class="badge badge-teal" style="font-size: 0.72rem; font-weight: 800; display: inline-block; margin-bottom: 0.5rem;">CRITERION 2</span>
+            <h4 style="font-size: 0.95rem; font-weight: 900; margin: 0 0 0.5rem 0; color: var(--ink, #151b20);">Governing Equation Shift</h4>
+            <p style="font-size: 0.85rem; line-height: 1.5; color: #242c33; margin: 0;">
+              Must fundamentally alter which term in the Expanded Iron Law of Processor Performance dominates: trading cycles for area (CPI &gt;&gt; 1), eliminating memory stall bubbles (CPI<sub>memory</sub> &rarr; 0), or saturating memory bandwidth through spatial parallelism.
+            </p>
+          </div>
+
+          <div style="background: var(--paper-deep, #eee4c8); border: 1.5px solid var(--ink, #151b20); border-radius: 8px; padding: 1.15rem;">
+            <span class="badge badge-coral" style="font-size: 0.72rem; font-weight: 800; display: inline-block; margin-bottom: 0.5rem;">CRITERION 3</span>
+            <h4 style="font-size: 0.95rem; font-weight: 900; margin: 0 0 0.5rem 0; color: var(--ink, #151b20);">Subsystem Addition / Removal</h4>
+            <p style="font-size: 0.85rem; line-height: 1.5; color: #242c33; margin: 0;">
+              Must introduce or remove a major architectural hardware entity: an Instruction Scoreboard, a Reorder Buffer (ROB), a Logarithmic TCDM Crossbar, a 2D Packet-Switched NoC Router, or a dedicated Vector Register File (VRF).
+            </p>
+          </div>
+        </div>
+
+        <!-- Master Archetype Summary Table Across Categories 1-4 -->
+        <h4 style="font-size: 1rem; font-weight: 900; margin-bottom: 0.75rem; color: var(--ink, #151b20);">Master 21-Archetype Taxonomy Across Hardware Domains</h4>
+        <div class="table-responsive" style="overflow-x: auto; margin-bottom: 1.5rem;">
+          <table class="ds-table" style="background: #ffffff; border: 1.5px solid var(--ink, #151b20); border-radius: 8px; width: 100%; font-size: 0.85rem;">
+            <thead>
+              <tr style="background: var(--paper-deep, #eee4c8); border-bottom: 2px solid var(--ink, #151b20);">
+                <th style="padding: 0.65rem 0.85rem; text-align: left;">Domain Category</th>
+                <th style="padding: 0.65rem 0.85rem; text-align: center;">Archetypes</th>
+                <th style="padding: 0.65rem 0.85rem; text-align: left;">Governing Hardware Dimension</th>
+                <th style="padding: 0.65rem 0.85rem; text-align: left;">Phase Transitions &amp; Exemplars</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 0.65rem 0.85rem;"><strong>Category 1: Microcontrollers</strong><br /><small class="text-muted">Scalar Embedded Cores</small></td>
+                <td style="padding: 0.65rem 0.85rem; text-align: center;"><span class="badge badge-yellow">4 Archetypes</span></td>
+                <td style="padding: 0.65rem 0.85rem;"><strong>1D Von Neumann Instruction Stream:</strong> Area vs. CPI vs. Frequency levers in SRAM-direct execution.</td>
+                <td style="padding: 0.65rem 0.85rem;">
+                  1. Minimalist State Machines (SERV, PicoRV32)<br />
+                  2. Balanced 2-Stage Harvard (Ibex, NEORV32)<br />
+                  3. Deep Pipelined Harvard with Forwarding (Hazard3, SCR1)<br />
+                  4. Superscalar Dual-Issue (VeeR EL2)
+                </td>
+              </tr>
+              <tr style="background: #fafaf5;">
+                <td style="padding: 0.65rem 0.85rem;"><strong>Category 2: Application Cores</strong><br /><small class="text-muted">Linux-Capable Processors</small></td>
+                <td style="padding: 0.65rem 0.85rem; text-align: center;"><span class="badge badge-teal">4 Archetypes</span></td>
+                <td style="padding: 0.65rem 0.85rem;"><strong>Memory Wall &amp; Hazard Mitigation:</strong> Overcoming DRAM latency and branch misprediction penalties.</td>
+                <td style="padding: 0.65rem 0.85rem;">
+                  1. Classic In-Order Baseline (Rocket Chip)<br />
+                  2. Industrial Scoreboarded In-Order (CVA6 / Ariane)<br />
+                  3. Coherent Multi-Core Tile Node (BlackParrot)<br />
+                  4. Dynamic Speculative Out-of-Order Superscalar (BOOM, OpenC910)
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 0.65rem 0.85rem;"><strong>Category 3: Vector &amp; Accelerators</strong><br /><small class="text-muted">Spatial &amp; SIMD Engines</small></td>
+                <td style="padding: 0.65rem 0.85rem; text-align: center;"><span class="badge badge-coral">8 Archetypes</span></td>
+                <td style="padding: 0.65rem 0.85rem;"><strong>Spatial Parallelism &amp; Algebra Dimensions:</strong> 1D sequential vectoring vs. 2D systolic meshes vs. DAE streaming vs. SIMT.</td>
+                <td style="padding: 0.65rem 0.85rem;">
+                  1. Sub-Word SIMD &bull; 2. Embedded RVV (Spatz)<br />
+                  3. Monolithic Multi-Lane RVV (Ara) &bull; 4. Clustered VRF (AraXL)<br />
+                  5. DAE Streaming (Snitch SSR) &bull; 6. 2D Systolic Mesh (Gemmini)<br />
+                  7. Vector-Matrix Tile Tensor &bull; 8. Multi-Warp SIMT GPGPU (Vortex)
+                </td>
+              </tr>
+              <tr style="background: #fafaf5;">
+                <td style="padding: 0.65rem 0.85rem;"><strong>Category 4: SoCs &amp; Manycores</strong><br /><small class="text-muted">Clusters &amp; Interconnects</small></td>
+                <td style="padding: 0.65rem 0.85rem; text-align: center;"><span class="badge badge-lime">5 Archetypes</span></td>
+                <td style="padding: 0.65rem 0.85rem;"><strong>Interconnect Topology &amp; Consistency Scaling:</strong> Bus &rarr; TCDM Crossbar &rarr; System AXI &rarr; Coherent Mesh &rarr; Chiplet TCDM.</td>
+                <td style="padding: 0.65rem 0.85rem;">
+                  1. Microcontroller Bus SoCs (PULPissimo, IOb-SoC)<br />
+                  2. Shared-L1 Compute Clusters (PULP / Snitch Cluster)<br />
+                  3. Linux Application Host SoCs (Cheshire, Carfield)<br />
+                  4. Directory-Coherent Tiled 2D Mesh Manycores (OpenPiton, Astral)<br />
+                  5. Ultra-Scale Flat Scratchpad &amp; Chiplet Manycores (MemPool, Occamy)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="analogy-banner" style="background: var(--yellow-soft, #fefce8); border-left: 6px solid var(--yellow, #eab308); margin: 0;">
+          <div class="analogy-icon">&#9878;</div>
+          <div class="analogy-text">
+            <strong>The Takeaway:</strong> Having 4, 4, 8, and 5 archetypes is not a design inconsistency—it is <strong>proof of scientific rigor</strong>. It demonstrates that SCORE's categorization is derived directly from empirical silicon physics, memory walls, and communication constraints, rather than forced into an artificial, ungrounded template.
+          </div>
         </div>
       </div>
     </section>

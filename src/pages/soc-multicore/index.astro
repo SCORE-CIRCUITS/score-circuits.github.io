@@ -108,7 +108,7 @@ const masterBenchmarkData = [
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
     isa: "RV32IMA (Snitch)",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad Manycores",
     hostCore: "Control Hart",
     computeCores: "256x Snitch PEs (16 Clusters x 16 Cores)",
     interconnect: "Hierarchical Logarithmic TCDM Crossbar",
@@ -132,7 +132,7 @@ const masterBenchmarkData = [
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
     isa: "RV32IMA (Snitch)",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad Manycores",
     hostCore: "Control Hart",
     computeCores: "16x Snitch PEs (1 Cluster)",
     interconnect: "Single-Cluster Logarithmic Crossbar",
@@ -156,7 +156,7 @@ const masterBenchmarkData = [
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
     isa: "RV32IMA (Snitch)",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad Manycores",
     hostCore: "Control Hart",
     computeCores: "16x Snitch PEs (1 Cluster)",
     interconnect: "Single-Cluster Logarithmic Crossbar",
@@ -180,7 +180,7 @@ const masterBenchmarkData = [
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
     isa: "RV32IMA (Snitch)",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad Manycores",
     hostCore: "Control Hart",
     computeCores: "16x Snitch PEs (1 Cluster)",
     interconnect: "Single-Cluster Logarithmic Crossbar",
@@ -204,7 +204,7 @@ const masterBenchmarkData = [
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
     isa: "RV32IMA (Snitch)",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad Manycores",
     hostCore: "Control Hart",
     computeCores: "16x Snitch PEs (1 Cluster)",
     interconnect: "Single-Cluster Logarithmic Crossbar",
@@ -516,7 +516,7 @@ const masterBenchmarkData = [
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
     isa: "RV64GC (Host) + Snitch FPU",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad & Multi-Chiplet Platforms",
     hostCore: "4x CVA6 Managers",
     computeCores: "432x Snitch FPUs (48 Clusters)",
     interconnect: "FlooNoC 2D Mesh + D2D AXI5 Link",
@@ -540,7 +540,7 @@ const masterBenchmarkData = [
     lang: "Verilog",
     license: "BSD-3-Clause",
     isa: "RV64GC (Ariane)",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 4: Directory-Coherent Tiled 2D Mesh Manycores",
     hostCore: "Ariane (CVA6)",
     computeCores: "Scalable 1 to 500+ Tiles",
     interconnect: "P-Mesh Coherent Network (3 Physical Networks)",
@@ -588,7 +588,7 @@ const masterBenchmarkData = [
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
     isa: "Custom Sync Engine",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 4: Directory-Coherent Tiled 2D Mesh Manycores",
     hostCore: "Snitch Cluster Interface",
     computeCores: "Hardware Barrier Collective Engine",
     interconnect: "Tree Reduction Network + FlooNoC",
@@ -768,17 +768,32 @@ const socArchetypes = [
   {
     id: "archetype-4",
     number: "04",
-    title: "Massive Manycore Systems & Scalable NoC / Multi-Chiplet Platforms",
-    subtitle: "64 to 432+ Cores, Distributed 2D Mesh FlooNoC / P-Mesh, High-Bandwidth Memory (HBM2e), and Chiplet Links",
-    platforms: "MemPool (256C), Occamy (432C), OpenPiton, Astral, Auteur, Picobello",
+    title: "Directory-Coherent Tiled 2D Mesh Manycore Systems",
+    subtitle: "Scalable 2D Mesh (P-Mesh / FlooNoC), Distributed L1.5/L2 Cache Slices, and Hardware Directory MESI Protocols",
+    platforms: "OpenPiton, Astral, Auteur, Picobello",
     badgeClass: "badge-coral",
     accentColor: "var(--coral)",
-    coreFocus: "Extreme-scale parallel computing, deep learning inference/training, scientific computing, and manycore research",
-    interconnectDesc: "Scalable 2D Mesh Networks-on-Chip (FlooNoC, P-Mesh) or multi-level hierarchical logarithmic fabrics; multi-chiplet die-to-die (D2D) links.",
-    memoryDesc: "Massive multi-megabyte shared L1/L2 scratchpads (e.g. 1MB 1024-bank TCDM in MemPool) or high-bandwidth 3D-stacked memory (HBM2e at 820 GB/s).",
-    dmaDesc: "Wide 512-bit multi-channel cluster DMA subsystems capable of saturating multi-terabit/s memory crossbars.",
-    syncDesc: "In-network collective hardware barrier engines (FractalSync) and dedicated reduction trees to smash the Manycore Barrier Wall.",
-    limitation: "High physical floorplan complexity, significant physical clock-tree power, and non-uniform memory access (NUMA) latency across tiles."
+    coreFocus: "General-purpose SMP Linux manycore scaling, multi-threaded server workloads, and hardware cache coherence research",
+    interconnectDesc: "Packet-switched 2D Mesh Networks-on-Chip (e.g. 3 independent physical meshes in P-Mesh or virtual-channel FlooNoC) preventing protocol deadlock.",
+    memoryDesc: "Distributed shared L1.5 and L2 cache slices across tiles with hardware directory controllers maintaining MESI/MOESI cache coherence.",
+    dmaDesc: "Packetized NoC DMA engines and network interfaces streaming cache lines directly through coherent memory tiles.",
+    syncDesc: "Hardware directory invalidations, atomic memory operations across mesh tiles, and in-network collective barriers (FractalSync).",
+    limitation: "Directory storage overhead and coherence invalidation traffic scale quadratically without hierarchical filtering, introducing latency hops at large grid dimensions."
+  },
+  {
+    id: "archetype-5",
+    number: "05",
+    title: "Ultra-Scale Flat Scratchpad Manycores & Multi-Chiplet Platforms",
+    subtitle: "256 to 432+ Cores, Flat Multi-Megabyte Interleaved L1 TCDM, Hierarchical FlooNoC, HBM2e & Die-to-Die (D2D) Links",
+    platforms: "MemPool (256C), Occamy (432C HBM2e)",
+    badgeClass: "badge-yellow",
+    accentColor: "#eab308",
+    coreFocus: "Extreme-scale parallel computing, dense linear algebra, scientific computing, and multi-chiplet packaging",
+    interconnectDesc: "Hierarchical multi-stage logarithmic crossbars (MemPool 1,024-bank pseudo-random interleaving) and wide 512-bit FlooNoC with D2D AXI5 links.",
+    memoryDesc: "Massive multi-megabyte flat scratchpads (1MB L1 TCDM with pseudo-random address interleaving to eliminate bank conflicts) or 3D-stacked HBM2e (820 GB/s).",
+    dmaDesc: "Ultra-wide 512-bit multi-channel cluster DMA subsystems capable of saturating multi-terabit/s memory crossbars.",
+    syncDesc: "In-network collective hardware barrier engines (FractalSync) and dedicated reduction trees to smash the Manycore Barrier Wall in single-digit cycles.",
+    limitation: "Requires explicit software DMA scheduling and non-cached data movement; lack of hardware cache coherence requires compiler/runtime-managed consistency."
   }
 ];
 
@@ -815,7 +830,7 @@ const socTaxonomyMatrix = [
   {
     name: "MemPool",
     slug: "mempool",
-    archetype: "Archetype 4",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad Manycores",
     host: "Control Hart",
     compute: "256x Snitch PEs (16 Clusters)",
     interconnect: "Hierarchical Logarithmic TCDM",
@@ -843,7 +858,7 @@ const socTaxonomyMatrix = [
   {
     name: "Occamy",
     slug: "occamy",
-    archetype: "Archetype 4",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad & Multi-Chiplet Platforms",
     host: "4x CVA6 Managers",
     compute: "432x Snitch FPUs (Dual Chiplet)",
     interconnect: "FlooNoC 2D Mesh + D2D AXI5",
@@ -857,7 +872,7 @@ const socTaxonomyMatrix = [
   {
     name: "OpenPiton",
     slug: "openpiton",
-    archetype: "Archetype 4",
+    archetype: "Archetype 4: Directory-Coherent Tiled 2D Mesh Manycores",
     host: "Ariane / CVA6 / SPARC",
     compute: "Scalable 1 to 500+ Tiles",
     interconnect: "P-Mesh (3 Physical 2D Meshes)",
@@ -955,7 +970,7 @@ const socTaxonomyMatrix = [
   {
     name: "Picobello",
     slug: "picobello",
-    archetype: "Archetype 4",
+    archetype: "Archetype 4: Directory-Coherent Tiled 2D Mesh Manycores",
     host: "Snitch Control Interface",
     compute: "FractalSync Hardware Engine",
     interconnect: "Tree Reduction Network + FlooNoC",
@@ -1205,7 +1220,7 @@ const bespokeSocDossiers = [
     org: "ETH Zürich (Matheus Cavalcante et al.)",
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad Manycores",
     hostCore: "Control Hart + 256 Snitch Worker PEs",
     bus: "Hierarchical Logarithmic TCDM Interconnect",
     tapeout: "Fabricated in TSMC 22nm FDX (500 MHz, 256 cores, 1MB L1)",
@@ -1269,7 +1284,7 @@ const bespokeSocDossiers = [
     org: "ETH Zürich (Fabian Schuiki et al.)",
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad & Multi-Chiplet Platforms",
     hostCore: "4x CVA6 64-bit Management Cores",
     bus: "FlooNoC 2D Mesh + AXI5 Die-to-Die (D2D) Link",
     tapeout: "Packaged Dual-Chiplet ASIC on Silicon Interposer",
@@ -1301,7 +1316,7 @@ const bespokeSocDossiers = [
     org: "Princeton University (David Wentzlaff et al.)",
     lang: "Verilog / SystemVerilog",
     license: "BSD-3-Clause",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 4: Directory-Coherent Tiled 2D Mesh Manycores",
     hostCore: "Ariane (CVA6) / OpenSPARC T1",
     bus: "P-Mesh (3 Independent Physical 2D Meshes)",
     tapeout: "Piton ASIC in IBM 32nm SOI (25-core chip); multi-core FPGA tapeouts",
@@ -1505,7 +1520,7 @@ const bespokeSocDossiers = [
     org: "ETH Zürich / University of Bologna",
     lang: "SystemVerilog",
     license: "Solderpad-0.51",
-    archetype: "Archetype 4: Massive Manycore Systems",
+    archetype: "Archetype 4: Directory-Coherent Tiled 2D Mesh Manycores",
     hostCore: "Snitch Cluster Interface",
     bus: "Tree Reduction Network + FlooNoC Mesh",
     tapeout: "Fabricated on GlobalFoundries 22FDX ASIC",
@@ -1801,81 +1816,29 @@ const bespokeSocDossiers = [
   }
 ];
 
-// Fallback technical summaries for Category 0 Infrastructure & Tooling
-const infraToolsList = [
-  {
-    name: "DRAMSim2",
-    slug: "dramsim2",
-    org: "University of Maryland",
-    lang: "C++",
-    license: "BSD-3-Clause",
-    desc: "Cycle-accurate memory system simulator for DDR2/DDR3 memory systems. Used in SCORE to model realistic DRAM controller latencies and memory controller contention."
-  },
-  {
-    name: "GHDL",
-    slug: "ghdl",
-    org: "Tristan Gingold et al.",
-    lang: "VHDL / Ada / C++",
-    license: "GPL-2.0",
-    desc: "Open-source VHDL simulator capable of compiling VHDL 2008 designs down to native machine code via LLVM/GCC. Primary simulator for NEORV32 and VHDL RISC-V platforms."
-  },
-  {
-    name: "HERO Toolchain Installer",
-    slug: "hero-install",
-    org: "ETH Zürich",
-    lang: "Shell / Python",
-    license: "Apache-2.0",
-    desc: "Automated deployment harness installing LLVM heterogeneous OpenMP compilers and cross-compilers for ARMv8 and PULP cluster architectures."
-  },
-  {
-    name: "Ibex Host Tools",
-    slug: "ibex-host-tools",
-    org: "lowRISC",
-    lang: "Python / C++",
-    license: "Apache-2.0",
-    desc: "Host-side development utilities for lowRISC Ibex, including memory image converters, trace log analyzers, and co-simulation bridges."
-  },
-  {
-    name: "NOCulator",
-    slug: "noculator",
-    org: "Open-Source Research",
-    lang: "C++",
-    license: "MIT",
-    desc: "Cycle-accurate on-chip network simulator modeling virtual-channel routers, flit buffers, crossbar contention, and latency distributions."
-  },
-  {
-    name: "Py2HWSW",
-    slug: "py2hwsw",
-    org: "IObundle Lda",
-    lang: "Python",
-    license: "MIT",
-    desc: "Python framework for generating hardware designs, testbenches, and software drivers. Drives the IOb-SoC automated IP generation pipeline."
-  },
-  {
-    name: "RISC-V Compliance Suite",
-    slug: "riscv-compliance",
-    org: "RISC-V International",
-    lang: "Assembly / C",
-    license: "BSD-3-Clause",
-    desc: "Golden architectural validation test suites verifying core adherence to RV32I, RV64I, M, A, F, D, and C unprivileged and privileged specifications."
-  },
-  {
-    name: "RISC-V Toolchain Wrapper",
-    slug: "riscv_toolchain_wrapper",
-    org: "SCORE Project",
-    lang: "Shell",
-    license: "Apache-2.0",
-    desc: "Unified cross-compiler wrapper managing target ABI discovery, optimization flag injection (-O3, -funroll-loops), and link script mapping."
-  },
-  {
-    name: "Verilator Wrapper",
-    slug: "verilator_wrapper",
-    org: "SCORE Project",
-    lang: "C++ / Shell",
-    license: "Apache-2.0",
-    desc: "Standardized multithreaded Verilator compilation and execution runner with cycle-exact performance counters, trace generation, and memory checkers."
-  }
-];
+// Master Category 0 Infrastructure, Verification & RTL Generation Tooling
+const cat0Fallbacks: Record<string, string> = {
+  dramsim2: "Cycle-accurate memory system simulator for DDR2/DDR3 memory systems. Used in SCORE to model realistic DRAM controller latencies and memory controller contention.",
+  ghdl: "Open-source VHDL simulator capable of compiling VHDL 2008 designs down to native machine code via LLVM/GCC. Primary simulator for NEORV32 and VHDL RISC-V platforms.",
+  "hero-install": "Automated deployment harness installing LLVM heterogeneous OpenMP compilers and cross-compilers for ARMv8 and PULP cluster architectures.",
+  "ibex-host-tools": "Host-side development utilities for lowRISC Ibex, including memory image converters, trace log analyzers, and co-simulation bridges.",
+  noculator: "Cycle-accurate on-chip network simulator modeling virtual-channel routers, flit buffers, crossbar contention, and latency distributions.",
+  py2hwsw: "Python framework for generating hardware designs, testbenches, and software drivers. Drives the IOb-SoC automated IP generation pipeline.",
+  "riscv-compliance": "Golden architectural validation test suites verifying core adherence to RV32I, RV64I, M, A, F, D, and C unprivileged and privileged specifications.",
+  riscv_toolchain_wrapper: "Unified cross-compiler wrapper managing target ABI discovery, optimization flag injection (-O3, -funroll-loops), and link script mapping.",
+  verilator_wrapper: "Standardized multithreaded Verilator compilation and execution runner with cycle-exact performance counters, trace generation, and memory checkers."
+};
+
+const infraToolsList = ((db as any).tools || [])
+  .filter((tool: any) => tool.categoryNumber === 0)
+  .map((tool: any) => ({
+    name: tool.name,
+    slug: tool.slug,
+    org: tool.organization || tool.org || "Open Source Community",
+    lang: tool.language || tool.lang || "RTL / Tooling",
+    license: tool.license || "Open-Source",
+    desc: cat0Fallbacks[tool.slug] || tool.subtitle || tool.notableStrengths || "Open-source hardware infrastructure and tooling framework."
+  }));
 ---
 
 <BaseLayout
@@ -1906,7 +1869,7 @@ const infraToolsList = [
       <a href="#soc-foundations" class="core-jump-pill">&sect; 1. SoC Foundations</a>
       <a href="#interconnect-standards" class="core-jump-pill">&sect; 1.2 Interconnect Standards</a>
       <a href="#divergence-drivers" class="core-jump-pill">&sect; 1.3 Divergence Drivers</a>
-      <a href="#soc-spectrum" class="core-jump-pill">&sect; 2. The Four Archetypes</a>
+      <a href="#soc-spectrum" class="core-jump-pill">&sect; 2. The Five Archetypes</a>
       <a href="#sim-barrier-wall" class="core-jump-pill pill-sim">&#9654; Sim 1: Barrier Wall</a>
       <a href="#sim-dma-inflection" class="core-jump-pill pill-sim">&#9654; Sim 2: DMA Inflection</a>
       <a href="#shared-dna" class="core-jump-pill">&sect; 3. Shared System DNA</a>
@@ -1914,7 +1877,7 @@ const infraToolsList = [
       <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Empirical Leaderboard</a>
       <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Multi-Config Scaling</a>
       <a href="#soc-dossiers" class="core-jump-pill">&sect; 7. Native SoC Dossiers (23)</a>
-      <a href="#infra-section" class="core-jump-pill pill-infra">&#9881; Tooling (9)</a>
+      <a href="#infra-section" class="core-jump-pill pill-infra">&#9881; Tooling &amp; HLS ({infraToolsList.length})</a>
     </div>
   </div>
 
@@ -1956,8 +1919,8 @@ const infraToolsList = [
           <rect x="15" y="15" width="930" height="490" rx="12" fill="none" stroke="#151b20" stroke-width="2.5"/>
 
           <!-- Top Title Bar -->
-          <rect x="15" y="15" width="930" height="34" rx="12" fill="#151b20"/>
-          <text x="480" y="38" font-size="12" font-weight="900" fill="#fffaf0" font-family="var(--md-code-font, monospace)" text-anchor="middle" letter-spacing="1">
+          <rect x="15" y="15" width="930" height="34" rx="12" fill="#b7df69" stroke="#151b20" stroke-width="2.5"/>
+          <text x="480" y="38" font-size="12" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle" letter-spacing="1">
             COMPLETE SYSTEM-ON-CHIP (SOC) HARDWARE FABRIC &amp; MANYCORE INTERCONNECT
           </text>
 
@@ -2302,14 +2265,14 @@ const infraToolsList = [
   <!-- ============================================================ -->
   <section id="soc-spectrum" class="content-block">
     <div class="block-header-wrap">
-      <div class="badge badge-accent">&sect; 2. THE MULTI-CORE &amp; SOC SPECTRUM: FOUR SYSTEM ARCHETYPES</div>
-      <h2 class="block-title">The Four Architectural Archetypes of Open-Source Systems</h2>
+      <div class="badge badge-accent">&sect; 2. THE MULTI-CORE &amp; SOC SPECTRUM: FIVE SYSTEM ARCHETYPES</div>
+      <h2 class="block-title">The Five Architectural Archetypes of Open-Source Systems</h2>
       <p class="block-desc">
-        Every evaluated platform belongs to one of four distinct system archetypes ordered progressively from single-core bus-centric microcontrollers to massive multi-chiplet manycores:
+        Every evaluated platform belongs to one of five distinct system archetypes ordered progressively from single-core bus-centric microcontrollers to massive multi-chiplet manycores:
       </p>
     </div>
 
-    <!-- The 4 Archetype Cards Progression Ladder -->
+    <!-- The 5 Archetype Cards Progression Ladder -->
     <div class="archetypes-ladder">
       {socArchetypes.map((arch) => (
         <article class="arch-card" id={arch.id} style={`border-top: 4px solid ${arch.accentColor};`}>
@@ -2588,7 +2551,8 @@ const infraToolsList = [
       <button class="btn btn-outline btn-sm matrix-filter-btn" data-tier="Archetype 1">Archetype 1: Embedded SoCs</button>
       <button class="btn btn-outline btn-sm matrix-filter-btn" data-tier="Archetype 2">Archetype 2: Shared-L1 Clusters</button>
       <button class="btn btn-outline btn-sm matrix-filter-btn" data-tier="Archetype 3">Archetype 3: Linux SoCs</button>
-      <button class="btn btn-outline btn-sm matrix-filter-btn" data-tier="Archetype 4">Archetype 4: Manycore NoCs</button>
+      <button class="btn btn-outline btn-sm matrix-filter-btn" data-tier="Archetype 4">Archetype 4: Coherent NoC Manycores</button>
+      <button class="btn btn-outline btn-sm matrix-filter-btn" data-tier="Archetype 5">Archetype 5: Scratchpad &amp; Chiplet</button>
     </div>
 
     <div class="table-responsive" style="margin-top: 1rem;">
@@ -3010,9 +2974,9 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
   <section class="dossiers-container" id="infra-section">
     <div class="section-title-wrap">
       <div class="badge badge-accent">&sect; 8. INFRASTRUCTURE &amp; COMPILER TOOLING</div>
-      <h2 class="section-heading">Category 0: Verification, Simulation &amp; Synthesis Tooling</h2>
+      <h2 class="section-heading">Category 0: Verification, Simulation &amp; Synthesis Tooling ({infraToolsList.length} Frameworks)</h2>
       <p class="section-sub">
-        Standardized compilers, wrappers, memory simulators, and compliance harnesses supporting the Level 4 SoC evaluation pipeline.
+        Standardized compilers, High-Level Synthesis (HLS) engines, Meta-HDLs, memory simulators, and compliance harnesses supporting the SCORE evaluation pipeline.
       </p>
     </div>
 
@@ -3408,81 +3372,98 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
 
   /* Master Hardware Schematic Box */
   .schematic-container {
-    background: #151b20;
-    border: 2px solid #000;
-    border-radius: 8px;
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
     padding: 1.25rem;
     margin: 1.5rem 0;
-    box-shadow: 4px 4px 0 #000;
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
     overflow-x: auto;
   }
   .schematic-header {
     margin-bottom: 0.75rem;
   }
   .schematic-tag {
-    color: var(--yellow, #ffc83e);
-    font-family: monospace;
+    color: var(--ink, #151b20);
+    font-family: var(--md-code-font, monospace);
     font-weight: 800;
     font-size: 0.85rem;
     letter-spacing: 0.05em;
   }
   .schematic-art {
-    color: #e2e8f0;
-    font-family: monospace;
+    color: var(--ink, #151b20);
+    background: var(--cream, #fffaf0);
+    font-family: var(--md-code-font, monospace);
     font-size: 0.78rem;
     line-height: 1.25;
     margin: 0;
+    padding: 1rem;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
     white-space: pre;
   }
 
-  /* Subsystem 6-Grid */
+  /* Subsystem Breakdown - Top-Down Linear Flow for Mobile & Desktop */
   .subsystem-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 1.25rem;
     margin-top: 1.5rem;
   }
   .subsystem-card {
-    background: #fff;
+    background: var(--cream, #fffaf0);
     border: 2px solid var(--ink, #151b20);
-    border-radius: 8px;
-    padding: 1.25rem;
+    border-radius: 10px;
+    padding: 1.35rem 1.5rem;
     box-shadow: 3px 3px 0 var(--ink, #151b20);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .subsystem-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
   }
   .sub-header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.65rem;
     margin-bottom: 0.75rem;
+    border-bottom: 1.5px dashed var(--line, #eee4c8);
+    padding-bottom: 0.5rem;
   }
   .sub-icon {
-    font-size: 1.25rem;
+    font-size: 1.35rem;
   }
   .sub-title {
-    font-weight: 800;
-    font-size: 1rem;
+    font-weight: 900;
+    font-size: 1.05rem;
     color: var(--ink, #151b20);
+    letter-spacing: -0.01em;
   }
   .sub-desc {
-    font-size: 0.9rem;
-    color: #4a5568;
-    line-height: 1.55;
+    font-size: 0.92rem;
+    color: #334155;
+    line-height: 1.6;
     margin: 0;
   }
 
-  /* Divergence Drivers Grid */
+  /* Divergence Drivers - Top-Down Linear Stack */
   .divergence-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 1.25rem;
     margin-top: 1.25rem;
   }
   .div-card {
-    background: #fff;
+    background: var(--cream, #fffaf0);
     border: 2px solid var(--ink, #151b20);
-    border-radius: 8px;
-    padding: 1.25rem;
+    border-radius: 10px;
+    padding: 1.35rem 1.5rem;
     box-shadow: 3px 3px 0 var(--ink, #151b20);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .div-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
   }
   .div-num {
     font-family: monospace;
@@ -3885,7 +3866,7 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
 
   /* LaTeX Export Box */
   .latex-export-box {
-    background: #1e293b;
+    background: var(--paper, #f6f0dc);
     border: 2px solid var(--ink, #151b20);
     border-radius: 8px;
     padding: 1rem;
@@ -3896,7 +3877,7 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #f8fafc;
+    color: var(--ink, #151b20);
     font-weight: 800;
     font-size: 0.85rem;
     margin-bottom: 0.5rem;
@@ -3904,15 +3885,19 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
   .close-latex-btn {
     background: none;
     border: none;
-    color: #94a3b8;
+    color: var(--ink, #151b20);
     font-size: 1.25rem;
     cursor: pointer;
   }
   .latex-code {
-    color: #38bdf8;
-    font-family: monospace;
-    font-size: 0.75rem;
-    line-height: 1.35;
+    color: var(--ink, #151b20);
+    background: var(--cream, #fffaf0);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 1rem;
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.78rem;
+    line-height: 1.45;
     margin: 0;
     white-space: pre-wrap;
   }

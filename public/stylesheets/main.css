@@ -219,8 +219,10 @@ code, kbd, samp, pre {
 .latex-code-pre {
   margin: 0;
   padding: 1.25rem;
-  background: #181d22;
-  color: #f6f0dc;
+  background: var(--cream, #fffaf0);
+  color: var(--ink, #151b20);
+  border: 1.5px solid var(--ink, #151b20);
+  border-radius: 6px;
   font-family: var(--md-code-font, monospace);
   font-size: 0.82rem;
   line-height: 1.55;
