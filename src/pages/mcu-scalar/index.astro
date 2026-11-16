@@ -687,6 +687,7 @@ const bespokeDossiers = [
       <span class="jump-label">Jump to Section:</span>
       <a href="#core-foundations" class="core-jump-pill">&sect; 1. Core Anatomy</a>
       <a href="#isa-spectrum" class="core-jump-pill">&sect; 1.2 Modular ISA</a>
+      <a href="#rv32-base-isa-table" class="core-jump-pill" style="background: var(--teal, #0d9488); color: #fff; border-color: var(--ink, #151b20);">&sect; 1.2 Full RV32I/E ISA (40 Insts)</a>
       <a href="#divergence-drivers" class="core-jump-pill">&sect; 1.3 Divergence Drivers</a>
       <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. The Four Archetypes</a>
       <a href="#archetype-1-deepdive" class="core-jump-pill">&sect; 2.1 Archetype 1</a>
@@ -1289,6 +1290,539 @@ const bespokeDossiers = [
                 <span class="isa-metric-val">Ultra-compact silicon envelopes, IoT sensor nodes, and tiny FPGA soft-cores (SERV, DarkRISCV, NEORV32-E).</span>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Architectural Register Mapping: RV32I vs RV32E -->
+        <div class="isa-reg-comparison-box" style="margin-top: 1.5rem; margin-bottom: 2rem;">
+          <div class="isa-reg-header">
+            <span class="pill-badge badge-purple">REGISTER FILE COMPARISON</span>
+            <h5 class="isa-reg-title">RV32I vs. RV32E Architectural Register Mapping &amp; ABI Conventions</h5>
+          </div>
+          <p class="isa-reg-desc">
+            Both RV32I and RV32E execute the <strong>identical 40 base integer instructions</strong>. The only distinction lies in the architectural register file index space: RV32E restricts register specifiers to <code>x0&ndash;x15</code> (requiring the MSB bit 4 of <code>rs1</code>, <code>rs2</code>, and <code>rd</code> to be <code>0</code>). Any attempt to access <code>x16&ndash;x31</code> on an RV32E core triggers a hardware <strong>Illegal Instruction Exception</strong>:
+          </p>
+          <div class="table-scroll" style="margin-top: 0.75rem;">
+            <table class="data-table isa-reg-table">
+              <thead>
+                <tr>
+                  <th>Register</th>
+                  <th>ABI Name</th>
+                  <th>Saver Role</th>
+                  <th>RV32I (32 GPRs &bull; ilp32 ABI)</th>
+                  <th>RV32E (16 GPRs &bull; ilp32e ABI)</th>
+                  <th>Architectural Function</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>x0</code></td><td><code>zero</code></td><td>&mdash;</td><td><span class="status-badge ok">✓ Hardwired 0</span></td><td><span class="status-badge ok">✓ Hardwired 0</span></td><td>Always reads 0x00000000; writes discarded (synthesizes <code>nop</code>, <code>mv</code>, <code>j</code>)</td></tr>
+                <tr><td><code>x1</code></td><td><code>ra</code></td><td>Caller</td><td><span class="status-badge ok">✓ Supported</span></td><td><span class="status-badge ok">✓ Supported</span></td><td>Return address for function calls (<code>jal</code>, <code>jalr</code>)</td></tr>
+                <tr><td><code>x2</code></td><td><code>sp</code></td><td>Callee</td><td><span class="status-badge ok">✓ Supported</span></td><td><span class="status-badge ok">✓ Supported</span></td><td>Stack pointer (must remain 16-byte aligned by ABI rule)</td></tr>
+                <tr><td><code>x3</code></td><td><code>gp</code></td><td>&mdash;</td><td><span class="status-badge ok">✓ Supported</span></td><td><span class="status-badge ok">✓ Supported</span></td><td>Global pointer (points into small data section for 1-cycle access)</td></tr>
+                <tr><td><code>x4</code></td><td><code>tp</code></td><td>&mdash;</td><td><span class="status-badge ok">✓ Supported</span></td><td><span class="status-badge ok">✓ Supported</span></td><td>Thread pointer (used in multi-threaded RTOS / thread-local storage)</td></tr>
+                <tr><td><code>x5&ndash;x7</code></td><td><code>t0&ndash;t2</code></td><td>Caller</td><td><span class="status-badge ok">✓ Supported</span></td><td><span class="status-badge ok">✓ Supported</span></td><td>Temporary registers for scratch expressions across basic blocks</td></tr>
+                <tr><td><code>x8</code></td><td><code>s0 / fp</code></td><td>Callee</td><td><span class="status-badge ok">✓ Supported</span></td><td><span class="status-badge ok">✓ Supported</span></td><td>Saved register 0 or Frame pointer (tracks stack frame base)</td></tr>
+                <tr><td><code>x9</code></td><td><code>s1</code></td><td>Callee</td><td><span class="status-badge ok">✓ Supported</span></td><td><span class="status-badge ok">✓ Supported</span></td><td>Saved register 1 (preserved across function calls)</td></tr>
+                <tr><td><code>x10&ndash;x11</code></td><td><code>a0&ndash;a1</code></td><td>Caller</td><td><span class="status-badge ok">✓ Supported</span></td><td><span class="status-badge ok">✓ Supported</span></td><td>Function arguments 0&ndash;1 and function return values 0&ndash;1</td></tr>
+                <tr><td><code>x12&ndash;x15</code></td><td><code>a2&ndash;a5</code></td><td>Caller</td><td><span class="status-badge ok">✓ Supported</span></td><td><span class="status-badge ok">✓ Supported</span></td><td>Function arguments 2&ndash;5</td></tr>
+                <tr class="rv32e-omitted-row">
+                  <td><code>x16&ndash;x17</code></td>
+                  <td><code>a6&ndash;a7</code></td>
+                  <td>Caller</td>
+                  <td><span class="status-badge ok">✓ Supported</span></td>
+                  <td><span class="status-badge fail">✗ Triggers Illegal Inst</span></td>
+                  <td>Function arguments 6&ndash;7 (in RV32E, spilled to memory stack via <code>sw</code>)</td>
+                </tr>
+                <tr class="rv32e-omitted-row">
+                  <td><code>x18&ndash;x27</code></td>
+                  <td><code>s2&ndash;s11</code></td>
+                  <td>Callee</td>
+                  <td><span class="status-badge ok">✓ Supported</span></td>
+                  <td><span class="status-badge fail">✗ Triggers Illegal Inst</span></td>
+                  <td>Saved registers 2&ndash;11 (in RV32E, compiler spills to stack frame)</td>
+                </tr>
+                <tr class="rv32e-omitted-row">
+                  <td><code>x28&ndash;x31</code></td>
+                  <td><code>t3&ndash;t6</code></td>
+                  <td>Caller</td>
+                  <td><span class="status-badge ok">✓ Supported</span></td>
+                  <td><span class="status-badge fail">✗ Triggers Illegal Inst</span></td>
+                  <td>Temporary registers 3&ndash;6 (in RV32E, compiler manages with <code>t0&ndash;t2</code>)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FULL 40-INSTRUCTION SPECIFICATION SECTION -->
+        <div id="rv32-base-isa-table" class="isa-full-table-block" style="margin-top: 2rem; margin-bottom: 2.5rem; background: var(--paper, #fdfbf7); border: 2px solid var(--ink, #151b20); border-radius: 12px; padding: 1.5rem; box-shadow: 4px 4px 0 var(--ink, #151b20);">
+          <div class="isa-table-head-flex" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+            <div>
+              <span class="pill-badge badge-teal">RATIFIED SPECIFICATION</span>
+              <h4 style="font-size: 1.35rem; font-weight: 900; margin-top: 0.35rem; margin-bottom: 0.35rem; color: var(--ink, #151b20);">
+                The Complete 40-Instruction Set of RV32I &amp; RV32E Base Integer ISAs
+              </h4>
+              <p style="font-size: 0.9rem; color: #4b5563; margin: 0; max-width: 850px;">
+                The official RISC-V unprivileged integer specification defines exactly <strong>40 unprivileged instructions</strong>. Both <strong>RV32I</strong> and <strong>RV32E</strong> share the identical 40 opcodes, functional encodings, and RTL semantics. Filter by functional category or search for any instruction below:
+              </p>
+            </div>
+            <!-- Search Input -->
+            <div class="isa-search-wrap">
+              <input type="text" id="isaSearchInput" class="isa-search-field" placeholder="🔍 Search mnemonic, opcode, syntax..." />
+            </div>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="isa-cat-filter-bar" style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem;">
+            <button class="isa-cat-btn active" data-isa-cat="all">All Base Instructions (40)</button>
+            <button class="isa-cat-btn" data-isa-cat="alu-reg">ALU Reg-Reg [R-Type] (10)</button>
+            <button class="isa-cat-btn" data-isa-cat="alu-imm">ALU Immediate [I-Type] (9)</button>
+            <button class="isa-cat-btn" data-isa-cat="upper-imm">Upper Immediate [U-Type] (2)</button>
+            <button class="isa-cat-btn" data-isa-cat="branches">Conditional Branches [B-Type] (6)</button>
+            <button class="isa-cat-btn" data-isa-cat="jumps">Unconditional Jumps [J/I-Type] (2)</button>
+            <button class="isa-cat-btn" data-isa-cat="loads">Memory Loads [I-Type] (5)</button>
+            <button class="isa-cat-btn" data-isa-cat="stores">Memory Stores [S-Type] (3)</button>
+            <button class="isa-cat-btn" data-isa-cat="system">System, Traps &amp; Sync [I-Type] (3)</button>
+          </div>
+
+          <!-- Mobile Scroll Hint -->
+          <div class="mobile-table-hint">
+            <span>&larr; Swipe horizontally to inspect bitfields, RTL semantics, and RV32E compatibility &rarr;</span>
+          </div>
+
+          <!-- The Table -->
+          <div class="table-scroll">
+            <table class="data-table isa-full-spec-table" id="isaFullSpecTable">
+              <thead>
+                <tr>
+                  <th style="min-width: 130px;">Mnemonic &amp; Syntax</th>
+                  <th>Format</th>
+                  <th>Opcode [6:0]</th>
+                  <th>funct3 [14:12]</th>
+                  <th>funct7 / Imm Field</th>
+                  <th style="min-width: 220px;">RTL Operation / Semantics</th>
+                  <th>RV32E Profile</th>
+                  <th style="min-width: 240px;">Architectural Purpose &amp; Silicon Path</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- 10 R-Type Instructions -->
+                <tr data-cat="alu-reg">
+                  <td><code>add rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] + R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Signed/unsigned integer addition; overflow ignored. Critical path on 32-bit carry-lookahead adder.</td>
+                </tr>
+                <tr data-cat="alu-reg">
+                  <td><code>sub rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0100000 (0x20)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] - R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Two's complement integer subtraction (adds inverted <code>~rs2</code> with carry-in = 1).</td>
+                </tr>
+                <tr data-cat="alu-reg">
+                  <td><code>sll rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] &lt;&lt; R[rs2][4:0]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Shift Left Logical; lowest 5 bits of rs2 determine shift amount (0..31 bits). Zero fill.</td>
+                </tr>
+                <tr data-cat="alu-reg">
+                  <td><code>slt rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>010 (0x2)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; (R[rs1] &lt;s R[rs2]) ? 1 : 0</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Set Less Than (Signed comparison). Writes 1 to rd if rs1 is smaller in signed two's complement.</td>
+                </tr>
+                <tr data-cat="alu-reg">
+                  <td><code>sltu rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; (R[rs1] &lt;u R[rs2]) ? 1 : 0</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Set Less Than Unsigned. Synthesizes boolean test <code>snez rd, rs</code> via <code>sltu rd, x0, rs</code>.</td>
+                </tr>
+                <tr data-cat="alu-reg">
+                  <td><code>xor rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>100 (0x4)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] ^ R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Bitwise Exclusive-OR across all 32 bit positions. Zero carry propagation delay.</td>
+                </tr>
+                <tr data-cat="alu-reg">
+                  <td><code>srl rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] &gt;&gt;&gt; R[rs2][4:0]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Shift Right Logical. Shifts right by rs2[4:0] bits, filling vacant upper bits with 0.</td>
+                </tr>
+                <tr data-cat="alu-reg">
+                  <td><code>sra rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>0100000 (0x20)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] &gt;&gt; R[rs2][4:0]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Shift Right Arithmetic. Shifts right by rs2[4:0] bits, replicating sign bit (rs1[31]).</td>
+                </tr>
+                <tr data-cat="alu-reg">
+                  <td><code>or rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>110 (0x6)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] | R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Bitwise OR across all 32 bit positions. Simple combinational gate layer.</td>
+                </tr>
+                <tr data-cat="alu-reg">
+                  <td><code>and rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>111 (0x7)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] &amp; R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Bitwise AND across all 32 bit positions. Used for bit-masking operations.</td>
+                </tr>
+
+                <!-- 9 I-Type ALU Instructions -->
+                <tr data-cat="alu-imm">
+                  <td><code>addi rd, rs1, imm</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0010011 (0x13)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] + sext(imm[11:0])</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Add 12-bit signed immediate (-2048..+2047). Synthesizes <code>nop</code> (<code>addi x0, x0, 0</code>) and <code>mv rd, rs</code>.</td>
+                </tr>
+                <tr data-cat="alu-imm">
+                  <td><code>slti rd, rs1, imm</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0010011 (0x13)</code></td>
+                  <td><code>010 (0x2)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; (R[rs1] &lt;s sext(imm)) ? 1 : 0</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Set Less Than Immediate (Signed). Compares rs1 against sign-extended 12-bit immediate.</td>
+                </tr>
+                <tr data-cat="alu-imm">
+                  <td><code>sltiu rd, rs1, imm</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0010011 (0x13)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; (R[rs1] &lt;u sext(imm)) ? 1 : 0</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Set Less Than Immediate Unsigned. Synthesizes <code>seqz rd, rs</code> (<code>sltiu rd, rs, 1</code>).</td>
+                </tr>
+                <tr data-cat="alu-imm">
+                  <td><code>xori rd, rs1, imm</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0010011 (0x13)</code></td>
+                  <td><code>100 (0x4)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] ^ sext(imm)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Bitwise XOR with 12-bit signed immediate. Synthesizes bitwise NOT (<code>xori rd, rs, -1</code>).</td>
+                </tr>
+                <tr data-cat="alu-imm">
+                  <td><code>ori rd, rs1, imm</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0010011 (0x13)</code></td>
+                  <td><code>110 (0x6)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] | sext(imm)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Bitwise OR with 12-bit signed immediate. Used to set constant bitflags.</td>
+                </tr>
+                <tr data-cat="alu-imm">
+                  <td><code>andi rd, rs1, imm</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0010011 (0x13)</code></td>
+                  <td><code>111 (0x7)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] &amp; sext(imm)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Bitwise AND with 12-bit signed immediate. Used to mask bitfields.</td>
+                </tr>
+                <tr data-cat="alu-imm">
+                  <td><code>slli rd, rs1, shamt</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0010011 (0x13)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>imm[11:5] = 0000000</code></td>
+                  <td><code>R[rd] &larr; R[rs1] &lt;&lt; shamt[4:0]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Shift Left Logical Immediate (0..31 bits). <code>shamt</code> encoded in bits [24:20].</td>
+                </tr>
+                <tr data-cat="alu-imm">
+                  <td><code>srli rd, rs1, shamt</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0010011 (0x13)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>imm[11:5] = 0000000</code></td>
+                  <td><code>R[rd] &larr; R[rs1] &gt;&gt;&gt; shamt[4:0]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Shift Right Logical Immediate (0..31 bits). Zero fill into upper vacated bit positions.</td>
+                </tr>
+                <tr data-cat="alu-imm">
+                  <td><code>srai rd, rs1, shamt</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0010011 (0x13)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>imm[11:5] = 0100000</code></td>
+                  <td><code>R[rd] &larr; R[rs1] &gt;&gt; shamt[4:0]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Shift Right Arithmetic Immediate. Preserves sign bit across division by powers of 2.</td>
+                </tr>
+
+                <!-- 2 U-Type Instructions -->
+                <tr data-cat="upper-imm">
+                  <td><code>lui rd, imm</code></td>
+                  <td><span class="fmt-badge fmt-u">U-Type</span></td>
+                  <td><code>0110111 (0x37)</code></td>
+                  <td>&mdash;</td>
+                  <td><code>imm[31:12] (20-bit)</code></td>
+                  <td><code>R[rd] &larr; imm[31:12] &lt;&lt; 12</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Load Upper Immediate. Writes 20-bit immediate into bits [31:12], zeroes lower 12 bits. Paired with <code>addi</code> to construct 32-bit constants.</td>
+                </tr>
+                <tr data-cat="upper-imm">
+                  <td><code>auipc rd, imm</code></td>
+                  <td><span class="fmt-badge fmt-u">U-Type</span></td>
+                  <td><code>0010111 (0x17)</code></td>
+                  <td>&mdash;</td>
+                  <td><code>imm[31:12] (20-bit)</code></td>
+                  <td><code>R[rd] &larr; PC + (imm[31:12] &lt;&lt; 12)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Add Upper Immediate to PC. Forms PC-relative addresses; essential for Position-Independent Code (PIC) and long jumps.</td>
+                </tr>
+
+                <!-- 2 Unconditional Jumps -->
+                <tr data-cat="jumps">
+                  <td><code>jal rd, offset</code></td>
+                  <td><span class="fmt-badge fmt-j">J-Type</span></td>
+                  <td><code>1101111 (0x6F)</code></td>
+                  <td>&mdash;</td>
+                  <td><code>imm[20|10:1|11|19:12]</code></td>
+                  <td><code>R[rd] &larr; PC + 4; PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Jump and Link (±1 MB range). Saves return PC in rd. Synthesizes unconditional jump <code>j</code> (<code>rd=x0</code>) and <code>call</code> (<code>rd=ra</code>).</td>
+                </tr>
+                <tr data-cat="jumps">
+                  <td><code>jalr rd, rs1, offset</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>1100111 (0x67)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>t = PC + 4; PC = (R[rs1] + sext(offset)) &amp; ~1; R[rd] = t</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Jump and Link Register. Computed indirect jump. Critical for function pointer calls, switch jump tables, and <code>ret</code> (<code>jalr x0, ra, 0</code>).</td>
+                </tr>
+
+                <!-- 6 Conditional Branches -->
+                <tr data-cat="branches">
+                  <td><code>beq rs1, rs2, offset</code></td>
+                  <td><span class="fmt-badge fmt-b">B-Type</span></td>
+                  <td><code>1100011 (0x63)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[12|10:5|4:1|11]</code></td>
+                  <td><code>if (R[rs1] == R[rs2]) PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Branch if Equal (±4 KB PC-relative displacement). Synthesizes <code>beqz rs, offset</code> (<code>beq rs, x0, offset</code>).</td>
+                </tr>
+                <tr data-cat="branches">
+                  <td><code>bne rs1, rs2, offset</code></td>
+                  <td><span class="fmt-badge fmt-b">B-Type</span></td>
+                  <td><code>1100011 (0x63)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>imm[12|10:5|4:1|11]</code></td>
+                  <td><code>if (R[rs1] != R[rs2]) PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Branch if Not Equal. Synthesizes <code>bnez rs, offset</code> (<code>bne rs, x0, offset</code>).</td>
+                </tr>
+                <tr data-cat="branches">
+                  <td><code>blt rs1, rs2, offset</code></td>
+                  <td><span class="fmt-badge fmt-b">B-Type</span></td>
+                  <td><code>1100011 (0x63)</code></td>
+                  <td><code>100 (0x4)</code></td>
+                  <td><code>imm[12|10:5|4:1|11]</code></td>
+                  <td><code>if (R[rs1] &lt;s R[rs2]) PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Branch if Less Than (Signed comparison). Synthesizes <code>bltz rs, offset</code> (<code>blt rs, x0, offset</code>).</td>
+                </tr>
+                <tr data-cat="branches">
+                  <td><code>bge rs1, rs2, offset</code></td>
+                  <td><span class="fmt-badge fmt-b">B-Type</span></td>
+                  <td><code>1100011 (0x63)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>imm[12|10:5|4:1|11]</code></td>
+                  <td><code>if (R[rs1] &gt;=s R[rs2]) PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Branch if Greater or Equal (Signed). Synthesizes <code>bgez rs, offset</code> (<code>bge rs, x0, offset</code>).</td>
+                </tr>
+                <tr data-cat="branches">
+                  <td><code>bltu rs1, rs2, offset</code></td>
+                  <td><span class="fmt-badge fmt-b">B-Type</span></td>
+                  <td><code>1100011 (0x63)</code></td>
+                  <td><code>110 (0x6)</code></td>
+                  <td><code>imm[12|10:5|4:1|11]</code></td>
+                  <td><code>if (R[rs1] &lt;u R[rs2]) PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Branch if Less Than Unsigned. Compares registers as unsigned 32-bit integers.</td>
+                </tr>
+                <tr data-cat="branches">
+                  <td><code>bgeu rs1, rs2, offset</code></td>
+                  <td><span class="fmt-badge fmt-b">B-Type</span></td>
+                  <td><code>1100011 (0x63)</code></td>
+                  <td><code>111 (0x7)</code></td>
+                  <td><code>imm[12|10:5|4:1|11]</code></td>
+                  <td><code>if (R[rs1] &gt;=u R[rs2]) PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Branch if Greater or Equal Unsigned. Compares registers as unsigned 32-bit integers.</td>
+                </tr>
+
+                <!-- 5 Memory Loads -->
+                <tr data-cat="loads">
+                  <td><code>lb rd, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0000011 (0x03)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; sext(Mem8[R[rs1] + sext(offset)])</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Load 8-bit Byte from effective address and sign-extend to 32 bits (signed char).</td>
+                </tr>
+                <tr data-cat="loads">
+                  <td><code>lh rd, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0000011 (0x03)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; sext(Mem16[R[rs1] + sext(offset)])</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Load 16-bit Halfword and sign-extend to 32 bits (signed short). Requires halfword alignment.</td>
+                </tr>
+                <tr data-cat="loads">
+                  <td><code>lw rd, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0000011 (0x03)</code></td>
+                  <td><code>010 (0x2)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; Mem32[R[rs1] + sext(offset)]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Load 32-bit Word directly into destination register. Standard memory read.</td>
+                </tr>
+                <tr data-cat="loads">
+                  <td><code>lbu rd, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0000011 (0x03)</code></td>
+                  <td><code>100 (0x4)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; zext(Mem8[R[rs1] + sext(offset)])</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Load 8-bit Byte and zero-extend to 32 bits (unsigned char / byte stream).</td>
+                </tr>
+                <tr data-cat="loads">
+                  <td><code>lhu rd, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0000011 (0x03)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>imm[11:0] (sign-ext)</code></td>
+                  <td><code>R[rd] &larr; zext(Mem16[R[rs1] + sext(offset)])</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Load 16-bit Halfword and zero-extend to 32 bits (unsigned short).</td>
+                </tr>
+
+                <!-- 3 Memory Stores -->
+                <tr data-cat="stores">
+                  <td><code>sb rs2, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-s">S-Type</span></td>
+                  <td><code>0100011 (0x23)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[11:5|4:0]</code></td>
+                  <td><code>Mem8[R[rs1] + sext(offset)] &larr; R[rs2][7:0]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Store lowest 8 bits of rs2 to memory address. LSU activates byte-enable strobe.</td>
+                </tr>
+                <tr data-cat="stores">
+                  <td><code>sh rs2, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-s">S-Type</span></td>
+                  <td><code>0100011 (0x23)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>imm[11:5|4:0]</code></td>
+                  <td><code>Mem16[R[rs1] + sext(offset)] &larr; R[rs2][15:0]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Store lowest 16 bits of rs2 to memory address. LSU activates 2-byte lane strobes.</td>
+                </tr>
+                <tr data-cat="stores">
+                  <td><code>sw rs2, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-s">S-Type</span></td>
+                  <td><code>0100011 (0x23)</code></td>
+                  <td><code>010 (0x2)</code></td>
+                  <td><code>imm[11:5|4:0]</code></td>
+                  <td><code>Mem32[R[rs1] + sext(offset)] &larr; R[rs2][31:0]</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Store full 32-bit word from rs2 into memory address. Activates all 4 byte strobes.</td>
+                </tr>
+
+                <!-- 3 System, Traps & Sync -->
+                <tr data-cat="system">
+                  <td><code>fence pred, succ</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0001111 (0x0F)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>fm[3:0] | pred[3:0] | succ[3:0]</code></td>
+                  <td><code>Fence Memory &amp; Device I/O Access</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Orders memory and memory-mapped device I/O accesses across predecessor and successor sets. Flushes LSU pipeline buffers.</td>
+                </tr>
+                <tr data-cat="system">
+                  <td><code>ecall</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>1110011 (0x73)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[11:0] = 0x000</code></td>
+                  <td><code>Trap: EnvironmentCall &rarr; mtvec</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Generates synchronous trap to Machine Mode monitor or OS runtime (system call). Saves return PC in <code>mepc</code> and sets <code>mcause</code> to 11.</td>
+                </tr>
+                <tr data-cat="system">
+                  <td><code>ebreak</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>1110011 (0x73)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[11:0] = 0x001</code></td>
+                  <td><code>Trap: Breakpoint &rarr; Debugger</code></td>
+                  <td><span class="status-badge ok">✓ Valid (x0..x15)</span></td>
+                  <td>Transfers execution control back to interactive hardware debugger (JTAG/OpenOCD) or breakpoint exception handler (sets <code>mcause = 3</code>).</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -3535,6 +4069,10 @@ const bespokeDossiers = [
         </p>
         <div class="sim-points-stack">
           <div class="sim-point-row">
+            <span class="point-badge">40 Base Integer Instructions</span>
+            <span class="point-desc">Full implementation of the 40 ratified base integer instructions across 6 instruction formats (10 R-type ALU, 9 I-type ALU, 2 U-type upper immediate, 6 B-type branches, 2 unconditional jumps, 5 memory loads, 3 stores, and 3 system/sync traps).</span>
+          </div>
+          <div class="sim-point-row">
             <span class="point-badge">32-Bit Instruction Encodings</span>
             <span class="point-desc">Standardized 6 instruction formats (R-type, I-type, S-type, B-type, U-type, J-type) with uniform opcode placement in bits [6:0] to simplify instruction decode logic.</span>
           </div>
@@ -3546,6 +4084,12 @@ const bespokeDossiers = [
             <span class="point-badge">Two's Complement Arithmetic</span>
             <span class="point-desc">Identical sign-extension rules, arithmetic right shifts (<code>sra</code>), and unsigned comparison logic (<code>sltu</code>).</span>
           </div>
+        </div>
+
+        <!-- Jump to Full Table Banner -->
+        <div style="margin-top: 1rem; padding: 0.75rem 1rem; background: var(--paper, #fdfbf7); border: 1.5px solid var(--teal, #0d9488); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+          <span style="font-size: 0.85rem; font-weight: 800; color: var(--ink, #151b20);">Full 40-instruction reference table with opcodes, funct3/7 bitfields, and RTL semantics:</span>
+          <a href="#rv32-base-isa-table" class="core-jump-pill" style="background: var(--teal, #0d9488); color: #fff; border-color: var(--ink, #151b20); font-size: 0.78rem;">⚡ View Full 40-Instruction Table &rarr;</a>
         </div>
       </div>
 
@@ -4189,6 +4733,41 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
       });
     });
   });
+
+  // Base ISA Table Filter & Search
+  const isaCatBtns = document.querySelectorAll(".isa-cat-btn");
+  const isaRows = document.querySelectorAll("#isaFullSpecTable tbody tr");
+  const isaSearch = document.getElementById("isaSearchInput") as HTMLInputElement;
+
+  function filterIsaTable() {
+    const activeCat = document.querySelector(".isa-cat-btn.active")?.getAttribute("data-isa-cat") || "all";
+    const query = isaSearch ? isaSearch.value.trim().toLowerCase() : "";
+
+    isaRows.forEach((row) => {
+      const rowCat = row.getAttribute("data-cat");
+      const text = row.textContent?.toLowerCase() || "";
+      const matchesCat = activeCat === "all" || rowCat === activeCat;
+      const matchesQuery = query === "" || text.includes(query);
+
+      if (matchesCat && matchesQuery) {
+        (row as HTMLElement).style.display = "";
+      } else {
+        (row as HTMLElement).style.display = "none";
+      }
+    });
+  }
+
+  isaCatBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      isaCatBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      filterIsaTable();
+    });
+  });
+
+  if (isaSearch) {
+    isaSearch.addEventListener("input", filterIsaTable);
+  }
 
   // Archetype 1 Live Simulator
   let simCore = "serv";
@@ -6349,4 +6928,93 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   .badge-paper { background: var(--paper-deep, #eee4c8) !important; color: var(--ink, #151b20) !important; border: 1px solid var(--ink, #151b20); }
 
   .text-muted { color: #666; }
+
+  /* Base ISA Specification Table & Register Comparison */
+  .isa-reg-comparison-box {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+  }
+  .isa-reg-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .isa-reg-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    margin: 0;
+  }
+  .isa-reg-desc {
+    font-size: 0.88rem;
+    color: #4b5563;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .rv32e-omitted-row {
+    background: #fff1f2 !important;
+  }
+  .rv32e-omitted-row td {
+    color: #9f1239;
+  }
+  .fmt-badge {
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    font-family: monospace;
+    border: 1px solid var(--ink, #151b20);
+    white-space: nowrap;
+  }
+  .fmt-r { background: #dbeafe; color: #1e40af; }
+  .fmt-i { background: #fef3c7; color: #92400e; }
+  .fmt-s { background: #fee2e2; color: #991b1b; }
+  .fmt-b { background: #fce7f3; color: #9d174d; }
+  .fmt-u { background: #f3e8ff; color: #6b21a8; }
+  .fmt-j { background: #ccfbf1; color: #0f766e; }
+
+  .isa-cat-btn {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    transition: all 0.1s ease;
+    color: var(--ink, #151b20);
+  }
+  .isa-cat-btn:hover {
+    background: var(--yellow, #ffc83e);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+  }
+  .isa-cat-btn.active {
+    background: var(--ink, #151b20);
+    color: #ffffff;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+  }
+  .isa-search-field {
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.85rem;
+    font-family: inherit;
+    width: 260px;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    background: #ffffff;
+    color: var(--ink, #151b20);
+  }
+  .isa-search-field:focus {
+    outline: none;
+    background: #fffbeb;
+  }
 </style>
