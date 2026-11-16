@@ -458,176 +458,565 @@ const appCoreConfigSensitivity = [
   }
 ];
 
-// Rich fallback markdown documentation for BlackParrot and BOOM
-const blackParrotFallbackReadme = `
-# BlackParrot: Modular Coherent RV64GC Multicore Processor
-
-BlackParrot is an open-source, Linux-capable, cache-coherent RISC-V multicore processor developed jointly by the University of Washington and Boston University. Designed with a strict "tiny, trusty, and timely" philosophy, BlackParrot aims to be the default open-source silicon standard for academic and industrial research.
-
-## Microarchitecture Highlights
-- **Pipeline:** 5-stage in-order frontend with dual-issue dispatch, decoupled backend execution units, and out-of-order writeback for multi-cycle operations.
-- **ISA Support:** RV64GC (RV64IMAFDC) complying with RISC-V Privileged Architecture v1.11, supporting User (U), Supervisor (S), and Machine (M) modes.
-- **Virtual Memory:** Hardware Sv39 MMU with configurable multi-entry translation lookaside buffers (ITLB and DTLB) and hardware page table walkers (PTW).
-- **Coherence Protocol:** Directory-based MESI cache coherence protocol operating over the open BedRock interconnect standard, formally verified using CMurphi model checking against safety and deadlock invariants.
-- **Cache Subsystem:** Split 32 KB 8-way set-associative L1 instruction and data caches with non-blocking miss handling via Miss Status Holding Registers (MSHRs).
-
-## Silicon Validation & Tapeouts
-- **TSMC 12nm FFC:** Quad-core BlackParrot cluster taped out in 2019 running at >1 GHz.
-- **TSMC 12nm Dual-Core:** Second-generation dual-core testchip taped out in 2020.
-- **GlobalFoundries 28nm:** Tapeout validation campaigns in 2022 and 2025 demonstrating full multi-user Linux boots.
-
-## Verification & FPGA Emulation
-- **CMurphi:** Automated formal verification of cache coherence state transitions.
-- **ZynqParrot:** Turnkey FPGA emulation environment mapping full BlackParrot clusters onto Xilinx Zynq-7000 and UltraScale+ platforms with real serial console and SD card storage.
-`;
-
-const boomFallbackReadme = `
-# SonicBOOM: Berkeley Out-of-Order RISC-V Machine
-
-The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open-source out-of-order RISC-V processor core written in Chisel. It delivers high-performance single-thread execution rivaling commercial ARM Cortex-A9/A15 and Intel Skylake class microarchitectures while maintaining full compatibility with the open RISC-V ecosystem.
-
-## Microarchitecture Highlights
-- **Pipeline Depth:** 7 to 10 stages from instruction fetch to writeback and commit.
-- **Configurable Superscalar Width:** Parameterized from 1-wide (SmallBOOM), 2-wide (MediumBOOM), 3-wide (LargeBOOM), to 4-wide decode/rename/dispatch (MegaBOOM).
-- **Execution Units:** Decoupled Issue Queues feeding separate Integer ALUs, Pipelined Multipliers, Floating-Point Units (FPUs), and Address Generation Units (AGUs).
-- **Out-of-Order Renaming:** Explicit Register Renaming with Physical Register Files (PRF) supporting up to 128 physical integer and floating-point registers.
-- **Speculative Memory Subsystem:** Deep Reorder Buffer (ROB) supporting up to 128 in-flight instructions, combined with a non-blocking Load-Store Queue (LSQ) with dynamic memory disambiguation and store-to-load forwarding.
-- **Branch Prediction:** State-of-the-art TAGE-SC branch predictor, Branch Target Buffer (BTB), and Return Address Stack (RAS) minimizing pipeline flushes.
-
-## Coherence & System Integration
-- **Interconnect:** Native TileLink-C (TL-C) coherent cache interface integrating with Rocket Chip / Chipyard coherent crossbars and shared L2 caches.
-- **Silicon Proven:** Fabricated across multiple TSMC 16nm and 28nm research test chips under the UC Berkeley ADEPT laboratory.
-`;
-
 // Native first-class dossiers for open-source 64-bit application cores
 const appCoreDossiers = [
   {
-    name: "Rocket Chip",
-    slug: "rocket-chip",
-    subtitle: "Foundational 5-Stage In-Order RV64GC Processor & TileLink SoC Generator",
-    org: "chipsalliance (UC Berkeley / SiFive)",
-    lang: "Chisel (Scala)",
-    license: "BSD-3-Clause",
-    archClass: "Archetype 1: Minimal In-Order",
-    isa: "RV64GC (Sv39 Radix-3 MMU)",
-    bus: "TileLink-UH 64b (Pipelined Cached)",
-    area: "135 kGE (~0.082 mm² @ 16nm)",
-    fmax: "1.2 GHz (16nm) / 850 MHz (28nm)",
-    measuredMemcpy: "485.4 MB/s (Standard 16K)",
-    memConcurrency: "Blocking L1 (0 MSHR) • 32 DTLB CAM",
-    siliconEvidence: "Fabricated across 15+ Berkeley/SiFive testchips (TSMC 16/28/45nm)",
-    verificationRigor: "Formally verified with RISC-V Formal, riscv-torture, continuous Linux boot CI",
-    pipelineDesc: "Classic 5-stage in-order single-issue scalar pipeline (Fetch, Decode, Execute, Memory, Writeback). Direct ALU-to-ALU bypass network resolves data dependencies with 0-cycle bubble. Integrated single-cycle integer multiplier, hardware Radix-4 non-restoring divider, and optional pipelined IEEE 754-2008 Double-Precision FPU with fused multiply-add (FMA).",
-    memDesc: "Split Harvard L1 caches (16 KiB 4-way I$ / 16 KiB 4-way D$) backed by an autonomous hardware Page Table Walker (PTW). The PTW performs 3-level radix tree walks (VPN[2] → VPN[1] → VPN[0]) on TLB misses. Memory access is serialized through a blocking LSU (Load-Store Unit) with TileLink-UH interconnect.",
-    strengths: "Gold standard of open-source RISC-V generators. Unmatched parameterizability via Chisel/Diplomacy, native TileLink fabric, minimal silicon area (135 kGE), and turnkey Linux boot support.",
-    tradeoffs: "Blocking cache stalls the core completely on an L1 miss, serializing memory access and capping memcpy throughput to 485 MB/s. Chisel/FIRRTL build flow requires Scala/JVM toolchains.",
-    scripts: {
-      generate: "scripts/generate_rocket_chip.sh",
-      run: "scripts/run_rocket_chip.sh",
-      install: "scripts/install_rocket_chip.sh",
-      env: "scripts/rocket_chip_env.sh"
-    },
-    topFiles: [
-      "Rocket.scala", "PTW.scala", "Tile.scala", "HellaCache.scala", "CSR.scala",
-      "IBuf.scala", "FPU.scala", "ALU.scala", "RVC.scala", "TileLink.scala"
+    "name": "Rocket Chip",
+    "slug": "rocket-chip",
+    "subtitle": "Foundational 5-Stage In-Order RV64GC Processor & TileLink SoC Generator",
+    "org": "chipsalliance (UC Berkeley / SiFive)",
+    "lang": "Chisel (Scala)",
+    "license": "BSD-3-Clause",
+    "archClass": "Archetype 1: Classic In-Order Baseline",
+    "isa": "RV64GC (Sv39 / Sv48 Radix MMU + 16 PMP)",
+    "bus": "TileLink-UH 64b (Pipelined Cached Interconnect)",
+    "area": "135 kGE (~0.082 mm² @ 16nm)",
+    "fmax": "1.2 GHz (TSMC 16nm) / 850 MHz (28nm)",
+    "measuredMemcpy": "485.4 MB/s (Standard 16K) • CoreMark: 2.12 / MHz • CPI 1.45–1.95",
+    "memConcurrency": "Blocking L1 (0 MSHR) • 32 ITLB / 32 DTLB CAM",
+    "siliconEvidence": "Fabricated across 15+ Berkeley/SiFive test chips (TSMC 16/28/45nm, GF 22FDX)",
+    "verificationRigor": "Formally verified with RISC-V Formal, riscv-torture, continuous Linux 6.x boot CI",
+    "pipelineDeepDive": "Classic 5-stage in-order single-issue scalar pipeline (Fetch, Decode, Execute, Memory, Writeback). Direct ALU-to-ALU bypass network resolves RAW data dependencies with zero bubble penalties. Includes an integrated single-cycle integer multiplier, hardware Radix-4 non-restoring divider with early-out bypass, and a fully pipelined IEEE 754-2008 Double-Precision FPU (Berkeley HardFloat) executing fused multiply-add (FMA) instructions in 4 pipeline stages.",
+    "branchArch": "Front-end incorporates a 28-entry Branch Target Buffer (BTB), a 512-entry bimodal Branch History Table (BHT) with 2-bit saturating counters, and a 6-entry Return Address Stack (RAS). Conditional branches are resolved in the Execute stage, incurring a strictly bounded 2-cycle penalty upon misprediction with synchronous instruction buffer flushing.",
+    "memSubsystem": "Split Harvard L1 caches (16–32 KiB 4-way set-associative I-Cache / 16–32 KiB 4-way set-associative D-Cache with 64-byte lines). Backed by an autonomous hardware Page Table Walker (PTW) executing 3-level radix tree walks (VPN[2] → VPN[1] → VPN[0]) on DTLB/ITLB misses. Connects natively to TileLink-UH point-to-point crossbars with optional TileLink-C broadcast or directory coherence.",
+    "privAndSecurity": "Enforces RISC-V Privileged Architecture v1.11 across Machine (M), Supervisor (S), and User (U) rings. Integrates up to 16 Physical Memory Protection (PMP) address filter registers with programmable NAPOT/TOR granularity down to 4 bytes. Hardware CSR unit coordinates trap delegation, timer interrupts (CLINT), and external PLIC interrupts.",
+    "coprocessorAndExt": "The industry-standard Rocket Custom Coprocessor (RoCC) interface. Provides non-blocking 4-register command FIFO channels, direct memory access to the L1 Data Cache pipeline, and custom CSR access. Houses domain-specific coprocessors including Gemmini (systolic tensor array), Hwacha (vector accelerator), and ChaCha20/Poly1305 cryptographic accelerators.",
+    "rtlParameters": [
+      {
+        "name": "nBTBEntries",
+        "defaultVal": "28",
+        "desc": "Branch Target Buffer capacity for caching jump/branch target addresses"
+      },
+      {
+        "name": "nBHTEntries",
+        "defaultVal": "512",
+        "desc": "Branch History Table 2-bit saturating counter array depth"
+      },
+      {
+        "name": "nRAS",
+        "defaultVal": "6",
+        "desc": "Hardware circular Return Address Stack depth for function returns"
+      },
+      {
+        "name": "nTLBEntries",
+        "defaultVal": "32",
+        "desc": "Fully associative translation entries in instruction and data TLBs"
+      },
+      {
+        "name": "nPMPs",
+        "defaultVal": "16",
+        "desc": "Hardware Physical Memory Protection address filter registers"
+      },
+      {
+        "name": "pmpGranularity",
+        "defaultVal": "4",
+        "desc": "Minimum byte granularity for PMP address range boundaries"
+      },
+      {
+        "name": "mulDiv",
+        "defaultVal": "mulUnroll=8, divEarlyOut=true",
+        "desc": "Pipelined multiplier unrolling and divider early-termination logic"
+      },
+      {
+        "name": "fpu",
+        "defaultVal": "fLen=64 (Double)",
+        "desc": "Instantiates 64-bit IEEE 754 Berkeley HardFloat coprocessor"
+      },
+      {
+        "name": "dcache.nWays",
+        "defaultVal": "4-way (16-32 KiB)",
+        "desc": "4-way set-associative L1 Data Cache with 64-byte line width"
+      },
+      {
+        "name": "icache.nWays",
+        "defaultVal": "4-way (16-32 KiB)",
+        "desc": "4-way set-associative L1 Instruction Cache with pre-decode buffer"
+      }
     ],
-    readme: cat2Tools.find(t => t.slug === "rocket-chip")?.readmeContent || ""
+    "strengths": "Gold standard of open-source RISC-V generators. Unmatched parameterizability via Chisel/Diplomacy, native TileLink fabric, minimal silicon area (135 kGE), and turnkey Linux boot support.",
+    "tradeoffs": "Blocking cache stalls the core completely on an L1 miss, serializing memory access and capping memcpy throughput to 485 MB/s. Chisel/FIRRTL build flow requires Scala/JVM toolchains."
   },
   {
-    name: "CVA6 (Ariane)",
-    slug: "cva6",
-    subtitle: "6-Stage Single-Issue In-Order Application Core with Scoreboard Scheduling",
-    org: "openhwgroup / pulp-platform (ETH Zürich)",
-    lang: "SystemVerilog",
-    license: "Solderpad-0.51",
-    archClass: "Archetype 2: Pipelined Industrial",
-    isa: "RV64GC (Sv39 MMU + 16 PMP)",
-    bus: "AXI4-64b (Industrial Standard)",
-    area: "148 kGE (~0.091 mm² @ 16nm)",
-    fmax: "1.4 GHz (16nm) / 1.0 GHz (GF 22FDX)",
-    measuredMemcpy: "442.8 MB/s (1 Miss MSHR)",
-    memConcurrency: "1 Outstanding Miss • 16 ITLB / 16 DTLB",
-    siliconEvidence: "Fabricated in GF 22FDX (PULPissimo/Ariane testchips), taped out in TSMC 16nm",
-    verificationRigor: "Industrial UVM testbenches, openhwgroup core-v-verif compliance suite",
-    pipelineDesc: "6-stage pipeline (PC Generation, Fetch, Decode, Issue, Execute, Commit). Features an 8-entry centralized issue scoreboard that decouples in-order dispatch from out-of-order writeback, enabling single-cycle ALU instructions to bypass multi-cycle floating-point, integer division, and long-latency memory transactions.",
-    memDesc: "Split 16 KiB 4-way I-Cache and 32 KiB 8-way write-through/write-back D-Cache. Includes a hardware PTW with private 16-entry fully associative ITLB and DTLB. Load-store unit supports 1 outstanding miss with AXI4 master interface integrating directly with industry-standard SoC crossbars.",
-    strengths: "Pure SystemVerilog codebase directly consumable by commercial synthesis and EDA tools (Synopsys, Cadence, Siemens). Centralized scoreboard hides multicycle latencies; robust OpenHW Group industrial verification.",
-    tradeoffs: "Load-store unit lacks multi-entry MSHR pool (limited to 1 miss at a time), which restricts concurrent memory bandwidth during sequential burst transfers.",
-    scripts: {
-      generate: "scripts/generate_cva6.sh",
-      run: "scripts/run_cva6.sh",
-      install: "scripts/install_cva6.sh",
-      env: "scripts/cva6_env.sh"
-    },
-    topFiles: [
-      "cva6.sv", "scoreboard.sv", "issue_stage.sv", "load_store_unit.sv", "ptw.sv",
-      "decoder.sv", "ex_stage.sv", "commit_stage.sv", "fpu_wrap.sv", "axi_shim.sv"
+    "name": "CVA6 (Ariane)",
+    "slug": "cva6",
+    "subtitle": "6-Stage Single-Issue In-Order Application Core with Scoreboard Scheduling",
+    "org": "openhwgroup / pulp-platform (ETH Zürich / Thales)",
+    "lang": "SystemVerilog",
+    "license": "Solderpad-0.51",
+    "archClass": "Archetype 2: Pipelined Industrial",
+    "isa": "RV64GC (Sv39 MMU + 16 PMP + Zba/Zbb/Zbs)",
+    "bus": "AXI4-64b (Industrial Standard 5-Channel)",
+    "area": "148 kGE (~0.091 mm² @ 16nm)",
+    "fmax": "1.4 GHz (16nm FinFET) / 1.0 GHz (GF 22FDX)",
+    "measuredMemcpy": "442.8 MB/s • CoreMark: 2.38 / MHz • CPI 1.30–1.65",
+    "memConcurrency": "1 Outstanding Miss • 16-entry ITLB / 16-entry DTLB • 8-entry Write Buffer",
+    "siliconEvidence": "Fabricated in GF 22FDX (PULPissimo / Ariane test chips), TSMC 16nm, and European Processor Initiative (EPI) pilot silicon",
+    "verificationRigor": "OpenHW Group industrial core-v-verif compliance environment, Google RISCV-DV random instruction generator, nightly UVM regressions",
+    "pipelineDeepDive": "6-stage decoupled scoreboard pipeline (PC Generation, Fetch, Decode, Issue, Execute, Commit). An 8-entry centralized scoreboard tracks instruction status and dependencies, allowing single-cycle ALU instructions to execute and commit out-of-order around long-latency multi-cycle FPUs, integer division, or memory loads.",
+    "branchArch": "Dynamic 2-level branch predictor comprising a 32-entry Branch Target Buffer (BTB), 128-entry Branch History Table (BHT) with 2-bit saturating counters, and a 2-entry Return Address Stack (RAS). Mispredictions trigger a 3-cycle squash penalty from the issue stage.",
+    "memSubsystem": "Split 16 KiB 4-way I-Cache and 32 KiB 8-way write-through/write-back D-Cache with 128-bit cache lines. Load-Store Unit (LSU) features an 8-entry write buffer (CVA6ConfigWtDcacheWbufDepth = 8), dual load buffer entries, and a 64-bit AXI4 master interface supporting atomic memory operations (AMOs).",
+    "privAndSecurity": "Full M/S/U privilege rings with Sv39 hardware Page Table Walker. Integrates 8 to 16 PMP range checkers with NAPOT addressing and memory idempotency filters. Secure execution regions enforce execute-only memory permissions.",
+    "coprocessorAndExt": "Core-V eXtension Interface (CV-X-IF) (CvxifEn = 1). Standardized coprocessor handshake bus featuring issue, commit, result, and compressed instruction interfaces. Enables seamless pairing with cryptographic engines, vector accelerators (Ara), and custom machine-learning coprocessors without pipeline stalls.",
+    "rtlParameters": [
+      {
+        "name": "CVA6ConfigXlen",
+        "defaultVal": "64",
+        "desc": "Data and address datapath width"
+      },
+      {
+        "name": "CVA6ConfigNrScoreboardEntries",
+        "defaultVal": "8",
+        "desc": "Capacity of the issue stage dependency-tracking scoreboard"
+      },
+      {
+        "name": "CVA6ConfigIcacheByteSize / Assoc",
+        "defaultVal": "16384 / 4-way",
+        "desc": "Instruction cache size and set associativity"
+      },
+      {
+        "name": "CVA6ConfigDcacheByteSize / Assoc",
+        "defaultVal": "32768 / 8-way",
+        "desc": "Data cache size and set associativity"
+      },
+      {
+        "name": "CVA6ConfigBTBEntries",
+        "defaultVal": "32",
+        "desc": "Branch Target Buffer entries"
+      },
+      {
+        "name": "CVA6ConfigBHTEntries",
+        "defaultVal": "128",
+        "desc": "Branch History Table saturating counter entries"
+      },
+      {
+        "name": "CVA6ConfigRASDepth",
+        "defaultVal": "2",
+        "desc": "Hardware Return Address Stack call/return tracking depth"
+      },
+      {
+        "name": "CVA6ConfigNrPMPEntries",
+        "defaultVal": "8",
+        "desc": "Physical Memory Protection boundary registers"
+      },
+      {
+        "name": "CVA6ConfigWtDcacheWbufDepth",
+        "defaultVal": "8",
+        "desc": "Write-through data cache store buffer depth"
+      },
+      {
+        "name": "CVA6ConfigCvxifEn",
+        "defaultVal": "1",
+        "desc": "Enables CV-X-IF coprocessor accelerator interface"
+      }
     ],
-    readme: cat2Tools.find(t => t.slug === "cva6")?.readmeContent || ""
+    "strengths": "Pure SystemVerilog codebase directly consumable by commercial synthesis and EDA tools (Synopsys, Cadence, Siemens). Centralized scoreboard hides multicycle latencies; robust OpenHW Group industrial verification.",
+    "tradeoffs": "Load-store unit lacks multi-entry MSHR pool (limited to 1 miss at a time), which restricts concurrent memory bandwidth during sequential burst transfers."
   },
   {
-    name: "BlackParrot",
-    slug: "black-parrot",
-    subtitle: "Modular Cache-Coherent RV64GC Multicore Processor for Heterogeneous Systems",
-    org: "black-parrot (Univ. of Washington & Boston Univ.)",
-    lang: "SystemVerilog",
-    license: "BSD-3-Clause",
-    archClass: "Archetype 3: Modular Multicore",
-    isa: "RV64GC (Sv39 MMU + 8 PMP)",
-    bus: "BedRock MESI / TileLink-C Gateway",
-    area: "165 kGE per core (~0.108 mm² @ 16nm)",
-    fmax: "1.1 GHz (22nm FDX) / >1.0 GHz (TSMC 12nm)",
-    measuredMemcpy: "412.6 MB/s (Dual-Core Cluster)",
-    memConcurrency: "2 MSHRs / Tile • Formally Verified MESI NoC",
-    siliconEvidence: "TSMC 12nm quad-core (2019), TSMC 12nm dual-core (2020), GF 28nm (2022/2025)",
-    verificationRigor: "CMurphi formal proof of cache coherence invariants, ZynqParrot FPGA emulation",
-    pipelineDesc: "Strictly modular 3-partition architecture: Front-End (FE, instruction fetch and branch prediction), Back-End (BE, 5-stage in-order dual-issue execution with decoupled scoreboard), and Memory-End (ME, cache and coherence management). Clear FIFO packet interfaces separate partitions to prevent timing path closures across modules.",
-    memDesc: "Split 32 KiB 8-way set-associative L1 caches with 2 non-blocking MSHRs. Memory-End houses the Coherence Engine (CCE) running a directory-based MESI coherence protocol over the BedRock packetized interconnect standard, scaling from 1 to 64 cores over a 2D-mesh NoC.",
-    strengths: "Native multicore coherence out of the box with zero third-party IP dependencies. Coherence state transitions mathematically verified against deadlock and livelock via CMurphi model checking; multi-tapeout silicon validation.",
-    tradeoffs: "Inter-tile BedRock directory packetization adds slight latency overhead to private cache refills, and the build system requires a specialized Docker/packaged container flow (black-parrot-sim).",
-    scripts: {
-      generate: "scripts/generate_black_parrot.sh",
-      install: "scripts/install_black_parrot.sh",
-      run: "scripts/benchmark_core_suite.sh --target=black-parrot",
-      env: null
-    },
-    topFiles: [
-      "bp_core.sv", "bp_fe_top.sv", "bp_be_top.sv", "bp_me_top.sv", "bp_cce_top.sv",
-      "bp_mmu.sv", "bp_dcache.sv", "bp_icache.sv", "bp_bedrock.sv", "bp_clint.sv"
+    "name": "BlackParrot",
+    "slug": "black-parrot",
+    "subtitle": "Modular Cache-Coherent RV64GC Multicore Processor for Heterogeneous Systems",
+    "org": "black-parrot (Univ. of Washington & Boston Univ.)",
+    "lang": "SystemVerilog",
+    "license": "BSD-3-Clause",
+    "archClass": "Archetype 3: Modular Multicore",
+    "isa": "RV64GC (Sv39 MMU + 8 PMP)",
+    "bus": "BedRock MESI Protocol / 2D Mesh Wormhole NoC",
+    "area": "165 kGE per core (~0.108 mm² @ 16nm)",
+    "fmax": "1.1 GHz (GF 22FDX) / >1.0 GHz (TSMC 12nm)",
+    "measuredMemcpy": "412.6 MB/s (Dual-Core Cluster) • CPI 1.25–1.55 • CoreMark: 2.25 / MHz",
+    "memConcurrency": "2–8 MSHRs / Tile • Formally Verified Directory MESI Coherence NoC",
+    "siliconEvidence": "TSMC 12nm quad-core tapeout (2019), TSMC 12nm dual-core (2020), GF 28nm (2022/2025)",
+    "verificationRigor": "CMurphi formal model checking proving cache coherence state transitions against deadlock and livelock; ZynqParrot FPGA emulation",
+    "pipelineDeepDive": "Strictly modular 3-partition architecture: Front-End (FE), Back-End (BE), and Memory-End (ME). Partitions communicate across latency-insensitive credit-based FIFO queues. The Back-End features a 5-stage dual-issue decoupled in-order datapath with an internal scoreboard that dispatches integer, floating-point, and memory ops concurrently.",
+    "branchArch": "Front-End integrates a parameterized BHT with 2-level adaptive global branch history, 512-entry BTB, and circular RAS. Branch redirection is transmitted to the FE via credit-based command packets, cleanly decoupling branch resolution from instruction fetch timing.",
+    "memSubsystem": "Split 32 KiB 8-way set-associative L1 caches with non-blocking MSHR support. Memory-End houses the Coherence Engine (CCE) running directory-based MESI coherence over the BedRock protocol. Supports multi-core clustering up to 64 cores over a 5-port 2D-mesh packetized wormhole router NoC.",
+    "privAndSecurity": "RV64GC Privileged Architecture v1.11 with Machine, Supervisor, and User rings. 8 PMP regions, Sv39 radix-3 PTW, and hardware-isolated BedRock address space partitioning preventing rogue cross-tile memory snooping.",
+    "coprocessorAndExt": "Coherent & Streaming Accelerator Complexes (CAC / SAC). Accommodates RoCC accelerators, vector dot-product engines (e_sacc_vdp), and dedicated scratchpad accelerators directly onto the coherent BedRock NoC without modifying core RTL.",
+    "rtlParameters": [
+      {
+        "name": "cc_x_dim / cc_y_dim",
+        "defaultVal": "1 to 4",
+        "desc": "Dimensions of the 2D-mesh Core Complex cluster array"
+      },
+      {
+        "name": "num_cce / num_lce",
+        "defaultVal": "Parameterized",
+        "desc": "Number of Coherence Directory Engines and Local Cache Engines"
+      },
+      {
+        "name": "cce_type",
+        "defaultVal": "e_cce_fsm / e_cce_ucode",
+        "desc": "Hardware state-machine vs. programmable microcode coherence engine"
+      },
+      {
+        "name": "cacc_type / sacc_type",
+        "defaultVal": "e_cacc_none / vdp",
+        "desc": "Coherent and streaming accelerator complex attachments"
+      },
+      {
+        "name": "icache_sets / assoc",
+        "defaultVal": "64 / 8-way",
+        "desc": "Instruction cache sets and set associativity"
+      },
+      {
+        "name": "dcache_sets / assoc",
+        "defaultVal": "64 / 8-way",
+        "desc": "Data cache sets and set associativity"
+      },
+      {
+        "name": "vaddr_width",
+        "defaultVal": "39",
+        "desc": "Sv39 39-bit virtual address translation width"
+      },
+      {
+        "name": "branch_metadata_fwd_width",
+        "defaultVal": "Parameterized",
+        "desc": "Width of speculative branch history metadata forwarded between FE and BE"
+      }
     ],
-    readme: blackParrotFallbackReadme
+    "strengths": "Native multicore coherence out of the box with zero third-party IP dependencies. Coherence state transitions mathematically verified against deadlock and livelock via CMurphi model checking; multi-tapeout silicon validation.",
+    "tradeoffs": "Inter-tile BedRock directory packetization adds slight latency overhead to private cache refills, and the build system requires a specialized Docker/packaged container flow (black-parrot-sim)."
   },
   {
-    name: "SonicBOOM (BOOM v3)",
-    slug: "boom",
-    subtitle: "Berkeley Out-of-Order Machine: High-Performance Parameterized Superscalar Processor",
-    org: "chipsalliance (UC Berkeley ADEPT Lab)",
-    lang: "Chisel (Scala)",
-    license: "BSD-3-Clause",
-    archClass: "Archetype 4: Out-of-Order Superscalar",
-    isa: "RV64GC (Sv39 / Sv48 MMU + 16 PMP)",
-    bus: "TileLink-C 64b/128b (Hardware Coherent)",
-    area: "420 kGE (~0.285 mm² @ 16nm)",
-    fmax: "1.5 GHz (TSMC 16nm FinFET)",
-    measuredMemcpy: "782.5 MB/s (3-Wide Flagship)",
-    memConcurrency: "8-Entry MSHR Pool • 128-Entry RoB",
-    siliconEvidence: "Multiple TSMC 16nm and 28nm research test chips taped out by UC Berkeley",
-    verificationRigor: "FireSim cycle-exact FPGA acceleration on AWS EC2 F1, riscv-torture, full Linux SMP",
-    pipelineDesc: "7-to-10 stage out-of-order superscalar pipeline. Parameterized 1-to-4 wide decode, rename, and dispatch. Explicit register renaming maps 32 architectural registers to up to 128 physical registers (PRF). Out-of-order issue queues feed distributed integer ALUs, pipelined multipliers, and floating-point execution units. Speculative execution managed by an aggressive 96-to-128 entry Reorder Buffer (RoB).",
-    memDesc: "Speculative non-blocking memory hierarchy with 32 KiB 8-way L1 caches. Includes a deep 8-entry Miss Status Holding Register (MSHR) pool supporting extensive hit-under-miss and miss-under-miss concurrency. High-performance Load-Store Queue (LSQ) with dynamic memory disambiguation, store-to-load forwarding, and speculative load replay.",
-    strengths: "Highest memory throughput (782.5 MB/s) and single-thread IPC in the open-source RISC-V ecosystem. Commercial-class TAGE-SC branch prediction, deep speculative latency hiding, and seamless Chipyard / FireSim integration.",
-    tradeoffs: "High silicon area (~420 kGE, 3.1× larger than Rocket Chip) and power dissipation. Synthesized Chisel graphs are large and require long elaboration and synthesis runtimes.",
-    scripts: {
-      generate: "scripts/generate_rocket_chip.sh --config=MediumBoomConfig",
-      run: "scripts/run_rocket_chip.sh --binary=bbl_linux.bin",
-      install: "scripts/install_rocket_chip.sh",
-      env: null
-    },
-    topFiles: [
-      "parameters.scala", "core.scala", "lsu.scala", "tage.scala", "rob.scala",
-      "rename.scala", "issue.scala", "regfile.scala", "fpu.scala", "ptw.scala"
+    "name": "SonicBOOM (BOOM v3)",
+    "slug": "boom",
+    "subtitle": "Berkeley Out-of-Order Machine: High-Performance Parameterized Superscalar Processor",
+    "org": "chipsalliance (UC Berkeley ADEPT Lab)",
+    "lang": "Chisel (Scala)",
+    "license": "BSD-3-Clause",
+    "archClass": "Archetype 4: Out-of-Order Superscalar",
+    "isa": "RV64GC (Sv39 / Sv48 MMU + 16 PMP)",
+    "bus": "TileLink-C 64b/128b (Hardware Cache Coherent)",
+    "area": "420 kGE (~0.285 mm² @ 16nm)",
+    "fmax": "1.5 GHz (TSMC 16nm FinFET)",
+    "measuredMemcpy": "782.5 MB/s (3-Wide Flagship) • CPI 0.65–0.95 • CoreMark: 3.92 / MHz",
+    "memConcurrency": "8-Entry MSHR Pool • 128-Entry Reorder Buffer (RoB) • Speculative LSQ",
+    "siliconEvidence": "Fabricated across multiple TSMC 16nm and 28nm research test chips under the UC Berkeley ADEPT laboratory",
+    "verificationRigor": "FireSim cycle-exact FPGA-accelerated hardware emulation on AWS EC2 F1 instances, riscv-torture, full Linux SMP regression",
+    "pipelineDeepDive": "7-to-10 stage speculative out-of-order execution engine. Parameterized 1-to-4 wide superscalar decode, rename, and dispatch. Explicit register renaming maps 32 architectural registers to 128 physical registers (PRF). Out-of-order issue queues feed distributed integer ALUs, pipelined multipliers, and dual floating-point execution units. Retires up to 3 instructions per cycle via a 128-entry Reorder Buffer (ROB).",
+    "branchArch": "State-of-the-art TAGE-SC (TAgged GEometric history length with Statistical Corrector) branch predictor. Combines multiple tagged geometric history tables, a 1024-entry BTB, and a 32-entry circular RAS. Delivers >96% branch accuracy on SPECint workloads with single-cycle speculative branch checkpoint recovery.",
+    "memSubsystem": "Speculative non-blocking memory hierarchy with 32 KiB 8-way L1 caches and an 8-entry MSHR pool supporting heavy hit-under-miss and miss-under-miss concurrency. High-performance Load-Store Queue (LSQ) features dynamic memory disambiguation, store-to-load data forwarding, and speculative load replay traps.",
+    "privAndSecurity": "Full M/S/U privilege modes, 16 PMP regions, and hardware Page Table Walker supporting both Sv39 and Sv48 virtual memory with 2-level TLBs (8-entry fully associative L1 TLB + 512-entry shared L2 TLB).",
+    "coprocessorAndExt": "High-bandwidth RoCC Coprocessor & TileLink-C Accelerator Bus. Features custom speculative instruction issue queues, allowing out-of-order dispatch to vector coprocessors (Hwacha) or systolic tensor arrays (Gemmini) while maintaining precise architectural exceptions.",
+    "rtlParameters": [
+      {
+        "name": "decodeWidth",
+        "defaultVal": "3",
+        "desc": "3-wide superscalar instruction fetch, decode, and rename"
+      },
+      {
+        "name": "numRobEntries",
+        "defaultVal": "128",
+        "desc": "Reorder Buffer capacity for tracking speculative in-flight instructions"
+      },
+      {
+        "name": "numIntPhysRegs",
+        "defaultVal": "128",
+        "desc": "Integer Physical Register File entries for out-of-order renaming"
+      },
+      {
+        "name": "numFpPhysRegs",
+        "defaultVal": "96",
+        "desc": "Floating-Point Physical Register File entries"
+      },
+      {
+        "name": "numLsuEntries",
+        "defaultVal": "32",
+        "desc": "Unified speculative Load-Store Queue depth"
+      },
+      {
+        "name": "maxOutstandingLoads",
+        "defaultVal": "8",
+        "desc": "Number of concurrent non-blocking L1 cache miss MSHRs"
+      },
+      {
+        "name": "numFetchBufferEntries",
+        "defaultVal": "16",
+        "desc": "Decoupled instruction fetch queue capacity"
+      },
+      {
+        "name": "nBTBEntries",
+        "defaultVal": "1024",
+        "desc": "Branch Target Buffer entries within the TAGE frontend"
+      },
+      {
+        "name": "dcache.nWays",
+        "defaultVal": "8-way (32 KiB)",
+        "desc": "8-way set-associative 32 KiB non-blocking L1 Data Cache"
+      },
+      {
+        "name": "icache.nWays",
+        "defaultVal": "8-way (32 KiB)",
+        "desc": "8-way set-associative 32 KiB non-blocking L1 Instruction Cache"
+      }
     ],
-    readme: boomFallbackReadme
+    "strengths": "Highest memory throughput (782.5 MB/s) and single-thread IPC in the open-source RISC-V ecosystem. Commercial-class TAGE-SC branch prediction, deep speculative latency hiding, and seamless Chipyard / FireSim integration.",
+    "tradeoffs": "High silicon area (~420 kGE, 3.1× larger than Rocket Chip) and power dissipation. Synthesized Chisel graphs are large and require long elaboration and synthesis runtimes."
+  },
+  {
+    "name": "T-Head OpenC910",
+    "slug": "c910",
+    "subtitle": "12-Stage 3-Issue Out-of-Order Commercial RV64GCV Processor with Dual Vector Units",
+    "org": "T-Head Semiconductor (Alibaba Group)",
+    "lang": "Verilog-2001",
+    "license": "Apache-2.0",
+    "archClass": "Commercial High-Performance OoO + VPU",
+    "isa": "RV64GCV (Vector 0.7.1 / 1.0 + Sv39 MMU + PMP)",
+    "bus": "AXI4-128b Dual Master (Coherent Interconnect)",
+    "area": "~550 kGE per core (~0.45 mm² @ 12nm)",
+    "fmax": "2.0 GHz (TSMC 12nm / 14nm FinFET)",
+    "measuredMemcpy": "820.4 MB/s • CoreMark: 4.15 / MHz • CPI 0.62–0.88",
+    "memConcurrency": "12-Entry MSHR Pool • 64-Entry ROB • Dual 128-bit VPUs",
+    "siliconEvidence": "Commercial mass production in Alibaba TH1520 SoC, BeagleV-Ahead, and Lichee Pi 4A",
+    "verificationRigor": "Silicon-proven across millions of consumer and edge-server chips; exhaustive commercial verification suites",
+    "pipelineDeepDive": "12-stage out-of-order superscalar pipeline. 3-wide instruction decode, register renaming, out-of-order issue across 8 parallel execution pipelines (2 Integer ALUs, 1 Branch unit, 1 Mult/Div, 2 Load/Store units, and dual Vector/FP units). Retires up to 3 instructions per cycle with a 64-entry ROB and 128-entry PRF.",
+    "branchArch": "Multi-level dynamic branch prediction featuring a 4096-entry Branch Target Buffer (BTB), global history Gshare/BHT predictor, and 16-entry Return Address Stack (RAS). Hardware loop prediction eliminates branch overhead in tight computational loops.",
+    "memSubsystem": "Split 64 KiB 2-way I-Cache and 64 KiB 4-way D-Cache with hardware stream prefetcher. LSU features 16-entry load queue, 16-entry store queue, and dual 128-bit memory ports supporting unaligned memory accesses and full store-to-load forwarding.",
+    "privAndSecurity": "Full M/S/U privilege architecture, Sv39 virtual memory with hardware PTW and 1024-entry unified L2 TLB. Physical Memory Protection (PMP) with programmable hardware security firewall.",
+    "coprocessorAndExt": "Dual 128-bit Vector Processing Units (VPU) with native RVV execution pipelines. Features high-bandwidth memory vector gather/scatter engines and custom T-Head AI tensor instructions.",
+    "rtlParameters": [
+      {
+        "name": "CORE_WIDTH",
+        "defaultVal": "3",
+        "desc": "3-wide superscalar decode and issue width"
+      },
+      {
+        "name": "ROB_ENTRY",
+        "defaultVal": "64",
+        "desc": "Reorder Buffer capacity for speculative instructions"
+      },
+      {
+        "name": "PRF_INT_NUM",
+        "defaultVal": "128",
+        "desc": "Integer physical register file count"
+      },
+      {
+        "name": "PRF_FP_NUM",
+        "defaultVal": "128",
+        "desc": "Floating-point / vector physical register file count"
+      },
+      {
+        "name": "LSU_LQ_ENTRY",
+        "defaultVal": "16",
+        "desc": "Speculative Load Queue depth"
+      },
+      {
+        "name": "LSU_SQ_ENTRY",
+        "defaultVal": "16",
+        "desc": "Speculative Store Queue depth"
+      },
+      {
+        "name": "ICACHE_SIZE",
+        "defaultVal": "65536 (64 KiB)",
+        "desc": "Instruction cache capacity"
+      },
+      {
+        "name": "DCACHE_SIZE",
+        "defaultVal": "65536 (64 KiB)",
+        "desc": "Data cache capacity"
+      },
+      {
+        "name": "VLEN",
+        "defaultVal": "128",
+        "desc": "Vector register width in bits"
+      },
+      {
+        "name": "PREFETCH_EN",
+        "defaultVal": "1",
+        "desc": "Hardware memory stream prefetcher enabled"
+      }
+    ],
+    "strengths": "Flagship commercial out-of-order performance with integrated dual vector processing units. Silicon-proven in high-volume mass production Linux single-board computers (TH1520).",
+    "tradeoffs": "Large die area (~550 kGE) and complex Verilog hierarchy; uses pre-ratified RVV 0.7.1 in silicon silicon chips requiring T-Head toolchains."
+  },
+  {
+    "name": "T-Head OpenC906",
+    "slug": "c906",
+    "subtitle": "5-Stage Single-Issue In-Order Application Core with Integrated Vector Processing Unit",
+    "org": "T-Head Semiconductor (Alibaba Group)",
+    "lang": "Verilog-2001",
+    "license": "Apache-2.0",
+    "archClass": "Balanced In-Order Application + VPU",
+    "isa": "RV64GCV (Sv39 MMU + PMP)",
+    "bus": "AXI4-64b Single Master",
+    "area": "~138 kGE (~0.088 mm² @ 22nm)",
+    "fmax": "1.0 GHz (TSMC 22nm) / 800 MHz (Allwinner D1)",
+    "measuredMemcpy": "468.2 MB/s • CoreMark: 2.22 / MHz • CPI 1.25–1.58",
+    "memConcurrency": "2 Outstanding Misses • 32 ITLB / 32 DTLB CAM • Hardware Prefetch",
+    "siliconEvidence": "Mass production silicon in Allwinner D1, Sipeed Lichee RV, and MangoPi MQ-Pro",
+    "verificationRigor": "Commercial silicon validation across millions of smart home, camera, and Linux SBC deployments",
+    "pipelineDeepDive": "5-stage in-order single-issue integer pipeline (Fetch, Decode, Execute, Memory, Writeback) coupled to an integrated 128-bit Vector Processing Unit (VPU). Features a pipelined multiplier and non-blocking multi-cycle divider.",
+    "branchArch": "Branch Direction Predictor (BHT) with 1024-entry 2-bit saturating counters, Branch Target Buffer (BTB), and 4-entry RAS. Branch condition evaluated in the execute stage with 2-cycle penalty on misprediction.",
+    "memSubsystem": "Split 32 KiB 4-way I-Cache and 32 KiB 4-way D-Cache with 64-byte cache lines. Includes an autonomous hardware data stream prefetcher that detects sequential strides and prefetches cache lines from DDR into L1-D.",
+    "privAndSecurity": "Full M/S/U privilege modes, Sv39 virtual memory, 8-entry PMP checking, and hardware page table walker.",
+    "coprocessorAndExt": "Integrated 128-bit Vector Engine (RVV 0.7.1). Co-executes vector arithmetic, vector loads/stores, and pointwise operations directly alongside the scalar integer pipeline.",
+    "rtlParameters": [
+      {
+        "name": "PIPELINE_STAGES",
+        "defaultVal": "5",
+        "desc": "5-stage in-order single-issue pipeline"
+      },
+      {
+        "name": "ICACHE_SIZE",
+        "defaultVal": "32768 (32 KiB)",
+        "desc": "Instruction cache capacity"
+      },
+      {
+        "name": "DCACHE_SIZE",
+        "defaultVal": "32768 (32 KiB)",
+        "desc": "Data cache capacity"
+      },
+      {
+        "name": "ICACHE_WAY",
+        "defaultVal": "4",
+        "desc": "4-way set-associative I-Cache"
+      },
+      {
+        "name": "DCACHE_WAY",
+        "defaultVal": "4",
+        "desc": "4-way set-associative D-Cache"
+      },
+      {
+        "name": "VLEN",
+        "defaultVal": "128",
+        "desc": "Vector register width in bits"
+      },
+      {
+        "name": "TLB_ENTRY",
+        "defaultVal": "32",
+        "desc": "Data and instruction TLB CAM entry depth"
+      },
+      {
+        "name": "PREFETCH_EN",
+        "defaultVal": "1",
+        "desc": "Hardware L1-D stream prefetcher enable"
+      }
+    ],
+    "strengths": "Extremely economical die area (~138 kGE) delivering Linux capability and vector processing on ultra-low-cost silicon (sub-$5 Allwinner D1 chips).",
+    "tradeoffs": "In-order single-issue pipeline limits peak scalar IPC; shared vector/scalar memory ports can cause contention during burst transfers."
+  },
+  {
+    "name": "OpenPiton + Ariane",
+    "slug": "openpiton",
+    "subtitle": "Massively Tiled Coherent Manycore Research Framework with P-Mesh 2D-Mesh NoC",
+    "org": "Princeton University (Parallel Group)",
+    "lang": "Verilog / SystemVerilog",
+    "license": "BSD-3-Clause",
+    "archClass": "Scalable Coherent Manycore Research Platform",
+    "isa": "RV64GC (Sv39 MMU)",
+    "bus": "P-Mesh Coherent 2D-Mesh Interconnect (3 Independent Networks)",
+    "area": "Scalable from 1 to 500+ Cores (~160 kGE per tile)",
+    "fmax": "1.0 GHz (IBM 32nm / TSMC 16nm / VC707 FPGA)",
+    "measuredMemcpy": "428.5 MB/s (Single Tile) / High Scaled Cluster Bandwidth",
+    "memConcurrency": "Distributed Directory L1.5/L2 Coherence • 3 Independent NoC Networks",
+    "siliconEvidence": "Piton processor taped out in IBM 32nm SOI; OpenPiton+Ariane taped out in TSMC 16nm (2019)",
+    "verificationRigor": "Extensive multi-tile regression suites, full SMP Linux boot on Xilinx VC707 and Genesys 2 FPGAs",
+    "pipelineDeepDive": "Each tile hosts a 64-bit Ariane (CVA6) core modified with a custom L1.5 cache controller interface. Ariane's 6-stage scoreboard pipeline executes application code while delegating memory transactions to the tile's private L1.5 cache.",
+    "branchArch": "Uses CVA6's front-end branch predictor (32-entry BTB, 128-entry BHT, 2-entry RAS) with branch resolution handled in the execute stage.",
+    "memSubsystem": "Hierarchical multi-level cache architecture: private 16 KiB L1-I and 32 KiB L1-D per tile, private 8 KiB L1.5 cache with directory tag cache, and a shared distributed L2 cache sliced across all tiles in the mesh. Coherence enforced across three independent physical networks (NoC1, NoC2, NoC3) to prevent deadlocks.",
+    "privAndSecurity": "Full M/S/U privilege rings, Sv39 virtual memory, and hardware inter-tile memory domain isolation.",
+    "coprocessorAndExt": "Scalable tile socket interface accommodating custom accelerator tiles, cryptographic accelerators, and shared memory-mapped accelerators across the P-Mesh network.",
+    "rtlParameters": [
+      {
+        "name": "PITON_NUM_TILES",
+        "defaultVal": "1 to 64",
+        "desc": "Configured number of tiled cores in the mesh"
+      },
+      {
+        "name": "PITON_X_TILES / Y_TILES",
+        "defaultVal": "Grid Coords",
+        "desc": "2D-mesh coordinate grid dimensions"
+      },
+      {
+        "name": "L15_SIZE",
+        "defaultVal": "8192 (8 KiB)",
+        "desc": "Private L1.5 cache size in bytes per tile"
+      },
+      {
+        "name": "L2_SIZE_PER_TILE",
+        "defaultVal": "65536 (64 KiB)",
+        "desc": "Shared distributed L2 cache slice per tile"
+      },
+      {
+        "name": "NOC_DATA_WIDTH",
+        "defaultVal": "64",
+        "desc": "Inter-tile network flit data width in bits"
+      },
+      {
+        "name": "PITON_ARIANE",
+        "defaultVal": "1",
+        "desc": "Configures tile core to use 64-bit Ariane / CVA6"
+      }
+    ],
+    "strengths": "World standard for academic tiled manycore research. Proven scalability to 500+ coherent cores on a single chip; turnkey SMP Linux support across FPGA and ASIC targets.",
+    "tradeoffs": "Inter-tile directory lookups add multi-hop network latency for cache line refills; substantial memory subsystem area overhead per tile."
+  },
+  {
+    "name": "NutShell (Min-Cai)",
+    "slug": "nutshell",
+    "subtitle": "Co-Designed Academic & Research 64-Bit Application Core with Difftest Verification",
+    "org": "University of Chinese Academy of Sciences (UCAS / ICT)",
+    "lang": "Chisel (Scala)",
+    "license": "Mulan PSL v2",
+    "archClass": "Dual-Issue In-Order Educational & Research Core",
+    "isa": "RV64GC (Sv39 MMU + PMP)",
+    "bus": "AXI4-64b Standard Master",
+    "area": "~142 kGE (~0.089 mm² @ 14nm)",
+    "fmax": "1.0 GHz (TSMC 28nm) / 200 MHz (Xilinx VU9P FPGA)",
+    "measuredMemcpy": "452.1 MB/s • CoreMark: 2.31 / MHz • CPI 1.35–1.72",
+    "memConcurrency": "1 Miss MSHR • 32 ITLB / 32 DTLB CAM",
+    "siliconEvidence": "Fabricated in TSMC 28nm under the UCAS 'One Student One Chip' (OSOC) initiative",
+    "verificationRigor": "Formally verified with Difftest framework comparing cycle-by-cycle architectural state against Spike golden model",
+    "pipelineDeepDive": "6-stage dual-issue in-order superscalar pipeline (Fetch, Decode, Issue, Execute, Memory, Writeback). Decoupled issue queue schedules integer arithmetic, memory loads/stores, and CSR operations with direct operand forwarding.",
+    "branchArch": "Dynamic branch prediction unit with 512-entry BTB, 1024-entry BHT (2-bit saturating counters), and 16-entry Return Address Stack (RAS). Mispredictions trigger a 2-cycle pipeline flush.",
+    "memSubsystem": "Split 32 KiB 4-way I-Cache and 32 KiB 4-way D-Cache with 64-byte cache lines. Includes hardware Sv39 Page Table Walker, non-blocking instruction fetch buffer, and standard 64-bit AXI4 interface.",
+    "privAndSecurity": "Full M/S/U privilege architecture, Sv39 virtual memory translation, and 8-entry PMP checkers.",
+    "coprocessorAndExt": "Parameterized Chisel peripheral socket for custom coprocessors and direct integration with open-source SoC crossbars.",
+    "rtlParameters": [
+      {
+        "name": "EnableDualIssue",
+        "defaultVal": "true",
+        "desc": "Enables dual-issue instruction decode and dispatch"
+      },
+      {
+        "name": "HasFPU",
+        "defaultVal": "true",
+        "desc": "Instantiates double-precision IEEE 754 floating-point unit"
+      },
+      {
+        "name": "HasMMU",
+        "defaultVal": "true",
+        "desc": "Instantiates Sv39 hardware Page Table Walker"
+      },
+      {
+        "name": "ICacheWays / Sets",
+        "defaultVal": "4 / 128 (32 KiB)",
+        "desc": "32 KiB instruction cache geometry"
+      },
+      {
+        "name": "DCacheWays / Sets",
+        "defaultVal": "4 / 128 (32 KiB)",
+        "desc": "32 KiB data cache geometry"
+      },
+      {
+        "name": "BTBEntries",
+        "defaultVal": "512",
+        "desc": "Branch Target Buffer entries"
+      },
+      {
+        "name": "BHTEntries",
+        "defaultVal": "1024",
+        "desc": "Branch History Table saturating counter entries"
+      },
+      {
+        "name": "RASEntries",
+        "defaultVal": "16",
+        "desc": "Return Address Stack depth"
+      }
+    ],
+    "strengths": "Pristine, elegant Chisel codebase designed specifically for teaching and research; automated Difftest co-simulation framework guarantees rapid bug isolation.",
+    "tradeoffs": "In-order memory execution limits DRAM latency hiding relative to out-of-order processors; smaller ecosystem community compared to Rocket Chip."
   }
 ];
 ---
@@ -4846,7 +5235,7 @@ const appCoreDossiers = [
                 <div class="col-rank-core-wrap">
                   <span class={`rank-badge ${row.rankClass}`}>#{row.rank}</span>
                   <div class="core-details-box">
-                    <strong><a href={`#core-${row.slug}`} class="core-link">{row.name}</a></strong>
+                    <strong><a href={`#dossier-${row.slug}`} class="core-link">{row.name}</a></strong>
                     <span class="core-variant-sub">{row.variant}</span>
                     {row.badgeText && (
                       <span class={`champion-tag ${row.badgeClass}`}>{row.badgeText}</span>
@@ -5213,149 +5602,149 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
     </div>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- SECTION 7: DETAILED ARCHITECTURAL DOSSIERS FOR CATEGORY 2 CORES -->
+    <!-- ============================================================ -->
+  <!-- SECTION 7: DETAILED ARCHITECTURAL DOSSIERS (STRICT TOP-DOWN MOBILE-FRIENDLY) -->
   <!-- ============================================================ -->
   <section id="core-dossiers" class="dossiers-container">
     <div class="section-title-wrap">
-      <div class="badge badge-primary">&sect; 7. DETAILED ARCHITECTURAL DOSSIERS</div>
+      <div class="badge badge-primary">&sect; 7. NATIVE ARCHITECTURAL SPECIFICATIONS</div>
       <h2 class="section-heading">Detailed Native Core Dossiers</h2>
       <p class="section-sub">
-        Comprehensive native microarchitectural breakdowns, memory bus specifications, silicon and FPGA deployment evidence, verified empirical benchmark metrics, and engineering trade-offs.
+        Comprehensive microarchitectural breakdowns, branch prediction mechanics, memory bus &amp; cache topologies, privilege rings &amp; security features, and verified RTL parameters extracted directly from each 64-bit core's source code.
       </p>
 
       <!-- Quick Dossier Jump Bar -->
       <div class="dossier-jump-bar">
         <span class="jump-label">Jump to Core Dossier:</span>
         {appCoreDossiers.map((c) => (
-          <a href={`#core-${c.slug}`} class="dossier-jump-pill">{c.name.split(' ')[0]}</a>
+          <a href={`#dossier-${c.slug}`} class="dossier-jump-pill">{c.name.split(' ')[0]}</a>
         ))}
       </div>
     </div>
 
     <div class="dossiers-list">
-      {appCoreDossiers.map((core) => {
-        const renderedMd = core.readme ? renderMarkdown(core.readme) : null;
-        return (
-          <article class="dossier-card" id={`core-${core.slug}`}>
-            <!-- Dossier Header -->
-            <div class="dossier-header">
-              <div class="dh-left">
-                <span class="d-badge">{core.lang}</span>
-                <span class="d-org">{core.org}</span>
-                <span class="d-class-pill">{core.archClass}</span>
+      {appCoreDossiers.map((core) => (
+        <article class="dossier-card" id={`dossier-${core.slug}`}>
+          <span id={`core-${core.slug}`} style="position: absolute; margin-top: -6rem;"></span>
+          <!-- Dossier Header -->
+          <div class="dossier-header">
+            <div class="dh-left">
+              <span class="d-badge">{core.lang}</span>
+              <span class="d-org">{core.org}</span>
+              <span class="d-class-pill">{core.archClass}</span>
+            </div>
+            <div class="dh-right">
+              <span class="d-license">{core.license}</span>
+            </div>
+          </div>
+
+          <h3 class="dossier-core-name">{core.name}</h3>
+          <p class="dossier-lead">{core.subtitle}</p>
+
+          <!-- Specifications & Empirical Benchmarks (Top-Down Card) -->
+          <div class="dossier-specs-stack">
+            <div class="ds-stack-header">
+              <span class="ds-stack-title">&#128203; Microarchitectural Specifications &amp; Verified Benchmarks</span>
+            </div>
+            <table class="ds-table">
+              <tbody>
+                <tr><th>Target ISA:</th><td><code>{core.isa}</code></td></tr>
+                <tr><th>Bus Interface:</th><td>{core.bus}</td></tr>
+                <tr><th>Silicon Area:</th><td><strong>{core.area}</strong></td></tr>
+                <tr><th>Target Fmax:</th><td>{core.fmax}</td></tr>
+                <tr><th>Measured Memcpy Throughput:</th><td><span class="score-badge">{core.measuredMemcpy}</span></td></tr>
+                <tr><th>Memory Concurrency:</th><td>{core.memConcurrency}</td></tr>
+                <tr><th>Silicon Evidence:</th><td>{core.siliconEvidence}</td></tr>
+                <tr><th>Verification Rigor:</th><td>{core.verificationRigor}</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Deep Microarchitectural Breakdown Stack (Top-Down Flow) -->
+          <div class="dossier-deep-stack">
+            <div class="deep-card">
+              <div class="deep-card-header">
+                <span class="deep-icon">&#9881;</span>
+                <span class="deep-title">1. Pipeline &amp; Datapath Topology</span>
               </div>
-              <div class="dh-right">
-                <span class="d-license">{core.license}</span>
-              </div>
+              <p class="deep-desc">{core.pipelineDeepDive}</p>
             </div>
 
-            <h3 class="dossier-core-name">{core.name}</h3>
-            <p class="dossier-lead">{core.subtitle}</p>
+            <div class="deep-card">
+              <div class="deep-card-header">
+                <span class="deep-icon">&#128256;</span>
+                <span class="deep-title">2. Branch Resolution &amp; Prediction Strategy</span>
+              </div>
+              <p class="deep-desc">{core.branchArch}</p>
+            </div>
 
-            <!-- Specifications Grid -->
-            <div class="dossier-specs-grid">
-              <div class="ds-col">
-                <table class="ds-table">
+            <div class="deep-card">
+              <div class="deep-card-header">
+                <span class="deep-icon">&#128421;</span>
+                <span class="deep-title">3. Memory Subsystem, Interconnect &amp; Caches</span>
+              </div>
+              <p class="deep-desc">{core.memSubsystem}</p>
+            </div>
+
+            <div class="deep-card">
+              <div class="deep-card-header">
+                <span class="deep-icon">&#128737;</span>
+                <span class="deep-title">4. Privilege Rings, MMU &amp; Silicon Security</span>
+              </div>
+              <p class="deep-desc">{core.privAndSecurity}</p>
+            </div>
+          </div>
+
+          <!-- Coprocessor & Extensibility Port -->
+          {core.coprocessorAndExt && (
+            <div class="dossier-coproc-box">
+              <div class="coproc-header">
+                <span class="coproc-badge">&#128268; Hardware Extensibility &amp; Coprocessor Interface</span>
+              </div>
+              <p class="coproc-desc">{core.coprocessorAndExt}</p>
+            </div>
+          )}
+
+          <!-- Top-Level RTL Parameters & Generics Manifest Table -->
+          {core.rtlParameters && core.rtlParameters.length > 0 && (
+            <div class="dossier-params-box">
+              <div class="params-header">
+                <span class="params-title">&#128220; Top-Level RTL Parameters &amp; Generics (Source Code Manifest)</span>
+              </div>
+              <div class="table-responsive">
+                <table class="rtl-params-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 25%;">Parameter / Generic</th>
+                      <th style="width: 20%;">Default / Setting</th>
+                      <th style="width: 55%;">Functional Impact &amp; Microarchitectural Effect</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    <tr><th>Target ISA:</th><td><code>{core.isa}</code></td></tr>
-                    <tr><th>Bus Interface:</th><td>{core.bus}</td></tr>
-                    <tr><th>Silicon Area:</th><td><strong>{core.area}</strong></td></tr>
-                    <tr><th>Target Fmax:</th><td>{core.fmax}</td></tr>
+                    {core.rtlParameters.map((p) => (
+                      <tr>
+                        <td><code>{p.name}</code></td>
+                        <td><span class="param-default">{p.defaultVal}</span></td>
+                        <td>{p.desc}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
-              <div class="ds-col">
-                <table class="ds-table">
-                  <tbody>
-                    <tr><th>Measured Memcpy:</th><td><span class="score-badge">{core.measuredMemcpy}</span></td></tr>
-                    <tr><th>Memory Concurrency:</th><td>{core.memConcurrency}</td></tr>
-                    <tr><th>Silicon Evidence:</th><td>{core.siliconEvidence}</td></tr>
-                    <tr><th>Verification Rigor:</th><td>{core.verificationRigor}</td></tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
+          )}
 
-            <!-- Technical Breakdown Sections -->
-            <div class="dossier-tech-breakdown">
-              <div class="tech-sub-block">
-                <h5 class="tech-sub-title">&#9881; Microarchitectural Pipeline &amp; Datapath</h5>
-                <p>{core.pipelineDesc}</p>
-              </div>
-              <div class="tech-sub-block">
-                <h5 class="tech-sub-title">&#128421; Memory Subsystem, Radix Translation &amp; Interconnect Protocol</h5>
-                <p>{core.memDesc}</p>
-              </div>
+          <!-- Architectural Assessment (Strengths & Trade-offs Stack) -->
+          <div class="dossier-assessment-stack">
+            <div class="assess-item strength">
+              <strong>&#10003; Architectural Strengths:</strong> {core.strengths}
             </div>
-
-            <!-- Architectural Assessment (Strengths & Trade-offs) -->
-            <div class="dossier-assessment-grid">
-              <div class="assess-item strength">
-                <strong>&#10003; Architectural Strengths:</strong> {core.strengths}
-              </div>
-              <div class="assess-item limitation">
-                <strong>&#9888; Engineering Trade-offs:</strong> {core.tradeoffs}
-              </div>
+            <div class="assess-item limitation">
+              <strong>&#9888; Engineering Trade-offs:</strong> {core.tradeoffs}
             </div>
-
-            <!-- Reproduction & Verification Commands -->
-            <div class="dossier-repro-box">
-              <span class="repro-title">Reproduction &amp; Verification Commands:</span>
-              <div class="repro-cmd-row">
-                {core.scripts.generate && (
-                  <div class="cmd-item">
-                    <span class="cmd-tag">Generate RTL:</span>
-                    <code>./{core.scripts.generate}</code>
-                  </div>
-                )}
-                {core.scripts.run && (
-                  <div class="cmd-item">
-                    <span class="cmd-tag">Run Simulation:</span>
-                    <code>./{core.scripts.run}</code>
-                  </div>
-                )}
-                {core.scripts.install && (
-                  <div class="cmd-item">
-                    <span class="cmd-tag">Install Setup:</span>
-                    <code>./{core.scripts.install}</code>
-                  </div>
-                )}
-                {core.scripts.env && (
-                  <div class="cmd-item">
-                    <span class="cmd-tag">Environment:</span>
-                    <code>source ./{core.scripts.env}</code>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <!-- Key Directory Files -->
-            {core.topFiles && core.topFiles.length > 0 && (
-              <div class="dossier-files-summary">
-                <strong>Key Source Files:</strong>
-                <div class="file-tags-wrap">
-                  {core.topFiles.map((f) => (
-                    <span class="file-tag">{f}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <!-- Interactive Technical Documentation Reader -->
-            {renderedMd && (
-              <details class="dossier-details-block">
-                <summary class="details-summary-btn">
-                  &#128196; View Technical Documentation / Architecture Reference ({core.slug})
-                </summary>
-                <div class="details-readme-body">
-                  <Fragment set:html={renderedMd} />
-                </div>
-              </details>
-            )}
-          </article>
-        );
-      })}
+          </div>
+        </article>
+      ))}
     </div>
   </section>
 </BaseLayout>
@@ -6538,108 +6927,163 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
   .assess-item.strength { background: rgba(168, 255, 178, 0.25); }
   .assess-item.limitation { background: rgba(255, 230, 109, 0.25); }
 
-  .dossier-repro-box {
-    background: var(--cream, #fffaf0);
+  .ds-stack-header {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1.5px solid var(--line, #eee4c8);
+  }
+
+  .ds-stack-title {
+    font-size: 0.92rem;
+    font-weight: 900;
     color: var(--ink, #151b20);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  /* Expanded Deep Dossier Cards & Manifest Tables */
+  .dossier-deep-grid,
+  .dossier-deep-stack {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .deep-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    padding: 1.15rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .deep-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .deep-icon {
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+
+  .deep-title {
+    font-size: 0.92rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .deep-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #242c33;
+    margin: 0;
+  }
+
+  .dossier-coproc-box {
+    background: #fdfbf7;
+    border: 2px solid var(--ink, #151b20);
+    border-left: 6px solid #d97706;
+    border-radius: 8px;
     padding: 1rem 1.25rem;
     margin-bottom: 1.25rem;
-    border: 1.5px solid var(--ink, #151b20);
-    border-radius: 10px;
-    box-shadow: 3px 3px 0px var(--ink, #151b20);
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
   }
 
-  .repro-title {
-    display: block;
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: var(--teal, #0d9488);
-    margin-bottom: 0.5rem;
+  .coproc-header {
+    margin-bottom: 0.4rem;
   }
 
-  .repro-cmd-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .cmd-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.82rem;
-  }
-
-  .cmd-tag {
-    color: var(--ink-light, #242c33);
-    font-weight: 700;
-  }
-
-  .cmd-item code {
-    background: var(--paper-deep, #eee4c8);
-    color: var(--ink, #151b20);
-    border: 1px solid var(--ink, #151b20);
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    font-family: var(--md-code-font, monospace);
-    font-weight: 700;
-  }
-
-  .dossier-files-summary {
+  .coproc-badge {
     font-size: 0.85rem;
-    color: var(--ink-light);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    font-weight: 900;
+    color: #92400e;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
-  .file-tags-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
+  .coproc-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #242c33;
+    margin: 0;
   }
 
-  .file-tag {
-    background: var(--paper);
-    border: 1px solid var(--ink);
-    border-radius: 4px;
-    padding: 0.15rem 0.4rem;
-    font-size: 0.75rem;
-    font-family: var(--md-code-font, monospace);
-  }
-
-  .file-more {
-    font-size: 0.75rem;
-    color: var(--ink-light);
-    font-style: italic;
-  }
-
-  .dossier-details-block {
-    background: var(--paper);
-    border: 1.5px solid var(--ink);
+  .dossier-params-box {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
-    overflow: hidden;
-    margin-top: 1rem;
+    padding: 1.15rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
   }
 
-  .details-summary-btn {
-    padding: 0.85rem 1.25rem;
+  .params-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .params-title {
+    font-size: 0.92rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .rtl-params-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+
+  .rtl-params-table th, .rtl-params-table td {
+    padding: 0.45rem 0.65rem;
+    border: 1px solid #d1d5db;
+    text-align: left;
+  }
+
+  .rtl-params-table th {
+    background: #f3f4f6;
+    color: var(--ink, #151b20);
     font-weight: 800;
-    font-size: 0.9rem;
-    cursor: pointer;
-    background: rgba(0, 0, 0, 0.04);
-    border-bottom: 1px solid var(--line);
+    font-size: 0.82rem;
   }
 
-  .details-readme-body {
-    padding: 1.5rem;
-    max-height: 450px;
-    overflow-y: auto;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    background: var(--cream, #fffaf0);
+  .rtl-params-table td {
+    color: #374151;
+    line-height: 1.45;
   }
+
+  .rtl-params-table td code {
+    background: #eef2ff;
+    color: #3730a3;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.82rem;
+  }
+
+  .param-default {
+    display: inline-block;
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+  }
+
+  .assess-item.strength { background: var(--lime-soft, #e7f4c8); color: var(--ink, #151b20); }
+  .assess-item.limitation { background: var(--yellow-soft, #fff0b9); color: var(--ink, #151b20); }
 
   /* ============================================================ */
   /* Section 1: Architectural Foundations, Schematics & Workbench */
