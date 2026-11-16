@@ -770,17 +770,34 @@ const bespokeDossiers = [
             <text x="28" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH &bull; BASELINE SCALAR RISC-V (RV32I/E) ARCHITECTURAL DATAPATH &amp; CONTROL</text>
 
             <!-- ============================================================ -->
-            <!-- TOP DEDICATED REDIRECTION CHANNELS (UNOBSTRUCTED) -->
+            <!-- TOP DEDICATED REDIRECTION HIGHWAYS (CONTROL HAZARD RESOLUTION) -->
             <!-- ============================================================ -->
-            <!-- Channel 1: Trap Vector Redirection (mtvec) -->
-            <path d="M 395 96 L 395 36 L 14 36 L 14 232 L 28 232" fill="none" stroke="#be123c" stroke-width="1.8" marker-end="url(#arrowCrimson)"/>
-            <rect x="120" y="29" width="245" height="14" rx="3" fill="#fff1f2" stroke="#be123c" stroke-width="1"/>
-            <text x="125" y="39" font-size="7" font-weight="900" fill="#be123c" font-family="monospace">TRAP REDIRECT: PC &larr; mtvec (Exceptions / Hardware IRQs)</text>
+            <!-- Channel 1: Trap Vector Redirection (mtvec) from Block 6 to Next PC MUX -->
+            <path d="M 424 83 L 424 34 L 14 34 L 14 230 L 28 230" fill="none" stroke="#be123c" stroke-width="2" marker-end="url(#arrowCrimson)"/>
+            <!-- Directional Flow Chevrons (East to West) -->
+            <polygon points="210,31 204,34 210,37" fill="#be123c"/>
+            <polygon points="320,31 314,34 320,37" fill="#be123c"/>
+            <!-- Channel 1 Origin & Route Callout Banner -->
+            <rect x="75" y="24" width="320" height="18" rx="4" fill="#fff1f2" stroke="#be123c" stroke-width="1.2"/>
+            <circle cx="84" cy="33" r="3.5" fill="#be123c"/>
+            <text x="92" y="36.5" font-size="7.2" font-weight="900" fill="#be123c" font-family="monospace">TRAP REDIRECT: [FROM BLOCK 6: CSR &amp; TRAP CTRL &bull; mtvec] &#8594; Next PC MUX [In 2]</text>
 
-            <!-- Channel 2: Branch Taken Redirection (Target PC) -->
-            <path d="M 542 96 L 542 52 L 22 52 L 22 202 L 28 202" fill="none" stroke="#ef4444" stroke-width="1.8" marker-end="url(#arrowRedBase)"/>
-            <rect x="160" y="45" width="280" height="14" rx="3" fill="#fef2f2" stroke="#ef4444" stroke-width="1"/>
-            <text x="165" y="55" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH REDIRECT: PC &larr; Target Address (beq / bne / blt / jal)</text>
+            <!-- Channel 2: Branch Taken Redirection (Target PC) from Stage 3 to Next PC MUX -->
+            <path d="M 581 83 L 581 48 L 22 48 L 22 202 L 28 202" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRedBase)"/>
+            <!-- Directional Flow Chevrons (East to West) -->
+            <polygon points="230,45 224,48 230,51" fill="#ef4444"/>
+            <polygon points="350,45 344,48 350,51" fill="#ef4444"/>
+            <polygon points="470,45 464,48 470,51" fill="#ef4444"/>
+            <!-- Channel 2 Origin & Route Callout Banner -->
+            <rect x="110" y="42" width="345" height="18" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1.2"/>
+            <circle cx="119" cy="51" r="3.5" fill="#ef4444"/>
+            <text x="127" y="54.5" font-size="7.2" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH REDIRECT: [FROM STAGE 3: BR/JMP TARGET UNIT] &#8594; Next PC MUX [In 1]</text>
+
+            <!-- PC Bus to Stage 3 Branch Target Unit (Clear Horizontal Corridor at y=60) -->
+            <path d="M 135 118 L 135 60 L 525 60 L 525 98" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlue)"/>
+            <circle cx="135" cy="118" r="3" fill="#0284c7"/>
+            <rect x="290" y="53" width="160" height="13" rx="2" fill="#f0f9ff" stroke="#0284c7" stroke-width="0.8"/>
+            <text x="295" y="62.5" font-size="6.5" font-weight="900" fill="#0369a1" font-family="monospace">&#9658; pc[31:0] to Branch Target Unit</text>
 
             <!-- ============================================================ -->
             <!-- PIPELINE STAGE ZONE HEADERS -->
@@ -801,37 +818,46 @@ const bespokeDossiers = [
             <!-- STAGE 1: INSTRUCTION FETCH (IF) -->
             <!-- ============================================================ -->
             <!-- 1. Next PC Multiplexer -->
-            <polygon points="28,150 52,160 52,245 28,255" fill="#f1f5f9" stroke="#151b20" stroke-width="1.8"/>
-            <text x="34" y="205" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">MUX</text>
-            <text x="55" y="168" font-size="7" font-weight="800" fill="#0284c7">0: PC+4</text>
-            <text x="55" y="196" font-size="7" font-weight="800" fill="#ef4444">1: Target</text>
-            <text x="55" y="226" font-size="7" font-weight="800" fill="#be123c">2: mtvec</text>
+            <polygon points="28,155 56,165 56,240 28,250" fill="#f1f5f9" stroke="#151b20" stroke-width="2"/>
+            <text x="42" y="200" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">NEXT<tspan x="42" dy="9">PC</tspan><tspan x="42" dy="9">MUX</tspan></text>
+
+            <!-- Next PC Mux Input Port Badges -->
+            <circle cx="28" cy="175" r="2.5" fill="#0284c7"/>
+            <text x="32" y="174" font-size="6.5" font-weight="900" fill="#0284c7" font-family="monospace">[0]</text>
+            <circle cx="28" cy="202" r="2.5" fill="#ef4444"/>
+            <text x="32" y="196" font-size="6.5" font-weight="900" fill="#ef4444" font-family="monospace">[1]</text>
+            <circle cx="28" cy="230" r="2.5" fill="#be123c"/>
+            <text x="32" y="228" font-size="6.5" font-weight="900" fill="#be123c" font-family="monospace">[2]</text>
+
+            <!-- Mux Select Control Input -->
+            <line x1="42" y1="264" x2="42" y2="250" stroke="#7e22ce" stroke-width="1.6" marker-end="url(#arrowPurple)"/>
+            <text x="28" y="274" font-size="6.5" font-weight="900" fill="#7e22ce" font-family="monospace">pc_sel[1:0]</text>
 
             <!-- Line from Next PC Mux to PC Reg -->
-            <line x1="52" y1="202" x2="70" y2="202" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
-            <text x="54" y="194" font-size="6.8" font-weight="900" font-family="monospace">next_pc</text>
+            <line x1="56" y1="202" x2="72" y2="202" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
+            <text x="57" y="194" font-size="6.8" font-weight="900" font-family="monospace">next_pc</text>
 
             <!-- 1. Program Counter (PC Reg) -->
-            <rect x="70" y="172" width="55" height="60" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
-            <rect x="70" y="172" width="55" height="16" rx="4" fill="#e2e8f0"/>
-            <text x="74" y="184" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">1. PC REG</text>
-            <text x="74" y="204" font-size="8.5" font-weight="800" fill="#151b20">PC [31:0]</text>
-            <text x="74" y="220" font-size="7" fill="#64748b">Clocked</text>
+            <rect x="72" y="172" width="55" height="60" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+            <rect x="72" y="172" width="55" height="16" rx="4" fill="#e2e8f0"/>
+            <text x="76" y="184" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">1. PC REG</text>
+            <text x="76" y="204" font-size="8.5" font-weight="800" fill="#151b20">PC [31:0]</text>
+            <text x="76" y="220" font-size="7" fill="#64748b">Clocked</text>
 
             <!-- PC out bus and split -->
-            <line x1="125" y1="202" x2="148" y2="202" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
+            <line x1="127" y1="202" x2="148" y2="202" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
             <circle cx="135" cy="202" r="3.5" fill="#151b20"/>
             <text x="130" y="195" font-size="6.8" font-weight="800" font-family="monospace">addr</text>
 
             <!-- PC to PC+4 Increment Adder -->
-            <path d="M 135 202 L 135 118 L 125 118" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlue)"/>
+            <path d="M 135 202 L 135 118 L 127 118" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlue)"/>
 
             <!-- PC+4 Adder -->
-            <rect x="70" y="100" width="55" height="36" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.8"/>
-            <text x="78" y="122" font-size="8.5" font-weight="900" fill="#0369a1" font-family="monospace">ADD +4</text>
+            <rect x="72" y="100" width="55" height="36" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.8"/>
+            <text x="80" y="122" font-size="8.5" font-weight="900" fill="#0369a1" font-family="monospace">ADD +4</text>
 
             <!-- PC+4 out loopback to Mux Input 0 -->
-            <path d="M 70 118 L 18 118 L 18 175 L 28 175" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlue)"/>
+            <path d="M 72 118 L 18 118 L 18 175 L 28 175" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlue)"/>
 
             <!-- 2. Instruction Memory (IMEM / I-Cache) -->
             <rect x="148" y="162" width="65" height="80" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
@@ -858,19 +884,28 @@ const bespokeDossiers = [
             <text x="240" y="179" font-size="7.5" font-weight="800" fill="#7e22ce">Control Generator</text>
 
             <!-- 6. Privileged CSR & Trap Controller (Block 6) -->
+            <!-- Output Port Terminal for mtvec Redirection Wire -->
+            <rect x="380" y="83" width="88" height="16" rx="3" fill="#be123c" stroke="#881337" stroke-width="1.2"/>
+            <text x="384" y="94" font-size="7" font-weight="900" fill="#ffffff" font-family="monospace">&#9650; OUT: mtvec [31:0]</text>
+            <circle cx="424" cy="83" r="3" fill="#be123c"/>
+
             <rect x="375" y="96" width="110" height="110" rx="6" fill="#fff1f2" stroke="#be123c" stroke-width="2"/>
             <rect x="375" y="96" width="110" height="18" rx="5" fill="#ffe4e6"/>
             <text x="380" y="109" font-size="8" font-weight="900" fill="#be123c" font-family="monospace">6. CSR &amp; TRAP CTRL</text>
-            <text x="380" y="128" font-size="7.5" fill="#9f1239">mstatus, mtvec, mepc</text>
-            <text x="380" y="145" font-size="7.5" fill="#9f1239">mcause, mie, mip</text>
-            <text x="380" y="162" font-size="7.5" font-weight="800" fill="#be123c">Interrupt / Trap FSM</text>
-            <text x="380" y="179" font-size="7" fill="#64748b">Direct &amp; Vectored</text>
+
+            <!-- Internal mtvec Register Box with Upward Vector Arrow -->
+            <rect x="380" y="118" width="100" height="26" rx="3" fill="#ffffff" stroke="#f43f5e" stroke-width="1"/>
+            <text x="384" y="129" font-size="7" font-weight="900" fill="#be123c" font-family="monospace">mtvec Reg (Trap Base)</text>
+            <text x="384" y="139" font-size="6.2" fill="#64748b">Exceptions / IRQ Vector</text>
+            <path d="M 424 118 L 424 99" fill="none" stroke="#be123c" stroke-width="1.6" marker-end="url(#arrowCrimson)"/>
+
+            <text x="380" y="156" font-size="7.5" fill="#9f1239">mstatus, mepc, mcause</text>
+            <text x="380" y="172" font-size="7.5" font-weight="800" fill="#be123c">Interrupt / Trap FSM</text>
+            <text x="380" y="188" font-size="7" fill="#64748b">Direct &amp; Vectored Modes</text>
 
             <!-- External Interrupt Pins into CSR -->
-            <line x1="425" y1="78" x2="425" y2="96" stroke="#be123c" stroke-width="1.8" marker-end="url(#arrowCrimson)"/>
-            <text x="415" y="74" font-size="6.8" font-weight="900" fill="#be123c" font-family="monospace">irq[15:0]</text>
             <line x1="465" y1="78" x2="465" y2="96" stroke="#be123c" stroke-width="1.8" marker-end="url(#arrowCrimson)"/>
-            <text x="450" y="74" font-size="6.8" font-weight="900" fill="#be123c" font-family="monospace">timer_irq</text>
+            <text x="445" y="74" font-size="6.8" font-weight="900" fill="#be123c" font-family="monospace">irq[15:0] &amp; timer</text>
 
             <!-- Register File rs1, rs2, rd addresses from Decoder -->
             <path d="M 285 206 L 285 235" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBase)"/>
@@ -891,8 +926,8 @@ const bespokeDossiers = [
             <circle cx="368" cy="135" r="3.5" fill="#7e22ce"/>
             <text x="358" y="128" font-size="7" font-weight="900" fill="#7e22ce" font-family="monospace">imm[31:0]</text>
 
-            <!-- Immediate straight to Branch Target Adder -->
-            <line x1="368" y1="135" x2="510" y2="135" stroke="#7e22ce" stroke-width="1.8" marker-end="url(#arrowPurple)"/>
+            <!-- Immediate straight to Branch Target Unit -->
+            <line x1="368" y1="135" x2="505" y2="135" stroke="#7e22ce" stroke-width="1.8" marker-end="url(#arrowPurple)"/>
 
             <!-- Immediate down to Operand B Selection Mux -->
             <path d="M 368 135 L 368 348 L 505 348" fill="none" stroke="#7e22ce" stroke-width="1.8" marker-end="url(#arrowPurple)"/>
@@ -919,10 +954,23 @@ const bespokeDossiers = [
             <!-- ============================================================ -->
             <!-- STAGE 3: EXECUTE (EX) -->
             <!-- ============================================================ -->
-            <!-- Branch Target Adder -->
-            <rect x="510" y="105" width="65" height="45" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.8"/>
-            <text x="516" y="122" font-size="8" font-weight="900" fill="#b45309" font-family="monospace">BR ADDER</text>
-            <text x="516" y="138" font-size="7.5" fill="#92400e">PC + Imm</text>
+            <!-- Stage 3 Branch & Jump Target Unit (Source of Branch Redirection) -->
+            <!-- Output Port Terminal for target_pc Redirection Wire -->
+            <rect x="535" y="83" width="92" height="16" rx="3" fill="#ef4444" stroke="#b91c1c" stroke-width="1.2"/>
+            <text x="539" y="94" font-size="7" font-weight="900" fill="#ffffff" font-family="monospace">&#9650; OUT: target_pc [31:0]</text>
+            <circle cx="581" cy="83" r="3" fill="#ef4444"/>
+
+            <rect x="505" y="98" width="122" height="66" rx="5" fill="#fff5f5" stroke="#ef4444" stroke-width="2"/>
+            <rect x="505" y="98" width="122" height="17" rx="4" fill="#fee2e2"/>
+            <text x="510" y="110" font-size="7.5" font-weight="900" fill="#b91c1c" font-family="monospace">STAGE 3: BR/JMP TARGET UNIT</text>
+            <text x="510" y="125" font-size="7" font-weight="800" fill="#991b1b">Adder: Target = PC + ImmGen</text>
+            <text x="510" y="137" font-size="6.8" fill="#7f1d1d">Gate: taken ? target_pc : pc+4</text>
+            <text x="510" y="149" font-size="6.5" fill="#ef4444">beq / bne / blt / bge / jal / jalr</text>
+            <text x="510" y="159" font-size="6.2" fill="#64748b">Redirects IF Stage on Taken</text>
+
+            <!-- Branch Evaluation Flag from ALU to Branch Target Unit -->
+            <path d="M 605 278 L 605 132 L 627 132" fill="none" stroke="#ef4444" stroke-width="1.6" stroke-dasharray="2,2" marker-end="url(#arrowRedBase)"/>
+            <text x="610" y="195" font-size="6.8" font-weight="900" fill="#ef4444" font-family="monospace">branch_eval</text>
 
             <!-- Operand B Selection MUX -->
             <polygon points="505,310 525,318 525,355 505,363" fill="#fef3c7" stroke="#151b20" stroke-width="1.8"/>
@@ -936,10 +984,6 @@ const bespokeDossiers = [
             <polygon points="545,260 620,285 620,355 545,380 545,335 558,320 545,305" fill="#ecfdf5" stroke="#059669" stroke-width="2.5"/>
             <text x="570" y="322" font-size="11" font-weight="900" fill="#065f46" font-family="monospace">ALU</text>
             <text x="558" y="338" font-size="7.5" font-weight="800" fill="#047857">ADD/SUB/CMP</text>
-
-            <!-- Branch Evaluation Flag from ALU to Branch Adder -->
-            <path d="M 605 278 L 605 130 L 575 130" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,2" marker-end="url(#arrowRedBase)"/>
-            <text x="580" y="200" font-size="6.8" font-weight="900" fill="#ef4444" font-family="monospace">branch_eval</text>
 
             <!-- ALU Result out and split -->
             <line x1="620" y1="320" x2="650" y2="320" stroke="#151b20" stroke-width="2.5"/>
@@ -981,8 +1025,8 @@ const bespokeDossiers = [
             <text x="814" y="333" font-size="6.8" font-weight="800" fill="#64748b" font-family="monospace">sys_req / gnt</text>
 
             <!-- CSR Read Data line to Writeback Mux Input 2 -->
-            <path d="M 485 150 L 785 150 L 785 405" fill="none" stroke="#be123c" stroke-width="1.6" stroke-dasharray="3,3" marker-end="url(#arrowCrimson)"/>
-            <text x="500" y="145" font-size="7" font-weight="800" fill="#be123c" font-family="monospace">csr_rdata[31:0]</text>
+            <path d="M 485 178 L 785 178 L 785 405" fill="none" stroke="#be123c" stroke-width="1.6" stroke-dasharray="3,3" marker-end="url(#arrowCrimson)"/>
+            <text x="500" y="174" font-size="7" font-weight="800" fill="#be123c" font-family="monospace">csr_rdata[31:0]</text>
 
             <!-- Writeback Selection MUX (WB MUX) -->
             <polygon points="635,405 795,405 785,432 645,432" fill="#ccfbf1" stroke="#0f766e" stroke-width="2"/>
@@ -1005,28 +1049,28 @@ const bespokeDossiers = [
             <line x1="25" y1="480" x2="45" y2="480" stroke="#151b20" stroke-width="2.5"/>
             <text x="50" y="483" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">Datapath [31:0]</text>
 
-            <line x1="135" y1="480" x2="155" y2="480" stroke="#0284c7" stroke-width="2"/>
-            <text x="160" y="483" font-size="7.5" font-weight="800" fill="#0284c7" font-family="monospace">PC Sequencing</text>
+            <line x1="125" y1="480" x2="145" y2="480" stroke="#0284c7" stroke-width="2"/>
+            <text x="150" y="483" font-size="7.5" font-weight="800" fill="#0284c7" font-family="monospace">PC Sequencing</text>
 
-            <line x1="240" y1="480" x2="260" y2="480" stroke="#7e22ce" stroke-width="1.8" stroke-dasharray="3,3"/>
-            <text x="265" y="483" font-size="7.5" font-weight="800" fill="#7e22ce" font-family="monospace">Control / Immediates</text>
+            <line x1="225" y1="480" x2="245" y2="480" stroke="#7e22ce" stroke-width="1.8" stroke-dasharray="3,3"/>
+            <text x="250" y="483" font-size="7.5" font-weight="800" fill="#7e22ce" font-family="monospace">Control / Immediates</text>
 
-            <line x1="380" y1="480" x2="400" y2="480" stroke="#ef4444" stroke-width="2"/>
-            <text x="405" y="483" font-size="7.5" font-weight="800" fill="#ef4444" font-family="monospace">Branch Redirect</text>
+            <line x1="365" y1="480" x2="385" y2="480" stroke="#ef4444" stroke-width="2"/>
+            <text x="390" y="483" font-size="7.5" font-weight="800" fill="#ef4444" font-family="monospace">Branch Redirect (Stage 3 Unit)</text>
 
-            <line x1="495" y1="480" x2="515" y2="480" stroke="#be123c" stroke-width="1.8"/>
-            <text x="520" y="483" font-size="7.5" font-weight="800" fill="#be123c" font-family="monospace">Trap Vector</text>
+            <line x1="550" y1="480" x2="570" y2="480" stroke="#be123c" stroke-width="1.8"/>
+            <text x="575" y="483" font-size="7.5" font-weight="800" fill="#be123c" font-family="monospace">Trap Vector mtvec (Block 6 CSR)</text>
 
-            <line x1="595" y1="480" x2="615" y2="480" stroke="#d97706" stroke-width="1.8"/>
-            <text x="620" y="483" font-size="7.5" font-weight="800" fill="#d97706" font-family="monospace">Store Data</text>
+            <line x1="735" y1="480" x2="755" y2="480" stroke="#d97706" stroke-width="1.8"/>
+            <text x="760" y="483" font-size="7.5" font-weight="800" fill="#d97706" font-family="monospace">Store Data</text>
 
-            <line x1="685" y1="480" x2="705" y2="480" stroke="#0d9488" stroke-width="2.5"/>
-            <text x="710" y="483" font-size="7.5" font-weight="800" fill="#0d9488" font-family="monospace">Writeback Highway</text>
+            <line x1="815" y1="480" x2="835" y2="480" stroke="#0d9488" stroke-width="2.5"/>
+            <text x="840" y="483" font-size="7.5" font-weight="800" fill="#0d9488" font-family="monospace">WB Highway</text>
           </svg>
         </div>
         <div class="mobile-scroll-hint">&#8596; Interactive Schematic: Scroll horizontally on touchscreens to inspect full datapath interconnects</div>
         <p class="schematic-caption" style="margin-top: 0.75rem;">
-          <strong>Figure 1.0:</strong> Complete architectural datapath and control topology of a baseline scalar RISC-V (RV32I/E) processor core. Solid black traces show the 32-bit integer datapath; dashed purple traces indicate decoded control signals; red loops illustrate branch and trap redirection back to the Program Counter multiplexer; the teal bus carries committed writeback data back to the register file.
+          <strong>Figure 1.0:</strong> Complete architectural datapath and control topology of a baseline scalar RISC-V (RV32I/E) processor core. Solid black traces show the 32-bit integer datapath; dashed purple traces indicate decoded control signals; upper dedicated highways carry redirection back to the Next PC multiplexer (Channel 1 returns <code>mtvec</code> from Block 6 Privileged CSR &amp; Trap Controller on interrupts/exceptions; Channel 2 returns <code>target_pc</code> from Stage 3 Branch/Jump Target Unit on taken control hazards); the teal bus carries committed writeback data back to the register file.
         </p>
       </div>
 
