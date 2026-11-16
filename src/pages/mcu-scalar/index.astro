@@ -711,59 +711,149 @@ const bespokeDossiers = [
     <!-- 1.1 UNIVERSAL BUILDING BLOCKS -->
     <div class="concept-step-card" style="margin-bottom: 2rem;">
       <div class="step-card-header">
-        <span class="step-tag" style="background: var(--ink); color: #fff;">1.1 THE SIX UNIVERSAL BUILDING BLOCKS</span>
+        <span class="step-tag badge-ink">1.1 THE SIX UNIVERSAL BUILDING BLOCKS</span>
         <h3 class="step-card-title">Anatomy of an Embedded Scalar RISC-V Core</h3>
       </div>
       <p class="step-card-lead">
         At the architectural level, every 32-bit scalar RISC-V processor (whether consuming 2 kGE or 50 kGE) executes instructions using an interconnected loop of six primary hardware primitives. The fundamental differences between cores lie not in <em>what</em> blocks exist, but in <em>how wide</em> they are, <em>how many clock cycles</em> they take, and <em>how many are executed concurrently</em>:
       </p>
 
-      <div class="primitives-grid">
+      <div class="primitives-flow">
+        <!-- Primitive 1 -->
         <div class="primitive-card">
-          <div class="prim-num">1</div>
-          <div class="prim-content">
-            <h4>Instruction Fetch &amp; Program Counter (IF &amp; PC)</h4>
-            <p>Maintains the 32-bit memory address of the current instruction word. On every instruction cycle, the PC increments by 4 bytes (or 2 bytes when compressed <code>RVC</code> instructions are enabled). On a branch, jump, or exception, the PC multiplexer redirects execution to the target address.</p>
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 01</span>
+            <h4 class="prim-title">Instruction Fetch &amp; Program Counter (IF &amp; PC)</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Maintains the 32-bit memory address of the current instruction word. On every instruction cycle, the PC increments by 4 bytes (or 2 bytes when compressed <code>RVC</code> instructions are enabled). On a branch, jump, or exception, the PC multiplexer redirects execution to the target address.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Physical Hardware:</span>
+                <span class="insight-value">Dedicated 32-bit PC register, incrementer adder (+4 / +2), target branch redirect mux, and fetch buffer FIFO.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">Minimal cores (SERV, PicoRV32) multiplex the main ALU to save an adder; pipelined cores (Ibex, Hazard3) use decoupled prefetch buffers.</span>
+              </div>
+            </div>
           </div>
         </div>
 
+        <!-- Primitive 2 -->
         <div class="primitive-card">
-          <div class="prim-num">2</div>
-          <div class="prim-content">
-            <h4>Instruction Decoder &amp; Immediate Generator (ID)</h4>
-            <p>Slices the 32-bit instruction word into source register indices (<code>rs1</code>, <code>rs2</code>), the destination register index (<code>rd</code>), and the opcode. It signs-extends immediate offsets (I, S, B, U, J formats) and generates internal control signals for the ALU, memory bus, and writeback logic.</p>
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 02</span>
+            <h4 class="prim-title">Instruction Decoder &amp; Immediate Generator (ID &amp; ImmGen)</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Slices the 32-bit instruction word into source register indices (<code>rs1</code>, <code>rs2</code>), the destination register index (<code>rd</code>), and the opcode. It signs-extends immediate offsets across I, S, B, U, and J instruction formats and generates internal control signals for the ALU, memory bus, and writeback logic.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Physical Hardware:</span>
+                <span class="insight-value">Combinational steering multiplexers, sign-extension bit fan-outs, and hazard detection logic.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">In 1&ndash;2 stage cores, ID and EX are merged in a single clock cycle; in 3&ndash;5 stage cores, a pipeline register breaks the critical path.</span>
+              </div>
+            </div>
           </div>
         </div>
 
+        <!-- Primitive 3 -->
         <div class="primitive-card">
-          <div class="prim-num">3</div>
-          <div class="prim-content">
-            <h4>General-Purpose Register File (RF)</h4>
-            <p>Houses thirty-two 32-bit registers (<code>x0&ndash;x31</code>) under the <code>RV32I</code> standard, or sixteen registers (<code>x0&ndash;x15</code>) under <code>RV32E</code>. Register <code>x0</code> is permanently hardwired to constant 0. Crucially, single-cycle execution requires <strong>two simultaneous read ports</strong> (to fetch <code>rs1</code> and <code>rs2</code>) and <strong>one write port</strong> (for <code>rd</code>)—consuming up to 40% of the entire silicon area in compact cores.</p>
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 03</span>
+            <h4 class="prim-title">General-Purpose Register File (RF &bull; x0&ndash;x31)</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Houses thirty-two 32-bit registers (<code>x0&ndash;x31</code>) under the standard <code>RV32I</code> specification, or sixteen registers (<code>x0&ndash;x15</code>) under <code>RV32E</code>. Register <code>x0</code> is permanently hardwired to constant 0. Crucially, single-cycle execution mandates <strong>two simultaneous read ports</strong> (for <code>rs1</code> and <code>rs2</code>) and <strong>one synchronous write port</strong> (for <code>rd</code>)—consuming up to 40% of the entire silicon area in compact cores.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Physical Hardware:</span>
+                <span class="insight-value">Dual-read, single-write multi-ported SRAM or flip-flop array; mapped to distributed LUT-RAM or Block RAM on FPGAs.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value"><code>RV32E</code> cuts registers by 50% to save silicon; SERV collapses registers into 32-bit serial shift registers inside a single FPGA LUT!</span>
+              </div>
+            </div>
           </div>
         </div>
 
+        <!-- Primitive 4 -->
         <div class="primitive-card">
-          <div class="prim-num">4</div>
-          <div class="prim-content">
-            <h4>Arithmetic Logic Unit &amp; Comparator (ALU)</h4>
-            <p>The core computational engine. Performs addition/subtraction, bitwise operations (<code>AND</code>, <code>OR</code>, <code>XOR</code>), shifts (<code>SLL</code>, <code>SRL</code>, <code>SRA</code>), and signed/unsigned magnitude comparisons (<code>SLT</code>, <code>SLTU</code>) for conditional branch resolution.</p>
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 04</span>
+            <h4 class="prim-title">Arithmetic Logic Unit &amp; Comparator (ALU &amp; CMP)</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              The core computational engine. Performs 32-bit arithmetic addition/subtraction, bitwise operations (<code>AND</code>, <code>OR</code>, <code>XOR</code>), variable bit shifts (<code>SLL</code>, <code>SRL</code>, <code>SRA</code>), and signed/unsigned magnitude comparisons (<code>SLT</code>, <code>SLTU</code>) for data calculations and conditional branch evaluation.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Physical Hardware:</span>
+                <span class="insight-value">Parallel carry-lookahead adder (CLA), multi-stage barrel shifter (or serial shift register), and condition evaluator.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">Full single-cycle 32-bit barrel shifter (~1.5 kGE) vs. iterative 1-bit serial shifter (PicoRV32/SERV) saving massive gate area.</span>
+              </div>
+            </div>
           </div>
         </div>
 
+        <!-- Primitive 5 -->
         <div class="primitive-card">
-          <div class="prim-num">5</div>
-          <div class="prim-content">
-            <h4>Load/Store Unit &amp; Interconnect Bus (LSU)</h4>
-            <p>Interfaces with physical SRAM or memory-mapped peripherals. Translates word, half-word, and byte loads (<code>lw</code>, <code>lh</code>, <code>lb</code>) and stores (<code>sw</code>, <code>sh</code>, <code>sb</code>) into bus handshakes (AHB, AXI, Wishbone, or OBI), managing byte masks and memory alignment.</p>
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 05</span>
+            <h4 class="prim-title">Load/Store Unit &amp; Interconnect Bus (LSU)</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Interfaces the internal pipeline with physical SRAM macros, caches, and memory-mapped SoC peripherals. Translates word, half-word, and byte loads (<code>lw</code>, <code>lh</code>, <code>lb</code>) and stores (<code>sw</code>, <code>sh</code>, <code>sb</code>) into bus handshakes, managing byte-lane write strobes and sign-extension for sub-word accesses.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Physical Hardware:</span>
+                <span class="insight-value">Memory alignment rotator, byte-mask strobe generator, and master bus wrapper (AHB-Lite, AXI4-Lite, Wishbone b4, or OBI).</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">Unaligned memory access support (e.g. Hazard3 multi-cycle hardware alignment vs. Ibex immediate exception generation).</span>
+              </div>
+            </div>
           </div>
         </div>
 
+        <!-- Primitive 6 -->
         <div class="primitive-card">
-          <div class="prim-num">6</div>
-          <div class="prim-content">
-            <h4>Privileged Control &amp; CSR Controller</h4>
-            <p>Manages hardware interrupts (timer ticks, UART/sensor interrupts), synchronous exceptions (illegal instruction, ecall), and Machine-mode status registers (<code>mstatus</code>, <code>mtvec</code>, <code>mepc</code>, <code>mcause</code>) ensuring deterministic interrupt latency.</p>
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 06</span>
+            <h4 class="prim-title">Privileged Control &amp; CSR Controller</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Coordinates privileged machine-mode status registers (<code>mstatus</code>, <code>mtvec</code>, <code>mepc</code>, <code>mcause</code>, <code>mie</code>, <code>mip</code>), trap handling, interrupt priority decoding, and synchronous exception dispatching, ensuring cycle-accurate deterministic interrupt latency.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Physical Hardware:</span>
+                <span class="insight-value">Shadow return PC registers, interrupt masking gates, trap cause encoders, and CSR read/write multiplexers.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">Barebones machine-mode timer interrupt vs. enterprise Physical Memory Protection (PMP 16-regions) and Dual-Core Lockstep (DCLS).</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -894,13 +984,14 @@ const bespokeDossiers = [
             <text x="25" y="399" font-size="8.5" font-weight="700" fill="#334155" font-family="monospace">DATAPATH FLOW: [1] PC Fetch &rarr; [2] Decode Opcode &rarr; [3] Read Registers rs1/rs2 &rarr; [4] ALU Exec &rarr; [5] Memory Load/Store &rarr; [6] Register Writeback</text>
           </svg>
         </div>
+        <div class="mobile-scroll-hint">&#8596; Scroll horizontally on touchscreens to inspect full datapath interconnects</div>
       </div>
     </div>
 
     <!-- 1.2 WHY ARE THERE DIFFERENT VARIANTS? -->
     <div class="concept-step-card" style="margin-bottom: 2rem;">
       <div class="step-card-header">
-        <span class="step-tag" style="background: var(--teal); color: #fff;">1.2 THE DIVERGENCE DRIVERS</span>
+        <span class="step-tag badge-teal">1.2 THE DIVERGENCE DRIVERS</span>
         <h3 class="step-card-title">Why Are There So Many Open-Source Cores?</h3>
       </div>
       <p class="step-card-lead">
@@ -961,7 +1052,7 @@ const bespokeDossiers = [
     <!-- 1.3 THE CLASSIFICATION LOGIC -->
     <div class="concept-step-card">
       <div class="step-card-header">
-        <span class="step-tag" style="background: var(--yellow); color: var(--ink);">1.3 THE CLASSIFICATION LOGIC</span>
+        <span class="step-tag badge-yellow">1.3 THE CLASSIFICATION LOGIC</span>
         <h3 class="step-card-title">Why Four Archetypes? The Microarchitectural Phase Transitions</h3>
       </div>
       <p class="step-card-lead">
@@ -1219,14 +1310,14 @@ const bespokeDossiers = [
     <div id="archetype-1-deepdive" class="concept-stream" style="margin-top: 2.5rem;">
       <div class="concept-step-card archetype-coral-border">
         <div class="step-card-header">
-          <span class="step-tag" style="background: var(--coral); color: #fff;">2.1 ARCHITECTURAL DEEP-DIVE</span>
+          <span class="step-tag badge-coral">2.1 ARCHITECTURAL DEEP-DIVE</span>
           <h3 class="step-card-title">Archetype 1: Ultra-Compact Minimalist Datapaths (SERV, PicoRV32 &amp; DarkRISCV)</h3>
         </div>
         <p class="step-card-lead">
           When an embedded systems architect has fewer than 1,000 FPGA LUTs or a silicon area budget below 10 kGE, a classical 32-bit pipelined CPU is physically impossible to fabricate. A conventional 32-bit dual-read single-write register file alone consumes over 32,000 transistors; a dedicated parallel 32-bit carry-lookahead adder demands hundreds more. Archetype 1 abandons wide parallel execution in favor of two ingenious architectural paradigms: <strong>Bit-Serial Datapaths</strong> and <strong>Single Shared-Adder State Machines</strong>.
         </p>
 
-        <!-- 1.1.1 SERV DEEP-DIVE -->
+        <!-- 2.1.1 SERV DEEP-DIVE -->
         <div class="sub-topic-card">
           <div class="sub-topic-head">
             <span class="pill-badge badge-coral">CORE 1</span>
@@ -1242,10 +1333,10 @@ const bespokeDossiers = [
             <li><strong>Why It Matters in Silicon:</strong> Eliminating 32-bit parallel interconnect buses and wide multiplexers reduces the entire core to just <strong>~2.1 kGE</strong> (126 to 150 Xilinx LUTs). Over 100 SERV cores can be tiled inside a single entry-level FPGA.</li>
           </ul>
 
-          <!-- Figure 1.1: SERV Datapath SVG Schematic -->
+          <!-- Figure 2.1: SERV Datapath SVG Schematic -->
           <div class="schematic-container">
             <div class="schematic-header">
-              <span class="schematic-tag">FIGURE 1.1 ARCHITECTURAL SCHEMATIC</span>
+              <span class="schematic-tag">FIGURE 2.1 ARCHITECTURAL SCHEMATIC</span>
               <h4 class="schematic-title">SERV: 1-Stage Bit-Serial Datapath Architecture</h4>
             </div>
             <div class="schematic-svg-wrap">
@@ -1344,12 +1435,12 @@ const bespokeDossiers = [
               </svg>
             </div>
             <p class="schematic-caption">
-              <strong>Figure 1.1:</strong> In SERV, operands are shifted out 1 bit at a time from <code>rs1</code> and <code>rs2</code> into a 1-bit ALU. A 1-bit flip-flop recirculates carry bits across consecutive cycles. After 32 clock ticks, the 5-bit cycle counter signals the completion of the 32-bit register commit.
+              <strong>Figure 2.1:</strong> In SERV, operands are shifted out 1 bit at a time from <code>rs1</code> and <code>rs2</code> into a 1-bit ALU. A 1-bit flip-flop recirculates carry bits across consecutive cycles. After 32 clock ticks, the 5-bit cycle counter signals the completion of the 32-bit register commit.
             </p>
           </div>
         </div>
 
-        <!-- 1.1.2 PICORV32 DEEP-DIVE -->
+        <!-- 2.1.2 PICORV32 DEEP-DIVE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
             <span class="pill-badge badge-teal">CORE 2</span>
@@ -1369,10 +1460,10 @@ const bespokeDossiers = [
             <li><strong>Formal Verification Heritage:</strong> PicoRV32 was developed alongside <em>SymbiYosys</em> and is one of the most rigorously formally verified open-source cores in existence, proven against the complete RISC-V ISA formal specification.</li>
           </ul>
 
-          <!-- Figure 1.2: PicoRV32 Datapath SVG Schematic -->
+          <!-- Figure 2.2: PicoRV32 Datapath SVG Schematic -->
           <div class="schematic-container">
             <div class="schematic-header">
-              <span class="schematic-tag">FIGURE 1.2 ARCHITECTURAL SCHEMATIC</span>
+              <span class="schematic-tag">FIGURE 2.2 ARCHITECTURAL SCHEMATIC</span>
               <h4 class="schematic-title">PicoRV32: Multi-Cycle Shared-Adder Datapath Architecture</h4>
             </div>
             <div class="schematic-svg-wrap">
@@ -1471,12 +1562,12 @@ const bespokeDossiers = [
               </svg>
             </div>
             <p class="schematic-caption">
-              <strong>Figure 1.2:</strong> PicoRV32's microarchitecture routes PC incrementation (<code>PC + 4</code>), branch target computation (<code>PC + imm</code>), memory addressing (<code>rs1 + imm</code>), and arithmetic execution through a single 32-bit adder over sequential clock states.
+              <strong>Figure 2.2:</strong> PicoRV32's microarchitecture routes PC incrementation (<code>PC + 4</code>), branch target computation (<code>PC + imm</code>), memory addressing (<code>rs1 + imm</code>), and arithmetic execution through a single 32-bit adder over sequential clock states.
             </p>
           </div>
         </div>
 
-        <!-- 1.1.3 DARKRISCV DEEP-DIVE -->
+        <!-- 2.1.3 DARKRISCV DEEP-DIVE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
             <span class="pill-badge badge-yellow">CORE 3</span>
@@ -1492,7 +1583,7 @@ const bespokeDossiers = [
           </ul>
         </div>
 
-        <!-- 1.1.4 INTERACTIVE EXECUTION SIMULATOR WORKBENCH -->
+        <!-- 2.1.4 INTERACTIVE EXECUTION SIMULATOR WORKBENCH -->
         <div class="interactive-workbench-card" id="archetype1Sim">
           <div class="workbench-header">
             <span class="w-badge">INTERACTIVE ARCHITECTURAL SIMULATOR</span>
@@ -2539,54 +2630,133 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     padding-left: 1rem;
   }
 
-  /* Section 1: Primitives & Foundations */
-  .primitives-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+  /* Section 1.1: Primitives & Foundations (Top-Down Flow) */
+  .primitives-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
   }
 
   .primitive-card {
     background: #ffffff;
-    border: 1.5px solid var(--ink, #151b20);
-    border-radius: 10px;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
     box-shadow: 3px 3px 0 var(--ink, #151b20);
-    padding: 1.15rem;
+    padding: 1.35rem;
     display: flex;
-    gap: 0.85rem;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .prim-num {
+  .primitive-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+  }
+
+  .prim-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    border-bottom: 1.5px dashed var(--line, #e2d9c8);
+    padding-bottom: 0.65rem;
+  }
+
+  .prim-step-pill {
     background: var(--ink, #151b20);
     color: #ffffff;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 900;
     font-family: var(--md-code-font, monospace);
-    width: 28px;
-    height: 28px;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.6rem;
     border-radius: 6px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
 
-  .prim-content h4 {
-    font-size: 0.98rem;
+  .prim-title {
+    font-size: 1.15rem;
     font-weight: 900;
     color: var(--ink, #151b20);
-    margin: 0 0 0.35rem 0;
+    margin: 0;
+    letter-spacing: -0.01em;
   }
 
-  .prim-content p {
-    font-size: 0.86rem;
-    line-height: 1.5;
-    color: var(--ink-light, #333);
+  .prim-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .prim-text {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: var(--ink-light, #242c33);
     margin: 0;
   }
 
+  .prim-micro-insights {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: var(--paper-deep, #f4eee1);
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+  }
+
+  .prim-insight-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  @media (min-width: 680px) {
+    .prim-insight-row {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+  }
+
+  .insight-label {
+    font-size: 0.74rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink, #151b20);
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .insight-value {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--ink-light, #333);
+  }
+
+  .mobile-scroll-hint {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--ink-light, #666);
+    font-family: var(--md-code-font, monospace);
+    text-align: center;
+    padding: 0.4rem 0.5rem 0.1rem 0.5rem;
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .mobile-scroll-hint {
+      display: block;
+    }
+  }
+
+  /* Section 1.2: Divergence Drivers */
   .drivers-grid {
     display: flex;
     flex-direction: column;
@@ -2596,9 +2766,24 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   .driver-card {
     background: #ffffff;
     border: 2px solid var(--ink, #151b20);
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 3px 3px 0 var(--ink, #151b20);
-    padding: 1.25rem;
+    padding: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .driver-card.driver-substrate {
+    border-left: 6px solid var(--coral, #f38469);
+  }
+
+  .driver-card.driver-language {
+    border-left: 6px solid var(--teal, #0d9488);
+  }
+
+  .driver-card.driver-mission {
+    border-left: 6px solid var(--yellow, #ffc83e);
   }
 
   .driver-top-badge {
@@ -2606,29 +2791,29 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     font-weight: 900;
     font-family: var(--md-code-font, monospace);
     letter-spacing: 0.04em;
-    padding: 0.2rem 0.5rem;
+    padding: 0.25rem 0.6rem;
     border-radius: 4px;
     border: 1px solid var(--ink, #151b20);
     display: inline-block;
-    margin-bottom: 0.5rem;
+    align-self: flex-start;
   }
 
-  .driver-substrate .driver-top-badge { background: var(--coral, #ff6b4a); color: #fff; }
-  .driver-language .driver-top-badge { background: var(--teal, #0d9488); color: #fff; }
-  .driver-mission .driver-top-badge { background: var(--yellow, #ffc83e); color: var(--ink); }
+  .driver-substrate .driver-top-badge { background: var(--coral, #f38469); color: #ffffff; }
+  .driver-language .driver-top-badge { background: var(--teal, #0d9488); color: #ffffff; }
+  .driver-mission .driver-top-badge { background: var(--yellow, #ffc83e); color: var(--ink, #151b20); }
 
   .driver-card h4 {
     font-size: 1.15rem;
     font-weight: 900;
     color: var(--ink, #151b20);
-    margin: 0 0 0.5rem 0;
+    margin: 0;
   }
 
   .driver-card p {
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     line-height: 1.6;
-    color: var(--ink-light, #333);
-    margin: 0 0 0.6rem 0;
+    color: var(--ink-light, #242c33);
+    margin: 0;
   }
 
   .driver-card p:last-child {
@@ -3853,20 +4038,43 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
       padding: 1.15rem;
     }
 
-    .primitives-grid {
-      grid-template-columns: 1fr;
+    .primitives-flow {
+      gap: 1rem;
     }
 
     .primitive-card {
-      padding: 0.95rem;
+      padding: 1.05rem;
+      gap: 0.65rem;
+    }
+
+    .prim-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+
+    .prim-title {
+      font-size: 1.05rem;
+      line-height: 1.35;
+    }
+
+    .prim-micro-insights {
+      padding: 0.75rem;
+      gap: 0.45rem;
     }
 
     .driver-card {
-      padding: 1rem;
+      padding: 1.1rem;
     }
 
     .driver-card h4 {
       font-size: 1.05rem;
+    }
+
+    .ladder-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.65rem;
     }
 
     .formula-callout-box {
@@ -3919,11 +4127,12 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   .assess-item.limitation { background: var(--yellow-soft, #fff8e1); color: var(--ink, #151b20); }
 
   /* Badge Utilities */
-  .badge-coral { background: var(--coral, #ff6b4a); color: #fff; border: 1px solid var(--ink); }
-  .badge-teal { background: var(--teal, #0d9488); color: #fff; border: 1px solid var(--ink); }
-  .badge-lime { background: var(--lime, #22c55e); color: var(--ink); border: 1px solid var(--ink); }
-  .badge-yellow { background: var(--yellow, #ffc83e); color: var(--ink); border: 1px solid var(--ink); }
-  .badge-paper { background: var(--paper-deep, #f4eee1); color: var(--ink); border: 1px solid var(--ink); }
+  .badge-ink { background: var(--ink, #151b20) !important; color: #ffffff !important; border: 1px solid var(--ink, #151b20); }
+  .badge-coral { background: var(--coral, #f38469) !important; color: #ffffff !important; border: 1px solid var(--ink, #151b20); }
+  .badge-teal { background: var(--teal, #0d9488) !important; color: #ffffff !important; border: 1px solid var(--ink, #151b20); }
+  .badge-lime { background: var(--lime, #b7df69) !important; color: var(--ink, #151b20) !important; border: 1px solid var(--ink, #151b20); }
+  .badge-yellow { background: var(--yellow, #ffc83e) !important; color: var(--ink, #151b20) !important; border: 1px solid var(--ink, #151b20); }
+  .badge-paper { background: var(--paper-deep, #eee4c8) !important; color: var(--ink, #151b20) !important; border: 1px solid var(--ink, #151b20); }
 
   .text-muted { color: #666; }
 </style>
