@@ -70,6 +70,7 @@ The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open
       <span class="jump-label">Jump to Section:</span>
       <a href="#core-foundations" class="core-jump-pill">&sect; 1. Architectural Foundations</a>
       <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. The Four Archetypes</a>
+      <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Common Architectural DNA</a>
       <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Benchmark Leaderboard</a>
       <a href="#core-dossiers" class="core-jump-pill">&sect; 6. Native Core Dossiers</a>
     </div>
@@ -1900,6 +1901,141 @@ The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open
     </div>
   </section>
 
+  <!-- ============================================================ -->
+  <!-- SECTION 3: ARCHITECTURAL SIMILARITIES & COMMON DNA         -->
+  <!-- ============================================================ -->
+  <section id="architectural-similarities" class="content-block">
+    <div class="block-header-wrap">
+      <div class="badge badge-accent">&sect; 3. COMMON ARCHITECTURAL DNA</div>
+      <h2 class="block-title">Cross-Core Similarities: The Shared RV64GC Linux Foundation</h2>
+      <p class="block-lead">
+        Despite massive divergences in pipeline depth (5-stage in-order vs. 10-stage out-of-order) and silicon gate count (135 kGE to 420 kGE), all evaluated application cores converge on a non-negotiable architectural baseline. This strict standard compliance is what enables identical, unmodified Linux kernel binaries, OpenSBI firmware, and glibc user applications to boot and execute with 100% binary portability across diverse open silicon implementations.
+      </p>
+    </div>
+
+    <div class="similarities-grid">
+      <!-- Similarity 1: Full RV64GC Conformance -->
+      <div class="sim-card sim-isa">
+        <div class="sim-header">
+          <span class="sim-num num-teal">01</span>
+          <h4>Complete RV64GC ISA Baseline &amp; Extension Conformance</h4>
+        </div>
+        <p class="sim-lead">
+          Every evaluated core implements the full, ratified <strong>RV64GC</strong> (<code>RV64IMAFDC_Zicsr_Zifencei</code>) instruction set architecture, guaranteeing software execution compatibility across all user-mode and kernel binaries:
+        </p>
+        <div class="sim-points-stack">
+          <div class="sim-point-row">
+            <span class="point-badge">64-Bit General-Purpose Registers</span>
+            <span class="point-desc">32 architectural GPRs (<code>x0&ndash;x31</code>) with <code>x0</code> permanently hardwired to zero, supporting 64-bit word operations, 64-bit pointer arithmetic, and dedicated 32-bit sub-word instructions (<code>addw</code>, <code>subw</code>, <code>sllw</code>, <code>srlw</code>, <code>sraw</code>).</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Hardware Multiply / Divide (M)</span>
+            <span class="point-desc">Full 64-bit integer multiplication (<code>mul</code>, <code>mulh</code>, <code>mulhsu</code>, <code>mulhu</code>) and signed/unsigned division and remainder (<code>div</code>, <code>divu</code>, <code>rem</code>, <code>remu</code>, <code>divw</code>, <code>remw</code>).</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Atomic Memory Primitives (A)</span>
+            <span class="point-desc">Load-Reserved / Store-Conditional (<code>lr.w/sc.w</code>, <code>lr.d/sc.d</code>) and Atomic Memory Operations (<code>amoswap</code>, <code>amoadd</code>, <code>amoxor</code>, <code>amoand</code>, <code>amoor</code>, <code>amomin</code>, <code>amomax</code>) with acquire (<code>.aq</code>) and release (<code>.rl</code>) memory ordering semantics, forming the non-negotiable foundation for Linux SMP spinlocks, mutexes, and futex synchronization.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">IEEE-754 Single &amp; Double Precision (F/D)</span>
+            <span class="point-desc">32 dedicated floating-point registers (<code>f0&ndash;f31</code>), dynamic rounding modes (<code>rm</code>), status flags (<code>fflags</code>), and hardware Fused Multiply-Add (<code>fmadd</code>, <code>fmsub</code>, <code>fnmadd</code>, <code>fnmsub</code>) compliant with the standard RISC-V floating-point calling convention.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Compressed 16-Bit Encodings (C)</span>
+            <span class="point-desc">Substantially improves instruction cache density and reduces bus bandwidth pressure by compressing common 32-bit instructions into 16-bit equivalents, yielding an average 25&ndash;35% code size reduction in compiled Linux kernels.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similarity 2: Tri-Privilege Hierarchy & Delegation -->
+      <div class="sim-card sim-mmode">
+        <div class="sim-header">
+          <span class="sim-num num-purple">02</span>
+          <h4>Tri-Privilege Hierarchy (M / S / U) &amp; Hardware Trap Delegation</h4>
+        </div>
+        <p class="sim-lead">
+          Full operating systems require hardware-enforced protection boundaries to isolate the OS kernel from untrusted user processes and low-level firmware:
+        </p>
+        <div class="sim-points-stack">
+          <div class="sim-point-row">
+            <span class="point-badge">Three Distinct Privilege Rings</span>
+            <span class="point-desc">User Mode (U-mode, ring 0) for unprivileged userland binaries, Supervisor Mode (S-mode, ring 1) for the Linux kernel and device drivers, and Machine Mode (M-mode, ring 3) for trusted boot firmware and OpenSBI execution.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Autonomous Trap Delegation (mideleg / medeleg)</span>
+            <span class="point-desc">Machine-level delegation registers allow timer interrupts, software interrupts, page faults, and supervisor system calls (<code>ecall</code>) to bypass M-mode firmware entirely and vector directly into the Linux S-mode trap handler (<code>stvec</code>), slashing OS syscall overhead from hundreds of cycles to a direct pipeline redirect.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Dual CSR Hierarchy</span>
+            <span class="point-desc">Mirrored status and control registers across modes: <code>mstatus/sstatus</code> (interrupt enables, privilege stacks), <code>mtvec/stvec</code> (trap vector base addresses), <code>mepc/sepc</code> (exception PCs), <code>mcause/scause</code> (trap etiology identifiers), and <code>mtval/stval</code> (faulting virtual addresses).</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Physical Memory Protection (PMP Firewall)</span>
+            <span class="point-desc">Up to 16 hardware PMP configuration and address registers (<code>pmpcfg0-3</code>, <code>pmpaddr0-15</code>) enforcing physical address isolation, preventing unauthorized DMA or compromised supervisor code from modifying secure M-mode firmware memory.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similarity 3: Sv39 Virtual Memory Management -->
+      <div class="sim-card sim-abi">
+        <div class="sim-header">
+          <span class="sim-num num-yellow">03</span>
+          <h4>Sv39 Radix-Tree Virtual Memory Management &amp; TLB Invalidation</h4>
+        </div>
+        <p class="sim-lead">
+          All evaluated cores implement identical virtual address translation mechanics to support Linux demand paging, virtual memory mapping, and copy-on-write (CoW) forks:
+        </p>
+        <div class="sim-points-stack">
+          <div class="sim-point-row">
+            <span class="point-badge">Sv39 3-Level Radix Address Mapping</span>
+            <span class="point-desc">Translates 39-bit virtual addresses (<code>VPN[2]</code>, <code>VPN[1]</code>, <code>VPN[0]</code>, <code>page_offset</code>) into 56-bit physical memory addresses across a 512 GiB virtual address space. Supports 4 KiB base pages, 2 MiB megapages, and 1 GiB gigapages.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Standard 64-Bit PTE Layout</span>
+            <span class="point-desc">Ratified page table entry bitfields including Valid (<code>V</code>), Read/Write/Execute (<code>R/W/X</code>), User (<code>U</code>), Global (<code>G</code>), Accessed (<code>A</code>), Dirty (<code>D</code>), and supervisor PBMT (Physical-Memory-Attribute) metadata.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">The satp Control Register</span>
+            <span class="point-desc">Standardized Address Translation and Protection register (<code>satp</code>) controlling MMU mode (<code>MODE=8</code> for Sv39), 16-bit Address Space Identifier (<code>ASID</code>), and the root page table physical address (<code>satp.PPN</code>).</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">TLB Invalidation Semantics (SFENCE.VMA)</span>
+            <span class="point-desc">Complete support for the <code>sfence.vma rs1, rs2</code> instruction, allowing the Linux kernel to surgically invalidate TLB translation caches per-virtual address, per-ASID, or globally across full process context switches.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similarity 4: Unified Linux Software Ecosystem -->
+      <div class="sim-card sim-bench">
+        <div class="sim-header">
+          <span class="sim-num num-lime">04</span>
+          <h4>Unified Linux Software Ecosystem, OpenSBI &amp; Deterministic SCORE Verification</h4>
+        </div>
+        <p class="sim-lead">
+          The shared architectural baseline ensures complete cross-platform software portability from bootloader to userland applications:
+        </p>
+        <div class="sim-points-stack">
+          <div class="sim-point-row">
+            <span class="point-badge">Standard GNU LP64D Calling Convention</span>
+            <span class="point-desc">Cross-core binary ABI compatibility where integer parameters and return values are passed in <code>a0&ndash;a7</code>, floating-point arguments in <code>fa0&ndash;fa7</code>, stack pointer <code>sp</code> is strictly 16-byte aligned, and callee-saved registers (<code>s0&ndash;s11</code>, <code>fs0&ndash;fs11</code>) are preserved.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">OpenSBI (Supervisor Binary Interface) Parity</span>
+            <span class="point-desc">All cores execute upstream OpenSBI v1.x firmware, providing standardized services for inter-processor interrupts (IPI), remote TLB shootdowns (<code>rfence</code>), timer alarms, and power management (HSM).</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Upstream Linux Kernel Boot Compatibility</span>
+            <span class="point-desc">A single precompiled Linux kernel image (<code>Image</code>) and Busybox/Buildroot root filesystem boots interchangeably across Rocket Chip, CVA6, BlackParrot, and BOOM without modifying a single line of C code.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Cycle-Accurate SCORE Harness Verification</span>
+            <span class="point-desc">Every core is evaluated under the <code>app_verilator</code> testbench profile with deterministic memory sweeps (unaligned memcpy, dirty page-table refills, PMP security violation traps) and automated UART console validation.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Benchmark Leaderboard -->
   <section id="benchmark-leaderboard" class="content-block">
     <div class="block-header-flex">
@@ -3538,6 +3674,111 @@ BOOM        &amp; RV64GC &amp; 7--10 (OoO)  &amp; Sv39/48 &amp; \textbf&#123;780
 
   .concept-list li {
     margin-bottom: 0.5rem;
+  }
+
+
+  /* ============================================================ */
+  /* Section 3: Common Architectural DNA (Similarities)          */
+  /* ============================================================ */
+  .similarities-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .sim-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.35rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .sim-card.sim-isa { border-left: 6px solid var(--teal, #0d9488); }
+  .sim-card.sim-mmode { border-left: 6px solid var(--purple, #8275e8); }
+  .sim-card.sim-abi { border-left: 6px solid var(--yellow, #ffc83e); }
+  .sim-card.sim-bench { border-left: 6px solid var(--lime, #b7df69); }
+
+  .sim-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .sim-num {
+    font-size: 1rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1.5px solid var(--ink, #151b20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .sim-num.num-teal { background: var(--teal, #0d9488); color: #ffffff; }
+  .sim-num.num-purple { background: var(--purple, #8275e8); color: #ffffff; }
+  .sim-num.num-yellow { background: var(--yellow, #ffc83e); color: var(--ink, #151b20); }
+  .sim-num.num-lime { background: var(--lime, #b7df69); color: var(--ink, #151b20); }
+
+  .sim-header h4 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+  }
+
+  .sim-lead {
+    font-size: 0.92rem;
+    color: var(--ink-light, #242c33);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .sim-points-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-top: 0.25rem;
+  }
+
+  .sim-point-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0.85rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-light, #242c33);
+    background: var(--paper, #fdfbf7);
+    padding: 0.6rem 0.85rem;
+    border-radius: 6px;
+    border: 1px solid var(--line, #e2d9c8);
+    align-items: baseline;
+  }
+
+  .point-badge {
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.82rem;
+    color: var(--ink, #151b20);
+    text-transform: uppercase;
+  }
+
+  .point-desc {
+    color: var(--ink-light, #242c33);
+  }
+
+  @media (max-width: 680px) {
+    .sim-point-row {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
   }
 
 </style>
