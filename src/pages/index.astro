@@ -99,9 +99,6 @@ function getToolUrl(tool: any) {
   <div class="noc-hero">
     <div class="noc-track-badge">✨ OPEN SILICON EVIDENCE &bull; 51 EVALUATED TOOLS</div>
     <h1>Open-Source RISC-V Hardware: <span class="score-highlight">From Transistors to Clusters</span></h1>
-    <p class="subtitle">
-      A systematic empirical survey and reproducible benchmarking suite spanning <strong>51 open hardware tools</strong> and architectures across <strong>4 categories</strong>—from sub-10 kGE microcontroller cores up to 432-core heterogeneous compute platforms.
-    </p>
 
     <div class="hero-action-group">
       <a href="/fundamentals/" class="noc-sim-btn" style="background: var(--yellow);">📖 Architecture Fundamentals →</a>
@@ -117,9 +114,6 @@ function getToolUrl(tool: any) {
     <div class="section-header">
       <div class="noc-track-badge" style="background: var(--cyan); margin-bottom: 0.5rem;">EVALUATION METHODOLOGY</div>
       <h2 class="section-title">The 4-Level Architecture &amp; Verification Ladder</h2>
-      <p class="section-subtitle">
-        Unlike generic literature reviews, SCORE evaluates architectures within an aligned 4-tier benchmarking framework. Explore the progressive abstraction ladder below—from minimal scalar microcontrollers up to 432-core heterogeneous compute platforms.
-      </p>
     </div>
 
     <div class="methodology-ladder">
@@ -293,27 +287,6 @@ function getToolUrl(tool: any) {
     </div>
   </section>
 
-  <!-- Reproduction Instructions -->
-  <section class="score-section">
-    <div class="repro-box">
-      <div class="repro-header">
-        <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--ink);">Quick Reproducibility Commands</h3>
-        <span class="noc-track-badge" style="background: var(--lime); margin-bottom: 0;">ZERO-CONFIG VERILATOR SUITE</span>
-      </div>
-      <p style="margin: 0.75rem 0; font-size: 0.92rem; color: var(--ink-light);">Clone the repository and run the automated test harnesses directly on your host:</p>
-      <pre class="code-block" style="background: var(--paper-deep); border: 1.5px solid var(--ink); border-radius: 8px; padding: 1rem; overflow-x: auto;"><code><span class="token-comment"># 1. Clone repository with submodules</span>
-git clone https://github.com/SCORE-CIRCUITS/score.git &amp;&amp; cd score
-
-<span class="token-comment"># 2. Run Category 1 MCU benchmark suite (CoreMark &amp; Dhrystone across 9 cores)</span>
-./scripts/benchmark_core_suite.sh
-
-<span class="token-comment"># 3. Simulate Category 3 Ara Vector Coprocessor (RVV 1.0 fmatmul kernel)</span>
-./scripts/run_ara.sh
-
-<span class="token-comment"># 4. Run Category 4 Full SoC simulation (Cheshire 64-bit Linux SoC)</span>
-./scripts/run_cheshire.sh</code></pre>
-    </div>
-  </section>
 </BaseLayout>
 
 <style>
