@@ -2708,6 +2708,9 @@ const bespokeDossiers = [
                   <marker id="arrowRedDark" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444"/>
                   </marker>
+                  <marker id="arrowCrimsonDark" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#be123c"/>
+                  </marker>
                 </defs>
 
                 <!-- Base Frame & Grid -->
@@ -2745,17 +2748,19 @@ const bespokeDossiers = [
                 <text x="307" y="88" font-size="7.5" font-weight="900" font-family="monospace">IDATA[31:0]</text>
 
                 <!-- 3. Instruction Slicer & Decoder -->
-                <rect x="340" y="55" width="145" height="95" rx="6" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
+                <rect x="340" y="55" width="145" height="98" rx="6" fill="#faf5ff" stroke="#7e22ce" stroke-width="2"/>
                 <rect x="340" y="55" width="145" height="18" rx="5" fill="#f3e8ff"/>
                 <text x="346" y="68" font-size="8.5" font-weight="900" fill="#7e22ce" font-family="monospace">DECODER &amp; SLICER</text>
-                <text x="346" y="88" font-size="8" fill="#6b21a8">Opcode, Funct3/7 Slicer</text>
-                <text x="346" y="102" font-size="8" font-weight="800" fill="#151b20">S1PTR[4:0], S2PTR[4:0]</text>
-                <text x="346" y="116" font-size="8" font-weight="800" fill="#7e22ce">DPTR[4:0] Destination</text>
-                <text x="346" y="130" font-size="7.5" fill="#64748b">SIMM: Sign-Extended Imm</text>
-                <text x="346" y="144" font-size="7" fill="#ef4444">FLUSH Logic (Branch Trap)</text>
+                <text x="346" y="87" font-size="8" fill="#6b21a8">Opcode, Funct3/7 Slicer</text>
+                <text x="346" y="100" font-size="8" font-weight="800" fill="#151b20">S1PTR[4:0], S2PTR[4:0]</text>
+                <text x="346" y="113" font-size="8" font-weight="800" fill="#7e22ce">DPTR[4:0] Destination</text>
+                <text x="346" y="126" font-size="7.5" fill="#64748b">SIMM: Sign-Extended Imm</text>
+                <!-- FLUSH Target Badge in Decoder -->
+                <rect x="344" y="133" width="137" height="15" rx="3" fill="#ffe4e6" stroke="#be123c" stroke-width="1"/>
+                <text x="348" y="144" font-size="6.8" font-weight="900" fill="#9f1239" font-family="monospace">FLUSH: Squash Inst &rarr; NOP</text>
 
                 <!-- Register pointers from Decoder down to Register File -->
-                <path d="M 400 150 L 400 175 L 290 175 L 290 190" fill="none" stroke="#7e22ce" stroke-width="1.8" marker-end="url(#arrowPurpleDark)"/>
+                <path d="M 400 153 L 400 175 L 290 175 L 290 190" fill="none" stroke="#7e22ce" stroke-width="1.8" marker-end="url(#arrowPurpleDark)"/>
                 <text x="300" y="170" font-size="7" font-weight="900" fill="#7e22ce" font-family="monospace">S1PTR, S2PTR [4:0]</text>
 
                 <!-- Immediate SIMM line to Operand Mux -->
@@ -2790,39 +2795,69 @@ const bespokeDossiers = [
                 <line x1="515" y1="265" x2="540" y2="265" stroke="#151b20" stroke-width="2.2" marker-end="url(#arrowDark)"/>
                 <text x="517" y="260" font-size="6.8" font-weight="900" font-family="monospace">op_b</text>
 
-                <!-- 5. Combinational ALU -->
+                <!-- 5. Combinational ALU & Branch Comparator -->
                 <polygon points="540,205 615,230 615,285 540,310 540,270 552,257 540,245" fill="#ecfdf5" stroke="#059669" stroke-width="2.5"/>
-                <text x="560" y="253" font-size="10" font-weight="900" fill="#065f46" font-family="monospace">ALU</text>
-                <text x="550" y="267" font-size="7.5" font-weight="800" fill="#047857">1-CYCLE COMB</text>
-                <text x="552" y="280" font-size="6.5" fill="#065f46">ADD/SUB/CMP</text>
+                <text x="560" y="238" font-size="10" font-weight="900" fill="#065f46" font-family="monospace">ALU</text>
+                <text x="548" y="252" font-size="7" font-weight="800" fill="#047857">1-CYCLE COMB</text>
+                <text x="548" y="265" font-size="6.5" fill="#065f46">ADD/SUB/LOGIC</text>
+                <text x="546" y="278" font-size="6.5" font-weight="900" fill="#ef4444">CMP: BMUX Eval</text>
 
                 <!-- ALU Result out -->
                 <line x1="615" y1="257" x2="640" y2="257" stroke="#151b20" stroke-width="2.5"/>
                 <circle cx="635" cy="257" r="3.5" fill="#151b20"/>
                 <text x="618" y="248" font-size="7.5" font-weight="900" font-family="monospace">ALU_RES[31:0]</text>
 
-                <!-- 6. DarkBridge External Memory / IO Controller -->
-                <rect x="645" y="55" width="105" height="110" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+                <!-- Branch & Jump Evaluation Unit (Source of Branch Target & FLUSH) -->
+                <!-- Output Terminal for JVAL Redirection Wire -->
+                <rect x="532" y="128" width="76" height="14" rx="2" fill="#ef4444" stroke="#b91c1c" stroke-width="1"/>
+                <text x="535" y="138" font-size="6.2" font-weight="900" fill="#ffffff" font-family="monospace">&#9650; OUT: JVAL [31:0]</text>
+                <circle cx="570" cy="128" r="2.5" fill="#ef4444"/>
+
+                <rect x="505" y="140" width="130" height="52" rx="5" fill="#fff5f5" stroke="#ef4444" stroke-width="1.8"/>
+                <rect x="505" y="140" width="130" height="15" rx="4" fill="#fee2e2"/>
+                <text x="510" y="151" font-size="7.5" font-weight="900" fill="#b91c1c" font-family="monospace">BRANCH LOGIC (ALU CORE)</text>
+                <text x="510" y="165" font-size="6.8" font-weight="800" fill="#991b1b">JVAL = PC + SIMM (Target)</text>
+                <text x="510" y="177" font-size="6.5" fill="#7f1d1d">JREQ = BCC &amp; BMUX (From ALU)</text>
+                <text x="510" y="188" font-size="6.2" fill="#64748b">Drives JVAL to IFPC &amp; FLUSH</text>
+
+                <!-- BMUX branch condition flag rising from ALU into Branch Unit -->
+                <line x1="575" y1="210" x2="575" y2="192" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRedDark)"/>
+                <text x="580" y="204" font-size="6.5" font-weight="900" fill="#ef4444" font-family="monospace">BMUX</text>
+
+                <!-- FLUSH Pulse (Crimson Dashed): Squashes Decoder Prefetch on Taken Branch -->
+                <path d="M 505 160 L 490 160 L 490 138 L 485 138" fill="none" stroke="#be123c" stroke-width="1.6" stroke-dasharray="2,2" marker-end="url(#arrowCrimsonDark)"/>
+                <rect x="432" y="152" width="68" height="12" rx="2" fill="#ffe4e6" stroke="#be123c" stroke-width="0.8"/>
+                <text x="435" y="160.5" font-size="6" font-weight="900" fill="#9f1239" font-family="monospace">&#9668; FLUSH Pulse (1b)</text>
+
+                <!-- 6. DarkBridge External Memory / IO Controller (DATA BUS ONLY) -->
+                <rect x="645" y="55" width="105" height="114" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
                 <rect x="645" y="55" width="105" height="18" rx="5" fill="#fee2e2"/>
                 <text x="650" y="68" font-size="8" font-weight="900" fill="#b91c1c" font-family="monospace">DARKBRIDGE BUS</text>
-                <text x="650" y="88" font-size="8.5" font-weight="800" fill="#151b20">3-Cycle Bus FSM</text>
-                <text x="650" y="103" font-size="7.5" fill="#991b1b">&bull; State 0: IDLE</text>
-                <text x="650" y="117" font-size="7.5" fill="#991b1b">&bull; State 1: ADDR</text>
-                <text x="650" y="131" font-size="7.5" fill="#991b1b">&bull; State 2: DATA</text>
-                <text x="650" y="145" font-size="7" fill="#64748b">Handles Wait-States</text>
-                <text x="650" y="158" font-size="6.8" fill="#dc2626">Harvard or von Neumann</text>
+                <rect x="648" y="74" width="98" height="13" rx="2" fill="#fee2e2" stroke="#dc2626" stroke-width="0.8"/>
+                <text x="653" y="83" font-size="6.2" font-weight="900" fill="#991b1b" font-family="monospace">DATA MEMORY ONLY</text>
+                <text x="650" y="98" font-size="8" font-weight="800" fill="#151b20">3-Cycle Bus FSM</text>
+                <text x="650" y="111" font-size="7" fill="#991b1b">&bull; State 0: IDLE</text>
+                <text x="650" y="123" font-size="7" fill="#991b1b">&bull; State 1: ADDR</text>
+                <text x="650" y="135" font-size="7" fill="#991b1b">&bull; State 2: DATA</text>
+                <text x="650" y="148" font-size="6.8" fill="#64748b">Handles Wait-States</text>
+                <text x="650" y="161" font-size="6.2" font-weight="800" fill="#dc2626" font-family="monospace">(Loads/Stores &bull; No Br)</text>
 
                 <!-- ALU address to DarkBridge -->
                 <path d="M 635 257 L 635 125 L 645 125" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowDark)"/>
                 <text x="610" y="160" font-size="6.8" font-weight="900" font-family="monospace">DADDR</text>
 
                 <!-- S2REG to DarkBridge DATAO -->
-                <path d="M 430 260 L 430 315 L 675 315 L 675 165" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrowAmberDark)"/>
+                <path d="M 430 260 L 430 315 L 675 315 L 675 169" fill="none" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrowAmberDark)"/>
                 <text x="440" y="310" font-size="7" font-weight="800" fill="#d97706" font-family="monospace">DATAO (Store)</text>
 
-                <!-- Branch & Jump PC loopback (Red Line) -->
-                <path d="M 578 205 L 578 35 L 75 35 L 75 60" fill="none" stroke="#ef4444" stroke-width="1.8" marker-end="url(#arrowRedDark)"/>
-                <text x="210" y="45" font-size="7.5" font-weight="900" fill="#ef4444" font-family="monospace">Branch Taken Redirect &amp; FLUSH Pulse (1-Cycle Penalty)</text>
+                <!-- Branch Taken Redirect Wire (Red): JVAL from Branch Logic to IFPC -->
+                <path d="M 570 128 L 570 34 L 75 34 L 75 60" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRedDark)"/>
+                <!-- Directional Flow Chevrons -->
+                <polygon points="280,31 274,34 280,37" fill="#ef4444"/>
+                <polygon points="420,31 414,34 420,37" fill="#ef4444"/>
+                <rect x="95" y="25" width="375" height="17" rx="3" fill="#fff1f2" stroke="#ef4444" stroke-width="1.2"/>
+                <circle cx="103" cy="33.5" r="3" fill="#ef4444"/>
+                <text x="110" y="37" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH REDIRECT: [FROM ALU &amp; BR LOGIC &bull; NOT BUS] &#8594; IFPC [Next_PC]</text>
 
                 <!-- Synchronous Register Commit Highway (Teal Line) -->
                 <path d="M 635 257 L 635 340 L 120 340 L 120 280 L 140 280" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowTealDark)"/>
@@ -2835,7 +2870,7 @@ const bespokeDossiers = [
               </svg>
             </div>
             <p class="schematic-caption">
-              <strong>Figure 2.3:</strong> DarkRISCV's microarchitecture routes instruction addresses through an asynchronous distributed LUT-RAM without clock latency. Register read ports (<code>U1REG</code>, <code>U2REG</code>) are pure combinational wires into the ALU. Operands are computed and latched into <code>REGS[DPTR]</code> on the subsequent clock edge, yielding near single-cycle execution on FPGAs.
+              <strong>Figure 2.3:</strong> DarkRISCV's microarchitecture routes instruction addresses through an asynchronous distributed LUT-RAM without clock latency. Register read ports (<code>U1REG</code>, <code>U2REG</code>) are pure combinational wires into the ALU. When a branch or jump is evaluated in the ALU (<code>BMUX</code>), the internal <strong>Branch Logic (driven by the ALU comparator &bull; completely independent of the DarkBridge data bus)</strong> redirects the program counter (<code>JVAL = PC + SIMM</code>) back to <code>IFPC</code> and simultaneously asserts a <code>FLUSH</code> pulse into the Decoder to squash the prefetched instruction (1-cycle penalty). DarkBridge operates strictly as an independent off-chip data memory/IO interface for loads and stores.
             </p>
           </div>
         </div>
