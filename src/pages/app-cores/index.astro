@@ -56,17 +56,23 @@ The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open
 
 <BaseLayout
   title="Application Cores"
-  description="Category 2: Application processors, virtual memory MMU compliance, Level 2 benchmark leaderboard, and evaluated core implementations."
+  description="Category 2: 64-bit application processors, virtual memory MMU compliance, benchmark leaderboard, and evaluated core implementations."
 >
   <div class="page-header accent-teal">
-    <div class="badge badge-accent">APPLICATION CORES &bull; LEVEL 2 BENCHMARKS</div>
+    <div class="badge badge-accent">APPLICATION CORES &bull; BENCHMARKS</div>
     <h1 class="page-title">Application Cores</h1>
     <p class="page-lead">
       Linux-capable in-order and out-of-order processors implementing RV64GC with virtual memory management (Sv39/Sv48 MMUs), multi-level split L1 caches, hardware page table walkers, and physical memory protection (PMP). Evaluated under the <code>app_verilator</code> simulation profile.
     </p>
 
-    <!-- Quick Navigation Jump to Cores -->
+    <!-- Quick Navigation Jump to Sections & Cores -->
     <div class="core-jump-bar">
+      <span class="jump-label">Jump to Section:</span>
+      <a href="#core-foundations" class="core-jump-pill">&sect; 1. Architectural Foundations</a>
+      <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Benchmark Leaderboard</a>
+      <a href="#core-dossiers" class="core-jump-pill">&sect; 6. Native Core Dossiers</a>
+    </div>
+    <div class="core-jump-bar" style="margin-top: 0.5rem;">
       <span class="jump-label">Jump to Architecture:</span>
       <a href="#core-cva6" class="core-jump-pill">CVA6 (Ariane)</a>
       <a href="#core-rocket-chip" class="core-jump-pill">Rocket Chip</a>
@@ -75,53 +81,684 @@ The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open
     </div>
   </div>
 
-  <!-- Microarchitectural Design Space -->
-  <section class="content-block">
-    <h2 class="block-title">Memory Hierarchy &amp; OS Compliance</h2>
-    <p class="block-lead">
-      Category 2 marks the boundary between baremetal microcontrollers and full operating system execution. Running multi-user Linux requires specific microarchitectural hardware blocks:
-    </p>
+  <!-- ============================================================ -->
+  <!-- SECTION 1: ARCHITECTURAL FOUNDATIONS & THE MEMORY WALL -->
+  <!-- ============================================================ -->
+  <section id="core-foundations" class="content-block">
+    <div class="block-header-wrap">
+      <div class="badge badge-primary">&sect; 1. ARCHITECTURAL FOUNDATIONS: CORE ANATOMY &amp; THE MEMORY WALL</div>
+      <h2 class="block-title">The Anatomy of an Application Core &amp; Conquering the Memory Wall</h2>
+      <p class="block-lead">
+        Before evaluating specific 64-bit processors or classifying them into microarchitectural archetypes, we must establish the physical foundations of high-performance computing: <strong>what an application-class RISC-V core is constructed from</strong>, and <strong>how modern open architectures bridge the 100&times; speed disparity between gigahertz silicon execution units and nanosecond DRAM</strong>.
+      </p>
+    </div>
 
-    <div class="arch-features-grid">
-      <div class="feature-card">
-        <span class="f-badge">VIRTUAL MEMORY</span>
-        <h3>Sv39 / Sv48 MMU &amp; PTW</h3>
-        <p>
-          Translates virtual addresses to physical pages. Requires hardware Page Table Walkers (PTW) to traverse three-level (Sv39) or four-level (Sv48) radix trees in memory upon TLB misses.
+    <!-- 1.1 THE SEVEN UNIVERSAL SUBSYSTEMS -->
+    <div class="concept-step-card" style="margin-bottom: 2rem;">
+      <div class="step-card-header">
+        <span class="step-tag badge-ink">1.1 THE SEVEN UNIVERSAL SUBSYSTEMS</span>
+        <h3 class="step-card-title">Anatomy of an Application-Class 64-Bit RISC-V Core</h3>
+      </div>
+      <p class="step-card-lead">
+        In deeply embedded microcontroller cores, instruction throughput is primarily bounded by ALU critical paths and simple branch bubble penalties. In Category 2 Application Cores, the fundamental engineering barrier shifts entirely to the <strong>Memory Wall</strong>: while 64-bit ALUs and FPU execution pipelines operate at gigahertz frequencies (&lt;1.0 ns clock period), external DDR DRAM memory takes 50 to 100 ns (100 to 200 clock cycles) to respond. Furthermore, running multi-user operating systems (such as Linux 6.1) mandates hardware-enforced privilege rings, dynamic virtual memory translation, and cache coherence.
+        Every evaluated 64-bit application core (from 135 kGE in-order cores up to 420 kGE out-of-order superscalar processors) implements seven coordinated hardware primitives to conquer memory latency and sustain instruction flow:
+      </p>
+
+      <!-- Figure 1.0: Universal Baseline Application Processor Microarchitecture -->
+      <div class="schematic-container" style="margin-top: 1.25rem; margin-bottom: 2rem;">
+        <div class="schematic-header">
+          <span class="schematic-tag">FIGURE 1.0 ARCHITECTURAL FOUNDATION</span>
+          <h4 class="schematic-title">Universal Baseline RV64GC Application Processor Microarchitecture</h4>
+        </div>
+        <div class="schematic-svg-wrap">
+          <svg viewBox="0 0 940 530" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="cadGridApp" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+              </pattern>
+              <marker id="arrowBaseApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+              </marker>
+              <marker id="arrowBlueApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+              </marker>
+              <marker id="arrowTealApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+              </marker>
+              <marker id="arrowRedApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444"/>
+              </marker>
+              <marker id="arrowCrimsonApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#be123c"/>
+              </marker>
+              <marker id="arrowPurpleApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#7e22ce"/>
+              </marker>
+              <marker id="arrowAmberApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706"/>
+              </marker>
+            </defs>
+
+            <!-- CAD Background & Frame -->
+            <rect width="938" height="528" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+            <rect width="936" height="492" x="2" y="2" rx="7" fill="url(#cadGridApp)"/>
+
+            <!-- Status Header Banner -->
+            <rect x="2" y="2" width="936" height="24" fill="var(--ink, #151b20)" rx="6"/>
+            <circle cx="16" cy="14" r="4" fill="#0284c7"/>
+            <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • UNIVERSAL RV64GC APPLICATION CORE &amp; MEMORY HIERARCHY TOPOLOGY</text>
+
+            <!-- ZONE 1: INSTRUCTION FETCH & BRANCH PREDICTION (x=20 to 220) -->
+            <rect x="20" y="36" width="200" height="428" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+            <rect x="20" y="36" width="200" height="20" rx="5" fill="#f1f5f9"/>
+            <text x="28" y="50" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace">ZONE 1: FETCH &amp; PREDICTION</text>
+
+            <!-- PC MUX -->
+            <rect x="30" y="68" width="75" height="38" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="40" y="84" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">PC MUX</text>
+            <text x="38" y="96" font-size="7" fill="#64748b">+4/Br/Trap/PTW</text>
+
+            <!-- PC Register -->
+            <rect x="120" y="68" width="88" height="38" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="130" y="84" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">PC REG [63:0]</text>
+            <text x="128" y="96" font-size="7" fill="#0284c7">Virtual Address</text>
+
+            <line x1="105" y1="87" x2="118" y2="87" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
+
+            <!-- ITLB Block -->
+            <rect x="30" y="118" width="180" height="48" rx="4" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+            <text x="40" y="133" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace">INSTRUCTION TLB (ITLB)</text>
+            <text x="40" y="146" font-size="7" fill="#151b20">32-Entry Fully Associative CAM</text>
+            <text x="40" y="157" font-size="6.8" font-weight="700" fill="#0369a1">&#8594; 1-Cycle Virtual VPN &#8594; Physical PPN</text>
+
+            <!-- Virtual to Physical Address arrow -->
+            <path d="M 164 106 L 164 118" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
+
+            <!-- L1-Instruction Cache -->
+            <rect x="30" y="178" width="180" height="54" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="40" y="194" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">L1-I CACHE (32 KB, 4-WAY)</text>
+            <text x="40" y="208" font-size="7" fill="#64748b">VIPT • 64-Byte Cache Lines</text>
+            <text x="40" y="221" font-size="6.8" font-weight="800" fill="#059669">&#10003; Hit: 1-Cycle 64-bit Fetch</text>
+
+            <!-- Branch Predictor Subsystem -->
+            <rect x="30" y="244" width="180" height="78" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+            <text x="40" y="259" font-size="8" font-weight="900" fill="#b91c1c" font-family="monospace">BRANCH PREDICTOR</text>
+            <text x="40" y="273" font-size="7" fill="#151b20">&bull; BTB: 64-512 Target Buffer</text>
+            <text x="40" y="286" font-size="7" fill="#151b20">&bull; BHT: 2-Level Direction Predictor</text>
+            <text x="40" y="299" font-size="7" fill="#151b20">&bull; RAS: 8-16 Entry Call/Return Stack</text>
+            <text x="40" y="312" font-size="6.8" font-weight="800" fill="#b91c1c">&#9888; Mispredict: 3 to 7 cycle flush</text>
+
+            <!-- Fetch Queue FIFO -->
+            <rect x="30" y="334" width="180" height="42" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="40" y="350" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">FETCH QUEUE / FIFO</text>
+            <text x="40" y="364" font-size="7" fill="#64748b">8-Entry Decoupled Instruction Stream</text>
+
+            <!-- Line from I-Cache to Fetch FIFO -->
+            <path d="M 120 232 L 120 334" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
+
+            <!-- ZONE 2: DECODE, RENAME & 64-BIT EXECUTION (x=235 to 495) -->
+            <rect x="235" y="36" width="260" height="428" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+            <rect x="235" y="36" width="260" height="20" rx="5" fill="#f1f5f9"/>
+            <text x="243" y="50" font-size="8.5" font-weight="900" fill="#0d9488" font-family="monospace">ZONE 2: DECODE, RENAME &amp; EXECUTE</text>
+
+            <!-- Instruction Decoder & RVC Expander -->
+            <rect x="245" y="68" width="240" height="48" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="255" y="84" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">RV64GC DECODER &amp; RVC EXPANDER</text>
+            <text x="255" y="97" font-size="7" fill="#64748b">Decodes 32-bit &amp; expands 16-bit compressed ops</text>
+            <text x="255" y="107" font-size="6.8" font-weight="700" fill="#7e22ce">&#8594; Slices rs1, rs2, rd, imm64, funct3, opcode</text>
+
+            <!-- Feed from Fetch Queue to Decoder -->
+            <path d="M 210 355 L 225 355 L 225 92 L 243 92" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
+
+            <!-- Issue & Dispatch Controller -->
+            <rect x="245" y="126" width="240" height="48" rx="4" fill="#fefce8" stroke="#ca8a04" stroke-width="1.8"/>
+            <text x="255" y="142" font-size="8" font-weight="900" fill="#854d0e" font-family="monospace">ISSUE &amp; DISPATCH CONTROLLER</text>
+            <text x="255" y="154" font-size="7" fill="#151b20">In-Order: Scoreboard &amp; Hazard Dependency Table</text>
+            <text x="255" y="165" font-size="6.8" font-weight="700" fill="#b45309">Out-of-Order: RAT Rename + Reorder Buffer (ROB)</text>
+
+            <line x1="365" y1="116" x2="365" y2="124" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
+
+            <!-- 64-Bit Integer Register File -->
+            <rect x="245" y="186" width="110" height="75" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="252" y="202" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT REGFILE</text>
+            <text x="252" y="215" font-size="6.8" fill="#64748b">32 GPRs (x0-x31)</text>
+            <text x="252" y="227" font-size="6.8" fill="#151b20">2R / 1W Ports</text>
+            <text x="252" y="240" font-size="6.5" font-weight="800" fill="#0d9488">Sync Clocked</text>
+
+            <!-- 64-Bit Floating-Point Register File -->
+            <rect x="245" y="271" width="110" height="75" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="252" y="287" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT FPU REGS</text>
+            <text x="252" y="300" font-size="6.8" fill="#64748b">32 FPRs (f0-f31)</text>
+            <text x="252" y="312" font-size="6.8" fill="#151b20">3R / 1W Ports</text>
+            <text x="252" y="325" font-size="6.5" font-weight="800" fill="#7e22ce">IEEE 754 DP</text>
+
+            <!-- 64-Bit Execution Units Stack -->
+            <rect x="368" y="186" width="117" height="42" rx="4" fill="#ffffff" stroke="#059669" stroke-width="1.8"/>
+            <text x="375" y="202" font-size="7.5" font-weight="900" fill="#059669" font-family="monospace">64-BIT ALU &amp; AGU</text>
+            <text x="375" y="215" font-size="6.8" fill="#64748b">1-Cycle Int Ops &amp; Effective Addr</text>
+
+            <rect x="368" y="238" width="117" height="42" rx="4" fill="#ffffff" stroke="#d97706" stroke-width="1.8"/>
+            <text x="375" y="254" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace">64-BIT MULDIV (M)</text>
+            <text x="375" y="267" font-size="6.8" fill="#64748b">Mul: 3-4 cyc • Div: Radix-4 Non-restoring</text>
+
+            <rect x="368" y="290" width="117" height="46" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.8"/>
+            <text x="375" y="306" font-size="7.5" font-weight="900" fill="#7e22ce" font-family="monospace">IEEE 754 FPU (F/D)</text>
+            <text x="375" y="318" font-size="6.8" fill="#64748b">Fused Multiply-Add (FMA)</text>
+            <text x="375" y="328" font-size="6.5" fill="#7e22ce">Pipelined SP/DP • 4-5 cyc</text>
+
+            <!-- CSR, PMP & Privilege Controller -->
+            <rect x="245" y="356" width="240" height="54" rx="4" fill="#fff1f2" stroke="#be123c" stroke-width="1.8"/>
+            <text x="255" y="372" font-size="8" font-weight="900" fill="#9f1239" font-family="monospace">PRIVILEGED CSR &amp; PMP CONTROLLER</text>
+            <text x="255" y="385" font-size="7" fill="#151b20">&bull; Modes: Machine (M) &bull; Supervisor (S) &bull; User (U)</text>
+            <text x="255" y="396" font-size="6.8" fill="#be123c">&bull; satp Base Register &bull; 16-Region PMP Memory Firewall</text>
+
+            <!-- ZONE 3: VIRTUAL MEMORY, PTW & L1-D CACHE (x=510 to 735) -->
+            <rect x="510" y="36" width="225" height="428" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+            <rect x="510" y="36" width="225" height="20" rx="5" fill="#f1f5f9"/>
+            <text x="518" y="50" font-size="8.5" font-weight="900" fill="#d97706" font-family="monospace">ZONE 3: SV39 MMU &amp; L1-D CACHE</text>
+
+            <!-- DTLB Block -->
+            <rect x="525" y="68" width="195" height="50" rx="4" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+            <text x="535" y="84" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace">DATA TLB (DTLB)</text>
+            <text x="535" y="97" font-size="7" fill="#151b20">32-Entry CAM • 1-Cycle Load/Store Translation</text>
+            <text x="535" y="108" font-size="6.8" font-weight="700" fill="#0369a1">&#10003; Hit: Virtual VA[38:0] &#8594; Physical PA[55:0]</text>
+
+            <!-- Sv39 Radix-Tree Hardware Page Table Walker (PTW) -->
+            <rect x="525" y="128" width="195" height="78" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.8"/>
+            <text x="535" y="144" font-size="8" font-weight="900" fill="#b45309" font-family="monospace">SV39 PAGE TABLE WALKER (PTW)</text>
+            <text x="535" y="157" font-size="7" fill="#151b20">3-Level Hardware DRAM Radix Walk on TLB Miss:</text>
+            <text x="535" y="169" font-size="6.8" fill="#64748b">1. Level 2 (VPN[2]): satp.PPN &#215; 4KB &#8594; PTE2</text>
+            <text x="535" y="180" font-size="6.8" fill="#64748b">2. Level 1 (VPN[1]): PTE2.PPN &#215; 4KB &#8594; PTE1</text>
+            <text x="535" y="191" font-size="6.8" font-weight="800" fill="#b45309">3. Level 0 (VPN[0]): Leaf PTE &#8594; Fill DTLB/ITLB</text>
+
+            <!-- Arrow from DTLB to PTW on miss -->
+            <path d="M 680 118 L 680 128" fill="none" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowAmberApp)"/>
+
+            <!-- Non-Blocking L1 Data Cache -->
+            <rect x="525" y="216" width="195" height="66" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="535" y="232" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">L1-D CACHE (32 KB, 8-WAY)</text>
+            <text x="535" y="246" font-size="7" fill="#64748b">VIPT • Write-Back &amp; Write-Allocate</text>
+            <text x="535" y="258" font-size="7" fill="#151b20">Store-to-Load Forwarding Queue</text>
+            <text x="535" y="271" font-size="6.8" font-weight="800" fill="#059669">&#10003; Hit: 2-3 Clock Cycle Load-to-Use</text>
+
+            <!-- AGU line feeding DTLB and L1D -->
+            <path d="M 485 200 L 515 200 L 515 95 L 523 95" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
+            <path d="M 515 200 L 515 240 L 523 240" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
+
+            <!-- Miss Status Holding Registers (MSHR) -->
+            <rect x="525" y="292" width="195" height="52" rx="4" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8"/>
+            <text x="535" y="308" font-size="8" font-weight="900" fill="#166534" font-family="monospace">MSHR SUBSYSTEM (4 TO 8 BUFFERS)</text>
+            <text x="535" y="321" font-size="7" fill="#151b20">Tracks Concurrent In-Flight DRAM Misses</text>
+            <text x="535" y="333" font-size="6.8" font-weight="800" fill="#16a34a">&#8594; Enables Hit-Under-Miss Execution</text>
+
+            <!-- Physical Memory Protection Filter -->
+            <rect x="525" y="356" width="195" height="54" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="535" y="372" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">PMP REGION FIREWALL (16 CHANNELS)</text>
+            <text x="535" y="385" font-size="7" fill="#64748b">Validates Physical Address vs. pmpaddr0-15</text>
+            <text x="535" y="396" font-size="6.8" font-weight="800" fill="#be123c">&#9888; Traps: Illegal Access Violation &rarr; Trap FSM</text>
+
+            <!-- ZONE 4: SYSTEM INTERCONNECT & COHERENCE (x=750 to 920) -->
+            <rect x="750" y="36" width="170" height="428" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+            <rect x="750" y="36" width="170" height="20" rx="5" fill="#f1f5f9"/>
+            <text x="758" y="50" font-size="8.5" font-weight="900" fill="#7e22ce" font-family="monospace">ZONE 4: SYSTEM COHERENCE</text>
+
+            <!-- Coherent Cache Crossbar Interface -->
+            <rect x="760" y="68" width="150" height="74" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <text x="768" y="84" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">COHERENT CROSSBAR</text>
+            <text x="768" y="98" font-size="7" fill="#64748b">TileLink-C / BedRock / AXI4</text>
+            <text x="768" y="112" font-size="7" fill="#151b20">5 Independent Channels:</text>
+            <text x="768" y="125" font-size="6.5" font-family="monospace" fill="#7e22ce">A:Acq B:Prb C:Rel D:Gnt E:Ack</text>
+
+            <!-- Directory-Based MESI Coherence -->
+            <rect x="760" y="152" width="150" height="85" rx="4" fill="#faf5ff" stroke="#9333ea" stroke-width="1.8"/>
+            <text x="768" y="168" font-size="8" font-weight="900" fill="#6b21a8" font-family="monospace">MESI COHERENCE ENGINE</text>
+            <text x="768" y="182" font-size="7" fill="#151b20">&bull; Modified (M): Exclusive Dirty</text>
+            <text x="768" y="194" font-size="7" fill="#151b20">&bull; Exclusive (E): Exclusive Clean</text>
+            <text x="768" y="206" font-size="7" fill="#151b20">&bull; Shared (S): Read-only Copy</text>
+            <text x="768" y="218" font-size="7" fill="#151b20">&bull; Invalid (I): Miss Required</text>
+
+            <!-- 64-Bit Outbound Master Bus Port -->
+            <rect x="760" y="248" width="150" height="98" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="1.8"/>
+            <text x="768" y="264" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace">SYSTEM BUS MASTER</text>
+            <text x="768" y="278" font-size="7" font-weight="800" fill="#047857">&#9650; OUT: read/write req</text>
+            <text x="768" y="291" font-size="7" font-weight="800" fill="#b45309">&#9660; IN:  read/write grant</text>
+            <text x="768" y="304" font-size="7" font-weight="800" fill="#047857">&#9650; OUT: 64-bit addr &amp; data</text>
+            <text x="768" y="317" font-size="7" font-weight="800" fill="#b45309">&#9660; IN:  response data valid</text>
+            <text x="768" y="330" font-size="6.5" fill="#64748b">Burst transfer engine</text>
+
+            <!-- Outbound to Shared L2 / System Fabric / DRAM -->
+            <rect x="760" y="356" width="150" height="54" rx="4" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8"/>
+            <text x="768" y="372" font-size="8" font-weight="900" fill="#1e293b" font-family="monospace">SHARED L2 &amp; DRAM</text>
+            <text x="768" y="385" font-size="7" fill="#475569">External Memory Gateway</text>
+            <text x="768" y="396" font-size="6.8" font-weight="700" fill="#b91c1c">&#8594; 50-100 ns DRAM Latency</text>
+
+            <!-- Connection lines between Memory Blocks and Bus -->
+            <path d="M 720 160 L 758 160" fill="none" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowAmberApp)"/>
+            <path d="M 720 315 L 758 315" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
+            <path d="M 835 346 L 835 354" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
+
+            <!-- SYNCHRONOUS COMMIT HIGHWAY (TEAL) & REDIRECTION TRACES -->
+            <!-- Writeback commit loopback to Register Files -->
+            <path d="M 720 250 L 738 250 L 738 438 L 225 438 L 225 220 L 243 220" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowTealApp)"/>
+            <rect x="360" y="428" width="280" height="18" rx="4" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+            <circle cx="368" cy="437" r="3" fill="#0d9488"/>
+            <text x="375" y="440.5" font-size="7.5" font-weight="900" fill="#0f766e" font-family="monospace">SYNCHRONOUS COMMIT HIGHWAY: Writeback Result &#8594; RegFiles</text>
+
+            <!-- Branch Misprediction Redirection Line (Red) to PC Mux -->
+            <path d="M 120 322 L 120 330 L 15 330 L 15 87 L 28 87" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRedApp)"/>
+            <rect x="25" y="322" width="80" height="15" rx="3" fill="#fef2f2" stroke="#ef4444" stroke-width="1"/>
+            <text x="28" y="332.5" font-size="6.5" font-weight="900" fill="#b91c1c" font-family="monospace">BR REDIRECT</text>
+
+            <!-- Trap Vector mtvec / stvec line from CSR to PC Mux -->
+            <path d="M 245 390 L 10 390 L 10 75 L 28 75" fill="none" stroke="#be123c" stroke-width="1.8" stroke-dasharray="3,3" marker-end="url(#arrowCrimsonApp)"/>
+
+            <!-- BOTTOM BUS KEY LEGEND & METRICS STRIP -->
+            <rect x="20" y="474" width="900" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+            <line x1="30" y1="486" x2="50" y2="486" stroke="#059669" stroke-width="2.2"/>
+            <text x="55" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">ALU/FPU Datapath</text>
+
+            <line x1="160" y1="486" x2="180" y2="486" stroke="#0284c7" stroke-width="2.2"/>
+            <text x="185" y="489" font-size="7.5" font-weight="800" fill="#0284c7" font-family="monospace">Virtual VA / Physical PA</text>
+
+            <line x1="320" y1="486" x2="340" y2="486" stroke="#d97706" stroke-width="2"/>
+            <text x="345" y="489" font-size="7.5" font-weight="800" fill="#d97706" font-family="monospace">PTW Radix Walk</text>
+
+            <line x1="450" y1="486" x2="470" y2="486" stroke="#0d9488" stroke-width="2.5"/>
+            <text x="475" y="489" font-size="7.5" font-weight="800" fill="#0d9488" font-family="monospace">Commit Highway</text>
+
+            <line x1="580" y1="486" x2="600" y2="486" stroke="#ef4444" stroke-width="2"/>
+            <text x="605" y="489" font-size="7.5" font-weight="800" fill="#ef4444" font-family="monospace">Branch Redirection</text>
+
+            <line x1="720" y1="486" x2="740" y2="486" stroke="#be123c" stroke-width="1.8" stroke-dasharray="3,3"/>
+            <text x="745" y="489" font-size="7.5" font-weight="800" fill="#be123c" font-family="monospace">Trap Vector (mtvec/stvec)</text>
+
+            <!-- Bottom Metrics Strip -->
+            <rect x="20" y="502" width="900" height="22" rx="4" fill="#151b20"/>
+            <text x="30" y="516" font-size="8" font-weight="800" fill="#22bfd7" font-family="monospace">METRICS: Fmax: 1.0 &#8211; 1.5 GHz (16nm/22nm) &bull; Area: 135 &#8211; 420 kGE &bull; Sv39 3-Level MMU &bull; MSHR Concurrency: 4-8 &bull; Full Linux 6.1 Boot</text>
+          </svg>
+        </div>
+        <div class="mobile-scroll-hint">&#8596; Interactive Schematic: Scroll horizontally on touchscreens to inspect full memory &amp; execution datapath</div>
+        <p class="schematic-caption" style="margin-top: 0.75rem;">
+          <strong>Figure 1.0:</strong> Universal architectural datapath and memory hierarchy topology of a 64-bit RV64GC application processor core. Virtual addresses flow from Fetch/Execute into the split ITLB/DTLB. On a TLB miss, the hardware Page Table Walker (PTW) autonomously traverses the 3-level Sv39 radix tree in memory. The non-blocking L1 Data Cache employs Miss Status Holding Registers (MSHRs) to sustain multiple outstanding DRAM misses while the execution core continues processing instructions.
         </p>
       </div>
 
-      <div class="feature-card">
-        <span class="f-badge">COHERENT INTERCONNECT</span>
-        <h3>AXI4 vs. TileLink vs. BedRock</h3>
-        <p>
-          CVA6 uses standardized 64-bit AXI4 crossbars with write buffering. Rocket Chip uses TileLink-UH/TileLink-C with built-in cache coherence. BlackParrot uses the BedRock channel protocol.
+      <!-- Interactive Application Core Memory & Translation Explorer -->
+      <div class="app-workbench-box" style="margin-bottom: 2rem;">
+        <div class="aw-header">
+          <span class="badge badge-accent">INTERACTIVE EDA WORKBENCH</span>
+          <h4 class="aw-title">Application Core Memory Wall &amp; OS Walkthrough</h4>
+          <p class="aw-lead">
+            Select an operational state to inspect how the microarchitecture dynamically resolves address translation, DRAM latency, and execution serialization:
+          </p>
+        </div>
+
+        <div class="aw-controls">
+          <button class="aw-btn active" data-scenario="tlb_hit">1. TLB Hit (Fast 1-Cycle Translation)</button>
+          <button class="aw-btn" data-scenario="tlb_miss">2. TLB Miss (3-Level Radix DRAM Walk)</button>
+          <button class="aw-btn" data-scenario="mshr_miss">3. L1-D Miss &amp; MSHR Concurrency</button>
+          <button class="aw-btn" data-scenario="ooo_rob">4. In-Order vs. Out-of-Order (RoB)</button>
+        </div>
+
+        <div class="aw-display">
+          <div class="aw-metric-strip">
+            <div class="aw-metric">
+              <span class="aw-lbl">Latency Penalty</span>
+              <span class="aw-val" id="awLatency">1 Clock Cycle (~0.7 ns)</span>
+            </div>
+            <div class="aw-metric">
+              <span class="aw-lbl">Active Hardware Blocks</span>
+              <span class="aw-val" id="awBlocks">PC Reg &#8594; DTLB CAM &#8594; L1 Cache Tag Compare</span>
+            </div>
+            <div class="aw-metric">
+              <span class="aw-lbl">Pipeline Impact</span>
+              <span class="aw-val" id="awImpact">Zero Stall Bubbles (Instantaneous CPI = 1.0)</span>
+            </div>
+          </div>
+          <div class="aw-step-desc" id="awDesc">
+            <strong>TLB Hit Mechanics:</strong> The 64-bit effective address Virtual Page Number (<code>VPN[2:0]</code>) matches an active translation entry in the fully associative 32-entry DTLB. The Physical Page Number (<code>PPN</code>) is concatenated with the 12-bit page offset within 1 clock cycle. The L1 Data Cache verifies tags simultaneously using Virtual-Index Physical-Tag (VIPT) mapping with zero pipeline stalls.
+          </div>
+          <div class="aw-tradeoff-box" id="awTradeoff">
+            <strong>Silicon Trade-off:</strong> Dedicated 32-entry CAM structures consume significant dynamic power on every memory access but guarantee that 99%+ of memory operations proceed without stall cycles.
+          </div>
+        </div>
+      </div>
+
+      <!-- Seven Primitives Top-Down Breakdown -->
+      <div class="anatomy-breakdown-intro">
+        <h4 class="anatomy-subheading">Deconstructing the Seven Universal Subsystems</h4>
+        <p class="ladder-narrative" style="margin-bottom: 1.25rem;">
+          Below is a detailed microarchitectural deconstruction of each subsystem in Figure 1.0, its silicon implementation costs, and how open-source cores diverge across the performance-area spectrum:
         </p>
       </div>
 
-      <div class="feature-card">
-        <span class="f-badge">BRANCH PREDICTION</span>
-        <h3>BHT + BTB + RAS Units</h3>
-        <p>
-          Longer 6-to-10 stage pipelines suffer severe misprediction penalties (3–7 cycles). Cores integrate Branch Target Buffers (BTB), Branch History Tables (BHT), and Return Address Stacks (RAS).
-        </p>
-      </div>
+      <div class="primitives-flow">
+        <!-- Primitive 1 -->
+        <div class="primitive-card">
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 01</span>
+            <h4 class="prim-title">Sv39 / Sv48 Radix-Tree Hardware Page Table Walker (PTW)</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Translates 39-bit (Sv39) or 48-bit (Sv48) virtual addresses into 56-bit physical memory addresses. When a TLB miss occurs, the hardware PTW autonomously issues sequential DRAM memory reads across a 3-level (or 4-level) radix tree starting from the root base address stored in the privileged <code>satp.PPN</code> register.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Hardware Implementation:</span>
+                <span class="insight-value">Autonomous FSM with dedicated bus master port, address arithmetic synthesis logic, and PTE validation checker.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">Rocket and CVA6 use a shared PTW servicing both ITLB and DTLB; BOOM utilizes dual parallel PTW channels with intermediate level-cache translation buffers.</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div class="feature-card">
-        <span class="f-badge">IN-ORDER VS. OOO</span>
-        <h3>CVA6 / Rocket vs. BOOM</h3>
-        <p>
-          In-order cores (CVA6, Rocket) achieve superior area and power efficiency (~135–150 kGE). Out-of-order cores (BOOM) deliver 1.6&times; higher memcpy bandwidth, but triple silicon area (~420 kGE).
-        </p>
+        <!-- Primitive 2 -->
+        <div class="primitive-card">
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 02</span>
+            <h4 class="prim-title">Split Translation Lookaside Buffers (ITLB &amp; DTLB)</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              High-speed Content-Addressable Memory (CAM) arrays caching recent Virtual Page Number (VPN) to Physical Page Number (PPN) translations alongside Address Space Identifiers (ASID) and permission bits (Read, Write, Execute, User).
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Hardware Implementation:</span>
+                <span class="insight-value">Fully associative 32-to-64 entry CAM cells integrated directly into the critical fetch and load-store pipeline stages.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">In-order cores (Rocket, CVA6) implement 32-entry single-level TLBs (~3.5 kGE); out-of-order BOOM uses a 2-level hierarchy (8-entry L1 TLB + 512-entry shared L2 TLB).</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primitive 3 -->
+        <div class="primitive-card">
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 03</span>
+            <h4 class="prim-title">Split L1 Caches &amp; Non-Blocking MSHR Subsystem</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Dedicated Harvard L1 Instruction Cache (32 KB, 4-way) and Data Cache (32 KB, 8-way). The Data Cache incorporates <strong>Miss Status Holding Registers (MSHRs)</strong> that track pending cache-line refills from DRAM, allowing subsequent instructions to access cached data without stalling the core (Hit-Under-Miss and Miss-Under-Miss).
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Hardware Implementation:</span>
+                <span class="insight-value">Multi-bank SRAM macro arrays, write-back dirty bit arrays, comparator tag arrays, and 4-to-8 MSHR entry comparators.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">CVA6 features a write-through D-cache with 2 MSHRs; Rocket provides non-blocking TileLink D-cache with 4 MSHRs; BOOM features 8 MSHRs supporting heavy memory concurrency.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primitive 4 -->
+        <div class="primitive-card">
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 04</span>
+            <h4 class="prim-title">Multi-Level Branch Prediction Subsystem (BTB, BHT, RAS &amp; TAGE)</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Because 6-to-10 stage application pipelines incur severe 3 to 7 clock cycle penalties on branch mispredictions, application cores integrate multi-level predictors: Branch Target Buffers (BTB) for fast zero-bubble target caching, Branch History Tables (BHT) for direction, Return Address Stacks (RAS) for function returns, and advanced TAGE algorithms.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Hardware Implementation:</span>
+                <span class="insight-value">SRAM tag arrays, 2-bit saturating counters, 16-entry circular RAS stacks, and speculative checkpoint recovery registers.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">Rocket uses a 28-entry BTB + 512-entry Bimodal BHT; CVA6 uses a 32-entry BTB + 1024-entry BHT + RAS; BOOM incorporates an industrial multi-kilobyte TAGE-SC predictor achieving &gt;96% accuracy.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primitive 5 -->
+        <div class="primitive-card">
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 05</span>
+            <h4 class="prim-title">Privileged Architecture, PMP Firewalls &amp; CSR Trap Unit</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Enforces the RISC-V Privileged Architecture v1.11: Machine (M) mode for firmware (OpenSBI), Supervisor (S) mode for the Linux kernel, and User (U) mode for application binaries. Features Physical Memory Protection (PMP) units checking physical memory accesses against up to 16 programmable address boundaries.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Hardware Implementation:</span>
+                <span class="insight-value">Privileged CSR bank (<code>mstatus</code>, <code>sstatus</code>, <code>satp</code>, <code>mtvec</code>, <code>stvec</code>), address comparator arrays, and hardware trap redirect FSM.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">Rocket and CVA6 implement 8 to 16 PMP regions with single-cycle trap redirection; BlackParrot integrates PMP directly alongside its BedRock channel security isolation.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primitive 6 -->
+        <div class="primitive-card">
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 06</span>
+            <h4 class="prim-title">Decoupled Execution: In-Order Scoreboard vs. Out-of-Order RoB</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Coordinates instruction execution across multiple functional units (Integer ALUs, 64-bit Multipliers, FPUs, Load-Store Units). In-order cores utilize scoreboards to track RAW dependencies; out-of-order processors employ Register Alias Tables (RAT), Physical Register Files (PRF), Reservation Stations, and a Reorder Buffer (RoB) to retire instructions in program order while executing out of order.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Hardware Implementation:</span>
+                <span class="insight-value">Scoreboard bit vectors (in-order) vs. 64-to-128 entry circular FIFO Reorder Buffers with speculative commit pointers (out-of-order).</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">Rocket uses an in-order pipeline with bypass multiplexers; CVA6 implements an 8-entry issue scoreboard; BOOM features up to a 128-entry ROB and explicit PRF renaming.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primitive 7 -->
+        <div class="primitive-card">
+          <div class="prim-card-header">
+            <span class="prim-step-pill">BLOCK 07</span>
+            <h4 class="prim-title">Coherent System Bus &amp; Cache Coherence Engine</h4>
+          </div>
+          <div class="prim-card-body">
+            <p class="prim-text">
+              Provides standardized high-bandwidth communication with system memory, peripherals, and peer cores. Implements hardware cache coherence protocols (such as directory-based MESI or snooping broadcast) over open interconnect standards like AXI4-64b, TileLink-C, or BedRock.
+            </p>
+            <div class="prim-micro-insights">
+              <div class="prim-insight-row">
+                <span class="insight-label">Hardware Implementation:</span>
+                <span class="insight-value">Multi-channel crossbar decoders, transaction queues, coherence state directories, and invalidation probe filters.</span>
+              </div>
+              <div class="prim-insight-row">
+                <span class="insight-label">Design Divergence:</span>
+                <span class="insight-value">CVA6 uses standardized 64-bit AXI4 point-to-point buses; Rocket utilizes TileLink-UH/TileLink-C; BlackParrot uses the BedRock channel protocol formally verified with CMurphi.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.2 THE PRIVILEGED ISA SPECTRUM -->
+    <div class="concept-step-card" style="margin-bottom: 2rem;">
+      <div class="step-card-header">
+        <span class="step-tag badge-ink">1.2 THE PRIVILEGED ISA SPECTRUM</span>
+        <h3 class="step-card-title">RV64GC Standard Extensions &amp; Privileged Ring Protection</h3>
+      </div>
+      <p class="step-card-lead">
+        While microcontroller cores often strip down to RV32I or RV32E to minimize silicon gate count, full operating systems like Linux require <strong>RV64GC</strong> (<code>RV64IMAFDC_Zicsr_Zifencei</code>). Below is why each architectural extension is non-negotiable for operating system execution and its physical silicon cost:
+      </p>
+
+      <div class="tradeoff-matrix-wrap">
+        <table class="tradeoff-table">
+          <thead>
+            <tr>
+              <th>ISA Extension</th>
+              <th>Architectural Purpose</th>
+              <th>Silicon Area Overhead</th>
+              <th>OS / Linux Role</th>
+              <th>Hardware Engineering Justification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Base RV64I</strong></td>
+              <td>64-bit GPRs, 64-bit pointer arithmetic, 64-bit ALUs</td>
+              <td>Baseline (~45 kGE core logic)</td>
+              <td>Mandatory</td>
+              <td>Enables flat &gt;4 GB virtual address spaces, eliminating 32-bit physical memory limits.</td>
+            </tr>
+            <tr>
+              <td><strong>M (Mul / Div)</strong></td>
+              <td>Hardware 64-bit integer multiplication and division</td>
+              <td>+8 to 15 kGE (Pipelined Booth array)</td>
+              <td>Mandatory</td>
+              <td>Eliminates 50-to-100 cycle software emulation loops in kernel hash tables and scheduler maths.</td>
+            </tr>
+            <tr>
+              <td><strong>A (Atomics)</strong></td>
+              <td>Load-Reserved / Store-Conditional (<code>lr.d</code>/<code>sc.d</code>) and AMOs</td>
+              <td>+3 to 6 kGE (Bus reservation monitor)</td>
+              <td>Mandatory</td>
+              <td>Enables lock-free multi-core synchronization, Linux spinlocks, mutexes, and thread scheduling.</td>
+            </tr>
+            <tr>
+              <td><strong>F &amp; D (FPUs)</strong></td>
+              <td>IEEE 754-2008 single and double-precision floating-point</td>
+              <td>+35 to 55 kGE (Fused multiply-add units)</td>
+              <td>Mandatory for glibc</td>
+              <td>Provides 32 dedicated 64-bit FPRs (<code>f0</code>-<code>f31</code>) avoiding soft-float software ABI overhead.</td>
+            </tr>
+            <tr>
+              <td><strong>C (Compressed)</strong></td>
+              <td>16-bit instruction encodings for common operations</td>
+              <td>+1.5 to 3.0 kGE (Frontend expander)</td>
+              <td>Strongly Recommended</td>
+              <td>Shrinks Linux kernel binary footprints by 25–30% and increases effective L1-I cache throughput.</td>
+            </tr>
+            <tr>
+              <td><strong>Privilege &amp; satp</strong></td>
+              <td>Machine, Supervisor, User modes + MMU control</td>
+              <td>+12 to 20 kGE (CSRs &amp; trap logic)</td>
+              <td>Mandatory</td>
+              <td>Hardware isolation preventing unprivileged user tasks from corrupting OS kernel memory.</td>
+            </tr>
+            <tr>
+              <td><strong>PMP (16-Regions)</strong></td>
+              <td>Physical Memory Protection address range checking</td>
+              <td>+4 to 8 kGE (16 parallel comparators)</td>
+              <td>Mandatory for Security</td>
+              <td>Hardware memory firewall protecting OpenSBI secure enclaves from rogue supervisor code.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 1.3 WHY APPLICATION CORES DIVERGE -->
+    <div class="concept-step-card" style="margin-bottom: 2rem;">
+      <div class="step-card-header">
+        <span class="step-tag badge-ink">1.3 THE MEMORY WALL TRIAD</span>
+        <h3 class="step-card-title">Why Application Cores Diverge: The Hardware Triad</h3>
+      </div>
+      <p class="step-card-lead">
+        If all application cores implement the exact same RV64GC ISA and run the same compiled Linux distributions, why do their physical gate counts range from <strong>135 kGE up to 420 kGE</strong>?
+        The answer lies in how different engineering teams balance the eternal <strong>Application Hardware Triad</strong>:
+      </p>
+
+      <div class="triad-cards-grid">
+        <div class="triad-card">
+          <div class="triad-card-head">
+            <span class="triad-pill badge-yellow">AXIS 1</span>
+            <h4>Silicon Area &amp; Energy Budget</h4>
+          </div>
+          <p>
+            When processors are deployed in edge gateways or battery-powered IoT clusters, die area must remain sub-150 kGE (&lt;0.2 mm&sup2; in 22nm). These designs adopt lean 5-stage in-order pipelines (e.g. Rocket Chip), accepting memory stall bubbles to achieve 15+ mW ultra-low power consumption.
+          </p>
+        </div>
+
+        <div class="triad-card">
+          <div class="triad-card-head">
+            <span class="triad-pill badge-cyan">AXIS 2</span>
+            <h4>Memory Hierarchy &amp; Cache Coherence</h4>
+          </div>
+          <p>
+            In multi-core clusters, memory throughput dominates. Teams invest silicon in multi-banked non-blocking L1 caches, 4 to 8 MSHRs, and directory-based MESI coherence controllers (e.g. BlackParrot). This increases area to 165 kGE but prevents bus crossbar saturation.
+          </p>
+        </div>
+
+        <div class="triad-card">
+          <div class="triad-card-head">
+            <span class="triad-pill badge-coral">AXIS 3</span>
+            <h4>Instruction-Level Parallelism (ILP)</h4>
+          </div>
+          <p>
+            When raw single-thread throughput is paramount (desktop, server, edge AI), in-order processors hit an insurmountable CPI ceiling (~1.25). Out-of-order engines (e.g. SonicBOOM) triple silicon area to 420 kGE to implement 128-entry Reorder Buffers, register renaming, and multi-issue dispatch, driving CPI below 0.85.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.4 WHY FOUR ARCHETYPES -->
+    <div class="concept-step-card">
+      <div class="step-card-header">
+        <span class="step-tag badge-ink">1.4 ARCHITECTURAL PHASE TRANSITIONS</span>
+        <h3 class="step-card-title">Why Four Archetypes? The Microarchitectural Boundaries</h3>
+      </div>
+      <p class="step-card-lead">
+        Based on these physical silicon trade-offs, the open-source 64-bit application core ecosystem clusters into four distinct microarchitectural archetypes:
+      </p>
+
+      <div class="archetype-preview-deck">
+        <div class="arch-preview-item" style="border-left: 6px solid var(--yellow);">
+          <span class="api-num">ARCHETYPE 1</span>
+          <h4>Classic In-Order Baseline (Rocket Chip &bull; ~135 kGE)</h4>
+          <p>Single-issue 5-stage classic RISC pipeline with TileLink-UH memory hierarchy and integrated Sv39 MMU. The reference baseline for academic research and low-power Linux.</p>
+        </div>
+
+        <div class="arch-preview-item" style="border-left: 6px solid var(--cyan);">
+          <span class="api-num">ARCHETYPE 2</span>
+          <h4>Industrial Deep In-Order Core (CVA6 / Ariane &bull; ~148 kGE)</h4>
+          <p>6-stage decoupled scoreboard pipeline with standardized AXI4-64b system bus interface, 16 PMP regions, and branch prediction. Hardened for industrial SoC tapeouts.</p>
+        </div>
+
+        <div class="arch-preview-item" style="border-left: 6px solid var(--coral);">
+          <span class="api-num">ARCHETYPE 3</span>
+          <h4>Modular Coherent Multi-Core Cluster Tile (BlackParrot &bull; ~165 kGE)</h4>
+          <p>5-stage frontend with dual-issue dispatch, decoupled backend execution, and formally verified directory-based MESI cache coherence over the BedRock interconnect.</p>
+        </div>
+
+        <div class="arch-preview-item" style="border-left: 6px solid var(--lime);">
+          <span class="api-num">ARCHETYPE 4</span>
+          <h4>High-Performance Superscalar OoO Engine (SonicBOOM &bull; ~420 kGE)</h4>
+          <p>7-to-10 stage out-of-order execution engine with 1-to-4 wide decode/dispatch, explicit register renaming, 128-entry Reorder Buffer (ROB), and non-blocking L1D caches.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Level 2 Empirical Leaderboard -->
-  <section class="content-block">
+  <!-- Benchmark Leaderboard -->
+  <section id="benchmark-leaderboard" class="content-block">
     <div class="block-header-flex">
       <div>
-        <h2 class="block-title">Level 2 Benchmark Leaderboard (Memory &amp; OS Compliance)</h2>
+        <h2 class="block-title">Benchmark Leaderboard (Memory &amp; OS Compliance)</h2>
         <p class="block-desc">
           Evaluates memory throughput (unaligned memcpy sweeps), MMU translation behavior, and PMP violation traps across standard workloads.
         </p>
@@ -422,6 +1059,61 @@ BOOM        &amp; RV64GC &amp; 7--10 (OoO)  &amp; Sv39/48 &amp; \textbf&#123;780
     btn.addEventListener("click", (e) => {
       const parent = (e.target as HTMLElement).closest(".latex-export-box") as HTMLElement;
       if (parent) parent.style.display = "none";
+    });
+  });
+
+  // Interactive Application Core Memory Workbench
+  const awData: Record<string, { latency: string; blocks: string; impact: string; desc: string; tradeoff: string }> = {
+    tlb_hit: {
+      latency: "1 Clock Cycle (~0.7 ns)",
+      blocks: "PC Reg \u2192 DTLB CAM \u2192 L1 Cache Tag Compare",
+      impact: "Zero Stall Bubbles (Instantaneous CPI = 1.0)",
+      desc: "<strong>TLB Hit Mechanics:</strong> The 64-bit effective address Virtual Page Number (<code>VPN[2:0]</code>) matches an active translation entry in the fully associative 32-entry DTLB. The Physical Page Number (<code>PPN</code>) is concatenated with the 12-bit page offset within 1 clock cycle. The L1 Data Cache verifies tags simultaneously using Virtual-Index Physical-Tag (VIPT) mapping with zero pipeline stalls.",
+      tradeoff: "<strong>Silicon Trade-off:</strong> Dedicated 32-entry Content-Addressable Memory (CAM) structures consume significant dynamic power on every memory access but guarantee that 99%+ of memory operations proceed without stall cycles."
+    },
+    tlb_miss: {
+      latency: "30 \u2013 120 Clock Cycles (~25 \u2013 90 ns)",
+      blocks: "DTLB Miss Trap \u2192 Hardware PTW FSM \u2192 L2 / DRAM Radix Walk \u2192 satp.PPN Refill",
+      impact: "Pipeline Frozen or Thread Suspended (CPI degraded to 15.0+)",
+      desc: "<strong>TLB Miss & 3-Level Radix Tree Walk:</strong> The requested VPN is not present in the TLB. The Hardware Page Table Walker (PTW) takes control of the memory bus, accessing Root Level-2 PTE (via <code>satp.PPN</code>), Middle Level-1 PTE, and Leaf Level-0 PTE sequentially in DRAM. Each walk step incurs cache miss penalties before writing the newly translated PTE back into the TLB.",
+      tradeoff: "<strong>Silicon Trade-off:</strong> A hardware PTW adds ~12\u201318 kGE of autonomous control FSM and bus arbitration logic. Without it, the core would have to trap to software M-mode / S-mode, turning a 50-cycle hardware walk into an catastrophic 800+ cycle OS trap handler."
+    },
+    mshr_miss: {
+      latency: "40 \u2013 80 Clock Cycles (Overlapped Concurrency)",
+      blocks: "L1 Cache Miss \u2192 MSHR Queue Allocation \u2192 TileLink / AXI4 Coherent Bus \u2192 DRAM Burst",
+      impact: "Non-blocking execution for non-dependent instructions (Hits-Under-Miss sustained)",
+      desc: "<strong>Non-blocking Cache & MSHR Concurrency:</strong> An L1 Data Cache miss occurs, but rather than stalling the core pipeline, the transaction address, sub-word offset, and target destination register are enqueued into one of 4 to 8 Miss Status Holding Registers (MSHRs). While the bus fetches the 64-byte cache line from DRAM, subsequent independent loads and stores continue to hit in L1-D.",
+      tradeoff: "<strong>Silicon Trade-off:</strong> Non-blocking caches require complex tag-matching CAMs on MSHR entries and out-of-order write-back arbitration into the L1 data SRAM, costing ~15\u201325 kGE over a simple blocking cache, but preventing memory-latency serialization."
+    },
+    ooo_rob: {
+      latency: "Dynamic Latency Hiding (0-cycle visible stall for long loads)",
+      blocks: "Instruction Rename \u2192 Reservation Stations \u2192 Distributed Execution Units \u2192 Reorder Buffer (RoB)",
+      impact: "Sustained IPC > 1.2 even in the presence of DRAM cache misses",
+      desc: "<strong>Out-of-Order Execution & In-Order Retirement (RoB):</strong> In an Out-of-Order core (e.g. BOOM), instructions that are stalled waiting for high-latency DRAM data are bypassed by subsequent ready instructions in the Reservation Stations. Instructions execute speculatively out-of-order and write results to the Reorder Buffer (RoB). The RoB commits instructions strictly in program order to ensure precise architectural exception handling.",
+      tradeoff: "<strong>Silicon Trade-off:</strong> Implementing an Out-of-Order microarchitecture requires huge physical register files (PRF), associative issue queues, and branch checkpoint recovery tables, escalating core area from ~135 kGE (Rocket) to ~420 kGE (BOOM)\u2014a 3.1\u00d7 silicon area penalty for ~2\u00d7 IPC throughput."
+    }
+  };
+
+  const awButtons = document.querySelectorAll(".aw-btn");
+  const elLatency = document.getElementById("awLatency");
+  const elBlocks = document.getElementById("awBlocks");
+  const elImpact = document.getElementById("awImpact");
+  const elDesc = document.getElementById("awDesc");
+  const elTradeoff = document.getElementById("awTradeoff");
+
+  awButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      awButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const scenarioKey = btn.getAttribute("data-scenario");
+      if (scenarioKey && awData[scenarioKey]) {
+        const item = awData[scenarioKey];
+        if (elLatency) elLatency.textContent = item.latency;
+        if (elBlocks) elBlocks.textContent = item.blocks;
+        if (elImpact) elImpact.textContent = item.impact;
+        if (elDesc) elDesc.innerHTML = item.desc;
+        if (elTradeoff) elTradeoff.innerHTML = item.tradeoff;
+      }
     });
   });
 </script>
@@ -899,5 +1591,563 @@ BOOM        &amp; RV64GC &amp; 7--10 (OoO)  &amp; Sv39/48 &amp; \textbf&#123;780
     font-size: 0.9rem;
     line-height: 1.6;
     background: var(--cream, #fffaf0);
+  }
+
+  /* ============================================================ */
+  /* Section 1: Architectural Foundations, Schematics & Workbench */
+  /* ============================================================ */
+  .badge {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    letter-spacing: 0.04em;
+  }
+
+  .badge-primary { background: var(--yellow, #ffc83e); color: var(--ink, #151b20); }
+  .badge-accent { background: var(--cyan, #22bfd7); color: var(--ink, #151b20); }
+  .badge-coral { background: var(--coral, #ff6b4a); color: var(--ink, #151b20); }
+  .badge-cyan { background: var(--cyan, #22bfd7); color: var(--ink, #151b20); }
+  .badge-yellow { background: var(--yellow, #ffc83e); color: var(--ink, #151b20); }
+  .badge-ink { background: var(--ink, #151b20); color: #ffffff; }
+
+  .block-header-wrap {
+    margin-bottom: 1.75rem;
+  }
+
+  .concept-step-card {
+    background: var(--paper, #fdfbf7);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+    padding: 1.75rem;
+  }
+
+  .step-card-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .step-tag {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    display: inline-block;
+    margin-bottom: 0.4rem;
+  }
+
+  .step-card-title {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .step-card-lead {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--ink-light, #333);
+    margin-bottom: 1.5rem;
+  }
+
+  .schematic-container {
+    background: var(--paper, #fdfbf7);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin: 1.25rem 0;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+  }
+
+  .schematic-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .schematic-tag {
+    font-size: 0.7rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    background: var(--cyan, #22bfd7);
+    color: var(--ink, #151b20);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    display: inline-block;
+    margin-bottom: 0.35rem;
+  }
+
+  .schematic-title {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+  }
+
+  .schematic-svg-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+
+  .schematic-svg {
+    width: 100%;
+    min-width: 780px;
+    height: auto;
+    display: block;
+  }
+
+  .schematic-caption {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--ink-light, #555);
+    margin: 0;
+  }
+
+  .mobile-scroll-hint {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--ink-light, #666);
+    font-family: var(--md-code-font, monospace);
+    text-align: center;
+    padding: 0.4rem 0.5rem 0.1rem 0.5rem;
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .mobile-scroll-hint {
+      display: block;
+    }
+  }
+
+  /* Interactive Application Core Workbench */
+  .app-workbench-box {
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: 4px 4px 0 var(--cyan, #22bfd7);
+    margin: 2rem 0;
+  }
+
+  .aw-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .aw-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0.4rem 0;
+  }
+
+  .aw-lead {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-light, #444);
+    margin: 0;
+  }
+
+  .aw-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .aw-btn {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    padding: 0.5rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .aw-btn:hover {
+    background: var(--paper-deep, #eee4c8);
+  }
+
+  .aw-btn.active {
+    background: var(--cyan, #22bfd7);
+    color: var(--ink, #151b20);
+    font-weight: 900;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+  }
+
+  .aw-display {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.25rem;
+  }
+
+  .aw-metric-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background: var(--paper, #fdfbf7);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .aw-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .aw-lbl {
+    font-size: 0.72rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    color: #666;
+    text-transform: uppercase;
+  }
+
+  .aw-val {
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+  }
+
+  .aw-step-desc {
+    background: var(--cream, #fffaf0);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink, #151b20);
+    margin-bottom: 0.75rem;
+  }
+
+  .aw-tradeoff-box {
+    background: var(--paper-deep, #eee4c8);
+    border-left: 4px solid var(--coral, #ff6b4a);
+    border-radius: 0 6px 6px 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--ink, #151b20);
+  }
+
+  /* Universal Primitives Flow */
+  .anatomy-breakdown-intro {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .anatomy-subheading {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.01em;
+  }
+
+  .ladder-narrative {
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: var(--ink-light, #242c33);
+    margin: 0;
+  }
+
+  .primitives-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .primitive-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .primitive-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+  }
+
+  .prim-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    border-bottom: 1.5px dashed var(--line, #e2d9c8);
+    padding-bottom: 0.65rem;
+  }
+
+  .prim-step-pill {
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
+    font-size: 0.75rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .prim-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .prim-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .prim-text {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: var(--ink-light, #242c33);
+    margin: 0;
+  }
+
+  .prim-micro-insights {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: var(--paper-deep, #f4eee1);
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+  }
+
+  .prim-insight-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  @media (min-width: 680px) {
+    .prim-insight-row {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+  }
+
+  .insight-label {
+    font-size: 0.74rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink, #151b20);
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .insight-value {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--ink-light, #333);
+  }
+
+  /* Tradeoff Table */
+  .tradeoff-matrix-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    margin-top: 1rem;
+    background: #ffffff;
+  }
+
+  .tradeoff-table {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .tradeoff-table th {
+    background: var(--paper-deep, #eee4c8);
+    border-bottom: 2px solid var(--ink, #151b20);
+    border-right: 1px solid var(--line, #e2d9c8);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+  }
+
+  .tradeoff-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--line, #e2d9c8);
+    border-right: 1px solid var(--line, #e2d9c8);
+    line-height: 1.5;
+    color: var(--ink, #151b20);
+  }
+
+  .tradeoff-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .tradeoff-table tbody tr:hover {
+    background: rgba(34, 191, 215, 0.05);
+  }
+
+  /* Triad Cards Grid */
+  .triad-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .triad-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .triad-card p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink-light, #333);
+    margin: 0;
+  }
+
+  .triad-card-head {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    border-bottom: 1.5px dashed var(--line, #e2d9c8);
+    padding-bottom: 0.5rem;
+  }
+
+  .triad-card-head h4 {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+  }
+
+  .triad-pill {
+    font-size: 0.7rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    display: inline-block;
+  }
+
+  /* Archetype Preview Deck */
+  .archetype-preview-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .arch-preview-item {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .arch-preview-item h4 {
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+  }
+
+  .arch-preview-item p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--ink-light, #444);
+    margin: 0;
+  }
+
+  .api-num {
+    font-size: 0.7rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    background: var(--paper-deep, #eee4c8);
+    border: 1px solid var(--ink, #151b20);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  @media (max-width: 768px) {
+    .concept-step-card {
+      padding: 1.15rem;
+    }
+
+    .aw-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .aw-btn {
+      width: 100%;
+      text-align: left;
+    }
+
+    .triad-cards-grid,
+    .archetype-preview-deck {
+      grid-template-columns: 1fr;
+    }
+
+    .primitive-card {
+      padding: 1.05rem;
+      gap: 0.65rem;
+    }
+
+    .prim-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
   }
 </style>
