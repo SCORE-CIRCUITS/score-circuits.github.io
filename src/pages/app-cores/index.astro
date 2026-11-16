@@ -1371,29 +1371,136 @@ const appCoreDossiers = [
         Based on these physical silicon trade-offs, the open-source 64-bit application core ecosystem clusters into four distinct microarchitectural archetypes:
       </p>
 
-      <div class="archetype-preview-deck">
-        <div class="arch-preview-item" style="border-left: 6px solid var(--yellow);">
-          <span class="api-num">ARCHETYPE 1</span>
-          <h4>Classic In-Order Baseline (Rocket Chip &bull; ~135 kGE)</h4>
-          <p>Single-issue 5-stage classic RISC pipeline with TileLink-UH memory hierarchy and integrated Sv39 MMU. The reference baseline for academic research and low-power Linux.</p>
+      <div class="archetype-preview-topdown">
+        <!-- Archetype 1 -->
+        <div class="arch-step-card arch-1-border">
+          <div class="arch-step-header">
+            <div class="arch-pill-badge badge-yellow">ARCHETYPE 1</div>
+            <div class="arch-title-block">
+              <h4 class="arch-title">Classic In-Order Baseline (Rocket Chip)</h4>
+              <span class="arch-archetype-tag">UC Berkeley / Chips Alliance &bull; ~135 kGE &bull; RV64GC</span>
+            </div>
+            <div class="arch-kpi-chip">
+              <span class="kpi-chip-label">Area / CPI:</span>
+              <span class="kpi-chip-val">~135 kGE &bull; 1.45&ndash;1.95</span>
+            </div>
+          </div>
+          <div class="arch-step-body">
+            <p>
+              Single-issue 5-stage classic RISC pipeline (Fetch, Decode, Execute, Memory, Writeback) with integrated TileLink-UH memory hierarchy and hardware Page Table Walker (PTW) for Sv39 MMU virtual memory translation. The golden reference baseline for academic research, cycle-accurate simulation, and low-power Linux edge computing.
+            </p>
+            <div class="arch-specs-row">
+              <span class="arch-spec-item"><strong>Pipeline:</strong> 5-Stage In-Order Single-Issue</span>
+              <span class="arch-spec-item"><strong>Memory Model:</strong> Blocking L1 VIPT (0 MSHR)</span>
+              <span class="arch-spec-item"><strong>Interconnect:</strong> TileLink-UH Cacheable Bus</span>
+              <span class="arch-spec-item"><strong>Primary Role:</strong> Academic Reference &amp; Edge Gateways</span>
+            </div>
+          </div>
         </div>
 
-        <div class="arch-preview-item" style="border-left: 6px solid var(--cyan);">
-          <span class="api-num">ARCHETYPE 2</span>
-          <h4>Industrial Deep In-Order Core (CVA6 / Ariane &bull; ~148 kGE)</h4>
-          <p>6-stage decoupled scoreboard pipeline with standardized AXI4-64b system bus interface, 16 PMP regions, and branch prediction. Hardened for industrial SoC tapeouts.</p>
+        <!-- Connector 1 -> 2 -->
+        <div class="arch-ladder-connector">
+          <div class="connector-line"></div>
+          <div class="connector-pill">
+            <span>&darr; Phase Transition: Decouple Stalls via Scoreboard Execution &amp; Industrial AXI4 (+13 kGE)</span>
+          </div>
+          <div class="connector-line"></div>
         </div>
 
-        <div class="arch-preview-item" style="border-left: 6px solid var(--coral);">
-          <span class="api-num">ARCHETYPE 3</span>
-          <h4>Modular Coherent Multi-Core Cluster Tile (BlackParrot &bull; ~165 kGE)</h4>
-          <p>5-stage frontend with dual-issue dispatch, decoupled backend execution, and formally verified directory-based MESI cache coherence over the BedRock interconnect.</p>
+        <!-- Archetype 2 -->
+        <div class="arch-step-card arch-2-border">
+          <div class="arch-step-header">
+            <div class="arch-pill-badge badge-cyan">ARCHETYPE 2</div>
+            <div class="arch-title-block">
+              <h4 class="arch-title">Industrial Deep In-Order Core (CVA6 / Ariane)</h4>
+              <span class="arch-archetype-tag">OpenHW Group / ETH Z&uuml;rich &bull; ~148 kGE &bull; RV64GC</span>
+            </div>
+            <div class="arch-kpi-chip">
+              <span class="kpi-chip-label">Tapeout Ready:</span>
+              <span class="kpi-chip-val">~148 kGE &bull; 1.30&ndash;1.65</span>
+            </div>
+          </div>
+          <div class="arch-step-body">
+            <p>
+              6-stage decoupled scoreboard pipeline (PC Gen, Fetch, Decode, Issue, Execute, Commit) with standardized AXI4-64b system bus interface, 16 physical memory protection (PMP) regions, and dynamic branch prediction (BTB + BHT). Engineered and silicon-hardened for European Processor Initiative (EPI) industrial SoC tapeouts.
+            </p>
+            <div class="arch-specs-row">
+              <span class="arch-spec-item"><strong>Pipeline:</strong> 6-Stage Decoupled Scoreboard</span>
+              <span class="arch-spec-item"><strong>Memory Model:</strong> 1 MSHR L1D + Hardware PTW</span>
+              <span class="arch-spec-item"><strong>Interconnect:</strong> Standard AXI4-64b 5-Channel Bus</span>
+              <span class="arch-spec-item"><strong>Primary Role:</strong> Industrial ASICs &amp; Secure Linux Microservers</span>
+            </div>
+          </div>
         </div>
 
-        <div class="arch-preview-item" style="border-left: 6px solid var(--lime);">
-          <span class="api-num">ARCHETYPE 4</span>
-          <h4>High-Performance Superscalar OoO Engine (SonicBOOM &bull; ~420 kGE)</h4>
-          <p>7-to-10 stage out-of-order execution engine with 1-to-4 wide decode/dispatch, explicit register renaming, 128-entry Reorder Buffer (ROB), and non-blocking L1D caches.</p>
+        <!-- Connector 2 -> 3 -->
+        <div class="arch-ladder-connector">
+          <div class="connector-line"></div>
+          <div class="connector-pill">
+            <span>&darr; Phase Transition: Scale to Coherent Multicore Clusters via BedRock MESI NoC (+17 kGE)</span>
+          </div>
+          <div class="connector-line"></div>
+        </div>
+
+        <!-- Archetype 3 -->
+        <div class="arch-step-card arch-3-border">
+          <div class="arch-step-header">
+            <div class="arch-pill-badge badge-coral">ARCHETYPE 3</div>
+            <div class="arch-title-block">
+              <h4 class="arch-title">Modular Coherent Multi-Core Cluster Tile (BlackParrot)</h4>
+              <span class="arch-archetype-tag">Univ. of Washington / Bespoke Silicon &bull; ~165 kGE &bull; RV64GC</span>
+            </div>
+            <div class="arch-kpi-chip">
+              <span class="kpi-chip-label">Scale Target:</span>
+              <span class="kpi-chip-val">1&ndash;64 Cores &bull; MESI NoC</span>
+            </div>
+          </div>
+          <div class="arch-step-body">
+            <p>
+              Latency-insensitive, composable application core tile partitioned into three independent domains: Front-End (FE), Back-End (BE), and Memory-End (ME) bridged by credit-based FIFOs. Implements formally verified directory-based MESI cache coherence over the BedRock protocol with embedded 5-port 2D-mesh packetized wormhole routers.
+            </p>
+            <div class="arch-specs-row">
+              <span class="arch-spec-item"><strong>Pipeline:</strong> Modular 3-Partition (FE / BE / ME)</span>
+              <span class="arch-spec-item"><strong>Memory Model:</strong> 2&ndash;8 MSHRs Non-Blocking L1</span>
+              <span class="arch-spec-item"><strong>Interconnect:</strong> BedRock MESI Coherence + 2D Mesh NoC</span>
+              <span class="arch-spec-item"><strong>Primary Role:</strong> Massively Tiled Manycore Accelerator Hosts</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector 3 -> 4 -->
+        <div class="arch-ladder-connector">
+          <div class="connector-line"></div>
+          <div class="connector-pill">
+            <span>&darr; Phase Transition: Shatter Single-Issue Floor via Speculative Out-of-Order Execution (+255 kGE)</span>
+          </div>
+          <div class="connector-line"></div>
+        </div>
+
+        <!-- Archetype 4 -->
+        <div class="arch-step-card arch-4-border">
+          <div class="arch-step-header">
+            <div class="arch-pill-badge badge-lime">ARCHETYPE 4</div>
+            <div class="arch-title-block">
+              <h4 class="arch-title">High-Performance Superscalar OoO Engine (SonicBOOM)</h4>
+              <span class="arch-archetype-tag">UC Berkeley / Chips Alliance &bull; ~420 kGE &bull; RV64GC</span>
+            </div>
+            <div class="arch-kpi-chip">
+              <span class="kpi-chip-label">Throughput Peak:</span>
+              <span class="kpi-chip-val">CPI 0.65&ndash;0.95 &bull; 3-Wide</span>
+            </div>
+          </div>
+          <div class="arch-step-body">
+            <p>
+              Industrial-class 7-to-10 stage speculative out-of-order execution engine featuring 3-wide superscalar decode/rename/dispatch, 128-entry Reorder Buffer (ROB), 128 Physical Register File (PRF), 8-entry MSHR non-blocking data caches, and a fully speculative multi-ported load-store unit (LSU) with memory disambiguation.
+            </p>
+            <div class="arch-specs-row">
+              <span class="arch-spec-item"><strong>Pipeline:</strong> 3-Wide Superscalar OoO (7&ndash;10 Stages)</span>
+              <span class="arch-spec-item"><strong>Memory Model:</strong> 8-Entry MSHR + Speculative LSQ</span>
+              <span class="arch-spec-item"><strong>Renaming:</strong> 128 PRF + 96&ndash;128 RoB Entries</span>
+              <span class="arch-spec-item"><strong>Primary Role:</strong> High-Throughput Linux Application Servers &amp; Edge AI</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -4175,6 +4282,9 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
   .badge-coral { background: var(--coral, #f38469); color: var(--ink, #151b20); }
   .badge-cyan { background: var(--cyan, #22bfd7); color: var(--ink, #151b20); }
   .badge-yellow { background: var(--yellow, #ffc83e); color: var(--ink, #151b20); }
+  .badge-lime { background: var(--lime, #b7df69); color: var(--ink, #151b20); }
+  .badge-teal { background: var(--teal, #0d9488); color: #ffffff; }
+  .badge-blue { background: #8275e8; color: #ffffff; }
   .badge-ink { background: var(--ink, #151b20); color: #ffffff; }
 
   .block-header-wrap {
@@ -4722,49 +4832,131 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
     padding: 0.75rem 0;
   }
 
-  /* Archetype Preview Deck */
-  .archetype-preview-deck {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.25rem;
+  /* Section 1.4 Archetype Preview Top-Down Progressive Ladder */
+  .archetype-preview-topdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     margin-top: 1.25rem;
   }
 
-  .arch-preview-item {
+  .arch-step-card {
     background: #ffffff;
     border: 2px solid var(--ink, #151b20);
-    border-radius: 10px;
-    box-shadow: 3px 3px 0 var(--ink, #151b20);
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+    padding: 1.5rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .arch-preview-item h4 {
-    font-size: 1rem;
+  .arch-step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 var(--ink, #151b20);
+  }
+
+  .arch-step-card.arch-1-border {
+    border-left: 8px solid var(--yellow, #ffc83e) !important;
+  }
+
+  .arch-step-card.arch-2-border {
+    border-left: 8px solid var(--cyan, #22bfd7) !important;
+  }
+
+  .arch-step-card.arch-3-border {
+    border-left: 8px solid var(--coral, #f38469) !important;
+  }
+
+  .arch-step-card.arch-4-border {
+    border-left: 8px solid var(--lime, #b7df69) !important;
+  }
+
+  .arch-step-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+    border-bottom: 1.5px dashed var(--line, #eee4c8);
+    padding-bottom: 0.75rem;
+  }
+
+  .arch-pill-badge {
+    font-size: 0.8rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--ink, #151b20);
+    box-shadow: 1.5px 1.5px 0 var(--ink, #151b20);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .arch-title-block {
+    flex: 1;
+    min-width: 220px;
+  }
+
+  .arch-title {
+    font-size: 1.2rem;
     font-weight: 900;
     color: var(--ink, #151b20);
-    margin: 0;
+    margin: 0 0 0.2rem 0;
   }
 
-  .arch-preview-item p {
-    font-size: 0.88rem;
-    line-height: 1.5;
+  .arch-archetype-tag {
+    font-size: 0.78rem;
+    font-family: var(--md-code-font, monospace);
+    font-weight: 700;
+    color: var(--ink-light, #242c33);
+  }
+
+  .arch-kpi-chip {
+    background: var(--paper, #fffaf0);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    box-shadow: 1.5px 1.5px 0 var(--ink, #151b20);
+  }
+
+  .arch-step-body p {
+    font-size: 0.92rem;
+    line-height: 1.6;
     color: var(--ink-light, #242c33);
     margin: 0;
   }
 
-  .api-num {
-    font-size: 0.7rem;
-    font-weight: 900;
-    font-family: var(--md-code-font, monospace);
+  .arch-specs-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--line, #eee4c8);
+    font-size: 0.8rem;
+  }
+
+  .arch-spec-item {
     background: var(--paper-deep, #eee4c8);
     border: 1px solid var(--ink, #151b20);
-    padding: 0.15rem 0.4rem;
     border-radius: 4px;
-    display: inline-block;
-    width: fit-content;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.75rem;
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .arch-ladder-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 0;
   }
 
   @media (max-width: 768px) {
@@ -4780,10 +4972,6 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
     .aw-btn {
       width: 100%;
       text-align: left;
-    }
-
-    .archetype-preview-deck {
-      grid-template-columns: 1fr;
     }
 
     .primitive-card {
