@@ -1624,7 +1624,7 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
           </div>
         </div>
         <p class="boom-step-desc">
-          DATE 2025 scale-up architecture. Partitions 8 lanes into dual independent 4-lane sub-clusters with local VRF banking and hierarchical crossbars, preventing \(O(N^2)\) wire explosion and sustaining 97.76% utilization (7.82 Ops/cycle).
+          DATE 2025 scale-up architecture. Partitions 8 lanes into dual independent 4-lane sub-clusters with local VRF banking and hierarchical crossbars, preventing <em>O</em>(<em>N</em><sup>2</sup>) wire explosion and sustaining 97.76% utilization (7.82 Ops/cycle).
         </p>
       </div>
 
@@ -1764,6 +1764,9 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
           <text x="555" y="284" font-size="7.5" font-weight="900" fill="#166534" font-family="monospace" text-anchor="middle">OBI</text>
         </svg>
       </div>
+      <p class="schematic-caption">
+        <strong>Figure 2.1: Spatz &amp; Vicuna Compact Embedded RVV Architecture.</strong> Single-lane, area-optimized RVV implementation coupling a scalar host core to a shared-memory scratchpad via low-latency dual-port OBI interfaces, achieving &gt;0.75 Ops/cycle within a &lt;100 kGE footprint.
+      </p>
     </div>
 
     <!-- FIGURE 2.2: Ara 4-Lane Standard RVV 1.0 Schematic -->
@@ -1863,13 +1866,16 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
           <text x="475" y="309" font-size="8.5" font-weight="900" fill="#166534" font-family="monospace" text-anchor="middle">128-bit AXI4 MEMORY INTERCONNECT &rarr; L2 CACHE &amp; CHESHIRE SOC</text>
         </svg>
       </div>
+      <p class="schematic-caption">
+        <strong>Figure 2.2: Ara 4-Lane Standard Scalable RVV 1.0 Coprocessor Architecture.</strong> High-performance monolithic coprocessor featuring 8 SRAM banks per lane, crossbar operand network, and 128-bit AXI4 interconnect, achieving 3.65 Ops/cycle in 4-lane configuration.
+      </p>
     </div>
 
     <!-- FIGURE 2.3: AraXL Dual-Cluster Schematic -->
     <div class="schematic-container" style="margin-top: 2rem; margin-bottom: 2rem;">
       <div class="schematic-header">
         <span class="schematic-tag">FIGURE 2.3 CLUSTERED SCALE-UP</span>
-        <h4 class="schematic-title">AraXL &bull; 8-Lane Dual-Cluster Hierarchical Architecture Mitigating \(O(N^2)\) Routing Bottlenecks</h4>
+        <h4 class="schematic-title">AraXL &bull; 8-Lane Dual-Cluster Hierarchical Architecture Mitigating <em>O</em>(<em>N</em><sup>2</sup>) Routing Bottlenecks</h4>
       </div>
       <div class="schematic-svg-wrap">
         <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
@@ -1951,6 +1957,9 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
           <text x="380" y="338" font-size="7" font-weight="700" fill="#991b1b" font-family="monospace" text-anchor="middle">Eliminates 73% of crossbar area vs flat 8-lane monolithic design</text>
         </svg>
       </div>
+      <p class="schematic-caption">
+        <strong>Figure 2.3: AraXL 8-Lane Dual-Cluster Hierarchical Architecture.</strong> Clustered scale-up topology grouping lanes into independent 4-lane clusters interconnected via inter-cluster bridge, eliminating 73% of crossbar area overhead and mitigating <em>O</em>(<em>N</em><sup>2</sup>) wire congestion.
+      </p>
     </div>
 
     <!-- FIGURE 2.4: Gemmini Systolic Array Schematic -->
@@ -2072,6 +2081,9 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
           <text x="380" y="396" font-size="8.5" font-weight="900" fill="#fdfbf7" font-family="monospace" text-anchor="middle">TILELINK-C / AXI4 SYSTEM INTERCONNECT HIGHWAY (512-bit BURST &bull; ZERO HOST STALL)</text>
         </svg>
       </div>
+      <p class="schematic-caption">
+        <strong>Figure 2.4: Gemmini 16&times;16 2D Systolic Array Mesh Architecture.</strong> Spatial tensor accelerator featuring 256 processing elements, weight-stationary dataflow, double-buffered scratchpads, and 512-bit TileLink DMA bursts delivering 450.80 Ops/cycle.
+      </p>
     </div>
   
     <!-- FIGURE 2.5: CV32E40P Packed Sub-Word SIMD & DSP Datapath -->
