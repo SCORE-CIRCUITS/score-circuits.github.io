@@ -9,48 +9,48 @@ const toolsBySlug = Object.fromEntries(db.tools.map(t => [t.slug, t]));
 const categoryFeaturedTiers = [
   {
     catNum: 1,
-    badge: "CATEGORY 01 • LEVEL 1",
+    badge: "01 • MICROCONTROLLER & SCALAR",
     badgeClass: "badge-yellow",
     borderClass: "tier-border-yellow",
     title: "Microcontroller & Scalar Embedded Cores",
     scope: "Single-Threaded In-Order Embedded Pipelines",
-    ctaText: "Explore Category 1 (13 Cores)",
+    ctaText: "Explore MCU & Scalar Cores (13 Cores)",
     href: "/mcu-scalar/",
     connectorText: "Scale from Single-Issue Microcontrollers to Virtual Memory (Sv39/Sv48 MMU) & Multi-Level Caches",
     slugs: ["ibex", "hazard3", "serv"]
   },
   {
     catNum: 2,
-    badge: "CATEGORY 02 • LEVEL 2",
+    badge: "02 • APPLICATION CORES",
     badgeClass: "badge-cyan",
     borderClass: "tier-border-cyan",
     title: "Application Cores",
     scope: "Linux-Capable In-Order & Out-of-Order Superscalar Cores",
-    ctaText: "Explore Category 2 (8 Processors)",
+    ctaText: "Explore Application Cores (8 Processors)",
     href: "/app-cores/",
     connectorText: "Scale from Memory-Bound Scalar Pipelines to Data-Parallel RVV 1.0 Vector Engines & Systolic Arrays",
     slugs: ["c910", "boom", "cva6", "rocket-chip"]
   },
   {
     catNum: 3,
-    badge: "CATEGORY 03 • LEVEL 3",
+    badge: "03 • VECTOR & ACCELERATOR ENGINES",
     badgeClass: "badge-coral",
     borderClass: "tier-border-coral",
     title: "Vector & Coprocessor Acceleration Engines",
     scope: "Data-Parallel SIMD / RVV 1.0 & Systolic Accelerators",
-    ctaText: "Explore Category 3 (8 Engines & Archetypes)",
+    ctaText: "Explore Vector Engines (8 Processors)",
     href: "/vector-coprocessors/",
     connectorText: "Scale from Coprocessor Accelerators to Many-Core Clusters (up to 432 Cores), NoC Fabrics & DMA Engines",
     slugs: ["ara", "gemmini", "spatz"]
   },
   {
     catNum: 4,
-    badge: "CATEGORY 04 • LEVEL 4",
+    badge: "04 • SOC & MULTI-CORE PLATFORMS",
     badgeClass: "badge-lime",
     borderClass: "tier-border-lime",
     title: "Full SoC Platforms & Multi-Core Clusters",
     scope: "Many-Core Compute Clusters & Complete Tapeout SoCs",
-    ctaText: "Explore Category 4 (23 Systems)",
+    ctaText: "Explore SoCs & Manycore (23 Systems)",
     href: "/soc-multicore/",
     slugs: ["snitch-cluster", "cheshire", "mempool"]
   }
@@ -78,7 +78,7 @@ const categoryDetails: Record<number, {
 }> = {
   1: {
     levelNum: "01",
-    levelBadge: "LEVEL 1 • TIER 1 • SCALAR MICROBENCHMARKS",
+    levelBadge: "01 • SCALAR MICROBENCHMARKS & PIPELINES",
     scope: "Single-Thread & In-Order Embedded Pipelines",
     borderClass: "ladder-border-yellow",
     badgeClass: "badge-yellow",
@@ -86,12 +86,12 @@ const categoryDetails: Record<number, {
     bottleneck: "Branch misprediction penalty incurs 1–2 idle bubble cycles on tight loops. Load-use dependencies stall simple 2-stage cores (e.g. Ibex) unless forwarding paths are expanded.",
     remedy: "Dual-issue in-order execution with static branch hints and zero-overhead hardware loop controllers (e.g. VeeR EL2, CV32E40P).",
     keyTools: "SERV (1-bit serial), PicoRV32, DarkRISCV, Ibex (2-stage), Hazard3 (3-stage), SCR1, VexRiscv (5-stage), VeeR EL2 (dual-issue), CV32E40P, NEORV32, RV12, RISC-V VHDL",
-    ctaText: "Explore Level 1 MCU / Scalar Cores",
+    ctaText: "Explore MCU & Scalar Cores",
     transitionText: "Scale from Single-Issue Microcontrollers to Virtual Memory (Sv39/Sv48 MMU) & Multi-Level Caches",
   },
   2: {
     levelNum: "02",
-    levelBadge: "LEVEL 2 • TIER 2 • MEMORY & OS COMPLIANCE",
+    levelBadge: "02 • MEMORY & OS COMPLIANCE",
     scope: "Linux-Capable In-Order & Out-of-Order Processors",
     borderClass: "ladder-border-cyan",
     badgeClass: "badge-cyan",
@@ -99,12 +99,12 @@ const categoryDetails: Record<number, {
     bottleneck: "Memory Wall latency (50–100 ns DRAM) on L1/L2 cache misses and serialized 3-level page table walk latency upon TLB misses.",
     remedy: "Non-blocking split L1/L2 caches with MSHRs, hardware stream prefetchers, and out-of-order superscalar execution (BOOM).",
     keyTools: "SonicBOOM (OoO), XuanTie C910 (3-issue OoO + VPU), CVA6 (6-stage in-order), XuanTie C906 (5-stage + VPU), Rocket Chip, NutShell (dual-issue), BlackParrot (BedRock multicore), OpenPiton (manycore)",
-    ctaText: "Explore Level 2 Application Cores",
+    ctaText: "Explore Application Cores",
     transitionText: "Scale from Memory-Bound Scalar Pipelines to Data-Parallel RVV 1.0 Vector Engines & Systolic Arrays",
   },
   3: {
     levelNum: "03",
-    levelBadge: "LEVEL 3 • TIER 3 • DOMAIN VECTOR ACCELERATION",
+    levelBadge: "03 • DOMAIN VECTOR ACCELERATION",
     scope: "Data-Parallel SIMD / RVV 1.0 & Systolic Accelerators",
     borderClass: "ladder-border-coral",
     badgeClass: "badge-coral",
@@ -112,12 +112,12 @@ const categoryDetails: Record<number, {
     bottleneck: "Vector lane utilization collapses from 98.4% on GEMM down to 23.0% on strided/reduction kernels (FFT, Softmax) due to scalar issue serialization and VRF bank conflicts.",
     remedy: "Decoupled Access-Execute (DAE) vector coprocessors with multi-bank conflict-free VRFs and systolic weight-stationary matrix tiles (Ara, Gemmini).",
     keyTools: "Ara (scalable 4–16 lanes RVV 1.0), AraXL (AXI bus), Gemmini (systolic GEMM array), Spatz (compact float coprocessor), Vicuna (Zve32f), Vortex (GPGPU)",
-    ctaText: "Explore Level 3 Vector & Coprocessors",
+    ctaText: "Explore Vector & Coprocessors",
     transitionText: "Scale from Coprocessor Accelerators to Many-Core Clusters (up to 432 Cores), NoC Fabrics & DMA Engines",
   },
   4: {
     levelNum: "04",
-    levelBadge: "LEVEL 4 • TIER 4 • FULL SYSTEM SCALING",
+    levelBadge: "04 • FULL SYSTEM SCALING",
     scope: "Many-Core Compute Clusters & Complete Tapeout SoCs",
     borderClass: "ladder-border-lime",
     badgeClass: "badge-lime",
@@ -125,7 +125,7 @@ const categoryDetails: Record<number, {
     bottleneck: "Software atomic spinlocks saturate shared crossbars past 64 cores, and autonomous DMA engines incur MMIO configuration setup penalties on small transfers (<128B).",
     remedy: "Hardware collective barrier synchronization networks (FractalSync) and single-cycle instruction-triggered streaming DMA engines.",
     keyTools: "Cheshire (64-bit Linux SoC), Snitch Cluster, MemPool (432-core shared-L1), PULPissimo (single-core MCU SoC), OpenPiton",
-    ctaText: "Explore Level 4 SoC & Multi-Core",
+    ctaText: "Explore SoC & Multi-Core",
   },
 };
 
@@ -142,7 +142,7 @@ function getToolUrl(tool: any) {
 
 <BaseLayout 
   title="Home" 
-  description="Survey and empirical benchmarking platform across 47 open-source RISC-V architectures, 9 verification & simulation tools, and 4 verification levels."
+  description="Survey and empirical benchmarking platform across 47 open-source RISC-V architectures and 9 verification & simulation tools, from scalar embedded cores to manycore systems."
 >
   <!-- Hero Section -->
   <div class="noc-hero">
@@ -150,19 +150,18 @@ function getToolUrl(tool: any) {
 
     <div class="hero-action-group">
       <a href="/fundamentals/" class="noc-sim-btn" style="background: var(--yellow);">📖 Architecture Fundamentals →</a>
-      <a href="/mcu-scalar/" class="noc-sim-btn secondary">Cat 1: MCU / Scalar Cores</a>
-      <a href="/app-cores/" class="noc-sim-btn secondary">Cat 2: Application Cores</a>
-      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Cat 3: Vector &amp; Coprocessors</a>
-      <a href="/soc-multicore/" class="noc-sim-btn secondary">Cat 4: SoC &amp; Multi-Core</a>
-      <a href="/soc-multicore/#infra-section" class="noc-sim-btn secondary" style="border-style: dashed;">Cat 0: Verification &amp; Tooling</a>
+      <a href="/mcu-scalar/" class="noc-sim-btn secondary">MCU &amp; Scalar Cores</a>
+      <a href="/app-cores/" class="noc-sim-btn secondary">Application Cores</a>
+      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Vector &amp; Coprocessors</a>
+      <a href="/soc-multicore/" class="noc-sim-btn secondary">SoC &amp; Multi-Core</a>
     </div>
   </div>
 
-  <!-- 4-Level Progressive Architecture Ladder -->
+  <!-- Architecture Progression Ladder -->
   <section class="score-section">
     <div class="section-header">
       <div class="noc-track-badge" style="background: var(--cyan); margin-bottom: 0.5rem;">EVALUATION METHODOLOGY</div>
-      <h2 class="section-title">The 4-Level Architecture &amp; Verification Ladder</h2>
+      <h2 class="section-title">Architecture &amp; Verification Ladder</h2>
     </div>
 
     <div class="methodology-ladder">
@@ -244,11 +243,11 @@ function getToolUrl(tool: any) {
   <section class="score-section">
     <div class="noc-book-banner" style="display: block; padding: 24px; box-shadow: 6px 6px 0px var(--coral); background: var(--cream, #fffaf0); border: 2px solid var(--ink, #151b20); border-radius: 14px;">
       <div class="insights-section-header">
-        <span class="noc-track-badge" style="background: var(--coral); color: #ffffff; margin-bottom: 0;">EMPIRICAL BENCHMARK INSIGHTS</span>
+        <span class="noc-track-badge" style="background: var(--coral); color: #ffffff; margin-bottom: 0;">EMPIRICAL FINDINGS</span>
         <h3 class="insights-main-title">Key Bottlenecks Driving Next-Generation Architectures</h3>
       </div>
       <p class="insights-intro-lead">
-        Our cross-category cycle-accurate simulations reveal three critical architectural boundaries where traditional RISC-V hardware scaling breaks down. Each bottleneck is explored in depth within its respective subpage:
+        Our cycle-accurate simulations reveal three critical architectural boundaries where traditional RISC-V hardware scaling breaks down. Each bottleneck is explored in depth within its respective subpage:
       </p>
       
       <div class="insights-topdown">
@@ -257,11 +256,11 @@ function getToolUrl(tool: any) {
           <div class="insight-step-header">
             <div class="insight-step-badge badge-coral">01</div>
             <div class="insight-step-meta">
-              <div class="insight-eyebrow">INSIGHT 01 &bull; VECTOR ARITHMETIC INTENSITY</div>
+              <div class="insight-eyebrow">01 &bull; VECTOR ARITHMETIC INTENSITY</div>
               <h4 class="insight-title">1. Vector Utilization Collapse: Scalar Issue Serialization &amp; VRF Bank Conflicts</h4>
             </div>
             <a href="/vector-coprocessors/" class="insight-cat-link cat-coral">
-              <span>Cat 3: Vector &amp; Coprocessor Acceleration Engines</span>
+              <span>Vector &amp; Coprocessor Acceleration Engines</span>
               <span class="cat-link-arrow">&rarr;</span>
             </a>
           </div>
@@ -311,11 +310,11 @@ function getToolUrl(tool: any) {
           <div class="insight-step-header">
             <div class="insight-step-badge badge-lime">02</div>
             <div class="insight-step-meta">
-              <div class="insight-eyebrow">INSIGHT 02 &bull; MULTI-CORE CLUSTER SYNCHRONIZATION</div>
+              <div class="insight-eyebrow">02 &bull; MULTI-CORE CLUSTER SYNCHRONIZATION</div>
               <h4 class="insight-title">2. Manycore Spinlock Wall: Interconnect Saturation Under Software Barriers</h4>
             </div>
             <a href="/soc-multicore/" class="insight-cat-link cat-lime">
-              <span>Cat 4: Full SoC Platforms &amp; Multi-Core Clusters</span>
+              <span>Full SoC Platforms &amp; Multi-Core Clusters</span>
               <span class="cat-link-arrow">&rarr;</span>
             </a>
           </div>
@@ -365,11 +364,11 @@ function getToolUrl(tool: any) {
           <div class="insight-step-header">
             <div class="insight-step-badge badge-teal">03</div>
             <div class="insight-step-meta">
-              <div class="insight-eyebrow">INSIGHT 03 &bull; FULL-SOC DATA MOVEMENT &amp; I/O</div>
+              <div class="insight-eyebrow">03 &bull; FULL-SOC DATA MOVEMENT &amp; I/O</div>
               <h4 class="insight-title">3. DMA MMIO Setup Penalty: Configuration Latency on Fine-Grained Transfers</h4>
             </div>
             <a href="/soc-multicore/" class="insight-cat-link cat-teal">
-              <span>Cat 4: Full SoC Platforms &amp; Multi-Core Clusters</span>
+              <span>Full SoC Platforms &amp; Multi-Core Clusters</span>
               <span class="cat-link-arrow">&rarr;</span>
             </a>
           </div>
@@ -408,13 +407,13 @@ function getToolUrl(tool: any) {
     </div>
   </section>
 
-  <!-- Featured Anchor Architectures Preview (Ordered Top-Down by Category 1 -> 4) -->
+  <!-- Featured Anchor Architectures Preview (Ordered Top-Down: Scalar to Manycore) -->
   <section class="score-section">
     <div class="section-header">
       <div class="noc-track-badge" style="background: var(--yellow); margin-bottom: 0.5rem;">HARDWARE DOSSIERS</div>
       <h2 class="section-title">Featured Anchor Architectures</h2>
       <p class="section-subtitle">
-        Representative open-source silicon-proven cores and clusters evaluated in our empirical study, ordered top-down across the 4 architecture categories. Every design is backed by synthesizable RTL and automated simulation scripts in this repository.
+        Representative open-source silicon-proven cores and clusters evaluated in our empirical study, ordered top-down from scalar embedded cores to manycore systems. Every design is backed by synthesizable RTL and automated simulation scripts in this repository.
       </p>
     </div>
 
@@ -444,7 +443,7 @@ function getToolUrl(tool: any) {
                     <div class="tool-card">
                       <div class="tool-card-main">
                         <div class="tool-card-top">
-                          <span class={`tool-badge ${tier.badgeClass}`}>Cat {tool.categoryNumber}: {tool.categoryName.split(':')[1]?.trim() || tool.categoryName}</span>
+                          <span class={`tool-badge ${tier.badgeClass}`}>{tool.categoryName.split(':')[1]?.trim() || tool.categoryName}</span>
                           <span class="tool-lang">{tool.language}</span>
                         </div>
                         <h4 class="tool-name">
@@ -495,11 +494,10 @@ function getToolUrl(tool: any) {
     </div>
 
     <div class="center-cta" style="margin-top: 2.5rem; display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
-      <a href="/mcu-scalar/" class="noc-sim-btn secondary">Cat 1: MCU / Scalar Cores &rarr;</a>
-      <a href="/app-cores/" class="noc-sim-btn secondary">Cat 2: Application Cores &rarr;</a>
-      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Cat 3: Vector &amp; Coprocessors &rarr;</a>
-      <a href="/soc-multicore/" class="noc-sim-btn secondary">Cat 4: SoC &amp; Multi-Core &rarr;</a>
-      <a href="/soc-multicore/#infra-section" class="noc-sim-btn secondary" style="border-style: dashed;">Cat 0: Verification &amp; Tooling &rarr;</a>
+      <a href="/mcu-scalar/" class="noc-sim-btn secondary">MCU &amp; Scalar Cores &rarr;</a>
+      <a href="/app-cores/" class="noc-sim-btn secondary">Application Cores &rarr;</a>
+      <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Vector &amp; Coprocessors &rarr;</a>
+      <a href="/soc-multicore/" class="noc-sim-btn secondary">SoC &amp; Multi-Core &rarr;</a>
     </div>
   </section>
 
