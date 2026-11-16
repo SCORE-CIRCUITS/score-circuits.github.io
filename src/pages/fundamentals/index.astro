@@ -56,9 +56,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             Modern microprocessors pair two complementary transistor types to create near-zero static power dissipation switches:
           </p>
           <ul class="concept-list">
-            <li><strong>nMOS (Negative-channel):</strong> Conducts when gate voltage is HIGH (logic <code>1</code>, <em>V</em><sub>DD</sub>), connecting the output line to Ground (logic <code>0</code>). Charge carriers are electrons with mobility &mu;<sub>n</sub> &approx; 650 cm<sup>2</sup>/(V&middot;s).</li>
-            <li><strong>pMOS (Positive-channel):</strong> Conducts when gate voltage is LOW (logic <code>0</code>, Ground), connecting the output line up to <em>V</em><sub>DD</sub> (logic <code>1</code>). Charge carriers are holes with mobility &mu;<sub>p</sub> &approx; 250 cm<sup>2</sup>/(V&middot;s).</li>
-            <li><strong>CMOS Inverter (NOT Gate):</strong> Pairs one pMOS pull-up with one nMOS pull-down. In steady state (input solid 0 or 1), one transistor is completely OFF, so static DC current from <em>V</em><sub>DD</sub> to Ground is virtually zero! Power is consumed almost entirely during switching transitions.</li>
+            <li><strong>nMOS (Negative-channel):</strong> Conducts when gate voltage is HIGH (logic <code>1</code>, <em>V<sub>DD</sub></em>), connecting the output line to Ground (logic <code>0</code>). Charge carriers are electrons with mobility &mu;<sub>n</sub> &approx; 650 cm<sup>2</sup>/(V&middot;s).</li>
+            <li><strong>pMOS (Positive-channel):</strong> Conducts when gate voltage is LOW (logic <code>0</code>, Ground), connecting the output line up to <em>V<sub>DD</sub></em> (logic <code>1</code>). Charge carriers are holes with mobility &mu;<sub>p</sub> &approx; 250 cm<sup>2</sup>/(V&middot;s).</li>
+            <li><strong>CMOS Inverter (NOT Gate):</strong> Pairs one pMOS pull-up with one nMOS pull-down. In steady state (input solid 0 or 1), one transistor is completely OFF, so static DC current from <em>V<sub>DD</sub></em> to Ground is virtually zero! Power is consumed almost entirely during switching transitions.</li>
           </ul>
 
           <!-- SCHEMATIC: CMOS INVERTER — proper EDA-style MOSFET symbols -->
@@ -260,20 +260,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
               <div class="tradeoff-col">
                 <span class="to-label">&#9889; The Engineering Problem</span>
                 <p>
-                  Early 1970s microprocessors used nMOS-only logic with resistive or depletion pull-up loads. Whenever the output was pulled LOW, continuous static DC current flowed from <em>V</em><sub>DD</sub> through the resistor to Ground (power loss = <em>V</em><sub>DD</sub><sup>2</sup> / <em>R</em>). As chips grew to thousands of gates, heat dissipation hit a thermal brick wall.
+                  Early 1970s microprocessors used nMOS-only logic with resistive or depletion pull-up loads. Whenever the output was pulled LOW, continuous static DC current flowed from <em>V<sub>DD</sub></em> through the resistor to Ground (power loss = <em>V<sub>DD</sub></em><sup>2</sup> / <em>R</em>). As chips grew to thousands of gates, heat dissipation hit a thermal brick wall.
                 </p>
               </div>
               <div class="tradeoff-col">
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
-                  <strong>Sizing vs. Parasitic Capacitance:</strong> Equalizing rise and fall times (<em>t</em><sub>PLH</sub> &approx; <em>t</em><sub>PHL</sub>) requires making pMOS 2.5&times; wider, which increases input gate capacitance <em>C</em><sub>in</sub>, increasing dynamic power and loading upstream gates.<br/>
-                  <strong>Voltage Scaling (<em>V</em><sub>DD</sub> vs. <em>V</em><sub>t</sub>):</strong> Dynamic power scales quadratically (<em>P</em><sub>dyn</sub> = &alpha;&middot;<em>C</em><sub>L</sub>&middot;<em>V</em><sub>DD</sub><sup>2</sup>&middot;<em>f</em>). Lowering <em>V</em><sub>DD</sub> cuts energy, but reducing threshold voltage <em>V</em><sub>t</sub> causes exponential subthreshold leakage.
+                  <strong>Sizing vs. Parasitic Capacitance:</strong> Equalizing rise and fall times (<em>t<sub>PLH</sub></em> &approx; <em>t<sub>PHL</sub></em>) requires making pMOS 2.5&times; wider, which increases input gate capacitance <em>C<sub>in</sub></em>, increasing dynamic power and loading upstream gates.<br/>
+                  <strong>Voltage Scaling (<em>V<sub>DD</sub></em> vs. <em>V<sub>t</sub></em>):</strong> Dynamic power scales quadratically (<em>P<sub>dyn</sub></em> = &alpha;&middot;<em>C<sub>L</sub></em>&middot;<em>V<sub>DD</sub></em><sup>2</sup>&middot;<em>f</em>). Lowering <em>V<sub>DD</sub></em> cuts energy, but reducing threshold voltage <em>V<sub>t</sub></em> causes exponential subthreshold leakage.
                 </p>
               </div>
               <div class="tradeoff-col">
                 <span class="to-label">&#127919; SCORE Benchmark Reality</span>
                 <p>
-                  Ultra-low-power IoT cores in Category 1 (like <code>SERV</code>) run at conservative frequencies with high-<em>V</em><sub>t</sub> standard cells to achieve sub-milliwatt idle leakage. In contrast, 64-bit high-performance cores (like <code>XiangShan</code>) use multi-<em>V</em><sub>t</sub> standard cell libraries where low-<em>V</em><sub>t</sub> cells are deployed selectively on critical timing paths.
+                  Ultra-low-power IoT cores in Category 1 (like <code>SERV</code>) run at conservative frequencies with high-<em>V<sub>t</sub></em> standard cells to achieve sub-milliwatt idle leakage. In contrast, 64-bit high-performance cores (like <code>XiangShan</code>) use multi-<em>V<sub>t</sub></em> standard cell libraries where low-<em>V<sub>t</sub></em> cells are deployed selectively on critical timing paths.
                 </p>
               </div>
             </div>
@@ -285,7 +285,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
               <span class="sub-w-tag">LIVE INTERACTIVE APP</span>
               <h4 class="sub-w-title">CMOS Inverter Switching &amp; Dynamic Power Explorer</h4>
               <p class="sub-w-desc">
-                Toggle the input voltage <em>V</em><sub>in</sub> and adjust the supply voltage <em>V</em><sub>DD</sub> and clock frequency to observe real-time conduction and dynamic power dissipation:
+                Toggle the input voltage <em>V<sub>in</sub></em> and adjust the supply voltage <em>V<sub>DD</sub></em> and clock frequency to observe real-time conduction and dynamic power dissipation:
               </p>
             </div>
 
@@ -296,7 +296,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <button class="toggle-btn" id="btnCmosVin" data-vin="0">0.0V (Logic 0)</button>
                 </div>
                 <div class="slider-ctrl">
-                  <label for="cmosVddSlider" class="ctrl-label">Supply Voltage (<em>V</em><sub>DD</sub>): <span id="cmosVddVal" class="val-mono">1.0 V</span></label>
+                  <label for="cmosVddSlider" class="ctrl-label">Supply Voltage (<em>V<sub>DD</sub></em>): <span id="cmosVddVal" class="val-mono">1.0 V</span></label>
                   <input type="range" id="cmosVddSlider" min="0.6" max="1.2" step="0.05" value="1.0" class="sim-slider"/>
                 </div>
                 <div class="slider-ctrl">
@@ -593,11 +593,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <h3 class="step-card-title">The Full Adder &amp; Carry-Lookahead Chains</h3>
           </div>
           <p>
-            Addition is the fundamental primitive from which almost all microprocessor arithmetic derives. While a <em>Half Adder</em> adds two bits, a <strong>Full Adder</strong> adds three bits (<em>A</em>, <em>B</em>, and a Carry-In <em>C</em><sub>in</sub> from the preceding bit column):
+            Addition is the fundamental primitive from which almost all microprocessor arithmetic derives. While a <em>Half Adder</em> adds two bits, a <strong>Full Adder</strong> adds three bits (<em>A</em>, <em>B</em>, and a Carry-In <em>C<sub>in</sub></em> from the preceding bit column):
           </p>
           <div class="formula-box">
-            <div style="margin-bottom: 0.35rem;"><strong>Sum:</strong> <em>S</em> = <em>A</em> &oplus; <em>B</em> &oplus; <em>C</em><sub>in</sub></div>
-            <div><strong>Carry-Out:</strong> <em>C</em><sub>out</sub> = (<em>A</em> &middot; <em>B</em>) + [<em>C</em><sub>in</sub> &middot; (<em>A</em> &oplus; <em>B</em>)] = <em>G</em> + (<em>P</em> &middot; <em>C</em><sub>in</sub>)</div>
+            <div style="margin-bottom: 0.35rem;"><strong>Sum:</strong> <em>S</em> = <em>A</em> &oplus; <em>B</em> &oplus; <em>C<sub>in</sub></em></div>
+            <div><strong>Carry-Out:</strong> <em>C<sub>out</sub></em> = (<em>A</em> &middot; <em>B</em>) + [<em>C<sub>in</sub></em> &middot; (<em>A</em> &oplus; <em>B</em>)] = <em>G</em> + (<em>P</em> &middot; <em>C<sub>in</sub></em>)</div>
           </div>
           <p class="small-text">
             Chaining 32 full adders together creates a <strong>32-bit Ripple-Carry Adder (RCA)</strong>. Because bit 31 must wait for the carry bit to ripple through all 31 preceding stages, propagation delay scales linearly: <em>O</em>(<em>N</em>). High-performance processors eliminate this ripple bottleneck using logarithmic <strong>Carry-Lookahead Adders (CLA)</strong> and parallel prefix trees (Kogge-Stone, Brent-Kung).
@@ -779,7 +779,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <em>A</em> &minus; <em>B</em> = <em>A</em> + (~<em>B</em>) + 1
           </div>
           <p class="small-text">
-            To subtract, the ALU simply inverts the bits of <em>B</em> (passing them through XOR gates with a <code>sub_ctrl</code> signal) and asserts the adder's initial carry-in <em>C</em><sub>in</sub> = 1. The <em>exact same adder hardware</em> computes both addition and subtraction with zero extra silicon cost!
+            To subtract, the ALU simply inverts the bits of <em>B</em> (passing them through XOR gates with a <code>sub_ctrl</code> signal) and asserts the adder's initial carry-in <em>C<sub>in</sub></em> = 1. The <em>exact same adder hardware</em> computes both addition and subtraction with zero extra silicon cost!
           </p>
 
           <!-- SCHEMATIC: ADDER-SUBTRACTOR DATAPATH -->
@@ -839,7 +839,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
               </svg>
             </div>
             <div class="schematic-caption">
-              <strong>Figure 2.2:</strong> Datapath schematic of the unified Adder-Subtractor. When <code>sub_ctrl = 1</code>, every bit of operand <em>B</em> is inverted via XOR gates and <em>C</em><sub>in</sub> is asserted HIGH to add 1, completing two's complement negation without adding a separate subtractor circuit.
+              <strong>Figure 2.2:</strong> Datapath schematic of the unified Adder-Subtractor. When <code>sub_ctrl = 1</code>, every bit of operand <em>B</em> is inverted via XOR gates and <em>C<sub>in</sub></em> is asserted HIGH to add 1, completing two's complement negation without adding a separate subtractor circuit.
             </div>
           </div>
 
@@ -856,7 +856,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
               <div class="tradeoff-col">
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
-                  <strong>Zero-Cost Reuse vs. 1 XOR Gate Delay:</strong> Reusing the adder via XOR inversion requires zero extra arithmetic silicon. However, operand <em>B</em> incurs a 1-gate XOR propagation delay (<em>t</em><sub>XOR</sub> &approx; 25 ps) before entering the adder, slightly shortening the remaining cycle budget for carry propagation.
+                  <strong>Zero-Cost Reuse vs. 1 XOR Gate Delay:</strong> Reusing the adder via XOR inversion requires zero extra arithmetic silicon. However, operand <em>B</em> incurs a 1-gate XOR propagation delay (<em>t<sub>XOR</sub></em> &approx; 25 ps) before entering the adder, slightly shortening the remaining cycle budget for carry propagation.
                 </p>
               </div>
               <div class="tradeoff-col">
@@ -1253,7 +1253,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
               <div class="tradeoff-col">
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
-                  <strong>Multi-Port Scaling Wall:</strong> A standard 1-issue scalar core needs 2 Read ports and 1 Write port (2R1W). A 4-issue superscalar core needs 8 Read ports and 4 Write ports (8R4W = 12 ports)! Register file silicon area scales quadratically: <em>Area</em> &prop; (<em>N</em><sub>read</sub> + <em>N</em><sub>write</sub>)<sup>2</sup>. Adding ports rapidly dominates core area and power.
+                  <strong>Multi-Port Scaling Wall:</strong> A standard 1-issue scalar core needs 2 Read ports and 1 Write port (2R1W). A 4-issue superscalar core needs 8 Read ports and 4 Write ports (8R4W = 12 ports)! Register file silicon area scales quadratically: <em>Area</em> &prop; (<em>N<sub>read</sub></em> + <em>N<sub>write</sub></em>)<sup>2</sup>. Adding ports rapidly dominates core area and power.
                 </p>
               </div>
               <div class="tradeoff-col">
@@ -2861,7 +2861,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         <div class="analogy-text">
           <strong style="font-size: 1.05rem;">The Iron Law of Processor Performance:</strong>
           <div class="formula-box" style="margin: 0.5rem 0; font-size: 1.05rem;">
-            <strong>Execution Time</strong> = (Instructions / Program) &times; CPI &times; (1 / <em>f</em><sub>max</sub>)
+            <strong>Execution Time</strong> = (Instructions / Program) &times; CPI &times; (1 / <em>f<sub>max</sub></em>)
           </div>
           Every architectural innovation attacks one of these three terms: Compiler &amp; ISA optimizations reduce <em>Instructions/Program</em>; Pipelining &amp; Out-of-Order reduce <em>CPI</em>; Physical synthesis &amp; shorter critical paths increase <em>Clock Frequency (f<sub>max</sub>)</em>.
         </div>
@@ -2935,7 +2935,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </div>
           <ul class="concept-list">
             <li><strong>Gate Count (kGE):</strong> Silicon area normalized in thousands of 2-input NAND gates. <code>SERV</code> = 2.1 kGE, <code>Ibex</code> = 24.5 kGE, <code>CVA6</code> = 148 kGE, <code>BOOM</code> = 420 kGE.</li>
-            <li><strong>ASIC <em>F</em><sub>max</sub>:</strong> Peak achievable operating frequency under target foundry technology nodes (e.g. TSMC 16nm, GlobalFoundries 22FDX, SkyWater 130nm).</li>
+            <li><strong>ASIC <em>F<sub>max</sub></em>:</strong> Peak achievable operating frequency under target foundry technology nodes (e.g. TSMC 16nm, GlobalFoundries 22FDX, SkyWater 130nm).</li>
             <li><strong>Energy Efficiency:</strong> Computed in GFLOPS/Watt or CoreMark/milliwatt.</li>
           </ul>
         </div>
@@ -2954,8 +2954,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <div class="tradeoff-col">
             <span class="to-label">&#9878; The Silicon Trade-off</span>
             <p>
-              &bull; <strong>Deeper Pipelines:</strong> Increase clock frequency <em>f</em><sub>max</sub>, but increase branch misprediction flush penalties, worsening CPI.<br/>
-              &bull; <strong>Superscalar Multi-Issue:</strong> Lowers CPI below 1.0, but adds complex rename and bypass logic that lengthens critical paths, lowering <em>f</em><sub>max</sub>.<br/>
+              &bull; <strong>Deeper Pipelines:</strong> Increase clock frequency <em>f<sub>max</sub></em>, but increase branch misprediction flush penalties, worsening CPI.<br/>
+              &bull; <strong>Superscalar Multi-Issue:</strong> Lowers CPI below 1.0, but adds complex rename and bypass logic that lengthens critical paths, lowering <em>f<sub>max</sub></em>.<br/>
               &bull; <strong>CISC Instructions:</strong> Reduce instruction count, but require complex microcode decoders that increase cycle time.
             </p>
           </div>
