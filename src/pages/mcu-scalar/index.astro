@@ -1827,8 +1827,11 @@ const bespokeDossiers = [
         <!-- 2.1.1 SERV DEEP-DIVE -->
         <div class="sub-topic-card">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-coral">CORE 1</span>
-            <h4>SERV: The 1-Stage Bit-Serial Architecture (~2.1 kGE)</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-coral">CORE 1</span>
+              <h4 class="sub-topic-title">SERV &bull; 1-Stage Bit-Serial</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~2.1 kGE</span>
           </div>
           <p>
             Developed by Olof Kindgren, <strong>SERV</strong> is officially the world's smallest 32-bit RISC-V processor. Instead of computing all 32 bits of an operation simultaneously in a single clock cycle, SERV shrinks the datapath down to a <strong>single 1-bit ALU</strong>:
@@ -1950,8 +1953,11 @@ const bespokeDossiers = [
         <!-- 2.1.2 PICORV32 DEEP-DIVE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-teal">CORE 2</span>
-            <h4>PicoRV32: The Multi-Cycle Shared-Adder FSM Architecture (~9.5 kGE)</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-teal">CORE 2</span>
+              <h4 class="sub-topic-title">PicoRV32 &bull; Multi-Cycle Shared-Adder FSM</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~9.5 kGE</span>
           </div>
           <p>
             Claire Wolf's <strong>PicoRV32</strong> targets a different compromise: achieve an order-of-magnitude higher performance than bit-serial cores (delivering <strong>~0.90 CoreMark/MHz</strong> instead of 0.03), while preserving a tiny FPGA footprint (under 800 LUTs). It accomplishes this through <strong>arithmetic unit multiplexing</strong>:
@@ -2077,8 +2083,11 @@ const bespokeDossiers = [
         <!-- 2.1.3 DARKRISCV DEEP-DIVE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-yellow">CORE 3</span>
-            <h4>DarkRISCV: Asynchronous LUT-RAM Distributed Architecture (~8.2 kGE)</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-yellow">CORE 3</span>
+              <h4 class="sub-topic-title">DarkRISCV &bull; 1-2 Stage Async LUT-RAM</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~8.2 kGE</span>
           </div>
           <p>
             Developed by Marcelo Samsoniuk in 2018 during a focused 24-hour sprint, <strong>DarkRISCV</strong> explores a radically different corner of the scalar design space: how fast and small an RV32I/E processor can be when microarchitected specifically to exploit modern FPGA silicon primitives. Rather than mimicking ASIC-style synchronous pipelining, DarkRISCV is built around <strong>asynchronous distributed LUT-RAM</strong>:
@@ -2341,8 +2350,10 @@ const bespokeDossiers = [
         <!-- 1.1.5 COMPARATIVE ARCHITECTURAL TRADE-OFF TABLE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-paper">COMPARATIVE SYNTHESIS</span>
-            <h4>Architectural &amp; Benchmark Comparison: Archetype 1 Cores</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-paper">SYNTHESIS</span>
+              <h4 class="sub-topic-title">Benchmark Comparison: Archetype 1 Cores</h4>
+            </div>
           </div>
           <p>
             The table below synthesizes the structural and measured benchmark differences across all three Archetype 1 processors from real hardware runs in the SCORE repository:
@@ -2430,8 +2441,11 @@ const bespokeDossiers = [
         <!-- 2.2.1 IBEX DEEP-DIVE -->
         <div class="sub-topic-card">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-teal">CORE 4</span>
-            <h4>Ibex: The 2-Stage In-Order Core with Open Bus Interface (18.5 &ndash; 32.0 kGE)</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-teal">CORE 4</span>
+              <h4 class="sub-topic-title">Ibex &bull; 2-Stage In-Order (OBI Bus)</h4>
+            </div>
+            <span class="sub-topic-spec-badge">18.5 &ndash; 32.0 kGE</span>
           </div>
           <p>
             Originally developed as <em>Zero-riscy</em> at ETH Z&uuml;rich and now maintained by <strong>lowRISC</strong> as the root-of-trust core for <strong>OpenTitan</strong>, <strong>Ibex</strong> represents the gold standard for high-security, area-optimized 2-stage RISC-V microcontrollers:
@@ -2598,8 +2612,11 @@ const bespokeDossiers = [
         <!-- 2.2.2 NEORV32 DEEP-DIVE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-teal">CORE 5</span>
-            <h4>NEORV32: The Modular 2-Stage Pipelined SoC Architecture (~24.5 kGE)</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-teal">CORE 5</span>
+              <h4 class="sub-topic-title">NEORV32 &bull; 2-Stage Modular SoC</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~24.5 kGE</span>
           </div>
           <p>
             Authored by Stephan Nolting in highly readable, standard-compliant <strong>VHDL-93</strong>, <strong>NEORV32</strong> is an exemplary open-source microcontroller system-on-chip that has gained widespread adoption across academic labs and industrial FPGA projects:
@@ -2722,8 +2739,10 @@ const bespokeDossiers = [
         <!-- 2.2.3 COMPARATIVE SYNTHESIS TABLE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-paper">COMPARATIVE SYNTHESIS</span>
-            <h4>Architectural &amp; Benchmark Comparison: Archetype 2 Cores</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-paper">SYNTHESIS</span>
+              <h4 class="sub-topic-title">Benchmark Comparison: Archetype 2 Cores</h4>
+            </div>
           </div>
           <p>
             The table below synthesizes empirical performance metrics for Archetype 2 processors across different configurations measured on cycle-accurate HDL platforms:
@@ -2834,8 +2853,11 @@ const bespokeDossiers = [
         <!-- 2.3.1 HAZARD3 DEEP-DIVE -->
         <div class="sub-topic-card">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-lime">CORE 6</span>
-            <h4>Hazard3: The 3-Stage Decoupled Harvard Core in Raspberry Pi RP2350 (~28.5 kGE)</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-lime">CORE 6</span>
+              <h4 class="sub-topic-title">Hazard3 &bull; 3-Stage Harvard (RP2350)</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~28.5 kGE</span>
           </div>
           <p>
             Designed by Luke Wren and chosen by the <strong>Raspberry Pi Foundation</strong> as the dual-core RISC-V compute complex inside the commercial <strong>RP2350</strong> microcontroller, <strong>Hazard3</strong> demonstrates the extreme efficiency attainable from a finely tuned 3-stage Harvard pipeline:
@@ -2969,8 +2991,11 @@ const bespokeDossiers = [
         <!-- 2.3.2 VEXRISCV DEEP-DIVE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-lime">CORE 7</span>
-            <h4>VexRiscv GenFull: The Classical 5-Stage RISC Forwarding Pipeline (~42.0 kGE)</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-lime">CORE 7</span>
+              <h4 class="sub-topic-title">VexRiscv &bull; 5-Stage Classic RISC</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~42.0 kGE</span>
           </div>
           <p>
             Generated via <strong>SpinalHDL</strong> by Charles Papon, <strong>VexRiscv</strong> won the FSiC 2018 Soft CPU contest. In its <em>GenFull</em> configuration, it implements the textbook 5-stage RISC pipeline complete with dynamic branch prediction and full hazard resolution:
@@ -3098,8 +3123,10 @@ const bespokeDossiers = [
         <!-- 2.3.3 COMPARATIVE SYNTHESIS TABLE -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-paper">COMPARATIVE SYNTHESIS</span>
-            <h4>Architectural &amp; Benchmark Comparison: Archetype 3 Cores</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-paper">SYNTHESIS</span>
+              <h4 class="sub-topic-title">Benchmark Comparison: Archetype 3 Cores</h4>
+            </div>
           </div>
           <p>
             The table below synthesizes empirical performance metrics for Archetype 3 deep-pipelined processors evaluated in SCORE:
@@ -3199,8 +3226,11 @@ const bespokeDossiers = [
         <!-- 2.4.1 VEER EL2 DEEP-DIVE -->
         <div class="sub-topic-card">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-yellow">CORE 8</span>
-            <h4>VeeR EL2: The 4-Stage Dual-Issue Superscalar Core (~48.5 kGE)</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-yellow">CORE 8</span>
+              <h4 class="sub-topic-title">VeeR EL2 &bull; 4-Stage Dual-Issue</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~48.5 kGE</span>
           </div>
           <p>
             Developed by <strong>Western Digital</strong> and maintained by the <strong>CHIPS Alliance</strong>, <strong>VeeR EL2</strong> (formerly SweRV EL2) is one of the highest-performing embedded RISC-V cores in production silicon, engineered specifically to manage multi-gigabyte-per-second NVMe storage controllers:
@@ -3364,8 +3394,10 @@ const bespokeDossiers = [
         <!-- 2.4.2 SUPERSCALAR HAZARD & INSTRUCTION PAIRING MATRIX -->
         <div class="sub-topic-card" style="margin-top: 2rem;">
           <div class="sub-topic-head">
-            <span class="pill-badge badge-paper">INSTRUCTION PAIRING ANALYSIS</span>
-            <h4>VeeR EL2 Dual-Issue Instruction Pairing Rules</h4>
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-paper">PAIRING MATRIX</span>
+              <h4 class="sub-topic-title">VeeR EL2 Dual-Issue Instruction Pairing Rules</h4>
+            </div>
           </div>
           <p>
             In an in-order superscalar pipeline, achieving dual-issue execution depends on strict architectural pairing constraints. When two candidate instructions meet the compatibility criteria, they dispatch in parallel; otherwise, the second instruction stalls for 1 cycle:
@@ -5078,15 +5110,44 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   .sub-topic-head {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1.5px dashed var(--line, #e2d9c8);
+    flex-wrap: nowrap;
   }
 
-  .sub-topic-head h4 {
-    font-size: 1.2rem;
+  .sub-topic-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .sub-topic-head h4,
+  .sub-topic-title {
+    font-size: 1.12rem;
     font-weight: 900;
     color: var(--ink, #151b20);
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sub-topic-spec-badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    background: var(--paper-deep, #eee4c8);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .pill-badge {
@@ -6164,6 +6225,26 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
 
     .sub-topic-card {
       padding: 1rem;
+    }
+
+    .sub-topic-head {
+      gap: 0.45rem;
+    }
+
+    .sub-topic-title {
+      font-size: 0.95rem;
+    }
+
+    .sub-topic-spec-badge {
+      font-size: 0.68rem;
+      padding: 0.15rem 0.4rem;
+    }
+
+    .btn-toggle-group {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.25rem;
     }
 
     .dossier-assessment-grid {
