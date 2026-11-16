@@ -345,15 +345,24 @@ def get_section_1():
               <div class="cd-row">
                 <div class="cd-item">
                   <span class="cd-lbl">Transistor Count</span>
-                  <span class="cd-val" id="cellTransCount">4 Transistors (2 pMOS + 2 nMOS)</span>
+                  <div class="cd-val" id="cellTransCount">
+                    <span class="cd-primary">4 Transistors</span>
+                    <span class="cd-sub">(2 pMOS + 2 nMOS)</span>
+                  </div>
                 </div>
                 <div class="cd-item">
                   <span class="cd-lbl">Area Benchmark</span>
-                  <span class="cd-val highlight" id="cellGeVal">1.00 Gate Equivalent (GE)</span>
+                  <div class="cd-val highlight" id="cellGeVal">
+                    <span class="cd-primary">1.00 GE</span>
+                    <span class="cd-sub">(Reference Standard)</span>
+                  </div>
                 </div>
                 <div class="cd-item">
                   <span class="cd-lbl">Typ. Propagation Delay</span>
-                  <span class="cd-val" id="cellDelayVal">&approx; 18 picoseconds (16nm FinFET)</span>
+                  <div class="cd-val" id="cellDelayVal">
+                    <span class="cd-primary">&approx; 18 picoseconds</span>
+                    <span class="cd-sub">(16nm FinFET Typical)</span>
+                  </div>
                 </div>
               </div>
               <p class="cd-desc" id="cellDescText">
@@ -3088,59 +3097,86 @@ def get_scripts():
   // 2. STANDARD CELL GE EXPLORER
   // ==========================================
   interface CellMeta {
-    transistors: string;
-    ge: string;
-    delay: string;
+    transPrimary: string;
+    transSub: string;
+    gePrimary: string;
+    geSub: string;
+    delayPrimary: string;
+    delaySub: string;
     desc: string;
   }
 
   const cellData: Record<string, CellMeta> = {
     "NAND2": {
-      transistors: "4 Transistors (2 pMOS + 2 nMOS)",
-      ge: "1.00 Gate Equivalent (GE)",
-      delay: "≈ 18 picoseconds (16nm FinFET)",
+      transPrimary: "4 Transistors",
+      transSub: "(2 pMOS + 2 nMOS)",
+      gePrimary: "1.00 GE",
+      geSub: "(Reference Standard)",
+      delayPrimary: "≈ 18 picoseconds",
+      delaySub: "(16nm FinFET Typical)",
       desc: "<strong>The Reference Standard:</strong> A 2-input CMOS NAND gate is functionally complete and physically compact. Slower pMOS transistors are parallel while fast nMOS transistors are in series, providing ideal rise/fall symmetry with minimal silicon area."
     },
     "INV": {
-      transistors: "2 Transistors (1 pMOS + 1 nMOS)",
-      ge: "0.50 Gate Equivalent (GE)",
-      delay: "≈ 10 picoseconds",
+      transPrimary: "2 Transistors",
+      transSub: "(1 pMOS + 1 nMOS)",
+      gePrimary: "0.50 GE",
+      geSub: "(Half of NAND2)",
+      delayPrimary: "≈ 10 picoseconds",
+      delaySub: "(16nm FinFET Typical)",
       desc: "<strong>The Smallest Switch:</strong> Single pull-up and single pull-down. Used extensively for clock buffering, signal inversion, and driving high-fanout inter-module nets."
     },
     "NOR2": {
-      transistors: "4 Transistors (2 pMOS + 2 nMOS)",
-      ge: "1.00 Gate Equivalent (GE)",
-      delay: "≈ 32 picoseconds",
+      transPrimary: "4 Transistors",
+      transSub: "(2 pMOS + 2 nMOS)",
+      gePrimary: "1.00 GE",
+      geSub: "(Equal Area to NAND2)",
+      delayPrimary: "≈ 32 picoseconds",
+      delaySub: "(1.8× NAND2 Delay)",
       desc: "<strong>The Series pMOS Bottleneck:</strong> While having identical transistor count to NAND2, NOR2 forces two high-resistance pMOS transistors into series, causing a 1.8× propagation delay penalty unless sized up."
     },
     "AND2": {
-      transistors: "6 Transistors (NAND2 + Inverter)",
-      ge: "1.33 Gate Equivalent (GE)",
-      delay: "≈ 24 picoseconds",
+      transPrimary: "6 Transistors",
+      transSub: "(NAND2 + Inverter)",
+      gePrimary: "1.33 GE",
+      geSub: "(Compound Standard Cell)",
+      delayPrimary: "≈ 24 picoseconds",
+      delaySub: "(16nm FinFET Typical)",
       desc: "<strong>Compound Cell:</strong> In CMOS, an AND gate is fabricated by appending an Inverter directly to a NAND gate output (NOT-NAND). Thus, NAND is physically simpler and faster than AND!"
     },
     "XOR2": {
-      transistors: "8 to 10 Transistors",
-      ge: "2.67 Gate Equivalent (GE)",
-      delay: "≈ 36 picoseconds",
+      transPrimary: "8 to 10 Transistors",
+      transSub: "(Dual-Rail Transmission)",
+      gePrimary: "2.67 GE",
+      geSub: "(Arithmetic Core Cell)",
+      delayPrimary: "≈ 36 picoseconds",
+      delaySub: "(16nm FinFET Typical)",
       desc: "<strong>Arithmetic Core:</strong> Fundamental for half adders, parity trees, and ALU bitwise instructions. Requires compound transmission gates or complex dual-rail logic."
     },
     "MUX2": {
-      transistors: "6 Transistors (Transmission-Gate)",
-      ge: "2.00 Gate Equivalent (GE)",
-      delay: "≈ 22 picoseconds",
+      transPrimary: "6 Transistors",
+      transSub: "(Transmission-Gate MUX)",
+      gePrimary: "2.00 GE",
+      geSub: "(Steering Logic Cell)",
+      delayPrimary: "≈ 22 picoseconds",
+      delaySub: "(16nm FinFET Typical)",
       desc: "<strong>Steering Logic:</strong> Routes one of two inputs based on a select bit. Omnipresent in processor bypass multiplexers, register files, and ALU operand selectors."
     },
     "DFF": {
-      transistors: "18 to 24 Transistors",
-      ge: "5.50 Gate Equivalent (GE)",
-      delay: "Setup: ≈ 25 ps | Clk-to-Q: ≈ 45 ps",
+      transPrimary: "18 to 24 Transistors",
+      transSub: "(Master-Slave Flip-Flop)",
+      gePrimary: "5.50 GE",
+      geSub: "(Sequential Storage Cell)",
+      delayPrimary: "Setup: 25 ps | Clk-Q: 45 ps",
+      delaySub: "(Clocked Register Profile)",
       desc: "<strong>Sequential Storage:</strong> Master-slave flip-flop with asynchronous reset. Every pipeline register and flip-flop costs ~5.5× more area than a combinational NAND gate!"
     },
     "SRAM6T": {
-      transistors: "6 Transistors (Cross-coupled inverters)",
-      ge: "1.50 Gate Equivalent (GE)",
-      delay: "Wordline Read: ≈ 120 ps",
+      transPrimary: "6 Transistors",
+      transSub: "(Cross-Coupled Bitcell)",
+      gePrimary: "1.50 GE",
+      geSub: "(Dense Custom Layout)",
+      delayPrimary: "≈ 120 picoseconds",
+      delaySub: "(Wordline Sense Access)",
       desc: "<strong>Dense Memory Cell:</strong> Custom hand-crafted layout for L1/L2 caches and register files. Much smaller than standard D-flip-flops, but requires analog sense amplifiers to read."
     }
   };
@@ -3158,10 +3194,18 @@ def get_scripts():
       const data = cellData[key];
       if (!data) return;
 
-      if (cellTransCount) cellTransCount.textContent = data.transistors;
-      if (cellGeVal) cellGeVal.textContent = data.ge;
-      if (cellDelayVal) cellDelayVal.textContent = data.delay;
-      if (cellDescText) cellDescText.innerHTML = data.desc;
+      if (cellTransCount) {
+        cellTransCount.innerHTML = `<span class="cd-primary">${data.transPrimary}</span><span class="cd-sub">${data.transSub}</span>`;
+      }
+      if (cellGeVal) {
+        cellGeVal.innerHTML = `<span class="cd-primary">${data.gePrimary}</span><span class="cd-sub">${data.geSub}</span>`;
+      }
+      if (cellDelayVal) {
+        cellDelayVal.innerHTML = `<span class="cd-primary">${data.delayPrimary}</span><span class="cd-sub">${data.delaySub}</span>`;
+      }
+      if (cellDescText) {
+        cellDescText.innerHTML = data.desc;
+      }
     });
   });
 
@@ -4543,44 +4587,73 @@ def get_styles():
   }
 
   .cell-detail-card {
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    padding: 1rem;
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
   }
 
   .cd-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .cd-item {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
   }
 
   .cd-lbl {
     display: block;
     font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--ink-light);
-    margin-bottom: 0.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-light, #52606d);
+    margin-bottom: 0.35rem;
   }
 
   .cd-val {
-    font-size: 0.95rem;
-    font-weight: 900;
-    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
-  .cd-val.highlight {
+  .cd-primary {
+    font-size: 1.15rem;
+    font-weight: 900;
+    line-height: 1.25;
+    color: var(--ink, #151b20);
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .cd-val.highlight .cd-primary {
     color: #b45309;
   }
 
+  .cd-sub {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #4b5563;
+    line-height: 1.35;
+  }
+
   .cd-desc {
-    font-size: 0.85rem;
-    line-height: 1.5;
+    font-size: 0.88rem;
+    line-height: 1.6;
     margin: 0;
-    color: var(--ink);
-    border-top: 1px dashed var(--line);
-    padding-top: 0.5rem;
+    color: var(--ink, #151b20);
+    border-top: 1.5px dashed var(--line, #cbd5e1);
+    padding-top: 0.85rem;
   }
 
   /* Pill Button Group */
