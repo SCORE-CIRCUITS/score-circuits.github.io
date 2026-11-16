@@ -270,12 +270,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <strong>Voltage Scaling (<em>V<sub>DD</sub></em> vs. <em>V<sub>t</sub></em>):</strong> Dynamic power scales quadratically (<em>P<sub>dyn</sub></em> = &alpha;&middot;<em>C<sub>L</sub></em>&middot;<em>V<sub>DD</sub></em><sup>2</sup>&middot;<em>f</em>). Lowering <em>V<sub>DD</sub></em> cuts energy, but reducing threshold voltage <em>V<sub>t</sub></em> causes exponential subthreshold leakage.
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  Ultra-low-power IoT cores in Category 1 (like <code>SERV</code>) run at conservative frequencies with high-<em>V<sub>t</sub></em> standard cells to achieve sub-milliwatt idle leakage. In contrast, 64-bit high-performance cores (like <code>XiangShan</code>) use multi-<em>V<sub>t</sub></em> standard cell libraries where low-<em>V<sub>t</sub></em> cells are deployed selectively on critical timing paths.
-                </p>
-              </div>
             </div>
           </div>
 
@@ -418,13 +412,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <strong>NAND2 as the Golden Yardstick:</strong> Standard cell libraries define <strong>1 Gate Equivalent (GE)</strong> as the exact physical area of one 2-input NAND gate in that specific technology node. Because a 2-input NAND requires only 4 transistors and is faster than NOR2, synthesis tools map &gt;70% of control logic into NAND and Invert (AOI) gates.
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  Normalizing all SCORE architectures to <strong>kGE (kilo-gate equivalents)</strong> allows apples-to-apples architectural complexity rankings:
-                  <code>SERV</code> (2.1 kGE) &bull; <code>Ibex</code> (24.5 kGE) &bull; <code>CV32E40P</code> (48.0 kGE) &bull; <code>CVA6</code> (148 kGE) &bull; <code>BOOM</code> (420 kGE).
-                </p>
-              </div>
             </div>
           </div>
 
@@ -555,12 +542,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
                 </p>
               </div>
             </div>
@@ -700,14 +681,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   &bull; <em>Ripple-Carry:</em> Tiny area (<em>O</em>(<em>N</em>)), low wiring congestion, but extremely slow (<em>O</em>(<em>N</em>) delay).<br/>
                   &bull; <em>Kogge-Stone:</em> Minimum possible delay (<em>O</em>(log <em>N</em>)), but explodes in silicon area and wiring tracks (<em>O</em>(<em>N</em> log <em>N</em>)), creating severe routing congestion in dense FinFET metallization layers.<br/>
                   &bull; <em>Brent-Kung:</em> Balanced compromise with bounded fan-out and intermediate area.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  &bull; <code>SERV</code> (Category 1) calculates 32-bit addition bit-by-bit over 32 clock cycles with a <strong>single 1-bit full adder</strong>, shrinking the entire core to 2.1 kGE.<br/>
-                  &bull; <code>Ibex</code> uses a balanced Brent-Kung CLA.<br/>
-                  &bull; <code>CVA6</code> and <code>BOOM</code> employ wide parallel prefix trees to hit &gt;1.5 GHz operating frequencies.
                 </p>
               </div>
             </div>
@@ -859,12 +832,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <strong>Zero-Cost Reuse vs. 1 XOR Gate Delay:</strong> Reusing the adder via XOR inversion requires zero extra arithmetic silicon. However, operand <em>B</em> incurs a 1-gate XOR propagation delay (<em>t<sub>XOR</sub></em> &approx; 25 ps) before entering the adder, slightly shortening the remaining cycle budget for carry propagation.
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  Every processor in SCORE—from the 2.1 kGE <code>SERV</code> to the out-of-order <code>XiangShan</code>—uses this exact two's complement adder-subtractor sharing scheme.
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -960,12 +927,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   A sequential shift register takes almost zero extra area (~30 GE), but incurs a variable 1-to-31 cycle execution latency.
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>SERV</code> uses sequential 1-bit shifting to minimize area. <code>Ibex</code> provides a Verilog parameter to let designers choose: small multi-cycle shifter for tiny smart cards vs. single-cycle barrel shifter for high-speed motor control.
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -1056,12 +1017,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
                 </p>
               </div>
             </div>
@@ -1166,12 +1121,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <strong>Code Density vs. Decoder Simplicity:</strong> CISC architectures (x86) achieve 15% to 25% denser compiled binary code by packing memory addresses into arithmetic opcodes. However, decoding variable-length instructions (1 to 15 bytes) requires complex, power-hungry decoders taking &gt;15% of the core area. RISC-V uses fixed 32-bit instructions that decode in less than 1 gate delay!
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  RISC-V eliminates the code density penalty through the optional <strong>'C' (Compressed 16-bit instructions) extension</strong>, achieving higher code density than x86 without compromising simple single-cycle hardware decoding!
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -1254,12 +1203,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Multi-Port Scaling Wall:</strong> A standard 1-issue scalar core needs 2 Read ports and 1 Write port (2R1W). A 4-issue superscalar core needs 8 Read ports and 4 Write ports (8R4W = 12 ports)! Register file silicon area scales quadratically: <em>Area</em> &prop; (<em>N<sub>read</sub></em> + <em>N<sub>write</sub></em>)<sup>2</sup>. Adding ports rapidly dominates core area and power.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  Scalar microcontrollers (<code>Ibex</code>, <code>CV32E40P</code>) use compact 2R1W register files. Out-of-Order cores (<code>BOOM</code>, <code>XiangShan</code>) use multi-banked Physical Register Files (PRF) with register renaming to overcome port limitations.
                 </p>
               </div>
             </div>
@@ -1425,12 +1368,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -1575,14 +1512,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
               <strong>Pipeline Depth Trade-off:</strong> Subdividing the datapath into <em>N</em> stages multiplies peak clock frequency by &approx;<em>N</em>. However, deeper pipelines increase branch misprediction penalties and require complex data forwarding multiplexers, degrading CPI on real code.
             </p>
           </div>
-          <div class="tradeoff-col">
-            <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-            <p>
-              &bull; <code>Ibex</code> uses a compact 2-stage/3-stage pipeline to minimize area (24.5 kGE).<br/>
-              &bull; <code>CV32E40P</code> implements a 4-stage pipeline with hardware loop extensions (48 kGE).<br/>
-              &bull; <code>XiangShan</code> pushes pipeline depth to 11 stages to reach 2.0 GHz in 14nm FinFET.
-            </p>
-          </div>
         </div>
       </div>
 
@@ -1674,12 +1603,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Forwarding Multiplexer Delay vs. Pipeline Stall Cycles:</strong> Adding forwarding paths requires running wide 32-bit (or 64-bit) bypass wires from EX/MEM and MEM/WB pipeline registers back to the ALU inputs, inserting 3-to-1 or 4-to-1 multiplexers directly into the critical ALU timing path. Designers must ensure the bypass MUX delay does not lengthen the clock period.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>CV32E40P</code> includes full ALU-to-ALU and MEM-to-ALU forwarding to maintain CPI &approx; 1.0 on compute loops, whereas <code>Ibex</code> uses a compact 2-stage pipeline that naturally avoids most ALU forwarding logic to minimize gate count.
                 </p>
               </div>
             </div>
@@ -1818,12 +1741,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <strong>Predictor Storage Area vs. Misprediction Penalty:</strong> A static predictor (predict forward not taken, backward taken) costs zero silicon area but mispredicts ~35% of branches. A dynamic 2-bit BHT or TAGE predictor achieves &gt;95% accuracy but requires dedicated SRAM tables (1 to 8 kbits), consuming chip area and static leakage power.
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>DarkRISCV</code> relies on simple static branch direction to stay under 5 kGE. In contrast, <code>XiangShan</code> and <code>BOOM</code> allocate thousands of gate equivalents to multi-tier TAGE predictors to protect their 11-stage deep pipelines from costly flush penalties.
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -1876,12 +1793,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
                 </p>
               </div>
             </div>
@@ -1997,12 +1908,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Security vs. Latency (The Page Walk Penalty):</strong> Hardware virtual memory provides complete process sandboxing. However, if the hardware TLB suffers a miss, the CPU must execute <strong>3 sequential DRAM lookups</strong> (&approx;150 to 200 cycles of stall) before the load or store can even begin!
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  Category 1 microcontrollers (<code>Ibex</code>, <code>PULPissimo</code>) omit the MMU entirely to fit inside tiny silicon footprints (&lt;25 kGE). Category 2 application cores (<code>CVA6</code>, <code>C910</code>, <code>XiangShan</code>) invest 30+ kGE in full Sv39 MMUs and multi-level TLBs to boot standard Linux.
                 </p>
               </div>
             </div>
@@ -2134,13 +2039,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <strong>Peak Single-Thread IPC vs. Massive Silicon Overhead:</strong> An out-of-order superscalar core achieves 2&times; to 4&times; higher IPC by keeping execution units fed with independent instructions. However, the Reorder Buffer (ROB), Reservation Stations (RS), and Register Alias Tables (RAT) explode silicon area (400+ kGE vs. 25 kGE) and consume high static and dynamic power.
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  &bull; <code>CVA6</code> (Category 2) represents the lean in-order application class (~148 kGE).<br/>
-                  &bull; <code>BOOM</code> and <code>XiangShan</code> represent the high-performance out-of-order application class (~420+ kGE), delivering server-class IPC.
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -2223,12 +2121,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
                 </p>
               </div>
             </div>
@@ -2342,13 +2234,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Peak Vector Compute vs. Memory Bandwidth Wall:</strong> Adding parallel lanes (e.g. 16 lanes &times; 64-bit = 1024 bits/cycle) multiplies arithmetic throughput. However, if the L2 cache interconnect cannot supply 128 Bytes every clock cycle, vector lanes starve, dropping utilization from 98% down to 23%!
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  &bull; <code>Ara</code> (Category 3) integrates up to 16 lanes (VLEN=4096) with multi-banked AXI interconnects to hit 32 DP-FLOPS/cycle on dense GEMM.<br/>
-                  &bull; <code>Spatz</code> implements a lightweight, energy-optimized vector coprocessor for ultra-low-power DSP.
                 </p>
               </div>
             </div>
@@ -2508,12 +2393,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <strong>Extreme Data Reuse vs. Architectural Rigidity:</strong> Systolic arrays achieve near-100% compute efficiency and 10&times; higher energy efficiency for dense convolutions and matrix multiplications by passing data directly between neighboring PEs. However, they have 0% utilization on non-matrix tasks like graph traversal or pointer chasing.
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Gemmini</code> (Category 3) integrates tightly with Rocket or BOOM host processors via RoCC (Rocket Custom Coprocessor) interfaces, executing dense tensor layers in hardware while letting the general-purpose host handle activation functions and control logic.
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -2575,12 +2454,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
                 </p>
               </div>
             </div>
@@ -2701,14 +2574,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   A crossbar provides single-cycle latency to any memory bank, but its switch area grows as <em>O</em>(<em>N</em><sup>2</sup>) (a 256-core crossbar would occupy more area than the CPU cores combined!). A 2D packet NoC scales cleanly in area (<em>O</em>(<em>N</em>)), but adds 1 to 2 cycles of packet router latency per X-Y hop.
                 </p>
               </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  &bull; <code>Cheshire</code> uses a high-speed AXI4 crossbar for 2 to 4 cores.<br/>
-                  &bull; <code>MemPool</code> (256 cores) implements a hierarchical interconnect with L1 clustering.<br/>
-                  &bull; <code>FlooNoC</code> provides a modular 2D mesh packet network for large manycore clusters.
-                </p>
-              </div>
             </div>
           </div>
 
@@ -2826,12 +2691,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
                 </p>
               </div>
             </div>
@@ -2959,13 +2818,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
               &bull; <strong>CISC Instructions:</strong> Reduce instruction count, but require complex microcode decoders that increase cycle time.
             </p>
           </div>
-          <div class="tradeoff-col">
-            <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-            <p>
-              The 4 SCORE categories map precisely onto different optimization vectors on the Iron Law Pareto frontier:
-              <strong>Category 1</strong> prioritizes area &amp; energy; <strong>Category 2</strong> pushes single-thread IPC; <strong>Category 3</strong> maximizes arithmetic FLOP density; <strong>Category 4</strong> scales parallel throughput.
-            </p>
-          </div>
         </div>
       </div>
 
@@ -3072,12 +2924,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
                   <strong>Dedicated Metal Routing vs. Software Lock Flexibility:</strong> Implementing a single-cycle hardware barrier requires routing dedicated reduction wires from every core to a central combinational tree and back. This consumes dedicated metal routing tracks, but accelerates synchronization from hundreds of cycles down to exactly 1 cycle.
-                </p>
-              </div>
-              <div class="tradeoff-col">
-                <span class="to-label">&#127919; SCORE Benchmark Reality</span>
-                <p>
-                  <code>Snitch</code> clusters (Category 4) integrate dedicated single-cycle hardware barriers and pseudo-streaming registers (SSR), allowing 64 to 256 cores to synchronize and stream matrix tiles with zero software polling overhead.
                 </p>
               </div>
             </div>
