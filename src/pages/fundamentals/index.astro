@@ -324,6 +324,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           To minimize decoder silicon area, RISC-V aligns source registers (<code>rs1</code>, <code>rs2</code>) and the destination register (<code>rd</code>) to the <em>exact same bit positions</em> in every 32-bit instruction format:
         </p>
 
+        <div class="mobile-table-hint">
+          <span>&larr; Swipe horizontally to view all format fields &rarr;</span>
+        </div>
+
         <div class="table-scroll">
           <table class="data-table">
             <thead>
@@ -418,6 +422,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
 
         <!-- 32-bit Visual Ribbon -->
+        <div class="mobile-table-hint">
+          <span>&larr; Swipe horizontally to inspect all 32 bits &rarr;</span>
+        </div>
         <div class="isa-ribbon-container">
           <div class="ribbon-labels">
             <span style="flex: 7;">funct7 [31:25]</span>
@@ -475,28 +482,38 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       <div class="pipe-stages-grid">
         <div class="p-stage-card">
           <span class="p-num">1</span>
-          <h4>IF (Fetch)</h4>
-          <p>Read 32-bit instruction from memory at the address stored in the Program Counter (PC). Increment PC by 4.</p>
+          <div class="p-stage-body">
+            <h4>IF (Fetch)</h4>
+            <p>Read 32-bit instruction from memory at the address stored in the Program Counter (PC). Increment PC by 4.</p>
+          </div>
         </div>
         <div class="p-stage-card">
           <span class="p-num">2</span>
-          <h4>ID (Decode)</h4>
-          <p>Decode opcode and read source registers (<code>rs1</code>, <code>rs2</code>) from the register file. Sign-extend immediates.</p>
+          <div class="p-stage-body">
+            <h4>ID (Decode)</h4>
+            <p>Decode opcode and read source registers (<code>rs1</code>, <code>rs2</code>) from the register file. Sign-extend immediates.</p>
+          </div>
         </div>
         <div class="p-stage-card">
           <span class="p-num">3</span>
-          <h4>EX (Execute)</h4>
-          <p>The ALU performs the arithmetic calculation, shift, or computes effective target memory addresses.</p>
+          <div class="p-stage-body">
+            <h4>EX (Execute)</h4>
+            <p>The ALU performs the arithmetic calculation, shift, or computes effective target memory addresses.</p>
+          </div>
         </div>
         <div class="p-stage-card">
           <span class="p-num">4</span>
-          <h4>MEM (Memory)</h4>
-          <p>Read from or write to Data Memory (DRAM/SRAM cache) if executing a <code>lw</code> or <code>sw</code> instruction.</p>
+          <div class="p-stage-body">
+            <h4>MEM (Memory)</h4>
+            <p>Read from or write to Data Memory (DRAM/SRAM cache) if executing a <code>lw</code> or <code>sw</code> instruction.</p>
+          </div>
         </div>
         <div class="p-stage-card">
           <span class="p-num">5</span>
-          <h4>WB (Writeback)</h4>
-          <p>Write the final computed result back into the destination register (<code>rd</code>) in the register file.</p>
+          <div class="p-stage-body">
+            <h4>WB (Writeback)</h4>
+            <p>Write the final computed result back into the destination register (<code>rd</code>) in the register file.</p>
+          </div>
         </div>
       </div>
 
@@ -603,6 +620,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           <p class="widget-desc">
             To intuitively understand why caches and Out-of-Order execution are essential, scale 1 clock cycle up to 1 human second:
           </p>
+        </div>
+
+        <div class="mobile-table-hint">
+          <span>&larr; Swipe horizontally to view all format fields &rarr;</span>
         </div>
 
         <div class="table-scroll">
@@ -1373,6 +1394,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 </script>
 
 <style>
+  button, input, a {
+    touch-action: manipulation;
+  }
+
   .jump-pill-bar {
     display: flex;
     gap: 0.5rem;
@@ -1380,10 +1405,26 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     margin-top: 1.25rem;
   }
 
+  @media (max-width: 640px) {
+    .jump-pill-bar {
+      gap: 0.35rem;
+    }
+    .jump-pill-bar .noc-sim-btn {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+    }
+  }
+
   .fundamentals-stream {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .fundamentals-stream {
+      gap: 1.5rem;
+    }
   }
 
   .fund-section-card {
@@ -1395,11 +1436,34 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     scroll-margin-top: 5rem;
   }
 
+  @media (max-width: 768px) {
+    .fund-section-card {
+      padding: 1.5rem 1.15rem;
+      border-radius: 12px;
+      box-shadow: 3.5px 3.5px 0px var(--ink);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .fund-section-card {
+      padding: 1.15rem 0.85rem;
+      border-radius: 10px;
+      box-shadow: 2.5px 2.5px 0px var(--ink);
+    }
+  }
+
   .fund-header {
     display: flex;
     align-items: center;
     gap: 1.25rem;
     margin-bottom: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .fund-header {
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
   }
 
   .fund-num {
@@ -1413,6 +1477,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     box-shadow: 3px 3px 0px var(--ink);
     line-height: 1;
     font-family: var(--md-code-font, monospace);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .fund-num {
+      font-size: 1.6rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 8px;
+      box-shadow: 2px 2px 0px var(--ink);
+    }
   }
 
   .fund-title {
@@ -1423,11 +1497,32 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     letter-spacing: -0.01em;
   }
 
+  @media (max-width: 768px) {
+    .fund-title {
+      font-size: 1.4rem;
+      line-height: 1.25;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .fund-title {
+      font-size: 1.2rem;
+    }
+  }
+
   .fund-lead {
     font-size: 1.05rem;
     color: var(--ink-light);
     line-height: 1.6;
     margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .fund-lead {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      margin-bottom: 1.2rem;
+    }
   }
 
   .concept-dual-grid {
@@ -1440,6 +1535,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   @media (max-width: 768px) {
     .concept-dual-grid {
       grid-template-columns: 1fr;
+      gap: 1rem;
     }
   }
 
@@ -1485,6 +1581,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     margin: 0.75rem 0;
     text-align: center;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    word-break: break-word;
   }
 
   .small-text {
@@ -1501,11 +1599,24 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     margin-bottom: 1.5rem;
   }
 
+  @media (max-width: 640px) {
+    .alu-deep-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
   .alu-col {
     background: var(--paper);
     border: 1.5px solid var(--line);
     border-radius: 10px;
     padding: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .alu-col {
+      padding: 1rem 0.85rem;
+    }
   }
 
   .sub-header-pill {
@@ -1533,6 +1644,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 4px 4px 0px var(--ink);
+  }
+
+  @media (max-width: 768px) {
+    .interactive-widget-box {
+      padding: 1.15rem 0.85rem;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px var(--ink);
+    }
+    .widget-title {
+      font-size: 1.18rem;
+      line-height: 1.3;
+    }
   }
 
   .widget-header {
@@ -1573,6 +1696,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     margin-bottom: 1.25rem;
   }
 
+  @media (max-width: 640px) {
+    .gate-selector-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.35rem;
+    }
+  }
+
   .gate-btn {
     background: var(--cream);
     border: 1.5px solid var(--ink);
@@ -1583,6 +1714,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     color: var(--ink);
     cursor: pointer;
     transition: all 0.12s ease;
+  }
+
+  @media (max-width: 640px) {
+    .gate-btn {
+      padding: 0.35rem 0.25rem;
+      font-size: 0.78rem;
+      text-align: center;
+    }
   }
 
   .gate-btn.active {
@@ -1601,6 +1740,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   @media (max-width: 768px) {
     .gate-sim-body {
       grid-template-columns: 1fr;
+      gap: 1rem;
     }
   }
 
@@ -1614,6 +1754,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     justify-content: space-between;
     gap: 0.75rem;
     min-height: 180px;
+  }
+
+  @media (max-width: 540px) {
+    .circuit-interactive-panel {
+      padding: 0.85rem 0.5rem;
+      gap: 0.35rem;
+      min-height: 160px;
+    }
   }
 
   .inputs-group {
@@ -1769,6 +1917,28 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     gap: 0.4rem;
   }
 
+  @media (max-width: 640px) {
+    .alu-op-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.35rem;
+    }
+    .alu-op-btn {
+      padding: 0.35rem 0.2rem;
+      font-size: 0.72rem;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .alu-op-buttons {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   .alu-op-btn {
     background: var(--cream);
     border: 1.5px solid var(--ink);
@@ -1796,6 +1966,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     .alu-inputs-row {
       flex-direction: column;
       align-items: stretch;
+      gap: 0.5rem;
     }
   }
 
@@ -1834,6 +2005,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     text-align: center;
   }
 
+  @media (max-width: 640px) {
+    .alu-center-op {
+      font-size: 1.4rem;
+      padding: 0.15rem 0;
+    }
+  }
+
   .alu-output-card {
     background: var(--cream);
     border: 2px solid var(--ink);
@@ -1842,11 +2020,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     box-shadow: 3px 3px 0px var(--ink);
   }
 
+  @media (max-width: 640px) {
+    .alu-output-card {
+      padding: 1rem 0.85rem;
+    }
+  }
+
   .alu-res-main {
     display: flex;
     align-items: baseline;
     gap: 0.75rem;
     margin-bottom: 0.35rem;
+    flex-wrap: wrap;
   }
 
   .res-label {
@@ -1859,6 +2044,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     font-size: 1.6rem;
     font-weight: 900;
     color: #0369a1;
+  }
+
+  @media (max-width: 640px) {
+    .res-dec {
+      font-size: 1.3rem;
+    }
   }
 
   .res-hex {
@@ -1879,10 +2070,24 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     margin-bottom: 0.75rem;
   }
 
+  @media (max-width: 640px) {
+    .alu-res-bin {
+      font-size: 0.82rem;
+      padding: 0.35rem 0.55rem;
+    }
+  }
+
   .alu-flags-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .alu-flags-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.4rem;
+    }
   }
 
   .flag-item {
@@ -1922,6 +2127,25 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     margin-bottom: 1.25rem;
   }
 
+  @media (max-width: 640px) {
+    .isa-sample-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.35rem;
+    }
+    .isa-btn {
+      padding: 0.35rem 0.25rem;
+      font-size: 0.72rem;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .isa-meta-output {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .isa-btn {
     background: var(--cream);
     border: 1.5px solid var(--ink);
@@ -1947,6 +2171,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     box-shadow: 3px 3px 0px var(--ink);
     margin-bottom: 1.25rem;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .ribbon-labels {
@@ -2027,6 +2252,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   @media (max-width: 768px) {
     .pipe-stages-grid {
       grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .p-stage-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.85rem 1rem;
+    }
+    .p-stage-body {
+      flex: 1;
+    }
+    .p-num {
+      margin-bottom: 0;
+      flex-shrink: 0;
     }
   }
 
@@ -2223,6 +2462,17 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     line-height: 1.6;
     margin-bottom: 0.75rem;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (max-width: 640px) {
+    .code-snippet-box {
+      padding: 0.65rem 0.75rem;
+      font-size: 0.74rem;
+    }
+    .v-comp-box {
+      padding: 1rem 0.85rem;
+    }
   }
 
   .v-stats-badge {
@@ -2249,6 +2499,33 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .bench-level-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.35rem;
+    }
+    .bench-lvl-btn {
+      text-align: center;
+      padding: 0.35rem 0.35rem;
+      font-size: 0.74rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .bench-level-card {
+      padding: 1rem 0.85rem;
+    }
+    .blc-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+    .blc-title {
+      font-size: 1.05rem;
+    }
   }
 
   .bench-lvl-btn {
@@ -2322,6 +2599,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   @media (max-width: 640px) {
     .blc-grid {
       grid-template-columns: 1fr;
+      gap: 1rem;
     }
   }
 
@@ -2350,13 +2628,34 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   /* Universal Shared Styles */
+  .mobile-table-hint {
+    display: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--ink-light);
+    margin-bottom: 0.35rem;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  @media (max-width: 768px) {
+    .mobile-table-hint {
+      display: flex;
+    }
+  }
+
   .table-scroll {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     margin-bottom: 1rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    background: var(--paper);
   }
 
   .data-table {
     width: 100%;
+    min-width: 580px;
     border-collapse: collapse;
     font-size: 0.85rem;
   }
@@ -2393,6 +2692,17 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     margin-bottom: 1.5rem;
   }
 
+  @media (max-width: 768px) {
+    .analogy-banner {
+      flex-direction: column;
+      gap: 0.65rem;
+      padding: 1rem 0.85rem;
+    }
+    .analogy-icon {
+      font-size: 1.5rem;
+    }
+  }
+
   .analogy-icon {
     font-size: 1.8rem;
     line-height: 1;
@@ -2413,6 +2723,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   @media (max-width: 768px) {
     .fund-grid {
       grid-template-columns: 1fr;
+      gap: 1rem;
     }
   }
 
@@ -2421,6 +2732,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     border: 1.5px solid var(--line);
     border-radius: 10px;
     padding: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .fund-box {
+      padding: 1rem 0.85rem;
+    }
   }
 
   .fund-box h4 {

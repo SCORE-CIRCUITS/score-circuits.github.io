@@ -218,6 +218,78 @@ function isActive(href: string) {
         gap: 1.25rem;
         font-size: 0.88rem;
       }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .score-header-inner {
+          padding: 0.5rem 0.85rem;
+          gap: 0.5rem;
+        }
+        .score-brand-sub {
+          display: none;
+        }
+        .score-brand-name {
+          font-size: 0.95rem;
+        }
+        .score-brand-badge {
+          font-size: 0.95rem;
+          padding: 0.15rem 0.45rem;
+        }
+        .score-star-btn {
+          padding: 0.25rem 0.65rem;
+          font-size: 0.78rem;
+        }
+        .score-tabs-inner {
+          padding: 0.4rem 0.85rem;
+          gap: 0.4rem;
+        }
+        .score-tab-item {
+          padding: 6px 14px;
+          font-size: 0.88rem;
+        }
+        .md-container {
+          padding: 1.25rem 0.85rem 3rem 0.85rem;
+        }
+        .score-footer {
+          padding: 1.5rem 0.85rem;
+          margin-top: 2.5rem;
+        }
+        .score-footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .score-header-inner {
+          padding: 0.45rem 0.65rem;
+        }
+        .score-brand-badge svg {
+          width: 15px;
+          height: 15px;
+        }
+        .score-brand-name {
+          font-size: 0.88rem;
+        }
+        .star-text {
+          display: none;
+        }
+        .score-star-btn {
+          padding: 0.25rem 0.5rem;
+          gap: 0.3rem;
+        }
+        .score-tabs-inner {
+          padding: 0.35rem 0.65rem;
+        }
+        .score-tab-item {
+          padding: 5px 11px;
+          font-size: 0.82rem;
+        }
+        .md-container {
+          padding: 1rem 0.5rem 2.5rem 0.5rem;
+        }
+      }
     </style>
   </head>
   <body class="md-typeset">
