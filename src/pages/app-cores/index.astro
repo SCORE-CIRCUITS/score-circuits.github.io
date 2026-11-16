@@ -69,15 +69,16 @@ The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open
     <div class="core-jump-bar">
       <span class="jump-label">Jump to Section:</span>
       <a href="#core-foundations" class="core-jump-pill">&sect; 1. Architectural Foundations</a>
+      <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. The Four Archetypes</a>
       <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Benchmark Leaderboard</a>
       <a href="#core-dossiers" class="core-jump-pill">&sect; 6. Native Core Dossiers</a>
     </div>
     <div class="core-jump-bar" style="margin-top: 0.5rem;">
       <span class="jump-label">Jump to Architecture:</span>
-      <a href="#core-cva6" class="core-jump-pill">CVA6 (Ariane)</a>
-      <a href="#core-rocket-chip" class="core-jump-pill">Rocket Chip</a>
-      <a href="#core-black-parrot" class="core-jump-pill">BlackParrot</a>
-      <a href="#core-boom" class="core-jump-pill">BOOM (OoO)</a>
+      <a href="#archetype-1-deepdive" class="core-jump-pill">Rocket (Arch 1)</a>
+      <a href="#archetype-2-deepdive" class="core-jump-pill">CVA6 (Arch 2)</a>
+      <a href="#archetype-3-deepdive" class="core-jump-pill">BlackParrot (Arch 3)</a>
+      <a href="#archetype-4-deepdive" class="core-jump-pill">BOOM (Arch 4)</a>
     </div>
   </div>
 
@@ -114,267 +115,267 @@ The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open
           <svg viewBox="0 0 940 530" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="cadGridApp" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                <circle cx="2" cy="2" r="1" fill="#151b20" opacity="0.12"/>
               </pattern>
               <marker id="arrowBaseApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                 <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
               </marker>
               <marker id="arrowBlueApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#22bfd7"/>
               </marker>
               <marker id="arrowTealApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                 <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
               </marker>
               <marker id="arrowRedApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444"/>
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#f38469"/>
               </marker>
               <marker id="arrowCrimsonApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#be123c"/>
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#f38469"/>
               </marker>
               <marker id="arrowPurpleApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#7e22ce"/>
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#8275e8"/>
               </marker>
               <marker id="arrowAmberApp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706"/>
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="#ffc83e"/>
               </marker>
             </defs>
 
             <!-- CAD Background & Frame -->
-            <rect width="938" height="528" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+            <rect width="938" height="528" x="1" y="1" rx="8" fill="#fffaf0" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
             <rect width="936" height="492" x="2" y="2" rx="7" fill="url(#cadGridApp)"/>
 
             <!-- Status Header Banner -->
-            <rect x="2" y="2" width="936" height="24" fill="var(--ink, #151b20)" rx="6"/>
-            <circle cx="16" cy="14" r="4" fill="#0284c7"/>
-            <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • UNIVERSAL RV64GC APPLICATION CORE &amp; MEMORY HIERARCHY TOPOLOGY</text>
+            <rect x="2" y="2" width="936" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+            <circle cx="16" cy="14" r="4" fill="#b7df69"/>
+            <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • UNIVERSAL RV64GC APPLICATION CORE &amp; MEMORY HIERARCHY TOPOLOGY</text>
 
             <!-- ZONE 1: INSTRUCTION FETCH & BRANCH PREDICTION (x=20 to 220) -->
-            <rect x="20" y="36" width="200" height="428" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
-            <rect x="20" y="36" width="200" height="20" rx="5" fill="#f1f5f9"/>
-            <text x="28" y="50" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace">ZONE 1: FETCH &amp; PREDICTION</text>
+            <rect x="20" y="36" width="200" height="428" rx="6" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <rect x="20" y="36" width="200" height="20" rx="5" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1"/>
+            <text x="28" y="50" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ZONE 1: FETCH &amp; PREDICTION</text>
 
             <!-- PC MUX -->
-            <rect x="30" y="68" width="75" height="38" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="30" y="68" width="75" height="38" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.8"/>
             <text x="40" y="84" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">PC MUX</text>
-            <text x="38" y="96" font-size="7" fill="#64748b">+4/Br/Trap/PTW</text>
+            <text x="38" y="96" font-size="7" fill="#242c33">+4/Br/Trap/PTW</text>
 
             <!-- PC Register -->
-            <rect x="120" y="68" width="88" height="38" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="120" y="68" width="88" height="38" rx="4" fill="#c9f3f4" stroke="#151b20" stroke-width="1.8"/>
             <text x="130" y="84" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">PC REG [63:0]</text>
-            <text x="128" y="96" font-size="7" fill="#0284c7">Virtual Address</text>
+            <text x="128" y="96" font-size="7" fill="#242c33">Virtual Address</text>
 
             <line x1="105" y1="87" x2="118" y2="87" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
 
             <!-- ITLB Block -->
-            <rect x="30" y="118" width="180" height="48" rx="4" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
-            <text x="40" y="133" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace">INSTRUCTION TLB (ITLB)</text>
+            <rect x="30" y="118" width="180" height="48" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.8"/>
+            <text x="40" y="133" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">INSTRUCTION TLB (ITLB)</text>
             <text x="40" y="146" font-size="7" fill="#151b20">32-Entry Fully Associative CAM</text>
-            <text x="40" y="157" font-size="6.8" font-weight="700" fill="#0369a1">&#8594; 1-Cycle Virtual VPN &#8594; Physical PPN</text>
+            <text x="40" y="157" font-size="6.8" font-weight="700" fill="#151b20">&#8594; 1-Cycle Virtual VPN &#8594; Physical PPN</text>
 
             <!-- Virtual to Physical Address arrow -->
-            <path d="M 164 106 L 164 118" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
+            <path d="M 164 106 L 164 118" fill="none" stroke="#22bfd7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
 
             <!-- L1-Instruction Cache -->
-            <rect x="30" y="178" width="180" height="54" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="30" y="178" width="180" height="54" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.8"/>
             <text x="40" y="194" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">L1-I CACHE (32 KB, 4-WAY)</text>
-            <text x="40" y="208" font-size="7" fill="#64748b">VIPT • 64-Byte Cache Lines</text>
-            <text x="40" y="221" font-size="6.8" font-weight="800" fill="#059669">&#10003; Hit: 1-Cycle 64-bit Fetch</text>
+            <text x="40" y="208" font-size="7" fill="#242c33">VIPT • 64-Byte Cache Lines</text>
+            <text x="40" y="221" font-size="6.8" font-weight="800" fill="#0d9488">&#10003; Hit: 1-Cycle 64-bit Fetch</text>
 
             <!-- Branch Predictor Subsystem -->
-            <rect x="30" y="244" width="180" height="78" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
-            <text x="40" y="259" font-size="8" font-weight="900" fill="#b91c1c" font-family="monospace">BRANCH PREDICTOR</text>
-            <text x="40" y="273" font-size="7" fill="#151b20">&bull; BTB: 64-512 Target Buffer</text>
-            <text x="40" y="286" font-size="7" fill="#151b20">&bull; BHT: 2-Level Direction Predictor</text>
-            <text x="40" y="299" font-size="7" fill="#151b20">&bull; RAS: 8-16 Entry Call/Return Stack</text>
-            <text x="40" y="312" font-size="6.8" font-weight="800" fill="#b91c1c">&#9888; Mispredict: 3 to 7 cycle flush</text>
+            <rect x="30" y="244" width="180" height="78" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.8"/>
+            <text x="40" y="259" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">BRANCH PREDICTOR</text>
+            <text x="40" y="273" font-size="7" fill="#151b20">&#8226; BTB: 64-512 Target Buffer</text>
+            <text x="40" y="286" font-size="7" fill="#151b20">&#8226; BHT: 2-Level Direction Predictor</text>
+            <text x="40" y="299" font-size="7" fill="#151b20">&#8226; RAS: 8-16 Entry Call/Return Stack</text>
+            <text x="40" y="312" font-size="6.8" font-weight="800" fill="#f38469">&#9888; Mispredict: 3 to 7 cycle flush</text>
 
             <!-- Fetch Queue FIFO -->
-            <rect x="30" y="334" width="180" height="42" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="30" y="334" width="180" height="42" rx="4" fill="#c9f3f4" stroke="#151b20" stroke-width="1.8"/>
             <text x="40" y="350" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">FETCH QUEUE / FIFO</text>
-            <text x="40" y="364" font-size="7" fill="#64748b">8-Entry Decoupled Instruction Stream</text>
+            <text x="40" y="364" font-size="7" fill="#242c33">8-Entry Decoupled Instruction Stream</text>
 
             <!-- Line from I-Cache to Fetch FIFO -->
             <path d="M 120 232 L 120 334" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
 
             <!-- ZONE 2: DECODE, RENAME & 64-BIT EXECUTION (x=235 to 495) -->
-            <rect x="235" y="36" width="260" height="428" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
-            <rect x="235" y="36" width="260" height="20" rx="5" fill="#f1f5f9"/>
-            <text x="243" y="50" font-size="8.5" font-weight="900" fill="#0d9488" font-family="monospace">ZONE 2: DECODE, RENAME &amp; EXECUTE</text>
+            <rect x="235" y="36" width="260" height="428" rx="6" fill="#fffaf0" stroke="#8275e8" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <rect x="235" y="36" width="260" height="20" rx="5" fill="#e2dfff" stroke="#8275e8" stroke-width="1"/>
+            <text x="243" y="50" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ZONE 2: DECODE, RENAME &amp; EXECUTE</text>
 
             <!-- Instruction Decoder & RVC Expander -->
-            <rect x="245" y="68" width="240" height="48" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="245" y="68" width="240" height="48" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.8"/>
             <text x="255" y="84" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">RV64GC DECODER &amp; RVC EXPANDER</text>
-            <text x="255" y="97" font-size="7" fill="#64748b">Decodes 32-bit &amp; expands 16-bit compressed ops</text>
-            <text x="255" y="107" font-size="6.8" font-weight="700" fill="#7e22ce">&#8594; Slices rs1, rs2, rd, imm64, funct3, opcode</text>
+            <text x="255" y="97" font-size="7" fill="#242c33">Decodes 32-bit &amp; expands 16-bit compressed ops</text>
+            <text x="255" y="107" font-size="6.8" font-weight="700" fill="#151b20">&#8594; Slices rs1, rs2, rd, imm64, funct3, opcode</text>
 
             <!-- Feed from Fetch Queue to Decoder -->
             <path d="M 210 355 L 225 355 L 225 92 L 243 92" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
 
             <!-- Issue & Dispatch Controller -->
-            <rect x="245" y="126" width="240" height="48" rx="4" fill="#fefce8" stroke="#ca8a04" stroke-width="1.8"/>
-            <text x="255" y="142" font-size="8" font-weight="900" fill="#854d0e" font-family="monospace">ISSUE &amp; DISPATCH CONTROLLER</text>
+            <rect x="245" y="126" width="240" height="48" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.8"/>
+            <text x="255" y="142" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">ISSUE &amp; DISPATCH CONTROLLER</text>
             <text x="255" y="154" font-size="7" fill="#151b20">In-Order: Scoreboard &amp; Hazard Dependency Table</text>
-            <text x="255" y="165" font-size="6.8" font-weight="700" fill="#b45309">Out-of-Order: RAT Rename + Reorder Buffer (ROB)</text>
+            <text x="255" y="165" font-size="6.8" font-weight="700" fill="#242c33">Out-of-Order: RAT Rename + Reorder Buffer (ROB)</text>
 
             <line x1="365" y1="116" x2="365" y2="124" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
 
             <!-- 64-Bit Integer Register File -->
-            <rect x="245" y="186" width="110" height="75" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="245" y="186" width="110" height="75" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.8"/>
             <text x="252" y="202" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT REGFILE</text>
-            <text x="252" y="215" font-size="6.8" fill="#64748b">32 GPRs (x0-x31)</text>
+            <text x="252" y="215" font-size="6.8" fill="#242c33">32 GPRs (x0-x31)</text>
             <text x="252" y="227" font-size="6.8" fill="#151b20">2R / 1W Ports</text>
-            <text x="252" y="240" font-size="6.5" font-weight="800" fill="#0d9488">Sync Clocked</text>
+            <text x="252" y="240" font-size="6.5" font-weight="800" fill="#151b20">Sync Clocked</text>
 
             <!-- 64-Bit Floating-Point Register File -->
-            <rect x="245" y="271" width="110" height="75" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="245" y="271" width="110" height="75" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.8"/>
             <text x="252" y="287" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT FPU REGS</text>
-            <text x="252" y="300" font-size="6.8" fill="#64748b">32 FPRs (f0-f31)</text>
+            <text x="252" y="300" font-size="6.8" fill="#242c33">32 FPRs (f0-f31)</text>
             <text x="252" y="312" font-size="6.8" fill="#151b20">3R / 1W Ports</text>
-            <text x="252" y="325" font-size="6.5" font-weight="800" fill="#7e22ce">IEEE 754 DP</text>
+            <text x="252" y="325" font-size="6.5" font-weight="800" fill="#151b20">IEEE 754 DP</text>
 
             <!-- 64-Bit Execution Units Stack -->
-            <rect x="368" y="186" width="117" height="42" rx="4" fill="#ffffff" stroke="#059669" stroke-width="1.8"/>
-            <text x="375" y="202" font-size="7.5" font-weight="900" fill="#059669" font-family="monospace">64-BIT ALU &amp; AGU</text>
-            <text x="375" y="215" font-size="6.8" fill="#64748b">1-Cycle Int Ops &amp; Effective Addr</text>
+            <rect x="368" y="186" width="117" height="42" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.8"/>
+            <text x="375" y="202" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT ALU &amp; AGU</text>
+            <text x="375" y="215" font-size="6.8" fill="#242c33">1-Cycle Int Ops &amp; Effective Addr</text>
 
-            <rect x="368" y="238" width="117" height="42" rx="4" fill="#ffffff" stroke="#d97706" stroke-width="1.8"/>
-            <text x="375" y="254" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace">64-BIT MULDIV (M)</text>
-            <text x="375" y="267" font-size="6.8" fill="#64748b">Mul: 3-4 cyc • Div: Radix-4 Non-restoring</text>
+            <rect x="368" y="238" width="117" height="42" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.8"/>
+            <text x="375" y="254" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT MULDIV (M)</text>
+            <text x="375" y="267" font-size="6.8" fill="#242c33">Mul: 3-4 cyc • Div: Radix-4 Non-restoring</text>
 
-            <rect x="368" y="290" width="117" height="46" rx="4" fill="#ffffff" stroke="#7e22ce" stroke-width="1.8"/>
-            <text x="375" y="306" font-size="7.5" font-weight="900" fill="#7e22ce" font-family="monospace">IEEE 754 FPU (F/D)</text>
-            <text x="375" y="318" font-size="6.8" fill="#64748b">Fused Multiply-Add (FMA)</text>
-            <text x="375" y="328" font-size="6.5" fill="#7e22ce">Pipelined SP/DP • 4-5 cyc</text>
+            <rect x="368" y="290" width="117" height="46" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.8"/>
+            <text x="375" y="306" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">IEEE 754 FPU (F/D)</text>
+            <text x="375" y="318" font-size="6.8" fill="#242c33">Fused Multiply-Add (FMA)</text>
+            <text x="375" y="328" font-size="6.5" fill="#242c33">Pipelined SP/DP • 4-5 cyc</text>
 
             <!-- CSR, PMP & Privilege Controller -->
-            <rect x="245" y="356" width="240" height="54" rx="4" fill="#fff1f2" stroke="#be123c" stroke-width="1.8"/>
-            <text x="255" y="372" font-size="8" font-weight="900" fill="#9f1239" font-family="monospace">PRIVILEGED CSR &amp; PMP CONTROLLER</text>
-            <text x="255" y="385" font-size="7" fill="#151b20">&bull; Modes: Machine (M) &bull; Supervisor (S) &bull; User (U)</text>
-            <text x="255" y="396" font-size="6.8" fill="#be123c">&bull; satp Base Register &bull; 16-Region PMP Memory Firewall</text>
+            <rect x="245" y="356" width="240" height="54" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.8"/>
+            <text x="255" y="372" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">PRIVILEGED CSR &amp; PMP CONTROLLER</text>
+            <text x="255" y="385" font-size="7" fill="#151b20">&#8226; Modes: Machine (M) &#8226; Supervisor (S) &#8226; User (U)</text>
+            <text x="255" y="396" font-size="6.8" fill="#f38469">&#8226; satp Base Register &#8226; 16-Region PMP Memory Firewall</text>
 
             <!-- ZONE 3: VIRTUAL MEMORY, PTW & L1-D CACHE (x=510 to 735) -->
-            <rect x="510" y="36" width="225" height="428" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
-            <rect x="510" y="36" width="225" height="20" rx="5" fill="#f1f5f9"/>
-            <text x="518" y="50" font-size="8.5" font-weight="900" fill="#d97706" font-family="monospace">ZONE 3: SV39 MMU &amp; L1-D CACHE</text>
+            <rect x="510" y="36" width="225" height="428" rx="6" fill="#fffaf0" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <rect x="510" y="36" width="225" height="20" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
+            <text x="518" y="50" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ZONE 3: SV39 MMU &amp; L1-D CACHE</text>
 
             <!-- DTLB Block -->
-            <rect x="525" y="68" width="195" height="50" rx="4" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
-            <text x="535" y="84" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace">DATA TLB (DTLB)</text>
+            <rect x="525" y="68" width="195" height="50" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
+            <text x="535" y="84" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">DATA TLB (DTLB)</text>
             <text x="535" y="97" font-size="7" fill="#151b20">32-Entry CAM • 1-Cycle Load/Store Translation</text>
-            <text x="535" y="108" font-size="6.8" font-weight="700" fill="#0369a1">&#10003; Hit: Virtual VA[38:0] &#8594; Physical PA[55:0]</text>
+            <text x="535" y="108" font-size="6.8" font-weight="700" fill="#151b20">&#10003; Hit: Virtual VA[38:0] &#8594; Physical PA[55:0]</text>
 
             <!-- Sv39 Radix-Tree Hardware Page Table Walker (PTW) -->
-            <rect x="525" y="128" width="195" height="78" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.8"/>
-            <text x="535" y="144" font-size="8" font-weight="900" fill="#b45309" font-family="monospace">SV39 PAGE TABLE WALKER (PTW)</text>
+            <rect x="525" y="128" width="195" height="78" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
+            <text x="535" y="144" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">SV39 PAGE TABLE WALKER (PTW)</text>
             <text x="535" y="157" font-size="7" fill="#151b20">3-Level Hardware DRAM Radix Walk on TLB Miss:</text>
-            <text x="535" y="169" font-size="6.8" fill="#64748b">1. Level 2 (VPN[2]): satp.PPN &#215; 4KB &#8594; PTE2</text>
-            <text x="535" y="180" font-size="6.8" fill="#64748b">2. Level 1 (VPN[1]): PTE2.PPN &#215; 4KB &#8594; PTE1</text>
-            <text x="535" y="191" font-size="6.8" font-weight="800" fill="#b45309">3. Level 0 (VPN[0]): Leaf PTE &#8594; Fill DTLB/ITLB</text>
+            <text x="535" y="169" font-size="6.8" fill="#242c33">1. Level 2 (VPN[2]): satp.PPN &#215; 4KB &#8594; PTE2</text>
+            <text x="535" y="180" font-size="6.8" fill="#242c33">2. Level 1 (VPN[1]): PTE2.PPN &#215; 4KB &#8594; PTE1</text>
+            <text x="535" y="191" font-size="6.8" font-weight="800" fill="#151b20">3. Level 0 (VPN[0]): Leaf PTE &#8594; Fill DTLB/ITLB</text>
 
             <!-- Arrow from DTLB to PTW on miss -->
-            <path d="M 680 118 L 680 128" fill="none" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowAmberApp)"/>
+            <path d="M 680 118 L 680 128" fill="none" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowTealApp)"/>
 
             <!-- Non-Blocking L1 Data Cache -->
-            <rect x="525" y="216" width="195" height="66" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="525" y="216" width="195" height="66" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
             <text x="535" y="232" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">L1-D CACHE (32 KB, 8-WAY)</text>
-            <text x="535" y="246" font-size="7" fill="#64748b">VIPT • Write-Back &amp; Write-Allocate</text>
+            <text x="535" y="246" font-size="7" fill="#242c33">VIPT • Write-Back &amp; Write-Allocate</text>
             <text x="535" y="258" font-size="7" fill="#151b20">Store-to-Load Forwarding Queue</text>
-            <text x="535" y="271" font-size="6.8" font-weight="800" fill="#059669">&#10003; Hit: 2-3 Clock Cycle Load-to-Use</text>
+            <text x="535" y="271" font-size="6.8" font-weight="800" fill="#0d9488">&#10003; Hit: 2-3 Clock Cycle Load-to-Use</text>
 
             <!-- AGU line feeding DTLB and L1D -->
-            <path d="M 485 200 L 515 200 L 515 95 L 523 95" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
-            <path d="M 515 200 L 515 240 L 523 240" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
+            <path d="M 485 200 L 515 200 L 515 95 L 523 95" fill="none" stroke="#22bfd7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
+            <path d="M 515 200 L 515 240 L 523 240" fill="none" stroke="#22bfd7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
 
             <!-- Miss Status Holding Registers (MSHR) -->
-            <rect x="525" y="292" width="195" height="52" rx="4" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8"/>
-            <text x="535" y="308" font-size="8" font-weight="900" fill="#166534" font-family="monospace">MSHR SUBSYSTEM (4 TO 8 BUFFERS)</text>
+            <rect x="525" y="292" width="195" height="52" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
+            <text x="535" y="308" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">MSHR SUBSYSTEM (4 TO 8 BUFFERS)</text>
             <text x="535" y="321" font-size="7" fill="#151b20">Tracks Concurrent In-Flight DRAM Misses</text>
-            <text x="535" y="333" font-size="6.8" font-weight="800" fill="#16a34a">&#8594; Enables Hit-Under-Miss Execution</text>
+            <text x="535" y="333" font-size="6.8" font-weight="800" fill="#0d9488">&#8594; Enables Hit-Under-Miss Execution</text>
 
             <!-- Physical Memory Protection Filter -->
-            <rect x="525" y="356" width="195" height="54" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="525" y="356" width="195" height="54" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.8"/>
             <text x="535" y="372" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">PMP REGION FIREWALL (16 CHANNELS)</text>
-            <text x="535" y="385" font-size="7" fill="#64748b">Validates Physical Address vs. pmpaddr0-15</text>
-            <text x="535" y="396" font-size="6.8" font-weight="800" fill="#be123c">&#9888; Traps: Illegal Access Violation &rarr; Trap FSM</text>
+            <text x="535" y="385" font-size="7" fill="#242c33">Validates Physical Address vs. pmpaddr0-15</text>
+            <text x="535" y="396" font-size="6.8" font-weight="800" fill="#f38469">&#9888; Traps: Illegal Access Violation &#8594; Trap FSM</text>
 
             <!-- ZONE 4: SYSTEM INTERCONNECT & COHERENCE (x=750 to 920) -->
-            <rect x="750" y="36" width="170" height="428" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
-            <rect x="750" y="36" width="170" height="20" rx="5" fill="#f1f5f9"/>
-            <text x="758" y="50" font-size="8.5" font-weight="900" fill="#7e22ce" font-family="monospace">ZONE 4: SYSTEM COHERENCE</text>
+            <rect x="750" y="36" width="170" height="428" rx="6" fill="#fffaf0" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <rect x="750" y="36" width="170" height="20" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
+            <text x="758" y="50" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ZONE 4: SYSTEM COHERENCE</text>
 
             <!-- Coherent Cache Crossbar Interface -->
-            <rect x="760" y="68" width="150" height="74" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+            <rect x="760" y="68" width="150" height="74" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.8"/>
             <text x="768" y="84" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">COHERENT CROSSBAR</text>
-            <text x="768" y="98" font-size="7" fill="#64748b">TileLink-C / BedRock / AXI4</text>
+            <text x="768" y="98" font-size="7" fill="#242c33">TileLink-C / BedRock / AXI4</text>
             <text x="768" y="112" font-size="7" fill="#151b20">5 Independent Channels:</text>
-            <text x="768" y="125" font-size="6.5" font-family="monospace" fill="#7e22ce">A:Acq B:Prb C:Rel D:Gnt E:Ack</text>
+            <text x="768" y="125" font-size="6.5" font-family="monospace" fill="#151b20">A:Acq B:Prb C:Rel D:Gnt E:Ack</text>
 
             <!-- Directory-Based MESI Coherence -->
-            <rect x="760" y="152" width="150" height="85" rx="4" fill="#faf5ff" stroke="#9333ea" stroke-width="1.8"/>
-            <text x="768" y="168" font-size="8" font-weight="900" fill="#6b21a8" font-family="monospace">MESI COHERENCE ENGINE</text>
-            <text x="768" y="182" font-size="7" fill="#151b20">&bull; Modified (M): Exclusive Dirty</text>
-            <text x="768" y="194" font-size="7" fill="#151b20">&bull; Exclusive (E): Exclusive Clean</text>
-            <text x="768" y="206" font-size="7" fill="#151b20">&bull; Shared (S): Read-only Copy</text>
-            <text x="768" y="218" font-size="7" fill="#151b20">&bull; Invalid (I): Miss Required</text>
+            <rect x="760" y="152" width="150" height="85" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.8"/>
+            <text x="768" y="168" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">MESI COHERENCE ENGINE</text>
+            <text x="768" y="182" font-size="7" fill="#151b20">&#8226; Modified (M): Exclusive Dirty</text>
+            <text x="768" y="194" font-size="7" fill="#151b20">&#8226; Exclusive (E): Exclusive Clean</text>
+            <text x="768" y="206" font-size="7" fill="#151b20">&#8226; Shared (S): Read-only Copy</text>
+            <text x="768" y="218" font-size="7" fill="#151b20">&#8226; Invalid (I): Miss Required</text>
 
             <!-- 64-Bit Outbound Master Bus Port -->
-            <rect x="760" y="248" width="150" height="98" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="1.8"/>
-            <text x="768" y="264" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace">SYSTEM BUS MASTER</text>
-            <text x="768" y="278" font-size="7" font-weight="800" fill="#047857">&#9650; OUT: read/write req</text>
-            <text x="768" y="291" font-size="7" font-weight="800" fill="#b45309">&#9660; IN:  read/write grant</text>
-            <text x="768" y="304" font-size="7" font-weight="800" fill="#047857">&#9650; OUT: 64-bit addr &amp; data</text>
-            <text x="768" y="317" font-size="7" font-weight="800" fill="#b45309">&#9660; IN:  response data valid</text>
-            <text x="768" y="330" font-size="6.5" fill="#64748b">Burst transfer engine</text>
+            <rect x="760" y="248" width="150" height="98" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
+            <text x="768" y="264" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">SYSTEM BUS MASTER</text>
+            <text x="768" y="278" font-size="7" font-weight="800" fill="#0d9488">&#9650; OUT: read/write req</text>
+            <text x="768" y="291" font-size="7" font-weight="800" fill="#242c33">&#9660; IN:  read/write grant</text>
+            <text x="768" y="304" font-size="7" font-weight="800" fill="#0d9488">&#9650; OUT: 64-bit addr &amp; data</text>
+            <text x="768" y="317" font-size="7" font-weight="800" fill="#242c33">&#9660; IN:  response data valid</text>
+            <text x="768" y="330" font-size="6.5" fill="#242c33">Burst transfer engine</text>
 
             <!-- Outbound to Shared L2 / System Fabric / DRAM -->
-            <rect x="760" y="356" width="150" height="54" rx="4" fill="#f1f5f9" stroke="#64748b" stroke-width="1.8"/>
-            <text x="768" y="372" font-size="8" font-weight="900" fill="#1e293b" font-family="monospace">SHARED L2 &amp; DRAM</text>
-            <text x="768" y="385" font-size="7" fill="#475569">External Memory Gateway</text>
-            <text x="768" y="396" font-size="6.8" font-weight="700" fill="#b91c1c">&#8594; 50-100 ns DRAM Latency</text>
+            <rect x="760" y="356" width="150" height="54" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.8"/>
+            <text x="768" y="372" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">SHARED L2 &amp; DRAM</text>
+            <text x="768" y="385" font-size="7" fill="#242c33">External Memory Gateway</text>
+            <text x="768" y="396" font-size="6.8" font-weight="700" fill="#f38469">&#8594; 50-100 ns DRAM Latency</text>
 
             <!-- Connection lines between Memory Blocks and Bus -->
-            <path d="M 720 160 L 758 160" fill="none" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowAmberApp)"/>
-            <path d="M 720 315 L 758 315" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
-            <path d="M 835 346 L 835 354" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
+            <path d="M 720 160 L 758 160" fill="none" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowTealApp)"/>
+            <path d="M 720 315 L 758 315" fill="none" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowTealApp)"/>
+            <path d="M 835 346 L 835 354" fill="none" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowTealApp)"/>
 
             <!-- SYNCHRONOUS COMMIT HIGHWAY (TEAL) & REDIRECTION TRACES -->
             <!-- Writeback commit loopback to Register Files -->
             <path d="M 720 250 L 738 250 L 738 438 L 225 438 L 225 220 L 243 220" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowTealApp)"/>
-            <rect x="360" y="428" width="280" height="18" rx="4" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+            <rect x="360" y="428" width="280" height="18" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
             <circle cx="368" cy="437" r="3" fill="#0d9488"/>
-            <text x="375" y="440.5" font-size="7.5" font-weight="900" fill="#0f766e" font-family="monospace">SYNCHRONOUS COMMIT HIGHWAY: Writeback Result &#8594; RegFiles</text>
+            <text x="375" y="440.5" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">SYNCHRONOUS COMMIT HIGHWAY: Writeback Result &#8594; RegFiles</text>
 
             <!-- Branch Misprediction Redirection Line (Red) to PC Mux -->
-            <path d="M 120 322 L 120 330 L 15 330 L 15 87 L 28 87" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRedApp)"/>
-            <rect x="25" y="322" width="80" height="15" rx="3" fill="#fef2f2" stroke="#ef4444" stroke-width="1"/>
-            <text x="28" y="332.5" font-size="6.5" font-weight="900" fill="#b91c1c" font-family="monospace">BR REDIRECT</text>
+            <path d="M 120 322 L 120 330 L 15 330 L 15 87 L 28 87" fill="none" stroke="#f38469" stroke-width="2" marker-end="url(#arrowRedApp)"/>
+            <rect x="25" y="322" width="80" height="15" rx="3" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
+            <text x="28" y="332.5" font-size="6.5" font-weight="900" fill="#151b20" font-family="monospace">BR REDIRECT</text>
 
             <!-- Trap Vector mtvec / stvec line from CSR to PC Mux -->
-            <path d="M 245 390 L 10 390 L 10 75 L 28 75" fill="none" stroke="#be123c" stroke-width="1.8" stroke-dasharray="3,3" marker-end="url(#arrowCrimsonApp)"/>
+            <path d="M 245 390 L 10 390 L 10 75 L 28 75" fill="none" stroke="#f38469" stroke-width="1.8" stroke-dasharray="3,3" marker-end="url(#arrowCrimsonApp)"/>
 
             <!-- BOTTOM BUS KEY LEGEND & METRICS STRIP -->
-            <rect x="20" y="474" width="900" height="24" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
-            <line x1="30" y1="486" x2="50" y2="486" stroke="#059669" stroke-width="2.2"/>
+            <rect x="20" y="474" width="900" height="24" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
+            <line x1="30" y1="486" x2="50" y2="486" stroke="#ffc83e" stroke-width="2.2"/>
             <text x="55" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">ALU/FPU Datapath</text>
 
-            <line x1="160" y1="486" x2="180" y2="486" stroke="#0284c7" stroke-width="2.2"/>
-            <text x="185" y="489" font-size="7.5" font-weight="800" fill="#0284c7" font-family="monospace">Virtual VA / Physical PA</text>
+            <line x1="160" y1="486" x2="180" y2="486" stroke="#22bfd7" stroke-width="2.2"/>
+            <text x="185" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">Virtual VA / Physical PA</text>
 
-            <line x1="320" y1="486" x2="340" y2="486" stroke="#d97706" stroke-width="2"/>
-            <text x="345" y="489" font-size="7.5" font-weight="800" fill="#d97706" font-family="monospace">PTW Radix Walk</text>
+            <line x1="320" y1="486" x2="340" y2="486" stroke="#0d9488" stroke-width="2"/>
+            <text x="345" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">PTW Radix Walk</text>
 
             <line x1="450" y1="486" x2="470" y2="486" stroke="#0d9488" stroke-width="2.5"/>
             <text x="475" y="489" font-size="7.5" font-weight="800" fill="#0d9488" font-family="monospace">Commit Highway</text>
 
-            <line x1="580" y1="486" x2="600" y2="486" stroke="#ef4444" stroke-width="2"/>
-            <text x="605" y="489" font-size="7.5" font-weight="800" fill="#ef4444" font-family="monospace">Branch Redirection</text>
+            <line x1="580" y1="486" x2="600" y2="486" stroke="#f38469" stroke-width="2"/>
+            <text x="605" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">Branch Redirection</text>
 
-            <line x1="720" y1="486" x2="740" y2="486" stroke="#be123c" stroke-width="1.8" stroke-dasharray="3,3"/>
-            <text x="745" y="489" font-size="7.5" font-weight="800" fill="#be123c" font-family="monospace">Trap Vector (mtvec/stvec)</text>
+            <line x1="720" y1="486" x2="740" y2="486" stroke="#f38469" stroke-width="1.8" stroke-dasharray="3,3"/>
+            <text x="745" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">Trap Vector (mtvec/stvec)</text>
 
             <!-- Bottom Metrics Strip -->
-            <rect x="20" y="502" width="900" height="22" rx="4" fill="#151b20"/>
-            <text x="30" y="516" font-size="8" font-weight="800" fill="#22bfd7" font-family="monospace">METRICS: Fmax: 1.0 &#8211; 1.5 GHz (16nm/22nm) &bull; Area: 135 &#8211; 420 kGE &bull; Sv39 3-Level MMU &bull; MSHR Concurrency: 4-8 &bull; Full Linux 6.1 Boot</text>
+            <rect x="20" y="502" width="900" height="22" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
+            <text x="30" y="516" font-size="8" font-weight="800" fill="#151b20" font-family="monospace">METRICS: Fmax: 1.0 &#8211; 1.5 GHz (16nm/22nm) &#8226; Area: 135 &#8211; 420 kGE &#8226; Sv39 3-Level MMU &#8226; MSHR Concurrency: 4-8 &#8226; Full Linux 6.1 Boot</text>
           </svg>
         </div>
         <div class="mobile-scroll-hint">&#8596; Interactive Schematic: Scroll horizontally on touchscreens to inspect full memory &amp; execution datapath</div>
@@ -749,6 +750,1151 @@ The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open
           <span class="api-num">ARCHETYPE 4</span>
           <h4>High-Performance Superscalar OoO Engine (SonicBOOM &bull; ~420 kGE)</h4>
           <p>7-to-10 stage out-of-order execution engine with 1-to-4 wide decode/dispatch, explicit register renaming, 128-entry Reorder Buffer (ROB), and non-blocking L1D caches.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: THE FOUR ARCHETYPES & THE PROGRESSIVE LADDER -->
+  <!-- ============================================================ -->
+  <section id="microarchitectural-spectrum" class="content-block">
+    <div class="block-header-wrap">
+      <div class="badge badge-primary">&sect; 2. THE FOUR ARCHETYPES &amp; PROGRESSIVE LADDER</div>
+      <h2 class="block-title">The 64-Bit Application Core Design Space: A Top-Down Progression</h2>
+      <p class="block-lead">
+        While microcontroller processors prioritize sub-50 kGE gate counts and simple bus interconnects, 64-bit application processors must satisfy a far more demanding baseline: running Linux, maintaining virtual address translation (Sv39/Sv48 MMUs), and orchestrating multi-level cache hierarchies. The open-source RISC-V application core ecosystem clusters into four distinct microarchitectural philosophies, organized below as a top-down progressive ladder spanning from lean in-order baselines up to multi-wide out-of-order execution engines.
+      </p>
+    </div>
+
+    <!-- 2.0 TOP-DOWN PROGRESSIVE ARCHITECTURAL LADDER -->
+    <div class="arch-ladder">
+      <!-- Step 1: Archetype 1 -->
+      <div class="ladder-step archetype-coral-border">
+        <div class="ladder-header">
+          <div class="ladder-num-badge badge-coral">01</div>
+          <div class="ladder-title-wrap">
+            <div class="ladder-eyebrow">ARCHETYPE 1 &bull; ~135 kGE &bull; CLASSIC IN-ORDER BASELINE</div>
+            <h3 class="ladder-title">Classic 5-Stage In-Order Baseline (Rocket Chip)</h3>
+          </div>
+        </div>
+        <div class="ladder-body">
+          <p class="ladder-narrative">
+            <strong>The Problem:</strong> When an engineering team needs a minimal-area 64-bit processor that boots full Linux and runs double-precision scientific workloads, silicon area must remain sub-150 kGE (&lt; 0.18 mm&sup2; in 22nm). Every additional pipeline register, multi-port rename table, or out-of-order queue rapidly inflates static leakage and timing closure complexity.
+          </p>
+          <p class="ladder-narrative">
+            <strong>The Architectural Solution:</strong> Adopt a classical single-issue 5-stage RISC pipeline (Fetch, Decode, Execute, Memory, Writeback). Leverage direct-mapped or set-associative blocking L1 caches with Virtual-Index Physical-Tag (VIPT) mapping. Virtual memory is managed by a lean hardware Page Table Walker (PTW) that arbitrates directly with the L1 data cache to service Sv39 3-level radix tree walks in memory.
+          </p>
+          <div class="ladder-summary-bar">
+            <div class="ladder-metric">
+              <span class="lm-lbl">Representative Core</span>
+              <span class="lm-val">Rocket Chip (UC Berkeley / Chips Alliance)</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CPI Span</span>
+              <span class="lm-val">1.45 &ndash; 1.95</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Max Frequency (16nm)</span>
+              <span class="lm-val">~1.2 &ndash; 1.4 GHz</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Primary Niche</span>
+              <span class="lm-val">Academic Reference, Low-Power Linux, Edge Gateways</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ladder Connector 1 -> 2 -->
+      <div class="ladder-connector">
+        <div class="connector-line"></div>
+        <div class="connector-pill">
+          <span>&darr; Trade +13 kGE to Decouple Stalls via 6-Stage Scoreboard Execution &amp; Standard Industrial AXI4-64b Bus</span>
+        </div>
+        <div class="connector-line"></div>
+      </div>
+
+      <!-- Step 2: Archetype 2 -->
+      <div class="ladder-step archetype-teal-border">
+        <div class="ladder-header">
+          <div class="ladder-num-badge badge-teal">02</div>
+          <div class="ladder-title-wrap">
+            <div class="ladder-eyebrow">ARCHETYPE 2 &bull; ~148 kGE &bull; INDUSTRIAL DEEP IN-ORDER CORE</div>
+            <h3 class="ladder-title">Industrial 6-Stage Decoupled Scoreboard Core (CVA6 / Ariane)</h3>
+          </div>
+        </div>
+        <div class="ladder-body">
+          <p class="ladder-narrative">
+            <strong>The Problem:</strong> Rigid 5-stage pipelines freeze the entire processor whenever a multicycle instruction (e.g. integer divide, multi-cycle FP multiply-add, or unaligned memory access) executes. Furthermore, integrating a processor into industrial ASIC or FPGA fabrics requires standardized AXI4 interfaces and robust physical memory protection rather than academic bus variants.
+          </p>
+          <p class="ladder-narrative">
+            <strong>The Architectural Solution:</strong> Deconstruct execution into 6 decoupled stages (PC Generation, Fetch, Decode, Issue, Execute, Commit). An instruction scoreboard tracks in-flight register dependencies, allowing subsequent independent ALU instructions to execute out-of-order while committing results strictly in program order. Incorporate a standard industrial 5-channel AXI4-64b bus interface, dynamic branch prediction (BTB + BHT), and a 16-region PMP hardware firewall.
+          </p>
+          <div class="ladder-summary-bar">
+            <div class="ladder-metric">
+              <span class="lm-lbl">Representative Core</span>
+              <span class="lm-val">CVA6 / Ariane (OpenHW Group / ETH Z&uuml;rich)</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CPI Span</span>
+              <span class="lm-val">1.30 &ndash; 1.65</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Max Frequency (16nm)</span>
+              <span class="lm-val">~1.4 GHz</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Primary Niche</span>
+              <span class="lm-val">Industrial Linux ASICs, European Processor Initiative (EPI)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ladder Connector 2 -> 3 -->
+      <div class="ladder-connector">
+        <div class="connector-line"></div>
+        <div class="connector-pill">
+          <span>&darr; Trade +17 kGE for Modular Multi-Core Coherence (BedRock MESI) &amp; Latency-Insensitive NoC Tiling</span>
+        </div>
+        <div class="connector-line"></div>
+      </div>
+
+      <!-- Step 3: Archetype 3 -->
+      <div class="ladder-step archetype-lime-border">
+        <div class="ladder-header">
+          <div class="ladder-num-badge badge-lime">03</div>
+          <div class="ladder-title-wrap">
+            <div class="ladder-eyebrow">ARCHETYPE 3 &bull; ~165 kGE &bull; MODULAR COHERENT MULTI-CORE CLUSTER TILE</div>
+            <h3 class="ladder-title">Modular Coherent Multi-Core Cluster Tile (BlackParrot)</h3>
+          </div>
+        </div>
+        <div class="ladder-body">
+          <p class="ladder-narrative">
+            <strong>The Problem:</strong> Monolithic application cores cannot scale to 8, 16, or 64 cores without suffering from severe cache coherence contention, interconnect routing congestion, and catastrophic timing violations across long global silicon wires.
+          </p>
+          <p class="ladder-narrative">
+            <strong>The Architectural Solution:</strong> Structure the core as an elastic, composable "cluster tile" partitioned into three independent domains: Front-End (FE), Back-End (BE), and Memory-End (ME) bridged by credit-based FIFOs. Implement the formal BedRock directory-based MESI cache coherence protocol driven by an on-chip Coherence Cache Engine (CCE), and embed a 5-port 2D-mesh packetized wormhole router directly into each core tile.
+          </p>
+          <div class="ladder-summary-bar">
+            <div class="ladder-metric">
+              <span class="lm-lbl">Representative Core</span>
+              <span class="lm-val">BlackParrot (Univ. of Washington / Bespoke Silicon)</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CPI Span</span>
+              <span class="lm-val">1.35 &ndash; 1.75</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Scalability</span>
+              <span class="lm-val">1 to 64 Cores (2D Mesh NoC)</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Primary Niche</span>
+              <span class="lm-val">Massively Tiled Server SoCs, Accelerator Hosts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ladder Connector 3 -> 4 -->
+      <div class="ladder-connector">
+        <div class="connector-line"></div>
+        <div class="connector-pill">
+          <span>&darr; Shatter the Single-Issue Floor via Out-of-Order Execution &amp; 8-Entry MSHR Queues (+255 kGE)</span>
+        </div>
+        <div class="connector-line"></div>
+      </div>
+
+      <!-- Step 4: Archetype 4 -->
+      <div class="ladder-step archetype-yellow-border">
+        <div class="ladder-header">
+          <div class="ladder-num-badge badge-yellow">04</div>
+          <div class="ladder-title-wrap">
+            <div class="ladder-eyebrow">ARCHETYPE 4 &bull; ~420 kGE &bull; OUT-OF-ORDER SUPERSCALAR INDUSTRIAL CLASS</div>
+            <h3 class="ladder-title">High-Performance Out-of-Order Superscalar Engine (SonicBOOM)</h3>
+          </div>
+        </div>
+        <div class="ladder-body">
+          <p class="ladder-narrative">
+            <strong>The Problem:</strong> The Memory Wall (100+ clock cycles for DRAM accesses) and instruction dependency chains place an insurmountable barrier on in-order cores: sustained CPI rarely drops below 1.3 in real-world workloads, capping single-thread performance regardless of clock frequency.
+          </p>
+          <p class="ladder-narrative">
+            <strong>The Architectural Solution:</strong> Transition to a multi-wide (2 to 4-wide) out-of-order superscalar pipeline. Map 32 architectural registers onto a 96-128 entry unified Physical Register File (PRF) to eliminate false WAR and WAW hazards. Dispatch micro-ops (uOPs) to distributed reservation stations, dynamically hide memory latency using a non-blocking L1-D cache with 8-entry MSHRs ("hits-under-miss"), and commit up to 4 instructions per cycle through a 128-entry circular Reorder Buffer (RoB).
+          </p>
+          <div class="ladder-summary-bar">
+            <div class="ladder-metric">
+              <span class="lm-lbl">Representative Core</span>
+              <span class="lm-val">BOOM / SonicBOOM (UC Berkeley)</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Sustained IPC</span>
+              <span class="lm-val">1.05 &ndash; 1.55 (CPI: 0.65 &ndash; 0.95)</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Max Frequency (16nm)</span>
+              <span class="lm-val">~1.5 GHz</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Primary Niche</span>
+              <span class="lm-val">High-Performance Linux Compute, RISC-V Workstations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SUBSECTION 2.1: ARCHETYPE 1 DEEP-DIVE -->
+    <!-- ============================================================ -->
+    <div id="archetype-1-deepdive" class="concept-stream" style="margin-top: 2.5rem;">
+      <div class="concept-step-card archetype-coral-border">
+        <div class="step-card-header">
+          <span class="step-tag badge-coral">2.1 ARCHITECTURAL DEEP-DIVE</span>
+          <h3 class="step-card-title">Archetype 1: Classic In-Order Baseline (Rocket Chip)</h3>
+        </div>
+        <p class="step-card-lead">
+          Designed by UC Berkeley and maintained under the Chips Alliance, <strong>Rocket Chip</strong> is the preeminent open-source reference implementation of the 64-bit RISC-V privileged architecture. It proves how an elegant, classical 5-stage pipeline can satisfy all operating system requirements (Sv39 virtual memory, double-precision IEEE-754 arithmetic, and machine/supervisor privilege rings) within a tiny silicon footprint of just ~135 kGE.
+        </p>
+
+        <!-- 2.1.1 Rocket Chip Technical Breakdown -->
+        <div class="sub-topic-card">
+          <div class="sub-topic-head">
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-coral">CORE 1</span>
+              <h4 class="sub-topic-title">Rocket Chip &bull; 5-Stage In-Order RISC Core</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~135 kGE &bull; Chisel HDL</span>
+          </div>
+          <p>
+            Rocket represents the purest distillation of Patterson's classical RISC pipeline principles scaled to 64-bit computing:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Classical 5-Stage Single-Issue Pipeline:</strong> Instructions progress through Instruction Fetch (IF), Instruction Decode (ID), Execute (EX), Memory Access (MEM), and Writeback (WB). Branch decisions and target addresses are resolved in the EX stage, incurring a modest 2-cycle penalty on mispredicted control transfers.</li>
+            <li><strong>Decoupled TileLink-UH Interconnect:</strong> Rocket communicates with the memory system using TileLink-UH (Uncached Heavyweight). The bus protocol uses decoupled request (Channel A: Get, PutFullData, PutPartialData) and response (Channel D: AccessAck, AccessAckData) channels with ready/valid handshakes, natively supporting multi-beat cache line bursts without bus deadlocks.</li>
+            <li><strong>Direct-Mapped or Set-Associative VIPT Caches:</strong> The L1 instruction and data caches use Virtual-Index Physical-Tag (VIPT) mapping. Because page offset bits (bits 11:0 in a 4 KiB page) are identical in virtual and physical address spaces, cache index lookups and TLB tag translations occur concurrently within a single clock cycle.</li>
+            <li><strong>Autonomous Hardware Page Table Walker (PTW):</strong> When a DTLB or ITLB miss occurs, the hardware PTW takes ownership of the memory interface, walking the 3-level Sv39 page table in memory (Level 2 &rarr; Level 1 &rarr; Level 0) across consecutive memory reads before repopulating the TLB entry with zero software OS trap overhead.</li>
+            <li><strong>Silicon Area &amp; Power Density:</strong> Synthesizes to ~135 kGE of standard cell logic (excluding cache SRAM macros). In a modern 16nm/22nm process, a complete Rocket core tile occupies less than 0.18 mm&sup2; and consumes under 25 mW at 1.0 GHz, making it the benchmark reference for energy-constrained edge Linux platforms.</li>
+          </ul>
+
+          <!-- Figure 2.1: Rocket Chip Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 2.1 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">Rocket Chip: 5-Stage In-Order Datapath &amp; TileLink-UH Architecture</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridRocket" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowRocket" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+                  </marker>
+                  <marker id="arrowRedR" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444"/>
+                  </marker>
+                  <marker id="arrowGold" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridRocket)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#16a34a"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • ROCKET CHIP 5-STAGE IN-ORDER PIPELINE &amp; TILELINK-UH TOPOLOGY</text>
+
+                <!-- 5 Stage Vertical Columns / Bounding Boxes -->
+                <!-- 1. IF Stage -->
+                <rect x="18" y="42" width="130" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="18" y="42" width="130" height="20" rx="5" fill="#f38469"/>
+                <text x="26" y="56" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace">STAGE 1: IF (FETCH)</text>
+                
+                <rect x="26" y="70" width="114" height="32" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="32" y="85" font-size="9" font-weight="800" fill="#151b20">PC Register (64b)</text>
+                <text x="32" y="96" font-size="7.5" fill="#666">Next-PC Logic / BTB</text>
+
+                <rect x="26" y="112" width="114" height="42" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.2"/>
+                <text x="32" y="126" font-size="8.5" font-weight="900" fill="#0369a1">ITLB (32-Entry CAM)</text>
+                <text x="32" y="138" font-size="7.5" fill="#0284c7">VPN[38:12] &rarr; PPN</text>
+                <text x="32" y="148" font-size="7" fill="#64748b">Single-Cycle Translation</text>
+
+                <rect x="26" y="164" width="114" height="48" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
+                <text x="32" y="179" font-size="8.5" font-weight="900" fill="#151b20">L1 I-Cache (VIPT)</text>
+                <text x="32" y="192" font-size="7.5" fill="#666">16/32 KiB 4-Way Set-Assoc</text>
+                <text x="32" y="204" font-size="7" fill="#888">32b Inst Packet Out</text>
+
+                <rect x="26" y="222" width="114" height="36" rx="4" fill="#fdfbf7" stroke="#151b20" stroke-width="1"/>
+                <text x="32" y="236" font-size="8" font-weight="800" fill="#151b20">Branch Target Buffer</text>
+                <text x="32" y="248" font-size="7" fill="#666">28-Entry BTB + 2-bit BHT</text>
+
+                <!-- 2. ID Stage -->
+                <rect x="162" y="42" width="130" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="162" y="42" width="130" height="20" rx="5" fill="#f38469"/>
+                <text x="170" y="56" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace">STAGE 2: ID (DECODE)</text>
+
+                <rect x="170" y="70" width="114" height="44" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="176" y="85" font-size="8.5" font-weight="900" fill="#151b20">RVC Decompressor</text>
+                <text x="176" y="97" font-size="7.5" fill="#666">16-bit C &rarr; 32b Base</text>
+                <text x="176" y="107" font-size="7" fill="#888">Control Signal Decode</text>
+
+                <rect x="170" y="124" width="114" height="66" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
+                <text x="176" y="139" font-size="8.5" font-weight="900" fill="#151b20">Integer RegFile (GPR)</text>
+                <text x="176" y="152" font-size="7.5" fill="#666">31 &times; 64-bit Registers</text>
+                <text x="176" y="164" font-size="7.5" fill="#0284c7">2 Read Ports (rs1, rs2)</text>
+                <text x="176" y="176" font-size="7" fill="#64748b">1 Write Port (rd)</text>
+
+                <rect x="170" y="200" width="114" height="52" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="176" y="215" font-size="8.5" font-weight="800" fill="#151b20">FP RegFile (FPR)</text>
+                <text x="176" y="228" font-size="7.5" fill="#666">32 &times; 64-bit (DP D-Ext)</text>
+                <text x="176" y="240" font-size="7" fill="#64748b">3 Read Ports (fs1, fs2, fs3)</text>
+
+                <!-- 3. EX Stage -->
+                <rect x="306" y="42" width="130" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="306" y="42" width="130" height="20" rx="5" fill="#f38469"/>
+                <text x="314" y="56" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace">STAGE 3: EX (EXECUTE)</text>
+
+                <polygon points="320,72 400,90 400,126 320,144 320,114 330,108 320,102" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+                <text x="340" y="104" font-size="9" font-weight="900" fill="#166534">64-bit ALU</text>
+                <text x="330" y="118" font-size="7" font-weight="700" fill="#15803d">Add/Sub/Logic/Shift</text>
+
+                <rect x="314" y="154" width="114" height="38" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="320" y="169" font-size="8" font-weight="800" fill="#151b20">M-Ext Pipelined Mul/Div</text>
+                <text x="320" y="181" font-size="7" fill="#666">64b Multiplier + Radix-2 Div</text>
+
+                <rect x="314" y="200" width="114" height="42" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="320" y="215" font-size="8" font-weight="800" fill="#151b20">IEEE-754 DP FPU</text>
+                <text x="320" y="227" font-size="7" fill="#666">HardFloat Pipelined FMA</text>
+                <text x="320" y="236" font-size="6.5" fill="#888">Single &amp; Double Precision</text>
+
+                <rect x="314" y="250" width="114" height="36" rx="4" fill="#fff1f2" stroke="#e11d48" stroke-width="1"/>
+                <text x="320" y="264" font-size="8" font-weight="800" fill="#be123c">Branch Resolution</text>
+                <text x="320" y="276" font-size="7" fill="#9f1239">Redirect Signal &rarr; IF PC</text>
+
+                <!-- 4. MEM Stage -->
+                <rect x="450" y="42" width="140" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="450" y="42" width="140" height="20" rx="5" fill="#f38469"/>
+                <text x="458" y="56" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace">STAGE 4: MEM (MEMORY)</text>
+
+                <rect x="458" y="70" width="124" height="44" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.2"/>
+                <text x="464" y="85" font-size="8.5" font-weight="900" fill="#0369a1">DTLB (32-Entry CAM)</text>
+                <text x="464" y="98" font-size="7.5" fill="#0284c7">Sv39 VPN[38:12] &rarr; PPN</text>
+                <text x="464" y="108" font-size="7" fill="#64748b">VIPT Tag Comparison</text>
+
+                <rect x="458" y="122" width="124" height="52" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
+                <text x="464" y="137" font-size="8.5" font-weight="900" fill="#151b20">L1 D-Cache (VIPT)</text>
+                <text x="464" y="150" font-size="7.5" fill="#666">16/32 KiB 4-Way Set-Assoc</text>
+                <text x="464" y="162" font-size="7" fill="#888">Blocking &bull; 64-bit Hit Path</text>
+
+                <rect x="458" y="182" width="124" height="54" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+                <text x="464" y="197" font-size="8" font-weight="900" fill="#b45309">Hardware PTW Arbiter</text>
+                <text x="464" y="210" font-size="7" fill="#92400e">Autonomous 3-Level Radix</text>
+                <text x="464" y="222" font-size="7" fill="#b45309">D-Cache Interconnect Master</text>
+
+                <rect x="458" y="244" width="124" height="34" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="464" y="258" font-size="8" font-weight="800" fill="#151b20">PMP Checker (8 Regs)</text>
+                <text x="464" y="270" font-size="7" fill="#666">Physical Memory Protection</text>
+
+                <!-- 5. WB Stage -->
+                <rect x="604" y="42" width="138" height="150" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="604" y="42" width="138" height="20" rx="5" fill="#f38469"/>
+                <text x="612" y="56" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace">STAGE 5: WB (WRITE)</text>
+
+                <rect x="612" y="70" width="122" height="50" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="618" y="85" font-size="8.5" font-weight="800" fill="#151b20">Writeback Multiplexer</text>
+                <text x="618" y="98" font-size="7" fill="#666">Select: ALU / Mem / FP / CSR</text>
+                <text x="618" y="110" font-size="7" fill="#16a34a">rd_data / fd_data Commit</text>
+
+                <rect x="612" y="128" width="122" height="40" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="618" y="143" font-size="8" font-weight="800" fill="#151b20">Forwarding Network</text>
+                <text x="618" y="155" font-size="7" fill="#666">Bypass EX/MEM &rarr; ID Operands</text>
+
+                <!-- TileLink-UH System Bus Interface (Bottom Right) -->
+                <rect x="604" y="204" width="138" height="103" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+                <rect x="604" y="204" width="138" height="20" rx="5" fill="#f59e0b"/>
+                <text x="612" y="218" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">TILELINK-UH BUS (64b)</text>
+
+                <rect x="612" y="230" width="122" height="30" rx="3" fill="#ffffff" stroke="#d97706" stroke-width="1"/>
+                <text x="618" y="243" font-size="7.5" font-weight="800" fill="#b45309">Chan A: Get / Put Req</text>
+                <text x="618" y="253" font-size="6.8" fill="#92400e">Address &bull; Size &bull; Mask &bull; Data</text>
+
+                <rect x="612" y="266" width="122" height="30" rx="3" fill="#ffffff" stroke="#d97706" stroke-width="1"/>
+                <text x="618" y="279" font-size="7.5" font-weight="800" fill="#b45309">Chan D: AccessAck Resp</text>
+                <text x="618" y="289" font-size="6.8" fill="#92400e">Data &bull; Corrupt &bull; Denied</text>
+
+                <!-- Inter-stage Piping Arrows -->
+                <path d="M 148 188 L 162 188" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowRocket)"/>
+                <path d="M 292 150 L 306 150" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowRocket)"/>
+                <path d="M 436 100 L 450 100" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowRocket)"/>
+                <path d="M 590 95 L 604 95" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowRocket)"/>
+
+                <!-- TileLink connection from MEM stage -->
+                <path d="M 582 208 L 604 250" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#arrowGold)"/>
+
+                <!-- Branch Redirect Feedback Line (EX stage -> IF stage) -->
+                <path d="M 370 286 L 370 320 L 80 320 L 80 102" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrowRedR)"/>
+                <text x="180" y="333" font-size="7.5" font-weight="800" fill="#ef4444">Branch Mispredict Redirect Signal (2-cycle bubble flush)</text>
+
+                <!-- Metrics Strip Footer -->
+                <rect x="2" y="348" width="756" height="28" fill="#151b20" rx="5"/>
+                <text x="20" y="366" font-size="8.5" font-weight="800" fill="#22bfd7" font-family="monospace">METRICS: CPI: 1.45 &#8211; 1.95 &bull; Area: ~135 kGE (16nm) &bull; Fmax: 1.2 &#8211; 1.4 GHz &bull; Bus: TileLink-UH 64b &bull; MMU: Sv39 3-Level</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 2.1:</strong> Detailed microarchitectural schematic of the Rocket Chip 5-stage in-order core. Instructions progress sequentially through IF, ID, EX, MEM, and WB stages. On a data or instruction TLB miss, the autonomous hardware Page Table Walker (PTW) preempts the L1 memory port to execute 3-level page walks across the TileLink-UH system bus.
+            </p>
+          </div>
+
+          <!-- Specifications Table -->
+          <div class="table-scroll" style="margin-top: 1.25rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Microarchitectural Attribute</th>
+                  <th>Rocket Chip Implementation</th>
+                  <th>Engineering Justification &amp; Trade-off</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Pipeline Depth &amp; Structure</strong></td>
+                  <td>5-Stage In-Order (IF &rarr; ID &rarr; EX &rarr; MEM &rarr; WB)</td>
+                  <td>Eliminates complex reservation stations and rename logic, minimizing gate count to 135 kGE.</td>
+                </tr>
+                <tr>
+                  <td><strong>Supported ISA Extensions</strong></td>
+                  <td>RV64GC (RV64IMAFDC + Zicsr + Zifencei)</td>
+                  <td>Full operating system compliance; enables booting standard upstream Linux 6.x kernels.</td>
+                </tr>
+                <tr>
+                  <td><strong>MMU &amp; Address Translation</strong></td>
+                  <td>Sv39 (39-bit Virtual &rarr; 56-bit Physical) with HW PTW</td>
+                  <td>Autonomous 3-level radix tree walker avoids catastrophic 800+ cycle OS trap penalties.</td>
+                </tr>
+                <tr>
+                  <td><strong>L1 Cache Hierarchy</strong></td>
+                  <td>16/32 KiB I-Cache + 16/32 KiB D-Cache (4-way VIPT, blocking)</td>
+                  <td>VIPT ensures zero-cycle tag aliasing; blocking design limits gate count at cost of memory stall serialization.</td>
+                </tr>
+                <tr>
+                  <td><strong>System Interconnect Bus</strong></td>
+                  <td>TileLink-UH (Uncached Heavyweight, 64-bit)</td>
+                  <td>Decoupled request/response channels with bursting support; native point-to-point flow control.</td>
+                </tr>
+                <tr>
+                  <td><strong>Silicon Area &amp; Operating Freq</strong></td>
+                  <td>~135 kGE &bull; ~1.2 &ndash; 1.4 GHz (TSMC 16nm / GF 22FDX)</td>
+                  <td>Smallest footprint in the evaluated application core category; ideal for power-critical edge nodes.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SUBSECTION 2.2: ARCHETYPE 2 DEEP-DIVE -->
+    <!-- ============================================================ -->
+    <div id="archetype-2-deepdive" class="concept-stream" style="margin-top: 2.5rem;">
+      <div class="concept-step-card archetype-teal-border">
+        <div class="step-card-header">
+          <span class="step-tag badge-teal">2.2 ARCHITECTURAL DEEP-DIVE</span>
+          <h3 class="step-card-title">Archetype 2: Industrial Deep In-Order Core (CVA6 / Ariane)</h3>
+        </div>
+        <p class="step-card-lead">
+          Originally developed as <em>Ariane</em> at ETH Z&uuml;rich and now standardized by the OpenHW Group, <strong>CVA6</strong> is the premier industrial-grade in-order application core. By introducing a 6-stage decoupled scoreboard architecture and native AXI4-64b connectivity, CVA6 resolves the latency-serialization bottlenecks of rigid 5-stage designs while maintaining strict timing closure margins for commercial automotive and aerospace tapeouts.
+        </p>
+
+        <!-- 2.2.1 CVA6 Technical Breakdown -->
+        <div class="sub-topic-card">
+          <div class="sub-topic-head">
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-teal">CORE 2</span>
+              <h4 class="sub-topic-title">CVA6 (Ariane) &bull; 6-Stage Decoupled Scoreboard Core</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~148 kGE &bull; SystemVerilog</span>
+          </div>
+          <p>
+            CVA6 bridges the gap between ultra-lean research cores and commercial multi-issue engines by introducing scoreboard-driven concurrency:
+          </p>
+          <ul class="concept-list">
+            <li><strong>6-Stage Decoupled Scoreboard Pipeline:</strong> Structured as PC Generation (PC Gen), Instruction Fetch (IF), Instruction Decode (ID), Issue / Scoreboard, Execute (EX), and Commit. The scoreboard tracks data dependencies, source operands, and busy flags for all in-flight instructions.</li>
+            <li><strong>Out-of-Order Execution with In-Order Commit:</strong> When a long-latency multicycle instruction issues (e.g. integer divide, multi-cycle FP multiply-accumulate, or an unaligned memory load), subsequent independent integer ALU instructions are permitted to execute out-of-order. Instructions commit to the architectural register file strictly in program order, guaranteeing exact exception recovery.</li>
+            <li><strong>Standard Industrial AXI4-64b System Bus Interface:</strong> Natively integrates standard ARM AMBA AXI4 master ports (AW, W, B, AR, R channels) with independent address and data phases. This allows CVA6 to interface directly with commercial DDR4/DDR5 controllers, PCIe root complexes, and standard FPGA IP blocks without protocol translation bridges.</li>
+            <li><strong>Dynamic Two-Level Branch Prediction:</strong> Features a Branch History Table (BHT) with 2-bit saturating counters, a Branch Target Buffer (BTB), and a Return Address Stack (RAS). Mispredicted branch penalties are bounded strictly to 3 clock cycles.</li>
+            <li><strong>16-Region Physical Memory Protection (PMP):</strong> Integrates 16 hardware PMP checker registers that validate every instruction fetch and data transaction against current privilege levels (M-mode, S-mode, U-mode), preventing kernel memory escalation attacks.</li>
+          </ul>
+
+          <!-- Figure 2.2: CVA6 Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 2.2 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">CVA6: 6-Stage Decoupled Scoreboard Datapath &amp; AXI4-64b Architecture</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridCva6" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowCva6" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowTeal" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridCva6)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#0d9488"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • CVA6 DECOUPLED 6-STAGE SCOREBOARD &amp; AXI4-64b TOPOLOGY</text>
+
+                <!-- Stage 1: PC Gen & IF -->
+                <rect x="18" y="42" width="115" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="18" y="42" width="115" height="20" rx="5" fill="#0d9488"/>
+                <text x="24" y="56" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">STG 1: PC GEN / IF</text>
+
+                <rect x="24" y="70" width="103" height="34" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="30" y="84" font-size="8" font-weight="800" fill="#151b20">PC Generation FSM</text>
+                <text x="30" y="95" font-size="7" fill="#666">Trap / Replay Mux</text>
+
+                <rect x="24" y="112" width="103" height="42" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
+                <text x="30" y="126" font-size="8" font-weight="900" fill="#0f766e">BHT + BTB + RAS</text>
+                <text x="30" y="138" font-size="7" fill="#0f766e">2-bit Saturating Predictor</text>
+                <text x="30" y="148" font-size="6.8" fill="#666">3-Cycle Mispredict Bound</text>
+
+                <rect x="24" y="162" width="103" height="50" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="30" y="176" font-size="8" font-weight="800" fill="#151b20">16 KiB 4-Way I-Cache</text>
+                <text x="30" y="188" font-size="7" fill="#666">16-Entry ITLB CAM</text>
+                <text x="30" y="200" font-size="6.8" fill="#888">32-bit Fetch Packet</text>
+
+                <rect x="24" y="220" width="103" height="34" rx="4" fill="#fdfbf7" stroke="#151b20" stroke-width="1"/>
+                <text x="30" y="234" font-size="8" font-weight="800" fill="#151b20">Fetch FIFO Buffer</text>
+                <text x="30" y="245" font-size="7" fill="#666">Decouples IF from ID</text>
+
+                <!-- Stage 2: ID (Decode) -->
+                <rect x="142" y="42" width="105" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="142" y="42" width="105" height="20" rx="5" fill="#0d9488"/>
+                <text x="148" y="56" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">STG 2: ID (DECODE)</text>
+
+                <rect x="148" y="70" width="93" height="42" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="154" y="85" font-size="8" font-weight="800" fill="#151b20">RV64GC Decoder</text>
+                <text x="154" y="97" font-size="7" fill="#666">RVC 16b Expansion</text>
+                <text x="154" y="106" font-size="6.8" fill="#888">Illegal Inst Check</text>
+
+                <rect x="148" y="120" width="93" height="74" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
+                <text x="154" y="135" font-size="8" font-weight="900" fill="#151b20">RegFile (31x64b)</text>
+                <text x="154" y="148" font-size="7" fill="#666">Dual Read Ports</text>
+                <text x="154" y="159" font-size="7" fill="#0d9488">Single Write Port</text>
+                <text x="154" y="170" font-size="6.8" fill="#64748b">FP Regs (32x64b)</text>
+                <text x="154" y="181" font-size="6.5" fill="#888">Bypass Operand Mux</text>
+
+                <!-- Stage 3: Issue & Scoreboard -->
+                <rect x="256" y="42" width="125" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="256" y="42" width="125" height="20" rx="5" fill="#0d9488"/>
+                <text x="262" y="56" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">STG 3: ISSUE / SB</text>
+
+                <rect x="262" y="70" width="113" height="96" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.5"/>
+                <text x="268" y="85" font-size="8.5" font-weight="900" fill="#0f766e">SCOREBOARD TABLE</text>
+                <text x="268" y="98" font-size="7" fill="#0f766e">&bull; In-Flight Inst Tags</text>
+                <text x="268" y="109" font-size="7" fill="#0f766e">&bull; Destination rd Check</text>
+                <text x="268" y="120" font-size="7" fill="#0f766e">&bull; Functional Unit Busy</text>
+                <text x="268" y="131" font-size="7" fill="#0f766e">&bull; RAW / WAW Resolution</text>
+                <text x="268" y="142" font-size="7" fill="#0f766e">&bull; Issue Enable Logic</text>
+                <text x="268" y="154" font-size="6.8" fill="#115e59">Out-of-Order Execution Gate</text>
+
+                <rect x="262" y="174" width="113" height="42" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="268" y="188" font-size="8" font-weight="800" fill="#151b20">Issue Control Unit</text>
+                <text x="268" y="200" font-size="7" fill="#666">Dispatches to EX Units</text>
+                <text x="268" y="210" font-size="6.8" fill="#888">Bypasses Stalled Units</text>
+
+                <!-- Stage 4: EX (Parallel Execution Units) -->
+                <rect x="390" y="42" width="145" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="390" y="42" width="145" height="20" rx="5" fill="#0d9488"/>
+                <text x="396" y="56" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">STG 4: EX (PARALLEL UNITS)</text>
+
+                <rect x="396" y="70" width="133" height="30" rx="3" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+                <text x="402" y="84" font-size="8" font-weight="800" fill="#166534">ALU (1-Cycle Integer)</text>
+                <text x="402" y="94" font-size="6.8" fill="#15803d">Add / Sub / Logic / Shifts</text>
+
+                <rect x="396" y="106" width="133" height="32" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="402" y="120" font-size="8" font-weight="800" fill="#151b20">Multiplier &amp; Divider</text>
+                <text x="402" y="131" font-size="6.8" fill="#666">Pipelined Mul &bull; Radix-2 Div</text>
+
+                <rect x="396" y="144" width="133" height="32" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="402" y="158" font-size="8" font-weight="800" fill="#151b20">Double-Precision FPU</text>
+                <text x="402" y="169" font-size="6.8" fill="#666">FMA &bull; IEEE-754 HardFloat</text>
+
+                <rect x="396" y="182" width="133" height="32" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="402" y="196" font-size="8" font-weight="800" fill="#151b20">Branch Unit (BRU)</text>
+                <text x="402" y="207" font-size="6.8" fill="#666">Jump / Call / Branch Eval</text>
+
+                <rect x="396" y="220" width="133" height="42" rx="3" fill="#e0f2fe" stroke="#0284c7" stroke-width="1"/>
+                <text x="402" y="234" font-size="8" font-weight="900" fill="#0369a1">Load-Store Unit (LSU)</text>
+                <text x="402" y="246" font-size="6.8" fill="#0284c7">16 KiB D-Cache &bull; 16-Entry DTLB</text>
+                <text x="402" y="256" font-size="6.5" fill="#64748b">16-Region PMP Firewall</text>
+
+                <!-- Stage 5: Commit & System Interconnect -->
+                <rect x="544" y="42" width="198" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="544" y="42" width="198" height="20" rx="5" fill="#0d9488"/>
+                <text x="550" y="56" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">STG 5/6: COMMIT &amp; AXI4 FABRIC</text>
+
+                <rect x="552" y="70" width="182" height="52" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
+                <text x="558" y="85" font-size="8.5" font-weight="900" fill="#151b20">In-Order Commit Engine</text>
+                <text x="558" y="98" font-size="7" fill="#666">Retires instructions in program order</text>
+                <text x="558" y="109" font-size="7" fill="#0d9488">Guarantees precise architectural traps</text>
+
+                <!-- AXI4 5-Channel Box -->
+                <rect x="552" y="130" width="182" height="135" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
+                <text x="558" y="145" font-size="8.5" font-weight="900" fill="#0f766e">AXI4-64b MASTER INTERFACE</text>
+                
+                <rect x="558" y="152" width="170" height="18" rx="2" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+                <text x="564" y="164" font-size="7" font-weight="800" fill="#0f766e">AW Channel: Write Address (awaddr, awlen)</text>
+
+                <rect x="558" y="174" width="170" height="18" rx="2" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+                <text x="564" y="186" font-size="7" font-weight="800" fill="#0f766e">W Channel: Write Data (wdata[63:0], wstrb)</text>
+
+                <rect x="558" y="196" width="170" height="18" rx="2" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+                <text x="564" y="208" font-size="7" font-weight="800" fill="#0f766e">B Channel: Write Response (bresp)</text>
+
+                <rect x="558" y="218" width="170" height="18" rx="2" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+                <text x="564" y="230" font-size="7" font-weight="800" fill="#0f766e">AR Channel: Read Address (araddr, arlen)</text>
+
+                <rect x="558" y="240" width="170" height="18" rx="2" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
+                <text x="564" y="252" font-size="7" font-weight="800" fill="#0f766e">R Channel: Read Data (rdata[63:0], rresp)</text>
+
+                <!-- Connecting Lines -->
+                <path d="M 133 188 L 142 188" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowCva6)"/>
+                <path d="M 247 150 L 256 150" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowCva6)"/>
+                <path d="M 381 120 L 390 120" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowCva6)"/>
+                <path d="M 535 96 L 544 96" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowCva6)"/>
+
+                <!-- Metrics Strip Footer -->
+                <rect x="2" y="348" width="756" height="28" fill="#151b20" rx="5"/>
+                <text x="20" y="366" font-size="8.5" font-weight="800" fill="#22bfd7" font-family="monospace">METRICS: CPI: 1.30 &#8211; 1.65 &bull; Area: ~148 kGE (16nm) &bull; Fmax: 1.4 GHz &bull; Bus: Standard AXI4-64b &bull; 16-Region PMP</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 2.2:</strong> Detailed microarchitectural schematic of the CVA6 (Ariane) 6-stage core. An instruction scoreboard decouples issue from execution, allowing independent integer ALU instructions to bypass multicycle FP, divide, or load operations. All memory transactions route through 16 hardware PMP check registers into a standard 5-channel AXI4-64b bus interface.
+            </p>
+          </div>
+
+          <!-- Specifications Table -->
+          <div class="table-scroll" style="margin-top: 1.25rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Microarchitectural Attribute</th>
+                  <th>CVA6 (Ariane) Implementation</th>
+                  <th>Engineering Justification &amp; Trade-off</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Pipeline Depth &amp; Structure</strong></td>
+                  <td>6-Stage Decoupled (PC Gen &rarr; IF &rarr; ID &rarr; Issue/SB &rarr; EX &rarr; Commit)</td>
+                  <td>Decouples fetch and issue, preventing multicycle execution stalls from freezing the entire front-end.</td>
+                </tr>
+                <tr>
+                  <td><strong>Supported ISA Extensions</strong></td>
+                  <td>RV64GC (RV64IMAFDC + Zicsr + Zifencei + 16 PMP)</td>
+                  <td>Meets full Linux ABI standards; hardened for industrial space and automotive applications.</td>
+                </tr>
+                <tr>
+                  <td><strong>Scoreboard Capability</strong></td>
+                  <td>Out-of-Order Execution with In-Order Commit</td>
+                  <td>Allows 1-cycle integer ops to bypass long FP and division delays while guaranteeing precise traps.</td>
+                </tr>
+                <tr>
+                  <td><strong>Branch Predictor</strong></td>
+                  <td>Dynamic BHT (2-bit saturating) + BTB + 4-entry RAS</td>
+                  <td>Bounds mispredicted branch penalties strictly to 3 clock cycles.</td>
+                </tr>
+                <tr>
+                  <td><strong>System Interconnect Bus</strong></td>
+                  <td>Standard ARM AMBA AXI4-64b (5 Independent Channels)</td>
+                  <td>Direct plug-and-play compatibility with commercial ASIC DDR controllers and PCIe root complexes.</td>
+                </tr>
+                <tr>
+                  <td><strong>Silicon Area &amp; Operating Freq</strong></td>
+                  <td>~148 kGE &bull; ~1.4 GHz (TSMC 16nm / GlobalFoundries 22FDX)</td>
+                  <td>Modest +10% area overhead over Rocket in exchange for scoreboard concurrency and standard AXI4.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SUBSECTION 2.3: ARCHETYPE 3 DEEP-DIVE -->
+    <!-- ============================================================ -->
+    <div id="archetype-3-deepdive" class="concept-stream" style="margin-top: 2.5rem;">
+      <div class="concept-step-card archetype-lime-border">
+        <div class="step-card-header">
+          <span class="step-tag badge-lime">2.3 ARCHITECTURAL DEEP-DIVE</span>
+          <h3 class="step-card-title">Archetype 3: Modular Coherent Multi-Core Cluster Tile (BlackParrot)</h3>
+        </div>
+        <p class="step-card-lead">
+          Co-developed by the University of Washington and the Bespoke Silicon Group, <strong>BlackParrot</strong> was engineered from inception to solve the multi-core scaling crisis. Rather than treating multi-core clustering as an afterthought glued together with ad-hoc interconnects, BlackParrot treats the processor core as a repeatable, composable "cluster tile" incorporating formal directory-based MESI cache coherence and latency-insensitive credit-based NoC packet routing.
+        </p>
+
+        <!-- 2.3.1 BlackParrot Technical Breakdown -->
+        <div class="sub-topic-card">
+          <div class="sub-topic-head">
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-lime">CORE 3</span>
+              <h4 class="sub-topic-title">BlackParrot &bull; Modular Coherent Multi-Core Tile</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~165 kGE / Tile &bull; SystemVerilog</span>
+          </div>
+          <p>
+            BlackParrot revolutionizes warehouse-scale processor scaling through modular elasticity and formal coherence:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Modular 3-Partition Architecture:</strong> The processor is partitioned into three decoupled modules: Front-End (FE: branch prediction, instruction fetch, ITLB), Back-End (BE: decode, scoreboard issue, integer ALU, FPU), and Memory-End (ME: DTLB, L1-D cache, MSHRs, and Coherence Cache Engine).</li>
+            <li><strong>Latency-Insensitive Design (LID):</strong> Communication across FE, BE, and ME occurs via standardized credit-based elastic FIFOs. Long wire delays and clock skews between physical blocks do not cause timing hazards or require pipeline stalls, enabling clean physical place-and-route across massive silicon dies.</li>
+            <li><strong>BedRock Directory-Based MESI Coherence:</strong> Every BlackParrot tile contains a Coherence Cache Engine (CCE) that communicates with a local L2 cache slice and distributed directory tags. The BedRock protocol formally guarantees race-free cache coherence across 1 to 64 cores without broadcast storms.</li>
+            <li><strong>Integrated 2D-Mesh Network-on-Chip (NoC):</strong> Each tile embeds a 5-port packetized wormhole router (North, South, East, West, and Local Core). Cores can be tiled directly in a 2D mesh array, scaling computing throughput linearly with silicon area.</li>
+            <li><strong>Silicon Workload &amp; Target Application:</strong> Consumes ~165 kGE per tile. It is the premier open-source solution for domain-specific accelerator hosts, massively parallel multi-core server processors, and tiled datacenter compute arrays.</li>
+          </ul>
+
+          <!-- Figure 2.3: BlackParrot Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 2.3 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">BlackParrot: Modular Multi-Core Tile &amp; BedRock Coherence Mesh Topology</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridBp" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowBp" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowLime" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#16a34a"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridBp)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#22c55e"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • BLACKPARROT MODULAR MULTI-CORE TILE &amp; BEDROCK COHERENCE TOPOLOGY</text>
+
+                <!-- Partition 1: Front-End (FE) -->
+                <rect x="18" y="42" width="165" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="18" y="42" width="165" height="20" rx="5" fill="#22c55e"/>
+                <text x="24" y="56" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">PARTITION 1: FRONT-END (FE)</text>
+
+                <rect x="26" y="70" width="149" height="42" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="32" y="85" font-size="8" font-weight="800" fill="#151b20">Branch Prediction Engine</text>
+                <text x="32" y="97" font-size="7" fill="#666">BHT + BTB + Return Stack</text>
+                <text x="32" y="106" font-size="6.8" fill="#888">Speculative Next-PC Gen</text>
+
+                <rect x="26" y="120" width="149" height="46" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="32" y="135" font-size="8" font-weight="800" fill="#151b20">L1 I-Cache &amp; ITLB</text>
+                <text x="32" y="148" font-size="7" fill="#666">VIPT Set-Associative Array</text>
+                <text x="32" y="159" font-size="6.8" fill="#64748b">Sv39 Translation CAM</text>
+
+                <rect x="26" y="174" width="149" height="44" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="32" y="189" font-size="8" font-weight="800" fill="#151b20">Instruction Queue</text>
+                <text x="32" y="201" font-size="7" fill="#666">RVC 16b Expansion</text>
+                <text x="32" y="211" font-size="6.8" fill="#888">Fetches 32b Instructions</text>
+
+                <rect x="26" y="226" width="149" height="34" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1.2"/>
+                <text x="32" y="240" font-size="8" font-weight="900" fill="#166534">Credit-Based Output FIFO</text>
+                <text x="32" y="252" font-size="7" fill="#15803d">Elastic FE &rarr; BE Handshake</text>
+
+                <!-- Partition 2: Back-End (BE) -->
+                <rect x="200" y="42" width="175" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="200" y="42" width="175" height="20" rx="5" fill="#22c55e"/>
+                <text x="206" y="56" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">PARTITION 2: BACK-END (BE)</text>
+
+                <rect x="208" y="70" width="159" height="42" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="214" y="85" font-size="8" font-weight="800" fill="#151b20">Decoupled Scoreboard</text>
+                <text x="214" y="97" font-size="7" fill="#666">Dual Issue Queue Logic</text>
+                <text x="214" y="106" font-size="6.8" fill="#888">Register Dependency Check</text>
+
+                <rect x="208" y="120" width="159" height="52" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="214" y="135" font-size="8" font-weight="800" fill="#151b20">Integer ALU &amp; Multiplier</text>
+                <text x="214" y="148" font-size="7" fill="#666">64-bit Radix-4 Math Units</text>
+                <text x="214" y="160" font-size="6.8" fill="#64748b">HardFloat IEEE-754 FPU</text>
+
+                <rect x="208" y="180" width="159" height="40" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="214" y="195" font-size="8" font-weight="800" fill="#151b20">Privileged CSRs &amp; Trap FSM</text>
+                <text x="214" y="208" font-size="7" fill="#666">M/S/U Privilege Compliance</text>
+
+                <rect x="208" y="228" width="159" height="34" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1.2"/>
+                <text x="214" y="242" font-size="8" font-weight="900" fill="#166534">Credit-Based Input/Output</text>
+                <text x="214" y="254" font-size="7" fill="#15803d">Elastic BE &harr; ME Handshake</text>
+
+                <!-- Partition 3: Memory-End (ME) & Coherence -->
+                <rect x="392" y="42" width="180" height="265" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="392" y="42" width="180" height="20" rx="5" fill="#22c55e"/>
+                <text x="398" y="56" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">PARTITION 3: MEMORY-END (ME)</text>
+
+                <rect x="400" y="70" width="164" height="42" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1"/>
+                <text x="406" y="85" font-size="8" font-weight="900" fill="#0369a1">L1 D-Cache &amp; DTLB CAM</text>
+                <text x="406" y="97" font-size="7" fill="#0284c7">Non-Blocking VIPT Design</text>
+                <text x="406" y="106" font-size="6.8" fill="#64748b">Hits-Under-Miss Capable</text>
+
+                <rect x="400" y="120" width="164" height="40" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="406" y="135" font-size="8" font-weight="800" fill="#151b20">MSHR Allocation Queue</text>
+                <text x="406" y="148" font-size="7" fill="#666">Tracks Outstanding DRAM Misses</text>
+
+                <rect x="400" y="168" width="164" height="52" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+                <text x="406" y="183" font-size="8" font-weight="900" fill="#b45309">BedRock Coherence Engine (CCE)</text>
+                <text x="406" y="196" font-size="7" fill="#92400e">Directory-Based MESI Protocol</text>
+                <text x="406" y="208" font-size="6.8" fill="#b45309">Snooping / Invalidation FSM</text>
+
+                <rect x="400" y="228" width="164" height="34" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1.2"/>
+                <text x="406" y="242" font-size="8" font-weight="900" fill="#166534">Tile L2 Cache Slice</text>
+                <text x="406" y="254" font-size="7" fill="#15803d">Shared Distributed Cache</text>
+
+                <!-- 2D-Mesh NoC Router (Right Side) -->
+                <rect x="588" y="42" width="154" height="265" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+                <rect x="588" y="42" width="154" height="20" rx="5" fill="#16a34a"/>
+                <text x="594" y="56" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace">2D-MESH NoC ROUTER (5P)</text>
+
+                <rect x="596" y="70" width="138" height="30" rx="3" fill="#ffffff" stroke="#16a34a" stroke-width="1"/>
+                <text x="602" y="84" font-size="8" font-weight="800" fill="#166534">&uarr; North Port (Packet Link)</text>
+                <text x="602" y="94" font-size="6.8" fill="#666">Credit-Based Flow Control</text>
+
+                <rect x="596" y="106" width="138" height="30" rx="3" fill="#ffffff" stroke="#16a34a" stroke-width="1"/>
+                <text x="602" y="120" font-size="8" font-weight="800" fill="#166534">&rarr; East Port (Packet Link)</text>
+                <text x="602" y="130" font-size="6.8" fill="#666">Inter-Core Mesh Packet</text>
+
+                <rect x="596" y="142" width="138" height="30" rx="3" fill="#ffffff" stroke="#16a34a" stroke-width="1"/>
+                <text x="602" y="156" font-size="8" font-weight="800" fill="#166534">&darr; South Port (Packet Link)</text>
+                <text x="602" y="166" font-size="6.8" fill="#666">Credit-Based Flow Control</text>
+
+                <rect x="596" y="178" width="138" height="30" rx="3" fill="#ffffff" stroke="#16a34a" stroke-width="1"/>
+                <text x="602" y="192" font-size="8" font-weight="800" fill="#166534">&larr; West Port (Packet Link)</text>
+                <text x="602" y="202" font-size="6.8" fill="#666">Inter-Core Mesh Packet</text>
+
+                <rect x="596" y="214" width="138" height="36" rx="3" fill="#ffffff" stroke="#16a34a" stroke-width="1"/>
+                <text x="602" y="228" font-size="8" font-weight="800" fill="#166534">&#8857; Local Core Port</text>
+                <text x="602" y="239" font-size="6.8" fill="#166534">BedRock CCE Interface</text>
+
+                <!-- Flow arrows -->
+                <path d="M 183 243 L 200 243" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowLime)"/>
+                <path d="M 375 245 L 392 245" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowLime)"/>
+                <path d="M 572 232 L 588 232" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowLime)"/>
+
+                <!-- Metrics Strip Footer -->
+                <rect x="2" y="348" width="756" height="28" fill="#151b20" rx="5"/>
+                <text x="20" y="366" font-size="8.5" font-weight="800" fill="#22bfd7" font-family="monospace">METRICS: CPI: 1.35 &#8211; 1.75 &bull; Area: ~165 kGE / Tile &bull; Scaling: 1 to 64 Cores &bull; Coherence: BedRock MESI &bull; NoC: 2D Mesh</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 2.3:</strong> Detailed microarchitectural schematic of the BlackParrot modular multi-core tile. The core is cleanly split into Front-End (FE), Back-End (BE), and Memory-End (ME) interconnected by credit-based elastic channels. Hardware directory-based MESI cache coherence is driven by the BedRock Coherence Engine (CCE), communicating with adjacent tiles via a 5-port 2D-mesh NoC router.
+            </p>
+          </div>
+
+          <!-- Specifications Table -->
+          <div class="table-scroll" style="margin-top: 1.25rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Microarchitectural Attribute</th>
+                  <th>BlackParrot Implementation</th>
+                  <th>Engineering Justification &amp; Trade-off</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Pipeline Depth &amp; Modular Structure</strong></td>
+                  <td>Modular 3-Partition (FE &harr; BE &harr; ME with credit-based FIFOs)</td>
+                  <td>Latency-Insensitive Design (LID) isolates wire latency; blocks place anywhere on chip with zero timing hazards.</td>
+                </tr>
+                <tr>
+                  <td><strong>Supported ISA Extensions</strong></td>
+                  <td>RV64GC (RV64IMAFDC + Zicsr + Zifencei)</td>
+                  <td>Complies with full 64-bit Linux privileged specification.</td>
+                </tr>
+                <tr>
+                  <td><strong>Cache Coherence Protocol</strong></td>
+                  <td>BedRock Directory-Based MESI Protocol (CCE)</td>
+                  <td>Scales up to 64 cores without broadcast storms or coherence deadlocks.</td>
+                </tr>
+                <tr>
+                  <td><strong>Interconnect Fabric</strong></td>
+                  <td>Embedded 5-Port 2D-Mesh Wormhole NoC Router</td>
+                  <td>Enables direct tiling of homogenous processor tiles across high-yield silicon chips.</td>
+                </tr>
+                <tr>
+                  <td><strong>L1 Memory Subsystem</strong></td>
+                  <td>Non-blocking L1-D with MSHRs &bull; Sv39 Radix-3 MMU</td>
+                  <td>Sustains hits-under-miss; prevents single DRAM latency from locking the multi-core mesh.</td>
+                </tr>
+                <tr>
+                  <td><strong>Silicon Area &amp; Operating Freq</strong></td>
+                  <td>~165 kGE per Core Tile &bull; ~1.1 GHz (TSMC 16nm / GF 22FDX)</td>
+                  <td>Includes core, L1 caches, BedRock CCE, and local NoC router in a compact repeatable layout.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SUBSECTION 2.4: ARCHETYPE 4 DEEP-DIVE -->
+    <!-- ============================================================ -->
+    <div id="archetype-4-deepdive" class="concept-stream" style="margin-top: 2.5rem;">
+      <div class="concept-step-card archetype-yellow-border">
+        <div class="step-card-header">
+          <span class="step-tag badge-yellow">2.4 ARCHITECTURAL DEEP-DIVE</span>
+          <h3 class="step-card-title">Archetype 4: High-Performance Out-of-Order Superscalar Engine (BOOM / SonicBOOM)</h3>
+        </div>
+        <p class="step-card-lead">
+          Developed at UC Berkeley, <strong>BOOM (Berkeley Out-of-Order Machine / SonicBOOM)</strong> is the pinnacle of open-source RISC-V performance. Inspired by modern commercial server microarchitectures (Cortex-A76, Apple Firestorm, Intel Golden Cove), BOOM shatters the single-issue in-order performance ceiling by executing up to 3 to 4 instructions per cycle out-of-order, renaming registers onto a massive physical register file, and aggressively overlapping DRAM misses with an 8-entry non-blocking MSHR queue.
+        </p>
+
+        <!-- 2.4.1 BOOM Technical Breakdown -->
+        <div class="sub-topic-card">
+          <div class="sub-topic-head">
+            <div class="sub-topic-title-group">
+              <span class="pill-badge badge-yellow">CORE 4</span>
+              <h4 class="sub-topic-title">SonicBOOM &bull; 3-Wide Out-of-Order Superscalar Engine</h4>
+            </div>
+            <span class="sub-topic-spec-badge">~420 kGE &bull; Chisel HDL</span>
+          </div>
+          <p>
+            BOOM deploys the full arsenal of modern superscalar microarchitectural techniques to maximize single-thread IPC:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Multi-Wide Superscalar Execution:</strong> Fetches 4 instructions per clock cycle and decodes/dispatches 3 micro-ops (uOPs) simultaneously into parallel execution pipelines (Dual Integer ALUs, Pipelined Multiplier/Divider, IEEE-754 FPU, and Load/Store AGUs).</li>
+            <li><strong>Register Renaming onto Explicit PRF:</strong> Employs a Register Alias Table (RAT) that maps the 32 architectural RISC-V registers onto a 96 to 128-entry unified Physical Register File (PRF). This completely eliminates false Write-After-Read (WAR) and Write-After-Write (WAW) hazards, freeing instructions to execute as soon as true RAW data is produced.</li>
+            <li><strong>Unified &amp; Distributed Issue Windows:</strong> Features reservation stations where waiting uOPs continuously snoop execution result broadcast buses. When source operands become valid, the issue logic dispatches ready uOPs speculatively into available execution units with zero wait states.</li>
+            <li><strong>Non-Blocking L1-D Cache with 8-Entry MSHR Queue:</strong> Solves the Memory Wall by allowing up to 8 independent DRAM cache line misses to be in-flight concurrently ("misses-under-miss" and "hits-under-miss"). The core continues processing independent compute threads even during prolonged DRAM delays.</li>
+            <li><strong>Circular Reorder Buffer (RoB) &amp; Speculative Recovery:</strong> A 64 to 128-entry circular Reorder Buffer holds speculative instruction outcomes. It commits up to 4 instructions per cycle strictly in program order. In the event of a branch misprediction or page fault, the RoB recovers the precise architectural state within a single clock cycle.</li>
+          </ul>
+
+          <!-- Figure 2.4: BOOM Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 2.4 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">SonicBOOM: 3-Wide Out-of-Order Superscalar Datapath, PRF &amp; MSHR Architecture</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 420" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridBoom" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowBoom" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowGoldB" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="418" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="384" x="2" y="2" rx="7" fill="url(#cadGridBoom)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#ffc83e"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • SONICBOOM 3-WIDE OUT-OF-ORDER SUPERSCALAR &amp; MSHR TOPOLOGY</text>
+
+                <!-- 1. Fetch Stage (4-Wide) -->
+                <rect x="18" y="42" width="115" height="305" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="18" y="42" width="115" height="20" rx="5" fill="#ffc83e"/>
+                <text x="24" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">FETCH (4-WIDE)</text>
+
+                <rect x="24" y="70" width="103" height="42" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="30" y="85" font-size="8" font-weight="800" fill="#151b20">Next-Line Predictor</text>
+                <text x="30" y="97" font-size="7" fill="#666">TAGE &bull; 32-Entry RAS</text>
+                <text x="30" y="106" font-size="6.8" fill="#888">Branch Target Queue</text>
+
+                <rect x="24" y="120" width="103" height="54" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
+                <text x="30" y="135" font-size="8" font-weight="900" fill="#151b20">32 KiB 8-Way I-Cache</text>
+                <text x="30" y="148" font-size="7" fill="#666">4-Wide Fetch Packet</text>
+                <text x="30" y="159" font-size="6.8" fill="#0284c7">32-Entry ITLB CAM</text>
+                <text x="30" y="168" font-size="6.5" fill="#64748b">VIPT Tag Lookup</text>
+
+                <rect x="24" y="182" width="103" height="50" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="30" y="196" font-size="8" font-weight="800" fill="#151b20">Fetch Target Queue (FTQ)</text>
+                <text x="30" y="208" font-size="7" fill="#666">Decouples Front-End</text>
+                <text x="30" y="218" font-size="6.8" fill="#888">16-Entry Branch Metadata</text>
+
+                <!-- 2. Decode & Rename (RAT) -->
+                <rect x="142" y="42" width="125" height="305" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="142" y="42" width="125" height="20" rx="5" fill="#ffc83e"/>
+                <text x="148" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">DECODE &amp; RENAME</text>
+
+                <rect x="148" y="70" width="113" height="44" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="154" y="85" font-size="8" font-weight="800" fill="#151b20">3-Wide Decoder</text>
+                <text x="154" y="97" font-size="7" fill="#666">Translates Inst &rarr; uOPs</text>
+                <text x="154" y="107" font-size="6.8" fill="#888">RVC 16b Expansion</text>
+
+                <rect x="148" y="122" width="113" height="74" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+                <text x="154" y="137" font-size="8" font-weight="900" fill="#b45309">Register Alias Table</text>
+                <text x="154" y="150" font-size="7" fill="#92400e">Maps 32 GPR &rarr; 128 PRF</text>
+                <text x="154" y="161" font-size="7" fill="#b45309">Eliminates WAR / WAW</text>
+                <text x="154" y="172" font-size="6.8" fill="#666">Free-List Allocator</text>
+                <text x="154" y="184" font-size="6.5" fill="#b45309">Checkpoint Recovery</text>
+
+                <rect x="148" y="204" width="113" height="52" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
+                <text x="154" y="219" font-size="8" font-weight="900" fill="#151b20">Unified PRF (128x64b)</text>
+                <text x="154" y="232" font-size="7" fill="#666">Physical Register File</text>
+                <text x="154" y="244" font-size="6.8" fill="#0284c7">6 Read Ports &bull; 4 Write</text>
+
+                <!-- 3. Issue Queues (Reservation Stations) -->
+                <rect x="276" y="42" width="135" height="305" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="276" y="42" width="135" height="20" rx="5" fill="#ffc83e"/>
+                <text x="282" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ISSUE QUEUES (RS)</text>
+
+                <rect x="282" y="70" width="123" height="64" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="288" y="85" font-size="8" font-weight="800" fill="#151b20">Integer Issue Window</text>
+                <text x="288" y="98" font-size="7" fill="#666">24-Entry Reservation Stn</text>
+                <text x="288" y="109" font-size="7" fill="#16a34a">CAM Tag Matching</text>
+                <text x="288" y="120" font-size="6.8" fill="#888">Speculative Wakeup</text>
+
+                <rect x="282" y="142" width="123" height="52" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="288" y="157" font-size="8" font-weight="800" fill="#151b20">Memory Issue Window</text>
+                <text x="288" y="170" font-size="7" fill="#666">16-Entry Queue (AGU)</text>
+                <text x="288" y="181" font-size="6.8" fill="#0284c7">Address Dependency Sched</text>
+
+                <rect x="282" y="202" width="123" height="50" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="288" y="217" font-size="8" font-weight="800" fill="#151b20">FP Issue Window</text>
+                <text x="288" y="230" font-size="7" fill="#666">16-Entry Queue (FMA)</text>
+                <text x="288" y="240" font-size="6.8" fill="#888">Double-Precision Sched</text>
+
+                <!-- 4. Parallel Execute Units -->
+                <rect x="420" y="42" width="135" height="305" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="420" y="42" width="135" height="20" rx="5" fill="#ffc83e"/>
+                <text x="426" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">EXECUTE PIPELINES</text>
+
+                <rect x="426" y="70" width="123" height="34" rx="3" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+                <text x="432" y="84" font-size="8" font-weight="800" fill="#166534">ALU 0: Branch &amp; Int</text>
+                <text x="432" y="95" font-size="6.8" fill="#15803d">1-Cycle Fast Integer Ops</text>
+
+                <rect x="426" y="112" width="123" height="34" rx="3" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+                <text x="432" y="126" font-size="8" font-weight="800" fill="#166534">ALU 1: Shift / Math</text>
+                <text x="432" y="137" font-size="6.8" fill="#15803d">Pipelined Multiplier Unit</text>
+
+                <rect x="426" y="154" width="123" height="34" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="432" y="168" font-size="8" font-weight="800" fill="#151b20">FPU: Pipelined FMA</text>
+                <text x="432" y="179" font-size="6.8" fill="#666">HardFloat Double-Precision</text>
+
+                <rect x="426" y="196" width="123" height="48" rx="3" fill="#e0f2fe" stroke="#0284c7" stroke-width="1"/>
+                <text x="432" y="210" font-size="8" font-weight="900" fill="#0369a1">Load/Store AGU</text>
+                <text x="432" y="222" font-size="7" fill="#0284c7">Effective Addr Calc (64b)</text>
+                <text x="432" y="233" font-size="6.8" fill="#64748b">VIPT Tag Comparison</text>
+
+                <!-- 5. Memory Subsystem & Commit (RoB) -->
+                <rect x="564" y="42" width="178" height="305" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="564" y="42" width="178" height="20" rx="5" fill="#ffc83e"/>
+                <text x="570" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">MEMORY &amp; REORDER BUFFER</text>
+
+                <rect x="572" y="70" width="162" height="66" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+                <text x="578" y="85" font-size="8.5" font-weight="900" fill="#b45309">REORDER BUFFER (RoB)</text>
+                <text x="578" y="98" font-size="7" fill="#92400e">&bull; 128-Entry Circular Array</text>
+                <text x="578" y="109" font-size="7" fill="#92400e">&bull; Commits up to 4 uOPs/cycle</text>
+                <text x="578" y="120" font-size="7" fill="#b45309">&bull; In-Order Architectural Commit</text>
+                <text x="578" y="131" font-size="6.8" fill="#115e59">Precise Exception Recovery</text>
+
+                <rect x="572" y="144" width="162" height="42" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
+                <text x="578" y="159" font-size="8" font-weight="800" fill="#151b20">Load / Store Queues (LDQ/STQ)</text>
+                <text x="578" y="171" font-size="7" fill="#666">16-Entry LDQ &bull; 16-Entry STQ</text>
+                <text x="578" y="181" font-size="6.8" fill="#0284c7">Store-to-Load Forwarding</text>
+
+                <!-- Non-blocking Cache + MSHR -->
+                <rect x="572" y="194" width="162" height="74" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.2"/>
+                <text x="578" y="209" font-size="8" font-weight="900" fill="#0369a1">NON-BLOCKING L1 D-CACHE</text>
+                <text x="578" y="222" font-size="7" fill="#0284c7">32 KiB 8-Way &bull; 32-Entry DTLB</text>
+                <text x="578" y="233" font-size="7" font-weight="800" fill="#b45309">8-ENTRY MSHR POOL</text>
+                <text x="578" y="244" font-size="6.8" fill="#92400e">Sustains 8 Concurrent DRAM Misses</text>
+                <text x="578" y="255" font-size="6.5" fill="#64748b">TileLink-UH 64b System Bus Port</text>
+
+                <!-- Flow arrows -->
+                <path d="M 133 160 L 142 160" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBoom)"/>
+                <path d="M 267 150 L 276 150" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBoom)"/>
+                <path d="M 411 120 L 420 120" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBoom)"/>
+                <path d="M 555 100 L 564 100" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBoom)"/>
+
+                <!-- Metrics Strip Footer -->
+                <rect x="2" y="388" width="756" height="28" fill="#151b20" rx="5"/>
+                <text x="20" y="406" font-size="8.5" font-weight="800" fill="#22bfd7" font-family="monospace">METRICS: Sustained IPC: 1.05 &#8211; 1.55 (CPI: 0.65 &#8211; 0.95) &bull; Area: ~420 kGE (16nm) &bull; Fmax: 1.5 GHz &bull; Rename: 128 PRF &bull; MSHRs: 8</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 2.4:</strong> Detailed microarchitectural schematic of the SonicBOOM 3-wide out-of-order superscalar core. Instructions are decoded and renamed onto a unified 128-entry Physical Register File (PRF). The non-blocking L1 Data Cache utilizes an 8-entry Miss Status Holding Register (MSHR) pool to overlap DRAM latency while instructions execute speculatively out-of-order and commit strictly in program order through a 128-entry Reorder Buffer (RoB).
+            </p>
+          </div>
+
+          <!-- Specifications Table -->
+          <div class="table-scroll" style="margin-top: 1.25rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Microarchitectural Attribute</th>
+                  <th>SonicBOOM Implementation</th>
+                  <th>Engineering Justification &amp; Trade-off</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Pipeline Depth &amp; Issue Width</strong></td>
+                  <td>7-to-10 Stage Superscalar (4-Wide Fetch, 3-Wide Decode/Rename/Commit)</td>
+                  <td>Shatters the in-order single-issue IPC barrier, achieving sustained IPC &gt; 1.2 in complex workloads.</td>
+                </tr>
+                <tr>
+                  <td><strong>Register Renaming &amp; PRF</strong></td>
+                  <td>Register Alias Table (RAT) &bull; 128-Entry Unified PRF</td>
+                  <td>Completely eliminates false WAR and WAW register hazards across speculatively executed threads.</td>
+                </tr>
+                <tr>
+                  <td><strong>Reorder Buffer (RoB)</strong></td>
+                  <td>128-Entry Circular Buffer (Commits up to 4 uOPs/cycle)</td>
+                  <td>Maintains precise architectural exception state and single-cycle recovery on branch mispredictions.</td>
+                </tr>
+                <tr>
+                  <td><strong>Non-Blocking L1-D &amp; MSHRs</strong></td>
+                  <td>32 KiB 8-Way VIPT Cache &bull; 8-Entry MSHR Queue</td>
+                  <td>Hides DRAM latency by sustaining up to 8 concurrent outstanding memory misses without core stalls.</td>
+                </tr>
+                <tr>
+                  <td><strong>Memory Disambiguation</strong></td>
+                  <td>16-Entry Load Queue (LDQ) &bull; 16-Entry Store Queue (STQ)</td>
+                  <td>Supports speculative load bypassing with dynamic store-to-load operand forwarding.</td>
+                </tr>
+                <tr>
+                  <td><strong>Silicon Area &amp; Operating Freq</strong></td>
+                  <td>~420 kGE &bull; ~1.5 GHz (TSMC 16nm / GlobalFoundries 22FDX)</td>
+                  <td>Consumes ~3.1&times; the area of Rocket Chip, representing the peak high-performance tier of open-source RISC-V.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -2150,4 +3296,248 @@ BOOM        &amp; RV64GC &amp; 7--10 (OoO)  &amp; Sv39/48 &amp; \textbf&#123;780
       gap: 0.4rem;
     }
   }
+
+  /* ============================================================ */
+  /* Section 2: Four Archetypes, Ladder & Deep-Dive Styling      */
+  /* ============================================================ */
+  .arch-ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 2rem;
+  }
+
+  .ladder-step {
+    background: var(--paper, #fdfbf7);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+    padding: 1.75rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .ladder-step:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 var(--ink, #151b20);
+  }
+
+  .ladder-step.archetype-coral-border {
+    border-left: 8px solid var(--coral, #ff6b4a) !important;
+  }
+
+  .ladder-step.archetype-teal-border {
+    border-left: 8px solid var(--teal, #0d9488) !important;
+  }
+
+  .ladder-step.archetype-lime-border {
+    border-left: 8px solid var(--lime, #22c55e) !important;
+  }
+
+  .ladder-step.archetype-yellow-border {
+    border-left: 8px solid var(--yellow, #ffc83e) !important;
+  }
+
+  .ladder-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ladder-num-badge {
+    font-size: 1.35rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    border: 2px solid var(--ink, #151b20);
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ladder-title-wrap {
+    flex: 1;
+  }
+
+  .ladder-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.04em;
+    color: var(--ink-light, #555);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+  }
+
+  .ladder-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .ladder-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .ladder-summary-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+  }
+
+  .ladder-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .lm-lbl {
+    font-size: 0.7rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .lm-val {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+  }
+
+  .ladder-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.85rem 0;
+  }
+
+  .connector-line {
+    width: 0;
+    height: 14px;
+    border-left: 2px solid var(--ink, #151b20);
+  }
+
+  .connector-pill {
+    background: var(--paper-deep, #f4eee1);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 999px;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    padding: 0.35rem 1rem;
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    text-align: center;
+    max-width: 90%;
+  }
+
+  .archetype-coral-border {
+    border-top: 5px solid var(--coral, #f38469) !important;
+  }
+
+  .archetype-teal-border {
+    border-top: 5px solid var(--teal, #0d9488) !important;
+  }
+
+  .archetype-lime-border {
+    border-top: 5px solid var(--lime, #b7df69) !important;
+  }
+
+  .archetype-yellow-border {
+    border-top: 5px solid var(--yellow, #ffc83e) !important;
+  }
+
+  .concept-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .sub-topic-card {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-topic-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1.5px dashed var(--line, #e2d9c8);
+    flex-wrap: nowrap;
+  }
+
+  .sub-topic-title-group {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .sub-topic-title {
+    font-size: 1.12rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sub-topic-spec-badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    background: var(--paper-deep, #eee4c8);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .pill-badge {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+  }
+
+  .concept-list {
+    margin: 0 0 1.25rem 0;
+    padding-left: 1.25rem;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--ink-light, #333);
+  }
+
+  .concept-list li {
+    margin-bottom: 0.5rem;
+  }
+
 </style>
