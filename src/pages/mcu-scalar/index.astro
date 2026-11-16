@@ -370,6 +370,69 @@ const masterBenchmarkData = [
   }
 ];
 
+// Helper to derive archetype category code for filtering
+function getArchetypeCategory(arch: string): string {
+  if (arch.includes("1-Stage") || arch.includes("1-2 Stage") || arch.includes("Multi-Cycle")) return "archetype-1";
+  if (arch.includes("2-Stage")) return "archetype-2";
+  if (arch.includes("3-Stage") || arch.includes("4-Stage Modular") || arch.includes("5-Stage") || arch.includes("Structural")) return "archetype-3";
+  if (arch.includes("Dual-Issue") || arch.includes("Superscalar")) return "archetype-4";
+  return "archetype-2";
+}
+
+// Compute rank map by CoreMark/MHz (non-zero scores first)
+const sortedByCoremark = [...masterBenchmarkData]
+  .map((row) => ({
+    key: row.name + "::" + row.variant,
+    score: parseFloat(row.coremarkMhz) || 0
+  }))
+  .sort((a, b) => b.score - a.score);
+
+const coremarkRankMap = new Map();
+sortedByCoremark.forEach((item, index) => {
+  coremarkRankMap.set(item.key, index + 1);
+});
+
+function getCpiClass(cpiStr: string): string {
+  const cpiVal = parseFloat(cpiStr);
+  if (isNaN(cpiVal)) return "cpi-mid";
+  if (cpiVal <= 1.15) return "cpi-elite";
+  if (cpiVal <= 1.45) return "cpi-good";
+  if (cpiVal <= 2.0) return "cpi-mid";
+  return "cpi-slow";
+}
+
+const leaderboardProcessedData = masterBenchmarkData.map((row, idx) => {
+  const archCat = getArchetypeCategory(row.archetype);
+  const rank = coremarkRankMap.get(row.name + "::" + row.variant) || (idx + 1);
+  const rankClass = rank === 1 ? "rank-gold" : rank === 2 ? "rank-silver" : rank === 3 ? "rank-bronze" : "rank-pill";
+  const scoreNum = parseFloat(row.coremarkMhz) || 0;
+  const scorePercent = Math.min(100, Math.max(2, Math.round((scoreNum / 3.2256) * 100)));
+  const cpiVal = parseFloat(row.cpi) || 999;
+  const cpiClass = getCpiClass(row.cpi);
+  const areaVal = parseFloat(row.areaKge) || 999;
+  const fmaxVal = parseInt(row.fmax) || 0;
+  const searchStr = `${row.name} ${row.variant} ${row.isa} ${row.archetype} ${row.simulator} ${row.bus}`.toLowerCase();
+  const isGoldScore = scoreNum >= 2.5;
+  const hasBar = scoreNum > 0;
+
+  return {
+    ...row,
+    idx,
+    archCat,
+    rank,
+    rankClass,
+    scoreNum,
+    scorePercent,
+    cpiVal,
+    cpiClass,
+    areaVal,
+    fmaxVal,
+    searchStr,
+    isGoldScore,
+    hasBar
+  };
+});
+
 // Configuration sensitivity dataset
 const configSensitivity = [
   {
@@ -5298,44 +5361,206 @@ const bespokeDossiers = [
       </button>
     </div>
 
-    <div class="table-scroll">
-      <table class="data-table">
+    <!-- Quick Scoreboard KPI Summary Strip -->
+    <div class="lb-kpi-grid">
+      <div class="lb-kpi-card">
+        <div class="lb-kpi-badge">&#127942; HIGHEST COREMARK / MHZ</div>
+        <div class="lb-kpi-value text-accent">3.2256</div>
+        <div class="lb-kpi-core">Ibex (Dynamic BP)</div>
+        <div class="lb-kpi-meta">+31% speedup over static 2-stage stall</div>
+      </div>
+      <div class="lb-kpi-card">
+        <div class="lb-kpi-badge">&#9889; TOP IPC / LOWEST CPI</div>
+        <div class="lb-kpi-value text-teal">1.030</div>
+        <div class="lb-kpi-core">VeeR EL2 (Dual-Issue)</div>
+        <div class="lb-kpi-meta">Sustained 2-wide superscalar commit</div>
+      </div>
+      <div class="lb-kpi-card">
+        <div class="lb-kpi-badge">&#128300; MINIMAL SILICON AREA</div>
+        <div class="lb-kpi-value text-coral">2.1 kGE</div>
+        <div class="lb-kpi-core">SERV (1-Bit Serial)</div>
+        <div class="lb-kpi-meta">Fits in 126 FPGA LUTs &amp; 1-bit full adder</div>
+      </div>
+      <div class="lb-kpi-card">
+        <div class="lb-kpi-badge">&#127981; MASS PRODUCTION SILICON</div>
+        <div class="lb-kpi-value text-lime">&gt;450 MHz</div>
+        <div class="lb-kpi-core">Hazard3 &amp; VeeR EL2</div>
+        <div class="lb-kpi-meta">Raspberry Pi RP2350 &amp; WD NVMe SSDs</div>
+      </div>
+    </div>
+
+    <!-- Leaderboard Interactive Controls (Filter, Search, Sort) -->
+    <div class="lb-controls-bar">
+      <div class="lb-filter-group">
+        <span class="lb-filter-label">Filter Archetype:</span>
+        <div class="lb-filter-pills">
+          <button class="lb-pill active" data-filter="all">All Cores (14)</button>
+          <button class="lb-pill" data-filter="archetype-1">Archetype 1: Bit-Serial &amp; Multi-Cycle (3)</button>
+          <button class="lb-pill" data-filter="archetype-2">Archetype 2: 2-Stage Harvard (5)</button>
+          <button class="lb-pill" data-filter="archetype-3">Archetype 3: Deep Pipelined (5)</button>
+          <button class="lb-pill" data-filter="archetype-4">Archetype 4: Dual-Issue Superscalar (1)</button>
+        </div>
+      </div>
+
+      <div class="lb-search-sort-group">
+        <div class="lb-search-wrap">
+          <span class="lb-search-icon">&#128269;</span>
+          <input type="text" id="lbSearchInput" class="lb-search-input" placeholder="Search core, ISA, bus, or simulator..." />
+          <button id="lbClearSearch" class="lb-clear-btn" title="Clear search" style="display: none;">&times;</button>
+        </div>
+        <div class="lb-sort-wrap">
+          <span class="lb-sort-label">Sort:</span>
+          <select id="lbSortSelect" class="lb-sort-select">
+            <option value="default">Default Order</option>
+            <option value="coremark-desc">CoreMark / MHz (High &rarr; Low)</option>
+            <option value="cpi-asc">Empirical CPI (Low &rarr; High)</option>
+            <option value="area-asc">Area kGE (Small &rarr; Large)</option>
+            <option value="fmax-desc">Fmax (High &rarr; Low)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-scroll leaderboard-scroll">
+      <table class="data-table leaderboard-table" id="masterLeaderboardTable">
         <thead>
           <tr>
-            <th>Core &amp; Variant</th>
-            <th>ISA Support</th>
-            <th>Pipeline Archetype</th>
-            <th>CoreMark / MHz</th>
-            <th>DMIPS / MHz</th>
-            <th>Empirical CPI</th>
-            <th>Total Cycles</th>
-            <th>Area (kGE)</th>
-            <th>ASIC Fmax</th>
-            <th>Simulation Engine</th>
-            <th>Bus Interface</th>
+            <th class="sticky-col col-rank-core" data-sort="name">
+              <div class="th-content">
+                <span># &bull; Core &amp; Variant</span>
+                <span class="sort-icon">&#8645;</span>
+              </div>
+            </th>
+            <th data-sort="isa">
+              <div class="th-content">
+                <span>ISA Support</span>
+                <span class="sort-icon">&#8645;</span>
+              </div>
+            </th>
+            <th data-sort="archetype">
+              <div class="th-content">
+                <span>Pipeline Archetype</span>
+                <span class="sort-icon">&#8645;</span>
+              </div>
+            </th>
+            <th class="th-numeric" data-sort="coremark">
+              <div class="th-content th-content-right">
+                <span>CoreMark / MHz</span>
+                <span class="sort-icon">&#8645;</span>
+              </div>
+            </th>
+            <th class="th-numeric" data-sort="dmips">
+              <div class="th-content th-content-right">
+                <span>DMIPS / MHz</span>
+                <span class="sort-icon">&#8645;</span>
+              </div>
+            </th>
+            <th class="th-center" data-sort="cpi">
+              <div class="th-content th-content-center">
+                <span>Empirical CPI</span>
+                <span class="sort-icon">&#8645;</span>
+              </div>
+            </th>
+            <th class="th-numeric">
+              <div class="th-content th-content-right">
+                <span>Total Cycles</span>
+              </div>
+            </th>
+            <th class="th-center" data-sort="area">
+              <div class="th-content th-content-center">
+                <span>Area (kGE)</span>
+                <span class="sort-icon">&#8645;</span>
+              </div>
+            </th>
+            <th class="th-center" data-sort="fmax">
+              <div class="th-content th-content-center">
+                <span>ASIC Fmax</span>
+                <span class="sort-icon">&#8645;</span>
+              </div>
+            </th>
+            <th>
+              <div class="th-content">
+                <span>Simulation Engine</span>
+              </div>
+            </th>
+            <th>
+              <div class="th-content">
+                <span>Bus Interface</span>
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {masterBenchmarkData.map((row) => (
-            <tr class={row.highlight ? "highlight-row" : ""}>
-              <td>
-                <strong><a href={`#dossier-${row.slug}`}>{row.name}</a></strong>
-                <br /><small class="text-muted">{row.variant}</small>
+          {leaderboardProcessedData.map((row) => (
+            <tr 
+              class={row.highlight ? "highlight-row" : ""}
+              data-original-idx={row.idx}
+              data-archetype={row.archCat}
+              data-coremark={row.scoreNum}
+              data-dmips={parseFloat(row.dmipsMhz) || 0}
+              data-cpi={row.cpiVal}
+              data-area={row.areaVal}
+              data-fmax={row.fmaxVal}
+              data-name={row.name.toLowerCase()}
+              data-isa={row.isa.toLowerCase()}
+              data-search={row.searchStr}
+            >
+              <td class="sticky-col col-rank-core">
+                <div class="col-rank-core-wrap">
+                  <span class={`rank-badge ${row.rankClass}`}>#{row.rank}</span>
+                  <div class="core-details-box">
+                    <strong><a href={`#dossier-${row.slug}`} class="core-link">{row.name}</a></strong>
+                    <span class="core-variant-sub">{row.variant}</span>
+                    {row.badgeText && (
+                      <span class={`champion-tag ${row.badgeClass}`}>{row.badgeText}</span>
+                    )}
+                  </div>
+                </div>
               </td>
-              <td><code>{row.isa}</code></td>
+              <td>
+                <code class="isa-pill">{row.isa}</code>
+              </td>
               <td>
                 <span class={`badge ${row.badgeClass}`}>{row.archetype}</span>
               </td>
-              <td>
-                <span class="score-badge">{row.coremarkMhz}</span>
+              <td class="td-numeric">
+                <div class="score-cell-wrap">
+                  <span class={row.isGoldScore ? "score-pill-gold" : "score-pill-plain"}>
+                    {row.coremarkMhz}
+                  </span>
+                  {row.hasBar && (
+                    <div class="mini-bar-track" title={`${row.scorePercent}% of peak (3.23 CoreMark/MHz)`}>
+                      <div class="mini-bar-fill" style={`width: ${row.scorePercent}%;`}></div>
+                    </div>
+                  )}
+                </div>
               </td>
-              <td><strong>{row.dmipsMhz}</strong></td>
-              <td><code>{row.cpi}</code></td>
-              <td><small>{row.totalCycles}</small></td>
-              <td>{row.areaKge} kGE</td>
-              <td>{row.fmax}</td>
-              <td><small>{row.simulator}</small></td>
-              <td><small>{row.bus}</small></td>
+              <td class="td-numeric">
+                <strong class="tabular-dmips">{row.dmipsMhz}</strong>
+              </td>
+              <td class="td-center">
+                <span class={`cpi-pill ${row.cpiClass}`}>
+                  <code>{row.cpi}</code>
+                </span>
+              </td>
+              <td class="td-numeric">
+                <div class="cycles-cell-wrap">
+                  <span class="cycles-num">{row.totalCycles}</span>
+                  <span class="iter-sub">{row.iterations}</span>
+                </div>
+              </td>
+              <td class="td-center">
+                <span class="area-pill">{row.areaKge} kGE</span>
+              </td>
+              <td class="td-center">
+                <span class="fmax-pill">{row.fmax}</span>
+              </td>
+              <td>
+                <span class="meta-pill">{row.simulator}</span>
+              </td>
+              <td>
+                <span class="meta-pill">{row.bus}</span>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -5742,6 +5967,141 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
       if (parent) parent.style.display = "none";
     });
   });
+
+  // Master Leaderboard: Filter, Search, and Sort
+  const lbTable = document.getElementById("masterLeaderboardTable");
+  if (lbTable) {
+    const lbTbody = lbTable.querySelector("tbody");
+    const lbFilterPills = document.querySelectorAll(".lb-pill");
+    const lbSearchInput = document.getElementById("lbSearchInput") as HTMLInputElement | null;
+    const lbClearSearch = document.getElementById("lbClearSearch") as HTMLButtonElement | null;
+    const lbSortSelect = document.getElementById("lbSortSelect") as HTMLSelectElement | null;
+    const lbSortHeaders = lbTable.querySelectorAll("th[data-sort]");
+
+    let activeFilter = "all";
+    let activeQuery = "";
+    let currentSortKey = "default";
+    let currentSortDir: "asc" | "desc" = "desc";
+
+    function filterLeaderboard() {
+      if (!lbTbody) return;
+      const rows = Array.from(lbTbody.querySelectorAll("tr")) as HTMLElement[];
+
+      rows.forEach((row) => {
+        const rowArch = row.getAttribute("data-archetype") || "";
+        const rowSearch = row.getAttribute("data-search") || "";
+
+        const matchesFilter = activeFilter === "all" || rowArch === activeFilter;
+        const matchesSearch = activeQuery === "" || rowSearch.includes(activeQuery);
+
+        if (matchesFilter && matchesSearch) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+
+    // Archetype pill filter click
+    lbFilterPills.forEach((pill) => {
+      pill.addEventListener("click", () => {
+        lbFilterPills.forEach((p) => p.classList.remove("active"));
+        pill.classList.add("active");
+        activeFilter = pill.getAttribute("data-filter") || "all";
+        filterLeaderboard();
+      });
+    });
+
+    // Real-time search input
+    if (lbSearchInput) {
+      lbSearchInput.addEventListener("input", () => {
+        activeQuery = lbSearchInput.value.trim().toLowerCase();
+        if (lbClearSearch) {
+          lbClearSearch.style.display = activeQuery.length > 0 ? "block" : "none";
+        }
+        filterLeaderboard();
+      });
+    }
+
+    // Clear search button
+    if (lbClearSearch && lbSearchInput) {
+      lbClearSearch.addEventListener("click", () => {
+        lbSearchInput.value = "";
+        activeQuery = "";
+        lbClearSearch.style.display = "none";
+        filterLeaderboard();
+        lbSearchInput.focus();
+      });
+    }
+
+    // Multi-key row sorting function
+    function sortRows(key: string, dir: "asc" | "desc") {
+      if (!lbTbody) return;
+      const rows = Array.from(lbTbody.querySelectorAll("tr")) as HTMLElement[];
+
+      rows.sort((a, b) => {
+        if (key === "default") {
+          const idxA = parseInt(a.getAttribute("data-original-idx") || "0", 10);
+          const idxB = parseInt(b.getAttribute("data-original-idx") || "0", 10);
+          return idxA - idxB;
+        }
+
+        const valA = a.getAttribute(`data-${key}`) || "";
+        const valB = b.getAttribute(`data-${key}`) || "";
+
+        const numA = parseFloat(valA);
+        const numB = parseFloat(valB);
+        if (!isNaN(numA) && !isNaN(numB)) {
+          return dir === "asc" ? numA - numB : numB - numA;
+        }
+
+        return dir === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
+      });
+
+      rows.forEach((r) => lbTbody.appendChild(r));
+    }
+
+    // Sort select change listener
+    if (lbSortSelect) {
+      lbSortSelect.addEventListener("change", () => {
+        const val = lbSortSelect.value;
+        lbSortHeaders.forEach((h) => h.classList.remove("sort-active", "sort-asc", "sort-desc"));
+        if (val === "default") {
+          sortRows("default", "asc");
+        } else if (val === "coremark-desc") {
+          sortRows("coremark", "desc");
+        } else if (val === "cpi-asc") {
+          sortRows("cpi", "asc");
+        } else if (val === "area-asc") {
+          sortRows("area", "asc");
+        } else if (val === "fmax-desc") {
+          sortRows("fmax", "desc");
+        }
+      });
+    }
+
+    // Interactive column header sort
+    lbSortHeaders.forEach((th) => {
+      th.addEventListener("click", () => {
+        const key = th.getAttribute("data-sort");
+        if (!key) return;
+
+        if (currentSortKey === key) {
+          currentSortDir = currentSortDir === "asc" ? "desc" : "asc";
+        } else {
+          currentSortKey = key;
+          currentSortDir = ["name", "isa", "archetype"].includes(key) ? "asc" : "desc";
+        }
+
+        lbSortHeaders.forEach((h) => {
+          h.classList.remove("sort-active", "sort-asc", "sort-desc");
+        });
+        th.classList.add("sort-active", currentSortDir === "asc" ? "sort-asc" : "sort-desc");
+
+        sortRows(key, currentSortDir);
+      });
+    });
+  }
 </script>
 
 <style>
@@ -7253,6 +7613,625 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     color: var(--ink-light, #666);
     font-style: italic;
     margin-top: 0.5rem;
+  }
+
+  /* ==========================================================================
+     Level 1 Benchmark Leaderboard: Master Table, KPI Grid & Interactive Controls
+     ========================================================================== */
+
+  /* KPI Scoreboard Grid */
+  .lb-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0 1.25rem 0;
+  }
+
+  .lb-kpi-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .lb-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+  }
+
+  .lb-kpi-badge {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-light, #64748b);
+    margin-bottom: 0.35rem;
+  }
+
+  .lb-kpi-value {
+    font-size: 1.85rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    line-height: 1.1;
+    margin-bottom: 0.2rem;
+  }
+
+  .lb-kpi-card .text-accent {
+    color: #0284c7;
+  }
+
+  .lb-kpi-card .text-teal {
+    color: #0f766e;
+  }
+
+  .lb-kpi-card .text-coral {
+    color: #dc2626;
+  }
+
+  .lb-kpi-card .text-lime {
+    color: #15803d;
+  }
+
+  .lb-kpi-core {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+  }
+
+  .lb-kpi-meta {
+    font-size: 0.76rem;
+    color: var(--ink-light, #64748b);
+    margin-top: 0.2rem;
+    line-height: 1.35;
+  }
+
+  /* Interactive Filter, Search & Sort Control Bar */
+  .lb-controls-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.25rem 0 1rem 0;
+    padding: 0.85rem 1rem;
+    background: var(--cream-soft, #f6f0dc);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+  }
+
+  .lb-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .lb-filter-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .lb-filter-pills {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  .lb-pill {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 0.28rem 0.65rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--ink, #151b20);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 1.5px 1.5px 0 var(--ink, #151b20);
+  }
+
+  .lb-pill:hover {
+    background: #fef08a;
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+  }
+
+  .lb-pill.active {
+    background: var(--ink, #151b20);
+    color: #ffffff;
+    border-color: var(--ink, #151b20);
+    box-shadow: 1.5px 1.5px 0 #0284c7;
+  }
+
+  .lb-search-sort-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .lb-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .lb-search-icon {
+    position: absolute;
+    left: 0.65rem;
+    font-size: 0.82rem;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .lb-search-input {
+    padding: 0.35rem 1.8rem 0.35rem 2.05rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    background: #ffffff;
+    width: 240px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    color: var(--ink, #151b20);
+  }
+
+  .lb-search-input:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.25);
+  }
+
+  .lb-clear-btn {
+    position: absolute;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    font-size: 1.15rem;
+    cursor: pointer;
+    color: #64748b;
+    line-height: 1;
+    padding: 0;
+  }
+
+  .lb-clear-btn:hover {
+    color: #0f172a;
+  }
+
+  .lb-sort-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .lb-sort-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .lb-sort-select {
+    padding: 0.32rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    background: #ffffff;
+    color: var(--ink, #151b20);
+    cursor: pointer;
+    outline: none;
+  }
+
+  .lb-sort-select:focus {
+    border-color: #0284c7;
+  }
+
+  /* Leaderboard Scroll Container & Master Table */
+  .leaderboard-scroll {
+    position: relative;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    border: 2px solid var(--ink, #151b20);
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+    background: #ffffff;
+    margin-bottom: 1.25rem;
+  }
+
+  .leaderboard-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.84rem;
+  }
+
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid var(--line, #e2d9c8);
+    border-right: 1px solid var(--line, #e2d9c8);
+    vertical-align: middle;
+  }
+
+  .leaderboard-table th:last-child,
+  .leaderboard-table td:last-child {
+    border-right: none;
+  }
+
+  .leaderboard-table thead th {
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    font-weight: 800;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid var(--ink, #151b20);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    user-select: none;
+  }
+
+  .leaderboard-table thead th[data-sort] {
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .leaderboard-table thead th[data-sort]:hover {
+    background: #fef08a;
+  }
+
+  .th-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+
+  .th-content-right {
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .th-content-center {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .sort-icon {
+    font-size: 0.82rem;
+    opacity: 0.4;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+
+  th.sort-active .sort-icon {
+    opacity: 1;
+    color: #0284c7;
+    font-weight: 900;
+  }
+
+  th.sort-asc .sort-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Sticky First Column */
+  .leaderboard-table th.sticky-col,
+  .leaderboard-table td.sticky-col {
+    position: sticky;
+    left: 0;
+    min-width: 230px;
+    max-width: 280px;
+    border-right: 2px solid var(--ink, #151b20) !important;
+    box-shadow: 4px 0 8px -2px rgba(21, 27, 32, 0.15);
+  }
+
+  .leaderboard-table th.sticky-col {
+    z-index: 12;
+    background: var(--cream-soft, #f6f0dc);
+  }
+
+  .leaderboard-table td.sticky-col {
+    z-index: 10;
+    background: #ffffff;
+  }
+
+  .leaderboard-table tr:nth-child(even) td.sticky-col {
+    background: var(--paper, #fdfbf7);
+  }
+
+  .leaderboard-table tr.highlight-row td.sticky-col {
+    background: #fff8e1;
+  }
+
+  /* Synchronized Hover across all cells including sticky column */
+  .leaderboard-table tbody tr:hover td,
+  .leaderboard-table tbody tr:hover td.sticky-col {
+    background: #f0fdf4 !important;
+  }
+
+  /* First Column Cell Details */
+  .col-rank-core-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.1rem;
+    height: 1.85rem;
+    padding: 0 0.3rem;
+    font-size: 0.76rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    border-radius: 6px;
+    border: 1.5px solid var(--ink, #151b20);
+    box-shadow: 1.5px 1.5px 0 var(--ink, #151b20);
+    flex-shrink: 0;
+  }
+
+  .rank-gold {
+    background: linear-gradient(135deg, #fef08a 0%, #eab308 100%);
+    color: #713f12;
+  }
+
+  .rank-silver {
+    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+    color: #334155;
+  }
+
+  .rank-bronze {
+    background: linear-gradient(135deg, #fed7aa 0%, #f97316 100%);
+    color: #7c2d12;
+  }
+
+  .rank-pill {
+    background: #f1f5f9;
+    color: #475569;
+  }
+
+  .core-details-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .core-link {
+    color: var(--ink, #151b20);
+    text-decoration: none;
+    font-size: 0.94rem;
+    font-weight: 800;
+  }
+
+  .core-link:hover {
+    color: #0284c7;
+    text-decoration: underline;
+  }
+
+  .core-variant-sub {
+    font-size: 0.72rem;
+    color: var(--ink-light, #64748b);
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .champion-tag {
+    display: inline-block;
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.1rem 0.38rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    width: fit-content;
+    margin-top: 0.15rem;
+    white-space: nowrap;
+  }
+
+  /* Table Cell Styling */
+  .td-numeric {
+    text-align: right;
+  }
+
+  .td-center {
+    text-align: center;
+  }
+
+  .score-cell-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+    min-width: 105px;
+  }
+
+  .score-pill-gold {
+    background: #fef08a;
+    color: #854d0e;
+    font-family: var(--md-code-font, monospace);
+    font-weight: 900;
+    font-size: 0.9rem;
+    padding: 0.18rem 0.45rem;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 4px;
+    box-shadow: 1.5px 1.5px 0 var(--ink, #151b20);
+  }
+
+  .score-pill-plain {
+    background: #f8fafc;
+    color: var(--ink, #151b20);
+    font-family: var(--md-code-font, monospace);
+    font-weight: 800;
+    font-size: 0.85rem;
+    padding: 0.15rem 0.4rem;
+    border: 1px solid var(--line, #cbd5e1);
+    border-radius: 4px;
+  }
+
+  .mini-bar-track {
+    width: 100%;
+    height: 5px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .mini-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #38bdf8, #2563eb);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+
+  .tabular-dmips {
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.86rem;
+    color: var(--ink, #151b20);
+  }
+
+  /* CPI Efficiency Color Code */
+  .cpi-pill {
+    display: inline-block;
+    padding: 0.16rem 0.45rem;
+    border-radius: 5px;
+    border: 1.5px solid var(--ink, #151b20);
+    font-family: var(--md-code-font, monospace);
+    font-weight: 800;
+    font-size: 0.78rem;
+    box-shadow: 1px 1px 0 var(--ink, #151b20);
+  }
+
+  .cpi-pill code {
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    color: inherit !important;
+    font-weight: 800;
+  }
+
+  .cpi-elite {
+    background: #dcfce7;
+    color: #15803d;
+    border-color: #15803d;
+  }
+
+  .cpi-good {
+    background: #ccfbf1;
+    color: #0f766e;
+    border-color: #0f766e;
+  }
+
+  .cpi-mid {
+    background: #f1f5f9;
+    color: #334155;
+  }
+
+  .cpi-slow {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #b91c1c;
+  }
+
+  .cycles-cell-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.1rem;
+  }
+
+  .cycles-num {
+    font-family: var(--md-code-font, monospace);
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--ink, #151b20);
+  }
+
+  .iter-sub {
+    font-size: 0.66rem;
+    color: var(--ink-light, #64748b);
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .area-pill,
+  .fmax-pill,
+  .isa-pill,
+  .meta-pill {
+    display: inline-block;
+    padding: 0.14rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.76rem;
+    font-family: var(--md-code-font, monospace);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .isa-pill {
+    background: #f1f5f9;
+    border: 1px solid #94a3b8;
+    color: #0f172a;
+    font-weight: 800;
+  }
+
+  .area-pill {
+    background: #fefce8;
+    border: 1px solid #fde047;
+    color: #854d0e;
+  }
+
+  .fmax-pill {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+  }
+
+  .meta-pill {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  @media (max-width: 992px) {
+    .lb-kpi-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .lb-controls-bar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .lb-search-input {
+      width: 100%;
+    }
+    .lb-search-sort-group {
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .lb-kpi-grid {
+      grid-template-columns: 1fr;
+    }
+    .lb-search-sort-group {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .lb-sort-wrap {
+      justify-content: space-between;
+    }
   }
 
   /* LaTeX Code Box */
