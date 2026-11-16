@@ -11,7 +11,7 @@ Public website and interactive benchmark exploration platform for the **SCORE (S
 This repository powers the official documentation and benchmarking portal for SCORE. It is built using [Astro](https://astro.build) and styled with the **"Warm Paper & Ink" Neo-Brutalist design system** (consistent with the [dataset-fundamentals](https://yongfu-li.github.io/dataset-fundamentals/) course platform).
 
 ### Features
-- **51 Evaluated Tools & Architectures:** Detailed microarchitectural profiles across Categories 1 to 4 and infrastructure tools.
+- **51 Evaluated Architectures:** Detailed microarchitectural profiles across Categories 1 to 4 and infrastructure frameworks.
 - **Interactive Leaderboard:** Empirical benchmark measurements (Level 1 MCU, Level 2 64-bit App, Level 3 Vector, Level 4 Full SoC Scaling).
 - **One-Click LaTeX Export:** Instant export of LaTeX tables for direct inclusion in academic survey manuscripts.
 - **Client-Side Search:** Real-time filtering by core name, ISA, bus protocol, language, or license.

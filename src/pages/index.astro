@@ -142,7 +142,7 @@ function getToolUrl(tool: any) {
 
 <BaseLayout 
   title="Home" 
-  description="Survey and empirical benchmarking platform across 51 open-source RISC-V tools, 4 architecture categories, and 4 verification levels."
+  description="Survey and empirical benchmarking platform across 51 open-source RISC-V architectures, 4 categories, and 4 verification levels."
 >
   <!-- Hero Section -->
   <div class="noc-hero">
@@ -217,10 +217,6 @@ function getToolUrl(tool: any) {
               </div>
 
               <div class="ladder-footer">
-                <div class="ladder-tools-pill">
-                  <span class="lt-icon">📦</span>
-                  <span><strong>{cat.tools.length}</strong> Evaluated Tools</span>
-                </div>
                 <a href={categoryLinks[cat.number]} class="ladder-cta-btn">
                   <span>{detail.ctaText}</span>
                   <span class="btn-arrow">&rarr;</span>
@@ -411,10 +407,10 @@ function getToolUrl(tool: any) {
     </div>
   </section>
 
-  <!-- Featured Tools Directory Preview (Ordered Top-Down by Category 1 -> 4) -->
+  <!-- Featured Anchor Architectures Preview (Ordered Top-Down by Category 1 -> 4) -->
   <section class="score-section">
     <div class="section-header">
-      <div class="noc-track-badge" style="background: var(--yellow); margin-bottom: 0.5rem;">TOOLS &amp; HARDWARE DOSSIERS</div>
+      <div class="noc-track-badge" style="background: var(--yellow); margin-bottom: 0.5rem;">HARDWARE DOSSIERS</div>
       <h2 class="section-title">Featured Anchor Architectures</h2>
       <p class="section-subtitle">
         Representative open-source silicon-proven cores and clusters evaluated in our empirical study, ordered top-down across the 4 architecture categories. Every design is backed by synthesizable RTL and automated simulation scripts in this repository.
@@ -737,26 +733,13 @@ function getToolUrl(tool: any) {
 
   .ladder-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin-top: 1.25rem;
     padding-top: 1rem;
     border-top: 1.5px solid var(--line, #eee4c8);
     gap: 1rem;
     flex-wrap: wrap;
-  }
-
-  .ladder-tools-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.82rem;
-    color: var(--ink-light, #242c33);
-    background: var(--paper, #fffaf0);
-    border: 1.5px solid var(--line, #eee4c8);
-    border-radius: 999px;
-    padding: 0.3rem 0.75rem;
-    font-weight: 600;
   }
 
   .ladder-cta-btn {
@@ -1371,10 +1354,6 @@ function getToolUrl(tool: any) {
       flex-direction: column;
       align-items: stretch;
       gap: 0.75rem;
-    }
-
-    .ladder-tools-pill {
-      justify-content: center;
     }
 
     .ladder-cta-btn {
