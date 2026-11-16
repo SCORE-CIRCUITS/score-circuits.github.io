@@ -2,7 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import db from "../data/score_db.json";
 
-const counts = db.counts;
 const categories = db.categories;
 const featuredTools = db.tools.filter(t => 
   ["cva6", "ara", "snitch-cluster", "cheshire", "ibex", "gemmini", "mempool", "hazard3"].includes(t.slug)
@@ -44,30 +43,6 @@ function getToolUrl(tool: any) {
       <a href="/app-cores/" class="noc-sim-btn secondary">Application Cores</a>
       <a href="/vector-coprocessors/" class="noc-sim-btn secondary">Vector &amp; Coprocessors</a>
       <a href="/soc-multicore/" class="noc-sim-btn secondary">SoC &amp; Multi-Core</a>
-    </div>
-  </div>
-
-  <!-- Key Metrics Grid -->
-  <div class="noc-stats-grid">
-    <div class="noc-stat-card">
-      <span class="noc-stat-number">{counts.tools}</span>
-      <span class="noc-stat-label">Evaluated Tools &amp; Cores</span>
-    </div>
-    <div class="noc-stat-card">
-      <span class="noc-stat-number" style="color: #b45309;">4</span>
-      <span class="noc-stat-label">Architecture Categories</span>
-    </div>
-    <div class="noc-stat-card">
-      <span class="noc-stat-number" style="color: #e11d48;">{counts.measuredRuns}</span>
-      <span class="noc-stat-label">Aggregated Benchmark Traces</span>
-    </div>
-    <div class="noc-stat-card">
-      <span class="noc-stat-number" style="color: #0e7490;">100%</span>
-      <span class="noc-stat-label">Open Silicon Evidence</span>
-    </div>
-    <div class="noc-stat-card">
-      <span class="noc-stat-number" style="color: #059669;">4</span>
-      <span class="noc-stat-label">Evaluation Levels</span>
     </div>
   </div>
 
