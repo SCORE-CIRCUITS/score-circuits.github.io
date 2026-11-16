@@ -400,7 +400,7 @@ const configSensitivity = [
   }
 ];
 
-// Curated first-class native dossiers for all 12 cores (NO RAW README DUMPS, NO MD LINKS)
+// Curated first-class native dossiers for open-source scalar cores (NO RAW README DUMPS, NO MD LINKS)
 const bespokeDossiers = [
   {
     name: "DarkRISCV",
@@ -659,7 +659,7 @@ const bespokeDossiers = [
 
 <BaseLayout
   title="MCU & Scalar Cores"
-  description="Architectural deconstruction, Level 1 CoreMark &amp; Dhrystone empirical benchmarking, cross-core taxonomy, and native silicon dossiers across 12 evaluated open-source RISC-V scalar processors."
+  description="Architectural deconstruction, Level 1 CoreMark &amp; Dhrystone empirical benchmarking, cross-core taxonomy, and native silicon dossiers across evaluated open-source RISC-V scalar processors."
 >
   <!-- Hero Section -->
   <div class="page-header accent-yellow">
@@ -678,7 +678,7 @@ const bespokeDossiers = [
         In hardware engineering, however, <strong>silicon area directly equals manufacturing cost</strong>. If you give a core a wide 32-bit parallel adder, 32 registers, dynamic branch predictors, and a 5-stage pipeline, it completes instructions rapidly (high instructions-per-cycle, or IPC), but takes up substantial silicon area. If you strip it down to a minimalist state machine or a 1-bit serial shifter, the core shrinks to near-zero area—but an instruction might require dozens of clock cycles to finish.
       </p>
       <p class="intro-p">
-        This page is a top-down educational guide and empirical benchmark report covering <strong>12 prominent open-source RISC-V scalar architectures</strong>. Below, you will explore their internal datapath schematics, step through their clock-by-clock execution in an interactive simulator, compare their empirical CoreMark and Dhrystone scores measured on cycle-accurate HDL simulators (Verilator, CXXRTL, Icarus, and GHDL), and discover which core best fits your silicon or FPGA design constraints.
+        This page is a top-down educational guide and empirical benchmark report covering <strong>open-source RISC-V scalar architectures</strong> across the hardware spectrum. Below, you will explore their internal datapath schematics, step through their clock-by-clock execution in an interactive simulator, compare their empirical CoreMark and Dhrystone scores measured on cycle-accurate HDL simulators (Verilator, CXXRTL, Icarus, and GHDL), and discover which core best fits your silicon or FPGA design constraints.
       </p>
     </div>
 
@@ -700,7 +700,7 @@ const bespokeDossiers = [
       <div class="badge badge-primary">&sect; 1. ARCHITECTURAL SPECTRUM &amp; THE FOUR ARCHETYPES</div>
       <h2 class="block-title">The Scalar Processor Design Space: A Top-Down Progression</h2>
       <p class="block-lead">
-        In deeply embedded computing, the central engineering challenge is balancing the eternal hardware triad: <strong>Silicon Area</strong> (<em>A</em>, in kGE or LUTs), <strong>Operating Frequency</strong> (<em>F</em><sub>max</sub>), and <strong>Execution Efficiency</strong> (CPI, CoreMark/MHz). The 12 evaluated open-source scalar implementations span four distinct microarchitectural philosophies, organized below as a top-down progression from the smallest possible silicon footprint up to high-throughput dual-issue execution.
+        In deeply embedded computing, the central engineering challenge is balancing the eternal hardware triad: <strong>Silicon Area</strong> (<em>A</em>, in kGE or LUTs), <strong>Operating Frequency</strong> (<em>F</em><sub>max</sub>), and <strong>Execution Efficiency</strong> (CPI, CoreMark/MHz). The evaluated open-source scalar implementations span four distinct microarchitectural philosophies, organized below as a top-down progression from the smallest possible silicon footprint up to high-throughput dual-issue execution.
       </p>
     </div>
 
@@ -1329,7 +1329,7 @@ const bespokeDossiers = [
       <div class="badge badge-accent">&sect; 2. COMMON ARCHITECTURAL DNA</div>
       <h2 class="block-title">Cross-Core Similarities: The Shared RISC-V Foundation</h2>
       <p class="block-lead">
-        Despite massive differences in pipeline depths and gate counts, all 12 evaluated scalar cores share an identical theoretical and practical foundation. This architectural convergence is what guarantees software portability across open silicon.
+        Despite massive differences in pipeline depths and gate counts, all evaluated scalar cores share an identical theoretical and practical foundation. This architectural convergence is what guarantees software portability across open silicon.
       </p>
     </div>
 
@@ -1357,7 +1357,7 @@ const bespokeDossiers = [
           <h4>Machine-Mode (M-Mode) Privileged Control &amp; CSRs</h4>
         </div>
         <p>
-          All 12 cores operate natively in Machine Mode (M-mode), the mandatory hardware root privilege tier:
+          All evaluated cores operate natively in Machine Mode (M-mode), the mandatory hardware root privilege tier:
         </p>
         <ul class="sim-list">
           <li><strong>Standard Trap Handling Registers:</strong> <code>mstatus</code> (interrupt enable bits), <code>mtvec</code> (trap vector base address), <code>mepc</code> (exception return PC), <code>mcause</code> (trap etiology identifier), and <code>mtval</code>.</li>
@@ -1373,7 +1373,7 @@ const bespokeDossiers = [
           <h4>Unified Toolchain &amp; Software ABI Portability</h4>
         </div>
         <p>
-          A single C firmware binary compiled with the open standard GNU toolchain runs on any of the 12 cores:
+          A single C firmware binary compiled with the open standard GNU toolchain runs on any of the evaluated cores:
         </p>
         <ul class="sim-list">
           <li><strong>Calling Convention (ILP32 / ILP32E):</strong> Function arguments passed in <code>a0&ndash;a7</code>, return values in <code>a0/a1</code>, saved registers in <code>s0&ndash;s11</code>, and stack pointer <code>sp</code> kept 16-byte aligned.</li>
@@ -1484,10 +1484,10 @@ const bespokeDossiers = [
       <div class="table-title-flex">
         <div>
           <h3 class="table-heading">Side-by-Side Architectural Differences Matrix</h3>
-          <p class="table-caption">Comprehensive structural comparison across all 12 evaluated open-source scalar cores.</p>
+          <p class="table-caption">Comprehensive structural comparison across evaluated open-source scalar cores.</p>
         </div>
         <div class="matrix-filter-bar">
-          <button class="matrix-filter-btn active" data-tier="all">All Cores (12)</button>
+          <button class="matrix-filter-btn active" data-tier="all">All Cores</button>
           <button class="matrix-filter-btn" data-tier="ultra">Ultra-Low Area (&lt;10 kGE)</button>
           <button class="matrix-filter-btn" data-tier="mcu">Standard MCU (15&ndash;32 kGE)</button>
           <button class="matrix-filter-btn" data-tier="highperf">High-Throughput (&gt;32 kGE)</button>
@@ -1801,7 +1801,7 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   <section id="core-dossiers" class="dossiers-container">
     <div class="section-title-wrap">
       <div class="badge badge-primary">&sect; 6. NATIVE ARCHITECTURAL SPECIFICATIONS</div>
-      <h2 class="section-heading">Detailed Dossiers for All 12 Evaluated Cores</h2>
+      <h2 class="section-heading">Detailed Native Core Dossiers</h2>
       <p class="section-sub">
         Comprehensive native microarchitectural breakdowns, memory bus specifications, silicon and FPGA deployment evidence, verified empirical benchmark metrics, and engineering trade-offs.
       </p>
