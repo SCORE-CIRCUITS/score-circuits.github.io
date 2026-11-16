@@ -637,29 +637,44 @@ const appCoreDossiers = [
   description="Category 2: 64-bit application processors, virtual memory MMU compliance, benchmark leaderboard, and evaluated core implementations."
 >
   <div class="page-header accent-teal">
-    <div class="badge badge-accent">APPLICATION CORES &bull; BENCHMARKS</div>
-    <h1 class="page-title">Application Cores</h1>
-    <p class="page-lead">
-      Linux-capable in-order and out-of-order processors implementing RV64GC with virtual memory management (Sv39/Sv48 MMUs), multi-level split L1 caches, hardware page table walkers, and physical memory protection (PMP). Evaluated under the <code>app_verilator</code> simulation profile.
-    </p>
+    <div class="badge badge-accent">OPEN-SOURCE APPLICATION ARCHITECTURES &bull; 64-BIT LINUX FOUNDATIONS &amp; BENCHMARKS</div>
+    <h1 class="page-title">Understanding 64-Bit Application Cores</h1>
+    
+    <!-- First-Principles Intuitive Introduction -->
+    <div class="intro-narrative">
+      <p class="intro-p intro-lead-highlight">
+        Behind almost every computing platform that drives modern digital infrastructure—from hyper-scale Linux server clusters, enterprise virtualization nodes, and cloud databases to smartphones, autonomous vehicle perception platforms, container hosts, and AI edge workstations—sits a 64-bit application processor core.
+      </p>
+      <p class="intro-p">
+        Unlike deeply embedded microcontroller cores that sip microwatts executing rigid, single-threaded bare-metal firmware loops within tiny static RAMs, 64-bit application processors operate in an environment of extreme dynamic complexity. They manage multi-gigabyte flat virtual memory spaces, execute billions of instructions per second across preemptive multi-threaded tasks, enforce hardware privilege rings (Machine, Supervisor, User) to isolate operating system kernels from untrusted software, and absorb unpredictable asynchronous hardware interrupts, memory faults, and context switches.
+      </p>
+      <p class="intro-p">
+        In high-performance microprocessor engineering, however, raw compute capability is not bounded by how fast an ALU can add two 64-bit integers: silicon arithmetic datapaths easily tick at gigahertz clock frequencies (&lt;1.0&nbsp;ns cycle period). Instead, the defining physical barrier is the <strong>Memory Wall</strong>: off-chip DDR DRAM takes 50 to 100 nanoseconds to respond, meaning a single cache miss wastes <strong>100 to 200 execution cycles</strong>. If an execution pipeline stalls on every memory miss, its sustained instructions-per-cycle (IPC) collapses. To conquer this 100&times; latency gulf, processor architects spend tens to hundreds of thousands of logic gates (kGE) on multi-level Caches, hardware Page Table Walkers (PTWs), non-blocking Miss Status Holding Registers (MSHRs), multi-level branch predictors, and speculative out-of-order execution pipelines.
+      </p>
+      <p class="intro-p">
+        This page is an authoritative, top-down educational guide and empirical benchmark report covering <strong>open-source 64-bit RISC-V application processors</strong>. Below, you will explore their internal architectural schematics, step through the Memory Wall in an interactive cycle-by-cycle simulator, inspect the complete RV64GC instruction set and 64-bit register conventions, compare empirical CoreMark, Dhrystone, and OS compliance scores measured under cycle-accurate Verilator simulation, and discover which microarchitectural archetype—from lean in-order baselines (Rocket Chip) to industrial scoreboard pipelines (CVA6), modular coherent NoC clusters (BlackParrot), and multi-wide out-of-order superscalar engines (SonicBOOM)—best satisfies your performance, area, and tapeout constraints.
+      </p>
+    </div>
 
-    <!-- Quick Navigation Jump to Sections & Cores -->
+    <!-- Quick Navigation Jump Bar -->
     <div class="core-jump-bar">
       <span class="jump-label">Jump to Section:</span>
-      <a href="#core-foundations" class="core-jump-pill">&sect; 1. Architectural Foundations</a>
-      <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. The Four Archetypes</a>
-      <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Common Architectural DNA</a>
+      <a href="#core-foundations" class="core-jump-pill">&sect; 1. Core Anatomy &amp; Memory Wall</a>
+      <a href="#isa-spectrum" class="core-jump-pill">&sect; 1.2 Modular RV64GC ISA</a>
+      <a href="#rv64-registers" class="core-jump-pill">&sect; 1.2 64-Bit Register File (x0&ndash;x31 &amp; f0&ndash;f31)</a>
+      <a href="#rv64gc-base-isa-table" class="core-jump-pill">&sect; 1.2 Full RV64GC ISA (60 Insts)</a>
+      <a href="#divergence-drivers" class="core-jump-pill">&sect; 1.3 Memory Wall Triad</a>
+      <a href="#classification-logic" class="core-jump-pill">&sect; 1.4 The Four Archetypes</a>
+      <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. Microarchitectural Ladder</a>
+      <a href="#archetype-1-deepdive" class="core-jump-pill">&sect; 2.1 Rocket Chip</a>
+      <a href="#archetype-2-deepdive" class="core-jump-pill">&sect; 2.2 CVA6 (Ariane)</a>
+      <a href="#archetype-3-deepdive" class="core-jump-pill">&sect; 2.3 BlackParrot</a>
+      <a href="#archetype-4-deepdive" class="core-jump-pill">&sect; 2.4 SonicBOOM</a>
+      <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Shared Linux DNA</a>
       <a href="#microarchitectural-differences" class="core-jump-pill">&sect; 4. Microarchitectural Diversity</a>
-      <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Benchmark Leaderboard</a>
+      <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Empirical Leaderboard</a>
       <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Configuration Sensitivity</a>
       <a href="#core-dossiers" class="core-jump-pill">&sect; 7. Native Core Dossiers</a>
-    </div>
-    <div class="core-jump-bar" style="margin-top: 0.5rem;">
-      <span class="jump-label">Jump to Architecture:</span>
-      <a href="#archetype-1-deepdive" class="core-jump-pill">Rocket (Arch 1)</a>
-      <a href="#archetype-2-deepdive" class="core-jump-pill">CVA6 (Arch 2)</a>
-      <a href="#archetype-3-deepdive" class="core-jump-pill">BlackParrot (Arch 3)</a>
-      <a href="#archetype-4-deepdive" class="core-jump-pill">BOOM (Arch 4)</a>
     </div>
   </div>
 
@@ -1180,16 +1195,1157 @@ const appCoreDossiers = [
       </div>
     </div>
 
-    <!-- 1.2 THE PRIVILEGED ISA SPECTRUM -->
-    <div class="concept-step-card" style="margin-bottom: 2rem;">
+    <!-- 1.2 THE PRIVILEGED & MODULAR RV64GC ISA SPECTRUM -->
+    <div id="isa-spectrum" class="concept-step-card" style="margin-bottom: 2rem;">
       <div class="step-card-header">
-        <span class="step-tag badge-ink">1.2 THE PRIVILEGED ISA SPECTRUM</span>
-        <h3 class="step-card-title">RV64GC Standard Extensions &amp; Privileged Ring Protection</h3>
+        <span class="step-tag badge-purple">1.2 THE PRIVILEGED &amp; MODULAR RV64GC ISA SPECTRUM</span>
+        <h3 class="step-card-title">RV64GC Standard Extensions, 64-Bit Calling Conventions &amp; Privileged Ring Protection</h3>
       </div>
       <p class="step-card-lead">
-        While microcontroller cores often strip down to RV32I or RV32E to minimize silicon gate count, full operating systems like Linux require <strong>RV64GC</strong> (<code>RV64IMAFDC_Zicsr_Zifencei</code>). Below is why each architectural extension is non-negotiable for operating system execution and its physical silicon cost:
+        While deeply embedded microcontroller cores strip down to 32-bit <code>RV32I</code> or <code>RV32E</code> to minimize silicon area (&lt;10 kGE), full multi-user operating systems like Linux mandate <strong>RV64GC</strong> (<code>RV64IMAFDC_Zicsr_Zifencei</code>). In application processors, instruction set selection is not merely a software convenience: every architectural extension is an explicit silicon investment engineered to eliminate software trap penalties, satisfy POSIX calling conventions, and conquer the Memory Wall.
       </p>
 
+      <!-- Sub-part A: 64-Bit Register File Architecture -->
+      <div id="rv64-registers" class="isa-subtopic-block" style="margin-bottom: 1.75rem;">
+        <h4 class="isa-subtopic-title">
+          <span class="pill-badge badge-ink">REGISTER FILE ARCHITECTURE</span>
+          The 64-Bit Register Space: Integer GPRs (<code>x0&ndash;x31</code>) &amp; Floating-Point FPRs (<code>f0&ndash;f31</code>)
+        </h4>
+        <p class="isa-subtopic-text">
+          In 64-bit RISC-V application processors, the general-purpose integer registers are expanded from 32 bits to 64 bits (<code>XLEN = 64</code>). Furthermore, supporting IEEE 754 floating-point mandates a separate 32-entry 64-bit floating-point register file (<code>FLEN = 64</code>) and dedicated control logic:
+        </p>
+
+        <!-- Top-down comparison cards -->
+        <div class="isa-base-grid">
+          <div class="isa-base-card isa-rv64-int">
+            <div class="isa-base-card-header">
+              <span class="isa-code-pill">XLEN = 64</span>
+              <span class="isa-card-title-text">64-Bit Integer Register File &bull; 32 General-Purpose Registers (<code>x0 &ndash; x31</code>)</span>
+            </div>
+            <div class="isa-base-card-body">
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Hardware Footprint:</span>
+                <span class="isa-metric-val"><strong>2,048 flip-flop bits</strong> + dual 64-bit read multiplexers and single 64-bit writeback port. Consumes <strong>~6.5 kGE</strong> in in-order cores, expanding to multi-ported renamed Physical Register Files (PRF, 128 entries) in out-of-order engines.</span>
+              </div>
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Software ABI Role:</span>
+                <span class="isa-metric-val">Standard <code>lp64</code> ABI. Enables flat <strong>&gt;4 GB virtual address spaces</strong> without physical memory segmentation. 32-bit arithmetic operations (e.g. <code>addw</code>, <code>subw</code>) automatically sign-extend their results to bit 63 to preserve 32-bit C <code>int</code> semantics without extra instructions.</span>
+              </div>
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Linux Kernel Impact:</span>
+                <span class="isa-metric-val">Pointers, memory offsets, and virtual page numbers naturally occupy 64-bit registers, eliminating high-latency page bank switching and enabling seamless 64-bit file offsets (LFS).</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="isa-base-card isa-rv64-fp">
+            <div class="isa-base-card-header">
+              <span class="isa-code-pill">FLEN = 64</span>
+              <span class="isa-card-title-text">64-Bit Floating-Point Register File &bull; 32 FP Registers (<code>f0 &ndash; f31</code>)</span>
+            </div>
+            <div class="isa-base-card-body">
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Hardware Footprint:</span>
+                <span class="isa-metric-val"><strong>2,048 flip-flop bits</strong> + 3 read ports (to feed 3-input Fused Multiply-Add <code>fmadd.d</code>) + 1 write port. Adds <strong>~7.5 kGE</strong> plus dedicated <code>fcsr</code> register for IEEE 754 dynamic rounding modes (<code>frm</code>) and exception flags (<code>fflags</code>).</span>
+              </div>
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">Software ABI Role:</span>
+                <span class="isa-metric-val">Standard <code>lp64d</code> ABI. Floating-point arguments and return values are passed directly inside <code>f10&ndash;f17</code> rather than serialized through integer GPRs, speeding up linear algebra and numerical routines by up to <strong>4.2&times;</strong>.</span>
+              </div>
+              <div class="isa-metric-item">
+                <span class="isa-metric-label">NaN-Boxing Rule:</span>
+                <span class="isa-metric-val">When a 32-bit single-precision float is written into a 64-bit FPR, upper bits [63:32] are filled with all 1s (canonical NaN). If read by a double-precision instruction, it is safely recognized as NaN rather than corrupting math.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comprehensive 32-Register Architectural Mapping Table -->
+        <div style="margin-top: 1.5rem; background: #ffffff; border: 1.5px solid var(--ink, #151b20); border-radius: 10px; padding: 1.25rem; box-shadow: 3px 3px 0 var(--ink, #151b20);">
+          <div class="isa-reg-header">
+            <span class="pill-badge badge-teal">ABI CONVENTIONS</span>
+            <h4 class="isa-reg-title">Complete 64-Bit Architectural Register Mapping (RV64GC lp64d ABI)</h4>
+          </div>
+          <p class="isa-reg-desc">
+            Every 64-bit Linux process conforms to the official RISC-V ELF psABI. Below is the hardware mapping of all 32 integer registers alongside their floating-point counterparts, caller/callee preservation contracts, and operating system functions:
+          </p>
+
+          <div class="table-scroll" style="margin-top: 0.75rem;">
+            <table class="data-table isa-reg-table">
+              <thead>
+                <tr>
+                  <th>Int Reg</th>
+                  <th>ABI Name</th>
+                  <th>Saver Role</th>
+                  <th>FP Counterpart</th>
+                  <th>FP Saver</th>
+                  <th>Architectural Function in Linux &amp; OS Runtime</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>x0</code></td>
+                  <td><strong>zero</strong></td>
+                  <td><span class="status-badge ok">&mdash;</span></td>
+                  <td><code>f0</code> (<strong>ft0</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x0: Hardwired 0 (reads 0x0; writes discarded). f0: Floating-point temporary 0.</td>
+                </tr>
+                <tr>
+                  <td><code>x1</code></td>
+                  <td><strong>ra</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f1</code> (<strong>ft1</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x1: Return address for function calls (jal, jalr). f1: FP temporary 1.</td>
+                </tr>
+                <tr>
+                  <td><code>x2</code></td>
+                  <td><strong>sp</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f2</code> (<strong>ft2</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x2: Stack pointer (must remain 16-byte aligned by psABI). f2: FP temporary 2.</td>
+                </tr>
+                <tr>
+                  <td><code>x3</code></td>
+                  <td><strong>gp</strong></td>
+                  <td><span class="status-badge ok">&mdash;</span></td>
+                  <td><code>f3</code> (<strong>ft3</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x3: Global pointer (points into small data section for 1-cycle access). f3: FP temporary 3.</td>
+                </tr>
+                <tr>
+                  <td><code>x4</code></td>
+                  <td><strong>tp</strong></td>
+                  <td><span class="status-badge ok">&mdash;</span></td>
+                  <td><code>f4</code> (<strong>ft4</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x4: Thread pointer (Thread-Local Storage / TLS in Linux pthreads). f4: FP temporary 4.</td>
+                </tr>
+                <tr>
+                  <td><code>x5</code></td>
+                  <td><strong>t0</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f5</code> (<strong>ft5</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x5: Alternate link register / scratch temporary 0. f5: FP temporary 5.</td>
+                </tr>
+                <tr>
+                  <td><code>x6</code></td>
+                  <td><strong>t1</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f6</code> (<strong>ft6</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x6: Temporary register 1. f6: FP temporary 6.</td>
+                </tr>
+                <tr>
+                  <td><code>x7</code></td>
+                  <td><strong>t2</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f7</code> (<strong>ft7</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x7: Temporary register 2. f7: FP temporary 7.</td>
+                </tr>
+                <tr>
+                  <td><code>x8</code></td>
+                  <td><strong>s0 / fp</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f8</code> (<strong>fs0</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x8: Saved register 0 or Frame pointer (tracks stack base). f8: FP saved register 0.</td>
+                </tr>
+                <tr>
+                  <td><code>x9</code></td>
+                  <td><strong>s1</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f9</code> (<strong>fs1</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x9: Saved register 1 (preserved across function calls). f9: FP saved register 1.</td>
+                </tr>
+                <tr>
+                  <td><code>x10</code></td>
+                  <td><strong>a0</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f10</code> (<strong>fa0</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x10: Function argument 0 / Return value 0. f10: FP argument 0 / FP return value 0.</td>
+                </tr>
+                <tr>
+                  <td><code>x11</code></td>
+                  <td><strong>a1</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f11</code> (<strong>fa1</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x11: Function argument 1 / Return value 1. f11: FP argument 1 / FP return value 1.</td>
+                </tr>
+                <tr>
+                  <td><code>x12</code></td>
+                  <td><strong>a2</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f12</code> (<strong>fa2</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x12: Function argument 2. f12: FP argument 2.</td>
+                </tr>
+                <tr>
+                  <td><code>x13</code></td>
+                  <td><strong>a3</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f13</code> (<strong>fa3</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x13: Function argument 3. f13: FP argument 3.</td>
+                </tr>
+                <tr>
+                  <td><code>x14</code></td>
+                  <td><strong>a4</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f14</code> (<strong>fa4</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x14: Function argument 4. f14: FP argument 4.</td>
+                </tr>
+                <tr>
+                  <td><code>x15</code></td>
+                  <td><strong>a5</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f15</code> (<strong>fa5</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x15: Function argument 5. f15: FP argument 5.</td>
+                </tr>
+                <tr>
+                  <td><code>x16</code></td>
+                  <td><strong>a6</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f16</code> (<strong>fa6</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x16: Function argument 6. f16: FP argument 6.</td>
+                </tr>
+                <tr>
+                  <td><code>x17</code></td>
+                  <td><strong>a7</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f17</code> (<strong>fa7</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x17: Function argument 7 / Linux syscall number in ecall. f17: FP argument 7.</td>
+                </tr>
+                <tr>
+                  <td><code>x18</code></td>
+                  <td><strong>s2</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f18</code> (<strong>fs2</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x18: Saved register 2. f18: FP saved register 2.</td>
+                </tr>
+                <tr>
+                  <td><code>x19</code></td>
+                  <td><strong>s3</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f19</code> (<strong>fs3</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x19: Saved register 3. f19: FP saved register 3.</td>
+                </tr>
+                <tr>
+                  <td><code>x20</code></td>
+                  <td><strong>s4</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f20</code> (<strong>fs4</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x20: Saved register 4. f20: FP saved register 4.</td>
+                </tr>
+                <tr>
+                  <td><code>x21</code></td>
+                  <td><strong>s5</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f21</code> (<strong>fs5</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x21: Saved register 5. f21: FP saved register 5.</td>
+                </tr>
+                <tr>
+                  <td><code>x22</code></td>
+                  <td><strong>s6</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f22</code> (<strong>fs6</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x22: Saved register 6. f22: FP saved register 6.</td>
+                </tr>
+                <tr>
+                  <td><code>x23</code></td>
+                  <td><strong>s7</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f23</code> (<strong>fs7</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x23: Saved register 7. f23: FP saved register 7.</td>
+                </tr>
+                <tr>
+                  <td><code>x24</code></td>
+                  <td><strong>s8</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f24</code> (<strong>fs8</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x24: Saved register 8. f24: FP saved register 8.</td>
+                </tr>
+                <tr>
+                  <td><code>x25</code></td>
+                  <td><strong>s9</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f25</code> (<strong>fs9</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x25: Saved register 9. f25: FP saved register 9.</td>
+                </tr>
+                <tr>
+                  <td><code>x26</code></td>
+                  <td><strong>s10</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f26</code> (<strong>fs10</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x26: Saved register 10. f26: FP saved register 10.</td>
+                </tr>
+                <tr>
+                  <td><code>x27</code></td>
+                  <td><strong>s11</strong></td>
+                  <td><span class="status-badge ok">Callee</span></td>
+                  <td><code>f27</code> (<strong>fs11</strong>)</td>
+                  <td><span class="status-badge highlight">Callee</span></td>
+                  <td>x27: Saved register 11. f27: FP saved register 11.</td>
+                </tr>
+                <tr>
+                  <td><code>x28</code></td>
+                  <td><strong>t3</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f28</code> (<strong>ft8</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x28: Temporary register 3. f28: FP temporary 8.</td>
+                </tr>
+                <tr>
+                  <td><code>x29</code></td>
+                  <td><strong>t4</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f29</code> (<strong>ft9</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x29: Temporary register 4. f29: FP temporary 9.</td>
+                </tr>
+                <tr>
+                  <td><code>x30</code></td>
+                  <td><strong>t5</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f30</code> (<strong>ft10</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x30: Temporary register 5. f30: FP temporary 10.</td>
+                </tr>
+                <tr>
+                  <td><code>x31</code></td>
+                  <td><strong>t6</strong></td>
+                  <td><span class="status-badge ok">Caller</span></td>
+                  <td><code>f31</code> (<strong>ft11</strong>)</td>
+                  <td><span class="status-badge highlight">Caller</span></td>
+                  <td>x31: Temporary register 6. f31: FP temporary 11.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-part B: Complete 60-Instruction Specification Table -->
+      <div id="rv64gc-base-isa-table" class="isa-full-table-block">
+        <div class="isa-table-head-flex">
+          <div>
+            <span class="pill-badge badge-teal">RATIFIED SPECIFICATION</span>
+            <h4 style="font-size: 1.35rem; font-weight: 900; margin-top: 0.35rem; margin-bottom: 0.35rem; color: var(--ink, #151b20);">
+              The Complete 60-Instruction Set of RV64GC Application Architecture
+            </h4>
+            <p style="font-size: 0.9rem; color: #242c33; margin: 0; max-width: 850px;">
+              The official RISC-V Linux profile combines 64-bit base integer instructions (<code>RV64I</code>), integer multiplication/division (<code>M</code>), atomic primitives (<code>A</code>), floating-point units (<code>F/D</code>), compressed encodings (<code>C</code>), and Privileged MMU registers. Filter by extension category or search for any instruction below:
+            </p>
+          </div>
+          <!-- Search Input -->
+          <div class="isa-search-wrap">
+            <input type="text" id="isaSearchInput" class="isa-search-field" placeholder="🔍 Search mnemonic, opcode, syntax, extension..." />
+          </div>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="isa-cat-filter-bar">
+          <button class="isa-cat-btn active" data-isa-cat="all">All Base &amp; Extended (60)</button>
+          <button class="isa-cat-btn" data-isa-cat="rv64i">RV64I 64-Bit Base (18)</button>
+          <button class="isa-cat-btn" data-isa-cat="rv64m">RV64M Mul/Div (8)</button>
+          <button class="isa-cat-btn" data-isa-cat="rv64a">RV64A Atomics (9)</button>
+          <button class="isa-cat-btn" data-isa-cat="rv64fd">RV64F/D Floating-Point (12)</button>
+          <button class="isa-cat-btn" data-isa-cat="rv64c">RV64C Compressed (8)</button>
+          <button class="isa-cat-btn" data-isa-cat="privileged">Privileged &amp; MMU (5)</button>
+        </div>
+
+        <!-- Mobile Scroll Hint -->
+        <div class="mobile-table-hint">
+          <span>&larr; Swipe horizontally to inspect bitfields, RTL semantics, and architectural paths &rarr;</span>
+        </div>
+
+        <!-- The Table -->
+        <div class="table-scroll">
+          <table class="data-table isa-full-spec-table" id="isaFullSpecTable">
+            <thead>
+              <tr>
+                <th style="min-width: 140px;">Mnemonic &amp; Syntax</th>
+                <th>Format</th>
+                <th>Opcode [6:0]</th>
+                <th>funct3 [14:12]</th>
+                <th>funct7 / Imm</th>
+                <th style="min-width: 220px;">RTL Operation / Semantics</th>
+                <th>Extension Profile</th>
+                <th style="min-width: 240px;">Architectural Purpose &amp; Silicon Execution Path</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr data-cat="rv64i">
+                  <td><code>ld rd, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0000011 (0x03)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>imm[11:0]</code></td>
+                  <td><code>R[rd] &larr; Mem64[R[rs1] + sext(imm)]</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Load 64-bit doubleword from memory. Primary 64-bit pointer and 64-bit scalar data load.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>sd rs2, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-s">S-Type</span></td>
+                  <td><code>0100011 (0x23)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>imm[11:5|4:0]</code></td>
+                  <td><code>Mem64[R[rs1] + sext(imm)] &larr; R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Store 64-bit doubleword to memory. Spills 64-bit registers and writes 64-bit variables.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>lwu rd, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0000011 (0x03)</code></td>
+                  <td><code>110 (0x6)</code></td>
+                  <td><code>imm[11:0]</code></td>
+                  <td><code>R[rd] &larr; zext(Mem32[R[rs1] + sext(imm)])</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Load 32-bit word unsigned, zero-extended into 64-bit GPR (distinct from sign-extending lw).</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>addw rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0111011 (0x3b)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1] + R[rs2])[31:0])</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Add 32-bit words, sign-extending the 32-bit sum to 64 bits. Preserves 32-bit C 'int' semantics.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>subw rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0111011 (0x3b)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0100000 (0x20)</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1] - R[rs2])[31:0])</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Subtract 32-bit words, sign-extending 32-bit difference to 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>sllw rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0111011 (0x3b)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1] &lt;&lt; R[rs2][4:0])[31:0])</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Shift Left Logical word (using rs2[4:0]), sign-extending 32-bit result to 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>srlw rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0111011 (0x3b)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>0000000 (0x00)</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1][31:0] &gt;&gt;u R[rs2][4:0]))</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Shift Right Logical word, zero-filling upper word bits before sign-extending to 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>sraw rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0111011 (0x3b)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>0100000 (0x20)</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1][31:0] &gt;&gt;s R[rs2][4:0]))</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Shift Right Arithmetic word, replicating sign bit 31 before sign-extending to 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>addiw rd, rs1, imm</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0011011 (0x1b)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[11:0]</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1] + sext(imm))[31:0])</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Add 12-bit signed immediate to lower 32 bits, sign-extending 32-bit result to 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>slliw rd, rs1, shamt</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0011011 (0x1b)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>0000000 | shamt[4:0]</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1] &lt;&lt; shamt)[31:0])</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Shift Left Logical word immediate by 5-bit shift amount, sign-extending to 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>srliw rd, rs1, shamt</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0011011 (0x1b)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>0000000 | shamt[4:0]</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1][31:0] &gt;&gt;u shamt))</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Shift Right Logical word immediate by 5-bit shift amount, sign-extending to 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>sraiw rd, rs1, shamt</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0011011 (0x1b)</code></td>
+                  <td><code>101 (0x5)</code></td>
+                  <td><code>0100000 | shamt[4:0]</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1][31:0] &gt;&gt;s shamt))</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Shift Right Arithmetic word immediate by 5-bit shift amount, replicating sign bit 31.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>lui rd, imm</code></td>
+                  <td><span class="fmt-badge fmt-u">U-Type</span></td>
+                  <td><code>0110111 (0x37)</code></td>
+                  <td><code>&mdash;</code></td>
+                  <td><code>imm[31:12]</code></td>
+                  <td><code>R[rd] &larr; sext(imm[31:12] &lt;&lt; 12)</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Load Upper Immediate. Builds 32-bit constants sign-extended into 64-bit registers.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>auipc rd, imm</code></td>
+                  <td><span class="fmt-badge fmt-u">U-Type</span></td>
+                  <td><code>0010111 (0x17)</code></td>
+                  <td><code>&mdash;</code></td>
+                  <td><code>imm[31:12]</code></td>
+                  <td><code>R[rd] &larr; PC + sext(imm[31:12] &lt;&lt; 12)</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Add Upper Immediate to PC. Enables position-independent code (PIC) and PC-relative loads.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>jal rd, offset</code></td>
+                  <td><span class="fmt-badge fmt-j">J-Type</span></td>
+                  <td><code>1101111 (0x6f)</code></td>
+                  <td><code>&mdash;</code></td>
+                  <td><code>imm[20|10:1|11|19:12]</code></td>
+                  <td><code>R[rd] &larr; PC + 4; PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Jump and Link. Unconditional jump to &plusmn;1 MB relative target; stores return address in ra.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>jalr rd, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>1100111 (0x67)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[11:0]</code></td>
+                  <td><code>t &larr; PC + 4; PC &larr; (R[rs1] + sext(imm)) &amp; ~1; R[rd] &larr; t</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Jump and Link Register. Used for dynamic function calls, C++ vtables, and function return (ret).</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>beq rs1, rs2, offset</code></td>
+                  <td><span class="fmt-badge fmt-b">B-Type</span></td>
+                  <td><code>1100011 (0x63)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[12|10:5|4:1|11]</code></td>
+                  <td><code>if (R[rs1] == R[rs2]) PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Branch if Equal. Compares two 64-bit registers; triggers PC redirect if true.</td>
+                </tr>
+                <tr data-cat="rv64i">
+                  <td><code>bne rs1, rs2, offset</code></td>
+                  <td><span class="fmt-badge fmt-b">B-Type</span></td>
+                  <td><code>1100011 (0x63)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>imm[12|10:5|4:1|11]</code></td>
+                  <td><code>if (R[rs1] != R[rs2]) PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ RV64I Base</span></td>
+                  <td>Branch if Not Equal. Evaluates 64-bit inequality across all 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64m">
+                  <td><code>mul rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0000001 (0x01)</code></td>
+                  <td><code>R[rd] &larr; (R[rs1] *s R[rs2])[63:0]</code></td>
+                  <td><span class="status-badge ok">✓ Extension M</span></td>
+                  <td>Signed 64-bit multiply returning lower 64 bits. Pipelined Booth array multiplier datapath.</td>
+                </tr>
+                <tr data-cat="rv64m">
+                  <td><code>mulh rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>0000001 (0x01)</code></td>
+                  <td><code>R[rd] &larr; (R[rs1] *s R[rs2])[127:64]</code></td>
+                  <td><span class="status-badge ok">✓ Extension M</span></td>
+                  <td>Signed 64-bit multiply returning upper 64 bits of 128-bit product. Used for multi-precision math.</td>
+                </tr>
+                <tr data-cat="rv64m">
+                  <td><code>mulhu rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>0000001 (0x01)</code></td>
+                  <td><code>R[rd] &larr; (R[rs1] *u R[rs2])[127:64]</code></td>
+                  <td><span class="status-badge ok">✓ Extension M</span></td>
+                  <td>Unsigned 64-bit multiply returning upper 64 bits of 128-bit product.</td>
+                </tr>
+                <tr data-cat="rv64m">
+                  <td><code>div rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>100 (0x4)</code></td>
+                  <td><code>0000001 (0x01)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] /s R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extension M</span></td>
+                  <td>Signed 64-bit integer division. Computed via multi-cycle iterative Radix-4 SRT divider.</td>
+                </tr>
+                <tr data-cat="rv64m">
+                  <td><code>rem rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0110011 (0x33)</code></td>
+                  <td><code>110 (0x6)</code></td>
+                  <td><code>0000001 (0x01)</code></td>
+                  <td><code>R[rd] &larr; R[rs1] %s R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extension M</span></td>
+                  <td>Signed 64-bit integer remainder matching dividend sign.</td>
+                </tr>
+                <tr data-cat="rv64m">
+                  <td><code>mulw rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0111011 (0x3b)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0000001 (0x01)</code></td>
+                  <td><code>R[rd] &larr; sext((R[rs1][31:0] *s R[rs2][31:0])[31:0])</code></td>
+                  <td><span class="status-badge ok">✓ Extension M</span></td>
+                  <td>Signed 32-bit multiply, sign-extended to 64 bits. Eliminates 64-bit truncation overhead.</td>
+                </tr>
+                <tr data-cat="rv64m">
+                  <td><code>divw rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0111011 (0x3b)</code></td>
+                  <td><code>100 (0x4)</code></td>
+                  <td><code>0000001 (0x01)</code></td>
+                  <td><code>R[rd] &larr; sext(R[rs1][31:0] /s R[rs2][31:0])</code></td>
+                  <td><span class="status-badge ok">✓ Extension M</span></td>
+                  <td>Signed 32-bit division, sign-extended to 64 bits. Completes in half the cycle count on variable-latency dividers.</td>
+                </tr>
+                <tr data-cat="rv64m">
+                  <td><code>remw rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0111011 (0x3b)</code></td>
+                  <td><code>110 (0x6)</code></td>
+                  <td><code>0000001 (0x01)</code></td>
+                  <td><code>R[rd] &larr; sext(R[rs1][31:0] %s R[rs2][31:0])</code></td>
+                  <td><span class="status-badge ok">✓ Extension M</span></td>
+                  <td>Signed 32-bit integer remainder, sign-extended to 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64a">
+                  <td><code>lr.d rd, (rs1)</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0101111 (0x2f)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>00010 aq rl</code></td>
+                  <td><code>R[rd] &larr; Mem64[R[rs1]]; Reserve(R[rs1])</code></td>
+                  <td><span class="status-badge ok">✓ Extension A</span></td>
+                  <td>Load-Reserved 64-bit doubleword. Loads address and registers exclusive cache-line reservation.</td>
+                </tr>
+                <tr data-cat="rv64a">
+                  <td><code>sc.d rd, rs2, (rs1)</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0101111 (0x2f)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>00011 aq rl</code></td>
+                  <td><code>if (Reserved) Mem64[R[rs1]] &larr; R[rs2]; R[rd] &larr; (Reserved ? 0 : 1)</code></td>
+                  <td><span class="status-badge ok">✓ Extension A</span></td>
+                  <td>Store-Conditional 64-bit doubleword. Stores value only if reservation holds; foundation of lock-free atomics.</td>
+                </tr>
+                <tr data-cat="rv64a">
+                  <td><code>lr.w rd, (rs1)</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0101111 (0x2f)</code></td>
+                  <td><code>010 (0x2)</code></td>
+                  <td><code>00010 aq rl</code></td>
+                  <td><code>R[rd] &larr; sext(Mem32[R[rs1]]); Reserve(R[rs1])</code></td>
+                  <td><span class="status-badge ok">✓ Extension A</span></td>
+                  <td>Load-Reserved 32-bit word, sign-extended to 64 bits.</td>
+                </tr>
+                <tr data-cat="rv64a">
+                  <td><code>sc.w rd, rs2, (rs1)</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0101111 (0x2f)</code></td>
+                  <td><code>010 (0x2)</code></td>
+                  <td><code>00011 aq rl</code></td>
+                  <td><code>if (Reserved) Mem32[R[rs1]] &larr; R[rs2][31:0]; R[rd] &larr; (Reserved ? 0 : 1)</code></td>
+                  <td><span class="status-badge ok">✓ Extension A</span></td>
+                  <td>Store-Conditional 32-bit word.</td>
+                </tr>
+                <tr data-cat="rv64a">
+                  <td><code>amoadd.d rd, rs2, (rs1)</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0101111 (0x2f)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>00000 aq rl</code></td>
+                  <td><code>R[rd] &larr; Mem64[rs1]; Mem64[rs1] &larr; Mem64[rs1] + R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extension A</span></td>
+                  <td>Atomic Memory Add 64-bit doubleword. Single-cycle read-modify-write without bus lock contention.</td>
+                </tr>
+                <tr data-cat="rv64a">
+                  <td><code>amoswap.d rd, rs2, (rs1)</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0101111 (0x2f)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>00001 aq rl</code></td>
+                  <td><code>R[rd] &larr; Mem64[rs1]; Mem64[rs1] &larr; R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extension A</span></td>
+                  <td>Atomic Memory Swap 64-bit doubleword. Swaps register and memory values atomically; used for spinlocks.</td>
+                </tr>
+                <tr data-cat="rv64a">
+                  <td><code>amoand.d rd, rs2, (rs1)</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0101111 (0x2f)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>01100 aq rl</code></td>
+                  <td><code>R[rd] &larr; Mem64[rs1]; Mem64[rs1] &larr; Mem64[rs1] &amp; R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extension A</span></td>
+                  <td>Atomic Memory Bitwise AND 64-bit doubleword. Used to clear flag bits in shared kernel bitmasks.</td>
+                </tr>
+                <tr data-cat="rv64a">
+                  <td><code>amoor.d rd, rs2, (rs1)</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0101111 (0x2f)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>01000 aq rl</code></td>
+                  <td><code>R[rd] &larr; Mem64[rs1]; Mem64[rs1] &larr; Mem64[rs1] | R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extension A</span></td>
+                  <td>Atomic Memory Bitwise OR 64-bit doubleword. Used to set flag bits in shared kernel bitmasks.</td>
+                </tr>
+                <tr data-cat="rv64a">
+                  <td><code>amomax.d rd, rs2, (rs1)</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>0101111 (0x2f)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>10100 aq rl</code></td>
+                  <td><code>R[rd] &larr; Mem64[rs1]; Mem64[rs1] &larr; max_s(Mem64[rs1], R[rs2])</code></td>
+                  <td><span class="status-badge ok">✓ Extension A</span></td>
+                  <td>Atomic Memory Signed Maximum 64-bit doubleword. Updates shared monotonic counters and timestamps.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fld rd, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-i">I-Type</span></td>
+                  <td><code>0000111 (0x07)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>imm[11:0]</code></td>
+                  <td><code>F[rd] &larr; Mem64[R[rs1] + sext(imm)]</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Load 64-bit double-precision float from memory directly into floating-point register file.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fsd rs2, offset(rs1)</code></td>
+                  <td><span class="fmt-badge fmt-s">S-Type</span></td>
+                  <td><code>0100111 (0x27)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>imm[11:5|4:0]</code></td>
+                  <td><code>Mem64[R[rs1] + sext(imm)] &larr; F[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Store 64-bit double-precision float from floating-point register to memory.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fadd.d rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>1010011 (0x53)</code></td>
+                  <td><code>rm [14:12]</code></td>
+                  <td><code>0000001 (0x01)</code></td>
+                  <td><code>F[rd] &larr; F[rs1] + F[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Double-precision IEEE 754 addition with dynamic or specified rounding mode in rm.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fsub.d rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>1010011 (0x53)</code></td>
+                  <td><code>rm [14:12]</code></td>
+                  <td><code>0000101 (0x05)</code></td>
+                  <td><code>F[rd] &larr; F[rs1] - F[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Double-precision IEEE 754 subtraction.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fmul.d rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>1010011 (0x53)</code></td>
+                  <td><code>rm [14:12]</code></td>
+                  <td><code>0001001 (0x09)</code></td>
+                  <td><code>F[rd] &larr; F[rs1] * F[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Double-precision IEEE 754 multiplication. Computes 106-bit product mantissa.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fdiv.d rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>1010011 (0x53)</code></td>
+                  <td><code>rm [14:12]</code></td>
+                  <td><code>0001101 (0x0d)</code></td>
+                  <td><code>F[rd] &larr; F[rs1] / F[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Double-precision IEEE 754 division over multi-cycle radix-4 SRT datapath.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fsqrt.d rd, rs1</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>1010011 (0x53)</code></td>
+                  <td><code>rm [14:12]</code></td>
+                  <td><code>0101101 (rs2=0)</code></td>
+                  <td><code>F[rd] &larr; sqrt(F[rs1])</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Double-precision IEEE 754 square root.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fmadd.d rd, rs1, rs2, rs3</code></td>
+                  <td><span class="fmt-badge fmt-r4">R4-Type</span></td>
+                  <td><code>1000011 (0x43)</code></td>
+                  <td><code>rm [14:12]</code></td>
+                  <td><code>funct2=01</code></td>
+                  <td><code>F[rd] &larr; (F[rs1] * F[rs2]) + F[rs3]</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Fused Multiply-Add Double. Evaluates (rs1 * rs2) + rs3 with single intermediate rounding. Essential for BLAS / AI kernels.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fcvt.d.l rd, rs1</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>1010011 (0x53)</code></td>
+                  <td><code>rm [14:12]</code></td>
+                  <td><code>1101001 (rs2=00010)</code></td>
+                  <td><code>F[rd] &larr; float64(R[rs1])</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Convert 64-bit signed integer GPR to 64-bit double-precision float FPR.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fcvt.l.d rd, rs1</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>1010011 (0x53)</code></td>
+                  <td><code>rm [14:12]</code></td>
+                  <td><code>1100001 (rs2=00010)</code></td>
+                  <td><code>R[rd] &larr; int64(F[rs1])</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Convert 64-bit double-precision float FPR to 64-bit signed integer GPR.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>feq.d rd, rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>1010011 (0x53)</code></td>
+                  <td><code>010 (0x2)</code></td>
+                  <td><code>1010001 (0x51)</code></td>
+                  <td><code>R[rd] &larr; (F[rs1] == F[rs2]) ? 1 : 0</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Double-precision equality test; returns boolean integer into integer register rd.</td>
+                </tr>
+                <tr data-cat="rv64fd">
+                  <td><code>fmv.x.d rd, rs1</code></td>
+                  <td><span class="fmt-badge fmt-r">R-Type</span></td>
+                  <td><code>1010011 (0x53)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>1110001 (rs2=00000)</code></td>
+                  <td><code>R[rd] &larr; F[rs1][63:0]</code></td>
+                  <td><span class="status-badge ok">✓ Extensions F/D</span></td>
+                  <td>Move bitwise raw 64-bit IEEE representation from float register to integer register without conversion.</td>
+                </tr>
+                <tr data-cat="rv64c">
+                  <td><code>c.ld rd', offset(rs1')</code></td>
+                  <td><span class="fmt-badge fmt-c">CL-Type</span></td>
+                  <td><code>00 (0x0)</code></td>
+                  <td><code>011 (0x3)</code></td>
+                  <td><code>imm[7:6|2:0]</code></td>
+                  <td><code>R[rd'] &larr; Mem64[R[rs1'] + imm]</code></td>
+                  <td><span class="status-badge ok">✓ Extension C</span></td>
+                  <td>16-bit compressed load doubleword. Replaces 32-bit ld with 16-bit instruction, saving 50% fetch bandwidth.</td>
+                </tr>
+                <tr data-cat="rv64c">
+                  <td><code>c.sd rs2', offset(rs1')</code></td>
+                  <td><span class="fmt-badge fmt-c">CS-Type</span></td>
+                  <td><code>00 (0x0)</code></td>
+                  <td><code>111 (0x7)</code></td>
+                  <td><code>imm[7:6|2:0]</code></td>
+                  <td><code>Mem64[R[rs1'] + imm] &larr; R[rs2']</code></td>
+                  <td><span class="status-badge ok">✓ Extension C</span></td>
+                  <td>16-bit compressed store doubleword.</td>
+                </tr>
+                <tr data-cat="rv64c">
+                  <td><code>c.addiw rd, imm</code></td>
+                  <td><span class="fmt-badge fmt-c">CI-Type</span></td>
+                  <td><code>01 (0x1)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>imm[5:0]</code></td>
+                  <td><code>R[rd] &larr; sext((R[rd] + sext(imm))[31:0])</code></td>
+                  <td><span class="status-badge ok">✓ Extension C</span></td>
+                  <td>16-bit compressed add immediate word to 64-bit register with sign-extension.</td>
+                </tr>
+                <tr data-cat="rv64c">
+                  <td><code>c.addw rd', rs2'</code></td>
+                  <td><span class="fmt-badge fmt-c">CA-Type</span></td>
+                  <td><code>01 (0x1)</code></td>
+                  <td><code>funct6=100111</code></td>
+                  <td><code>funct2=01</code></td>
+                  <td><code>R[rd'] &larr; sext((R[rd'] + R[rs2'])[31:0])</code></td>
+                  <td><span class="status-badge ok">✓ Extension C</span></td>
+                  <td>16-bit compressed add 32-bit word registers.</td>
+                </tr>
+                <tr data-cat="rv64c">
+                  <td><code>c.subw rd', rs2'</code></td>
+                  <td><span class="fmt-badge fmt-c">CA-Type</span></td>
+                  <td><code>01 (0x1)</code></td>
+                  <td><code>funct6=100111</code></td>
+                  <td><code>funct2=00</code></td>
+                  <td><code>R[rd'] &larr; sext((R[rd'] - R[rs2'])[31:0])</code></td>
+                  <td><span class="status-badge ok">✓ Extension C</span></td>
+                  <td>16-bit compressed subtract 32-bit word registers.</td>
+                </tr>
+                <tr data-cat="rv64c">
+                  <td><code>c.addi rd, imm</code></td>
+                  <td><span class="fmt-badge fmt-c">CI-Type</span></td>
+                  <td><code>01 (0x1)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>imm[5:0]</code></td>
+                  <td><code>R[rd] &larr; R[rd] + sext(imm)</code></td>
+                  <td><span class="status-badge ok">✓ Extension C</span></td>
+                  <td>16-bit compressed add immediate (-32 to +31).</td>
+                </tr>
+                <tr data-cat="rv64c">
+                  <td><code>c.jal offset</code></td>
+                  <td><span class="fmt-badge fmt-c">CJ-Type</span></td>
+                  <td><code>01 (0x1)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>imm[11|4|9:8|10|6|7|3:1|5]</code></td>
+                  <td><code>R[x1] &larr; PC + 2; PC &larr; PC + sext(offset)</code></td>
+                  <td><span class="status-badge ok">✓ Extension C</span></td>
+                  <td>16-bit compressed jump and link. Saves 2-byte return address to ra.</td>
+                </tr>
+                <tr data-cat="rv64c">
+                  <td><code>c.mv rd, rs2</code></td>
+                  <td><span class="fmt-badge fmt-c">CR-Type</span></td>
+                  <td><code>10 (0x2)</code></td>
+                  <td><code>funct4=1000</code></td>
+                  <td><code>rs1=00000</code></td>
+                  <td><code>R[rd] &larr; R[rs2]</code></td>
+                  <td><span class="status-badge ok">✓ Extension C</span></td>
+                  <td>16-bit compressed copy register. Synthesizes add rd, x0, rs2.</td>
+                </tr>
+                <tr data-cat="privileged">
+                  <td><code>sfence.vma rs1, rs2</code></td>
+                  <td><span class="fmt-badge fmt-sys">R-Type</span></td>
+                  <td><code>1110011 (0x73)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0001001 (0x09)</code></td>
+                  <td><code>FlushTLB(vaddr=R[rs1], asid=R[rs2])</code></td>
+                  <td><span class="status-badge ok">✓ Privileged MMU</span></td>
+                  <td>Memory-Management Fence for Virtual Memory. Flushes TLB entries for process context switches and page table updates.</td>
+                </tr>
+                <tr data-cat="privileged">
+                  <td><code>sret</code></td>
+                  <td><span class="fmt-badge fmt-sys">R-Type</span></td>
+                  <td><code>1110011 (0x73)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0001000 (rs2=00010)</code></td>
+                  <td><code>PC &larr; sepc; Priv &larr; sstatus.SPP; sstatus.SIE &larr; sstatus.SPIE</code></td>
+                  <td><span class="status-badge ok">✓ Supervisor Mode</span></td>
+                  <td>Return from Supervisor trap handler. Restores previous execution privilege and re-enables supervisor interrupts.</td>
+                </tr>
+                <tr data-cat="privileged">
+                  <td><code>mret</code></td>
+                  <td><span class="fmt-badge fmt-sys">R-Type</span></td>
+                  <td><code>1110011 (0x73)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0011000 (rs2=00010)</code></td>
+                  <td><code>PC &larr; mepc; Priv &larr; mstatus.MPP; mstatus.MIE &larr; mstatus.MPIE</code></td>
+                  <td><span class="status-badge ok">✓ Machine Mode</span></td>
+                  <td>Return from Machine-mode trap handler (e.g. OpenSBI firmware trap dispatch).</td>
+                </tr>
+                <tr data-cat="privileged">
+                  <td><code>wfi</code></td>
+                  <td><span class="fmt-badge fmt-sys">R-Type</span></td>
+                  <td><code>1110011 (0x73)</code></td>
+                  <td><code>000 (0x0)</code></td>
+                  <td><code>0001000 (rs2=00101)</code></td>
+                  <td><code>CoreHaltUntilInterrupt()</code></td>
+                  <td><span class="status-badge ok">✓ Privileged System</span></td>
+                  <td>Wait for Interrupt. Clocks down core datapath into idle sleep state, waking on pending interrupt.</td>
+                </tr>
+                <tr data-cat="privileged">
+                  <td><code>csrrw rd, csr, rs1</code></td>
+                  <td><span class="fmt-badge fmt-sys">I-Type</span></td>
+                  <td><code>1110011 (0x73)</code></td>
+                  <td><code>001 (0x1)</code></td>
+                  <td><code>csr[11:0]</code></td>
+                  <td><code>t &larr; CSR[csr]; CSR[csr] &larr; R[rs1]; R[rd] &larr; t</code></td>
+                  <td><span class="status-badge ok">✓ Privileged Zicsr</span></td>
+                  <td>Atomic CSR Read &amp; Write. Controls privilege registers, MMU config (satp), and trap vectors.</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Sub-part C: Standard Extensions Deep-Dives -->
+      <div class="isa-subtopic-block" style="margin-bottom: 1.75rem;">
+        <h4 class="isa-subtopic-title">
+          <span class="pill-badge badge-teal">MODULAR EXTENSIONS</span>
+          Standard Extensions Deep-Dive: Spending Silicon to Conquer the Memory Wall
+        </h4>
+        <p class="isa-subtopic-text">
+          In application processors, architectural extensions represent direct silicon gate investments that eliminate CPU stalls, reduce memory bandwidth pressure, and accelerate critical OS kernel algorithms:
+        </p>
+
+        <div class="isa-extensions-flow">
+          <!-- Extension RV64I -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-cyan">BASE RV64I</span>
+                <span class="isa-ext-name">64-Bit Base Integer Architecture (Flat Virtual Addressing)</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: ~45 kGE Baseline (Core ALUs &amp; 64-bit RF)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Implements 32 64-bit general-purpose registers, 64-bit adders, shifters, and memory address generation units (AGU). Provides dedicated <code>*W</code> instructions (<code>addw</code>, <code>subw</code>, <code>sllw</code>, <code>addiw</code>) that perform 32-bit operations and automatically sign-extend results to bit 63.
+              </p>
+              <p>
+                <strong>Software Payoff:</strong> Provides a flat virtual address space spanning up to 256 Terabytes (Sv48), eliminating 32-bit physical RAM boundaries and supporting multi-gigabyte memory-mapped files without banking tricks.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Mandatory baseline for all evaluated application cores (Rocket, CVA6, BlackParrot, BOOM).
+              </div>
+            </div>
+          </div>
+
+          <!-- Extension M -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-yellow">EXTENSION 'M'</span>
+                <span class="isa-ext-name">Hardware 64-Bit Multiply &amp; Divide (Radix-4 Booth &amp; SRT)</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +8 to 18 kGE (Multiplier Array &amp; Iterative Divider)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Pipelined Radix-4 Booth multiplier tree calculating full 64&times;64 products in 2 to 3 clock cycles, alongside an iterative restoring or non-restoring SRT divider computing quotients over 32 to 64 clock cycles.
+              </p>
+              <p>
+                <strong>Software Payoff:</strong> <strong>25&times; to 60&times; acceleration</strong> over GCC software emulation routines (<code>__muldi3</code>, <code>__divdi3</code>). Eliminates severe thread scheduling stalls during kernel hash table lookups, timer tick calculations, and slab allocator maths.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Universal in all Category 2 processors. Rocket integrates a non-blocking iterative divider; BOOM features fully pipelined multi-cycle multiplier stages.
+              </div>
+            </div>
+          </div>
+
+          <!-- Extension A -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-teal">EXTENSION 'A'</span>
+                <span class="isa-ext-name">Atomic Memory Operations (AMO &amp; LR/SC Cache Locking)</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +3 to 6 kGE + L1 Reservation Monitor</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Load-Reserved/Store-Conditional (<code>lr.d</code>/<code>sc.d</code>) and single-cycle Atomic Read-Modify-Write (<code>amoadd.d</code>, <code>amoswap.d</code>, <code>amomax.d</code>). The L1 Data Cache incorporates an address reservation latch that monitors bus invalidation snoops.
+              </p>
+              <p>
+                <strong>Software Payoff:</strong> <strong>The foundation of Linux SMP multi-core scaling.</strong> Powers kernel spinlocks, mutexes, futexes, reader-writer semaphores, RCU (Read-Copy-Update), and atomic reference counting without system deadlocks.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Mandatory for Linux multi-core boot. CVA6 and BlackParrot implement AMO ALU logic directly inside the L1 cache controller to prevent bus lock contention.
+              </div>
+            </div>
+          </div>
+
+          <!-- Extensions F & D -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-coral">EXTENSIONS 'F' &amp; 'D'</span>
+                <span class="isa-ext-name">IEEE 754-2008 Floating-Point Units (Hard-Float Datapath)</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +35 to 65 kGE (FMA Multiplier, Align &amp; Normalizer)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> 32 64-bit FPRs (<code>f0&ndash;f31</code>) and a multi-stage pipelined Fused Multiply-Add (FMA) unit executing <code>(rs1 &times; rs2) + rs3</code> with single intermediate rounding. Supports IEEE 754 subnormals, infinities, quiet/signaling NaNs, and NaN-boxing.
+              </p>
+              <p>
+                <strong>Software Payoff:</strong> Satisfies the <code>lp64d</code> Linux ABI, executing floating-point software (BLAS, Python NumPy, multimedia codecs, browser engines) at full native silicon speeds without triggering kernel soft-float trap handlers.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Rocket and CVA6 feature modular Berkeley HardFloat units; SonicBOOM integrates dual fully pipelined FP execution pipelines.
+              </div>
+            </div>
+          </div>
+
+          <!-- Extension C -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-lime">EXTENSION 'C'</span>
+                <span class="isa-ext-name">Compressed 16-Bit Encodings (Cache Bandwidth Multiplier)</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +1.5 to 3.5 kGE (Fetch Expander &amp; Alignment MUXes)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Re-encodes the most common 64-bit instructions into 16-bit equivalents (<code>c.ld</code>, <code>c.sd</code>, <code>c.addiw</code>, <code>c.addi</code>). The Instruction Fetch unit handles halfword-aligned instruction streams and expands them into 32-bit instructions before decode.
+              </p>
+              <p>
+                <strong>The Memory Bandwidth Payoff:</strong> Shrinks compiled Linux kernel and userland binaries by <strong>25% to 35%</strong>. This increases effective L1-I cache hit rate by <strong>15% to 20%</strong>, directly reducing external memory bus traffic.
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> Essential for maximizing instruction fetch efficiency in modern application pipelines.
+              </div>
+            </div>
+          </div>
+
+          <!-- Privileged Architecture & MMU -->
+          <div class="isa-ext-card">
+            <div class="isa-ext-head">
+              <div class="isa-ext-badge-group">
+                <span class="isa-ext-badge badge-ink">PRIVILEGE &amp; MMU</span>
+                <span class="isa-ext-name">Privileged Rings, PMP Firewalls &amp; Sv39/Sv48 Virtual Memory</span>
+              </div>
+              <div class="isa-cost-pill">Silicon Cost: +20 to 45 kGE (Hardware PTW, TLBs, CSR Bank)</div>
+            </div>
+            <div class="isa-ext-body">
+              <p>
+                <strong>The Mechanism:</strong> Machine (M), Supervisor (S), and User (U) privilege rings. Hardware Page Table Walker (PTW) autonomously traverses 3-level (Sv39) or 4-level (Sv48) page tables in memory on TLB misses, populating translation entries without software intervention.
+              </p>
+              <p>
+                <strong>Software Payoff:</strong> The physical foundation of modern OS security: enforces process address space isolation, demand paging, memory-mapped I/O protection, and copy-on-write (<code>fork</code>).
+              </p>
+              <div class="isa-adoption-note">
+                <strong>Adoption Decision:</strong> The non-negotiable definition of a Category 2 Application Core.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-part D: Extension Summary Trade-off Table -->
       <div class="tradeoff-matrix-wrap">
         <table class="tradeoff-table">
           <thead>
@@ -1363,14 +2519,82 @@ const appCoreDossiers = [
       </div>
     </div>
 
-    <!-- 1.4 WHY FOUR ARCHETYPES -->
-    <div class="concept-step-card">
+    <!-- 1.4 THE CLASSIFICATION LOGIC & ARCHITECTURAL PHASE TRANSITIONS -->
+    <div id="classification-logic" class="concept-step-card">
       <div class="step-card-header">
-        <span class="step-tag badge-ink">1.4 ARCHITECTURAL PHASE TRANSITIONS</span>
-        <h3 class="step-card-title">Why Four Archetypes? The Microarchitectural Boundaries</h3>
+        <span class="step-tag badge-yellow">1.4 THE CLASSIFICATION LOGIC</span>
+        <h3 class="step-card-title">Why Four Archetypes? The Iron Law of High-Performance Processors</h3>
       </div>
       <p class="step-card-lead">
-        Based on these physical silicon trade-offs, the open-source 64-bit application core ecosystem clusters into four distinct microarchitectural archetypes:
+        Every processor core's real-world execution time under a full operating system like Linux is governed by the <strong>Expanded Iron Law of Processor Performance</strong>, taking the Memory Wall and branch prediction penalties into account:
+      </p>
+
+      <div class="formula-callout-box">
+        <div class="formula-line">
+          <code>Execution Time = (Instructions / Program) &times; (CPI<sub>compute</sub> + CPI<sub>memory stalls</sub> + CPI<sub>branch penalties</sub>) &times; (1 / <em>F</em><sub>max</sub>)</code>
+        </div>
+        <div class="formula-explanation">
+          <p>
+            In deeply embedded microcontrollers, <code>CPI<sub>memory stalls</sub> &approx; 0</code> because code executes directly from single-cycle on-chip SRAM. In 64-bit application processors, however, <code>CPI<sub>memory stalls</sub> = (L1 Miss Rate &times; L1 Penalty) + (L2 Miss Rate &times; L2 Penalty) + (TLB Miss Rate &times; PTW Penalty)</code>, which can easily reach <strong>2.0 to 5.0 CPI</strong> if unaddressed!
+          </p>
+          <p style="margin-top: 0.5rem;">
+            To reduce execution time, an application processor architect cannot simply crank up clock frequency <em>F</em><sub>max</sub> without solving memory stalls. Every microarchitectural archetype represents a distinct, mathematically driven strategy to eliminate memory stall bubbles and drive effective CPI below 1.0.
+          </p>
+        </div>
+      </div>
+
+      <!-- Archetypes Rationale Table -->
+      <div class="archetypes-rationale-table-wrap" style="margin-top: 1.25rem; margin-bottom: 2rem;">
+        <table class="ds-table" style="background: #ffffff; border: 1.5px solid var(--ink); border-radius: 8px;">
+          <thead>
+            <tr style="background: var(--paper-deep); border-bottom: 2px solid var(--ink);">
+              <th style="padding: 0.6rem 0.75rem;">Archetype</th>
+              <th style="padding: 0.6rem 0.75rem;">Governing Physical Philosophy</th>
+              <th style="padding: 0.6rem 0.75rem;">Typical Area</th>
+              <th style="padding: 0.6rem 0.75rem;">Target CPI (Linux)</th>
+              <th style="padding: 0.6rem 0.75rem;">Memory Concurrency &amp; MSHRs</th>
+              <th style="padding: 0.6rem 0.75rem;">Key Microarchitectural Technique</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Archetype 1</strong><br /><small class="text-muted">Classic In-Order Baseline</small></td>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Minimal area &amp; golden reference.</strong> Single-issue in-order pipeline with integrated hardware Sv39 PTW.</td>
+              <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-yellow">~135 kGE</span></td>
+              <td style="padding: 0.6rem 0.75rem;"><code>1.45 &ndash; 1.95</code></td>
+              <td style="padding: 0.6rem 0.75rem;">Blocking L1 (0 MSHR) / 1-flight misses</td>
+              <td style="padding: 0.6rem 0.75rem;">5-stage in-order pipeline (Fetch, Decode, Execute, Mem, WB) with TileLink-UH bus (Rocket Chip).</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Archetype 2</strong><br /><small class="text-muted">Industrial Deep In-Order</small></td>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Break critical timing paths for ASIC tapeout.</strong> Decouple execution units with issue scoreboard and standardized AXI4.</td>
+              <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-cyan">~148 kGE</span></td>
+              <td style="padding: 0.6rem 0.75rem;"><code>1.30 &ndash; 1.65</code></td>
+              <td style="padding: 0.6rem 0.75rem;">1&ndash;2 MSHRs + write-through L1D</td>
+              <td style="padding: 0.6rem 0.75rem;">6-stage decoupled scoreboard, 16 PMP regions, and standard AXI4 64-bit interconnect (CVA6 / Ariane).</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Archetype 3</strong><br /><small class="text-muted">Modular Coherent Multi-Core</small></td>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Tile composability &amp; cluster scalability.</strong> Partition pipeline into FIFO-decoupled domains with directory MESI cache coherence.</td>
+              <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-coral">~165 kGE</span></td>
+              <td style="padding: 0.6rem 0.75rem;"><code>1.25 &ndash; 1.55</code></td>
+              <td style="padding: 0.6rem 0.75rem;">2&ndash;8 MSHRs non-blocking L1D</td>
+              <td style="padding: 0.6rem 0.75rem;">Three independent partitions (FE / BE / ME), BedRock MESI protocol, and 2D-mesh packetized NoC (BlackParrot).</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Archetype 4</strong><br /><small class="text-muted">High-Performance Superscalar OoO</small></td>
+              <td style="padding: 0.6rem 0.75rem;"><strong>Break the 1.0 CPI in-order wall.</strong> Speculative out-of-order execution hides multi-cycle DRAM latency behind independent ALU instructions.</td>
+              <td style="padding: 0.6rem 0.75rem;"><span class="badge badge-lime">~420 kGE</span></td>
+              <td style="padding: 0.6rem 0.75rem;"><code>0.65 &ndash; 0.95</code></td>
+              <td style="padding: 0.6rem 0.75rem;">8 MSHRs + Speculative LSQ</td>
+              <td style="padding: 0.6rem 0.75rem;">3-wide superscalar rename/dispatch, 128-entry Reorder Buffer (ROB), 128 PRF, and TAGE-SC branch prediction (SonicBOOM).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="step-card-lead" style="margin-bottom: 1.25rem;">
+        Explore the four microarchitectural phase transitions below:
       </p>
 
       <div class="archetype-preview-topdown">
@@ -4137,6 +5361,41 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
 </BaseLayout>
 
 <script>
+  // Base RV64GC ISA Table Filter & Search
+  const isaCatBtns = document.querySelectorAll(".isa-cat-btn");
+  const isaRows = document.querySelectorAll("#isaFullSpecTable tbody tr");
+  const isaSearch = document.getElementById("isaSearchInput") as HTMLInputElement;
+
+  function filterIsaTable() {
+    const activeCat = document.querySelector(".isa-cat-btn.active")?.getAttribute("data-isa-cat") || "all";
+    const query = isaSearch ? isaSearch.value.trim().toLowerCase() : "";
+
+    isaRows.forEach((row) => {
+      const rowCat = row.getAttribute("data-cat");
+      const text = row.textContent?.toLowerCase() || "";
+      const matchesCat = activeCat === "all" || rowCat === activeCat;
+      const matchesQuery = query === "" || text.includes(query);
+
+      if (matchesCat && matchesQuery) {
+        (row as HTMLElement).style.display = "";
+      } else {
+        (row as HTMLElement).style.display = "none";
+      }
+    });
+  }
+
+  isaCatBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      isaCatBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      filterIsaTable();
+    });
+  });
+
+  if (isaSearch) {
+    isaSearch.addEventListener("input", filterIsaTable);
+  }
+
   // Copy LaTeX
   document.querySelectorAll(".copy-latex-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -4378,6 +5637,464 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
 </script>
 
 <style>
+  /* First-Principles Intuitive Introduction */
+  .intro-narrative {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+    margin-top: 1rem;
+    margin-bottom: 1.75rem;
+    max-width: 950px;
+  }
+
+  .intro-p {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink-light, #242c33);
+    margin: 0;
+  }
+
+  .intro-lead-highlight {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink, #151b20);
+    border-left: 4px solid var(--teal, #0d9488);
+    padding-left: 1rem;
+  }
+
+  /* Section 1.2: 64-Bit Register File & ISA Spec */
+  .isa-subtopic-block {
+    margin-bottom: 1.5rem;
+  }
+
+  .isa-subtopic-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    margin: 0 0 0.5rem 0;
+    flex-wrap: wrap;
+  }
+
+  .isa-subtopic-text {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-light, #242c33);
+    margin: 0 0 1rem 0;
+  }
+
+  .isa-base-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .isa-base-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .isa-base-card.isa-rv64-int {
+    border-left: 6px solid var(--cyan, #22bfd7);
+  }
+
+  .isa-base-card.isa-rv64-fp {
+    border-left: 6px solid var(--coral, #f38469);
+  }
+
+  .isa-base-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .isa-code-pill {
+    font-family: var(--md-code-font, monospace);
+    font-weight: 900;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--ink, #151b20);
+  }
+
+  .isa-rv64-int .isa-code-pill {
+    background: var(--cyan, #22bfd7);
+    color: #151b20;
+  }
+
+  .isa-rv64-fp .isa-code-pill {
+    background: var(--coral, #f38469);
+    color: #ffffff;
+  }
+
+  .isa-card-title-text {
+    font-weight: 800;
+    font-size: 0.96rem;
+    color: var(--ink, #151b20);
+  }
+
+  .isa-base-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .isa-metric-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-light, #242c33);
+  }
+
+  .isa-metric-label {
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    font-size: 0.8rem;
+    font-family: var(--md-code-font, monospace);
+    text-transform: uppercase;
+  }
+
+  .isa-metric-val {
+    color: var(--ink-light, #242c33);
+  }
+
+  .isa-reg-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .isa-reg-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    margin: 0;
+  }
+
+  .isa-reg-desc {
+    font-size: 0.88rem;
+    color: #242c33;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .isa-reg-table {
+    width: 100%;
+    min-width: 680px;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+  }
+
+  .isa-reg-table th {
+    background: var(--paper-deep, #eee4c8);
+    border-bottom: 2px solid var(--ink, #151b20);
+    border-right: 1px solid var(--line, #eee4c8);
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+  }
+
+  .isa-reg-table td {
+    padding: 0.55rem 0.85rem;
+    border-bottom: 1px solid var(--line, #eee4c8);
+    border-right: 1px solid var(--line, #eee4c8);
+    line-height: 1.45;
+    color: var(--ink, #151b20);
+  }
+
+  .isa-reg-table tbody tr:hover {
+    background: #fff9ea;
+  }
+
+  /* Full ISA Specification Table Block */
+  .isa-full-table-block {
+    margin-top: 2rem;
+    margin-bottom: 2.5rem;
+    background: var(--paper, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+  }
+
+  .isa-table-head-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .isa-search-wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  .isa-search-field {
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.85rem;
+    font-family: inherit;
+    width: 280px;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    background: #ffffff;
+    color: var(--ink, #151b20);
+  }
+
+  .isa-search-field:focus {
+    outline: none;
+    background: #fff0b9;
+  }
+
+  .isa-cat-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .isa-cat-btn {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    transition: all 0.1s ease;
+    color: var(--ink, #151b20);
+  }
+
+  .isa-cat-btn:hover {
+    background: var(--cyan, #22bfd7);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+  }
+
+  .isa-cat-btn.active {
+    background: var(--cyan, #22bfd7);
+    color: #151b20;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    transform: translate(-1px, -1px);
+  }
+
+  .isa-full-spec-table {
+    width: 100%;
+    min-width: 860px;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+
+  .isa-full-spec-table th {
+    background: var(--paper-deep, #eee4c8);
+    border-bottom: 2px solid var(--ink, #151b20);
+    border-right: 1px solid var(--line, #eee4c8);
+    padding: 0.65rem 0.75rem;
+    text-align: left;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .isa-full-spec-table td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--line, #eee4c8);
+    border-right: 1px solid var(--line, #eee4c8);
+    line-height: 1.45;
+    color: var(--ink, #151b20);
+  }
+
+  .isa-full-spec-table tbody tr:hover {
+    background: #fdf2d0;
+  }
+
+  .fmt-badge {
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    font-family: monospace;
+    border: 1px solid var(--ink, #151b20);
+    white-space: nowrap;
+  }
+  .fmt-r { background: #c9f3f4; color: #0891b2; }
+  .fmt-i { background: #fff0b9; color: #151b20; }
+  .fmt-s { background: #ffd8ce; color: #151b20; }
+  .fmt-b { background: #ffd8ce; color: #151b20; }
+  .fmt-u { background: #e2dfff; color: #151b20; }
+  .fmt-j { background: #ccfbf1; color: #0d9488; }
+  .fmt-r4 { background: #fed7aa; color: #c2410c; }
+  .fmt-c { background: #dcfce7; color: #15803d; }
+  .fmt-sys { background: #e0e7ff; color: #4338ca; }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.76rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    white-space: nowrap;
+  }
+  .status-badge.ok {
+    background: var(--lime-soft, #e8f7ec);
+    color: #166534;
+    border-color: #16a34a;
+  }
+  .status-badge.highlight {
+    background: #c9f3f4;
+    color: #0e7490;
+    border-color: #0891b2;
+  }
+
+  /* Extensions Deep-Dive Flow */
+  .isa-extensions-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .isa-ext-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .isa-ext-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-bottom: 1px dashed var(--line, #eee4c8);
+    padding-bottom: 0.65rem;
+  }
+
+  .isa-ext-badge-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .isa-ext-badge {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+  }
+
+  .isa-ext-name {
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+  }
+
+  .isa-cost-pill {
+    font-size: 0.78rem;
+    font-family: var(--md-code-font, monospace);
+    font-weight: 800;
+    background: var(--paper-deep, #eee4c8);
+    color: var(--ink, #151b20);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--ink, #151b20);
+  }
+
+  .isa-ext-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.91rem;
+    line-height: 1.55;
+    color: var(--ink-light, #242c33);
+  }
+
+  .isa-ext-body p {
+    margin: 0;
+  }
+
+  .isa-adoption-note {
+    background: var(--paper, #fffaf0);
+    border-left: 3px solid var(--ink, #151b20);
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.86rem;
+    color: var(--ink, #151b20);
+    margin-top: 0.25rem;
+  }
+
+  /* Formula Callout Box */
+  .formula-callout-box {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-left: 6px solid var(--cyan, #22bfd7);
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    margin-bottom: 1.25rem;
+  }
+
+  .formula-line {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    margin-bottom: 0.5rem;
+  }
+
+  .formula-line code {
+    background: var(--paper-deep, #eee4c8);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid var(--ink, #151b20);
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .formula-explanation p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink-light, #151b20);
+    margin: 0;
+  }
+
+  .archetypes-rationale-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .page-header {
     background: var(--cream, #fffaf0);
     border: 2px solid var(--ink, #151b20);
