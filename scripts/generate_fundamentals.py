@@ -7027,8 +7027,9 @@ styles = """<style>
   }
 
   .schematic-tag {
-    background: var(--ink);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
     font-size: 0.68rem;
     font-weight: 800;
     padding: 0.15rem 0.45rem;
@@ -7759,13 +7760,13 @@ styles = """<style>
   }
 
   .gate-box-art {
-    background: var(--ink);
-    color: #ffffff;
-    border: 2px solid var(--ink);
+    background: var(--cream, #fffaf0);
+    color: var(--ink, #151b20);
+    border: 2px solid var(--ink, #151b20);
     border-radius: 8px;
     padding: 1rem 1.25rem;
     text-align: center;
-    box-shadow: 3px 3px 0px var(--yellow);
+    box-shadow: 3px 3px 0px var(--yellow, #ffc83e);
     min-width: 110px;
   }
 
@@ -7773,12 +7774,14 @@ styles = """<style>
     display: block;
     font-size: 1.2rem;
     font-weight: 900;
+    color: var(--ink, #151b20);
   }
 
   .gate-art-formula {
     display: block;
     font-size: 0.75rem;
-    color: var(--yellow);
+    color: var(--teal, #0f766e);
+    font-weight: 800;
     margin-top: 0.25rem;
     font-family: var(--md-code-font, monospace);
   }
@@ -7851,7 +7854,7 @@ styles = """<style>
     text-align: center;
   }
 
-  .truth-table th { background: var(--ink); color: #ffffff; }
+  .truth-table th { background: var(--cream-soft, #f6f0dc); color: var(--ink, #151b20); font-weight: 800; border-bottom: 2px solid var(--ink, #151b20); }
 
   .truth-table tr.active-row {
     background: var(--yellow-soft);
@@ -8118,11 +8121,11 @@ styles = """<style>
   }
 
   .isa-ribbon-container {
-    background: var(--ink);
-    border: 2px solid var(--ink);
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
     padding: 1rem;
-    box-shadow: 3px 3px 0px var(--ink);
+    box-shadow: 3px 3px 0px var(--ink, #151b20);
     margin-bottom: 1.25rem;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -8131,7 +8134,7 @@ styles = """<style>
   .ribbon-labels {
     display: flex;
     gap: 4px;
-    color: #94a3b8;
+    color: var(--ink-light, #242c33);
     font-size: 0.72rem;
     font-weight: 700;
     margin-bottom: 0.35rem;
@@ -8233,15 +8236,16 @@ styles = """<style>
 
   .p-num {
     display: inline-block;
-    background: var(--ink);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1.5px solid var(--ink, #151b20);
     font-size: 0.75rem;
     font-weight: 800;
     width: 22px;
     height: 22px;
     border-radius: 50%;
     text-align: center;
-    line-height: 22px;
+    line-height: 20px;
     margin-bottom: 0.5rem;
   }
 
@@ -8368,8 +8372,9 @@ styles = """<style>
   }
 
   .code-snippet-box {
-    background: var(--ink);
-    color: #a8ffb2;
+    background: var(--paper-deep, #eee4c8);
+    color: var(--ink, #151b20);
+    border: 1.5px solid var(--ink, #151b20);
     padding: 0.85rem 1rem;
     border-radius: 6px;
     font-family: var(--md-code-font, monospace);
@@ -8480,8 +8485,9 @@ styles = """<style>
   }
 
   .blc-badge {
-    background: var(--ink);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
     font-size: 0.72rem;
     font-weight: 800;
     padding: 0.2rem 0.5rem;
@@ -8575,9 +8581,10 @@ styles = """<style>
   }
 
   .data-table th {
-    background: var(--ink);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
     font-weight: 800;
+    border-bottom: 2px solid var(--ink, #151b20);
   }
 
   .data-table tr:nth-child(even) td {

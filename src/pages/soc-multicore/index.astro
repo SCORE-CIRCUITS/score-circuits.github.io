@@ -802,13 +802,14 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .data-table th {
-    background: var(--ink, #151b20);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
     font-weight: 800;
+    border-bottom: 2px solid var(--ink, #151b20);
   }
 
   .data-table tr:nth-child(even) td {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(0, 0, 0, 0.02);
   }
 
   .verified-tag {
@@ -822,17 +823,18 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .latex-export-box {
-    background: var(--ink, #151b20);
-    border: 2px solid var(--ink);
+    background: var(--paper-deep, #eee4c8);
+    border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
     padding: 1.25rem;
     margin-top: 1rem;
+    box-shadow: 3px 3px 0px var(--ink, #151b20);
   }
 
   .latex-head {
     display: flex;
     justify-content: space-between;
-    color: var(--lime);
+    color: var(--ink, #151b20);
     font-size: 0.85rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
@@ -841,9 +843,10 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   .close-latex-btn {
     background: transparent;
     border: none;
-    color: #ffffff;
+    color: var(--ink, #151b20);
     font-size: 1.25rem;
     cursor: pointer;
+    font-weight: 700;
   }
 
   .latex-code {
@@ -851,7 +854,7 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
     padding: 0;
     font-family: var(--md-code-font, monospace);
     font-size: 0.82rem;
-    color: #a8ffb2;
+    color: var(--ink, #151b20);
     overflow-x: auto;
   }
 
@@ -898,7 +901,9 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .badge-infra {
-    background: var(--ink);
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
   }
 
   .dossier-header {
@@ -915,8 +920,9 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .d-badge {
-    background: var(--ink);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
     font-size: 0.75rem;
     font-weight: 800;
     padding: 0.2rem 0.5rem;
@@ -1018,19 +1024,20 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   .assess-item.limitation { background: rgba(255, 230, 109, 0.25); }
 
   .dossier-repro-box {
-    background: var(--ink, #151b20);
-    color: #ffffff;
+    background: var(--cream, #fffaf0);
+    color: var(--ink, #151b20);
     padding: 1rem 1.25rem;
     margin-bottom: 1.25rem;
-    border: 1.5px solid var(--ink);
+    border: 1.5px solid var(--ink, #151b20);
     border-radius: 10px;
+    box-shadow: 3px 3px 0px var(--ink, #151b20);
   }
 
   .repro-title {
     display: block;
     font-size: 0.82rem;
     font-weight: 800;
-    color: var(--lime);
+    color: var(--teal, #0f766e);
     margin-bottom: 0.5rem;
   }
 
@@ -1048,15 +1055,18 @@ Picobello   &amp; fractalsync     &amp; Tree Reduction &amp; 4,120 &amp; 52.8 &a
   }
 
   .cmd-tag {
-    color: #cccccc;
+    color: var(--ink-light, #596a78);
+    font-weight: 700;
   }
 
   .cmd-item code {
-    background: #000000;
-    color: #7ed957;
+    background: var(--paper-deep, #eee4c8);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
     font-family: var(--md-code-font, monospace);
+    font-weight: 700;
   }
 
   .dossier-files-summary {

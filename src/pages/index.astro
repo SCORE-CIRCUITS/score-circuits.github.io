@@ -14,6 +14,72 @@ const categoryLinks: Record<number, string> = {
   4: "/soc-multicore/",
 };
 
+const categoryDetails: Record<number, {
+  levelNum: string;
+  levelBadge: string;
+  scope: string;
+  borderClass: string;
+  badgeClass: string;
+  colorVar: string;
+  bottleneck: string;
+  remedy: string;
+  keyTools: string;
+  ctaText: string;
+  transitionText?: string;
+}> = {
+  1: {
+    levelNum: "01",
+    levelBadge: "LEVEL 1 • TIER 1 • SCALAR MICROBENCHMARKS",
+    scope: "Single-Thread & In-Order Embedded Pipelines",
+    borderClass: "ladder-border-yellow",
+    badgeClass: "badge-yellow",
+    colorVar: "var(--yellow)",
+    bottleneck: "Branch misprediction penalty incurs 1–2 idle bubble cycles on tight loops. Load-use dependencies stall simple 2-stage cores (e.g. Ibex) unless forwarding paths are expanded.",
+    remedy: "Dual-issue in-order execution with static branch hints and zero-overhead hardware loop controllers (e.g. VeeR EL2, CV32E40P).",
+    keyTools: "SERV (1-bit serial), PicoRV32, DarkRISCV, Ibex (2-stage), Hazard3 (3-stage), SCR1, VexRiscv (5-stage), VeeR EL2 (dual-issue)",
+    ctaText: "Explore Level 1 MCU / Scalar Cores",
+    transitionText: "Scale from Single-Issue Microcontrollers to Virtual Memory (Sv39/Sv48 MMU) & Multi-Level Caches",
+  },
+  2: {
+    levelNum: "02",
+    levelBadge: "LEVEL 2 • TIER 2 • MEMORY & OS COMPLIANCE",
+    scope: "Linux-Capable In-Order & Out-of-Order Processors",
+    borderClass: "ladder-border-cyan",
+    badgeClass: "badge-cyan",
+    colorVar: "var(--cyan)",
+    bottleneck: "Memory Wall latency (50–100 ns DRAM) on L1/L2 cache misses and serialized 3-level page table walk latency upon TLB misses.",
+    remedy: "Non-blocking split L1/L2 caches with MSHRs, hardware stream prefetchers, and out-of-order superscalar execution (BOOM).",
+    keyTools: "CVA6 (6-stage in-order RV64GC), Rocket Chip (TileLink-UH), BlackParrot (BedRock coherent), BOOM (7–10 stage OoO)",
+    ctaText: "Explore Level 2 Application Cores",
+    transitionText: "Scale from Memory-Bound Scalar Pipelines to Data-Parallel RVV 1.0 Vector Engines & Systolic Arrays",
+  },
+  3: {
+    levelNum: "03",
+    levelBadge: "LEVEL 3 • TIER 3 • DOMAIN VECTOR ACCELERATION",
+    scope: "Data-Parallel SIMD / RVV 1.0 & Systolic Accelerators",
+    borderClass: "ladder-border-coral",
+    badgeClass: "badge-coral",
+    colorVar: "var(--coral)",
+    bottleneck: "Vector lane utilization collapses from 98.4% on GEMM down to 23.0% on strided/reduction kernels (FFT, Softmax) due to scalar issue serialization and VRF bank conflicts.",
+    remedy: "Decoupled Access-Execute (DAE) vector coprocessors with multi-bank conflict-free VRFs and systolic weight-stationary matrix tiles (Ara, Gemmini).",
+    keyTools: "Ara (scalable 4–16 lanes RVV 1.0), AraXL (AXI bus), Gemmini (systolic GEMM array), Spatz (compact float coprocessor)",
+    ctaText: "Explore Level 3 Vector & Coprocessors",
+    transitionText: "Scale from Coprocessor Accelerators to Many-Core Clusters (up to 432 Cores), NoC Fabrics & DMA Engines",
+  },
+  4: {
+    levelNum: "04",
+    levelBadge: "LEVEL 4 • TIER 4 • FULL SYSTEM SCALING",
+    scope: "Many-Core Compute Clusters & Complete Tapeout SoCs",
+    borderClass: "ladder-border-lime",
+    badgeClass: "badge-lime",
+    colorVar: "var(--lime)",
+    bottleneck: "Software atomic spinlocks saturate shared crossbars past 64 cores, and autonomous DMA engines incur MMIO configuration setup penalties on small transfers (<128B).",
+    remedy: "Hardware collective barrier synchronization networks (FractalSync) and single-cycle instruction-triggered streaming DMA engines.",
+    keyTools: "Cheshire (64-bit Linux SoC), Snitch Cluster, MemPool (432-core shared-L1), PULPissimo (single-core MCU SoC), OpenPiton",
+    ctaText: "Explore Level 4 SoC & Multi-Core",
+  },
+};
+
 function getToolUrl(tool: any) {
   switch (tool.categoryNumber) {
     case 1: return `/mcu-scalar/#core-${tool.slug}`;
@@ -37,7 +103,7 @@ function getToolUrl(tool: any) {
       A systematic empirical survey and reproducible benchmarking suite spanning <strong>51 open hardware tools</strong> and architectures across <strong>4 categories</strong>—from sub-10 kGE microcontroller cores up to 432-core heterogeneous compute platforms.
     </p>
 
-    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem;">
+    <div class="hero-action-group">
       <a href="/fundamentals/" class="noc-sim-btn" style="background: var(--yellow);">📖 Architecture Fundamentals →</a>
       <a href="/mcu-scalar/" class="noc-sim-btn secondary">MCU / Scalar Cores</a>
       <a href="/app-cores/" class="noc-sim-btn secondary">Application Cores</a>
@@ -46,43 +112,92 @@ function getToolUrl(tool: any) {
     </div>
   </div>
 
-  <!-- 4 Categories Architecture Framework -->
+  <!-- 4-Level Progressive Architecture Ladder -->
   <section class="score-section">
     <div class="section-header">
       <div class="noc-track-badge" style="background: var(--cyan); margin-bottom: 0.5rem;">EVALUATION METHODOLOGY</div>
-      <h2 class="section-title">The 4 Architecture Categories</h2>
+      <h2 class="section-title">The 4-Level Architecture &amp; Verification Ladder</h2>
       <p class="section-subtitle">
-        Unlike generic literature reviews, SCORE evaluates architectures within an aligned 4-tier benchmarking framework designed to isolate bottlenecks at each layer of abstraction.
+        Unlike generic literature reviews, SCORE evaluates architectures within an aligned 4-tier benchmarking framework. Explore the progressive abstraction ladder below—from minimal scalar microcontrollers up to 432-core heterogeneous compute platforms.
       </p>
     </div>
 
-    <div class="categories-grid">
-      {categories.map((cat) => (
-        <div class={`category-card cat-card-${cat.number}`}>
-          <div class="cat-card-header">
-            <span class="cat-badge">{cat.badge}</span>
-          </div>
-          <h3 class="cat-title">{cat.title}</h3>
-          <p class="cat-desc">{cat.description}</p>
-          
-          <div class="cat-meta-block">
-            <div class="cat-meta-item">
-              <strong>Evaluation Profile:</strong> <code>{cat.profile}</code>
-            </div>
-            <div class="cat-meta-item">
-              <strong>Standard Workloads:</strong> {cat.workloads.join(", ")}
-            </div>
-            <div class="cat-meta-item">
-              <strong>Key Metrics:</strong> {cat.metrics.join(", ")}
-            </div>
-          </div>
+    <div class="methodology-ladder">
+      {categories.map((cat, idx) => {
+        const detail = categoryDetails[cat.number];
+        const isLast = idx === categories.length - 1;
+        return (
+          <div class="ladder-step-wrapper">
+            <article class={`ladder-step ${detail.borderClass}`}>
+              <div class="ladder-header">
+                <div class={`ladder-num-badge ${detail.badgeClass}`}>
+                  {detail.levelNum}
+                </div>
+                <div class="ladder-title-wrap">
+                  <div class="ladder-eyebrow">{detail.levelBadge}</div>
+                  <h3 class="ladder-title">{cat.title}</h3>
+                  <div class="ladder-scope-pill">{detail.scope}</div>
+                </div>
+              </div>
 
-          <div class="cat-card-footer">
-            <span class="cat-tools-count"><strong>{cat.tools.length}</strong> Tools Included</span>
-            <a href={categoryLinks[cat.number]} class="cat-link">Explore Category &rarr;</a>
+              <div class="ladder-body">
+                <p class="ladder-narrative">{cat.description}</p>
+
+                <div class="ladder-specs-grid">
+                  <div class="ladder-spec-card">
+                    <span class="lsc-label">Evaluation Profile</span>
+                    <span class="lsc-val"><code>{cat.profile}</code></span>
+                  </div>
+                  <div class="ladder-spec-card">
+                    <span class="lsc-label">Standard Workloads</span>
+                    <span class="lsc-val">{cat.workloads.join(", ")}</span>
+                  </div>
+                  <div class="ladder-spec-card">
+                    <span class="lsc-label">Key Metrics</span>
+                    <span class="lsc-val">{cat.metrics.join(", ")}</span>
+                  </div>
+                  <div class="ladder-spec-card">
+                    <span class="lsc-label">Evaluated Hardware</span>
+                    <span class="lsc-val">{detail.keyTools}</span>
+                  </div>
+                </div>
+
+                <div class="ladder-insight-box">
+                  <div class="lib-row">
+                    <strong class="lib-tag bottleneck">Empirical Bottleneck:</strong>
+                    <span>{detail.bottleneck}</span>
+                  </div>
+                  <div class="lib-row">
+                    <strong class="lib-tag remedy">Next-Gen Remedy:</strong>
+                    <span>{detail.remedy}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ladder-footer">
+                <div class="ladder-tools-pill">
+                  <span class="lt-icon">📦</span>
+                  <span><strong>{cat.tools.length}</strong> Evaluated Tools</span>
+                </div>
+                <a href={categoryLinks[cat.number]} class="ladder-cta-btn">
+                  <span>{detail.ctaText}</span>
+                  <span class="btn-arrow">&rarr;</span>
+                </a>
+              </div>
+            </article>
+
+            {!isLast && detail.transitionText && (
+              <div class="ladder-connector">
+                <div class="connector-line"></div>
+                <div class="connector-pill">
+                  <span>&darr; {detail.transitionText}</span>
+                </div>
+                <div class="connector-line"></div>
+              </div>
+            )}
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </section>
 
@@ -230,13 +345,27 @@ git clone https://github.com/SCORE-CIRCUITS/score.git &amp;&amp; cd score
     line-height: 1.6;
   }
 
-  .categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+  .hero-action-group {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
   }
 
-  .category-card {
+  /* 4-Level Progressive Architecture Ladder (Top-Down Flow) */
+  .methodology-ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ladder-step-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .ladder-step {
     background: var(--cream, #fffaf0);
     border: 2px solid var(--ink, #151b20);
     border-radius: 14px;
@@ -247,91 +376,259 @@ git clone https://github.com/SCORE-CIRCUITS/score.git &amp;&amp; cd score
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .category-card:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 7px 7px 0px var(--cyan);
+  .ladder-step:hover {
+    transform: translateY(-2px);
+    box-shadow: 7px 7px 0px var(--ink, #151b20);
   }
 
-  .cat-card-1 { border-top: 6px solid var(--yellow); }
-  .cat-card-2 { border-top: 6px solid var(--cyan); }
-  .cat-card-3 { border-top: 6px solid var(--coral); }
-  .cat-card-4 { border-top: 6px solid var(--lime); }
+  .ladder-border-yellow { border-left: 8px solid var(--yellow, #ffc83e) !important; }
+  .ladder-border-cyan   { border-left: 8px solid var(--cyan, #0284c7) !important; }
+  .ladder-border-coral  { border-left: 8px solid var(--coral, #ff6b4a) !important; }
+  .ladder-border-lime   { border-left: 8px solid var(--lime, #22c55e) !important; }
 
-  .cat-card-header {
+  .badge-yellow { background: var(--yellow, #ffc83e) !important; color: var(--ink, #151b20) !important; }
+  .badge-cyan   { background: var(--cyan, #0284c7) !important; color: #ffffff !important; }
+  .badge-coral  { background: var(--coral, #ff6b4a) !important; color: #ffffff !important; }
+  .badge-lime   { background: var(--lime, #22c55e) !important; color: var(--ink, #151b20) !important; }
+
+  .ladder-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    align-items: flex-start;
+    gap: 1.15rem;
+    margin-bottom: 1.25rem;
   }
 
-  .cat-num {
-    font-size: 1.5rem;
+  .ladder-num-badge {
+    font-size: 1.35rem;
     font-weight: 900;
-    color: rgba(21, 27, 32, 0.4);
     font-family: var(--md-code-font, monospace);
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid var(--ink, #151b20);
+    box-shadow: 2.5px 2.5px 0px var(--ink, #151b20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
-  .cat-badge {
-    background: var(--paper);
-    border: 1.5px solid var(--ink);
-    border-radius: 6px;
-    padding: 0.2rem 0.5rem;
+  .ladder-title-wrap {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ladder-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.04em;
+    color: var(--ink-light, #555);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+  }
+
+  .ladder-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0 0 0.35rem 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .ladder-scope-pill {
+    display: inline-block;
     font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--ink, #151b20);
+    background: var(--paper, #fdfbf7);
+    border: 1.5px solid var(--line, #e2d9c8);
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+  }
+
+  .ladder-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .ladder-narrative {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-light, #242c33);
+    margin: 0;
+  }
+
+  .ladder-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+    background: var(--paper, #fdfbf7);
+    border: 1.5px solid var(--line, #e2d9c8);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+  }
+
+  .ladder-spec-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .lsc-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    color: rgba(21, 27, 32, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .lsc-val {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--ink, #151b20);
+    line-height: 1.4;
+  }
+
+  .lsc-val code {
+    background: var(--cream, #fffaf0);
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 4px;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.8rem;
     font-weight: 700;
   }
 
-  .cat-title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    margin-bottom: 0.75rem;
-    line-height: 1.3;
-    color: var(--ink);
-  }
-
-  .cat-desc {
-    font-size: 0.9rem;
-    color: var(--ink-light);
-    line-height: 1.55;
-    margin-bottom: 1.25rem;
-    flex-grow: 1;
-  }
-
-  .cat-meta-block {
-    background: var(--paper);
-    border: 1.5px solid var(--line);
+  .ladder-insight-box {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
     border-radius: 8px;
-    padding: 0.75rem 0.85rem;
-    margin-bottom: 1.25rem;
-    font-size: 0.8rem;
+    padding: 0.75rem 1rem;
+    box-shadow: 2px 2px 0px var(--ink, #151b20);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.86rem;
+    line-height: 1.5;
   }
 
-  .cat-meta-item {
-    margin-bottom: 0.35rem;
+  .lib-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
-  .cat-card-footer {
+  .lib-tag {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+
+  .lib-tag.bottleneck {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .lib-tag.remedy {
+    background: var(--lime-soft, #dcfce7);
+    color: #065f46;
+  }
+
+  .ladder-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.85rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1.5px solid var(--line, #e2d9c8);
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
-  .cat-tools-count {
-    color: var(--ink-light);
+  .ladder-tools-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     font-size: 0.82rem;
+    color: var(--ink-light, #242c33);
+    background: var(--paper, #fdfbf7);
+    border: 1.5px solid var(--line, #e2d9c8);
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    font-weight: 600;
   }
 
-  .cat-link {
+  .ladder-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.88rem;
     font-weight: 800;
-    color: var(--ink);
+    color: var(--ink, #151b20);
+    background: var(--yellow, #ffc83e);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.45rem 1.15rem;
     text-decoration: none;
-    border-bottom: 2px solid var(--ink);
-    padding-bottom: 1px;
-    transition: all 0.15s ease;
+    box-shadow: 2.5px 2.5px 0px var(--ink, #151b20);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   }
 
-  .cat-link:hover {
-    background: var(--yellow);
+  .ladder-cta-btn:hover {
+    background: #ffe066;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px var(--ink, #151b20);
+  }
+
+  .ladder-cta-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1.5px 1.5px 0px var(--ink, #151b20);
+  }
+
+  .btn-arrow {
+    transition: transform 0.15s ease;
+  }
+
+  .ladder-cta-btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  /* Ladder Transition Connector */
+  .ladder-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.9rem 0;
+  }
+
+  .connector-line {
+    width: 2px;
+    height: 18px;
+    background: var(--ink, #151b20);
+  }
+
+  .connector-pill {
+    background: var(--paper-deep, #eee4c8);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 999px;
+    box-shadow: 2.5px 2.5px 0px var(--ink, #151b20);
+    padding: 0.4rem 1.15rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    text-align: center;
+    max-width: 92%;
+    line-height: 1.4;
   }
 
   .insights-grid {
@@ -509,9 +806,9 @@ git clone https://github.com/SCORE-CIRCUITS/score.git &amp;&amp; cd score
   }
 
   .code-block {
-    background: var(--ink, #151b20);
-    color: #ffffff;
-    border: 2px solid var(--ink);
+    background: var(--paper-deep, #eee4c8);
+    color: var(--ink, #151b20);
+    border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
     padding: 1.25rem;
     overflow-x: auto;
@@ -519,14 +816,171 @@ git clone https://github.com/SCORE-CIRCUITS/score.git &amp;&amp; cd score
     font-size: 0.9rem;
     line-height: 1.6;
     margin-top: 1rem;
+    box-shadow: 3px 3px 0px var(--ink, #151b20);
   }
 
   .token-comment {
-    color: #888888;
+    color: #596a78;
+    font-style: italic;
   }
 
   .center-cta {
     text-align: center;
+  }
+
+  /* Responsive Media Queries (Mobile First Refinements) */
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 1.55rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.95rem;
+    }
+
+    .ladder-step {
+      padding: 1.25rem;
+      border-radius: 12px;
+    }
+
+    .ladder-header {
+      gap: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .ladder-num-badge {
+      width: 42px;
+      height: 42px;
+      font-size: 1.15rem;
+      border-radius: 8px;
+    }
+
+    .ladder-title {
+      font-size: 1.15rem;
+    }
+
+    .ladder-specs-grid {
+      grid-template-columns: 1fr;
+      padding: 0.75rem 0.85rem;
+      gap: 0.6rem;
+    }
+
+    .ladder-footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+    }
+
+    .ladder-tools-pill {
+      justify-content: center;
+    }
+
+    .ladder-cta-btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      padding: 0.6rem 1rem;
+      font-size: 0.88rem;
+    }
+
+    .connector-pill {
+      font-size: 0.72rem;
+      padding: 0.35rem 0.75rem;
+      max-width: 96%;
+    }
+
+    .insights-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .tools-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .tool-actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+    }
+
+    .tool-actions .noc-sim-btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .bench-tag {
+      text-align: center;
+    }
+
+    .center-cta {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .center-cta .noc-sim-btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .repro-box {
+      padding: 1.25rem 1rem;
+    }
+
+    .repro-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .code-block {
+      font-size: 0.8rem;
+      padding: 0.85rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-action-group {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .hero-action-group .noc-sim-btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .section-title {
+      font-size: 1.35rem;
+    }
+
+    .ladder-step {
+      padding: 1rem 0.85rem;
+    }
+
+    .ladder-title {
+      font-size: 1.05rem;
+    }
+
+    .ladder-eyebrow {
+      font-size: 0.65rem;
+    }
+
+    .ladder-scope-pill {
+      font-size: 0.7rem;
+    }
+
+    .lib-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
   }
 </style>
 
