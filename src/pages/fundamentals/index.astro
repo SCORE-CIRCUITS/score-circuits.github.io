@@ -4,542 +4,831 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="Fundamental Learnings"
-  description="First-principles intuitive guide to computer architecture, silicon microprocessors, memory hierarchies, and the 4 SCORE categories."
+  description="Comprehensive first-principles guide to computer architecture: transistors, ALUs, RISC-V ISA, pipelining, virtual memory, vector engines, and SoC interconnects."
 >
   <!-- Page Header -->
   <div class="noc-hero">
-    <div class="noc-track-badge">✨ START HERE &bull; ZERO TO CHIP ARCHITECT</div>
+    <div class="noc-track-badge">✨ FIRST PRINCIPLES TO SILICON ARCHITECTURES</div>
     <h1>Fundamental Learnings in Computer Architecture</h1>
     <p class="subtitle">
-      How do millions of microscopic switches carved into silicon execute software, stream video, and accelerate artificial intelligence? This guide starts from absolute first principles—designed so that <strong>newcomers, students, and engineers alike</strong> can intuitively grasp how computer chips work and why the <strong>4 SCORE Categories</strong> exist.
+      How do billions of microscopic switches carved into silicon execute software, calculate neural networks, and coordinate heterogeneous clusters? This guide starts from absolute physical first principles—providing rigorous technical depth on <strong>logic gates, ALUs, the RISC-V ISA, microarchitectures, and system scaling</strong> so anyone can master the <strong>4 SCORE Architecture Categories</strong>.
     </p>
 
-    <!-- Quick Navigation Jump -->
-    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem;">
-      <a href="#what-is-a-chip" class="noc-sim-btn secondary">&sect; 1. What is a Chip?</a>
-      <a href="#what-is-riscv" class="noc-sim-btn secondary">&sect; 2. What is RISC-V?</a>
-      <a href="#pipeline-laundry" class="noc-sim-btn secondary">&sect; 3. The Laundry Assembly Line</a>
-      <a href="#kitchen-memory" class="noc-sim-btn secondary">&sect; 4. The Chef's Kitchen (Memory)</a>
-      <a href="#vehicle-analogy" class="noc-sim-btn secondary">&sect; 5. The 4 Categories Explained</a>
-      <a href="#benchmarking-101" class="noc-sim-btn secondary">&sect; 6. How We Score Chips</a>
+    <!-- Navigation Jump Bar -->
+    <div class="jump-pill-bar">
+      <a href="#silicon-foundation" class="noc-sim-btn secondary">&sect; 1. Silicon &amp; Logic</a>
+      <a href="#alu-deep-dive" class="noc-sim-btn secondary">&sect; 2. ALU Deep-Dive</a>
+      <a href="#isa-datapath" class="noc-sim-btn secondary">&sect; 3. RISC-V ISA &amp; Datapath</a>
+      <a href="#pipelining-hazards" class="noc-sim-btn secondary">&sect; 4. Pipelining &amp; Hazards</a>
+      <a href="#memory-virtual" class="noc-sim-btn secondary">&sect; 5. Memory, MMU &amp; OoO</a>
+      <a href="#vector-parallelism" class="noc-sim-btn secondary">&sect; 6. Vector &amp; SIMD Engines</a>
+      <a href="#soc-interconnects" class="noc-sim-btn secondary">&sect; 7. SoC Fabrics &amp; Clusters</a>
+      <a href="#benchmarking-metrics" class="noc-sim-btn secondary">&sect; 8. Benchmarking Metrics</a>
     </div>
   </div>
 
   <div class="fundamentals-stream">
-    <!-- SECTION 1: What is a Chip? -->
-    <section id="what-is-a-chip" class="fund-section-card">
+    <!-- ============================================================ -->
+    <!-- SECTION 1: SILICON & LOGIC FOUNDATION -->
+    <!-- ============================================================ -->
+    <section id="silicon-foundation" class="fund-section-card">
       <div class="fund-header">
         <span class="fund-num">01</span>
         <div>
-          <span class="badge badge-accent">FIRST PRINCIPLES</span>
-          <h2 class="fund-title">What Exactly is a Computer Chip?</h2>
+          <span class="badge badge-accent">PHYSICAL LAYER</span>
+          <h2 class="fund-title">Silicon, Transistors &amp; Logic Gates</h2>
         </div>
       </div>
       <p class="fund-lead">
-        At the most fundamental physical level, a computer chip is made of pure refined <strong>sand (silicon)</strong> carved with billions of microscopic electrical switches called <strong>transistors</strong>.
+        At the most fundamental physical level, a computer chip is fabricated from pure monocrystalline <strong>silicon (sand)</strong> doped with trace elements (boron, phosphorus) to create microscopic electrical switches called <strong>MOSFET transistors</strong>.
       </p>
 
-      <div class="analogy-banner">
-        <div class="analogy-icon">&#128161;</div>
-        <div class="analogy-text">
-          <strong>The Light Switch Analogy:</strong> Think of a transistor as a microscopic light switch. When electricity flows through, the switch is <strong>ON (1)</strong>. When blocked, it is <strong>OFF (0)</strong>. By connecting millions of these tiny switches together in clever patterns, we create <em>logic gates</em> that can add numbers, store data, and execute programs.
+      <div class="concept-dual-grid">
+        <div class="concept-box">
+          <h4>Complementary MOS (CMOS) Technology</h4>
+          <p>
+            Modern processors combine two complementary transistor types to achieve near-zero static power dissipation:
+          </p>
+          <ul class="concept-list">
+            <li><strong>nMOS (Negative-channel):</strong> Turns <strong>ON</strong> (conducts) when gate voltage is HIGH (logic <code>1</code>, <em>V</em><sub>DD</sub>), pulling output to Ground (logic <code>0</code>).</li>
+            <li><strong>pMOS (Positive-channel):</strong> Turns <strong>ON</strong> when gate voltage is LOW (logic <code>0</code>, Ground), pulling output up to <em>V</em><sub>DD</sub> (logic <code>1</code>).</li>
+            <li><strong>CMOS Inverter (NOT Gate):</strong> Pairs one pMOS pull-up with one nMOS pull-down. Current flows only during the split-picosecond transition between states!</li>
+          </ul>
+        </div>
+
+        <div class="concept-box">
+          <h4>Universal Logic: NAND &amp; Silicon Gate Count</h4>
+          <p>
+            From simple transistors, we construct fundamental boolean logic gates: <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>XOR</code>, <code>NAND</code>, and <code>NOR</code>.
+          </p>
+          <div class="formula-box">
+            <span class="formula-label">Area Benchmark:</span> 1 Gate Equivalent (GE) &equiv; Silicon Area of a Standard 2-Input CMOS NAND Gate
+          </div>
+          <p class="small-text">
+            Because a 2-input NAND requires only 4 transistors (2 pMOS + 2 nMOS) and is mathematically <em>functionally complete</em> (any digital computer can be built entirely from NAND gates), chip area is universally measured in <strong>kGE (kilo-gate equivalents)</strong> across all foundry processes.
+          </p>
         </div>
       </div>
 
       <!-- INTERACTIVE TRANSISTOR / LOGIC GATE SIMULATOR -->
       <div class="interactive-widget-box" id="gateWidget">
         <div class="widget-header">
-          <span class="widget-badge">INTERACTIVE SIMULATION</span>
+          <span class="widget-badge">LIVE CIRCUIT SIMULATOR</span>
           <h3 class="widget-title">Interactive Logic Gate &amp; Transistor Switch</h3>
           <p class="widget-desc">
-            Toggle the inputs below to see how electrical currents pass through digital logic gates to turn on the output light!
+            Toggle inputs A and B to observe how CMOS pull-up and pull-down networks switch binary voltages to produce standard logic functions:
           </p>
         </div>
 
-        <div class="gate-controls-row">
-          <div class="ctrl-group">
-            <span class="ctrl-label">Select Logic Gate:</span>
-            <div class="gate-btn-group">
-              <button class="gate-sel-btn active" data-gate="AND">AND</button>
-              <button class="gate-sel-btn" data-gate="OR">OR</button>
-              <button class="gate-sel-btn" data-gate="NAND">NAND (Universal)</button>
-              <button class="gate-sel-btn" data-gate="XOR">XOR (Adder)</button>
-            </div>
-          </div>
-
-          <div class="inputs-group">
-            <span class="ctrl-label">Toggle Inputs:</span>
-            <div class="switch-pair">
-              <button class="toggle-switch-btn" id="toggleInputA" data-val="1">
-                Input A: <span class="val-pill pill-on">1 (HIGH)</span>
-              </button>
-              <button class="toggle-switch-btn" id="toggleInputB" data-val="1">
-                Input B: <span class="val-pill pill-on">1 (HIGH)</span>
-              </button>
-            </div>
-          </div>
+        <div class="gate-selector-bar">
+          <button class="gate-btn active" data-gate="AND">AND</button>
+          <button class="gate-btn" data-gate="OR">OR</button>
+          <button class="gate-btn" data-gate="NAND">NAND</button>
+          <button class="gate-btn" data-gate="NOR">NOR</button>
+          <button class="gate-btn" data-gate="XOR">XOR</button>
+          <button class="gate-btn" data-gate="NOT">NOT</button>
         </div>
 
-        <div class="gate-visual-display">
-          <div class="gate-diagram-wrap">
-            <div class="wire-in wire-a"><span class="wire-lbl">A = <span id="wireValA">1</span></span></div>
-            <div class="wire-in wire-b"><span class="wire-lbl">B = <span id="wireValB">1</span></span></div>
-            <div class="logic-gate-box" id="gateBoxLabel">
-              <span class="gate-symbol-txt">AND</span>
-              <span class="gate-sub-txt">Logic Gate</span>
+        <div class="gate-sim-body">
+          <div class="circuit-interactive-panel">
+            <div class="inputs-group">
+              <div class="input-ctrl">
+                <span class="in-label">Input A (Switch 1)</span>
+                <button class="toggle-btn" id="toggleA" data-state="0">
+                  <span class="sw-state">OFF (0)</span>
+                </button>
+              </div>
+              <div class="input-ctrl" id="inputBWrap">
+                <span class="in-label">Input B (Switch 2)</span>
+                <button class="toggle-btn" id="toggleB" data-state="0">
+                  <span class="sw-state">OFF (0)</span>
+                </button>
+              </div>
             </div>
-            <div class="wire-out"><span class="wire-lbl">OUT = <span id="wireValOut">1</span></span></div>
-            
-            <div class="lightbulb-container" id="bulbContainer">
-              <div class="bulb-icon">&#128161;</div>
-              <span class="bulb-status" id="bulbStatusTxt">OUTPUT ON (1)</span>
+
+            <div class="gate-symbol-visual">
+              <div class="gate-wire-in-a"></div>
+              <div class="gate-wire-in-b" id="wireB"></div>
+              <div class="gate-box-art" id="gateVisualBox">
+                <span class="gate-art-name" id="gateName">AND</span>
+                <span class="gate-art-formula" id="gateFormula">Y = A &bull; B</span>
+              </div>
+              <div class="gate-wire-out"></div>
+            </div>
+
+            <div class="output-bulb-panel">
+              <span class="out-label">Output (Y)</span>
+              <div class="bulb-lamp off" id="outputBulb">
+                <span class="bulb-val">0</span>
+              </div>
+              <span class="voltage-state" id="voltageState">0.0V (Ground)</span>
             </div>
           </div>
 
-          <div class="gate-truth-table-wrap">
-            <span class="tt-title">Truth Table for <strong id="ttGateName">AND</strong>:</span>
-            <table class="truth-table" id="truthTableBody">
+          <div class="truth-table-panel">
+            <h4 class="tt-title">Truth Table (<span id="ttGateName">AND</span>)</h4>
+            <table class="truth-table" id="truthTable">
               <thead>
-                <tr><th>A</th><th>B</th><th>Output</th><th>Status</th></tr>
+                <tr><th>A</th><th>B</th><th>Output (Y)</th></tr>
               </thead>
               <tbody>
-                <tr id="tr-00"><td>0</td><td>0</td><td class="res-cell">0</td><td class="state-cell">OFF</td></tr>
-                <tr id="tr-01"><td>0</td><td>1</td><td class="res-cell">0</td><td class="state-cell">OFF</td></tr>
-                <tr id="tr-10"><td>1</td><td>0</td><td class="res-cell">0</td><td class="state-cell">OFF</td></tr>
-                <tr id="tr-11" class="active-tr"><td>1</td><td>1</td><td class="res-cell">1</td><td class="state-cell">ACTIVE &#9733;</td></tr>
+                <tr data-row="00" class="active-row"><td>0</td><td>0</td><td class="res-cell">0</td></tr>
+                <tr data-row="01"><td>0</td><td>1</td><td class="res-cell">0</td></tr>
+                <tr data-row="10"><td>1</td><td>0</td><td class="res-cell">0</td></tr>
+                <tr data-row="11"><td>1</td><td>1</td><td class="res-cell">1</td></tr>
               </tbody>
             </table>
           </div>
         </div>
-        <div class="widget-insight" id="gateInsightTxt">
-          <strong>Key Architectural Insight:</strong> The <strong>NAND gate</strong> is known as a <em>universal gate</em>. Any digital circuit—from an arithmetic adder to a 64-bit multi-core CPU—can be constructed entirely from connected NAND gates!
-        </div>
-      </div>
-
-      <div class="fund-grid" style="margin-top: 1.5rem;">
-        <div class="fund-box">
-          <h4>Key Building Blocks</h4>
-          <ul>
-            <li><strong>Bit (0 or 1):</strong> The fundamental atomic unit of information.</li>
-            <li><strong>Byte (8 bits):</strong> Enough bits to encode a single ASCII character (e.g. 'A' = <code>01000001</code>).</li>
-            <li><strong>Clock Cycle:</strong> The synchronized heartbeat of the silicon chip. At 1.0 GHz, the clock ticks <strong>one billion times every second</strong>.</li>
-            <li><strong>CPU (Central Processing Unit):</strong> The central engine that fetches binary instructions from memory and computes results.</li>
-          </ul>
-        </div>
-
-        <div class="fund-box">
-          <h4>From Software to Silicon</h4>
-          <p>
-            When you write software in Python, Rust, or C++:
-          </p>
-          <ol>
-            <li>A <strong>Compiler</strong> converts your human-readable logic into <strong>Assembly Instructions</strong> (elementary primitives like <code>ADD</code>, <code>LW</code>, <code>BEQ</code>).</li>
-            <li>The assembler encodes those mnemonics into binary <strong>Machine Code</strong> ($32$-bit or $64$-bit words).</li>
-            <li>The processor's hardware decoders physically steer voltages across logic gates to execute the instruction!</li>
-          </ol>
-        </div>
       </div>
     </section>
 
-    <!-- SECTION 2: What is RISC-V? -->
-    <section id="what-is-riscv" class="fund-section-card">
+    <!-- ============================================================ -->
+    <!-- SECTION 2: THE ARITHMETIC LOGIC UNIT (ALU) DEEP-DIVE -->
+    <!-- ============================================================ -->
+    <section id="alu-deep-dive" class="fund-section-card">
       <div class="fund-header">
         <span class="fund-num">02</span>
         <div>
-          <span class="badge badge-accent">OPEN ARCHITECTURE</span>
-          <h2 class="fund-title">What is RISC-V and Why Does it Matter?</h2>
+          <span class="badge badge-accent">EXECUTION ENGINE</span>
+          <h2 class="fund-title">The Arithmetic Logic Unit (ALU) Deep-Dive</h2>
         </div>
       </div>
       <p class="fund-lead">
-        An <strong>Instruction Set Architecture (ISA)</strong> is the contract, or dictionary, between software and hardware. Without an ISA, software cannot communicate with silicon.
+        The <strong>Arithmetic Logic Unit (ALU)</strong> is the computational heart of every microprocessor core. It receives binary operands from processor registers and performs fundamental integer math (addition, subtraction), bitwise logic (AND, OR, XOR), shifts, and comparisons in a fraction of a nanosecond.
       </p>
 
-      <div class="fund-grid">
-        <div class="fund-box">
-          <h4>The Problem with Proprietary ISAs</h4>
+      <!-- Binary Math Derivations -->
+      <div class="alu-deep-grid">
+        <div class="alu-col">
+          <div class="sub-header-pill">1. The Full Adder Building Block</div>
           <p>
-            Historically, instruction sets were strictly guarded proprietary property:
+            Addition is the primitive from which almost all arithmetic derives. While a <em>Half Adder</em> adds two bits, a <strong>Full Adder</strong> adds three bits (<em>A</em>, <em>B</em>, and a Carry-In <em>C</em><sub>in</sub> from the preceding column):
           </p>
-          <ul>
-            <li><strong>x86 (Intel / AMD):</strong> Dominates desktop PCs and cloud servers. Proprietary and closed; third parties cannot build an x86 core without risking copyright litigation.</li>
-            <li><strong>ARM (Apple, Qualcomm, Raspberry Pi):</strong> Dominates mobile phones and IoT. Authors must pay substantial upfront license fees and ongoing royalties for each fabricated chip.</li>
-          </ul>
+          <div class="formula-box">
+            <div style="margin-bottom: 0.35rem;"><strong>Sum:</strong> <em>S</em> = <em>A</em> &oplus; <em>B</em> &oplus; <em>C</em><sub>in</sub></div>
+            <div><strong>Carry-Out:</strong> <em>C</em><sub>out</sub> = (<em>A</em> &middot; <em>B</em>) + [<em>C</em><sub>in</sub> &middot; (<em>A</em> &oplus; <em>B</em>)]</div>
+          </div>
+          <p class="small-text">
+            Chaining 32 full adders together creates a <strong>32-bit Ripple-Carry Adder</strong>. Because each bit must wait for the carry bit to ripple from bit 0 to bit 31, high-speed cores implement <em>Carry-Lookahead Adders (CLA)</em> to generate carries in parallel using Generate (<em>G<sub>i</sub></em> = <em>A<sub>i</sub></em> &middot; <em>B<sub>i</sub></em>) and Propagate (<em>P<sub>i</sub></em> = <em>A<sub>i</sub></em> &oplus; <em>B<sub>i</sub></em>) logic trees.
+          </p>
         </div>
 
-        <div class="fund-box">
-          <h4>The RISC-V Open Revolution</h4>
+        <div class="alu-col">
+          <div class="sub-header-pill">2. Two's Complement Subtraction Trick</div>
           <p>
-            Invented at UC Berkeley in 2010, <strong>RISC-V</strong> (pronounced <em>"risk-five"</em>) is an <strong>open, royalty-free standard</strong>. Anyone—from students and independent researchers to global technology corporations—can design, simulate, tape out, and commercialize RISC-V chips freely without licensing fees.
+            Hardware designers avoid building dedicated subtractors. Instead, subtraction <em>A</em> &minus; <em>B</em> is mathematically converted into addition using <strong>Two's Complement</strong>:
           </p>
-          <div class="highlight-callout">
-            <strong>Modular Extension Architecture:</strong> Start with a compact integer base (<code>RV32I</code> or <code>RV64I</code>), and snap on modular extensions like building blocks: <code>M</code> (Multiply/Divide), <code>A</code> (Atomics), <code>C</code> (Compressed 16-bit code), <code>F/D</code> (Floating-Point), and <code>V</code> (Vector acceleration).
+          <div class="formula-box">
+            <em>A</em> &minus; <em>B</em> = <em>A</em> + (~<em>B</em>) + 1
           </div>
-        </div>
-      </div>
-
-      <!-- INTERACTIVE RISC-V INSTRUCTION DISSECTOR -->
-      <div class="interactive-widget-box" id="isaWidget">
-        <div class="widget-header">
-          <span class="widget-badge">INTERACTIVE MACHINE CODE DISSECTOR</span>
-          <h3 class="widget-title">Anatomy of a 32-bit RISC-V Instruction</h3>
-          <p class="widget-desc">
-            How does raw assembly code translate into physical bits that control silicon transistors? Select an instruction to decode its 32-bit binary format and see which hardware datapath activates:
+          <p class="small-text">
+            To subtract, the ALU simply inverts the bits of <em>B</em> (passing them through XOR gates with a <code>sub_flag</code> control bit) and asserts the adder's initial <em>C</em><sub>in</sub> = 1. The <em>exact same adder hardware</em> computes both addition and subtraction with zero extra silicon cost!
           </p>
         </div>
 
-        <div class="isa-btn-group">
-          <button class="isa-sel-btn active" data-ins="add">1. ADD (R-Type Arithmetic)</button>
-          <button class="isa-sel-btn" data-ins="lw">2. LW (I-Type Memory Load)</button>
-          <button class="isa-sel-btn" data-ins="beq">3. BEQ (B-Type Conditional Branch)</button>
-          <button class="isa-sel-btn" data-ins="vadd">4. VADD.VV (V-Type Vector Arithmetic)</button>
-        </div>
-
-        <div class="isa-preview-bar">
-          <div class="isa-code-chip">
-            <span class="isa-label">Assembly:</span>
-            <code id="isaAsmTxt">add x3, x1, x2</code>
-          </div>
-          <div class="isa-code-chip">
-            <span class="isa-label">C Language Equivalent:</span>
-            <code id="isaCEqTxt">x3 = x1 + x2;</code>
-          </div>
-          <div class="isa-code-chip">
-            <span class="isa-label">Hex Machine Word:</span>
-            <code id="isaHexTxt">0x002081B3</code>
-          </div>
-        </div>
-
-        <!-- Dynamic Bitfield Grid -->
-        <div class="bitfield-container" id="isaBitfields">
-          <!-- Populated by script -->
-        </div>
-
-        <!-- Hardware Datapath Activation Flow -->
-        <div class="hw-activation-box">
-          <span class="ctrl-label">Activated Hardware Datapath:</span>
-          <div class="hw-flow-stream" id="isaHwFlow">
-            <!-- Populated by script -->
-          </div>
-          <div class="hw-detail-note" id="isaHwNote">
-            <!-- Populated by script -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: The Laundry Assembly Line (Pipelining) -->
-    <section id="pipeline-laundry" class="fund-section-card">
-      <div class="fund-header">
-        <span class="fund-num">03</span>
-        <div>
-          <span class="badge badge-accent">MICROARCHITECTURE</span>
-          <h2 class="fund-title">The Laundry Assembly Line: How Pipelining Works</h2>
-        </div>
-      </div>
-      <p class="fund-lead">
-        Executing an instruction requires five sequential operations: <strong>Fetch (IF)</strong> &rarr; <strong>Decode (ID)</strong> &rarr; <strong>Execute (EX)</strong> &rarr; <strong>Memory Access (MEM)</strong> &rarr; <strong>Writeback (WB)</strong>. If a processor waited for an instruction to finish all five stages before beginning the next, execution units would sit idle 80% of the time!
-      </p>
-
-      <div class="analogy-banner">
-        <div class="analogy-icon">&#129530;</div>
-        <div class="analogy-text">
-          <strong>The Classic Laundry Analogy:</strong><br />
-          Imagine doing 4 loads of laundry using a Washer (30 min), Dryer (30 min), and Folding table (30 min):
-          <ul>
-            <li><strong>Without Pipelining (Sequential):</strong> Wash Load 1 &rarr; Dry Load 1 &rarr; Fold Load 1 (90 mins total). Then start Load 2. Total time for 4 loads = <strong>360 minutes (6 hours)</strong>!</li>
-            <li><strong>With Pipelining (Overlapped):</strong> As soon as Load 1 moves to the dryer, throw Load 2 into the washer! All three appliances operate simultaneously. Total time for 4 loads drops to <strong>180 minutes (3 hours)</strong>—completing 1 fresh load every 30 minutes!</li>
+        <div class="alu-col">
+          <div class="sub-header-pill">3. Barrel Shifter &amp; Logic Operations</div>
+          <p>
+            Besides addition, the ALU datapath integrates:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Bitwise Logic:</strong> Parallel banks of 32 <code>AND</code>, <code>OR</code>, and <code>XOR</code> gates evaluate boolean operations in a single gate delay.</li>
+            <li><strong>Barrel Shifter:</strong> Shifts an operand left or right by 0 to 31 bit positions in a single cycle using multiplexer stages, implementing Logical Shift Left (<code>SLL</code>), Logical Shift Right (<code>SRL</code>), and Arithmetic Shift Right (<code>SRA</code>, which preserves sign bits for signed division).</li>
+            <li><strong>Set Less Than (SLT/SLTU):</strong> Subtracts operands and checks the sign and overflow flags to return <code>1</code> if $A \lt B$, else <code>0</code>.</li>
           </ul>
         </div>
       </div>
 
-      <!-- INTERACTIVE PIPELINE VISUALIZER -->
-      <div class="interactive-widget-box" id="pipelineWidget">
+      <!-- INTERACTIVE ALU SIMULATOR WIDGET -->
+      <div class="interactive-widget-box" id="aluWidget" style="margin-top: 1.5rem;">
         <div class="widget-header">
-          <span class="widget-badge">INTERACTIVE VISUALIZER</span>
-          <h3 class="widget-title">Interactive Pipeline Speedup Simulator</h3>
+          <span class="widget-badge">INTERACTIVE DATAPATH</span>
+          <h3 class="widget-title">Interactive 8-Bit ALU &amp; Flag Simulator</h3>
           <p class="widget-desc">
-            Toggle between non-pipelined sequential execution and a 5-stage pipelined processor to witness the dramatic reduction in total clock cycles!
+            Select an arithmetic or logic operation, enter decimal values for Operand A and B, and observe how the ALU computes the 8-bit result along with condition flags (Zero, Negative, Carry, Overflow):
           </p>
         </div>
 
-        <div class="pipe-toggle-row">
-          <button class="pipe-mode-btn" id="btnPipeSeq" data-mode="seq">
-            Sequential (No Pipeline)
-          </button>
-          <button class="pipe-mode-btn active" id="btnPipePipe" data-mode="pipe">
-            5-Stage Pipelined (Overlapped)
-          </button>
-        </div>
-
-        <div class="pipe-metrics-summary">
-          <div class="pm-box">
-            <span class="pm-lbl">Total Clock Cycles:</span>
-            <span class="pm-val" id="pmCycles">8 Cycles</span>
-          </div>
-          <div class="pm-box">
-            <span class="pm-lbl">Throughput (Instructions / Cycle):</span>
-            <span class="pm-val" id="pmThroughput">0.50 IPC (Max 1.0)</span>
-          </div>
-          <div class="pm-box highlight-box">
-            <span class="pm-lbl">Speedup Factor:</span>
-            <span class="pm-val highlight-val" id="pmSpeedup">2.50&times; Faster</span>
-          </div>
-        </div>
-
-        <div class="pipe-grid-container">
-          <div class="pipe-grid" id="pipeVisualGrid">
-            <!-- Rendered dynamically by script -->
-          </div>
-        </div>
-
-        <div class="pipe-stage-legend">
-          <span class="legend-item"><span class="stage-color-chip chip-if"></span> IF: Fetch</span>
-          <span class="legend-item"><span class="stage-color-chip chip-id"></span> ID: Decode</span>
-          <span class="legend-item"><span class="stage-color-chip chip-ex"></span> EX: Execute</span>
-          <span class="legend-item"><span class="stage-color-chip chip-mem"></span> MEM: Memory</span>
-          <span class="legend-item"><span class="stage-color-chip chip-wb"></span> WB: Writeback</span>
-        </div>
-      </div>
-
-      <div class="pipeline-comparison-grid" style="margin-top: 1.5rem;">
-        <div class="pipe-card">
-          <span class="pipe-badge">1-STAGE / BIT-SERIAL</span>
-          <h4>SERV (~2.1 kGE)</h4>
-          <p>
-            Does laundry <strong>one sock at a time</strong>. Processes 1 bit per cycle over 32 cycles. Minimizes silicon footprint to fit in the smallest FPGA or ASIC budgets.
-          </p>
-        </div>
-
-        <div class="pipe-card">
-          <span class="pipe-badge">2-STAGE PIPELINE</span>
-          <h4>Ibex (~24.5 kGE)</h4>
-          <p>
-            Two stages: Fetch and Execute. Features low branch penalties (only 1 bubble on mispredictions), making it an industrial standard for embedded microcontrollers.
-          </p>
-        </div>
-
-        <div class="pipe-card">
-          <span class="pipe-badge">4-STAGE DUAL-ISSUE</span>
-          <h4>VeeR EL2 (~48.5 kGE)</h4>
-          <p>
-            Dual-pipe parallel assembly lines! Decodes and issues <strong>two instructions simultaneously</strong> per clock cycle to reach superscalar IPC (CoreMark = 3.62/MHz).
-          </p>
-        </div>
-
-        <div class="pipe-card">
-          <span class="pipe-badge">6-STAGE APPLICATION</span>
-          <h4>CVA6 (~148 kGE)</h4>
-          <p>
-            Deep 6-stage pipeline (Fetch, Decode, Issue, Execute, Commit, Writeback) operating at >1.4 GHz with Sv39 virtual memory for full Linux operating systems.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 4: The Chef's Kitchen (Memory Hierarchy) -->
-    <section id="kitchen-memory" class="fund-section-card">
-      <div class="fund-header">
-        <span class="fund-num">04</span>
-        <div>
-          <span class="badge badge-accent">MEMORY SUBSYSTEMS</span>
-          <h2 class="fund-title">The Chef's Kitchen: Understanding the Memory Hierarchy</h2>
-        </div>
-      </div>
-      <p class="fund-lead">
-        A fast processor without fast memory is like a world-class chef who has to drive across town every time they need a pinch of salt. Modern chips use a multi-tiered memory hierarchy to keep data right next to the computing core.
-      </p>
-
-      <div class="analogy-banner">
-        <div class="analogy-icon">&#128104;&#8205;&#127859;</div>
-        <div class="analogy-text">
-          <strong>The Kitchen Counter Analogy:</strong>
-          <ul>
-            <li><strong>Registers (Chef's Hands &amp; Cutting Board):</strong> Instant access (0 clock cycles). Extremely fast, but holds only 32 numbers!</li>
-            <li><strong>L1 Cache (Kitchen Spice Rack):</strong> Inches away from the chef. Takes 1–2 clock cycles. Stores a few thousand bytes of frequently used ingredients.</li>
-            <li><strong>Main Memory / DRAM (The Pantry Downstairs):</strong> Takes 50–200 clock cycles. Holds gigabytes of data, but the chef has to stop cooking and walk downstairs to retrieve items.</li>
-            <li><strong>Storage / SSD / Flash (The Grocery Store):</strong> Takes thousands to millions of clock cycles! Holds terabytes permanently even when power is turned off.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- INTERACTIVE MEMORY LATENCY SCALE WIDGET -->
-      <div class="interactive-widget-box" id="memoryWidget">
-        <div class="widget-header">
-          <span class="widget-badge">INTERACTIVE LATENCY COMPARISON</span>
-          <h3 class="widget-title">The Memory Latency Gap (Human Scale)</h3>
-          <p class="widget-desc">
-            If 1 CPU clock cycle was scaled to <strong>1 second</strong> in human time, how long would the CPU wait for each memory level? Select a level to compare:
-          </p>
-        </div>
-
-        <div class="mem-level-selector">
-          <button class="mem-level-btn active" data-level="reg">1. CPU Registers (0.5 ns)</button>
-          <button class="mem-level-btn" data-level="l1">2. L1 Cache (1.5 ns)</button>
-          <button class="mem-level-btn" data-level="dram">3. Main DRAM (60 ns)</button>
-          <button class="mem-level-btn" data-level="ssd">4. NVMe SSD (50,000 ns)</button>
-        </div>
-
-        <div class="mem-detail-card">
-          <div class="mdc-top">
-            <span class="mdc-title" id="memTitle">CPU Register File (32 Registers)</span>
-            <span class="mdc-latency" id="memLatency">Latency: &lt; 0.5 nanoseconds (0 cycles)</span>
+        <div class="alu-sim-controls">
+          <div class="alu-op-buttons">
+            <button class="alu-op-btn active" data-op="ADD">ADD (A + B)</button>
+            <button class="alu-op-btn" data-op="SUB">SUB (A - B)</button>
+            <button class="alu-op-btn" data-op="AND">AND (A &amp; B)</button>
+            <button class="alu-op-btn" data-op="OR">OR (A | B)</button>
+            <button class="alu-op-btn" data-op="XOR">XOR (A ^ B)</button>
+            <button class="alu-op-btn" data-op="SLL">SLL (A &lt;&lt; B)</button>
+            <button class="alu-op-btn" data-op="SRL">SRL (A &gt;&gt; B)</button>
+            <button class="alu-op-btn" data-op="SLT">SLT (A &lt; B ? 1:0)</button>
           </div>
 
-          <div class="human-scale-box">
-            <div class="hs-icon" id="hsIcon">&#9997;</div>
-            <div class="hs-text">
-              <strong id="hsTimeText">Human Equivalent: 1 Second</strong>
-              <p id="hsDescText">
-                Like picking up a pencil already sitting in your hand. The processor computes immediately with zero stalls.
-              </p>
+          <div class="alu-inputs-row">
+            <div class="alu-input-card">
+              <label for="aluInA">Operand A (Signed: -128 to 127)</label>
+              <input type="number" id="aluInA" value="25" min="-128" max="255" class="form-control" />
+              <div class="bin-preview" id="binA">0001 1001</div>
+            </div>
+
+            <div class="alu-center-op" id="aluOpSymbol">+</div>
+
+            <div class="alu-input-card">
+              <label for="aluInB">Operand B (Signed: -128 to 127)</label>
+              <input type="number" id="aluInB" value="12" min="-128" max="255" class="form-control" />
+              <div class="bin-preview" id="binB">0000 1100</div>
             </div>
           </div>
 
-          <div class="latency-bar-track">
-            <div class="latency-bar-fill" id="latencyBarFill" style="width: 2%;"></div>
-          </div>
-          <div class="latency-scale-labels">
-            <span>Instant (Registers)</span>
-            <span>Seconds (L1 Cache)</span>
-            <span>Minutes (Main Memory)</span>
-            <span>Months (SSD Storage)</span>
+          <!-- ALU Result Visual -->
+          <div class="alu-output-card">
+            <div class="alu-res-main">
+              <span class="res-label">ALU 8-bit Result:</span>
+              <span class="res-dec" id="aluResDec">37</span>
+              <span class="res-hex" id="aluResHex">(0x25)</span>
+            </div>
+            <div class="alu-res-bin" id="aluResBin">Binary: 0010 0101</div>
+
+            <!-- Condition Flags -->
+            <div class="alu-flags-grid">
+              <div class="flag-item" id="flagZ">
+                <span class="flag-name">Z (Zero)</span>
+                <span class="flag-val">0</span>
+              </div>
+              <div class="flag-item" id="flagN">
+                <span class="flag-name">N (Negative)</span>
+                <span class="flag-val">0</span>
+              </div>
+              <div class="flag-item" id="flagC">
+                <span class="flag-name">C (Carry-Out)</span>
+                <span class="flag-val">0</span>
+              </div>
+              <div class="flag-item" id="flagV">
+                <span class="flag-name">V (Overflow)</span>
+                <span class="flag-val">0</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="fund-grid" style="margin-top: 1.5rem;">
-        <div class="fund-box">
-          <h4>Scratchpad SRAM vs. Hardware Cache</h4>
-          <ul>
-            <li><strong>Tightly-Coupled Scratchpad (TCDM):</strong> Dedicated, low-latency SRAM with guaranteed 1-cycle access. The software programmer explicitly allocates memory buffers. Used extensively in real-time embedded systems (Category 1) and parallel manycore clusters (Category 4 <strong>MemPool</strong>).</li>
-            <li><strong>Hardware Cache:</strong> Automatically monitors memory access patterns to prefetch data. A successful look-up is a <em>Cache Hit</em>; a miss stalls the processor while fetching from slower external memory.</li>
-          </ul>
-        </div>
-
-        <div class="fund-box">
-          <h4>Virtual Memory &amp; The MMU</h4>
-          <p>
-            When running multi-tasking operating systems with multiple processes:
-          </p>
-          <ul>
-            <li>The <strong>Memory Management Unit (MMU)</strong> grants each software process an isolated virtual address space.</li>
-            <li>Hardware Page Table Walkers (PTW) automatically translate virtual addresses to physical DRAM pages.</li>
-            <li><strong>Linux requires an MMU</strong> (Category 2). Microcontrollers operate without an MMU, executing baremetal firmware directly on physical addresses (Category 1).</li>
-          </ul>
+        <div class="alu-explanation-box">
+          <strong>Microarchitectural Insight (SERV vs Ibex):</strong> In Category 1, the ultra-compact <code>SERV</code> core implements a <strong>bit-serial ALU</strong>—it calculates 32-bit addition with a <em>single 1-bit full adder</em> over 32 clock cycles, shrinking the entire core to a record <strong>2.1 kGE</strong>! Meanwhile, balanced cores like <code>Ibex</code> use a full 32-bit parallel carry-lookahead adder to finish in 1 cycle, spending ~24 kGE of silicon.
         </div>
       </div>
     </section>
 
-    <!-- SECTION 5: The 4 Categories via the Vehicle Analogy -->
-    <section id="vehicle-analogy" class="fund-section-card">
+    <!-- ============================================================ -->
+    <!-- SECTION 3: RISC-V ISA & SINGLE-CYCLE DATAPATH -->
+    <!-- ============================================================ -->
+    <section id="isa-datapath" class="fund-section-card">
       <div class="fund-header">
-        <span class="fund-num">05</span>
+        <span class="fund-num">03</span>
         <div>
-          <span class="badge badge-accent">THE BIG PICTURE</span>
-          <h2 class="fund-title">The 4 SCORE Categories: Explained via Vehicles</h2>
+          <span class="badge badge-accent">INSTRUCTION ARCHITECTURE</span>
+          <h2 class="fund-title">The RISC-V Instruction Set Architecture (ISA)</h2>
         </div>
       </div>
       <p class="fund-lead">
-        Why does SCORE categorize open-source chips into 4 categories? Because you wouldn't use a 50-car freight train to buy milk, nor could you haul 1,000 tons of steel on a bicycle. Different computational tasks demand fundamentally different chip architectures!
+        An <strong>Instruction Set Architecture (ISA)</strong> is the formal contract between software and hardware. It defines the registers, memory addressing rules, and exact binary machine code formats that the microprocessor executes.
       </p>
 
-      <div class="vehicle-grid">
-        <div class="v-card cat1-v">
-          <div class="v-icon">&#128692;</div>
-          <span class="v-badge">CATEGORY 01</span>
-          <h3>The Electric Bicycle</h3>
-          <div class="v-subtitle">Microcontroller &amp; Scalar Cores</div>
+      <div class="concept-dual-grid">
+        <div class="concept-box">
+          <h4>The Load-Store Architecture Principle</h4>
           <p>
-            Ultra-compact, highly efficient, and cheap. Ideal for dedicated control loops: monitoring sensors, battery management, and security root-of-trust controllers. Consumes microwatts of power.
+            Unlike complex legacy ISAs (such as x86) where single instructions can directly modify DRAM memory, RISC-V is a strict <strong>Load-Store Architecture</strong>:
           </p>
-          <div class="v-examples">Examples: SERV, PicoRV32, Ibex, Hazard3</div>
-          <a href="/mcu-scalar/" class="btn btn-outline btn-xs" style="margin-top: 0.75rem;">Explore Category 1 &rarr;</a>
+          <ul class="concept-list">
+            <li>Arithmetic instructions (<code>add</code>, <code>sub</code>, <code>xor</code>) can <em>only</em> operate on data already inside processor registers.</li>
+            <li>Memory access is restricted exclusively to explicit load (<code>lw</code>, <code>ld</code>) and store (<code>sw</code>, <code>sd</code>) instructions.</li>
+            <li>This decouples memory latency from arithmetic pipeline execution, keeping silicon execution units simple and blistering fast.</li>
+          </ul>
         </div>
 
-        <div class="v-card cat2-v">
-          <div class="v-icon">&#128663;</div>
-          <span class="v-badge">CATEGORY 02</span>
-          <h3>The Passenger Sedan</h3>
-          <div class="v-subtitle">Application Cores</div>
+        <div class="concept-box">
+          <h4>The 32 General-Purpose Registers (x0–x31)</h4>
           <p>
-            Comfortable, full-featured daily driver. Integrates an MMU, multi-level caches, and 64-bit addresses. Capable of hosting full Linux distributions, network stacks, and user software.
+            Standard 32-bit RISC-V (RV32I) provides 32 registers, each 32 bits wide. By architectural rule:
           </p>
-          <div class="v-examples">Examples: CVA6 (Ariane), Rocket Chip, BOOM</div>
-          <a href="/app-cores/" class="btn btn-outline btn-xs" style="margin-top: 0.75rem;">Explore Category 2 &rarr;</a>
+          <ul class="concept-list">
+            <li><code>x0 (zero)</code> is <strong>hardwired to constant zero</strong>. Writing to <code>x0</code> has no effect; reading it always returns <code>0</code>. This elegantly synthesizes instructions like <code>nop</code> (implemented as <code>addi x0, x0, 0</code>) without wasting opcode space!</li>
+            <li><code>x1 (ra)</code>: Return address for function calls.</li>
+            <li><code>x2 (sp)</code>: Stack pointer managing memory frames.</li>
+            <li><code>x10-x17 (a0-a7)</code>: Function arguments and return values.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- The 6 Instruction Formats Table -->
+      <div class="isa-formats-wrap" style="margin-top: 1.5rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.75rem;">The 6 Universal RISC-V Instruction Formats</h3>
+        <p class="small-text" style="margin-bottom: 1rem;">
+          To minimize decoder silicon area, RISC-V aligns source registers (<code>rs1</code>, <code>rs2</code>) and the destination register (<code>rd</code>) to the <em>exact same bit positions</em> in every 32-bit instruction format:
+        </p>
+
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Format</th>
+                <th>Bits [31:25]</th>
+                <th>Bits [24:20]</th>
+                <th>Bits [19:15]</th>
+                <th>Bits [14:12]</th>
+                <th>Bits [11:7]</th>
+                <th>Bits [6:0]</th>
+                <th>Common Examples</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>R-Type</strong> (Register)</td>
+                <td><code>funct7 (7b)</code></td>
+                <td><code>rs2 (5b)</code></td>
+                <td><code>rs1 (5b)</code></td>
+                <td><code>funct3 (3b)</code></td>
+                <td><code>rd (5b)</code></td>
+                <td><code>opcode (7b)</code></td>
+                <td><code>add</code>, <code>sub</code>, <code>and</code>, <code>sll</code></td>
+              </tr>
+              <tr>
+                <td><strong>I-Type</strong> (Immediate / Load)</td>
+                <td colspan="2"><code>imm[11:0] (12b)</code></td>
+                <td><code>rs1 (5b)</code></td>
+                <td><code>funct3 (3b)</code></td>
+                <td><code>rd (5b)</code></td>
+                <td><code>opcode (7b)</code></td>
+                <td><code>addi</code>, <code>lw</code>, <code>jalr</code></td>
+              </tr>
+              <tr>
+                <td><strong>S-Type</strong> (Store)</td>
+                <td><code>imm[11:5] (7b)</code></td>
+                <td><code>rs2 (5b)</code></td>
+                <td><code>rs1 (5b)</code></td>
+                <td><code>funct3 (3b)</code></td>
+                <td><code>imm[4:0] (5b)</code></td>
+                <td><code>opcode (7b)</code></td>
+                <td><code>sw</code>, <code>sh</code>, <code>sb</code></td>
+              </tr>
+              <tr>
+                <td><strong>B-Type</strong> (Conditional Branch)</td>
+                <td><code>imm[12|10:5]</code></td>
+                <td><code>rs2 (5b)</code></td>
+                <td><code>rs1 (5b)</code></td>
+                <td><code>funct3 (3b)</code></td>
+                <td><code>imm[4:1|11]</code></td>
+                <td><code>opcode (7b)</code></td>
+                <td><code>beq</code>, <code>bne</code>, <code>blt</code>, <code>bge</code></td>
+              </tr>
+              <tr>
+                <td><strong>U-Type</strong> (Upper Immediate)</td>
+                <td colspan="4"><code>imm[31:12] (20b)</code></td>
+                <td><code>rd (5b)</code></td>
+                <td><code>opcode (7b)</code></td>
+                <td><code>lui</code>, <code>auipc</code></td>
+              </tr>
+              <tr>
+                <td><strong>J-Type</strong> (Unconditional Jump)</td>
+                <td colspan="4"><code>imm[20|10:1|11|19:12] (20b)</code></td>
+                <td><code>rd (5b)</code></td>
+                <td><code>opcode (7b)</code></td>
+                <td><code>jal</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE RISC-V BITFIELD VISUALIZER -->
+      <div class="interactive-widget-box" id="isaWidget" style="margin-top: 1.5rem;">
+        <div class="widget-header">
+          <span class="widget-badge">INSTRUCTION DECODER</span>
+          <h3 class="widget-title">Interactive RISC-V 32-Bit Instruction Explorer</h3>
+          <p class="widget-desc">
+            Select a sample instruction or choose a format to watch how the 32 binary bits partition into Opcode, Registers, and Immediate fields:
+          </p>
         </div>
 
-        <div class="v-card cat3-v">
-          <div class="v-icon">&#128646;</div>
-          <span class="v-badge">CATEGORY 03</span>
-          <h3>The Heavy Cargo Train</h3>
-          <div class="v-subtitle">Vector &amp; Coprocessor Engines</div>
-          <p>
-            Built for massive bulk data. Rather than computing one number at a time, parallel vector lanes process dozens of data points simultaneously. Essential for AI matrix multiplication, vision, and signal processing.
-          </p>
-          <div class="v-examples">Examples: Ara (RVV 1.0), AraXL, Gemmini</div>
-          <a href="/vector-coprocessors/" class="btn btn-outline btn-xs" style="margin-top: 0.75rem;">Explore Category 3 &rarr;</a>
+        <div class="isa-sample-buttons">
+          <button class="isa-btn active" data-inst="add">add x1, x2, x3 (R-Type)</button>
+          <button class="isa-btn" data-inst="addi">addi x10, x10, 4 (I-Type)</button>
+          <button class="isa-btn" data-inst="lw">lw x5, 8(x2) (I-Type Load)</button>
+          <button class="isa-btn" data-inst="sw">sw x5, 12(x2) (S-Type Store)</button>
+          <button class="isa-btn" data-inst="beq">beq x1, x2, loop (B-Type Branch)</button>
+          <button class="isa-btn" data-inst="lui">lui x10, 0x12345 (U-Type)</button>
+          <button class="isa-btn" data-inst="jal">jal x1, func (J-Type Jump)</button>
         </div>
 
-        <div class="v-card cat4-v">
-          <div class="v-icon">&#127970;</div>
-          <span class="v-badge">CATEGORY 04</span>
-          <h3>The Complete City Transit System</h3>
-          <div class="v-subtitle">SoC Platforms &amp; Multi-Core Clusters</div>
-          <p>
-            Not just an isolated vehicle, but an entire metropolitan transport network! Features multi-lane expressways (AXI4/NoC), traffic dispatchers (arbiters), autonomous delivery trucks (DMA engines), and hundreds of parallel cores (up to 432 cores).
-          </p>
-          <div class="v-examples">Examples: MemPool (256 cores), Cheshire, Occamy</div>
-          <a href="/soc-multicore/" class="btn btn-outline btn-xs" style="margin-top: 0.75rem;">Explore Category 4 &rarr;</a>
+        <!-- 32-bit Visual Ribbon -->
+        <div class="isa-ribbon-container">
+          <div class="ribbon-labels">
+            <span style="flex: 7;">funct7 [31:25]</span>
+            <span style="flex: 5;">rs2 [24:20]</span>
+            <span style="flex: 5;">rs1 [19:15]</span>
+            <span style="flex: 3;">funct3 [14:12]</span>
+            <span style="flex: 5;">rd [11:7]</span>
+            <span style="flex: 7;">opcode [6:0]</span>
+          </div>
+
+          <div class="ribbon-blocks" id="ribbonBlocks">
+            <div class="r-blk b-funct7" style="flex: 7;" id="blkFunct7">0000000</div>
+            <div class="r-blk b-rs2" style="flex: 5;" id="blkRs2">00011 (x3)</div>
+            <div class="r-blk b-rs1" style="flex: 5;" id="blkRs1">00010 (x2)</div>
+            <div class="r-blk b-funct3" style="flex: 3;" id="blkFunct3">000</div>
+            <div class="r-blk b-rd" style="flex: 5;" id="blkRd">00001 (x1)</div>
+            <div class="r-blk b-opcode" style="flex: 7;" id="blkOpcode">0110011</div>
+          </div>
+        </div>
+
+        <!-- Machine Code Output -->
+        <div class="isa-meta-output">
+          <div class="isa-meta-card">
+            <span class="imc-lbl">Assembly Syntax</span>
+            <span class="imc-val" id="isaAsmText">add x1, x2, x3</span>
+          </div>
+          <div class="isa-meta-card">
+            <span class="imc-lbl">Machine Code (Hexadecimal)</span>
+            <span class="imc-val mono" id="isaHexText">0x003100B3</span>
+          </div>
+          <div class="isa-meta-card">
+            <span class="imc-lbl">Semantic Operation</span>
+            <span class="imc-val" id="isaSemantics">R[x1] &larr; R[x2] + R[x3]</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 6: How We Score Chips -->
-    <section id="benchmarking-101" class="fund-section-card">
+    <!-- ============================================================ -->
+    <!-- SECTION 4: PIPELINING & HAZARDS (CATEGORY 1 BRIDGE) -->
+    <!-- ============================================================ -->
+    <section id="pipelining-hazards" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">04</span>
+        <div>
+          <span class="badge badge-accent">CATEGORY 1 BRIDGE &bull; SCALAR MICROARCHITECTURE</span>
+          <h2 class="fund-title">Pipelining &amp; The Three Hazards</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        Executing an instruction sequentially requires multiple steps (Fetch, Decode, ALU Execute, Memory Access, Register Writeback). If executed one-at-a-time, hardware sits idle 80% of the time. <strong>Pipelining</strong> turns the datapath into an assembly line where 5 instructions are processed simultaneously in different stages.
+      </p>
+
+      <!-- 5 Stages Breakdown -->
+      <div class="pipe-stages-grid">
+        <div class="p-stage-card">
+          <span class="p-num">1</span>
+          <h4>IF (Fetch)</h4>
+          <p>Read 32-bit instruction from memory at the address stored in the Program Counter (PC). Increment PC by 4.</p>
+        </div>
+        <div class="p-stage-card">
+          <span class="p-num">2</span>
+          <h4>ID (Decode)</h4>
+          <p>Decode opcode and read source registers (<code>rs1</code>, <code>rs2</code>) from the register file. Sign-extend immediates.</p>
+        </div>
+        <div class="p-stage-card">
+          <span class="p-num">3</span>
+          <h4>EX (Execute)</h4>
+          <p>The ALU performs the arithmetic calculation, shift, or computes effective target memory addresses.</p>
+        </div>
+        <div class="p-stage-card">
+          <span class="p-num">4</span>
+          <h4>MEM (Memory)</h4>
+          <p>Read from or write to Data Memory (DRAM/SRAM cache) if executing a <code>lw</code> or <code>sw</code> instruction.</p>
+        </div>
+        <div class="p-stage-card">
+          <span class="p-num">5</span>
+          <h4>WB (Writeback)</h4>
+          <p>Write the final computed result back into the destination register (<code>rd</code>) in the register file.</p>
+        </div>
+      </div>
+
+      <!-- The Three Hazards -->
+      <div class="hazards-trio-grid" style="margin-top: 1.5rem;">
+        <div class="hazard-card">
+          <span class="h-badge">HAZARD 1</span>
+          <h4>Structural Hazards</h4>
+          <p>Hardware cannot support two operations simultaneously (e.g. instruction fetch and data read both competing for single memory port). Solved by separating Instruction Cache (I$) and Data Cache (D$) in Harvard architectures.</p>
+        </div>
+        <div class="hazard-card">
+          <span class="h-badge">HAZARD 2</span>
+          <h4>Data Hazards (RAW)</h4>
+          <p>Instruction $B$ needs the result of Instruction $A$, but $A$ hasn't written to registers yet! Solved by <strong>Data Forwarding (Bypassing)</strong>: routing ALU output directly from EX/MEM stages into the ALU input of the next instruction without waiting for writeback.</p>
+        </div>
+        <div class="hazard-card">
+          <span class="h-badge">HAZARD 3</span>
+          <h4>Control Hazards</h4>
+          <p>A conditional branch (<code>beq</code>) changes the Program Counter, but the next instructions have already entered the pipeline! If branch is taken, the wrong instructions must be flushed (idle pipeline bubbles). Solved by <strong>Branch Predictors</strong>.</p>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE PIPELINE SPEEDUP SIMULATOR -->
+      <div class="interactive-widget-box" id="pipeWidget" style="margin-top: 1.5rem;">
+        <div class="widget-header">
+          <span class="widget-badge">LIVE PIPELINE SIMULATOR</span>
+          <h3 class="widget-title">Interactive Pipeline Speedup &amp; CPI Calculator</h3>
+          <p class="widget-desc">
+            Compare non-pipelined sequential execution vs. 5-stage pipelining across $N$ instructions:
+          </p>
+        </div>
+
+        <div class="pipe-sim-controls">
+          <div class="slider-group">
+            <label for="numInstRange">Number of Instructions ($N$): <span id="numInstVal">10</span></label>
+            <input type="range" id="numInstRange" min="1" max="100" value="10" class="sim-slider" />
+          </div>
+
+          <div class="pipe-compare-metrics">
+            <div class="metric-card seq-metric">
+              <span class="m-label">Non-Pipelined Clock Cycles</span>
+              <span class="m-val" id="seqCycles">50</span>
+              <span class="m-sub">Each instruction requires 5 separate cycles</span>
+            </div>
+            <div class="metric-card pipe-metric">
+              <span class="m-label">5-Stage Pipelined Clock Cycles</span>
+              <span class="m-val" id="pipeCycles">14</span>
+              <span class="m-sub">Formula: Cycles = 5 + (<em>N</em> &minus; 1)</span>
+            </div>
+            <div class="metric-card speedup-metric">
+              <span class="m-label">Effective Speedup Factor</span>
+              <span class="m-val" id="speedupVal">3.57&times;</span>
+              <span class="m-sub">As <em>N</em> &rarr; &infin;, Speedup approaches <strong>5.0&times;</strong> (CPI &rarr; 1.0)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 5: MEMORY HIERARCHY, MMU & OUT-OF-ORDER (CATEGORY 2 BRIDGE) -->
+    <!-- ============================================================ -->
+    <section id="memory-virtual" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">05</span>
+        <div>
+          <span class="badge badge-accent">CATEGORY 2 BRIDGE &bull; APPLICATION CLASS</span>
+          <h2 class="fund-title">The Memory Hierarchy, MMU &amp; Out-of-Order Execution</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        While processors operate in gigahertz (&lt;1 nanosecond), external DRAM memory takes 50 to 100 nanoseconds to respond. This is the <strong>Memory Wall</strong>. Category 2 Application Cores solve this through multi-level caches, hardware virtual memory (MMU), and Out-of-Order (OoO) superscalar execution.
+      </p>
+
+      <div class="concept-dual-grid">
+        <div class="concept-box">
+          <h4>Virtual Memory &amp; The Sv39 MMU</h4>
+          <p>
+            An operating system like Linux cannot give programs direct physical access to DRAM (programs would corrupt each other's memory). The <strong>Memory Management Unit (MMU)</strong> translates program <em>virtual addresses</em> into real <em>physical addresses</em>:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Sv39 Standard:</strong> 39-bit virtual addresses mapped via a 3-level radix tree (Page Table Walk: VPN2 &rarr; VPN1 &rarr; VPN0) with 4 KiB memory pages.</li>
+            <li><strong>TLB (Translation Lookaside Buffer):</strong> An ultra-fast hardware cache that stores recent page translations, avoiding the 3-step DRAM walk on every load and store.</li>
+          </ul>
+        </div>
+
+        <div class="concept-box">
+          <h4>In-Order vs. Out-of-Order (OoO) Execution</h4>
+          <p>
+            Why do high-performance cores like <code>BOOM</code> and <code>XiangShan</code> take 400+ kGE of silicon?
+          </p>
+          <ul class="concept-list">
+            <li><strong>In-Order Bottleneck:</strong> If instruction 1 suffers a cache miss and waits 100 cycles for DRAM, the <em>entire pipeline freezes</em>, even if instructions 2, 3, and 4 are completely independent!</li>
+            <li><strong>The OoO Breakthrough:</strong> Instructions are decoded in order, <strong>renamed</strong> to eliminate false register dependencies, placed into <strong>Reservation Stations</strong>, and executed <em>as soon as operands are ready</em>. Finally, the <strong>Reorder Buffer (ROB)</strong> commits them in original program order to guarantee precise exceptions.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Human Scale Latency Comparison -->
+      <div class="interactive-widget-box" style="margin-top: 1.5rem;">
+        <div class="widget-header">
+          <span class="widget-badge">INTUITIVE SCALE</span>
+          <h3 class="widget-title">The Memory Latency Gap (If 1 CPU Cycle = 1 Second)</h3>
+          <p class="widget-desc">
+            To intuitively understand why caches and Out-of-Order execution are essential, scale 1 clock cycle up to 1 human second:
+          </p>
+        </div>
+
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Storage Level</th>
+                <th>Hardware Latency</th>
+                <th>Human Scaled Time</th>
+                <th>Real-World Everyday Analogy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>CPU Registers</strong></td>
+                <td>1 cycle (~0.5 ns)</td>
+                <td><strong>1 second</strong></td>
+                <td>Item already in your hands</td>
+              </tr>
+              <tr>
+                <td><strong>L1 Cache</strong></td>
+                <td>3 to 4 cycles (~1.5 ns)</td>
+                <td><strong>3 to 4 seconds</strong></td>
+                <td>Grabbing a book off your desk</td>
+              </tr>
+              <tr>
+                <td><strong>L2 Cache</strong></td>
+                <td>12 to 15 cycles (~6 ns)</td>
+                <td><strong>15 seconds</strong></td>
+                <td>Walking across the room to a bookshelf</td>
+              </tr>
+              <tr>
+                <td><strong>L3 Cache (Shared)</strong></td>
+                <td>40 to 60 cycles (~20 ns)</td>
+                <td><strong>1 minute</strong></td>
+                <td>Taking the elevator down to the library basement</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>Main Memory (DRAM)</strong></td>
+                <td>150 to 200 cycles (~80 ns)</td>
+                <td><strong>3.5 minutes</strong></td>
+                <td>Driving across town to the central library!</td>
+              </tr>
+              <tr>
+                <td><strong>NVMe SSD Flash</strong></td>
+                <td>20,000 cycles (~10 &mu;s)</td>
+                <td><strong>5.5 hours</strong></td>
+                <td>Ordering a book for same-day package delivery</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 6: VECTOR ENGINES & PARALLELISM (CATEGORY 3 BRIDGE) -->
+    <!-- ============================================================ -->
+    <section id="vector-parallelism" class="fund-section-card">
       <div class="fund-header">
         <span class="fund-num">06</span>
+        <div>
+          <span class="badge badge-accent">CATEGORY 3 BRIDGE &bull; HIGH-THROUGHPUT COMPUTE</span>
+          <h2 class="fund-title">Vector Coprocessors &amp; Systolic Arrays</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        Adding two 1,000-element arrays on a scalar processor requires a loop executing 1,000 separate load, add, and store instructions. <strong>Vector processors (RVV 1.0)</strong> eliminate loop overhead by computing wide vectors of data with a single instruction across parallel execution lanes.
+      </p>
+
+      <div class="concept-dual-grid">
+        <div class="concept-box">
+          <h4>The RISC-V Vector (RVV 1.0) Architecture</h4>
+          <p>
+            Unlike fixed-width multimedia extensions (such as x86 AVX or ARM NEON), RISC-V Vector (RVV) is <em>vector-length agnostic</em>:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Vector Registers (v0–v31):</strong> 32 vector registers with hardware length <code>VLEN</code> (e.g. 512, 1024, or 4096 bits in <code>Ara</code>).</li>
+            <li><strong>LMUL (Register Grouping):</strong> Dynamically groups registers together (LMUL = 1, 2, 4, 8) to trade register count for massive operand capacity.</li>
+            <li><strong>Vector Lanes:</strong> The physical vector datapath is sliced into identical parallel lanes (e.g., 4, 8, or 16 lanes). A 16-lane core executes 16 DP-FLOPS every single clock cycle!</li>
+          </ul>
+        </div>
+
+        <div class="concept-box">
+          <h4>2D Systolic Arrays (Gemmini Matrix Engines)</h4>
+          <p>
+            For Deep Learning and dense Matrix Multiplication ($C = A \times B$):
+          </p>
+          <ul class="concept-list">
+            <li>Instead of repeatedly loading values from memory, a <strong>2D Systolic Array</strong> arranges hundreds of Processing Elements (PEs) in a grid.</li>
+            <li>Weights remain stationary inside the cells, while inputs flow rhythmically through rows and columns like a beating heart (systole), reusing data across thousands of operations without DRAM traffic!</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Scalar vs Vector Visual Compare -->
+      <div class="interactive-widget-box" style="margin-top: 1.5rem;">
+        <div class="widget-header">
+          <span class="widget-badge">ARCHITECTURAL CONTRAST</span>
+          <h3 class="widget-title">Scalar Loop vs. 4-Lane Vector Execution</h3>
+          <p class="widget-desc">
+            Observe the dramatic reduction in instruction fetch overhead when adding two 16-element vectors:
+          </p>
+        </div>
+
+        <div class="vector-compare-grid">
+          <div class="v-comp-box">
+            <h4>Scalar Approach (16 Loop Iterations)</h4>
+            <div class="code-snippet-box">
+              <code>loop:</code><br />
+              <code>&nbsp;&nbsp;lw &nbsp;t0, 0(a0) &nbsp;&nbsp;# Load A[i]</code><br />
+              <code>&nbsp;&nbsp;lw &nbsp;t1, 0(a1) &nbsp;&nbsp;# Load B[i]</code><br />
+              <code>&nbsp;&nbsp;add t2, t0, t1 &nbsp;# Add A[i]+B[i]</code><br />
+              <code>&nbsp;&nbsp;sw &nbsp;t2, 0(a2) &nbsp;&nbsp;# Store C[i]</code><br />
+              <code>&nbsp;&nbsp;addi a0, a0, 4 &nbsp;# Ptr inc</code><br />
+              <code>&nbsp;&nbsp;addi a1, a1, 4</code><br />
+              <code>&nbsp;&nbsp;addi a2, a2, 4</code><br />
+              <code>&nbsp;&nbsp;bne &nbsp;a0, a3, loop # Branch check</code>
+            </div>
+            <div class="v-stats-badge badge-warn">
+              <strong>Cost:</strong> 128 instructions fetched, decoded, and dispatched! High branch overhead.
+            </div>
+          </div>
+
+          <div class="v-comp-box">
+            <h4>RVV 1.0 Vector Approach (4 Hardware Lanes)</h4>
+            <div class="code-snippet-box">
+              <code>vsetvli t0, a0, e32, m1 # Set len=16</code><br />
+              <code>vle32.v v0, (a0) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Vector Load A</code><br />
+              <code>vle32.v v1, (a1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Vector Load B</code><br />
+              <code>vadd.vv v2, v0, v1 &nbsp;&nbsp;&nbsp;&nbsp;# Vector Add (SIMD)</code><br />
+              <code>vse32.v v2, (a2) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Vector Store C</code>
+            </div>
+            <div class="v-stats-badge badge-success">
+              <strong>Advantage:</strong> Only 5 instructions fetched! 4 vector lanes calculate 4 elements per clock cycle in parallel.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 7: SOC FABRICS, INTERCONNECTS & CLUSTERS (CATEGORY 4 BRIDGE) -->
+    <!-- ============================================================ -->
+    <section id="soc-interconnects" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">07</span>
+        <div>
+          <span class="badge badge-accent">CATEGORY 4 BRIDGE &bull; MANYCORE SYSTEMS</span>
+          <h2 class="fund-title">SoC Interconnect Fabrics &amp; Multi-Core Clusters</h2>
+        </div>
+      </div>
+      <p class="fund-lead">
+        A processor core in isolation cannot run an application without peripherals, memory controllers, and interconnect fabrics. <strong>System-on-Chip (SoC)</strong> architecture integrates dozens to hundreds of cores with coherent crossbars, Direct Memory Access (DMA) engines, and hardware synchronization units.
+      </p>
+
+      <div class="concept-dual-grid">
+        <div class="concept-box">
+          <h4>Interconnect Topologies: Bus vs. Crossbar vs. NoC</h4>
+          <p>
+            How multiple cores communicate with multi-banked L2 memory:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Shared Bus (Wishbone / AXI-Lite):</strong> Single shared communication wire. Only one master can talk at a time; saturates past 2 to 4 cores.</li>
+            <li><strong>Full Crossbar (TileLink / AXI4):</strong> Matrix of parallel switches allowing $M$ masters to access $N$ independent memory banks simultaneously without contention.</li>
+            <li><strong>Network-on-Chip (NoC, e.g. FlooNoC):</strong> Packet-switched 2D mesh router network for 16 to 432 cores (e.g. <code>MemPool</code>), transmitting packets through X-Y routing hops.</li>
+          </ul>
+        </div>
+
+        <div class="concept-box">
+          <h4>DMA &amp; Hardware Barrier Synchronization</h4>
+          <p>
+            Overcoming manycore software bottlenecks:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Autonomous DMA:</strong> Direct Memory Access engines stream gigabytes of matrix tiles from external DRAM into local tightly-coupled SRAM buffers without halting the CPU.</li>
+            <li><strong>The Manycore Spinlock Wall:</strong> When 256 cores wait for each other using software spinlocks (atomic memory operations), the crossbar congests. Category 4 clusters (like <code>Snitch</code>) integrate dedicated <strong>hardware barrier wires</strong> to synchronize 256 cores in a single clock cycle!</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECTION 8: HOW WE SCORE & MEASURE CHIPS -->
+    <!-- ============================================================ -->
+    <section id="benchmarking-metrics" class="fund-section-card">
+      <div class="fund-header">
+        <span class="fund-num">08</span>
         <div>
           <span class="badge badge-accent">BENCHMARKING 101</span>
           <h2 class="fund-title">How We Score &amp; Measure Chips</h2>
         </div>
       </div>
       <p class="fund-lead">
-        Evaluating a processor is never as simple as asking "which core is fastest?" Architecture requires balancing performance against silicon area, energy, and design complexity:
+        Evaluating computer architecture is never as simple as asking "which core has the highest clock speed?" Hardware design is a multi-dimensional Pareto optimization trade-off between speed, silicon area, energy, and design complexity:
       </p>
 
-      <div class="fund-grid">
+      <!-- The Iron Law of Processor Performance -->
+      <div class="analogy-banner" style="background: var(--yellow-soft); border-left: 6px solid var(--yellow);">
+        <div class="analogy-icon">&#9878;</div>
+        <div class="analogy-text">
+          <strong style="font-size: 1.05rem;">The Iron Law of Processor Performance:</strong>
+          <div class="formula-box" style="margin: 0.5rem 0; font-size: 1.05rem;">
+            <strong>Execution Time</strong> = (Instructions / Program) &times; CPI &times; (1 / <em>f</em><sub>max</sub>)
+          </div>
+          Every architectural innovation attacks one of these three terms: Compiler &amp; ISA optimizations reduce <em>Instructions/Program</em>; Pipelining &amp; Out-of-Order reduce <em>CPI</em>; Physical synthesis &amp; shorter critical paths increase <em>Clock Frequency (f<sub>max</sub>)</em>.
+        </div>
+      </div>
+
+      <div class="fund-grid" style="margin-top: 1.5rem;">
         <div class="fund-box">
           <h4>Efficiency &amp; Speed Metrics</h4>
           <ul>
-            <li>
-              <strong>CPI (Cycles per Instruction):</strong> Average clock cycles required to retire an instruction. Lower is better. A CPI of 1.0 indicates one instruction completes per cycle. Superscalar dual-issue cores achieve CPI &lt; 1.0!
-            </li>
-            <li>
-              <strong>CoreMark / MHz:</strong> The standard industry benchmark for embedded cores. Measures integer compute capability per megahertz of operating frequency.
-            </li>
-            <li>
-              <strong>Ops / Cycle:</strong> Operations completed per clock tick. Vector processors and systolic arrays reach 4 to 30+ Ops/Cycle by evaluating SIMD lanes in parallel.
-            </li>
-            <li>
-              <strong>Vector Utilization (%):</strong> The percentage of cycles that arithmetic execution units are actively calculating numbers vs. sitting idle waiting for memory.
-            </li>
+            <li><strong>CPI (Cycles per Instruction):</strong> Average cycles per instruction. Single-issue in-order targets CPI &approx; 1.0; superscalar dual-issue targets CPI &lt; 0.8.</li>
+            <li><strong>CoreMark / MHz:</strong> Standard embedded benchmark measuring integer processing throughput per megahertz.</li>
+            <li><strong>DMIPS / MHz:</strong> Dhrystone million instructions per second normalized per megahertz.</li>
+            <li><strong>Vector Ops / Cycle:</strong> Peak arithmetic floating-point operations retired per cycle (scales up to 32+ on <code>Ara</code>).</li>
           </ul>
         </div>
 
         <div class="fund-box">
           <h4>Physical Silicon Metrics</h4>
           <ul>
-            <li>
-              <strong>Gate Count (kGE - Kilo Gate Equivalents):</strong> Standardized silicon area measured in thousands of two-input NAND gates (NAND2):
-              <br />
-              &bull; <code>SERV</code> = ~2.1 kGE (ultra-compact bit-serial)<br />
-              &bull; <code>Ibex</code> = ~24.5 kGE (balanced embedded core)<br />
-              &bull; <code>CVA6</code> = ~148 kGE (64-bit Linux application core)<br />
-              &bull; <code>BOOM</code> = ~420 kGE (superscalar out-of-order)
-            </li>
-            <li>
-              <strong>Process Node (nm):</strong> The fabrication technology (e.g. 130nm, 28nm, 16nm). Smaller nodes pack more transistors into smaller footprints, operating at higher frequencies and lower voltages.
-            </li>
+            <li><strong>Gate Count (kGE):</strong> Silicon area normalized in thousands of 2-input NAND gates. <code>SERV</code> = 2.1 kGE, <code>Ibex</code> = 24.5 kGE, <code>CVA6</code> = 148 kGE, <code>BOOM</code> = 420 kGE.</li>
+            <li><strong>ASIC <em>F</em><sub>max</sub>:</strong> Peak achievable operating frequency under target foundry technology nodes (e.g. TSMC 16nm, GlobalFoundries 22FDX, SkyWater 130nm).</li>
+            <li><strong>Energy Efficiency:</strong> Computed in GFLOPS/Watt or CoreMark/milliwatt.</li>
           </ul>
         </div>
       </div>
@@ -555,10 +844,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
 
         <div class="bench-level-buttons">
-          <button class="bench-lvl-btn active" data-blvl="1">Level 1: Scalar Pipeline (Cat 1: MCU)</button>
-          <button class="bench-lvl-btn" data-blvl="2">Level 2: Memory &amp; OS (Cat 2: App Cores)</button>
-          <button class="bench-lvl-btn" data-blvl="3">Level 3: Vector Intensity (Cat 3: Vector)</button>
-          <button class="bench-lvl-btn" data-blvl="4">Level 4: Interconnect &amp; Clusters (Cat 4: SoCs)</button>
+          <button class="bench-lvl-btn active" data-blvl="1">Level 1: Scalar Pipeline (MCU Cores)</button>
+          <button class="bench-lvl-btn" data-blvl="2">Level 2: Memory &amp; OS (Application Cores)</button>
+          <button class="bench-lvl-btn" data-blvl="3">Level 3: Vector Intensity (Vector Engines)</button>
+          <button class="bench-lvl-btn" data-blvl="4">Level 4: Interconnect &amp; Clusters (SoC Platforms)</button>
         </div>
 
         <div class="bench-level-card" id="benchLevelCard">
@@ -598,430 +887,411 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   // WIDGET 1: LOGIC GATE & TRANSISTOR SWITCH
   // ==========================================
   let currentGate = "AND";
-  let inputA = 1;
-  let inputB = 1;
+  let inputA = 0;
+  let inputB = 0;
 
-  const btnA = document.getElementById("toggleInputA");
-  const btnB = document.getElementById("toggleInputB");
-  const wireValA = document.getElementById("wireValA");
-  const wireValB = document.getElementById("wireValB");
-  const wireValOut = document.getElementById("wireValOut");
-  const gateBoxLabel = document.getElementById("gateBoxLabel")?.querySelector(".gate-symbol-txt");
-  const bulbContainer = document.getElementById("bulbContainer");
-  const bulbStatusTxt = document.getElementById("bulbStatusTxt");
+  const toggleABtn = document.getElementById("toggleA");
+  const toggleBBtn = document.getElementById("toggleB");
+  const outputBulb = document.getElementById("outputBulb");
+  const voltageState = document.getElementById("voltageState");
+  const gateVisualBox = document.getElementById("gateVisualBox");
+  const gateName = document.getElementById("gateName");
+  const gateFormula = document.getElementById("gateFormula");
   const ttGateName = document.getElementById("ttGateName");
-  const gateInsightTxt = document.getElementById("gateInsightTxt");
+  const truthTable = document.getElementById("truthTable");
+  const inputBWrap = document.getElementById("inputBWrap");
+  const wireB = document.getElementById("wireB");
 
-  function evaluateGate(gate: string, a: number, b: number): number {
-    switch (gate) {
-      case "AND": return a && b ? 1 : 0;
-      case "OR": return a || b ? 1 : 0;
-      case "NAND": return !(a && b) ? 1 : 0;
-      case "XOR": return a !== b ? 1 : 0;
-      default: return 0;
-    }
-  }
+  const gateMeta: Record<string, { formula: string; calc: (a: number, b: number) => number }> = {
+    "AND":  { formula: "Y = A &bull; B", calc: (a, b) => a & b },
+    "OR":   { formula: "Y = A + B", calc: (a, b) => a | b },
+    "NAND": { formula: "Y = ~(A &bull; B)", calc: (a, b) => (a & b) ? 0 : 1 },
+    "NOR":  { formula: "Y = ~(A + B)", calc: (a, b) => (a | b) ? 0 : 1 },
+    "XOR":  { formula: "Y = A &oplus; B", calc: (a, b) => a ^ b },
+    "NOT":  { formula: "Y = ~A", calc: (a, _) => a ? 0 : 1 }
+  };
 
-  function updateGateWidget() {
-    const out = evaluateGate(currentGate, inputA, inputB);
+  function updateGateSim() {
+    const meta = gateMeta[currentGate];
+    const out = meta.calc(inputA, inputB);
 
-    if (wireValA) wireValA.textContent = String(inputA);
-    if (wireValB) wireValB.textContent = String(inputB);
-    if (wireValOut) wireValOut.textContent = String(out);
-    if (gateBoxLabel) gateBoxLabel.textContent = currentGate;
+    if (gateName) gateName.textContent = currentGate;
+    if (gateFormula) gateFormula.innerHTML = meta.formula;
     if (ttGateName) ttGateName.textContent = currentGate;
 
-    // Update Input buttons UI
-    if (btnA) {
-      btnA.innerHTML = `Input A: <span class="val-pill ${inputA ? 'pill-on' : 'pill-off'}">${inputA} (${inputA ? 'HIGH' : 'LOW'})</span>`;
-    }
-    if (btnB) {
-      btnB.innerHTML = `Input B: <span class="val-pill ${inputB ? 'pill-on' : 'pill-off'}">${inputB} (${inputB ? 'HIGH' : 'LOW'})</span>`;
+    if (currentGate === "NOT") {
+      if (inputBWrap) inputBWrap.style.opacity = "0.2";
+      if (wireB) wireB.style.opacity = "0.2";
+    } else {
+      if (inputBWrap) inputBWrap.style.opacity = "1";
+      if (wireB) wireB.style.opacity = "1";
     }
 
-    // Update bulb
-    if (bulbContainer && bulbStatusTxt) {
+    if (outputBulb) {
+      const bulbVal = outputBulb.querySelector(".bulb-val");
       if (out === 1) {
-        bulbContainer.classList.add("bulb-active");
-        bulbStatusTxt.textContent = "OUTPUT ON (1)";
+        outputBulb.classList.remove("off");
+        outputBulb.classList.add("on");
+        if (bulbVal) bulbVal.textContent = "1";
+        if (voltageState) voltageState.textContent = "1.0V (VDD / High)";
       } else {
-        bulbContainer.classList.remove("bulb-active");
-        bulbStatusTxt.textContent = "OUTPUT OFF (0)";
+        outputBulb.classList.remove("on");
+        outputBulb.classList.add("off");
+        if (bulbVal) bulbVal.textContent = "0";
+        if (voltageState) voltageState.textContent = "0.0V (Ground / Low)";
       }
     }
 
-    // Update Truth table
-    const rows = [
-      { id: "tr-00", a: 0, b: 0 },
-      { id: "tr-01", a: 0, b: 1 },
-      { id: "tr-10", a: 1, b: 0 },
-      { id: "tr-11", a: 1, b: 1 },
-    ];
-
-    rows.forEach(r => {
-      const rowEl = document.getElementById(r.id);
-      if (rowEl) {
-        const rowOut = evaluateGate(currentGate, r.a, r.b);
-        const resCell = rowEl.querySelector(".res-cell");
-        const stateCell = rowEl.querySelector(".state-cell");
-        if (resCell) resCell.textContent = String(rowOut);
-        if (stateCell) stateCell.textContent = rowOut ? "ON (1)" : "OFF (0)";
-
-        if (r.a === inputA && r.b === inputB) {
-          rowEl.classList.add("active-tr");
-          if (stateCell) stateCell.textContent = rowOut ? "ACTIVE ★ (1)" : "ACTIVE ★ (0)";
+    if (truthTable) {
+      const tbody = truthTable.querySelector("tbody");
+      if (tbody) {
+        tbody.innerHTML = "";
+        if (currentGate === "NOT") {
+          [0, 1].forEach((a) => {
+            const res = gateMeta["NOT"].calc(a, 0);
+            const tr = document.createElement("tr");
+            if (a === inputA) tr.className = "active-row";
+            tr.innerHTML = `<td>${a}</td><td>-</td><td class="res-cell">${res}</td>`;
+            tbody.appendChild(tr);
+          });
         } else {
-          rowEl.classList.remove("active-tr");
+          [
+            [0, 0],
+            [0, 1],
+            [1, 0],
+            [1, 1]
+          ].forEach(([a, b]) => {
+            const res = meta.calc(a, b);
+            const tr = document.createElement("tr");
+            if (a === inputA && b === inputB) tr.className = "active-row";
+            tr.innerHTML = `<td>${a}</td><td>${b}</td><td class="res-cell">${res}</td>`;
+            tbody.appendChild(tr);
+          });
         }
-      }
-    });
-
-    // Update insight
-    if (gateInsightTxt) {
-      if (currentGate === "NAND") {
-        gateInsightTxt.innerHTML = "<strong>Key Architectural Insight:</strong> The <strong>NAND gate</strong> is functionally universal. Every digital system—from single-cycle ALUs to 64-bit multi-core processors—can be fabricated entirely using interconnected NAND gates!";
-      } else if (currentGate === "XOR") {
-        gateInsightTxt.innerHTML = "<strong>Key Architectural Insight:</strong> The <strong>XOR gate</strong> is the core arithmetic engine of computer addition! It computes binary addition ($1 + 1 = 0$ with carry), forming the foundation of every CPU's Arithmetic Logic Unit (ALU).";
-      } else if (currentGate === "AND") {
-        gateInsightTxt.innerHTML = "<strong>Key Architectural Insight:</strong> An <strong>AND gate</strong> outputs $1$ only when both control gates receive voltage. CPUs use AND gates to check conditional flags and enable memory write operations.";
-      } else {
-        gateInsightTxt.innerHTML = "<strong>Key Architectural Insight:</strong> An <strong>OR gate</strong> outputs $1$ if either input is active. Microprocessors use OR gates to multiplex data buses and handle shared interrupt request lines.";
       }
     }
   }
 
-  // Gate selection buttons
-  document.querySelectorAll(".gate-sel-btn").forEach(btn => {
+  toggleABtn?.addEventListener("click", () => {
+    inputA = inputA === 0 ? 1 : 0;
+    const swState = toggleABtn.querySelector(".sw-state");
+    if (swState) swState.textContent = inputA === 1 ? "ON (1)" : "OFF (0)";
+    toggleABtn.setAttribute("data-state", String(inputA));
+    toggleABtn.classList.toggle("is-on", inputA === 1);
+    updateGateSim();
+  });
+
+  toggleBBtn?.addEventListener("click", () => {
+    if (currentGate === "NOT") return;
+    inputB = inputB === 0 ? 1 : 0;
+    const swState = toggleBBtn.querySelector(".sw-state");
+    if (swState) swState.textContent = inputB === 1 ? "ON (1)" : "OFF (0)";
+    toggleBBtn.setAttribute("data-state", String(inputB));
+    toggleBBtn.classList.toggle("is-on", inputB === 1);
+    updateGateSim();
+  });
+
+  document.querySelectorAll(".gate-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".gate-sel-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".gate-btn").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       currentGate = btn.getAttribute("data-gate") || "AND";
-      updateGateWidget();
+      updateGateSim();
     });
   });
 
-  btnA?.addEventListener("click", () => {
-    inputA = inputA === 1 ? 0 : 1;
-    updateGateWidget();
-  });
-
-  btnB?.addEventListener("click", () => {
-    inputB = inputB === 1 ? 0 : 1;
-    updateGateWidget();
-  });
-
   // ==========================================
-  // WIDGET 2: PIPELINING LAUNDRY SIMULATOR
+  // WIDGET 2: 8-BIT ALU & FLAG SIMULATOR
   // ==========================================
-  let pipeMode = "pipe"; // "seq" or "pipe"
+  let currentAluOp = "ADD";
+  const inAEl = document.getElementById("aluInA") as HTMLInputElement;
+  const inBEl = document.getElementById("aluInB") as HTMLInputElement;
+  const binAEl = document.getElementById("binA");
+  const binBEl = document.getElementById("binB");
+  const aluOpSymbol = document.getElementById("aluOpSymbol");
+  const aluResDec = document.getElementById("aluResDec");
+  const aluResHex = document.getElementById("aluResHex");
+  const aluResBin = document.getElementById("aluResBin");
+  const flagZ = document.getElementById("flagZ");
+  const flagN = document.getElementById("flagN");
+  const flagC = document.getElementById("flagC");
+  const flagV = document.getElementById("flagV");
 
-  const btnSeq = document.getElementById("btnPipeSeq");
-  const btnPipe = document.getElementById("btnPipePipe");
-  const pmCycles = document.getElementById("pmCycles");
-  const pmThroughput = document.getElementById("pmThroughput");
-  const pmSpeedup = document.getElementById("pmSpeedup");
-  const gridContainer = document.getElementById("pipeVisualGrid");
-
-  const stages = [
-    { name: "IF", cls: "chip-if" },
-    { name: "ID", cls: "chip-id" },
-    { name: "EX", cls: "chip-ex" },
-    { name: "MEM", cls: "chip-mem" },
-    { name: "WB", cls: "chip-wb" },
-  ];
-
-  function renderPipeline() {
-    if (!gridContainer) return;
-
-    if (pipeMode === "seq") {
-      // 4 instructions * 5 stages = 20 cycles
-      if (pmCycles) pmCycles.textContent = "20 Cycles";
-      if (pmThroughput) pmThroughput.textContent = "0.20 IPC (Stalled)";
-      if (pmSpeedup) pmSpeedup.textContent = "1.00× (Baseline)";
-
-      let html = `<div class="p-row p-head"><div class="p-cell p-label">Instruction</div>`;
-      for (let c = 1; c <= 20; c++) {
-        html += `<div class="p-cell p-col-hdr">C${c}</div>`;
-      }
-      html += `</div>`;
-
-      for (let inst = 0; inst < 4; inst++) {
-        html += `<div class="p-row"><div class="p-cell p-label">Inst ${inst + 1}</div>`;
-        const startCycle = inst * 5;
-        for (let c = 0; c < 20; c++) {
-          if (c >= startCycle && c < startCycle + 5) {
-            const stIdx = c - startCycle;
-            html += `<div class="p-cell p-stage ${stages[stIdx].cls}">${stages[stIdx].name}</div>`;
-          } else {
-            html += `<div class="p-cell p-empty">&middot;</div>`;
-          }
-        }
-        html += `</div>`;
-      }
-      gridContainer.innerHTML = html;
-    } else {
-      // Pipelined: 4 instructions overlap across 8 cycles
-      if (pmCycles) pmCycles.textContent = "8 Cycles";
-      if (pmThroughput) pmThroughput.textContent = "0.50 IPC (Peak 1.0)";
-      if (pmSpeedup) pmSpeedup.textContent = "2.50× Faster!";
-
-      let html = `<div class="p-row p-head"><div class="p-cell p-label">Instruction</div>`;
-      for (let c = 1; c <= 8; c++) {
-        html += `<div class="p-cell p-col-hdr">C${c}</div>`;
-      }
-      html += `</div>`;
-
-      for (let inst = 0; inst < 4; inst++) {
-        html += `<div class="p-row"><div class="p-cell p-label">Inst ${inst + 1}</div>`;
-        const startCycle = inst; // 0, 1, 2, 3
-        for (let c = 0; c < 8; c++) {
-          if (c >= startCycle && c < startCycle + 5) {
-            const stIdx = c - startCycle;
-            html += `<div class="p-cell p-stage ${stages[stIdx].cls}">${stages[stIdx].name}</div>`;
-          } else {
-            html += `<div class="p-cell p-empty">&middot;</div>`;
-          }
-        }
-        html += `</div>`;
-      }
-      gridContainer.innerHTML = html;
-    }
+  function toBin8(num: number): string {
+    const u8 = num & 0xff;
+    const s = u8.toString(2).padStart(8, "0");
+    return `${s.slice(0, 4)} ${s.slice(4)}`;
   }
 
-  btnSeq?.addEventListener("click", () => {
-    pipeMode = "seq";
-    btnSeq.classList.add("active");
-    btnPipe?.classList.remove("active");
-    renderPipeline();
-  });
+  function updateAlu() {
+    let a = parseInt(inAEl?.value || "0", 10);
+    let b = parseInt(inBEl?.value || "0", 10);
 
-  btnPipe?.addEventListener("click", () => {
-    pipeMode = "pipe";
-    btnPipe.classList.add("active");
-    btnSeq?.classList.remove("active");
-    renderPipeline();
-  });
+    if (isNaN(a)) a = 0;
+    if (isNaN(b)) b = 0;
 
-  // Initial render
-  renderPipeline();
+    if (binAEl) binAEl.textContent = toBin8(a);
+    if (binBEl) binBEl.textContent = toBin8(b);
 
-  // ==========================================
-  // WIDGET 3: MEMORY LATENCY SCALE WIDGET
-  // ==========================================
-  const memData: Record<string, { title: string; latency: string; timeText: string; desc: string; icon: string; width: string }> = {
-    reg: {
-      title: "CPU Register File (32 Registers, e.g. x0–x31)",
-      latency: "Latency: < 0.5 nanoseconds (0 stall cycles)",
-      timeText: "Human Scale: 1 Second",
-      desc: "Like picking up a pencil already sitting in your hand. The processor computes immediately with zero stalls.",
-      icon: "✍️",
-      width: "3%"
-    },
-    l1: {
-      title: "Level 1 Cache (16 KB - 64 KB SRAM)",
-      latency: "Latency: ~1.5 nanoseconds (1–2 clock cycles)",
-      timeText: "Human Scale: 3 Seconds",
-      desc: "Like reaching for a cookbook sitting right on your kitchen counter. Ultra-fast, near-zero execution impact.",
-      icon: "📖",
-      width: "15%"
-    },
-    dram: {
-      title: "Main Memory / DDR4 DRAM (8 GB - 64 GB)",
-      latency: "Latency: ~60 nanoseconds (60–200 clock cycles)",
-      timeText: "Human Scale: 4 Minutes",
-      desc: "Like leaving your desk, walking downstairs, and searching through a pantry. The processor must pause execution and wait.",
-      icon: "🚶",
-      width: "55%"
-    },
-    ssd: {
-      title: "Solid State Storage / NVMe SSD (1 TB - 4 TB)",
-      latency: "Latency: ~50,000 nanoseconds (50,000+ clock cycles)",
-      timeText: "Human Scale: 2.3 Months!",
-      desc: "Like boarding a cargo sailboat and traveling across the ocean to pick up a single ingredient. The CPU switches to other processes entirely.",
-      icon: "⛵",
-      width: "100%"
+    const uA = a & 0xff;
+    const uB = b & 0xff;
+
+    let res = 0;
+    let carryOut = 0;
+    let overflow = 0;
+
+    switch (currentAluOp) {
+      case "ADD":
+        if (aluOpSymbol) aluOpSymbol.textContent = "+";
+        res = uA + uB;
+        carryOut = res > 0xff ? 1 : 0;
+        // Overflow in signed: (A>0 && B>0 && Res<0) || (A<0 && B<0 && Res>0)
+        {
+          const sA = (uA << 24) >> 24;
+          const sB = (uB << 24) >> 24;
+          const sRes = sA + sB;
+          overflow = (sRes < -128 || sRes > 127) ? 1 : 0;
+        }
+        res = res & 0xff;
+        break;
+      case "SUB":
+        if (aluOpSymbol) aluOpSymbol.textContent = "-";
+        res = uA - uB;
+        carryOut = uA >= uB ? 1 : 0; // Borrow
+        {
+          const sA = (uA << 24) >> 24;
+          const sB = (uB << 24) >> 24;
+          const sRes = sA - sB;
+          overflow = (sRes < -128 || sRes > 127) ? 1 : 0;
+        }
+        res = (res + 256) & 0xff;
+        break;
+      case "AND":
+        if (aluOpSymbol) aluOpSymbol.textContent = "&";
+        res = uA & uB;
+        break;
+      case "OR":
+        if (aluOpSymbol) aluOpSymbol.textContent = "|";
+        res = uA | uB;
+        break;
+      case "XOR":
+        if (aluOpSymbol) aluOpSymbol.textContent = "^";
+        res = uA ^ uB;
+        break;
+      case "SLL":
+        if (aluOpSymbol) aluOpSymbol.textContent = "<<";
+        res = (uA << (uB & 0x7)) & 0xff;
+        break;
+      case "SRL":
+        if (aluOpSymbol) aluOpSymbol.textContent = ">>";
+        res = (uA >>> (uB & 0x7)) & 0xff;
+        break;
+      case "SLT":
+        if (aluOpSymbol) aluOpSymbol.textContent = "<";
+        {
+          const sA = (uA << 24) >> 24;
+          const sB = (uB << 24) >> 24;
+          res = sA < sB ? 1 : 0;
+        }
+        break;
     }
-  };
 
-  const memTitle = document.getElementById("memTitle");
-  const memLatency = document.getElementById("memLatency");
-  const hsTimeText = document.getElementById("hsTimeText");
-  const hsDescText = document.getElementById("hsDescText");
-  const hsIcon = document.getElementById("hsIcon");
-  const latencyBarFill = document.getElementById("latencyBarFill");
+    const signedRes = (res << 24) >> 24;
+    const isZero = res === 0 ? 1 : 0;
+    const isNeg = (res & 0x80) !== 0 ? 1 : 0;
 
-  document.querySelectorAll(".mem-level-btn").forEach(btn => {
+    if (aluResDec) aluResDec.textContent = `${signedRes} (Unsigned: ${res})`;
+    if (aluResHex) aluResHex.textContent = `(0x${res.toString(16).toUpperCase().padStart(2, "0")})`;
+    if (aluResBin) aluResBin.textContent = `Binary: ${toBin8(res)}`;
+
+    // Update flag elements
+    function setFlag(el: HTMLElement | null, val: number) {
+      if (!el) return;
+      const vSpan = el.querySelector(".flag-val");
+      if (vSpan) vSpan.textContent = String(val);
+      el.classList.toggle("flag-active", val === 1);
+    }
+
+    setFlag(flagZ, isZero);
+    setFlag(flagN, isNeg);
+    setFlag(flagC, carryOut);
+    setFlag(flagV, overflow);
+  }
+
+  inAEl?.addEventListener("input", updateAlu);
+  inBEl?.addEventListener("input", updateAlu);
+
+  document.querySelectorAll(".alu-op-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".mem-level-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".alu-op-btn").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
-      const lvl = btn.getAttribute("data-level") || "reg";
-      const info = memData[lvl];
-      if (info) {
-        if (memTitle) memTitle.textContent = info.title;
-        if (memLatency) memLatency.textContent = info.latency;
-        if (hsTimeText) hsTimeText.textContent = info.timeText;
-        if (hsDescText) hsDescText.textContent = info.desc;
-        if (hsIcon) hsIcon.textContent = info.icon;
-        if (latencyBarFill) latencyBarFill.style.width = info.width;
-      }
+      currentAluOp = btn.getAttribute("data-op") || "ADD";
+      updateAlu();
     });
   });
 
   // ==========================================
-  // WIDGET 4: RISC-V 32-BIT MACHINE CODE DISSECTOR
+  // WIDGET 3: RISC-V INSTRUCTION EXPLORER
   // ==========================================
-  interface IsaField {
-    name: string;
-    bits: string;
-    val: string;
-    desc: string;
-    color: string;
-  }
-  interface IsaEntry {
+  interface InstDef {
+    format: string;
     asm: string;
-    cEq: string;
     hex: string;
-    fields: IsaField[];
-    flow: Array<{ step: string; active: boolean; label: string }>;
-    note: string;
+    semantics: string;
+    f7: string;
+    rs2: string;
+    rs1: string;
+    f3: string;
+    rd: string;
+    op: string;
   }
 
-  const isaData: Record<string, IsaEntry> = {
+  const instData: Record<string, InstDef> = {
     add: {
-      asm: "add x3, x1, x2",
-      cEq: "x3 = x1 + x2;",
-      hex: "0x002081B3",
-      fields: [
-        { name: "funct7", bits: "[31:25] 7b", val: "0000000", desc: "Integer ADD", color: "#e3f2fd" },
-        { name: "rs2", bits: "[24:20] 5b", val: "00010 (x2)", desc: "Source 2", color: "#e8f5e9" },
-        { name: "rs1", bits: "[19:15] 5b", val: "00001 (x1)", desc: "Source 1", color: "#e8f5e9" },
-        { name: "funct3", bits: "[14:12] 3b", val: "000", desc: "ADD/SUB", color: "#fff3e0" },
-        { name: "rd", bits: "[11:7] 5b", val: "00011 (x3)", desc: "Destination", color: "#fce4ec" },
-        { name: "opcode", bits: "[6:0] 7b", val: "0110011", desc: "OP (Reg-Reg)", color: "#f3e5f5" },
-      ],
-      flow: [
-        { step: "1. RegFile", active: true, label: "Read Ports x1 & x2" },
-        { step: "2. ALU", active: true, label: "32-bit Adder (x1 + x2)" },
-        { step: "3. Mem/Bus", active: false, label: "Bypassed (No Memory)" },
-        { step: "4. Writeback", active: true, label: "Commit Result to x3" },
-      ],
-      note: "<strong>Microarchitectural Flow:</strong> Pure integer execution. Register File outputs operands <code>x1</code> and <code>x2</code> in single-cycle combinatorial logic. The integer ALU completes addition, and the result is forwarded to the writeback multiplexer directly into <code>x3</code> without touching memory caches."
+      format: "R-Type",
+      asm: "add x1, x2, x3",
+      hex: "0x003100B3",
+      semantics: "R[x1] ← R[x2] + R[x3]",
+      f7: "0000000",
+      rs2: "00011 (x3)",
+      rs1: "00010 (x2)",
+      f3: "000",
+      rd: "00001 (x1)",
+      op: "0110011 (OP)"
+    },
+    addi: {
+      format: "I-Type",
+      asm: "addi x10, x10, 4",
+      hex: "0x00450513",
+      semantics: "R[x10] ← R[x10] + 4",
+      f7: "0000000 (imm)",
+      rs2: "00100 (imm)",
+      rs1: "01010 (x10)",
+      f3: "000",
+      rd: "01010 (x10)",
+      op: "0010011 (OP-IMM)"
     },
     lw: {
-      asm: "lw x5, 4(x10)",
-      cEq: "x5 = *(int*)(x10 + 4);",
-      hex: "0x00452283",
-      fields: [
-        { name: "imm[11:0]", bits: "[31:20] 12b", val: "000000000100 (+4)", desc: "Byte Offset", color: "#fff9c4" },
-        { name: "rs1", bits: "[19:15] 5b", val: "01010 (x10)", desc: "Base Address", color: "#e8f5e9" },
-        { name: "funct3", bits: "[14:12] 3b", val: "010", desc: "Word (32-bit)", color: "#fff3e0" },
-        { name: "rd", bits: "[11:7] 5b", val: "00101 (x5)", desc: "Destination", color: "#fce4ec" },
-        { name: "opcode", bits: "[6:0] 7b", val: "0000011", desc: "LOAD (Memory)", color: "#f3e5f5" },
-      ],
-      flow: [
-        { step: "1. RegFile", active: true, label: "Read Base Reg x10" },
-        { step: "2. ALU", active: true, label: "Compute Addr (x10 + 4)" },
-        { step: "3. Mem/Bus", active: true, label: "Query L1 Data Cache" },
-        { step: "4. Writeback", active: true, label: "Commit Data to x5" },
-      ],
-      note: "<strong>Microarchitectural Flow:</strong> Memory load flow. The ALU computes the effective physical byte address (<code>x10 + 4</code>), issues a 32-bit read request to the L1 Data Cache or bus master, and loads the returning word into register <code>x5</code> upon cache hit."
+      format: "I-Type (Load)",
+      asm: "lw x5, 8(x2)",
+      hex: "0x00812283",
+      semantics: "R[x5] ← Mem32[R[x2] + 8]",
+      f7: "0000000 (imm)",
+      rs2: "01000 (imm)",
+      rs1: "00010 (x2/sp)",
+      f3: "010 (Word)",
+      rd: "00101 (x5/t0)",
+      op: "0000011 (LOAD)"
+    },
+    sw: {
+      format: "S-Type (Store)",
+      asm: "sw x5, 12(x2)",
+      hex: "0x00512623",
+      semantics: "Mem32[R[x2] + 12] ← R[x5]",
+      f7: "0000000 (imm[11:5])",
+      rs2: "00101 (x5)",
+      rs1: "00010 (x2/sp)",
+      f3: "010 (Word)",
+      rd: "01100 (imm[4:0])",
+      op: "0100011 (STORE)"
     },
     beq: {
-      asm: "beq x1, x2, offset",
-      cEq: "if (x1 == x2) PC += offset;",
+      format: "B-Type (Branch)",
+      asm: "beq x1, x2, 16",
       hex: "0x00208863",
-      fields: [
-        { name: "imm[12|10:5]", bits: "[31:25] 7b", val: "0000000", desc: "Target Offset", color: "#fff9c4" },
-        { name: "rs2", bits: "[24:20] 5b", val: "00010 (x2)", desc: "Compare Reg 2", color: "#e8f5e9" },
-        { name: "rs1", bits: "[19:15] 5b", val: "00001 (x1)", desc: "Compare Reg 1", color: "#e8f5e9" },
-        { name: "funct3", bits: "[14:12] 3b", val: "000", desc: "BEQ (Equal)", color: "#fff3e0" },
-        { name: "imm[4:1|11]", bits: "[11:7] 5b", val: "10000", desc: "Target Offset", color: "#fff9c4" },
-        { name: "opcode", bits: "[6:0] 7b", val: "1100011", desc: "BRANCH", color: "#f3e5f5" },
-      ],
-      flow: [
-        { step: "1. RegFile", active: true, label: "Read x1 & x2" },
-        { step: "2. Comparator", active: true, label: "Subtractor (x1 == x2)" },
-        { step: "3. Branch Adder", active: true, label: "Target (PC + offset)" },
-        { step: "4. PC Mux", active: true, label: "Redirect Fetch Engine" },
-      ],
-      note: "<strong>Microarchitectural Flow:</strong> Control hazard branch. The branch comparator compares registers <code>x1</code> and <code>x2</code>. If equal, the PC multiplexer takes the branch target. In pipelined designs without branch prediction, this introduces a 1–2 cycle stall bubble."
+      semantics: "if (R[x1] == R[x2]) PC ← PC + 16",
+      f7: "0000000 (imm[12|10:5])",
+      rs2: "00010 (x2)",
+      rs1: "00001 (x1)",
+      f3: "000 (BEQ)",
+      rd: "10000 (imm[4:1|11])",
+      op: "1100011 (BRANCH)"
     },
-    vadd: {
-      asm: "vadd.vv v3, v1, v2",
-      cEq: "for(i=0; i<VLEN; i++) v3[i]=v1[i]+v2[i];",
-      hex: "0x022081D7",
-      fields: [
-        { name: "funct6", bits: "[31:26] 6b", val: "000000", desc: "VADD Vector Op", color: "#e3f2fd" },
-        { name: "vm", bits: "[25] 1b", val: "1", desc: "Unmasked", color: "#ffe0b2" },
-        { name: "vs2", bits: "[24:20] 5b", val: "00010 (v2)", desc: "Vector Source 2", color: "#e8f5e9" },
-        { name: "vs1", bits: "[19:15] 5b", val: "00001 (v1)", desc: "Vector Source 1", color: "#e8f5e9" },
-        { name: "funct3", bits: "[14:12] 3b", val: "000", desc: "OPIVV (Int Vector)", color: "#fff3e0" },
-        { name: "vd", bits: "[11:7] 5b", val: "00011 (v3)", desc: "Vector Dest", color: "#fce4ec" },
-        { name: "opcode", bits: "[6:0] 7b", val: "1010111", desc: "OP-V (Vector)", color: "#f3e5f5" },
-      ],
-      flow: [
-        { step: "1. VRF Banks", active: true, label: "Multi-bank VRF Read" },
-        { step: "2. Vector Lanes", active: true, label: "Parallel SIMD ALUs (4-16 lanes)" },
-        { step: "3. Reduction", active: false, label: "Bypassed (Element-wise)" },
-        { step: "4. VRF Write", active: true, label: "Multi-bank VRF Commit" },
-      ],
-      note: "<strong>Microarchitectural Flow:</strong> Data-parallel SIMD vector execution. A single 32-bit instruction triggers parallel vector lanes (e.g. 4 lanes in Ara or 8 in Spatz) to compute up to 16 arithmetic operations per clock cycle, demanding high VRF banking bandwidth."
+    lui: {
+      format: "U-Type (Upper Imm)",
+      asm: "lui x10, 0x12345",
+      hex: "0x12345537",
+      semantics: "R[x10] ← 0x12345000",
+      f7: "0001001 (imm[31:12])",
+      rs2: "00100 (imm)",
+      rs1: "01101 (imm)",
+      f3: "000 (imm)",
+      rd: "01010 (x10/a0)",
+      op: "0110111 (LUI)"
+    },
+    jal: {
+      format: "J-Type (Jump & Link)",
+      asm: "jal x1, 40",
+      hex: "0x028000EF",
+      semantics: "R[x1] ← PC + 4; PC ← PC + 40",
+      f7: "0000000 (imm[20|10:1])",
+      rs2: "00101 (imm)",
+      rs1: "00000 (imm)",
+      f3: "000 (imm)",
+      rd: "00001 (x1/ra)",
+      op: "1101111 (JAL)"
     }
   };
 
-  const isaAsmTxt = document.getElementById("isaAsmTxt");
-  const isaCEqTxt = document.getElementById("isaCEqTxt");
-  const isaHexTxt = document.getElementById("isaHexTxt");
-  const isaBitfields = document.getElementById("isaBitfields");
-  const isaHwFlow = document.getElementById("isaHwFlow");
-  const isaHwNote = document.getElementById("isaHwNote");
+  const blkFunct7 = document.getElementById("blkFunct7");
+  const blkRs2 = document.getElementById("blkRs2");
+  const blkRs1 = document.getElementById("blkRs1");
+  const blkFunct3 = document.getElementById("blkFunct3");
+  const blkRd = document.getElementById("blkRd");
+  const blkOpcode = document.getElementById("blkOpcode");
+  const isaAsmText = document.getElementById("isaAsmText");
+  const isaHexText = document.getElementById("isaHexText");
+  const isaSemantics = document.getElementById("isaSemantics");
 
-  function renderIsaWidget(key: string) {
-    const item = isaData[key];
-    if (!item) return;
-
-    if (isaAsmTxt) isaAsmTxt.textContent = item.asm;
-    if (isaCEqTxt) isaCEqTxt.textContent = item.cEq;
-    if (isaHexTxt) isaHexTxt.textContent = item.hex;
-    if (isaHwNote) isaHwNote.innerHTML = item.note;
-
-    if (isaBitfields) {
-      isaBitfields.innerHTML = item.fields.map(f => `
-        <div class="bitfield-col" style="background: ${f.color};">
-          <span class="bf-bits">${f.bits}</span>
-          <span class="bf-name">${f.name}</span>
-          <span class="bf-val">${f.val}</span>
-          <span class="bf-desc">${f.desc}</span>
-        </div>
-      `).join("");
-    }
-
-    if (isaHwFlow) {
-      isaHwFlow.innerHTML = item.flow.map(s => `
-        <div class="hw-stage-card ${s.active ? 'stage-active' : 'stage-inactive'}">
-          <span class="hw-s-name">${s.step}</span>
-          <span class="hw-s-label">${s.label}</span>
-        </div>
-      `).join("");
-    }
-  }
-
-  document.querySelectorAll(".isa-sel-btn").forEach(btn => {
+  document.querySelectorAll(".isa-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".isa-sel-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".isa-btn").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
-      const key = btn.getAttribute("data-ins") || "add";
-      renderIsaWidget(key);
+      const key = btn.getAttribute("data-inst") || "add";
+      const d = instData[key];
+      if (!d) return;
+
+      if (blkFunct7) blkFunct7.textContent = d.f7;
+      if (blkRs2) blkRs2.textContent = d.rs2;
+      if (blkRs1) blkRs1.textContent = d.rs1;
+      if (blkFunct3) blkFunct3.textContent = d.f3;
+      if (blkRd) blkRd.textContent = d.rd;
+      if (blkOpcode) blkOpcode.textContent = d.op;
+
+      if (isaAsmText) isaAsmText.textContent = d.asm;
+      if (isaHexText) isaHexText.textContent = d.hex;
+      if (isaSemantics) isaSemantics.innerHTML = d.semantics;
     });
   });
 
-  // Initial render of ISA Dissector
-  renderIsaWidget("add");
+  // ==========================================
+  // WIDGET 4: PIPELINE SPEEDUP SIMULATOR
+  // ==========================================
+  const numInstRange = document.getElementById("numInstRange") as HTMLInputElement;
+  const numInstVal = document.getElementById("numInstVal");
+  const seqCycles = document.getElementById("seqCycles");
+  const pipeCycles = document.getElementById("pipeCycles");
+  const speedupVal = document.getElementById("speedupVal");
+
+  function updatePipelineSim() {
+    const n = parseInt(numInstRange?.value || "10", 10);
+    if (numInstVal) numInstVal.textContent = String(n);
+
+    const seq = n * 5;
+    const pipe = 5 + (n - 1);
+    const speedup = (seq / pipe).toFixed(2);
+
+    if (seqCycles) seqCycles.textContent = String(seq);
+    if (pipeCycles) pipeCycles.textContent = String(pipe);
+    if (speedupVal) speedupVal.textContent = `${speedup}x`;
+  }
+
+  numInstRange?.addEventListener("input", updatePipelineSim);
 
   // ==========================================
-  // WIDGET 5: 4-LEVEL BENCHMARKING LADDER
+  // WIDGET 5: BENCHMARKING LEVEL EXPLORER
   // ==========================================
-  const benchData: Record<string, {
+  interface LevelData {
     badge: string;
     title: string;
     scope: string;
@@ -1029,9 +1299,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     workloads: string;
     bottleneck: string;
     remedy: string;
-  }> = {
-    "1": {
-      badge: "LEVEL 01 • SCALAR EFFICIENCY",
+  }
+
+  const ladderData: Record<number, LevelData> = {
+    1: {
+      badge: "LEVEL 01 &bull; SCALAR EFFICIENCY",
       title: "Microcontroller & In-Order Pipeline Optimization",
       scope: "Scope: Single-Net / Single-Threaded Core",
       target: "Instruction fetch throughput, branch prediction accuracy, ALU execution latency, and load-use hazard stalls in cycle-accurate Verilator simulations.",
@@ -1039,32 +1311,32 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       bottleneck: "Branch misprediction penalty incurs 1 to 2 idle pipeline bubbles on tight loops. Load-use dependencies stall simple 2-stage cores (e.g. Ibex) unless forwarding paths are expanded.",
       remedy: "→ Dual-issue in-order pipelines with static branch hints and zero-cycle hardware loop controllers (e.g. VeeR EL2, CV32E40P)."
     },
-    "2": {
-      badge: "LEVEL 02 • MEMORY & OS SUBSYSTEMS",
-      title: "64-bit Linux Memory Wall & Virtual Memory Translation",
-      scope: "Scope: Application Cores with MMU & Caches",
-      target: "L1/L2 cache hit rates, hardware page-table walk latency (Sv39/Sv48 TLB misses), and full Linux boot time.",
-      workloads: "<code>Embench-IoT</code>, SPEC CPU-style memory stress, and Debian Linux 6.1 boot sequence.",
-      bottleneck: "Hardware page-table walk stalls freeze the execution pipeline for dozens of cycles upon Translation Lookaside Buffer (TLB) misses. In-order application cores (e.g. CVA6) stall completely on L1 D-Cache misses.",
-      remedy: "→ Non-blocking multi-banked L1/L2 caches with hardware stream prefetchers, out-of-order execution (BOOM / OpenXiangShan), and 2-level TLBs."
+    2: {
+      badge: "LEVEL 02 &bull; MEMORY & OS INTEGRATION",
+      title: "64-Bit Application Cores & Linux Boot Compliance",
+      scope: "Scope: Virtual Memory Subsystem (Sv39 MMU) + Multi-level Caches",
+      target: "TLB miss latency, hardware page table walking, cache line fill concurrency (MSHRs), and atomic memory operations under Linux boot workloads.",
+      workloads: "<code>Linux Kernel Boot</code>, <code>Stream Memcpy</code>, <code>RISC-V Privileged ISA Compliance</code>.",
+      bottleneck: "DRAM memory wall. When an in-order core (such as CVA6) misses L1/L2 caches, the execution pipeline stalls for 50-100 cycles, causing severe IPC degradation.",
+      remedy: "→ Out-of-Order superscalar execution with register renaming, non-blocking caches (MSHRs), and aggressive hardware stride prefetchers (e.g. BOOM, XiangShan)."
     },
-    "3": {
-      badge: "LEVEL 03 • DATA-PARALLEL ACCELERATION",
-      title: "Vector Arithmetic Density & VRF Contention",
-      scope: "Scope: Vector Coprocessors & Systolic Arrays",
-      target: "Floating-point and integer vector MAC utilization, Vector Register File (VRF) port contention, and Roofline arithmetic intensity.",
-      workloads: "RVV 1.0 dense matrix multiplication (<code>fmatmul</code>), Fast Fourier Transform (<code>fft</code>), 2D Convolution (<code>conv2d</code>), and <code>softmax</code>.",
-      bottleneck: "On dense fmatmul, vector utilization reaches 98.4%. But on strided memory access and reductions (softmax, fft), utilization collapses to 23.0% due to scalar issue serialization and VRF bank conflicts.",
-      remedy: "→ Decoupled Access-Execute (DAE) command queues, asynchronous vector load units, and multi-ported banked VRFs (e.g. Ara / AraXL)."
+    3: {
+      badge: "LEVEL 03 &bull; VECTOR INTENSITY",
+      title: "Vector Coprocessors & Systolic Acceleration",
+      scope: "Scope: SIMD Vector Execution Units (VLEN 512–4096 bits)",
+      target: "Vector arithmetic density, floating-point utilization, crossbar bank conflict stalls, and decoupled scalar-vector command issue.",
+      workloads: "<code>fmatmul</code> (GEMM), <code>fconv2d</code>, <code>fft</code>, <code>softmax</code>, <code>fdotproduct</code>.",
+      bottleneck: "Vector Coprocessor Utilization Collapse: While dense GEMM achieves 98.4% peak utilization, reduction and stride kernels collapse to 23.0% because the scalar host core becomes a serial bottleneck generating addresses.",
+      remedy: "→ Decoupled Access-Execute (DAE) hardware engines and multi-banked, clustered Vector Register Files (VRFs) to decouple memory prefetch from vector math."
     },
-    "4": {
-      badge: "LEVEL 04 • INTERCONNECT & MANY-CORE CLUSTERS",
-      title: "Multi-Core Scaling & On-Chip Interconnects",
-      scope: "Scope: Shared-Memory Clusters & Full SoCs",
-      target: "Multi-core parallel speedup, hardware barrier synchronization latency, AXI4/NoC crossbar bandwidth saturation, and DMA transfer latency.",
-      workloads: "MemPool 256-core parallel GEMM, Snitch multi-cluster barriers, and Cheshire full-SoC Linux DMA transfers.",
-      bottleneck: "Software spinlocks degrade exponentially beyond 64 cores as atomic memory operations (AMO) saturate the shared memory interconnect. Small DMA transfers (<128B) incur high MMIO configuration latency.",
-      remedy: "→ In-network single-cycle hardware synchronization barriers (FractalSync) and instruction-triggered streaming DMA controllers."
+    4: {
+      badge: "LEVEL 04 &bull; MANYCORE CLUSTERS & SOCS",
+      title: "Shared-Memory Interconnects & System-on-Chip Fabrics",
+      scope: "Scope: 16 to 432-Core Coherent Platforms",
+      target: "Bisection bandwidth, Network-on-Chip (NoC) flit latency, DMA transfer efficiency, and collective hardware barrier synchronization.",
+      workloads: "<code>Parallel 2D-FFT</code>, <code>Cluster Matrix Multiplication</code>, <code>Multi-Core Barrier Microbenchmarks</code>.",
+      bottleneck: "Manycore Spinlock Scaling Wall: In shared-memory clusters past 64 cores (e.g. MemPool), traditional software atomic spinlocks saturate the crossbar, causing exponential synchronization overhead.",
+      remedy: "→ In-network hardware collective barriers (FractalSync) and hierarchical 2D mesh packet NoCs with autonomous DMA offload engines (e.g. Snitch, Cheshire)."
     }
   };
 
@@ -1076,35 +1348,42 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   const blcBottleneck = document.getElementById("blcBottleneck");
   const blcRemedy = document.getElementById("blcRemedy");
 
-  function renderBenchWidget(lvl: string) {
-    const item = benchData[lvl];
-    if (!item) return;
-
-    if (blcBadge) blcBadge.textContent = item.badge;
-    if (blcTitle) blcTitle.textContent = item.title;
-    if (blcScopeTag) blcScopeTag.textContent = item.scope;
-    if (blcTarget) blcTarget.textContent = item.target;
-    if (blcWorkloads) blcWorkloads.innerHTML = item.workloads;
-    if (blcBottleneck) blcBottleneck.textContent = item.bottleneck;
-    if (blcRemedy) blcRemedy.textContent = item.remedy;
-  }
-
-  document.querySelectorAll(".bench-lvl-btn").forEach(btn => {
+  document.querySelectorAll(".bench-lvl-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".bench-lvl-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".bench-lvl-btn").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
-      const lvl = btn.getAttribute("data-blvl") || "1";
-      renderBenchWidget(lvl);
+      const lvl = parseInt(btn.getAttribute("data-blvl") || "1", 10);
+      const data = ladderData[lvl];
+      if (!data) return;
+
+      if (blcBadge) blcBadge.innerHTML = data.badge;
+      if (blcTitle) blcTitle.textContent = data.title;
+      if (blcScopeTag) blcScopeTag.textContent = data.scope;
+      if (blcTarget) blcTarget.textContent = data.target;
+      if (blcWorkloads) blcWorkloads.innerHTML = data.workloads;
+      if (blcBottleneck) blcBottleneck.textContent = data.bottleneck;
+      if (blcRemedy) blcRemedy.textContent = data.remedy;
     });
   });
+
+  // Initial runs
+  updateGateSim();
+  updateAlu();
+  updatePipelineSim();
 </script>
 
 <style>
+  .jump-pill-bar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+
   .fundamentals-stream {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
-    margin-bottom: 3rem;
   }
 
   .fund-section-card {
@@ -1113,6 +1392,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     border-radius: 14px;
     box-shadow: 5px 5px 0px var(--ink, #151b20);
     padding: 2.25rem;
+    scroll-margin-top: 5rem;
   }
 
   .fund-header {
@@ -1125,53 +1405,1003 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   .fund-num {
     font-size: 2.5rem;
     font-weight: 900;
-    color: var(--yellow, #ffc83e);
-    -webkit-text-stroke: 1.5px var(--ink, #151b20);
+    color: var(--ink);
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    padding: 0.2rem 0.85rem;
+    box-shadow: 3px 3px 0px var(--ink);
     line-height: 1;
     font-family: var(--md-code-font, monospace);
   }
 
   .fund-title {
-    font-size: 1.8rem;
+    font-size: 1.85rem;
     font-weight: 900;
-    margin: 0.25rem 0 0 0;
     color: var(--ink);
-    letter-spacing: -0.02em;
+    margin: 0.25rem 0 0 0;
+    letter-spacing: -0.01em;
   }
 
   .fund-lead {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--ink-light);
     line-height: 1.6;
     margin-bottom: 1.5rem;
   }
 
-  .analogy-banner {
+  .concept-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .concept-dual-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .concept-box {
     background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .concept-box h4 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .concept-box p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--ink-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .concept-list {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--ink-light);
+  }
+
+  .concept-list li {
+    margin-bottom: 0.4rem;
+  }
+
+  .formula-box {
+    background: var(--cream);
     border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin: 0.75rem 0;
+    text-align: center;
+    overflow-x: auto;
+  }
+
+  .small-text {
+    font-size: 0.82rem;
+    color: var(--ink-light);
+    line-height: 1.45;
+  }
+
+  /* ALU Deep-Dive Grid */
+  .alu-deep-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .alu-col {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .sub-header-pill {
+    display: inline-block;
+    background: var(--ink);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+  }
+
+  .alu-col p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--ink-light);
+    margin-bottom: 0.5rem;
+  }
+
+  /* Interactive Widget Outer Box */
+  .interactive-widget-box {
+    background: var(--paper);
+    border: 2px solid var(--ink);
     border-radius: 12px;
-    box-shadow: 3px 3px 0px var(--yellow);
+    padding: 1.5rem;
+    box-shadow: 4px 4px 0px var(--ink);
+  }
+
+  .widget-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .widget-badge {
+    background: var(--cyan);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    display: inline-block;
+    margin-bottom: 0.35rem;
+  }
+
+  .widget-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--ink);
+    margin: 0.25rem 0 0.35rem 0;
+  }
+
+  .widget-desc {
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Logic Gate Widget */
+  .gate-selector-bar {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .gate-btn {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+
+  .gate-btn.active {
+    background: var(--yellow);
+    box-shadow: 2px 2px 0px var(--ink);
+    transform: translate(-1px, -1px);
+  }
+
+  .gate-sim-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .gate-sim-body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .circuit-interactive-panel {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
     padding: 1.25rem;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 180px;
+  }
+
+  .inputs-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .input-ctrl {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .in-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .toggle-btn {
+    background: #e2e8f0;
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px var(--ink);
+    transition: all 0.1s ease;
+  }
+
+  .toggle-btn.is-on {
+    background: var(--lime);
+  }
+
+  .gate-symbol-visual {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .gate-box-art {
+    background: var(--ink);
+    color: #ffffff;
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    text-align: center;
+    box-shadow: 3px 3px 0px var(--yellow);
+    min-width: 110px;
+  }
+
+  .gate-art-name {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 900;
+  }
+
+  .gate-art-formula {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--yellow);
+    margin-top: 0.25rem;
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .output-bulb-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .out-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .bulb-lamp {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.25rem;
+    box-shadow: 2px 2px 0px var(--ink);
+    transition: all 0.2s ease;
+  }
+
+  .bulb-lamp.off {
+    background: #cbd5e1;
+    color: #64748b;
+  }
+
+  .bulb-lamp.on {
+    background: #ffea00;
+    color: #000000;
+    box-shadow: 0 0 16px rgba(255, 234, 0, 0.8), 2px 2px 0px var(--ink);
+  }
+
+  .voltage-state {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--ink-light);
+  }
+
+  .truth-table-panel {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .tt-title {
+    font-size: 0.88rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .truth-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+
+  .truth-table th, .truth-table td {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .truth-table th { background: var(--ink); color: #ffffff; }
+
+  .truth-table tr.active-row {
+    background: var(--yellow-soft);
+    font-weight: 800;
+  }
+
+  /* ALU Simulator Widget */
+  .alu-sim-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .alu-op-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .alu-op-btn {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .alu-op-btn.active {
+    background: var(--yellow);
+    box-shadow: 2px 2px 0px var(--ink);
+    transform: translate(-1px, -1px);
+  }
+
+  .alu-inputs-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .alu-inputs-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  .alu-input-card {
+    flex: 1;
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    padding: 0.85rem;
+  }
+
+  .alu-input-card label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    margin-bottom: 0.35rem;
+    color: var(--ink);
+  }
+
+  .bin-preview {
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: var(--paper);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    margin-top: 0.35rem;
+  }
+
+  .alu-center-op {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--ink);
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+
+  .alu-output-card {
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 3px 3px 0px var(--ink);
+  }
+
+  .alu-res-main {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .res-label {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  .res-dec {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #0369a1;
+  }
+
+  .res-hex {
+    font-family: var(--md-code-font, monospace);
+    font-weight: 800;
+    color: var(--ink-light);
+  }
+
+  .alu-res-bin {
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.95rem;
+    font-weight: 800;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+  }
+
+  .alu-flags-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+
+  .flag-item {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.35rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .flag-item.flag-active {
+    background: var(--lime);
+    border: 1.5px solid var(--ink);
+    font-weight: 900;
+    box-shadow: 1px 1px 0px var(--ink);
+  }
+
+  .alu-explanation-box {
+    background: var(--cream);
+    border-left: 4px solid var(--cyan);
+    padding: 0.85rem 1rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* ISA Bitfield Explorer */
+  .isa-sample-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .isa-btn {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    cursor: pointer;
+  }
+
+  .isa-btn.active {
+    background: var(--cyan);
+    box-shadow: 2px 2px 0px var(--ink);
+    transform: translate(-1px, -1px);
+  }
+
+  .isa-ribbon-container {
+    background: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 3px 3px 0px var(--ink);
+    margin-bottom: 1.25rem;
+    overflow-x: auto;
+  }
+
+  .ribbon-labels {
+    display: flex;
+    gap: 4px;
+    color: #94a3b8;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    text-align: center;
+    min-width: 580px;
+  }
+
+  .ribbon-blocks {
+    display: flex;
+    gap: 4px;
+    min-width: 580px;
+  }
+
+  .r-blk {
+    padding: 0.65rem 0.25rem;
+    text-align: center;
+    font-family: var(--md-code-font, monospace);
+    font-weight: 800;
+    font-size: 0.78rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .b-funct7  { background: #fed7aa; color: #7c2d12; }
+  .b-rs2     { background: #bbf7d0; color: #14532d; }
+  .b-rs1     { background: #bfdbfe; color: #1e3a8a; }
+  .b-funct3  { background: #fef08a; color: #713f12; }
+  .b-rd      { background: #fbcfe8; color: #831843; }
+  .b-opcode  { background: #e9d5ff; color: #581c87; }
+
+  .isa-meta-output {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .isa-meta-card {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+
+  .imc-lbl {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--ink-light);
+    margin-bottom: 0.2rem;
+  }
+
+  .imc-val {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--ink);
+  }
+
+  .imc-val.mono {
+    font-family: var(--md-code-font, monospace);
+    color: #0369a1;
+  }
+
+  /* Pipeline Stages Grid */
+  .pipe-stages-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .pipe-stages-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .p-stage-card {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 2px 2px 0px var(--ink);
+  }
+
+  .p-num {
+    display: inline-block;
+    background: var(--ink);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    margin-bottom: 0.5rem;
+  }
+
+  .p-stage-card h4 {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .p-stage-card p {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--ink-light);
+  }
+
+  /* Hazards Grid */
+  .hazards-trio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .hazards-trio-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hazard-card {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .h-badge {
+    background: var(--coral);
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 0.35rem;
+  }
+
+  .hazard-card h4 {
+    margin: 0 0 0.35rem 0;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .hazard-card p {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--ink-light);
+  }
+
+  /* Pipeline Simulator */
+  .pipe-sim-controls {
+    display: flex;
+    flex-direction: column;
     gap: 1.25rem;
+  }
+
+  .slider-group {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .slider-group label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  .sim-slider {
+    width: 100%;
+    accent-color: var(--ink);
+    cursor: pointer;
+  }
+
+  .pipe-compare-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .pipe-compare-metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .metric-card {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+
+  .m-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--ink-light);
+    margin-bottom: 0.35rem;
+  }
+
+  .m-val {
+    display: block;
+    font-size: 1.85rem;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+  }
+
+  .m-sub {
+    font-size: 0.72rem;
+    color: var(--ink-light);
+  }
+
+  .speedup-metric {
+    background: var(--yellow-soft);
+    border: 2px solid var(--ink);
+    box-shadow: 2px 2px 0px var(--ink);
+  }
+
+  .speedup-metric .m-val {
+    color: #b45309;
+  }
+
+  /* Vector Compare Box */
+  .vector-compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 768px) {
+    .vector-compare-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .v-comp-box {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    padding: 1.25rem;
+  }
+
+  .v-comp-box h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .code-snippet-box {
+    background: var(--ink);
+    color: #a8ffb2;
+    padding: 0.85rem 1rem;
+    border-radius: 6px;
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+  }
+
+  .v-stats-badge {
+    font-size: 0.78rem;
+    line-height: 1.45;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--ink);
+  }
+
+  .badge-warn {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .badge-success {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  /* Benchmarking Ladder */
+  .bench-level-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .bench-lvl-btn {
+    background: var(--cream);
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+
+  .bench-lvl-btn.active {
+    background: var(--yellow);
+    box-shadow: 2px 2px 0px var(--ink);
+    transform: translate(-1px, -1px);
+  }
+
+  .bench-level-card {
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 3px 3px 0px var(--ink);
+  }
+
+  .blc-header {
+    display: flex;
+    justify-content: space-between;
     align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1.5px solid var(--line);
+  }
+
+  .blc-badge {
+    background: var(--ink);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .blc-title {
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin: 0.35rem 0 0 0;
+    color: var(--ink);
+  }
+
+  .blc-scope-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .blc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .blc-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .blc-col-lbl {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 0.25rem;
+  }
+
+  .blc-col p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .blc-bottleneck-txt {
+    color: #b91c1c;
+  }
+
+  .blc-remedy-txt {
+    color: #15803d;
+    font-weight: 700;
+  }
+
+  /* Universal Shared Styles */
+  .table-scroll {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .data-table th, .data-table td {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--ink);
+    text-align: left;
+  }
+
+  .data-table th {
+    background: var(--ink);
+    color: #ffffff;
+    font-weight: 800;
+  }
+
+  .data-table tr:nth-child(even) td {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .highlight-row td {
+    background: var(--yellow-soft) !important;
+    font-weight: 700;
+  }
+
+  .analogy-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    padding: 1.25rem;
     margin-bottom: 1.5rem;
   }
 
   .analogy-icon {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     line-height: 1;
   }
 
   .analogy-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.92rem;
+    line-height: 1.55;
     color: var(--ink);
-  }
-
-  .analogy-text ul {
-    margin: 0.5rem 0 0 1.25rem;
-    padding: 0;
   }
 
   .fund-grid {
@@ -1181,939 +2411,34 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   @media (max-width: 768px) {
-    .fund-grid { grid-template-columns: 1fr; }
+    .fund-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .fund-box {
     background: var(--paper);
-    border: 1.5px solid var(--ink);
-    border-radius: 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
     padding: 1.25rem;
   }
 
   .fund-box h4 {
     font-size: 1.1rem;
-    font-weight: 900;
-    margin-bottom: 0.75rem;
-    color: var(--ink);
-  }
-
-  .fund-box p, .fund-box ul, .fund-box ol {
-    font-size: 0.9rem;
-    line-height: 1.55;
-    color: var(--ink-light);
-  }
-
-  .highlight-callout {
-    background: var(--yellow-soft);
-    border-left: 4px solid var(--yellow);
-    border-radius: 0 8px 8px 0;
-    padding: 0.75rem 1rem;
-    margin-top: 1rem;
-    font-size: 0.88rem;
-    line-height: 1.5;
-    color: var(--ink);
-  }
-
-  /* ========================================= */
-  /* INTERACTIVE WIDGET STYLES                */
-  /* ========================================= */
-  .interactive-widget-box {
-    background: var(--paper, #f6f0dc);
-    border: 2px solid var(--ink, #151b20);
-    border-radius: 14px;
-    box-shadow: 5px 5px 0px var(--cyan);
-    padding: 1.75rem;
-    margin: 1.75rem 0;
-  }
-
-  .widget-badge {
-    background: var(--ink);
-    color: var(--lime);
-    font-size: 0.72rem;
     font-weight: 800;
-    padding: 0.2rem 0.5rem;
-    border-radius: 6px;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-  }
-
-  .widget-title {
-    font-size: 1.4rem;
-    font-weight: 900;
-    margin: 0 0 0.35rem 0;
-    color: var(--ink);
-  }
-
-  .widget-desc {
-    font-size: 0.92rem;
-    color: var(--ink-light);
-    margin-bottom: 1.25rem;
-    line-height: 1.5;
-  }
-
-  /* Gate Widget */
-  .gate-controls-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .ctrl-label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 800;
-    color: var(--ink-light);
-    margin-bottom: 0.35rem;
-  }
-
-  .gate-btn-group, .switch-pair {
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-  }
-
-  .gate-sel-btn, .toggle-switch-btn {
-    background: var(--paper);
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    box-shadow: 2px 2px 0 var(--ink);
-    padding: 0.35rem 0.75rem;
-    font-size: 0.82rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.1s ease;
-    color: var(--ink);
-  }
-
-  .gate-sel-btn.active {
-    background: var(--ink);
-    color: #ffffff;
-    box-shadow: 2px 2px 0 var(--cyan);
-  }
-
-  .toggle-switch-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .val-pill {
-    padding: 0.15rem 0.4rem;
-    font-size: 0.75rem;
-    border-radius: 4px;
-    border: 1px solid var(--ink);
-  }
-
-  .pill-on { background: var(--lime); color: var(--ink); font-weight: 900; }
-  .pill-off { background: #dddddd; color: #555555; font-weight: 900; }
-
-  .gate-visual-display {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 1.5rem;
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 10px;
-    padding: 1.5rem;
-  }
-
-  @media (max-width: 768px) {
-    .gate-visual-display { grid-template-columns: 1fr; }
-  }
-
-  .gate-diagram-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem;
-    background: var(--paper);
-    border: 1.5px dashed var(--ink);
-    border-radius: 8px;
-  }
-
-  .wire-in, .wire-out {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-family: var(--md-code-font, monospace);
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: var(--ink);
-  }
-
-  .logic-gate-box {
-    background: var(--ink);
-    color: #ffffff;
-    padding: 1rem 1.25rem;
-    text-align: center;
-    border: 2px solid var(--ink);
-    border-radius: 8px;
-    box-shadow: 3px 3px 0 var(--lime);
-  }
-
-  .gate-symbol-txt {
-    display: block;
-    font-size: 1.3rem;
-    font-weight: 900;
-    color: var(--lime);
-  }
-
-  .gate-sub-txt {
-    font-size: 0.7rem;
-    color: #aaaaaa;
-  }
-
-  .lightbulb-container {
-    text-align: center;
-    padding: 0.5rem 0.75rem;
-    border: 2px solid var(--ink);
-    border-radius: 8px;
-    background: #eeeeee;
-    transition: all 0.2s ease;
-  }
-
-  .bulb-icon {
-    font-size: 2.2rem;
-    line-height: 1;
-    filter: grayscale(100%);
-    opacity: 0.4;
-    transition: all 0.2s ease;
-  }
-
-  .bulb-status {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 900;
-    margin-top: 0.25rem;
-    color: #555555;
-  }
-
-  .bulb-active {
-    background: var(--yellow-soft);
-    border-color: var(--yellow);
-    box-shadow: 0 0 15px rgba(255, 200, 62, 0.6);
-  }
-
-  .bulb-active .bulb-icon {
-    filter: none;
-    opacity: 1;
-    transform: scale(1.1);
-  }
-
-  .bulb-active .bulb-status {
-    color: #b45309;
-  }
-
-  .truth-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.82rem;
-    margin-top: 0.5rem;
-  }
-
-  .truth-table th, .truth-table td {
-    padding: 0.35rem 0.5rem;
-    border: 1px solid var(--ink);
-    text-align: center;
-  }
-
-  .truth-table th { background: var(--ink); color: #ffffff; }
-
-  .active-tr {
-    background: var(--yellow-soft) !important;
-    font-weight: 900;
-  }
-
-  .widget-insight {
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin-top: 1rem;
-    color: var(--ink);
-  }
-
-  /* Pipelining Widget */
-  .pipe-toggle-row {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .pipe-mode-btn {
-    background: var(--cream);
-    border: 2px solid var(--ink);
-    border-radius: 8px;
-    box-shadow: 2px 2px 0 var(--ink);
-    padding: 0.5rem 1rem;
-    font-size: 0.88rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.1s ease;
-    color: var(--ink);
-  }
-
-  .pipe-mode-btn.active {
-    background: var(--ink);
-    color: #ffffff;
-    box-shadow: 3px 3px 0 var(--yellow);
-  }
-
-  .pipe-metrics-summary {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-
-  @media (max-width: 640px) {
-    .pipe-metrics-summary { grid-template-columns: 1fr; }
-  }
-
-  .pm-box {
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 10px;
-    box-shadow: 2px 2px 0 var(--ink);
-    padding: 0.75rem 1rem;
-  }
-
-  .pm-lbl {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: var(--ink-light);
-  }
-
-  .pm-val {
-    font-size: 1.2rem;
-    font-weight: 900;
-    color: var(--ink);
-  }
-
-  .highlight-box {
-    background: var(--yellow-soft);
-    border-color: var(--ink);
-  }
-
-  .highlight-val {
-    color: #b45309;
-  }
-
-  .pipe-grid-container {
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 10px;
-    padding: 1rem;
-    overflow-x: auto;
-  }
-
-  .pipe-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    min-width: 650px;
-  }
-
-  .p-row {
-    display: flex;
-    gap: 0.25rem;
-  }
-
-  .p-cell {
-    width: 38px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 800;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-  }
-
-  .p-label {
-    width: 95px;
-    justify-content: flex-start;
-    padding-left: 0.4rem;
-    background: var(--paper);
-    border-color: var(--ink);
-    font-family: var(--md-code-font, monospace);
-    color: var(--ink);
-  }
-
-  .p-col-hdr {
-    background: var(--ink);
-    color: #ffffff;
-    border-color: var(--ink);
-  }
-
-  .p-stage {
-    color: var(--ink);
-    font-weight: 900;
-    border-color: var(--ink);
-  }
-
-  .p-empty {
-    color: #bbbbbb;
-    background: rgba(21, 27, 32, 0.03);
-  }
-
-  .chip-if { background: var(--cyan); color: var(--ink); }
-  .chip-id { background: var(--yellow); color: var(--ink); }
-  .chip-ex { background: var(--lime); color: var(--ink); }
-  .chip-mem { background: var(--purple-soft); color: var(--ink); }
-  .chip-wb { background: var(--coral-soft); color: var(--ink); }
-
-  .pipe-stage-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-top: 0.75rem;
-    font-size: 0.8rem;
-    font-weight: 800;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-
-  .stage-color-chip {
-    width: 14px;
-    height: 14px;
-    display: inline-block;
-    border: 1px solid var(--ink);
-    border-radius: 3px;
-  }
-
-  /* Memory Scale Widget */
-  .mem-level-selector {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .mem-level-btn {
-    background: var(--cream);
-    border: 2px solid var(--ink);
-    border-radius: 8px;
-    box-shadow: 2px 2px 0 var(--ink);
-    padding: 0.45rem 0.85rem;
-    font-size: 0.82rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.1s ease;
-    color: var(--ink);
-  }
-
-  .mem-level-btn.active {
-    background: var(--yellow);
-    box-shadow: 3px 3px 0 var(--ink);
-  }
-
-  .mem-detail-card {
-    background: var(--cream);
-    border: 2px solid var(--ink);
-    border-radius: 12px;
-    box-shadow: 3px 3px 0 var(--ink);
-    padding: 1.5rem;
-  }
-
-  .mdc-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px dashed var(--ink);
-    padding-bottom: 0.75rem;
-  }
-
-  .mdc-title {
-    font-size: 1.15rem;
-    font-weight: 900;
-    color: var(--ink);
-  }
-
-  .mdc-latency {
-    font-size: 0.85rem;
-    font-weight: 800;
-    background: var(--ink);
-    color: var(--lime);
-    border-radius: 4px;
-    padding: 0.2rem 0.5rem;
-    font-family: var(--md-code-font, monospace);
-  }
-
-  .human-scale-box {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    background: var(--paper);
-    border: 1.5px solid var(--ink);
-    border-radius: 10px;
-    padding: 1.25rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .hs-icon {
-    font-size: 2.5rem;
-  }
-
-  .hs-text strong {
-    display: block;
-    font-size: 1.1rem;
-    font-weight: 900;
-    color: #b45309;
-    margin-bottom: 0.25rem;
-  }
-
-  .hs-text p {
-    margin: 0;
-    font-size: 0.88rem;
-    color: var(--ink-light);
-    line-height: 1.5;
-  }
-
-  .latency-bar-track {
-    background: var(--paper-deep);
-    border: 1.5px solid var(--ink);
-    border-radius: 6px;
-    height: 20px;
-    overflow: hidden;
-  }
-
-  .latency-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--lime), var(--coral));
-    transition: width 0.3s ease;
-  }
-
-  .latency-scale-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: var(--ink-light);
-    margin-top: 0.35rem;
-  }
-
-  /* Vehicle Cards */
-  .vehicle-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .v-card {
-    border: 2px solid var(--ink);
-    border-radius: 14px;
-    box-shadow: 4px 4px 0 var(--ink);
-    padding: 1.5rem;
-    background: var(--cream);
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .v-card:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 var(--yellow);
-  }
-
-  .v-card.cat1-v { border-top: 8px solid var(--yellow); }
-  .v-card.cat2-v { border-top: 8px solid var(--cyan); }
-  .v-card.cat3-v { border-top: 8px solid var(--coral); }
-  .v-card.cat4-v { border-top: 8px solid var(--lime); }
-
-  .v-icon {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .v-badge {
-    font-size: 0.7rem;
-    font-weight: 800;
-    background: var(--ink);
-    color: #ffffff;
-    border-radius: 6px;
-    padding: 0.15rem 0.4rem;
-    width: fit-content;
-    margin-bottom: 0.35rem;
-  }
-
-  .v-card h3 {
-    font-size: 1.3rem;
-    font-weight: 900;
-    margin: 0.25rem 0;
-    color: var(--ink);
-  }
-
-  .v-subtitle {
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: var(--ink-light);
+    margin-top: 0;
     margin-bottom: 0.75rem;
   }
 
-  .v-card p {
+  .fund-box ul {
+    margin: 0;
+    padding-left: 1.25rem;
     font-size: 0.88rem;
     line-height: 1.55;
     color: var(--ink-light);
-    margin-bottom: 1rem;
-    flex-grow: 1;
   }
 
-  .v-examples {
-    font-size: 0.78rem;
-    font-weight: 700;
-    background: var(--paper);
-    border-radius: 6px;
-    padding: 0.35rem 0.6rem;
-    border: 1px solid var(--line);
-    color: var(--ink);
-  }
-
-  .pipeline-comparison-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .pipe-card {
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 12px;
-    box-shadow: 3px 3px 0 var(--ink);
-    padding: 1.25rem;
-  }
-
-  .pipe-badge {
-    font-size: 0.68rem;
-    font-weight: 800;
-    background: var(--yellow);
-    border: 1.5px solid var(--ink);
-    border-radius: 4px;
-    padding: 0.15rem 0.35rem;
-    width: fit-content;
-    display: inline-block;
+  .fund-box li {
     margin-bottom: 0.5rem;
-    color: var(--ink);
-  }
-
-  .pipe-card h4 {
-    font-size: 1.1rem;
-    font-weight: 900;
-    margin: 0.2rem 0 0.5rem 0;
-    color: var(--ink);
-  }
-
-  .pipe-card p {
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: var(--ink-light);
-    margin: 0;
-  }
-
-  /* ========================================= */
-  /* ISA DISSECTOR WIDGET STYLES               */
-  /* ========================================= */
-  .isa-btn-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .isa-sel-btn {
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    box-shadow: 2px 2px 0 var(--ink);
-    padding: 0.4rem 0.85rem;
-    font-size: 0.82rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.1s ease;
-    color: var(--ink);
-  }
-
-  .isa-sel-btn.active {
-    background: var(--ink);
-    color: #ffffff;
-    box-shadow: 2px 2px 0 var(--cyan);
-  }
-
-  .isa-preview-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 10px;
-    padding: 0.85rem 1.25rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .isa-code-chip {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-
-  .isa-label {
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--ink-light);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  .isa-code-chip code {
-    font-family: var(--md-code-font, monospace);
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: var(--ink);
-  }
-
-  .bitfield-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .bitfield-col {
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    padding: 0.65rem 0.5rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 2px 0 var(--ink);
-  }
-
-  .bf-bits {
-    font-size: 0.7rem;
-    font-weight: 800;
-    color: #555555;
-    font-family: var(--md-code-font, monospace);
-  }
-
-  .bf-name {
-    font-size: 0.95rem;
-    font-weight: 900;
-    color: var(--ink);
-    margin: 0.2rem 0;
-  }
-
-  .bf-val {
-    font-size: 0.78rem;
-    font-weight: 800;
-    font-family: var(--md-code-font, monospace);
-    color: #004d40;
-    background: rgba(255, 255, 255, 0.7);
-    padding: 0.15rem 0.25rem;
-    border-radius: 4px;
-    margin-bottom: 0.25rem;
-  }
-
-  .bf-desc {
-    font-size: 0.72rem;
-    color: var(--ink-light);
-    font-weight: 600;
-  }
-
-  .hw-activation-box {
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-
-  .hw-flow-stream {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .hw-stage-card {
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    padding: 0.75rem;
-    box-shadow: 2px 2px 0 var(--ink);
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .stage-active {
-    background: var(--lime-soft);
-    border-color: var(--ink);
-  }
-
-  .stage-inactive {
-    background: var(--paper-deep);
-    opacity: 0.55;
-  }
-
-  .hw-s-name {
-    font-size: 0.85rem;
-    font-weight: 900;
-    color: var(--ink);
-  }
-
-  .hw-s-label {
-    font-size: 0.76rem;
-    font-weight: 700;
-    color: var(--ink-light);
-  }
-
-  .hw-detail-note {
-    background: var(--yellow-soft);
-    border-left: 4px solid var(--yellow);
-    border-radius: 0 8px 8px 0;
-    padding: 0.65rem 0.85rem;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: var(--ink);
-  }
-
-  /* ========================================= */
-  /* 4-LEVEL BENCHMARKING LADDER STYLES        */
-  /* ========================================= */
-  .bench-level-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .bench-lvl-btn {
-    background: var(--cream);
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    box-shadow: 2px 2px 0 var(--ink);
-    padding: 0.65rem 0.85rem;
-    font-size: 0.82rem;
-    font-weight: 800;
-    text-align: left;
-    cursor: pointer;
-    transition: all 0.1s ease;
-    color: var(--ink);
-  }
-
-  .bench-lvl-btn.active {
-    background: var(--ink);
-    color: #ffffff;
-    box-shadow: 3px 3px 0 var(--coral);
-  }
-
-  .bench-level-card {
-    background: var(--cream);
-    border: 2px solid var(--ink);
-    border-radius: 12px;
-    box-shadow: 4px 4px 0 var(--ink);
-    padding: 1.5rem;
-  }
-
-  .blc-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 1rem;
-    border-bottom: 1.5px solid var(--line);
-    padding-bottom: 1rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .blc-badge {
-    display: inline-block;
-    background: var(--coral);
-    color: #ffffff;
-    font-size: 0.72rem;
-    font-weight: 800;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    margin-bottom: 0.35rem;
-  }
-
-  .blc-title {
-    font-size: 1.3rem;
-    font-weight: 900;
-    margin: 0;
-    color: var(--ink);
-  }
-
-  .blc-scope-tag {
-    font-size: 0.78rem;
-    font-weight: 800;
-    background: var(--paper);
-    border: 1.5px solid var(--ink);
-    border-radius: 6px;
-    padding: 0.3rem 0.6rem;
-    color: var(--ink);
-  }
-
-  .blc-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  @media (max-width: 768px) {
-    .blc-grid { grid-template-columns: 1fr; }
-  }
-
-  .blc-col-lbl {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    letter-spacing: 0.04em;
-    margin-bottom: 0.35rem;
-  }
-
-  .blc-col p {
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: var(--ink);
-    margin: 0;
-  }
-
-  .blc-contrast-col {
-    background: var(--yellow-soft);
-    border-left: 3px solid var(--coral);
-    border-radius: 0 8px 8px 0;
-    padding: 0.85rem 1.25rem;
-  }
-
-  .blc-bottleneck-txt {
-    color: #b91c1c !important;
-    font-weight: 700;
-  }
-
-  .blc-remedy-txt {
-    color: #0369a1 !important;
-    font-weight: 800;
   }
 </style>
