@@ -1843,11 +1843,11 @@ const infraToolsList = ((db as any).tools || [])
 
 <BaseLayout
   title="SoC Platforms & Multi-Core Clusters"
-  description="Category 4: Complete System-on-Chip platforms, manycore compute clusters, coherent interconnect fabrics (AXI4, OBI, FlooNoC, P-Mesh), autonomous DMA subsystems, Level 4 empirical benchmarks, and native silicon dossiers."
+  description="Complete System-on-Chip platforms, manycore compute clusters, coherent interconnect fabrics (AXI4, OBI, FlooNoC, P-Mesh), autonomous DMA subsystems, empirical benchmarks, and native silicon dossiers."
 >
   <!-- Hero Section -->
   <div class="page-header accent-lime">
-    <div class="badge badge-accent">SYSTEM-ON-CHIP PLATFORMS &bull; MULTI-CORE CLUSTERS &bull; LEVEL 4 BENCHMARKS</div>
+    <div class="badge badge-accent">SYSTEM-ON-CHIP PLATFORMS &bull; MULTI-CORE CLUSTERS &bull; EMPIRICAL BENCHMARKS</div>
     <h1 class="page-title">Understanding SoC Platforms &amp; Multi-Core Clusters</h1>
 
     <!-- First-Principles Intuitive Introduction -->
@@ -1859,7 +1859,7 @@ const infraToolsList = ((db as any).tools || [])
         In deeply embedded and edge computing systems, scalar cores like Ibex or CV32E40P cannot meet high-throughput computing demands alone. When scaling from 1 core to 8, 256, or 432 cores, computer architects encounter fundamental physical phase transitions: <strong>the Manycore Barrier Wall</strong> (where crossbar contention from atomic spinlocks destroys parallel scaling) and the <strong>DMA Setup Overhead Inflection Point</strong> (where MMIO register configuration latencies determine whether software memcpy or autonomous streaming DMA achieves superior energy efficiency).
       </p>
       <p class="intro-p">
-        This page is a rigorous, top-down educational guide and master empirical benchmark report covering <strong>open-source RISC-V SoC architectures and multi-core clusters</strong> evaluated under the SCORE platform. Below, you will explore their internal interconnect topographies, step through interactive simulations of barrier synchronization and DMA burst inflection, examine our cycle-accurate Verilator benchmark traces across 46 runs, review configuration sensitivity studies, and inspect verified native architectural dossiers for all 23 Category 4 platforms.
+        This page is a rigorous, top-down educational guide and master empirical benchmark report covering <strong>open-source RISC-V SoC architectures and multi-core clusters</strong> evaluated under the SCORE platform. Below, you will explore their internal interconnect topographies, step through interactive simulations of barrier synchronization and DMA burst inflection, examine our cycle-accurate Verilator benchmark traces across 46 runs, review configuration sensitivity studies, and inspect verified native architectural dossiers across all 23 SoC and multi-core platforms.
       </p>
     </div>
 
@@ -2540,7 +2540,7 @@ const infraToolsList = ((db as any).tools || [])
       <div class="badge badge-accent">&sect; 4. CROSS-PLATFORM DIFFERENCES &amp; TAXONOMY MATRIX</div>
       <h2 class="block-title">Side-by-Side Architectural Differences Matrix (23 Platforms)</h2>
       <p class="block-desc">
-        Comprehensive comparative taxonomy across all 23 Category 4 platforms evaluating compute topology, interconnect networks, memory hierarchies, DMA capabilities, and silicon tapeout evidence:
+        Comprehensive comparative taxonomy across all 23 SoC and multi-core platforms evaluating compute topology, interconnect networks, memory hierarchies, DMA capabilities, and silicon tapeout evidence:
       </p>
     </div>
 
@@ -2660,14 +2660,14 @@ const infraToolsList = ((db as any).tools || [])
     <!-- LaTeX Code Box -->
     <div class="latex-export-box" id="soc-latex" style="display: none;">
       <div class="latex-head">
-        <span>LaTeX Table: Category 4 SoC Platforms &amp; Multi-Core Benchmarks</span>
+        <span>LaTeX Table: SoC Platforms &amp; Multi-Core Benchmarks</span>
         <button class="close-latex-btn">&times;</button>
       </div>
       <pre class="latex-code"><code>\begin&#123;table&#125;[t]
 \centering
 \small
-\caption&#123;Category 4 SoC Platforms and Multi-Core Verification Traces under SCORE&#125;
-\label&#123;tab:cat4_master_benchmarks&#125;
+\caption&#123;SoC Platforms and Multi-Core Verification Traces under SCORE&#125;
+\label&#123;tab:soc_master_benchmarks&#125;
 \begin&#123;tabular&#125;&#123;llllrcc&#125;
 \toprule
 \textbf&#123;Platform&#125; &amp; \textbf&#123;Workload&#125; &amp; \textbf&#123;Interconnect&#125; &amp; \textbf&#123;Cores&#125; &amp; \textbf&#123;Cycles&#125; &amp; \textbf&#123;Speed (kHz)&#125; &amp; \textbf&#123;Status&#125; \\
@@ -2969,12 +2969,12 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
   </section>
 
   <!-- ============================================================ -->
-  <!-- SECTION 8: CATEGORY 0 INFRASTRUCTURE & TOOLING DOSSIERS -->
+  <!-- SECTION 8: VERIFICATION & TOOLING INFRASTRUCTURE DOSSIERS -->
   <!-- ============================================================ -->
   <section class="dossiers-container" id="infra-section">
     <div class="section-title-wrap">
       <div class="badge badge-accent">&sect; 8. INFRASTRUCTURE &amp; COMPILER TOOLING</div>
-      <h2 class="section-heading">Category 0: Verification, Simulation &amp; Synthesis Tooling ({infraToolsList.length} Frameworks)</h2>
+      <h2 class="section-heading">Verification, Simulation &amp; Synthesis Tooling ({infraToolsList.length} Frameworks)</h2>
       <p class="section-sub">
         Standardized compilers, High-Level Synthesis (HLS) engines, Meta-HDLs, memory simulators, and compliance harnesses supporting the SCORE evaluation pipeline.
       </p>
@@ -3000,11 +3000,11 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     </div>
   </section>
 
-  <!-- Category Navigation Pager -->
+  <!-- Track Navigation Pager -->
   <div class="score-pager">
     <a href="/vector-coprocessors/" class="score-pager-btn prev">
-      <span class="pager-dir">&larr; Previous Category</span>
-      <span class="pager-title">Category 3: Vector &amp; Coprocessors</span>
+      <span class="pager-dir">&larr; Previous Track</span>
+      <span class="pager-title">Vector &amp; Coprocessors</span>
     </a>
     <a href="/fundamentals/" class="score-pager-btn next">
       <span class="pager-dir">Architecture Fundamentals &rarr;</span>
