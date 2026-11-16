@@ -689,8 +689,11 @@ const bespokeDossiers = [
       <a href="#isa-spectrum" class="core-jump-pill">&sect; 1.2 Modular ISA</a>
       <a href="#divergence-drivers" class="core-jump-pill">&sect; 1.3 Divergence Drivers</a>
       <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. The Four Archetypes</a>
-      <a href="#archetype-1-deepdive" class="core-jump-pill">&sect; 2.1 Archetype 1 Deep-Dive</a>
-      <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Shared DNA (Similarities)</a>
+      <a href="#archetype-1-deepdive" class="core-jump-pill">&sect; 2.1 Archetype 1</a>
+      <a href="#archetype-2-deepdive" class="core-jump-pill">&sect; 2.2 Archetype 2</a>
+      <a href="#archetype-3-deepdive" class="core-jump-pill">&sect; 2.3 Archetype 3</a>
+      <a href="#archetype-4-deepdive" class="core-jump-pill">&sect; 2.4 Archetype 4</a>
+      <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Shared DNA</a>
       <a href="#microarchitectural-differences" class="core-jump-pill">&sect; 4. Differences &amp; Taxonomy</a>
       <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Empirical Leaderboard</a>
       <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Configuration Sensitivity</a>
@@ -2410,6 +2413,1028 @@ const bespokeDossiers = [
         </div>
       </div>
     </div>
+
+    <!-- ============================================================ -->
+    <!-- SUBSECTION 2.2: ARCHETYPE 2 DEEP-DIVE -->
+    <!-- ============================================================ -->
+    <div id="archetype-2-deepdive" class="concept-stream" style="margin-top: 2.5rem;">
+      <div class="concept-step-card archetype-teal-border">
+        <div class="step-card-header">
+          <span class="step-tag badge-teal">2.2 ARCHITECTURAL DEEP-DIVE</span>
+          <h3 class="step-card-title">Archetype 2: Balanced 2-Stage Harvard Microcontrollers (Ibex, NEORV32 &amp; SCR1 MIN)</h3>
+        </div>
+        <p class="step-card-lead">
+          When an embedded application demands genuine single-cycle integer arithmetic and deterministic sub-microsecond interrupt latency, multi-cycle state machines become unacceptable bottlenecks. Archetype 2 establishes the industrial &ldquo;sweet spot&rdquo; for 32-bit embedded computing (18 to 32 kGE). By splitting the processor into two concurrent stages&mdash;<strong>Instruction Fetch (IF)</strong> and combined <strong>Instruction Decode / Execute (ID/EX)</strong>&mdash;these cores achieve sustained CPI between 1.18 and 1.69 while eliminating the silicon overhead, latching power, and complex forwarding multiplexers of deeper pipelines.
+        </p>
+
+        <!-- 2.2.1 IBEX DEEP-DIVE -->
+        <div class="sub-topic-card">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-teal">CORE 4</span>
+            <h4>Ibex: The 2-Stage In-Order Core with Open Bus Interface (18.5 &ndash; 32.0 kGE)</h4>
+          </div>
+          <p>
+            Originally developed as <em>Zero-riscy</em> at ETH Z&uuml;rich and now maintained by <strong>lowRISC</strong> as the root-of-trust core for <strong>OpenTitan</strong>, <strong>Ibex</strong> represents the gold standard for high-security, area-optimized 2-stage RISC-V microcontrollers:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Two-Stage Overlapped Pipeline:</strong> The <strong>IF stage</strong> hosts a 2-entry prefetch buffer that fetches instructions ahead via the pipelined Open Bus Interface (OBI). The <strong>ID/EX stage</strong> decodes the instruction, accesses the 32-entry register file, executes ALU operations, resolves branches, and generates memory request addresses.</li>
+            <li><strong>Zero Forwarding Network Overhead:</strong> Because register writeback occurs at the conclusion of the ID/EX stage, back-to-back arithmetic instructions (e.g. <code>add x1, x2, x3</code> followed by <code>sub x4, x1, x5</code>) consume operands directly without requiring expensive multi-level forwarding bypass multiplexers.</li>
+            <li><strong>Deterministic 1-Cycle Branch Penalty:</strong> When a conditional branch evaluates as taken, only the single instruction currently buffered in the prefetch stage is invalidated. The Fetch unit targets the branch destination on the next clock cycle, guaranteeing a strictly bounded 1-cycle penalty without speculative rollbacks.</li>
+            <li><strong>Open Bus Interface (OBI):</strong> Uses a decoupled request/grant protocol (<code>req</code>/<code>gnt</code> and <code>rvalid</code>/<code>rdata</code>). Split address and data phases allow back-to-back single-cycle SRAM access with zero wait-state bubbles.</li>
+            <li><strong>Physical Attack Countermeasures (OpenTitan Profile):</strong> Includes optional Dual-Core Lockstep (DCLS) running two redundant cores staggered by 1&ndash;2 clock cycles to detect laser fault injection, dummy instruction insertion to defeat Differential Power Analysis (DPA), and register file ECC bit protection.</li>
+          </ul>
+
+          <!-- Figure 2.4: Ibex Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 2.4 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">Ibex: 2-Stage Decoupled Harvard Datapath &amp; OBI Bus Architecture</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridIbex" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowIbex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowRedIbex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#ff6b4a"/>
+                  </marker>
+                  <marker id="arrowTealIbex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridIbex)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#0d9488"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • IBEX 2-STAGE DECOUPLED HARVARD TOPOLOGY (OBI BUS)</text>
+
+                <!-- Stage 1 Background Zone -->
+                <rect x="25" y="38" width="230" height="280" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+                <rect x="25" y="38" width="230" height="20" rx="5" fill="#f1f5f9"/>
+                <text x="35" y="52" font-size="9" font-weight="900" fill="#0d9488" font-family="monospace">STAGE 1: INSTRUCTION FETCH (IF)</text>
+
+                <!-- PC Mux -->
+                <rect x="40" y="70" width="75" height="42" rx="5" fill="#ffffff" stroke="#151b20" stroke-width="2"/>
+                <text x="52" y="86" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">PC MUX</text>
+                <text x="50" y="100" font-size="8" fill="#666">Next / Br / Trap</text>
+
+                <!-- PC Register -->
+                <rect x="135" y="70" width="105" height="42" rx="5" fill="#ffffff" stroke="#151b20" stroke-width="2"/>
+                <text x="145" y="86" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">PC [31:0]</text>
+                <text x="145" y="100" font-size="8" fill="#666">Program Counter</text>
+                <line x1="115" y1="91" x2="135" y2="91" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+
+                <!-- 2-Entry Prefetch Buffer -->
+                <rect x="40" y="132" width="200" height="58" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+                <rect x="40" y="132" width="200" height="18" rx="5" fill="#f4eee1"/>
+                <text x="48" y="145" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">PREFETCH BUFFER (2x32-bit)</text>
+                <text x="48" y="166" font-size="10" font-weight="700" fill="#151b20">Decoupled FIFO Buffer</text>
+                <text x="48" y="179" font-size="8" fill="#666">Absorbs 1-cycle OBI grant bubbles</text>
+
+                <!-- OBI Instruction Master -->
+                <rect x="40" y="210" width="200" height="95" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+                <text x="48" y="226" font-size="9" font-weight="900" fill="#065f46" font-family="monospace">OBI INSTRUCTION MASTER</text>
+                <text x="48" y="244" font-size="8.5" fill="#151b20">• <code>instr_req / instr_gnt</code></text>
+                <text x="48" y="258" font-size="8.5" fill="#151b20">• <code>instr_addr [31:0]</code></text>
+                <text x="48" y="272" font-size="8.5" fill="#151b20">• <code>instr_rvalid / instr_rdata</code></text>
+                <text x="48" y="290" font-size="8" font-weight="800" fill="#047857">&#8594; Fast Zero-Bubble SRAM Port</text>
+
+                <path d="M 185 112 L 185 132" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+                <path d="M 90 190 L 90 210" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arrowIbex)"/>
+
+                <!-- Pipeline Stage Boundary -->
+                <line x1="270" y1="38" x2="270" y2="318" stroke="#0d9488" stroke-width="2" stroke-dasharray="4,4"/>
+                <text x="275" y="50" font-size="8" font-weight="900" fill="#0d9488" font-family="monospace">PIPELINE BOUNDARY</text>
+
+                <!-- Stage 2 Background Zone -->
+                <rect x="285" y="38" width="450" height="280" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+                <rect x="285" y="38" width="450" height="20" rx="5" fill="#f1f5f9"/>
+                <text x="295" y="52" font-size="9" font-weight="900" fill="#0d9488" font-family="monospace">STAGE 2: INSTRUCTION DECODE &amp; EXECUTE (ID/EX)</text>
+
+                <!-- Instruction from Prefetch to Decoder -->
+                <path d="M 240 160 L 295 160 L 295 85 L 305 85" fill="none" stroke="#151b20" stroke-width="2.2" marker-end="url(#arrowIbex)"/>
+
+                <!-- Decoder & Controller -->
+                <rect x="305" y="65" width="125" height="50" rx="6" fill="#fff8e1" stroke="#151b20" stroke-width="2"/>
+                <text x="315" y="80" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">DECODER / CTRL</text>
+                <text x="315" y="94" font-size="9" font-weight="700" fill="#151b20">Single-Cycle FSM</text>
+                <text x="315" y="106" font-size="8" fill="#666">Opcode / Imm Decode</text>
+
+                <!-- 32x32 General Register File -->
+                <rect x="305" y="130" width="125" height="175" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+                <rect x="305" y="130" width="125" height="20" rx="5" fill="#f4eee1"/>
+                <text x="315" y="144" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">REG FILE (32x32)</text>
+                <text x="315" y="165" font-size="10" font-weight="800" fill="#151b20">x0 &#8211; x31</text>
+                <text x="315" y="180" font-size="8.5" fill="#666">Dual Read Ports (2R)</text>
+                <text x="315" y="195" font-size="8.5" fill="#666">Single Write Port (1W)</text>
+                <text x="315" y="225" font-size="8.5" font-weight="800" fill="#0d9488">Zero-Forwarding:</text>
+                <text x="315" y="240" font-size="8" fill="#151b20">Operands written</text>
+                <text x="315" y="252" font-size="8" fill="#151b20">at cycle boundary</text>
+                <text x="315" y="280" font-size="8" font-weight="700" fill="#999">No Bypass Muxes</text>
+
+                <!-- 32-Bit ALU -->
+                <polygon points="480,95 565,125 565,195 480,225 480,180 495,160 480,140" fill="#ecfdf5" stroke="#059669" stroke-width="2.5"/>
+                <text x="500" y="155" font-size="12" font-weight="900" fill="#065f46" font-family="monospace">32-BIT</text>
+                <text x="505" y="172" font-size="12" font-weight="900" fill="#059669" font-family="monospace">ALU</text>
+                <text x="490" y="190" font-size="8" font-weight="700" fill="#666">Add / Shift / Cmp</text>
+
+                <!-- Operands from Regfile to ALU -->
+                <path d="M 430 150 L 480 120" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+                <text x="435" y="132" font-size="8" font-weight="800" fill="#151b20">rs1 [31:0]</text>
+                <path d="M 430 180 L 480 200" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+                <text x="435" y="210" font-size="8" font-weight="800" fill="#151b20">rs2 [31:0]</text>
+
+                <!-- Multiplier / Divider Unit -->
+                <rect x="470" y="240" width="105" height="65" rx="6" fill="#fff8e1" stroke="#151b20" stroke-width="2"/>
+                <text x="478" y="255" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">M-EXT COPROCESSOR</text>
+                <text x="478" y="272" font-size="9" font-weight="700" fill="#151b20">Mult / Div Unit</text>
+                <text x="478" y="286" font-size="8" fill="#666">Fast 1-cyc / slow 32-cyc</text>
+
+                <!-- OBI Data Master -->
+                <rect x="605" y="115" width="120" height="190" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+                <rect x="605" y="115" width="120" height="20" rx="5" fill="#d1fae5"/>
+                <text x="612" y="129" font-size="9" font-weight="900" fill="#065f46" font-family="monospace">OBI DATA MASTER</text>
+                <text x="612" y="152" font-size="8.5" fill="#151b20">• <code>data_req</code></text>
+                <text x="612" y="167" font-size="8.5" fill="#151b20">• <code>data_gnt</code></text>
+                <text x="612" y="182" font-size="8.5" fill="#151b20">• <code>data_addr [31:0]</code></text>
+                <text x="612" y="197" font-size="8.5" fill="#151b20">• <code>data_wdata [31:0]</code></text>
+                <text x="612" y="212" font-size="8.5" fill="#151b20">• <code>data_rdata [31:0]</code></text>
+                <text x="612" y="235" font-size="8" font-weight="800" fill="#047857">&#8594; Data SRAM Port</text>
+                <text x="612" y="250" font-size="7.5" fill="#666">Pipelined request</text>
+                <text x="612" y="262" font-size="7.5" fill="#666">with zero wait states</text>
+
+                <!-- ALU to OBI Data address -->
+                <path d="M 565 160 L 605 160" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowIbex)"/>
+
+                <!-- 1-Cycle Branch Redirection Loop (Red) -->
+                <path d="M 520 95 L 520 28 L 75 28 L 75 70" fill="none" stroke="#ff6b4a" stroke-width="2.2" stroke-dasharray="4,3" marker-end="url(#arrowRedIbex)"/>
+                <rect x="180" y="20" width="220" height="16" rx="3" fill="#fff1f2" stroke="#ff6b4a" stroke-width="1"/>
+                <text x="186" y="32" font-size="8" font-weight="900" fill="#b91c1c">BRANCH REDIRECTION: Strictly 1-Cycle Penalty</text>
+
+                <!-- Writeback Highway (Teal) -->
+                <path d="M 585 200 L 585 330 L 365 330 L 365 305" fill="none" stroke="#0d9488" stroke-width="2.2" marker-end="url(#arrowTealIbex)"/>
+                <rect x="400" y="322" width="160" height="16" rx="3" fill="#f0fdfa" stroke="#0d9488" stroke-width="1"/>
+                <text x="406" y="334" font-size="8" font-weight="900" fill="#0f766e">WRITEBACK: Direct Register Commit</text>
+
+                <!-- Bottom Status Strip -->
+                <rect x="25" y="348" width="710" height="24" rx="4" fill="#151b20"/>
+                <text x="35" y="364" font-size="9" font-weight="800" fill="#cbd5e1" font-family="monospace">METRICS: CPI 1.18 &#8211; 1.69 | Fmax: 380 MHz | Area: 18.5 &#8211; 32.0 kGE | Silicon Proven in OpenTitan Root-of-Trust</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 2.4:</strong> Ibex decouples execution into two concurrent stages. A 2-entry prefetch buffer in Stage 1 sustains continuous instruction feed over the Open Bus Interface (OBI). Because Stage 2 decodes and executes back-to-back arithmetic instructions in a single cycle with register writeback at the cycle boundary, Ibex achieves near-unity CPI without needing silicon-costly operand bypass networks. Taken branches incur strictly 1 clock cycle of penalty.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2.2.2 NEORV32 DEEP-DIVE -->
+        <div class="sub-topic-card" style="margin-top: 2rem;">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-teal">CORE 5</span>
+            <h4>NEORV32: The Modular 2-Stage Pipelined SoC Architecture (~24.5 kGE)</h4>
+          </div>
+          <p>
+            Authored by Stephan Nolting in highly readable, standard-compliant <strong>VHDL-93</strong>, <strong>NEORV32</strong> is an exemplary open-source microcontroller system-on-chip that has gained widespread adoption across academic labs and industrial FPGA projects:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Clean 2-Stage Pipelined Architecture:</strong> Like Ibex, NEORV32 overlaps instruction fetch with decode/execution. The core is completely synchronous and free from vendor-specific FPGA primitives, allowing it to synthesize seamlessly on Xilinx, Intel/Altera, Lattice, Microchip, and Gowin devices.</li>
+            <li><strong>Wishbone b4 Pipelined Interconnect:</strong> Features a standardized 32-bit pipelined Wishbone b4 bus interface with configurable latency and burst capabilities, making it trivial to integrate custom memory-mapped peripherals.</li>
+            <li><strong>Tightly-Coupled Memories (IMEM &amp; DMEM):</strong> Incorporates internal dual-port block RAMs for deterministic single-cycle access to real-time code and stack frames, bypassing external bus contention.</li>
+            <li><strong>Extensive Extension Support:</strong> Supports RV32I/E with optional M (multiplication/division), C (compressed 16-bit instructions), A (atomic operations), B (bit manipulation), and custom coprocessor extensions (CFU) for domain-specific algorithmic acceleration.</li>
+          </ul>
+
+          <!-- Figure 2.5: NEORV32 Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 2.5 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">NEORV32: 2-Stage Modular Pipeline &amp; Wishbone b4 Bus Architecture</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridNeorv" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowNeorv" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowTealNeorv" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridNeorv)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#0d9488"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • NEORV32 2-STAGE MODULAR PIPELINE &amp; WISHBONE b4 FABRIC</text>
+
+                <!-- Stage 1 Block -->
+                <rect x="30" y="50" width="190" height="265" rx="6" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="30" y="50" width="190" height="22" rx="5" fill="#f1f5f9"/>
+                <text x="40" y="65" font-size="9" font-weight="900" fill="#0d9488" font-family="monospace">STAGE 1: FETCH (IF)</text>
+                
+                <rect x="45" y="85" width="160" height="50" rx="5" fill="#ffffff" stroke="#151b20" stroke-width="1.5"/>
+                <text x="55" y="102" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">PC &amp; PREFETCH QUEUE</text>
+                <text x="55" y="118" font-size="8" fill="#666">Instruction buffer FIFO</text>
+
+                <rect x="45" y="150" width="160" height="75" rx="5" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="55" y="168" font-size="9" font-weight="900" fill="#065f46" font-family="monospace">INTERNAL IMEM</text>
+                <text x="55" y="184" font-size="8.5" fill="#151b20">Single-cycle Block RAM</text>
+                <text x="55" y="198" font-size="8" fill="#666">Optional Bootloader ROM</text>
+                <text x="55" y="212" font-size="8" font-weight="800" fill="#047857">Zero bus wait states</text>
+
+                <rect x="45" y="240" width="160" height="55" rx="5" fill="#ffffff" stroke="#151b20" stroke-width="1.5"/>
+                <text x="55" y="258" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">TRAP CONTROLLER</text>
+                <text x="55" y="274" font-size="8" fill="#666">Fast vectored interrupts</text>
+
+                <!-- Stage 2 Block -->
+                <rect x="245" y="50" width="265" height="265" rx="6" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="245" y="50" width="265" height="22" rx="5" fill="#f1f5f9"/>
+                <text x="255" y="65" font-size="9" font-weight="900" fill="#0d9488" font-family="monospace">STAGE 2: DECODE &amp; EXECUTION (ID/EX)</text>
+
+                <rect x="260" y="85" width="235" height="50" rx="5" fill="#fff8e1" stroke="#151b20" stroke-width="1.5"/>
+                <text x="270" y="102" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">CENTRAL CONTROL FSM</text>
+                <text x="270" y="118" font-size="8" fill="#666">Multi-format instruction decoding</text>
+
+                <rect x="260" y="145" width="110" height="150" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="268" y="162" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">REG FILE</text>
+                <text x="268" y="178" font-size="8" fill="#151b20">32x32 / 16x32</text>
+                <text x="268" y="194" font-size="8" fill="#666">2R / 1W ports</text>
+                <text x="268" y="220" font-size="8" font-weight="800" fill="#0d9488">Single-cycle</text>
+                <text x="268" y="234" font-size="8" fill="#151b20">register write</text>
+
+                <rect x="385" y="145" width="110" height="70" rx="5" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="393" y="162" font-size="8.5" font-weight="900" fill="#065f46" font-family="monospace">CENTRAL ALU</text>
+                <text x="393" y="178" font-size="8" fill="#151b20">Add, Sub, Cmp</text>
+                <text x="393" y="192" font-size="8" fill="#151b20">Barrel Shifter</text>
+
+                <rect x="385" y="225" width="110" height="70" rx="5" fill="#ffffff" stroke="#151b20" stroke-width="1.5"/>
+                <text x="393" y="242" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">COPROCESSOR</text>
+                <text x="393" y="258" font-size="8" fill="#666">Zfinx / CFU / AES</text>
+                <text x="393" y="272" font-size="8" fill="#666">Mult / Div Unit</text>
+
+                <!-- Wishbone Fabric Block -->
+                <rect x="535" y="50" width="195" height="265" rx="6" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="535" y="50" width="195" height="22" rx="5" fill="#f1f5f9"/>
+                <text x="545" y="65" font-size="9" font-weight="900" fill="#0d9488" font-family="monospace">SYSTEM FABRIC &amp; BUS</text>
+
+                <rect x="550" y="85" width="165" height="90" rx="5" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="560" y="103" font-size="9" font-weight="900" fill="#065f46" font-family="monospace">WISHBONE b4 MASTER</text>
+                <text x="560" y="120" font-size="8" fill="#151b20">• <code>wb_adr_o [31:0]</code></text>
+                <text x="560" y="134" font-size="8" fill="#151b20">• <code>wb_dat_o / wb_dat_i</code></text>
+                <text x="560" y="148" font-size="8" fill="#151b20">• <code>wb_cyc_o / wb_stb_o</code></text>
+                <text x="560" y="162" font-size="8" fill="#151b20">• <code>wb_ack_i (Pipelined)</code></text>
+
+                <rect x="550" y="185" width="165" height="110" rx="5" fill="#ffffff" stroke="#151b20" stroke-width="1.5"/>
+                <text x="560" y="203" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">PERIPHERAL CROSSBAR</text>
+                <text x="560" y="220" font-size="8" fill="#666">• UART / SPI / TMR</text>
+                <text x="560" y="234" font-size="8" fill="#666">• GPIO / Watchdog</text>
+                <text x="560" y="248" font-size="8" fill="#666">• Internal DMEM</text>
+                <text x="560" y="268" font-size="8" font-weight="800" fill="#0d9488">Plug-and-play SoC</text>
+
+                <!-- Connecting Traces -->
+                <path d="M 220 110 L 260 110" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowNeorv)"/>
+                <path d="M 495 180 L 550 130" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowNeorv)"/>
+
+                <!-- Bottom Status Strip -->
+                <rect x="30" y="348" width="700" height="24" rx="4" fill="#151b20"/>
+                <text x="40" y="364" font-size="9" font-weight="800" fill="#cbd5e1" font-family="monospace">METRICS: CoreMark/MHz: 2.15 | CPI: 1.35 | Area: ~24.5 kGE | Clean VHDL-93 Portable Synthesis</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 2.5:</strong> NEORV32 modular 2-stage microcontroller pipeline. Instructions stream from the tightly-coupled instruction memory (IMEM) through the prefetch buffer directly into the central control engine and ALU. The standard Wishbone b4 pipelined master enables low-latency communication with on-chip RAM, peripherals, and modular coprocessors.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2.2.3 COMPARATIVE SYNTHESIS TABLE -->
+        <div class="sub-topic-card" style="margin-top: 2rem;">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-paper">COMPARATIVE SYNTHESIS</span>
+            <h4>Architectural &amp; Benchmark Comparison: Archetype 2 Cores</h4>
+          </div>
+          <p>
+            The table below synthesizes empirical performance metrics for Archetype 2 processors across different configurations measured on cycle-accurate HDL platforms:
+          </p>
+
+          <div class="table-scroll" style="margin-top: 1rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Core Configuration</th>
+                  <th>Pipeline Structure</th>
+                  <th>Multiplier Hardware</th>
+                  <th>Branch Predictor</th>
+                  <th>Measured CPI</th>
+                  <th>CoreMark / MHz</th>
+                  <th>Dhrystone DMIPS/MHz</th>
+                  <th>Silicon Area</th>
+                  <th>Primary Use Case</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ibex (small)</strong></td>
+                  <td>2-Stage In-Order</td>
+                  <td>32-cycle serial divider/mul</td>
+                  <td>None (static 1-cyc stall)</td>
+                  <td><code>1.686</code></td>
+                  <td><span class="score-badge">2.4609</span></td>
+                  <td>0.7230</td>
+                  <td><span class="badge badge-teal">18.5 kGE</span></td>
+                  <td>Area-constrained IoT sensors &amp; microcontrollers</td>
+                </tr>
+                <tr>
+                  <td><strong>Ibex (branch-predictor)</strong></td>
+                  <td>2-Stage Predicted</td>
+                  <td>Pipelined 1-cycle DSP</td>
+                  <td>Dynamic 2-bit branch predictor</td>
+                  <td><code>1.285</code></td>
+                  <td><span class="score-badge">3.2256</span></td>
+                  <td>1.2500</td>
+                  <td><span class="badge badge-teal">22.0 kGE</span></td>
+                  <td>High-throughput embedded compute &amp; control loops</td>
+                </tr>
+                <tr>
+                  <td><strong>Ibex (OpenTitan Secure)</strong></td>
+                  <td>2-Stage Hardened</td>
+                  <td>Constant-time multiplier</td>
+                  <td>Static with dummy instructions</td>
+                  <td><code>1.450</code></td>
+                  <td><span class="score-badge">2.1000</span></td>
+                  <td>1.0500</td>
+                  <td><span class="badge badge-purple">32.0 kGE</span></td>
+                  <td>Silicon Root-of-Trust, cryptographic hardware enclaves</td>
+                </tr>
+                <tr>
+                  <td><strong>NEORV32 (VHDL)</strong></td>
+                  <td>2-Stage Modular SoC</td>
+                  <td>Configurable 1-cycle DSP</td>
+                  <td>Static 1-cycle branch penalty</td>
+                  <td><code>1.350</code></td>
+                  <td><span class="score-badge">2.1500</span></td>
+                  <td>1.1000</td>
+                  <td><span class="badge badge-teal">24.5 kGE</span></td>
+                  <td>Complete open-source FPGA microcontroller SoC systems</td>
+                </tr>
+                <tr>
+                  <td><strong>SCR1 (MIN)</strong></td>
+                  <td>2-Stage Harvard</td>
+                  <td>Integrated MULDIV</td>
+                  <td>Static branch resolution</td>
+                  <td><code>1.380</code></td>
+                  <td><span class="score-badge">2.1500</span></td>
+                  <td>1.0100</td>
+                  <td><span class="badge badge-teal">20.5 kGE</span></td>
+                  <td>Commercial ASIC deeply embedded control blocks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Architectural Decision Guide -->
+          <div class="arch-verdict-box" style="margin-top: 1.25rem;">
+            <h5 class="verdict-title">&#9878; System Architect's Decision Guide: When to Select Archetype 2?</h5>
+            <ul class="concept-list">
+              <li><strong>Select Ibex when:</strong> You are designing a commercial ASIC or secure SoC requiring silicon-proven reliability, formal verification heritage, native Open Bus Interface (OBI) integration, or advanced hardware security hardening (OpenTitan root-of-trust, DCLS dual-core lockstep).</li>
+              <li><strong>Select NEORV32 when:</strong> You are deploying on FPGAs and require an out-of-the-box complete microcontroller SoC in pure VHDL-93, with native Wishbone peripherals (UART, SPI, TMR, I2C), bootloader, and custom instruction extension (CFU) capabilities.</li>
+              <li><strong>Avoid Archetype 2 when:</strong> Your design requires clock frequencies above 400 MHz in standard cell silicon or sustained CPI &lt; 1.0, where deep pipelining (Archetype 3) or superscalar dual-issue (Archetype 4) becomes necessary.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!-- SUBSECTION 2.3: ARCHETYPE 3 DEEP-DIVE -->
+    <!-- ============================================================ -->
+    <div id="archetype-3-deepdive" class="concept-stream" style="margin-top: 2.5rem;">
+      <div class="concept-step-card archetype-lime-border">
+        <div class="step-card-header">
+          <span class="step-tag badge-lime">2.3 ARCHITECTURAL DEEP-DIVE</span>
+          <h3 class="step-card-title">Archetype 3: High-Efficiency Deep Pipelined Harvard Cores (Hazard3, SCR1 MAX &amp; VexRiscv)</h3>
+        </div>
+        <p class="step-card-lead">
+          When operating frequencies must exceed 400 MHz in standard cell silicon or 150 MHz on modern FPGAs, the long combinational path of a 2-stage core (instruction decode + register file read + ALU arithmetic + memory bus address setup) becomes the ultimate frequency bottleneck. Archetype 3 shatters this critical path by inserting dedicated synchronous pipeline registers between Decode, Execute, and Memory access, decoupling execution into <strong>3 to 5 synchronous stages</strong>. To prevent devastating data hazard pipeline bubbles, these cores incorporate <strong>complete operand forwarding networks</strong> and hardware branch hazard resolution.
+        </p>
+
+        <!-- 2.3.1 HAZARD3 DEEP-DIVE -->
+        <div class="sub-topic-card">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-lime">CORE 6</span>
+            <h4>Hazard3: The 3-Stage Decoupled Harvard Core in Raspberry Pi RP2350 (~28.5 kGE)</h4>
+          </div>
+          <p>
+            Designed by Luke Wren and chosen by the <strong>Raspberry Pi Foundation</strong> as the dual-core RISC-V compute complex inside the commercial <strong>RP2350</strong> microcontroller, <strong>Hazard3</strong> demonstrates the extreme efficiency attainable from a finely tuned 3-stage Harvard pipeline:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Decoupled 3-Stage Pipeline (Fetch &rarr; Decode/Issue &rarr; Execute/Writeback):</strong> By isolating instruction fetch into Stage 1, decode/register access into Stage 2, and execution/writeback into Stage 3, Hazard3 eliminates the combinational feedback paths that drag down 2-stage cores, comfortably reaching &gt;450 MHz on 40nm/28nm ASIC nodes.</li>
+            <li><strong>Single-Cycle Branch Hazard Forwarding:</strong> Conditional branches are resolved early in the Execute stage. Branch target addresses are fed directly back into the Fetch stage through an accelerated forwarding channel, constraining branch redirection bubbles to just 1&ndash;2 cycles while streaming linear code at CPI ~1.15.</li>
+            <li><strong>Dual Independent AHB5 32-Bit Buses:</strong> Implements dedicated AHB5 master interfaces for instruction and data memory. The core can initiate a data load or store concurrently with an instruction fetch without internal bus contention or priority stalls.</li>
+            <li><strong>Radix-4 Fast Divider:</strong> Computes 2 bits of quotient per clock cycle, resolving 32-bit division in strictly 16 clock cycles (compared to 32&ndash;34 cycles in standard serial dividers), accelerating mathematical DSP and real-time control routines.</li>
+            <li><strong>Commercial Silicon Pedigree:</strong> Unlike research-only prototypes, Hazard3 is fabricated in tens of millions of commercial RP2350 chips, coexisting seamlessly with Arm Cortex-M33 cores under a unified system architecture.</li>
+          </ul>
+
+          <!-- Figure 2.6: Hazard3 Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 2.6 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">Hazard3: 3-Stage Decoupled Harvard Pipeline &amp; Dual AHB5 Bus Topology</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridHazard" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowHazard" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowRedHazard" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#ff6b4a"/>
+                  </marker>
+                  <marker id="arrowTealHazard" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridHazard)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#22c55e"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • HAZARD3 3-STAGE PIPELINE (RASPBERRY PI RP2350)</text>
+
+                <!-- Stage 1: Fetch -->
+                <rect x="25" y="45" width="205" height="270" rx="6" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="25" y="45" width="205" height="22" rx="5" fill="#f1f5f9"/>
+                <text x="35" y="60" font-size="9" font-weight="900" fill="#22c55e" font-family="monospace">STAGE 1: FETCH (IF)</text>
+
+                <rect x="38" y="78" width="180" height="48" rx="5" fill="#ffffff" stroke="#151b20" stroke-width="1.5"/>
+                <text x="48" y="95" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">PC GENERATION &amp; MUX</text>
+                <text x="48" y="112" font-size="8" fill="#666">Sequential / Branch target</text>
+
+                <rect x="38" y="138" width="180" height="58" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="48" y="154" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">INSTRUCTION BUFFER</text>
+                <text x="48" y="170" font-size="8" fill="#151b20">32-bit Fetch Alignment</text>
+                <text x="48" y="184" font-size="8" fill="#666">RVC 16-bit decompressor</text>
+
+                <rect x="38" y="208" width="180" height="92" rx="5" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="48" y="225" font-size="9" font-weight="900" fill="#065f46" font-family="monospace">AHB5 INSTR MASTER</text>
+                <text x="48" y="242" font-size="8" fill="#151b20">• <code>HADDR [31:0]</code></text>
+                <text x="48" y="256" font-size="8" fill="#151b20">• <code>HTRANS / HBURST</code></text>
+                <text x="48" y="270" font-size="8" fill="#151b20">• <code>HRDATA [31:0]</code></text>
+                <text x="48" y="288" font-size="8" font-weight="800" fill="#047857">&#8594; Non-blocking burst fetch</text>
+
+                <!-- Stage 2: Decode / Issue -->
+                <rect x="250" y="45" width="220" height="270" rx="6" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="250" y="45" width="220" height="22" rx="5" fill="#f1f5f9"/>
+                <text x="260" y="60" font-size="9" font-weight="900" fill="#22c55e" font-family="monospace">STAGE 2: DECODE / ISSUE (ID)</text>
+
+                <rect x="262" y="78" width="195" height="55" rx="5" fill="#fff8e1" stroke="#151b20" stroke-width="1.5"/>
+                <text x="272" y="95" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">INSTRUCTION DECODER</text>
+                <text x="272" y="112" font-size="8" fill="#151b20">Immediate generator</text>
+                <text x="272" y="124" font-size="8" fill="#666">Hazard bypass steering</text>
+
+                <rect x="262" y="145" width="195" height="155" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="262" y="145" width="195" height="20" rx="5" fill="#f4eee1"/>
+                <text x="272" y="159" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">REGISTER FILE (32x32)</text>
+                <text x="272" y="180" font-size="8.5" fill="#151b20">Dual Read Ports (<code>rs1, rs2</code>)</text>
+                <text x="272" y="196" font-size="8.5" fill="#151b20">Single Writeback Port (<code>rd</code>)</text>
+                <text x="272" y="222" font-size="8" font-weight="800" fill="#0d9488">Operand Forwarding Inputs:</text>
+                <text x="272" y="238" font-size="8" fill="#151b20">&#8226; EX result bypass (0 stall)</text>
+                <text x="272" y="252" font-size="8" fill="#151b20">&#8226; Load-use hazard detection</text>
+                <text x="272" y="280" font-size="8" font-weight="700" fill="#666">Single-cycle register read</text>
+
+                <!-- Stage 3: Execute / Writeback -->
+                <rect x="490" y="45" width="245" height="270" rx="6" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="490" y="45" width="245" height="22" rx="5" fill="#f1f5f9"/>
+                <text x="500" y="60" font-size="9" font-weight="900" fill="#22c55e" font-family="monospace">STAGE 3: EXECUTE / WB (EX)</text>
+
+                <polygon points="510,85 580,110 580,170 510,195 510,160 522,142 510,125" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+                <text x="528" y="138" font-size="10" font-weight="900" fill="#065f46" font-family="monospace">ALU</text>
+                <text x="523" y="152" font-size="7.5" font-weight="700" fill="#059669">32-Bit</text>
+
+                <rect x="600" y="80" width="120" height="48" rx="5" fill="#fff8e1" stroke="#151b20" stroke-width="1.5"/>
+                <text x="608" y="96" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">RADIX-4 DIVIDER</text>
+                <text x="608" y="112" font-size="8" fill="#151b20">16-cycle division</text>
+                <text x="608" y="122" font-size="7.5" fill="#666">2 bits / cycle</text>
+
+                <rect x="600" y="135" width="120" height="45" rx="5" fill="#fff8e1" stroke="#151b20" stroke-width="1.5"/>
+                <text x="608" y="150" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">BOOTH MULTIPLIER</text>
+                <text x="608" y="166" font-size="8" fill="#151b20">1-cycle 32x32 mul</text>
+
+                <rect x="510" y="208" width="210" height="92" rx="5" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="520" y="225" font-size="9" font-weight="900" fill="#065f46" font-family="monospace">AHB5 DATA MASTER</text>
+                <text x="520" y="242" font-size="8" fill="#151b20">• <code>HADDR [31:0] / HWDATA [31:0]</code></text>
+                <text x="520" y="256" font-size="8" fill="#151b20">• <code>HWRITE / HSIZE / HTRANS</code></text>
+                <text x="520" y="270" font-size="8" fill="#151b20">• <code>HRDATA [31:0] (Direct bypass)</code></text>
+                <text x="520" y="288" font-size="8" font-weight="800" fill="#047857">&#8594; Dual bus avoids fetch stalls</text>
+
+                <!-- Branch Redirection Loop -->
+                <path d="M 545 85 L 545 32 L 85 32 L 85 78" fill="none" stroke="#ff6b4a" stroke-width="2.2" stroke-dasharray="4,3" marker-end="url(#arrowRedHazard)"/>
+                <rect x="220" y="24" width="220" height="16" rx="3" fill="#fff1f2" stroke="#ff6b4a" stroke-width="1"/>
+                <text x="226" y="36" font-size="8" font-weight="900" fill="#b91c1c">BRANCH REDIRECTION: 1-Cycle Forwarding</text>
+
+                <!-- Forwarding Loop back to ID Regfile -->
+                <path d="M 580 140 L 460 140 L 460 210" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowTealHazard)"/>
+                <text x="465" y="135" font-size="7.5" font-weight="900" fill="#0d9488">EX Bypass</text>
+
+                <!-- Bottom Status Strip -->
+                <rect x="25" y="348" width="710" height="24" rx="4" fill="#151b20"/>
+                <text x="35" y="364" font-size="9" font-weight="800" fill="#cbd5e1" font-family="monospace">METRICS: CoreMark/MHz: 2.10 | CPI: 1.15 | Fmax: &gt;450 MHz | Dual AHB5 Bus | Silicon in Raspberry Pi RP2350</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 2.6:</strong> Hazard3 3-stage decoupled pipeline. Synchronous pipeline registers decouple the Instruction Fetch, Instruction Decode/Issue, and Execute/Writeback stages, breaking critical paths and enabling &gt;450 MHz clock frequencies. Independent AHB5 instruction and data buses ensure zero bus contention between instruction streaming and SRAM data accesses.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2.3.2 VEXRISCV DEEP-DIVE -->
+        <div class="sub-topic-card" style="margin-top: 2rem;">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-lime">CORE 7</span>
+            <h4>VexRiscv GenFull: The Classical 5-Stage RISC Forwarding Pipeline (~42.0 kGE)</h4>
+          </div>
+          <p>
+            Generated via <strong>SpinalHDL</strong> by Charles Papon, <strong>VexRiscv</strong> won the FSiC 2018 Soft CPU contest. In its <em>GenFull</em> configuration, it implements the textbook 5-stage RISC pipeline complete with dynamic branch prediction and full hazard resolution:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Classical 5-Stage Pipeline (IF &rarr; ID &rarr; EX &rarr; MEM &rarr; WB):</strong> The classic Hennessy &amp; Patterson five-stage pipeline maximizes temporal instruction parallelism. Every phase of instruction life has dedicated cycle resources.</li>
+            <li><strong>Three-Level Forwarding Matrix:</strong> Features bypass networks routing results directly from <code>EX &rarr; EX</code>, <code>MEM &rarr; EX</code>, and <code>WB &rarr; EX</code>. Back-to-back mathematical operations execute with zero bubble stalls (instantaneous CPI = 1.0).</li>
+            <li><strong>Load-Use Interlock Detection:</strong> When an instruction in the Decode stage requires a value loaded by a preceding <code>lw</code> instruction in Execute, the hardware hazard detection unit automatically stalls IF/ID by exactly 1 clock cycle to allow the memory word to return.</li>
+            <li><strong>Dynamic BTB Branch Predictor:</strong> Features a Branch Target Buffer (BTB) that predicts branch outcomes during the IF stage. Correctly predicted branches incur <strong>zero bubble cycles</strong>, maintaining pipeline saturation through tight loops.</li>
+            <li><strong>Dedicated Pipelined DSP Multiplier:</strong> Leverages FPGA DSP48E1 slices or ASIC standard-cell Booth multipliers to execute 32&times;32 multiplications in a single cycle.</li>
+          </ul>
+
+          <!-- Figure 2.7: VexRiscv Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 2.7 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">VexRiscv: Classical 5-Stage Forwarding Pipeline Topology</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridVex" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowVex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowTealVex" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridVex)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#22c55e"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • VEXRISCV CLASSICAL 5-STAGE PIPELINE &amp; FORWARDING MATRIX</text>
+
+                <!-- 5 Pipeline Stage Columns -->
+                <!-- IF -->
+                <rect x="25" y="45" width="130" height="270" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="25" y="45" width="130" height="20" rx="4" fill="#f1f5f9"/>
+                <text x="32" y="59" font-size="8.5" font-weight="900" fill="#059669" font-family="monospace">1. FETCH (IF)</text>
+                <rect x="35" y="75" width="110" height="45" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.5"/>
+                <text x="42" y="92" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">PC &amp; BTB</text>
+                <text x="42" y="106" font-size="7.5" fill="#666">Dynamic predictor</text>
+                <rect x="35" y="130" width="110" height="55" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="42" y="148" font-size="8" font-weight="900" fill="#065f46" font-family="monospace">I-CACHE</text>
+                <text x="42" y="162" font-size="7.5" fill="#151b20">4KB 4-way set</text>
+                <text x="42" y="174" font-size="7.5" fill="#666">Pipelined fetch</text>
+
+                <!-- ID -->
+                <rect x="170" y="45" width="130" height="270" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="170" y="45" width="130" height="20" rx="4" fill="#f1f5f9"/>
+                <text x="177" y="59" font-size="8.5" font-weight="900" fill="#059669" font-family="monospace">2. DECODE (ID)</text>
+                <rect x="180" y="75" width="110" height="45" rx="4" fill="#fff8e1" stroke="#151b20" stroke-width="1.5"/>
+                <text x="188" y="92" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">DECODER</text>
+                <text x="188" y="106" font-size="7.5" fill="#666">Plugin-based</text>
+                <rect x="180" y="130" width="110" height="95" rx="4" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="188" y="148" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">REG FILE</text>
+                <text x="188" y="164" font-size="7.5" fill="#151b20">32x32 GPRs</text>
+                <text x="188" y="178" font-size="7.5" fill="#666">Dual read ports</text>
+                <text x="188" y="205" font-size="7.5" font-weight="800" fill="#ff6b4a">Hazard Interlock</text>
+
+                <!-- EX -->
+                <rect x="315" y="45" width="135" height="270" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="315" y="45" width="135" height="20" rx="4" fill="#f1f5f9"/>
+                <text x="322" y="59" font-size="8.5" font-weight="900" fill="#059669" font-family="monospace">3. EXECUTE (EX)</text>
+                <polygon points="330,85 410,110 410,170 330,195 330,160 342,142 330,125" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+                <text x="350" y="138" font-size="10" font-weight="900" fill="#065f46" font-family="monospace">ALU</text>
+                <text x="345" y="152" font-size="7.5" font-weight="700" fill="#059669">Single-cycle</text>
+                <rect x="325" y="210" width="115" height="50" rx="4" fill="#fff8e1" stroke="#151b20" stroke-width="1.5"/>
+                <text x="333" y="228" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">DSP MULTIPLIER</text>
+                <text x="333" y="244" font-size="7.5" fill="#666">1-cycle 32x32 DSP</text>
+
+                <!-- MEM -->
+                <rect x="465" y="45" width="130" height="270" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="465" y="45" width="130" height="20" rx="4" fill="#f1f5f9"/>
+                <text x="472" y="59" font-size="8.5" font-weight="900" fill="#059669" font-family="monospace">4. MEMORY (MEM)</text>
+                <rect x="475" y="75" width="110" height="85" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="483" y="93" font-size="8" font-weight="900" fill="#065f46" font-family="monospace">D-CACHE</text>
+                <text x="483" y="108" font-size="7.5" fill="#151b20">4KB Data Cache</text>
+                <text x="483" y="122" font-size="7.5" fill="#666">Load/Store Align</text>
+                <text x="483" y="145" font-size="7.5" font-weight="800" fill="#047857">Wishbone/AXI</text>
+
+                <!-- WB -->
+                <rect x="610" y="45" width="125" height="270" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="610" y="45" width="125" height="20" rx="4" fill="#f1f5f9"/>
+                <text x="617" y="59" font-size="8.5" font-weight="900" fill="#059669" font-family="monospace">5. WRITEBACK (WB)</text>
+                <rect x="620" y="75" width="105" height="60" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.5"/>
+                <text x="628" y="95" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">RESULT MUX</text>
+                <text x="628" y="112" font-size="7.5" fill="#666">ALU / Mem / CSR</text>
+
+                <!-- Multi-Level Forwarding Bypass Busses -->
+                <!-- EX to EX Forwarding -->
+                <path d="M 410 135 L 440 135 L 440 330 L 310 330 L 310 170 L 325 170" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowTealVex)"/>
+                <!-- MEM to EX Forwarding -->
+                <path d="M 530 160 L 530 340 L 290 340 L 290 185 L 325 185" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arrowVex)"/>
+                <!-- WB to EX Forwarding -->
+                <path d="M 670 135 L 670 350 L 270 350 L 270 195 L 325 195" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrowVex)"/>
+
+                <rect x="360" y="322" width="220" height="20" rx="4" fill="#151b20"/>
+                <text x="368" y="336" font-size="8" font-weight="800" fill="#f8fafc" font-family="monospace">FORWARDING MATRIX: EX&#8594;EX, MEM&#8594;EX, WB&#8594;EX</text>
+
+                <!-- Stage Connecting Arrows -->
+                <path d="M 155 97 L 180 97" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVex)"/>
+                <path d="M 300 97 L 330 97" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVex)"/>
+                <path d="M 450 115 L 475 115" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVex)"/>
+                <path d="M 595 105 L 620 105" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVex)"/>
+
+                <!-- Bottom Status Strip -->
+                <rect x="25" y="358" width="710" height="18" rx="3" fill="#151b20"/>
+                <text x="35" y="371" font-size="8.5" font-weight="800" fill="#cbd5e1" font-family="monospace">METRICS: CoreMark/MHz: 2.35 | CPI: 1.20 | DMIPS/MHz: 1.92 | Full Forwarding Matrix | Winner FSiC Soft CPU</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 2.7:</strong> VexRiscv classical 5-stage RISC forwarding pipeline. Stages IF, ID, EX, MEM, and WB operate synchronously. A complete 3-level operand forwarding network (EX&rarr;EX, MEM&rarr;EX, WB&rarr;EX) routes arithmetic and memory load results directly back to ALU inputs, eliminating data hazard stalls for arithmetic sequences and sustaining high throughput.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2.3.3 COMPARATIVE SYNTHESIS TABLE -->
+        <div class="sub-topic-card" style="margin-top: 2rem;">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-paper">COMPARATIVE SYNTHESIS</span>
+            <h4>Architectural &amp; Benchmark Comparison: Archetype 3 Cores</h4>
+          </div>
+          <p>
+            The table below synthesizes empirical performance metrics for Archetype 3 deep-pipelined processors evaluated in SCORE:
+          </p>
+
+          <div class="table-scroll" style="margin-top: 1rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Architecture</th>
+                  <th>Pipeline Depth</th>
+                  <th>Branch Predictor</th>
+                  <th>Forwarding Network</th>
+                  <th>Measured CPI</th>
+                  <th>CoreMark / MHz</th>
+                  <th>Dhrystone DMIPS/MHz</th>
+                  <th>Silicon Area</th>
+                  <th>Target Deployment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Hazard3</strong></td>
+                  <td>3-Stage Harvard</td>
+                  <td>Single-cycle branch forward</td>
+                  <td>EX &rarr; ID register bypass</td>
+                  <td><code>1.150</code></td>
+                  <td><span class="score-badge">2.1000</span></td>
+                  <td>1.2500</td>
+                  <td><span class="badge badge-lime">28.5 kGE</span></td>
+                  <td>High-frequency edge MCUs (Raspberry Pi RP2350)</td>
+                </tr>
+                <tr>
+                  <td><strong>SCR1 (MAX)</strong></td>
+                  <td>4-Stage Decoupled</td>
+                  <td>Static branch target cache</td>
+                  <td>Full EX/MEM forwarding</td>
+                  <td><code>1.200</code></td>
+                  <td><span class="score-badge">2.0100</span></td>
+                  <td>1.1500</td>
+                  <td><span class="badge badge-lime">34.0 kGE</span></td>
+                  <td>Industrial automotive &amp; communications control</td>
+                </tr>
+                <tr>
+                  <td><strong>VexRiscv (GenFull)</strong></td>
+                  <td>5-Stage Classic</td>
+                  <td>Dynamic BTB predictor</td>
+                  <td>3-Level full forwarding matrix</td>
+                  <td><code>1.200</code></td>
+                  <td><span class="score-badge">2.3487</span></td>
+                  <td>1.9200</td>
+                  <td><span class="badge badge-lime">42.0 kGE</span></td>
+                  <td>High-performance FPGA soft-core SoCs &amp; Linux nodes</td>
+                </tr>
+                <tr>
+                  <td><strong>RV12</strong></td>
+                  <td>3-Stage Harvard</td>
+                  <td>Static prediction</td>
+                  <td>Single-stage bypass</td>
+                  <td><code>1.250</code></td>
+                  <td><span class="score-badge">1.7500</span></td>
+                  <td>1.0500</td>
+                  <td><span class="badge badge-lime">30.0 kGE</span></td>
+                  <td>Compact ASIC control coprocessors</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Architectural Decision Guide -->
+          <div class="arch-verdict-box" style="margin-top: 1.25rem;">
+            <h5 class="verdict-title">&#9878; System Architect's Decision Guide: When to Select Archetype 3?</h5>
+            <ul class="concept-list">
+              <li><strong>Select Hazard3 when:</strong> Your SoC design requires clock frequencies above 400 MHz in standard CMOS nodes, native dual AHB5 bus interfaces, fast 16-cycle hardware division, and commercial silicon verification (RP2350).</li>
+              <li><strong>Select VexRiscv when:</strong> You are targeting high-end FPGAs (Xilinx UltraScale, Intel Stratix) and require a mature, modular 5-stage RISC architecture with dynamic BTB branch prediction, instruction/data caches, and MMU support for Linux.</li>
+              <li><strong>Avoid Archetype 3 when:</strong> You cannot afford the silicon area for full forwarding multiplexers and dual-ported SRAMs, where a simpler 2-stage core (Archetype 2) delivers adequate performance at 40% lower gate count.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!-- SUBSECTION 2.4: ARCHETYPE 4 DEEP-DIVE -->
+    <!-- ============================================================ -->
+    <div id="archetype-4-deepdive" class="concept-stream" style="margin-top: 2.5rem;">
+      <div class="concept-step-card archetype-yellow-border">
+        <div class="step-card-header">
+          <span class="step-tag badge-yellow">2.4 ARCHITECTURAL DEEP-DIVE</span>
+          <h3 class="step-card-title">Archetype 4: Superscalar Dual-Issue Industrial Embedded Engines (VeeR EL2)</h3>
+        </div>
+        <p class="step-card-lead">
+          In high-IOPS enterprise storage controllers, NVMe flash memory management, and data-center network accelerators, even the most optimized single-issue processor hits an insurmountable theoretical ceiling: <strong>CPI cannot drop below 1.0</strong>. Archetype 4 shatters this single-issue barrier by introducing <strong>in-order dual-issue superscalar execution</strong>. By fetching, decoding, and dispatching two instructions simultaneously into parallel execution pipelines, these industrial-grade engines drive sustained CPI down to <strong>~1.03</strong>, achieving unparalleled compute density within an embedded power envelope.
+        </p>
+
+        <!-- 2.4.1 VEER EL2 DEEP-DIVE -->
+        <div class="sub-topic-card">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-yellow">CORE 8</span>
+            <h4>VeeR EL2: The 4-Stage Dual-Issue Superscalar Core (~48.5 kGE)</h4>
+          </div>
+          <p>
+            Developed by <strong>Western Digital</strong> and maintained by the <strong>CHIPS Alliance</strong>, <strong>VeeR EL2</strong> (formerly SweRV EL2) is one of the highest-performing embedded RISC-V cores in production silicon, engineered specifically to manage multi-gigabyte-per-second NVMe storage controllers:
+          </p>
+          <ul class="concept-list">
+            <li><strong>4-Stage Dual-Issue Superscalar Pipeline:</strong>
+              <br />&bull; <em>Stage 1 (Fetch):</em> 64-bit aligned dual-instruction fetch from tightly-coupled instruction memory (ICCM).
+              <br />&bull; <em>Stage 2 (Align, Decode &amp; Dual Dispatch):</em> Pre-decodes up to 4 instructions, analyzes inter-instruction read-after-write (RAW) data dependencies, and steers valid pairs simultaneously into parallel execution pipes.
+              <br />&bull; <em>Stage 3 (Execute 1 - EX1):</em> Four dedicated parallel execution units operate concurrently: Primary ALU 1, Secondary ALU 2, Pipelined Multiplier/Divider, and dedicated Branch Execution Unit (BRU).
+              <br />&bull; <em>Stage 4 (Execute 2 &amp; Dual Commit - EX2/WB):</em> Resolves load data alignment and commits up to <strong>two instruction results per cycle</strong> into the multi-port register file.
+            </li>
+            <li><strong>Breaking the CPI = 1.0 Barrier:</strong> When executing loops with independent arithmetic or memory instructions, VeeR EL2 executes two instructions per clock cycle (IPC = 2.0, CPI = 0.5). Over the full CoreMark benchmark workload, it achieves a sustained CPI of <strong>1.030</strong>.</li>
+            <li><strong>Dynamic Gshare Branch Predictor &amp; 512-Entry BTB:</strong> To avoid devastating 3-cycle pipeline flushes on taken branches, VeeR EL2 integrates a 512-entry Branch Target Buffer (BTB) coupled with a dynamic Gshare branch history table using 2-bit saturating counters, achieving &gt;94% prediction accuracy on control code.</li>
+            <li><strong>Quad-Read Dual-Write (4R/2W) Register File:</strong> Supports reading up to 4 source operands (<code>rs1_0, rs2_0, rs1_1, rs2_1</code>) and committing 2 destination results (<code>rd_0, rd_1</code>) in the exact same clock edge.</li>
+            <li><strong>Tightly-Coupled Memories (ICCM / DCCM):</strong> Dual 64-bit wide interfaces directly connect to on-chip SRAMs, eliminating cache miss latency and providing deterministic multi-word throughput for flash translation layer (FTL) firmware.</li>
+          </ul>
+
+          <!-- Figure 2.8: VeeR EL2 Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 2.8 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">VeeR EL2: 4-Stage Dual-Issue Superscalar Datapath Architecture</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridVeer" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowRedVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#ff6b4a"/>
+                  </marker>
+                  <marker id="arrowGoldVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706"/>
+                  </marker>
+                  <marker id="arrowTealVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridVeer)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#eab308"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • VEER EL2 4-STAGE DUAL-ISSUE SUPERSCALAR ARCHITECTURE</text>
+
+                <!-- Stage 1: 64-Bit Dual Fetch -->
+                <rect x="25" y="45" width="160" height="270" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="25" y="45" width="160" height="20" rx="4" fill="#f1f5f9"/>
+                <text x="32" y="59" font-size="8.5" font-weight="900" fill="#d97706" font-family="monospace">1. 64b DUAL FETCH</text>
+                
+                <rect x="35" y="75" width="140" height="60" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="43" y="93" font-size="8" font-weight="900" fill="#065f46" font-family="monospace">64-BIT ICCM SRAM</text>
+                <text x="43" y="108" font-size="7.5" fill="#151b20">Fetches 2 &#215; 32b instrs</text>
+                <text x="43" y="122" font-size="7.5" fill="#666">Dual-ported tightly coupled</text>
+
+                <rect x="35" y="145" width="140" height="75" rx="4" fill="#fff8e1" stroke="#151b20" stroke-width="1.5"/>
+                <text x="43" y="163" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">512-ENTRY BTB</text>
+                <text x="43" y="178" font-size="7.5" fill="#151b20">&amp; Dynamic Gshare BHT</text>
+                <text x="43" y="192" font-size="7.5" fill="#666">2-bit saturating counters</text>
+                <text x="43" y="206" font-size="7.5" font-weight="800" fill="#d97706">&gt;94% prediction accuracy</text>
+
+                <rect x="35" y="230" width="140" height="75" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.5"/>
+                <text x="43" y="248" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">FETCH QUEUE</text>
+                <text x="43" y="264" font-size="7.5" fill="#666">4-instruction FIFO</text>
+                <text x="43" y="278" font-size="7.5" fill="#666">RVC 16b/32b expander</text>
+
+                <!-- Stage 2: Align, Decode & Dual Dispatch -->
+                <rect x="200" y="45" width="175" height="270" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="200" y="45" width="175" height="20" rx="4" fill="#f1f5f9"/>
+                <text x="208" y="59" font-size="8.5" font-weight="900" fill="#d97706" font-family="monospace">2. DUAL DISPATCH</text>
+
+                <rect x="210" y="75" width="155" height="70" rx="4" fill="#fff8e1" stroke="#151b20" stroke-width="1.5"/>
+                <text x="218" y="93" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">DUAL DECODER</text>
+                <text x="218" y="108" font-size="7.5" fill="#151b20">Inst 0 &amp; Inst 1 decoded</text>
+                <text x="218" y="122" font-size="7.5" fill="#666">Dependency checker</text>
+                <text x="218" y="136" font-size="7.5" font-weight="800" fill="#d97706">RAW Hazard Steering</text>
+
+                <rect x="210" y="155" width="155" height="150" rx="4" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="210" y="155" width="155" height="18" rx="4" fill="#f4eee1"/>
+                <text x="218" y="168" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">4R / 2W REG FILE</text>
+                <text x="218" y="188" font-size="7.5" fill="#151b20">• 4 Read Ports (<code>rs1/2_0, rs1/2_1</code>)</text>
+                <text x="218" y="202" font-size="7.5" fill="#151b20">• 2 Write Ports (<code>rd_0, rd_1</code>)</text>
+                <text x="218" y="224" font-size="7.5" font-weight="800" fill="#0d9488">Simultaneous 2-inst read</text>
+                <text x="218" y="238" font-size="7.5" fill="#666">Zero port conflict stall</text>
+                <text x="218" y="260" font-size="7.5" font-weight="800" fill="#d97706">Dual Issue Steering:</text>
+                <text x="218" y="274" font-size="7.5" fill="#151b20">&#8226; Pipe 0: ALU1 / Branch</text>
+                <text x="218" y="288" font-size="7.5" fill="#151b20">&#8226; Pipe 1: ALU2 / Mem / Mul</text>
+
+                <!-- Stage 3: Parallel Execution Pipes -->
+                <rect x="390" y="45" width="190" height="270" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="390" y="45" width="190" height="20" rx="4" fill="#f1f5f9"/>
+                <text x="398" y="59" font-size="8.5" font-weight="900" fill="#d97706" font-family="monospace">3. PARALLEL PIPES (EX1)</text>
+
+                <!-- Pipe 0: ALU 1 -->
+                <polygon points="405,75 465,95 465,135 405,155 405,130 415,115 405,100" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="420" y="112" font-size="8.5" font-weight="900" fill="#065f46" font-family="monospace">ALU 1</text>
+                <text x="415" y="124" font-size="7" fill="#059669">Primary</text>
+
+                <!-- Pipe 1: ALU 2 -->
+                <polygon points="405,165 465,185 465,225 405,245 405,220 415,205 405,190" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="420" y="202" font-size="8.5" font-weight="900" fill="#065f46" font-family="monospace">ALU 2</text>
+                <text x="412" y="214" font-size="7" fill="#059669">Secondary</text>
+
+                <!-- Multiplier / Divider -->
+                <rect x="480" y="75" width="90" height="75" rx="4" fill="#fff8e1" stroke="#151b20" stroke-width="1.5"/>
+                <text x="486" y="93" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">MULDIV PIPE</text>
+                <text x="486" y="108" font-size="7" fill="#151b20">Pipelined mul</text>
+                <text x="486" y="120" font-size="7" fill="#666">Radix-4 div</text>
+
+                <!-- Branch Unit -->
+                <rect x="480" y="165" width="90" height="75" rx="4" fill="#fff1f2" stroke="#ff6b4a" stroke-width="1.5"/>
+                <text x="486" y="183" font-size="7.5" font-weight="900" fill="#991b1b" font-family="monospace">BRANCH UNIT</text>
+                <text x="486" y="198" font-size="7" fill="#151b20">Early resolution</text>
+                <text x="486" y="210" font-size="7" fill="#666">BTB update</text>
+
+                <!-- Stage 4: Execute 2 & Dual Commit -->
+                <rect x="595" y="45" width="140" height="270" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="2"/>
+                <rect x="595" y="45" width="140" height="20" rx="4" fill="#f1f5f9"/>
+                <text x="602" y="59" font-size="8.5" font-weight="900" fill="#d97706" font-family="monospace">4. DUAL COMMIT (WB)</text>
+
+                <rect x="605" y="75" width="120" height="85" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="613" y="93" font-size="8" font-weight="900" fill="#065f46" font-family="monospace">64-BIT DCCM SRAM</text>
+                <text x="613" y="108" font-size="7.5" fill="#151b20">Dual memory ports</text>
+                <text x="613" y="122" font-size="7.5" fill="#666">Load/store aligner</text>
+                <text x="613" y="145" font-size="7.5" font-weight="800" fill="#047857">Non-blocking load</text>
+
+                <rect x="605" y="175" width="120" height="85" rx="4" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="613" y="193" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">DUAL COMMIT</text>
+                <text x="613" y="208" font-size="7.5" fill="#151b20">Up to 2 instrs / cycle</text>
+                <text x="613" y="222" font-size="7.5" font-weight="800" fill="#d97706">Measured CPI ~1.03</text>
+                <text x="613" y="244" font-size="7.5" fill="#666">Precise exception</text>
+
+                <!-- Dual Commit Highway (Teal) -->
+                <path d="M 665 260 L 665 330 L 285 330 L 285 305" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowTealVeer)"/>
+                <rect x="380" y="322" width="200" height="18" rx="3" fill="#f0fdfa" stroke="#0d9488" stroke-width="1"/>
+                <text x="388" y="335" font-size="8" font-weight="900" fill="#0f766e">DUAL WRITEBACK: 2 Results / Cycle to Regfile</text>
+
+                <!-- Branch Misprediction Loop (Red) -->
+                <path d="M 525 165 L 525 32 L 85 32 L 85 75" fill="none" stroke="#ff6b4a" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowRedVeer)"/>
+                <rect x="180" y="24" width="220" height="16" rx="3" fill="#fff1f2" stroke="#ff6b4a" stroke-width="1"/>
+                <text x="186" y="36" font-size="8" font-weight="900" fill="#b91c1c">BRANCH FLUSH: 3-Cycle Penalty (if mispredicted)</text>
+
+                <!-- Bottom Status Strip -->
+                <rect x="25" y="348" width="710" height="24" rx="4" fill="#151b20"/>
+                <text x="35" y="364" font-size="9" font-weight="800" fill="#cbd5e1" font-family="monospace">METRICS: Measured CPI: 1.030 | CoreMark/MHz: 2.56 | DMIPS/MHz: 1.68 | Western Digital Silicon in NVMe SSDs</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 2.8:</strong> VeeR EL2 4-stage dual-issue superscalar datapath architecture. A 64-bit dual-fetch engine retrieves two instructions per cycle from tightly-coupled ICCM SRAM backed by a 512-entry BTB. The dual-dispatch unit steers instructions simultaneously into four parallel execution pipes (ALU1, ALU2, Mult/Div, Branch). A 4R/2W register file commits up to two results concurrently, achieving sustained CPI of 1.030 in commercial storage controllers.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2.4.2 SUPERSCALAR HAZARD & INSTRUCTION PAIRING MATRIX -->
+        <div class="sub-topic-card" style="margin-top: 2rem;">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-paper">INSTRUCTION PAIRING ANALYSIS</span>
+            <h4>VeeR EL2 Dual-Issue Instruction Pairing Rules</h4>
+          </div>
+          <p>
+            In an in-order superscalar pipeline, achieving dual-issue execution depends on strict architectural pairing constraints. When two candidate instructions meet the compatibility criteria, they dispatch in parallel; otherwise, the second instruction stalls for 1 cycle:
+          </p>
+
+          <div class="table-scroll" style="margin-top: 1rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Instruction Pair Combination</th>
+                  <th>Dual-Issue Capable?</th>
+                  <th>Cycle Latency</th>
+                  <th>Hardware Mechanism &amp; Constraint</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>ALU + ALU (Independent)</strong><br /><code>add x1, x2, x3</code> &amp; <code>sub x4, x5, x6</code></td>
+                  <td><span class="score-badge" style="background: #22c55e; color: #fff;">YES</span></td>
+                  <td>1 clock cycle (CPI = 0.5)</td>
+                  <td>Dispatches Inst 0 to ALU 1 and Inst 1 to ALU 2 concurrently. Both write back to separate ports on cycle edge.</td>
+                </tr>
+                <tr>
+                  <td><strong>ALU + Load (Independent)</strong><br /><code>addi x1, x2, 4</code> &amp; <code>lw x3, 0(x4)</code></td>
+                  <td><span class="score-badge" style="background: #22c55e; color: #fff;">YES</span></td>
+                  <td>1 clock cycle</td>
+                  <td>Inst 0 uses ALU 1; Inst 1 computes memory address in ALU 2 and asserts DCCM load request.</td>
+                </tr>
+                <tr>
+                  <td><strong>Branch + ALU (Independent)</strong><br /><code>bne x1, x2, target</code> &amp; <code>add x3, x4, x5</code></td>
+                  <td><span class="score-badge" style="background: #22c55e; color: #fff;">YES</span></td>
+                  <td>1 clock cycle</td>
+                  <td>Branch evaluates in dedicated Branch Unit; ALU executes concurrently. If branch taken, ALU result commits or rolls back based on branch order.</td>
+                </tr>
+                <tr>
+                  <td><strong>RAW Data Hazard (Dependent ALU)</strong><br /><code>add x1, x2, x3</code> &amp; <code>sub x4, x1, x5</code></td>
+                  <td><span class="badge badge-coral">NO (Stall 1 cyc)</span></td>
+                  <td>2 clock cycles</td>
+                  <td>Inst 1 consumes <code>x1</code> produced by Inst 0. Inter-instruction bypass forwards result from EX1 to EX2, but dual-issue is split.</td>
+                </tr>
+                <tr>
+                  <td><strong>Load-to-Use Hazard</strong><br /><code>lw x1, 0(x2)</code> &amp; <code>add x3, x1, x4</code></td>
+                  <td><span class="badge badge-coral">NO (Stall 2 cyc)</span></td>
+                  <td>3 clock cycles</td>
+                  <td>Memory word requires 1 cycle DCCM read latency; consuming instruction stalls in dispatch stage until data valid.</td>
+                </tr>
+                <tr>
+                  <td><strong>Multiplier + Multiplier</strong><br /><code>mul x1, x2, x3</code> &amp; <code>mul x4, x5, x6</code></td>
+                  <td><span class="badge badge-coral">NO (Structural Stall)</span></td>
+                  <td>2 clock cycles</td>
+                  <td>Only one hardware multiplier pipeline is provisioned to conserve silicon area. Second multiply serialized.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Architectural Decision Guide -->
+          <div class="arch-verdict-box" style="margin-top: 1.25rem;">
+            <h5 class="verdict-title">&#9878; System Architect's Decision Guide: When to Select Archetype 4?</h5>
+            <ul class="concept-list">
+              <li><strong>Select VeeR EL2 when:</strong> You are architecting enterprise-grade storage controllers (NVMe, SAS, SATA), high-throughput network interfaces (SmartNICs), or industrial real-time compute complexes where single-issue CPI &ge; 1.0 is an intolerable throughput bottleneck.</li>
+              <li><strong>Select VeeR EL2 when:</strong> You require the highest possible DMIPS/MHz (1.68) and CoreMark/MHz (2.56) in open silicon, backed by Western Digital's silicon qualification and mass-production testing.</li>
+              <li><strong>Avoid Archetype 4 when:</strong> Your gate count budget is below 40 kGE or you cannot provision a 4R/2W multiported register file and dual-ported 64-bit SRAMs.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <!-- SECTION 3: ARCHITECTURAL SIMILARITIES -->
@@ -3981,7 +5006,19 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
 
   /* Section 1.1 Styles */
   .archetype-coral-border {
-    border-top: 5px solid var(--coral, #ff6b4a) !important;
+    border-top: 5px solid var(--coral, #f38469) !important;
+  }
+
+  .archetype-teal-border {
+    border-top: 5px solid var(--teal, #0d9488) !important;
+  }
+
+  .archetype-lime-border {
+    border-top: 5px solid var(--lime, #b7df69) !important;
+  }
+
+  .archetype-yellow-border {
+    border-top: 5px solid var(--yellow, #ffc83e) !important;
   }
 
   .concept-stream {
