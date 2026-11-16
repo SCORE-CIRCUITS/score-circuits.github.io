@@ -445,14 +445,16 @@ function getToolUrl(tool: any) {
                   if (!tool) return null;
                   return (
                     <div class="tool-card">
-                      <div class="tool-card-top">
-                        <span class={`tool-badge ${tier.badgeClass}`}>Cat {tool.categoryNumber}: {tool.categoryName.split(':')[1]?.trim() || tool.categoryName}</span>
-                        <span class="tool-lang">{tool.language}</span>
+                      <div class="tool-card-main">
+                        <div class="tool-card-top">
+                          <span class={`tool-badge ${tier.badgeClass}`}>Cat {tool.categoryNumber}: {tool.categoryName.split(':')[1]?.trim() || tool.categoryName}</span>
+                          <span class="tool-lang">{tool.language}</span>
+                        </div>
+                        <h4 class="tool-name">
+                          <a href={getToolUrl(tool)}>{tool.name}</a>
+                        </h4>
+                        <p class="tool-sub">{tool.subtitle}</p>
                       </div>
-                      <h4 class="tool-name">
-                        <a href={getToolUrl(tool)}>{tool.name}</a>
-                      </h4>
-                      <p class="tool-sub">{tool.subtitle}</p>
                       
                       <div class="tool-specs">
                         <div class="spec-row">
@@ -470,10 +472,10 @@ function getToolUrl(tool: any) {
                       </div>
 
                       <div class="tool-actions">
-                        <a href={getToolUrl(tool)} class="noc-sim-btn secondary" style="font-size: 0.8rem; padding: 6px 12px;">Architecture Deep Dive &rarr;</a>
                         {tool.benchmarks.length > 0 && (
                           <span class="bench-tag">&#10003; {tool.benchmarks.length} Traces</span>
                         )}
+                        <a href={getToolUrl(tool)} class="noc-sim-btn secondary" style="font-size: 0.82rem; padding: 6px 14px; white-space: nowrap;">Architecture Deep Dive &rarr;</a>
                       </div>
                     </div>
                   );
@@ -1159,32 +1161,40 @@ function getToolUrl(tool: any) {
   }
 
   .tier-tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
   }
 
   .tool-card {
     background: var(--cream, #fffaf0);
     border: 2px solid var(--ink, #151b20);
-    border-radius: 14px;
-    box-shadow: 5px 5px 0px var(--ink, #151b20);
-    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 3.5px 3.5px 0px var(--ink, #151b20);
+    padding: 1.15rem 1.35rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
   .tool-card:hover {
     transform: translate(-2px, -2px);
-    box-shadow: 7px 7px 0px var(--yellow);
+    box-shadow: 5.5px 5.5px 0px var(--yellow);
+  }
+
+  .tool-card-main {
+    flex: 1.2;
+    min-width: 220px;
   }
 
   .tool-card-top {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.75rem;
+    gap: 0.65rem;
+    margin-bottom: 0.35rem;
   }
 
   .tool-badge {
@@ -1205,9 +1215,9 @@ function getToolUrl(tool: any) {
   }
 
   .tool-name {
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     font-weight: 900;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
     letter-spacing: -0.01em;
   }
 
@@ -1221,21 +1231,23 @@ function getToolUrl(tool: any) {
   }
 
   .tool-sub {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--ink-light);
-    margin-bottom: 1.25rem;
-    line-height: 1.4;
+    margin-bottom: 0;
+    line-height: 1.35;
   }
 
   .tool-specs {
     background: var(--paper);
     border: 1.5px solid var(--line);
     border-radius: 8px;
-    padding: 0.75rem;
-    margin-bottom: 1.25rem;
+    padding: 0.6rem 0.85rem;
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 0;
   }
 
   .spec-row {
@@ -1257,9 +1269,11 @@ function getToolUrl(tool: any) {
 
   .tool-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    margin-top: 0;
   }
 
   .bench-tag {
@@ -1413,18 +1427,25 @@ function getToolUrl(tool: any) {
     }
 
     .tier-tools-grid {
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
+      gap: 1rem;
+    }
+
+    .tool-card {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
     }
 
     .tool-actions {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.5rem;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 0.25rem;
     }
 
     .tool-actions .noc-sim-btn {
-      width: 100%;
+      width: auto;
       text-align: center;
       justify-content: center;
     }
