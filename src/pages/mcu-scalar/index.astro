@@ -732,16 +732,17 @@ const bespokeDossiers = [
     </div>
   </div>
 
-  <!-- SECTION 1: MICROARCHITECTURAL SPECTRUM -->
+  <!-- SECTION 1: MICROARCHITECTURAL SPECTRUM & DEEP TAXONOMY -->
   <section id="microarchitectural-spectrum" class="content-block">
     <div class="block-header-wrap">
-      <div class="badge badge-primary">&sect; 1. ARCHITECTURAL TAXONOMY</div>
-      <h2 class="block-title">The Four Microarchitectural Archetypes</h2>
+      <div class="badge badge-primary">&sect; 1. ARCHITECTURAL TAXONOMY &amp; THE FOUR ARCHETYPES</div>
+      <h2 class="block-title">The Scalar Processor Design Space &amp; Microarchitectural Taxonomy</h2>
       <p class="block-lead">
-        Category 1 evaluates 12 open-source scalar cores covering four distinct design philosophies—ranging from extreme 1-bit area conservation to dual-issue superscalar instruction throughput.
+        In deeply embedded computing, the central engineering challenge is balancing the eternal hardware triad: <strong>Silicon Area</strong> (<em>A</em>, in kGE or LUTs), <strong>Operating Frequency</strong> (<em>F</em><sub>max</sub>), and <strong>Execution Efficiency</strong> (CPI, CoreMark/MHz). Category 1 evaluates 12 open-source scalar implementations spanning four distinct microarchitectural philosophies.
       </p>
     </div>
 
+    <!-- 1.0 ARCHETYPE OVERVIEW GRID -->
     <div class="arch-features-grid">
       <!-- Archetype 1 -->
       <div class="feature-card archetype-coral">
@@ -749,7 +750,7 @@ const bespokeDossiers = [
         <h3>Ultra-Compact / Bit-Serial &amp; Minimal Multi-Cycle</h3>
         <p class="arch-cores-list"><strong>Representative Cores:</strong> SERV, DarkRISCV, PicoRV32</p>
         <p>
-          Architectures where silicon area is the primary design bottleneck. <strong>SERV</strong> shifts operands 1 bit per clock cycle through a single 1-bit ALU across 32 cycles, consuming fewer than 150 FPGA LUTs. <strong>PicoRV32</strong> reuses a single 32-bit adder for PC increments, memory address calculation, and arithmetic over 3–4 clock cycles.
+          Architectures where silicon area is the absolute limiting constraint. <strong>SERV</strong> shifts operands 1 bit per clock cycle through a single 1-bit ALU across 32 cycles, consuming fewer than 150 FPGA LUTs. <strong>PicoRV32</strong> reuses a single 32-bit adder for PC increments, memory address calculation, and arithmetic over 3&ndash;4 clock cycles.
         </p>
         <div class="arch-meta-pills">
           <span class="pill-metric">CPI: 1.6 &ndash; 32.0</span>
@@ -779,7 +780,7 @@ const bespokeDossiers = [
         <h3>High-Efficiency Deep Pipelined Harvard Cores</h3>
         <p class="arch-cores-list"><strong>Representative Cores:</strong> Hazard3, SCR1 (MAX), VexRiscv (GenFull), RV12</p>
         <p>
-          3 to 5 stage decoupled in-order pipelines featuring independent AHB5/AXI4 instruction and data buses, comprehensive operand forwarding paths, hardware bit-manipulation (Zba/Zbb/Zbc/Zbs), and fast radix-4 dividers. Delivers exceptional IPC (>3.0 CoreMark/MHz) without superscalar complexity.
+          3 to 5 stage decoupled in-order pipelines featuring independent AHB5/AXI4 instruction and data buses, comprehensive operand forwarding paths, hardware bit-manipulation (Zba/Zbb/Zbc/Zbs), and fast radix-4 dividers. Delivers exceptional IPC (&gt;3.0 CoreMark/MHz) without superscalar complexity.
         </p>
         <div class="arch-meta-pills">
           <span class="pill-metric">CPI: 1.15 &ndash; 1.30</span>
@@ -800,6 +801,446 @@ const bespokeDossiers = [
           <span class="pill-metric">CPI: ~1.03</span>
           <span class="pill-metric">CoreMark/MHz: 2.56</span>
           <span class="pill-metric">Niche: High-IOPS NVMe / Industrial SSDs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SUBSECTION 1.1: ARCHETYPE 1 DEEP-DIVE -->
+    <!-- ============================================================ -->
+    <div class="concept-stream" style="margin-top: 2.5rem;">
+      <div class="concept-step-card archetype-coral-border">
+        <div class="step-card-header">
+          <span class="step-tag" style="background: var(--coral); color: #fff;">1.1 ARCHITECTURAL DEEP-DIVE</span>
+          <h3 class="step-card-title">Archetype 1: Ultra-Compact Minimalist Datapaths (SERV, PicoRV32 &amp; DarkRISCV)</h3>
+        </div>
+        <p class="step-card-lead">
+          When an embedded systems architect has fewer than 1,000 FPGA LUTs or a silicon area budget below 10 kGE, a classical 32-bit pipelined CPU is physically impossible to fabricate. A conventional 32-bit dual-read single-write register file alone consumes over 32,000 transistors; a dedicated parallel 32-bit carry-lookahead adder demands hundreds more. Archetype 1 abandons wide parallel execution in favor of two ingenious architectural paradigms: <strong>Bit-Serial Datapaths</strong> and <strong>Single Shared-Adder State Machines</strong>.
+        </p>
+
+        <!-- 1.1.1 SERV DEEP-DIVE -->
+        <div class="sub-topic-card">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-coral">CORE 1</span>
+            <h4>SERV: The 1-Stage Bit-Serial Architecture (~2.1 kGE)</h4>
+          </div>
+          <p>
+            Developed by Olof Kindgren, <strong>SERV</strong> is officially the world's smallest 32-bit RISC-V processor. Instead of computing all 32 bits of an operation simultaneously in a single clock cycle, SERV shrinks the datapath down to a <strong>single 1-bit ALU</strong>:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Bit-by-Bit Shift Execution:</strong> Source operands in registers <code>rs1</code> and <code>rs2</code> are stored in serial shift registers. On each clock cycle, exactly 1 bit is shifted out from <code>rs1</code> and 1 bit from <code>rs2</code> into a 1-bit full adder slice.</li>
+            <li><strong>Carry Recirculation Loop:</strong> The carry-out (<em>C</em><sub>out</sub>) from the 1-bit addition is captured into a 1-bit flip-flop and recirculated as the carry-in (<em>C</em><sub>in</sub>) for the subsequent bit on the next clock cycle.</li>
+            <li><strong>Instruction Latency:</strong> A standard 32-bit integer arithmetic instruction (<code>add</code>, <code>sub</code>, <code>and</code>, <code>or</code>, <code>xor</code>) takes exactly <strong>32 clock cycles</strong> to shift all bits through the 1-bit ALU into the destination register <code>rd</code>. Non-aligned memory accesses and branches take up to 64 clock cycles.</li>
+            <li><strong>Why It Matters in Silicon:</strong> Eliminating 32-bit parallel interconnect buses and wide multiplexers reduces the entire core to just <strong>~2.1 kGE</strong> (126 to 150 Xilinx LUTs). Over 100 SERV cores can be tiled inside a single entry-level FPGA.</li>
+          </ul>
+
+          <!-- Figure 1.1: SERV Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 1.1 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">SERV: 1-Stage Bit-Serial Datapath Architecture</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridServ" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowServ" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#ff6b4a"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridServ)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#22c55e"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • SERV BIT-SERIAL 1-STAGE DATAPATH TOPOLOGY</text>
+
+                <!-- 1. Source Register rs1 Shift Register Block -->
+                <rect x="40" y="60" width="180" height="65" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+                <rect x="40" y="60" width="180" height="20" rx="5" fill="#f4eee1"/>
+                <text x="50" y="74" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">REG FILE: rs1 [31:0]</text>
+                <text x="50" y="100" font-size="11" font-weight="700" fill="#151b20">32-Bit Serial Shift Reg</text>
+                <text x="50" y="115" font-size="9" fill="#666">Shift Right: 1 bit / clk</text>
+                <!-- Serial Out Node rs1 -->
+                <circle cx="220" cy="92" r="4" fill="#ff6b4a"/>
+                <text x="180" y="87" font-size="9" font-weight="900" fill="#ff6b4a" font-family="monospace">1-bit q</text>
+
+                <!-- 2. Source Register rs2 Shift Register Block -->
+                <rect x="40" y="170" width="180" height="65" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+                <rect x="40" y="170" width="180" height="20" rx="5" fill="#f4eee1"/>
+                <text x="50" y="184" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">REG FILE: rs2 [31:0]</text>
+                <text x="50" y="210" font-size="11" font-weight="700" fill="#151b20">32-Bit Serial Shift Reg</text>
+                <text x="50" y="225" font-size="9" fill="#666">Shift Right: 1 bit / clk</text>
+                <!-- Serial Out Node rs2 -->
+                <circle cx="220" cy="202" r="4" fill="#ff6b4a"/>
+                <text x="180" y="197" font-size="9" font-weight="900" fill="#ff6b4a" font-family="monospace">1-bit q</text>
+
+                <!-- 3. Central 1-Bit ALU Slicer -->
+                <polygon points="320,60 410,105 410,195 320,240 320,170 340,150 320,130" fill="#fff8e1" stroke="#151b20" stroke-width="2.5"/>
+                <text x="345" y="145" font-size="13" font-weight="900" fill="#151b20" font-family="monospace">1-BIT</text>
+                <text x="350" y="162" font-size="13" font-weight="900" fill="#ff6b4a" font-family="monospace">ALU</text>
+                <text x="330" y="185" font-size="8.5" font-weight="700" fill="#666">Full Adder + Logic</text>
+
+                <!-- Data lines rs1/rs2 to ALU -->
+                <path d="M 220 92 L 320 92" fill="none" stroke="#ff6b4a" stroke-width="2" marker-end="url(#arrowRed)"/>
+                <text x="245" y="85" font-size="9" font-weight="800" fill="#ff6b4a">rs1_bit (1b)</text>
+
+                <path d="M 220 202 L 320 202" fill="none" stroke="#ff6b4a" stroke-width="2" marker-end="url(#arrowRed)"/>
+                <text x="245" y="195" font-size="9" font-weight="800" fill="#ff6b4a">rs2_bit (1b)</text>
+
+                <!-- 4. 1-Bit Carry Recirculation Flip-Flop -->
+                <rect x="335" y="280" width="80" height="50" rx="6" fill="#e8f7ec" stroke="#151b20" stroke-width="2"/>
+                <text x="345" y="298" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">1-BIT REG</text>
+                <text x="343" y="316" font-size="11" font-weight="900" fill="#15803d">Carry-FF</text>
+
+                <!-- Carry Out line from ALU down to Carry-FF -->
+                <path d="M 390 195 L 390 280" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arrowServ)"/>
+                <text x="395" y="240" font-size="8.5" font-weight="800" fill="#15803d">C_out (1b)</text>
+
+                <!-- Carry In line from Carry-FF back up to ALU -->
+                <path d="M 350 280 L 350 225" fill="none" stroke="#15803d" stroke-width="2" marker-end="url(#arrowServ)"/>
+                <text x="310" y="260" font-size="8.5" font-weight="800" fill="#15803d">C_in (1b)</text>
+
+                <!-- 5. Destination Register rd Shift Register Block -->
+                <rect x="520" y="115" width="200" height="70" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
+                <rect x="520" y="115" width="200" height="20" rx="5" fill="#f4eee1"/>
+                <text x="530" y="129" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">REG FILE: rd [31:0]</text>
+                <text x="530" y="155" font-size="11" font-weight="700" fill="#151b20">32-Bit Serial Shift In</text>
+                <text x="530" y="170" font-size="9" fill="#666">Full word valid at Cycle 31</text>
+
+                <!-- Result line from ALU to rd -->
+                <path d="M 410 150 L 520 150" fill="none" stroke="#151b20" stroke-width="2.5" marker-end="url(#arrowServ)"/>
+                <text x="430" y="142" font-size="9.5" font-weight="900" fill="#151b20">rd_bit (1-bit / clk)</text>
+
+                <!-- 6. 5-bit Cycle Counter & FSM -->
+                <rect x="520" y="240" width="200" height="65" rx="6" fill="#151b20" stroke="#151b20" stroke-width="2"/>
+                <text x="535" y="260" font-size="10" font-weight="900" fill="#ffc83e" font-family="monospace">5-BIT CYCLE COUNTER</text>
+                <text x="535" y="280" font-size="11" font-weight="700" fill="#ffffff">Cycles: [0 .. 31]</text>
+                <text x="535" y="295" font-size="9" fill="#cbd5e1">Triggers WB &amp; PC increment</text>
+
+                <!-- Control flow from counter to rd -->
+                <path d="M 620 240 L 620 185" fill="none" stroke="#ffc83e" stroke-dasharray="3,3" stroke-width="2" marker-end="url(#arrowServ)"/>
+                <text x="625" y="215" font-size="8.5" font-weight="800" fill="#151b20">Commit Pulse</text>
+
+                <!-- Bottom Status Callout -->
+                <rect x="40" y="315" width="280" height="28" rx="4" fill="#fff8e1" stroke="#151b20" stroke-width="1"/>
+                <text x="50" y="333" font-size="9" font-weight="800" fill="#151b20">Area: ~2.1 kGE | Latency: 32 cycles/inst</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 1.1:</strong> In SERV, operands are shifted out 1 bit at a time from <code>rs1</code> and <code>rs2</code> into a 1-bit ALU. A 1-bit flip-flop recirculates carry bits across consecutive cycles. After 32 clock ticks, the 5-bit cycle counter signals the completion of the 32-bit register commit.
+            </p>
+          </div>
+        </div>
+
+        <!-- 1.1.2 PICORV32 DEEP-DIVE -->
+        <div class="sub-topic-card" style="margin-top: 2rem;">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-teal">CORE 2</span>
+            <h4>PicoRV32: The Multi-Cycle Shared-Adder FSM Architecture (~9.5 kGE)</h4>
+          </div>
+          <p>
+            Claire Wolf's <strong>PicoRV32</strong> targets a different compromise: achieve an order-of-magnitude higher performance than bit-serial cores (delivering <strong>~0.90 CoreMark/MHz</strong> instead of 0.03), while preserving a tiny FPGA footprint (under 800 LUTs). It accomplishes this through <strong>arithmetic unit multiplexing</strong>:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Single Shared 32-bit Adder:</strong> A conventional pipelined CPU has separate adders for incrementing the Program Counter (<code>PC + 4</code>), calculating branch targets (<code>PC + imm</code>), generating memory effective addresses (<code>rs1 + imm</code>), and executing ALU additions (<code>rs1 + rs2</code>). PicoRV32 eliminates all duplicate adders and routes every calculation through <strong>one central 32-bit adder</strong>.</li>
+            <li><strong>4-Phase State Machine Sequencing:</strong> Instruction execution is broken down into discrete non-overlapping states:
+              <br />&bull; <em>Cycle 1 (Fetch):</em> Adder computes <code>PC + 4</code>. Memory bus read request is asserted.
+              <br />&bull; <em>Cycle 2 (Decode / Wait):</em> Memory word arrives; instruction opcode is decoded; operands read from register file.
+              <br />&bull; <em>Cycle 3 (Execute):</em> Adder computes ALU operation (<code>rs1 + rs2</code>) or memory address (<code>rs1 + imm</code>).
+              <br />&bull; <em>Cycle 4 (Memory Access / Writeback):</em> Data memory read/write phase or register file commit to <code>rd</code>.
+            </li>
+            <li><strong>Formal Verification Heritage:</strong> PicoRV32 was developed alongside <em>SymbiYosys</em> and is one of the most rigorously formally verified open-source cores in existence, proven against the complete RISC-V ISA formal specification.</li>
+          </ul>
+
+          <!-- Figure 1.2: PicoRV32 Datapath SVG Schematic -->
+          <div class="schematic-container">
+            <div class="schematic-header">
+              <span class="schematic-tag">FIGURE 1.2 ARCHITECTURAL SCHEMATIC</span>
+              <h4 class="schematic-title">PicoRV32: Multi-Cycle Shared-Adder Datapath Architecture</h4>
+            </div>
+            <div class="schematic-svg-wrap">
+              <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cadGridPico" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#cbd5e1" opacity="0.6"/>
+                  </pattern>
+                  <marker id="arrowPico" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
+                  </marker>
+                  <marker id="arrowTeal" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
+                  </marker>
+                </defs>
+
+                <!-- Base Frame & Grid -->
+                <rect width="758" height="378" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridPico)"/>
+
+                <!-- Status Header Banner -->
+                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#0d9488"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • PICORV32 MULTI-CYCLE SHARED ADDER TOPOLOGY</text>
+
+                <!-- Left Column: Input Sources -->
+                <rect x="30" y="55" width="140" height="45" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="40" y="72" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">PC REG [31:0]</text>
+                <text x="40" y="88" font-size="9" fill="#666">Program Counter</text>
+
+                <rect x="30" y="115" width="140" height="45" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="40" y="132" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">REG FILE: rs1</text>
+                <text x="40" y="148" font-size="9" fill="#666">Source Reg A</text>
+
+                <rect x="30" y="195" width="140" height="45" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="40" y="212" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">CONSTANT +4</text>
+                <text x="40" y="228" font-size="9" fill="#666">Next Instruction</text>
+
+                <rect x="30" y="255" width="140" height="45" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="40" y="272" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">REG rs2 / IMM</text>
+                <text x="40" y="288" font-size="9" fill="#666">Operand B or Offset</text>
+
+                <!-- Multiplexer A (Upper) -->
+                <polygon points="220,55 250,75 250,135 220,155" fill="#fff8e1" stroke="#151b20" stroke-width="2"/>
+                <text x="225" y="110" font-size="10" font-weight="900" fill="#151b20">MUX A</text>
+
+                <!-- Multiplexer B (Lower) -->
+                <polygon points="220,195 250,215 250,275 220,295" fill="#fff8e1" stroke="#151b20" stroke-width="2"/>
+                <text x="225" y="250" font-size="10" font-weight="900" fill="#151b20">MUX B</text>
+
+                <!-- Connections to MUX A -->
+                <path d="M 170 77 L 220 77" fill="none" stroke="#151b20" stroke-width="1.5" marker-end="url(#arrowPico)"/>
+                <path d="M 170 137 L 220 137" fill="none" stroke="#151b20" stroke-width="1.5" marker-end="url(#arrowPico)"/>
+
+                <!-- Connections to MUX B -->
+                <path d="M 170 217 L 220 217" fill="none" stroke="#151b20" stroke-width="1.5" marker-end="url(#arrowPico)"/>
+                <path d="M 170 277 L 220 277" fill="none" stroke="#151b20" stroke-width="1.5" marker-end="url(#arrowPico)"/>
+
+                <!-- Central Shared 32-bit Adder -->
+                <polygon points="320,100 420,140 420,230 320,270 320,200 340,185 320,170" fill="#e8f7ec" stroke="#151b20" stroke-width="2.5"/>
+                <text x="345" y="180" font-size="12" font-weight="900" fill="#151b20" font-family="monospace">SHARED 32b</text>
+                <text x="355" y="198" font-size="13" font-weight="900" fill="#0d9488" font-family="monospace">ADDER</text>
+                <text x="340" y="215" font-size="8.5" font-weight="700" fill="#666">1 Single Unit for All</text>
+
+                <!-- Mux outputs to Adder -->
+                <path d="M 250 105 L 320 135" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowTeal)"/>
+                <path d="M 250 245 L 320 235" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowTeal)"/>
+
+                <!-- Output Demultiplexer & Targets -->
+                <path d="M 420 185 L 500 185" fill="none" stroke="#151b20" stroke-width="2.5" marker-end="url(#arrowPico)"/>
+
+                <rect x="500" y="65" width="220" height="45" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="510" y="82" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">Cycle 1: PC &lt;= PC + 4</text>
+                <text x="510" y="98" font-size="8.5" fill="#666">Next Instruction Fetch Address</text>
+
+                <rect x="500" y="125" width="220" height="45" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="510" y="142" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">Cycle 3 (Branch): PC + imm</text>
+                <text x="510" y="158" font-size="8.5" fill="#666">Conditional Branch Target Target</text>
+
+                <rect x="500" y="185" width="220" height="45" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="510" y="202" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">Cycle 3 (Memory): rs1 + imm</text>
+                <text x="510" y="218" font-size="8.5" fill="#666">Effective Memory Address for Load/Store</text>
+
+                <rect x="500" y="245" width="220" height="45" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
+                <text x="510" y="262" font-size="10" font-weight="900" fill="#151b20" font-family="monospace">Cycle 4 (ALU Commit): rd &lt;= Sum</text>
+                <text x="510" y="278" font-size="8.5" fill="#666">Register File Writeback Commit</text>
+
+                <!-- Branching lines from Adder Output -->
+                <path d="M 460 185 L 460 87 L 500 87" fill="none" stroke="#151b20" stroke-width="1.5" marker-end="url(#arrowPico)"/>
+                <path d="M 475 185 L 475 147 L 500 147" fill="none" stroke="#151b20" stroke-width="1.5" marker-end="url(#arrowPico)"/>
+                <path d="M 460 185 L 460 267 L 500 267" fill="none" stroke="#151b20" stroke-width="1.5" marker-end="url(#arrowPico)"/>
+
+                <!-- FSM Controller Badge -->
+                <rect x="30" y="320" width="690" height="30" rx="6" fill="#151b20"/>
+                <text x="45" y="339" font-size="9.5" font-weight="900" fill="#ffc83e" font-family="monospace">STATE MACHINE CONTROLLER: [State 0: Fetch] &rarr; [State 1: Decode] &rarr; [State 2: Execute] &rarr; [State 3: Writeback] &bull; CPI ~3.85</text>
+              </svg>
+            </div>
+            <p class="schematic-caption">
+              <strong>Figure 1.2:</strong> PicoRV32's microarchitecture routes PC incrementation (<code>PC + 4</code>), branch target computation (<code>PC + imm</code>), memory addressing (<code>rs1 + imm</code>), and arithmetic execution through a single 32-bit adder over sequential clock states.
+            </p>
+          </div>
+        </div>
+
+        <!-- 1.1.3 DARKRISCV DEEP-DIVE -->
+        <div class="sub-topic-card" style="margin-top: 2rem;">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-yellow">CORE 3</span>
+            <h4>DarkRISCV: Asynchronous LUT-RAM Distributed Architecture (~8.2 kGE)</h4>
+          </div>
+          <p>
+            Marcelo Samsoniuk's <strong>DarkRISCV</strong> leverages an FPGA-specific architectural primitive: <strong>distributed LUT-RAM</strong>. Unlike standard synchronous block memories (BRAM) which mandate an unavoidable 1-cycle read latency, LUT-RAM supports purely combinational, asynchronous reads:
+          </p>
+          <ul class="concept-list">
+            <li><strong>Combinational Decode &amp; Fetch:</strong> Instruction memory and data registers respond combinationally to address inputs within the same clock period. This collapses instruction fetch and decode into a single phase.</li>
+            <li><strong>Near Single-Cycle Execution:</strong> Because memory wait-states are eliminated when running out of LUT-RAM, DarkRISCV achieves an empirical <strong>CPI of 1.64</strong>, delivering <strong>0.6435 CoreMark/MHz</strong> in just ~8.2 kGE of logic.</li>
+            <li><strong>The Silicon Trade-off:</strong> This design is tailored for FPGAs (Xilinx Artix-7/Spartan-6, Lattice iCE40). In standard ASIC cell libraries, asynchronous RAM arrays require latch-based memories which are sensitive to clock skew and timing hazards.</li>
+          </ul>
+        </div>
+
+        <!-- 1.1.4 INTERACTIVE EXECUTION SIMULATOR WORKBENCH -->
+        <div class="interactive-workbench-card" id="archetype1Sim">
+          <div class="workbench-header">
+            <span class="w-badge">INTERACTIVE ARCHITECTURAL SIMULATOR</span>
+            <h4 class="w-title">Clock-by-Clock Datapath Execution Simulator</h4>
+            <p class="w-desc">
+              Compare how the three Archetype 1 architectures execute a single RISC-V <code>add rd, rs1, rs2</code> instruction. Step clock cycles or press Auto-Run to watch how serial shift registers vs. shared state machines trade off cycle latency and hardware resources.
+            </p>
+          </div>
+
+          <!-- Controls Bar -->
+          <div class="sim-ctrl-deck">
+            <div class="ctrl-group">
+              <span class="ctrl-label">Select Architecture:</span>
+              <div class="btn-toggle-group">
+                <button class="sim-toggle-btn active" data-core="serv">SERV (Bit-Serial)</button>
+                <button class="sim-toggle-btn" data-core="picorv32">PicoRV32 (Multi-Cycle)</button>
+                <button class="sim-toggle-btn" data-core="darkriscv">DarkRISCV (1-2 Stage)</button>
+              </div>
+            </div>
+
+            <div class="ctrl-group">
+              <span class="ctrl-label">Cycle Controls:</span>
+              <div class="action-btn-row">
+                <button class="btn btn-outline btn-sm" id="btnStepCycle">&gt; Step 1 Cycle</button>
+                <button class="btn btn-accent btn-sm" id="btnAutoRun">&#9654; Auto-Run</button>
+                <button class="btn btn-outline btn-sm" id="btnResetSim">&#8634; Reset</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Dynamic Simulation Monitor Display -->
+          <div class="sim-monitor-display">
+            <div class="monitor-top-row">
+              <div class="mon-block">
+                <span class="mon-lbl">Active Core:</span>
+                <span class="mon-val" id="dispCoreName">SERV (1-Stage Bit-Serial)</span>
+              </div>
+              <div class="mon-block">
+                <span class="mon-lbl">Clock Cycle:</span>
+                <span class="mon-val font-mono" id="dispCycle">Cycle 0 of 32</span>
+              </div>
+              <div class="mon-block">
+                <span class="mon-lbl">Current Pipeline Phase:</span>
+                <span class="mon-val text-accent" id="dispPhase">Idle / Ready</span>
+              </div>
+              <div class="mon-block">
+                <span class="mon-lbl">Active Hardware Unit:</span>
+                <span class="mon-val" id="dispHwUnit">1-Bit Full Adder Slice</span>
+              </div>
+            </div>
+
+            <!-- Progress Meter -->
+            <div class="progress-wrap">
+              <div class="progress-bar-fill" id="simProgressFill" style="width: 0%;"></div>
+            </div>
+
+            <!-- Live Datapath State Description -->
+            <div class="datapath-status-box">
+              <div class="status-indicator-dot" id="simLiveDot"></div>
+              <span class="status-msg" id="dispStatusMsg">Press "Step 1 Cycle" or "Auto-Run" to observe bit-serial operand shifting.</span>
+            </div>
+
+            <!-- Live Metrics Comparison Cards -->
+            <div class="live-metrics-strip">
+              <div class="live-met-item">
+                <span class="lm-lbl">Silicon Footprint:</span>
+                <span class="lm-val" id="dispArea">~2.1 kGE (126 LUTs)</span>
+              </div>
+              <div class="live-met-item">
+                <span class="lm-lbl">Effective CPI:</span>
+                <span class="lm-val font-mono" id="dispCpi">32.0 cycles/inst</span>
+              </div>
+              <div class="live-met-item">
+                <span class="lm-lbl">Adders in Datapath:</span>
+                <span class="lm-val" id="dispAdders">1 single 1-bit Adder</span>
+              </div>
+              <div class="live-met-item">
+                <span class="lm-lbl">Empirical CoreMark:</span>
+                <span class="lm-val font-mono" id="dispScore">0.03 CoreMark/MHz</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.1.5 COMPARATIVE ARCHITECTURAL TRADE-OFF TABLE -->
+        <div class="sub-topic-card" style="margin-top: 2rem;">
+          <div class="sub-topic-head">
+            <span class="pill-badge badge-paper">COMPARATIVE SYNTHESIS</span>
+            <h4>Architectural &amp; Benchmark Comparison: Archetype 1 Cores</h4>
+          </div>
+          <p>
+            The table below synthesizes the structural and measured benchmark differences across all three Archetype 1 processors from real hardware runs in the SCORE repository:
+          </p>
+
+          <div class="table-scroll" style="margin-top: 1rem;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Architecture</th>
+                  <th>Datapath Architecture</th>
+                  <th>Hardware Adders</th>
+                  <th>Measured Cycles / Inst</th>
+                  <th>Measured CPI</th>
+                  <th>CoreMark / MHz</th>
+                  <th>Dhrystone DMIPS/MHz</th>
+                  <th>Silicon Area</th>
+                  <th>Optimal Best-Fit Application</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>SERV</strong></td>
+                  <td>1-Stage Bit-Serial</td>
+                  <td>1 &times; 1-bit full adder</td>
+                  <td>32 to 64 cycles</td>
+                  <td><code>32.00</code></td>
+                  <td><span class="score-badge">0.03</span></td>
+                  <td>0.08</td>
+                  <td><span class="badge badge-coral">2.1 kGE</span></td>
+                  <td>Extreme area-limited FPGA glue logic, cryptographic co-processors</td>
+                </tr>
+                <tr>
+                  <td><strong>PicoRV32</strong></td>
+                  <td>Multi-Cycle State Machine</td>
+                  <td>1 &times; shared 32-bit adder</td>
+                  <td>3 to 4 cycles</td>
+                  <td><code>3.85</code></td>
+                  <td><span class="score-badge">0.8970</span></td>
+                  <td>0.4060</td>
+                  <td><span class="badge badge-teal">9.5 kGE</span></td>
+                  <td>Formally-verified SoC house-keeping, FPGA board power management</td>
+                </tr>
+                <tr>
+                  <td><strong>DarkRISCV</strong></td>
+                  <td>1&ndash;2 Stage Async LUT-RAM</td>
+                  <td>Parallel 32-bit ALU</td>
+                  <td>1 to 2 cycles</td>
+                  <td><code>1.64</code></td>
+                  <td><span class="score-badge">0.6435</span></td>
+                  <td>0.3414</td>
+                  <td><span class="badge badge-yellow">8.2 kGE</span></td>
+                  <td>Low-cost FPGAs with abundant distributed RAM seeking high IPC</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Architectural Decision Guide -->
+          <div class="arch-verdict-box" style="margin-top: 1.25rem;">
+            <h5 class="verdict-title">&#9878; System Architect's Decision Guide: When to Select Archetype 1?</h5>
+            <ul class="concept-list">
+              <li><strong>Select SERV when:</strong> Silicon area or FPGA slice count is the absolute hard ceiling. Ideal for housekeeping controllers that execute low-frequency state transitions, background power sequencing, or cryptographic key loading where an instruction latency of 32 clock cycles is completely acceptable.</li>
+              <li><strong>Select PicoRV32 when:</strong> You require a tiny, battle-tested, standard-compliant embedded RISC-V microcontroller with formally proven correctness (SymbiYosys), native AXI/Wishbone interfacing, and sufficient throughput (~0.90 CoreMark/MHz) to run lightweight RTOS kernels.</li>
+              <li><strong>Select DarkRISCV when:</strong> You are targeting low-cost Xilinx, Lattice, or Gowin FPGAs where distributed LUT-RAM is free and you want the highest possible instructions-per-cycle (CPI ~1.64) within a sub-10 kGE envelope.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -1409,6 +1850,147 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     });
   });
 
+  // Archetype 1 Live Simulator
+  let simCore = "serv";
+  let simCycle = 0;
+  let simInterval: any = null;
+
+  const coreSpecs: Record<string, any> = {
+    serv: {
+      name: "SERV (1-Stage Bit-Serial)",
+      maxCycles: 32,
+      area: "~2.1 kGE (126 LUTs)",
+      cpi: "32.0 cycles/inst",
+      adders: "1 single 1-bit Adder",
+      score: "0.03 CoreMark/MHz",
+      unit: "1-Bit Full Adder Slice + Carry Flip-Flop",
+      getPhase: (c: number) => c === 0 ? "Idle / Instruction Fetch" : (c < 32 ? `Serial Bit-Shift & Add [Bit ${c-1}]` : "32-Bit Commit / Complete"),
+      getMsg: (c: number) => c === 0 ? "Cycle 0: Fetching opcode. Shift registers rs1, rs2, and rd initialized." : (c < 32 ? `Cycle ${c}: Shifting bit ${c-1} of rs1 & rs2 into 1-bit ALU. Carry-out stored in 1b flip-flop.` : "Cycle 32: All 32 bits computed and shifted into rd. Word committed to register file!")
+    },
+    picorv32: {
+      name: "PicoRV32 (Multi-Cycle Shared ALU)",
+      maxCycles: 4,
+      area: "~9.5 kGE (750 LUTs)",
+      cpi: "3.85 cycles/inst",
+      adders: "1 single shared 32-bit Adder",
+      score: "0.8970 CoreMark/MHz",
+      unit: "Shared 32-bit Adder + FSM Controller",
+      getPhase: (c: number) => {
+        if (c === 0) return "Idle / Ready";
+        if (c === 1) return "Phase 1: Fetch (PC <= PC + 4 via Shared Adder)";
+        if (c === 2) return "Phase 2: Decode & Register Fetch (Memory Wait)";
+        if (c === 3) return "Phase 3: Execute (ALU rs1 + rs2 via Shared Adder)";
+        return "Phase 4: Writeback & Register Commit";
+      },
+      getMsg: (c: number) => {
+        if (c === 0) return "Cycle 0: Ready for instruction fetch.";
+        if (c === 1) return "Cycle 1: Shared adder increments PC (PC + 4). Memory read request asserted on native bus.";
+        if (c === 2) return "Cycle 2: Instruction word returned from bus. Opcode decoded; rs1 & rs2 read into internal latches.";
+        if (c === 3) return "Cycle 3: Shared adder reused to execute arithmetic addition (rs1 + rs2).";
+        return "Cycle 4: Result written back to rd register. Instruction complete in 4 clock cycles!";
+      }
+    },
+    darkriscv: {
+      name: "DarkRISCV (1-2 Stage Async LUT-RAM)",
+      maxCycles: 2,
+      area: "~8.2 kGE (850 LUTs)",
+      cpi: "1.64 cycles/inst",
+      adders: "Parallel 32-bit ALU",
+      score: "0.6435 CoreMark/MHz",
+      unit: "Combinational LUT-RAM Decode + Synchronous ALU",
+      getPhase: (c: number) => c === 0 ? "Idle" : (c === 1 ? "Stage 1: Combinational Fetch/Decode" : "Stage 2: Synchronous Execute & Commit"),
+      getMsg: (c: number) => c === 0 ? "Ready." : (c === 1 ? "Cycle 1: Combinational read from distributed LUT-RAM without wait-states." : "Cycle 2: Parallel 32-bit ALU evaluates result and commits to register file!")
+    }
+  };
+
+  function updateSimUI() {
+    const spec = coreSpecs[simCore];
+    const dispName = document.getElementById("dispCoreName");
+    const dispCyc = document.getElementById("dispCycle");
+    const dispPh = document.getElementById("dispPhase");
+    const dispHw = document.getElementById("dispHwUnit");
+    const dispMsg = document.getElementById("dispStatusMsg");
+    const dispArea = document.getElementById("dispArea");
+    const dispCpi = document.getElementById("dispCpi");
+    const dispAdd = document.getElementById("dispAdders");
+    const dispScore = document.getElementById("dispScore");
+    const fill = document.getElementById("simProgressFill");
+
+    if (dispName) dispName.textContent = spec.name;
+    if (dispCyc) dispCyc.textContent = `Cycle ${simCycle} of ${spec.maxCycles}`;
+    if (dispPh) dispPh.textContent = spec.getPhase(simCycle);
+    if (dispHw) dispHw.textContent = spec.unit;
+    if (dispMsg) dispMsg.textContent = spec.getMsg(simCycle);
+    if (dispArea) dispArea.textContent = spec.area;
+    if (dispCpi) dispCpi.textContent = spec.cpi;
+    if (dispAdd) dispAdd.textContent = spec.adders;
+    if (dispScore) dispScore.textContent = spec.score;
+
+    if (fill) {
+      const pct = Math.min(100, Math.round((simCycle / spec.maxCycles) * 100));
+      fill.style.width = `${pct}%`;
+    }
+  }
+
+  document.querySelectorAll(".sim-toggle-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".sim-toggle-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      simCore = btn.getAttribute("data-core") || "serv";
+      simCycle = 0;
+      if (simInterval) { clearInterval(simInterval); simInterval = null; }
+      const runBtn = document.getElementById("btnAutoRun");
+      if (runBtn) runBtn.textContent = "▶ Auto-Run";
+      updateSimUI();
+    });
+  });
+
+  const stepBtn = document.getElementById("btnStepCycle");
+  if (stepBtn) {
+    stepBtn.addEventListener("click", () => {
+      const spec = coreSpecs[simCore];
+      if (simCycle < spec.maxCycles) {
+        simCycle++;
+      } else {
+        simCycle = 0;
+      }
+      updateSimUI();
+    });
+  }
+
+  const resetBtn = document.getElementById("btnResetSim");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      simCycle = 0;
+      if (simInterval) { clearInterval(simInterval); simInterval = null; }
+      const runBtn = document.getElementById("btnAutoRun");
+      if (runBtn) runBtn.textContent = "▶ Auto-Run";
+      updateSimUI();
+    });
+  }
+
+  const runBtn = document.getElementById("btnAutoRun");
+  if (runBtn) {
+    runBtn.addEventListener("click", () => {
+      if (simInterval) {
+        clearInterval(simInterval);
+        simInterval = null;
+        runBtn.textContent = "▶ Auto-Run";
+      } else {
+        runBtn.textContent = "⏸ Pause";
+        simInterval = setInterval(() => {
+          const spec = coreSpecs[simCore];
+          if (simCycle < spec.maxCycles) {
+            simCycle++;
+          } else {
+            simCycle = 0;
+          }
+          updateSimUI();
+        }, simCore === "serv" ? 150 : 600);
+      }
+    });
+  }
+
   // Copy LaTeX Table
   document.querySelectorAll(".copy-latex-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -1615,6 +2197,371 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   .archetype-teal .card-top-tag { background: var(--teal, #0d9488); color: #fff; }
   .archetype-lime .card-top-tag { background: var(--lime, #22c55e); color: var(--ink); }
   .archetype-yellow .card-top-tag { background: var(--yellow, #ffc83e); color: var(--ink); }
+
+  /* Section 1.1 Styles */
+  .archetype-coral-border {
+    border-top: 5px solid var(--coral, #ff6b4a) !important;
+  }
+
+  .concept-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .concept-step-card {
+    background: var(--paper, #fdfbf7);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
+    padding: 1.75rem;
+  }
+
+  .step-card-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .step-tag {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    display: inline-block;
+    margin-bottom: 0.4rem;
+  }
+
+  .step-card-title {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .step-card-lead {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--ink-light, #333);
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-topic-card {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-topic-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .sub-topic-head h4 {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+  }
+
+  .pill-badge {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+  }
+
+  .schematic-container {
+    background: var(--paper, #fdfbf7);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin: 1.25rem 0;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+  }
+
+  .schematic-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .schematic-tag {
+    font-size: 0.7rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    background: var(--yellow, #ffc83e);
+    color: var(--ink, #151b20);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    display: inline-block;
+    margin-bottom: 0.35rem;
+  }
+
+  .schematic-title {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+  }
+
+  .schematic-svg-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+
+  .schematic-svg {
+    width: 100%;
+    min-width: 680px;
+    height: auto;
+    display: block;
+  }
+
+  .schematic-caption {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--ink-light, #555);
+    margin: 0;
+  }
+
+  /* Interactive Workbench Card */
+  .interactive-workbench-card {
+    background: var(--cream, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: 4px 4px 0 var(--yellow, #ffc83e);
+    margin: 2rem 0;
+  }
+
+  .workbench-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .w-badge {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    background: var(--ink, #151b20);
+    color: #ffffff;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 0.4rem;
+  }
+
+  .w-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0 0 0.4rem 0;
+  }
+
+  .w-desc {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-light, #444);
+    margin: 0;
+  }
+
+  .sim-ctrl-deck {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+    background: var(--paper, #fdfbf7);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ctrl-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .ctrl-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--ink-light, #666);
+    text-transform: uppercase;
+  }
+
+  .btn-toggle-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .sim-toggle-btn {
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .sim-toggle-btn:hover {
+    background: var(--yellow-soft, #fff8e1);
+  }
+
+  .sim-toggle-btn.active {
+    background: var(--yellow, #ffc83e);
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+  }
+
+  .action-btn-row {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .sim-monitor-display {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.25rem;
+  }
+
+  .monitor-top-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .mon-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mon-lbl {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #666;
+    text-transform: uppercase;
+  }
+
+  .mon-val {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+  }
+
+  .progress-wrap {
+    width: 100%;
+    height: 10px;
+    background: var(--paper-deep, #f4eee1);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--lime, #22c55e);
+    transition: width 0.15s ease;
+  }
+
+  .datapath-status-box {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--cream, #fffaf0);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .status-indicator-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--lime, #22c55e);
+    border: 1px solid var(--ink, #151b20);
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  .status-msg {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--ink, #151b20);
+    line-height: 1.4;
+  }
+
+  .live-metrics-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    background: var(--paper, #fdfbf7);
+    border: 1.5px solid var(--line, #e2d9c8);
+    border-radius: 6px;
+    padding: 0.75rem;
+  }
+
+  .live-met-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lm-lbl {
+    font-size: 0.72rem;
+    color: #666;
+    font-weight: 700;
+  }
+
+  .lm-val {
+    font-size: 0.88rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+  }
+
+  .arch-verdict-box {
+    background: var(--cream, #fffaf0);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .verdict-title {
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .font-mono {
+    font-family: var(--md-code-font, monospace);
+  }
+
+  .text-accent {
+    color: var(--coral, #ff6b4a);
+  }
 
   .feature-card h3 {
     font-size: 1.25rem;
