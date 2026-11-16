@@ -61,195 +61,202 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <li><strong>CMOS Inverter (NOT Gate):</strong> Pairs one pMOS pull-up with one nMOS pull-down. In steady state (input solid 0 or 1), one transistor is completely OFF, so static DC current from <em>V<sub>DD</sub></em> to Ground is virtually zero! Power is consumed almost entirely during switching transitions.</li>
           </ul>
 
-          <!-- SCHEMATIC: CMOS INVERTER — proper EDA-style MOSFET symbols -->
-          <div class="schematic-container">
-            <div class="schematic-header">
-              <span class="schematic-tag">SCHEMATIC DIAGRAM</span>
-              <span class="schematic-title">CMOS Inverter (NOT Gate) — Standard MOSFET Schematic Symbols</span>
+          <!-- COMBINED: LIVE INTERACTIVE SCHEMATIC & SWITCHING POWER EXPLORER -->
+          <div class="sub-interactive-card" id="cmosPowerWidget">
+            <div class="sub-widget-header">
+              <span class="sub-w-tag">LIVE INTERACTIVE SCHEMATIC &amp; SIMULATOR</span>
+              <h4 class="sub-w-title">CMOS Inverter — Dynamic Conduction Paths &amp; Power Dissipation</h4>
+              <p class="sub-w-desc">
+                Click <strong>Toggle Vin</strong> or adjust supply voltage <em>V<sub>DD</sub></em> and frequency <em>f</em>. Watch the complementary transistors switch between conducting (ON) and cut-off (OFF), trace the animated charge/discharge current paths, and observe real-time dynamic switching power.
+              </p>
             </div>
+
+            <!-- Live Animated Schematic SVG -->
             <div class="schematic-svg-wrap">
-              <!--
-                Standard MOSFET schematic symbol layout:
-                  Gate line (LEFT of channel) → oxide gap → Channel bar (vertical thick bar)
-                  Source/Drain tabs go RIGHT from channel bar to main vertical wire
-                  pMOS: source top (→VDD), inversion bubble on gate, arrow OUT of channel
-                  nMOS: source bottom (→GND), no bubble, arrow INTO channel
+              <svg id="cmosLiveSvg" viewBox="0 0 660 490" class="schematic-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Interactive CMOS Inverter schematic and switching simulation">
+                <defs>
+                  <marker id="arr-g" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                    <path d="M0,0 L6,3 L0,6 Z" fill="#16a34a"/>
+                  </marker>
+                  <marker id="arr-b" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                    <path d="M0,0 L6,3 L0,6 Z" fill="#2563eb"/>
+                  </marker>
+                </defs>
 
-                Coordinate map (viewBox 0 0 650 490):
-                  Main vertical wire: x=280
-                  Channel bar:        x=252  (28px left of wire)
-                  Gate insulator bar: x=232  (20px left of channel)
-                  Gate horizontal:    x=160..232
-                  Gate bus:           x=160, y=125..329
-                  Vin input:          x=90,  y=227
-                  VDD rail: y=28  │  pMOS source: y=90  │  pMOS drain: y=165
-                  Vout:     y=227 │  nMOS drain: y=288  │  nMOS source: y=370
-                  GND rail: y=430
-              -->
-              <svg viewBox="0 0 650 490" class="schematic-svg" xmlns="http://www.w3.org/2000/svg" aria-label="CMOS Inverter standard MOSFET schematic">
+                <!-- VDD SUPPLY RAIL -->
+                <line x1="130" y1="28" x2="430" y2="28" stroke="#b91c1c" stroke-width="3.5" stroke-linecap="round"/>
+                <text x="12" y="24" fill="#b91c1c" font-weight="900" font-size="13" font-family="monospace">VDD</text>
+                <text x="12" y="38" fill="#b91c1c" font-size="11" font-family="monospace">= <tspan id="svgVddLabel">1.00</tspan> V</text>
+                <line id="vddStem" x1="280" y1="28" x2="280" y2="90" stroke="#16a34a" stroke-width="3"/>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  VDD SUPPLY RAIL                                       -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <line x1="140" y1="28" x2="420" y2="28" stroke="#b91c1c" stroke-width="3.5" stroke-linecap="round"/>
-                <text x="8" y="22" fill="#b91c1c" font-weight="900" font-size="12" font-family="monospace">VDD</text>
-                <text x="8" y="35" fill="#b91c1c" font-size="10" font-family="monospace">= 1.0 V</text>
-                <!-- Stem: VDD rail → pMOS source connection at y=90 -->
-                <line x1="280" y1="28" x2="280" y2="90" stroke="#b91c1c" stroke-width="2.5"/>
+                <!-- pMOS TRANSISTOR (Pull-Up Network) -->
+                <line id="pch" x1="252" y1="78" x2="252" y2="175" stroke="#16a34a" stroke-width="6" stroke-linecap="square"/>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  pMOS TRANSISTOR                                       -->
-                <!--  Standard symbol: G left │ channel bar │ S/D right    -->
-                <!--  Source = top (→VDD),  Drain = bottom (→Vout)         -->
-                <!-- ══════════════════════════════════════════════════════ -->
+                <line id="pSourceTab" x1="252" y1="90" x2="280" y2="90" stroke="#16a34a" stroke-width="2.5"/>
+                <polygon id="pSourceArrow" points="274,90 262,84 262,96" fill="#16a34a"/>
 
-                <!-- Channel bar: thick vertical bar representing the semiconductor body -->
-                <line x1="252" y1="78" x2="252" y2="175" stroke="#151b20" stroke-width="5" stroke-linecap="square"/>
+                <line id="pDrainTab" x1="252" y1="165" x2="280" y2="165" stroke="#16a34a" stroke-width="2.5"/>
 
-                <!-- Source tab: channel bar (x=252) → main wire (x=280), at y=90 -->
-                <line x1="252" y1="90" x2="280" y2="90" stroke="#151b20" stroke-width="2.5"/>
-                <!--   pMOS source arrow: pointing RIGHT = AWAY from channel (p-type, holes flow out) -->
-                <!--   Arrowhead tip at x=272, pointing right; body from x=260 -->
-                <polygon points="272,90 260,84 260,96" fill="#b91c1c"/>
-
-                <!-- Drain tab: channel bar (x=252) → main wire (x=280), at y=165 -->
-                <line x1="252" y1="165" x2="280" y2="165" stroke="#151b20" stroke-width="2.5"/>
-
-                <!-- Gate insulator bar: thin vertical line to the left of channel bar -->
-                <!-- The gap x=232..252 represents the gate oxide (SiO2) -->
                 <line x1="232" y1="82" x2="232" y2="171" stroke="#151b20" stroke-width="2.5"/>
-
-                <!-- pMOS inversion bubble on gate (active LOW = conducts when Vin=GND) -->
                 <circle cx="222" cy="127" r="9" fill="#fffef5" stroke="#151b20" stroke-width="2"/>
-
-                <!-- Gate horizontal wire: gate bus (x=160) → left edge of bubble (x=213) -->
                 <line x1="160" y1="127" x2="213" y2="127" stroke="#151b20" stroke-width="2"/>
 
-                <!-- pMOS drain → Vout connection wire -->
-                <line x1="280" y1="165" x2="280" y2="227" stroke="#151b20" stroke-width="2.5"/>
+                <line id="pDrainWire" x1="280" y1="165" x2="280" y2="227" stroke="#16a34a" stroke-width="3"/>
 
-                <!-- Terminal labels -->
-                <text x="286" y="94"  font-size="9" fill="#9f1239" font-family="monospace" font-weight="700">S</text>
-                <text x="286" y="169" font-size="9" fill="#9f1239" font-family="monospace" font-weight="700">D</text>
-                <text x="140" y="122" font-size="9" fill="#6b7280" font-family="monospace">G</text>
+                <line id="pAnimFlow" x1="280" y1="35" x2="280" y2="220" stroke="#22c55e" stroke-width="3" stroke-dasharray="6 4" opacity="1">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="0.4s" repeatCount="indefinite"/>
+                </line>
 
-                <!-- pMOS label -->
-                <text x="192" y="62" font-size="12" font-weight="900" fill="#b91c1c" font-family="sans-serif">pMOS</text>
-                <text x="192" y="76" font-size="10" fill="#7f1d1d" font-family="sans-serif">W/L &#8776; 2.5&#215; nMOS</text>
+                <text x="180" y="58" font-size="12" font-weight="900" fill="#b91c1c" font-family="sans-serif">pMOS Pull-Up</text>
+                <text x="180" y="72" font-size="10" fill="#7f1d1d" font-family="sans-serif">W/L &#8776; 2.5&#215; nMOS</text>
+                <rect id="pBadge" x="180" y="78" width="62" height="18" rx="4" fill="#16a34a"/>
+                <text id="pBadgeTxt" x="211" y="91" font-size="9" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="sans-serif">ON (Pull-up)</text>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  Vout NODE                                             -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <circle cx="280" cy="227" r="5.5" fill="#0369a1"/>
-                <!-- Vout wire going right to output terminal -->
-                <line x1="280" y1="227" x2="430" y2="227" stroke="#0369a1" stroke-width="2.5"/>
-                <text x="435" y="222" font-weight="900" font-size="13" fill="#0369a1" font-family="sans-serif">Vout</text>
-                <text x="435" y="237" font-size="10" fill="#0369a1" font-family="sans-serif">= NOT Vin</text>
+                <text x="288" y="93"  font-size="9" fill="#9f1239" font-family="monospace" font-weight="700">S</text>
+                <text x="288" y="167" font-size="9" fill="#9f1239" font-family="monospace" font-weight="700">D</text>
+                <text x="142" y="122" font-size="9" fill="#6b7280" font-family="monospace">G</text>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  nMOS TRANSISTOR                                       -->
-                <!--  Standard symbol: G left │ channel bar │ D/S right    -->
-                <!--  Drain = top (→Vout),  Source = bottom (→GND)         -->
-                <!-- ══════════════════════════════════════════════════════ -->
+                <!-- Vout NODE & OUTPUT WIRE -->
+                <circle id="voutDot" cx="280" cy="227" r="6" fill="#0284c7"/>
+                <line id="voutWire" x1="280" y1="227" x2="430" y2="227" stroke="#0284c7" stroke-width="3"/>
+                <circle cx="430" cy="227" r="5" fill="#0284c7"/>
+                <text x="382" y="217" font-weight="900" font-size="14" fill="#0369a1" font-family="sans-serif">Vout</text>
+                <text id="svgVoutLabel" x="382" y="242" font-size="11" font-weight="900" fill="#0284c7" font-family="sans-serif">= 1.00 V (HIGH)</text>
 
-                <!-- Vout → nMOS drain connection wire -->
-                <line x1="280" y1="227" x2="280" y2="288" stroke="#151b20" stroke-width="2.5"/>
+                <!-- nMOS TRANSISTOR (Pull-Down Network) -->
+                <line id="nDrainWire" x1="280" y1="227" x2="280" y2="288" stroke="#94a3b8" stroke-width="2"/>
+                <line id="nch" x1="252" y1="280" x2="252" y2="378" stroke="#94a3b8" stroke-width="4" stroke-dasharray="4 3" stroke-linecap="square"/>
 
-                <!-- Channel bar -->
-                <line x1="252" y1="280" x2="252" y2="378" stroke="#151b20" stroke-width="5" stroke-linecap="square"/>
+                <line id="nDrainTab" x1="252" y1="288" x2="280" y2="288" stroke="#94a3b8" stroke-width="2"/>
+                <line id="nSourceTab" x1="252" y1="370" x2="280" y2="370" stroke="#94a3b8" stroke-width="2"/>
+                <polygon id="nSourceArrow" points="258,370 270,364 270,376" fill="#94a3b8"/>
 
-                <!-- Drain tab: channel bar (x=252) → main wire (x=280), at y=288 -->
-                <line x1="252" y1="288" x2="280" y2="288" stroke="#151b20" stroke-width="2.5"/>
-
-                <!-- Source tab: channel bar (x=252) → main wire (x=280), at y=370 -->
-                <line x1="252" y1="370" x2="280" y2="370" stroke="#151b20" stroke-width="2.5"/>
-                <!--   nMOS source arrow: pointing LEFT = INTO channel (n-type, electrons flow in) -->
-                <!--   Arrowhead tip at x=258, pointing left; body from x=270 -->
-                <polygon points="258,370 270,364 270,376" fill="#1e40af"/>
-
-                <!-- Gate insulator bar -->
                 <line x1="232" y1="284" x2="232" y2="374" stroke="#151b20" stroke-width="2.5"/>
-
-                <!-- nMOS gate horizontal wire: gate bus (x=160) → gate insulator bar (x=232) -->
                 <line x1="160" y1="329" x2="232" y2="329" stroke="#151b20" stroke-width="2"/>
 
-                <!-- nMOS source → GND wire -->
-                <line x1="280" y1="370" x2="280" y2="430" stroke="#1e3a8a" stroke-width="2.5"/>
+                <line id="gndStem" x1="280" y1="370" x2="280" y2="430" stroke="#94a3b8" stroke-width="2"/>
 
-                <!-- Terminal labels -->
-                <text x="286" y="292" font-size="9" fill="#1e3a8a" font-family="monospace" font-weight="700">D</text>
-                <text x="286" y="373" font-size="9" fill="#1e3a8a" font-family="monospace" font-weight="700">S</text>
-                <text x="140" y="324" font-size="9" fill="#6b7280" font-family="monospace">G</text>
+                <line id="nAnimFlow" x1="280" y1="235" x2="280" y2="425" stroke="#3b82f6" stroke-width="3" stroke-dasharray="6 4" opacity="0">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="0.4s" repeatCount="indefinite"/>
+                </line>
 
-                <!-- nMOS label -->
-                <text x="192" y="405" font-size="12" font-weight="900" fill="#1e40af" font-family="sans-serif">nMOS</text>
-                <text x="192" y="419" font-size="10" fill="#1d4ed8" font-family="sans-serif">W/L &#8776; 1.0&#215; (reference)</text>
+                <text x="180" y="402" font-size="12" font-weight="900" fill="#1e40af" font-family="sans-serif">nMOS Pull-Down</text>
+                <text x="180" y="416" font-size="10" fill="#1d4ed8" font-family="sans-serif">W/L &#8776; 1.0&#215; (reference)</text>
+                <rect id="nBadge" x="180" y="422" width="62" height="18" rx="4" fill="#94a3b8"/>
+                <text id="nBadgeTxt" x="211" y="435" font-size="9" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="sans-serif">OFF (Cut-off)</text>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  GND RAIL + EARTH COMB SYMBOL                         -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <line x1="140" y1="430" x2="420" y2="430" stroke="#1e3a8a" stroke-width="3.5" stroke-linecap="round"/>
-                <!-- Earth comb below nMOS source -->
+                <text x="288" y="291" font-size="9" fill="#1e3a8a" font-family="monospace" font-weight="700">D</text>
+                <text x="288" y="373" font-size="9" fill="#1e3a8a" font-family="monospace" font-weight="700">S</text>
+                <text x="142" y="324" font-size="9" fill="#6b7280" font-family="monospace">G</text>
+
+                <!-- GND RAIL + EARTH COMB SYMBOL -->
+                <line x1="130" y1="430" x2="430" y2="430" stroke="#1e3a8a" stroke-width="3.5" stroke-linecap="round"/>
                 <line x1="280" y1="430" x2="280" y2="445" stroke="#1e3a8a" stroke-width="2"/>
                 <line x1="262" y1="445" x2="298" y2="445" stroke="#1e3a8a" stroke-width="2.5"/>
                 <line x1="268" y1="451" x2="292" y2="451" stroke="#1e3a8a" stroke-width="2"/>
                 <line x1="274" y1="457" x2="286" y2="457" stroke="#1e3a8a" stroke-width="1.5"/>
-                <text x="8" y="425" fill="#1e3a8a" font-weight="900" font-size="12" font-family="monospace">GND</text>
-                <text x="8" y="438" fill="#1e3a8a" font-size="10" font-family="monospace">= 0.0 V</text>
+                <text x="12" y="426" fill="#1e3a8a" font-weight="900" font-size="13" font-family="monospace">GND</text>
+                <text x="12" y="440" fill="#1e3a8a" font-size="11" font-family="monospace">= 0.0 V</text>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  Vin INPUT WIRE + SHARED GATE BUS                     -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!-- Vin input terminal at x=90, y=227 (midpoint of pMOS gate y=127 and nMOS gate y=329) -->
-                <line x1="90" y1="227" x2="160" y2="227" stroke="#151b20" stroke-width="2.5"/>
-                <circle cx="90" cy="227" r="5" fill="#151b20"/>
-                <text x="14" y="222" font-weight="900" font-size="13" fill="#151b20" font-family="sans-serif">Vin</text>
+                <!-- Vin INPUT + GATE BUS -->
+                <line id="vinStem" x1="80" y1="227" x2="160" y2="227" stroke="#16a34a" stroke-width="2.5"/>
+                <circle id="vinDot" cx="80" cy="227" r="6" fill="#16a34a"/>
+                <text x="12" y="216" font-weight="900" font-size="14" fill="#151b20" font-family="sans-serif">Vin</text>
+                <text id="svgVinLabel" x="12" y="232" font-size="11" font-weight="900" fill="#16a34a" font-family="sans-serif">= 0.0 V (LOW)</text>
 
-                <!-- Vertical gate bus: x=160, connects to both gate wires -->
-                <line x1="160" y1="127" x2="160" y2="329" stroke="#151b20" stroke-width="2"/>
-                <!-- Junction dots where gate taps branch off the bus -->
-                <circle cx="160" cy="127" r="4"   fill="#151b20"/>
-                <circle cx="160" cy="227" r="4"   fill="#151b20"/>
-                <circle cx="160" cy="329" r="4"   fill="#151b20"/>
+                <line id="gateBus" x1="160" y1="127" x2="160" y2="329" stroke="#16a34a" stroke-width="2.5"/>
+                <circle cx="160" cy="127" r="4" fill="#151b20"/>
+                <circle cx="160" cy="227" r="4" fill="#151b20"/>
+                <circle cx="160" cy="329" r="4" fill="#151b20"/>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  LOAD CAPACITOR CL (output + downstream gate loads)   -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <line x1="372" y1="227" x2="372" y2="298" stroke="#64748b" stroke-width="1.5"/>
-                <!-- Capacitor parallel plates -->
-                <line x1="354" y1="298" x2="390" y2="298" stroke="#64748b" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="354" y1="308" x2="390" y2="308" stroke="#64748b" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="372" y1="308" x2="372" y2="430" stroke="#64748b" stroke-width="1.5"/>
-                <circle cx="372" cy="227" r="3.5" fill="#0369a1"/>
-                <text x="396" y="305" font-size="12" fill="#64748b" font-weight="800" font-family="sans-serif">C<tspan font-size="9" dy="2">L</tspan></text>
+                <!-- LOAD CAPACITOR CL -->
+                <line x1="360" y1="227" x2="360" y2="298" stroke="#64748b" stroke-width="1.5"/>
+                <line x1="342" y1="298" x2="378" y2="298" stroke="#64748b" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="342" y1="308" x2="378" y2="308" stroke="#64748b" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="360" y1="308" x2="360" y2="430" stroke="#64748b" stroke-width="1.5"/>
+                <circle cx="360" cy="227" r="3.5" fill="#0369a1"/>
+                <text x="384" y="304" font-size="12" fill="#64748b" font-weight="800" font-family="sans-serif">C<tspan font-size="9" dy="2">L</tspan></text>
+                <text id="svgCapLabel" x="384" y="318" font-size="9" fill="#16a34a" font-weight="700" font-family="sans-serif">CHARGED</text>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!--  STATE ANNOTATION BOXES                                -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!-- GREEN box: Vin=0, pMOS ON, nMOS OFF -->
-                <rect x="458" y="52" width="182" height="84" rx="7" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
-                <text x="466" y="70"  font-size="11" font-weight="900" fill="#15803d" font-family="sans-serif">Vin = 0 (LOW)</text>
-                <text x="466" y="85"  font-size="10" fill="#166534" font-family="sans-serif">pMOS ON  &#8212; charges CL to VDD</text>
-                <text x="466" y="99"  font-size="10" fill="#166534" font-family="sans-serif">nMOS OFF &#8212; no GND path</text>
-                <text x="466" y="128" font-size="11" font-weight="900" fill="#15803d" font-family="sans-serif">&#8658; Vout = VDD &#10003;</text>
+                <!-- LIVE DYNAMIC STATE CARD (RIGHT SIDE) -->
+                <rect id="stateCardBg" x="465" y="65" width="185" height="350" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+                <text id="svgStateTitle" x="477" y="95" font-size="12" font-weight="900" fill="#15803d" font-family="sans-serif">&#9650; Vin = 0 (Logic 0)</text>
 
-                <!-- BLUE box: Vin=1, nMOS ON, pMOS OFF -->
-                <rect x="458" y="348" width="182" height="84" rx="7" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
-                <text x="466" y="366" font-size="11" font-weight="900" fill="#1d4ed8" font-family="sans-serif">Vin = 1 (HIGH)</text>
-                <text x="466" y="381" font-size="10" fill="#1e40af" font-family="sans-serif">pMOS OFF &#8212; no VDD path</text>
-                <text x="466" y="395" font-size="10" fill="#1e40af" font-family="sans-serif">nMOS ON  &#8212; discharges CL</text>
-                <text x="466" y="424" font-size="11" font-weight="900" fill="#1d4ed8" font-family="sans-serif">&#8658; Vout = GND &#10003;</text>
+                <line x1="475" y1="108" x2="640" y2="108" stroke="#bbf7d0" stroke-width="1.5"/>
+
+                <text x="477" y="130" font-size="10" font-weight="800" fill="#166534" font-family="sans-serif">pMOS (Pull-Up):</text>
+                <text id="svgStatePmos" x="477" y="146" font-size="10" fill="#15803d" font-weight="700" font-family="sans-serif">&#10003; ON (VGS = &#8722;VDD)</text>
+                <text x="477" y="160" font-size="9" fill="#4b5563" font-family="sans-serif">Low-resistance path to VDD</text>
+
+                <text x="477" y="190" font-size="10" font-weight="800" fill="#166534" font-family="sans-serif">nMOS (Pull-Down):</text>
+                <text id="svgStateNmos" x="477" y="206" font-size="10" fill="#dc2626" font-weight="700" font-family="sans-serif">&#10007; OFF (VGS = 0.0V)</text>
+                <text x="477" y="220" font-size="9" fill="#4b5563" font-family="sans-serif">Cut-off, open circuit to GND</text>
+
+                <line x1="475" y1="234" x2="640" y2="234" stroke="#bbf7d0" stroke-width="1.5"/>
+
+                <text x="477" y="254" font-size="10" font-weight="800" fill="#166534" font-family="sans-serif">Active Path:</text>
+                <text id="svgStatePath" x="477" y="270" font-size="10" fill="#15803d" font-weight="700" font-family="sans-serif">VDD &#8594; pMOS &#8594; Output</text>
+                <text x="477" y="284" font-size="9" fill="#4b5563" font-family="sans-serif">Charges CL capacitor up</text>
+
+                <text x="477" y="314" font-size="10" font-weight="800" fill="#166534" font-family="sans-serif">Output Voltage:</text>
+                <text id="svgStateVout" x="477" y="330" font-size="11" fill="#0369a1" font-weight="900" font-family="sans-serif">Vout = VDD (Logic 1)</text>
+
+                <line x1="475" y1="344" x2="640" y2="344" stroke="#bbf7d0" stroke-width="1.5"/>
+
+                <text x="477" y="366" font-size="10" font-weight="800" fill="#166534" font-family="sans-serif">Static DC Current:</text>
+                <text x="477" y="382" font-size="11" fill="#15803d" font-weight="900" font-family="monospace">I_static &#8776; 0.00 &#956;A</text>
+                <text x="477" y="398" font-size="9" fill="#6b7280" font-family="sans-serif">(One FET is always OFF!)</text>
               </svg>
             </div>
+
+            <!-- Figure Caption -->
             <div class="schematic-caption">
-              <strong>Figure 1.1:</strong> Standard MOSFET schematic symbol for the CMOS inverter.
-              The gate <em>insulator gap</em> between the gate line and channel bar represents the SiO<sub>2</sub> oxide (~1.2 nm at 7 nm node).
-              The <em>inversion bubble</em> on the pMOS gate indicates active-LOW (conducts when V<sub>GS</sub> &lt; &minus;|V<sub>tp</sub>|).
-              The source <em>arrow</em> on pMOS points outward (p-type, holes flow from channel toward source);
-              on nMOS it points inward (n-type, electrons flow from source into channel).
-              Because &mu;<sub>p</sub> &approx; 250 &lt; &mu;<sub>n</sub> &approx; 480 cm<sup>2</sup>/(V&middot;s),
-              pMOS width W is sized ~2.5&times; wider to equalize t<sub>PLH</sub> &asymp; t<sub>PHL</sub>.
-              <strong>Static power &asymp; 0</strong>: in both steady states exactly one transistor is fully OFF, breaking the VDD&#8209;to&#8209;GND current path.
+              <strong>Figure 1.1:</strong> Interactive IEEE-standard transistor-level schematic of the static CMOS inverter.
+              The gate <em>insulator gap</em> represents the thin SiO<sub>2</sub> dielectric oxide.
+              The <em>inversion bubble</em> on pMOS indicates active-LOW gate conduction (conducts when <span style="white-space: nowrap;"><em>V<sub>GS</sub></em> &lt; &minus;|<em>V<sub>tp</sub></em>|</span>).
+              The source <em>arrow</em> on pMOS points outward (p-type holes exit toward channel/source); on nMOS it points inward (electrons enter).
+              Because hole mobility is lower (<span style="white-space: nowrap;">&mu;<sub>p</sub> &approx; 250</span> vs <span style="white-space: nowrap;">&mu;<sub>n</sub> &approx; 480 cm<sup>2</sup>/(V&middot;s)</span>), pMOS channel width <em>W</em> is sized ~2.5&times; wider to equalize switching rise and fall times (<span style="white-space: nowrap;"><em>t<sub>PLH</sub></em> &asymp; <em>t<sub>PHL</sub></em></span>).
+              <strong>Zero Static Power:</strong> In both logic states, exactly one transistor is fully cut off, completely blocking continuous DC current between <span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span> and Ground.
+            </div>
+
+            <!-- Controls row -->
+            <div class="cmos-ctrl-row" style="margin-top: 1rem;">
+              <div class="cmos-toggle-wrap">
+                <span class="ctrl-label">Input Switch (Vin):</span>
+                <button class="toggle-btn" id="btnCmosVin" data-vin="0">&#8644; Toggle Vin: 0.0V (Logic 0)</button>
+              </div>
+              <div class="slider-ctrl">
+                <label for="cmosVddSlider" class="ctrl-label">Supply Voltage (<span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span>): <span id="cmosVddVal" class="val-mono">1.00 V</span></label>
+                <input type="range" id="cmosVddSlider" min="0.6" max="1.2" step="0.05" value="1.0" class="sim-slider"/>
+              </div>
+              <div class="slider-ctrl">
+                <label for="cmosFreqSlider" class="ctrl-label">Clock Frequency (<em>f</em>): <span id="cmosFreqVal" class="val-mono">1000 MHz</span></label>
+                <input type="range" id="cmosFreqSlider" min="100" max="3000" step="50" value="1000" class="sim-slider"/>
+              </div>
+            </div>
+
+            <!-- Metrics grid -->
+            <div class="cmos-metrics-grid">
+              <div class="cmos-m-card">
+                <span class="m-caption">pMOS Conduction</span>
+                <span class="m-status on" id="cmosPmosState">CONDUCTING (ON)</span>
+                <span class="m-detail">Pulls output to <span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span></span>
+              </div>
+              <div class="cmos-m-card">
+                <span class="m-caption">nMOS Conduction</span>
+                <span class="m-status off" id="cmosNmosState">ISOLATED (OFF)</span>
+                <span class="m-detail">Zero DC path to Ground</span>
+              </div>
+              <div class="cmos-m-card">
+                <span class="m-caption">Output Voltage (Vout)</span>
+                <span class="m-status vout" id="cmosVoutVal">1.00 V (Logic 1)</span>
+                <span class="m-detail">Capacitor C<sub>L</sub> charged</span>
+              </div>
+              <div class="cmos-m-card highlight">
+                <span class="m-caption">Dynamic Power (P<sub>dyn</sub> = &alpha;&middot;C<sub>L</sub>&middot;V<sub>DD</sub>²&middot;f)</span>
+                <span class="m-status power" id="cmosPowerVal">2.50 mW</span>
+                <span class="m-detail">1,000 gates &middot; 5 fF &middot; &alpha;=0.5</span>
+              </div>
             </div>
           </div>
 
@@ -260,70 +267,18 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
               <div class="tradeoff-col">
                 <span class="to-label">&#9889; The Engineering Problem</span>
                 <p>
-                  Early 1970s microprocessors used nMOS-only logic with resistive or depletion pull-up loads. Whenever the output was pulled LOW, continuous static DC current flowed from <em>V<sub>DD</sub></em> through the resistor to Ground (power loss = <em>V<sub>DD</sub></em><sup>2</sup> / <em>R</em>). As chips grew to thousands of gates, heat dissipation hit a thermal brick wall.
+                  Early 1970s microprocessors used nMOS-only logic with resistive or depletion pull-up loads. Whenever the output was pulled LOW, continuous static DC current flowed from <span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span> through the resistor to Ground (power loss = <span style="white-space: nowrap;"><em>V<sub>DD</sub></em><sup>2</sup> / <em>R</em></span>). As chips grew to thousands of gates, static dissipation hit a thermal brick wall.
                 </p>
               </div>
               <div class="tradeoff-col">
                 <span class="to-label">&#9878; The Silicon Trade-off</span>
                 <p>
-                  <strong>Sizing vs. Parasitic Capacitance:</strong> Equalizing rise and fall times (<em>t<sub>PLH</sub></em> &approx; <em>t<sub>PHL</sub></em>) requires making pMOS 2.5&times; wider, which increases input gate capacitance <em>C<sub>in</sub></em>, increasing dynamic power and loading upstream gates.<br/>
-                  <strong>Voltage Scaling (<em>V<sub>DD</sub></em> vs. <em>V<sub>t</sub></em>):</strong> Dynamic power scales quadratically (<em>P<sub>dyn</sub></em> = &alpha;&middot;<em>C<sub>L</sub></em>&middot;<em>V<sub>DD</sub></em><sup>2</sup>&middot;<em>f</em>). Lowering <em>V<sub>DD</sub></em> cuts energy, but reducing threshold voltage <em>V<sub>t</sub></em> causes exponential subthreshold leakage.
+                  <strong>Sizing vs. Parasitic Capacitance:</strong> Equalizing rise and fall times (<span style="white-space: nowrap;"><em>t<sub>PLH</sub></em> &approx; <em>t<sub>PHL</sub></em></span>) requires sizing the pMOS channel ~2.5&times; wider than nMOS due to lower hole mobility (<span style="white-space: nowrap;">&mu;<sub>p</sub> &lt; &mu;<sub>n</sub></span>). This increases gate input capacitance <span style="white-space: nowrap;"><em>C<sub>in</sub></em></span>, raising dynamic power and loading upstream driving gates.<br/>
+                  <strong>Voltage Scaling (<span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span> vs. <span style="white-space: nowrap;"><em>V<sub>t</sub></em></span>):</strong> Dynamic power scales quadratically (<span style="white-space: nowrap;"><em>P<sub>dyn</sub></em> = &alpha;&middot;<em>C<sub>L</sub></em>&middot;<em>V<sub>DD</sub></em><sup>2</sup>&middot;<em>f</em></span>). Lowering supply voltage <span style="white-space: nowrap;"><em>V<sub>DD</sub></em></span> cuts energy, but reducing threshold voltage <span style="white-space: nowrap;"><em>V<sub>t</sub></em></span> triggers exponential subthreshold leakage current.
                 </p>
               </div>
             </div>
           </div>
-
-          <!-- INTERACTIVE CMOS DYNAMIC POWER APP -->
-          <div class="sub-interactive-card" id="cmosPowerWidget">
-            <div class="sub-widget-header">
-              <span class="sub-w-tag">LIVE INTERACTIVE APP</span>
-              <h4 class="sub-w-title">CMOS Inverter Switching &amp; Dynamic Power Explorer</h4>
-              <p class="sub-w-desc">
-                Toggle the input voltage <em>V<sub>in</sub></em> and adjust the supply voltage <em>V<sub>DD</sub></em> and clock frequency to observe real-time conduction and dynamic power dissipation:
-              </p>
-            </div>
-
-            <div class="cmos-sim-controls">
-              <div class="cmos-ctrl-row">
-                <div class="cmos-toggle-wrap">
-                  <span class="ctrl-label">Input Voltage (Vin):</span>
-                  <button class="toggle-btn" id="btnCmosVin" data-vin="0">0.0V (Logic 0)</button>
-                </div>
-                <div class="slider-ctrl">
-                  <label for="cmosVddSlider" class="ctrl-label">Supply Voltage (<em>V<sub>DD</sub></em>): <span id="cmosVddVal" class="val-mono">1.0 V</span></label>
-                  <input type="range" id="cmosVddSlider" min="0.6" max="1.2" step="0.05" value="1.0" class="sim-slider"/>
-                </div>
-                <div class="slider-ctrl">
-                  <label for="cmosFreqSlider" class="ctrl-label">Clock Frequency (<em>f</em>): <span id="cmosFreqVal" class="val-mono">1000 MHz</span></label>
-                  <input type="range" id="cmosFreqSlider" min="100" max="3000" step="50" value="1000" class="sim-slider"/>
-                </div>
-              </div>
-
-              <div class="cmos-metrics-grid">
-                <div class="cmos-m-card">
-                  <span class="m-caption">pMOS State</span>
-                  <span class="m-status on" id="cmosPmosState">CONDUCTING (ON)</span>
-                  <span class="m-detail">Pulling output to VDD</span>
-                </div>
-                <div class="cmos-m-card">
-                  <span class="m-caption">nMOS State</span>
-                  <span class="m-status off" id="cmosNmosState">ISOLATED (OFF)</span>
-                  <span class="m-detail">Zero DC path to Ground</span>
-                </div>
-                <div class="cmos-m-card">
-                  <span class="m-caption">Output Voltage (Vout)</span>
-                  <span class="m-status vout" id="cmosVoutVal">1.0 V (Logic 1)</span>
-                  <span class="m-detail">Capacitor CL fully charged</span>
-                </div>
-                <div class="cmos-m-card highlight">
-                  <span class="m-caption">Dynamic Power (Pdyn)</span>
-                  <span class="m-status power" id="cmosPowerVal">2.50 mW</span>
-                  <span class="m-detail">Normalized for 1,000 switching gates</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <!-- 1.2 UNIVERSAL LOGIC & GE -->
         <div class="concept-step-card">
@@ -2936,7 +2891,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 <script>
   // ==========================================
-  // 1. CMOS INVERTER DYNAMIC POWER SIMULATOR
+  // 1. CMOS INVERTER DYNAMIC POWER & LIVE SCHEMATIC SIMULATOR
   // ==========================================
   const btnCmosVin = document.getElementById("btnCmosVin");
   const cmosVddSlider = document.getElementById("cmosVddSlider") as HTMLInputElement;
@@ -2948,6 +2903,41 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   const cmosVoutVal = document.getElementById("cmosVoutVal");
   const cmosPowerVal = document.getElementById("cmosPowerVal");
 
+  // SVG elements for live schematic animation
+  const svgVddLabel = document.getElementById("svgVddLabel");
+  const svgVinLabel = document.getElementById("svgVinLabel");
+  const svgVoutLabel = document.getElementById("svgVoutLabel");
+  const svgCapLabel = document.getElementById("svgCapLabel");
+  const vddStem = document.getElementById("vddStem");
+  const pch = document.getElementById("pch");
+  const pSourceTab = document.getElementById("pSourceTab");
+  const pSourceArrow = document.getElementById("pSourceArrow");
+  const pDrainTab = document.getElementById("pDrainTab");
+  const pDrainWire = document.getElementById("pDrainWire");
+  const pAnimFlow = document.getElementById("pAnimFlow");
+  const pBadge = document.getElementById("pBadge");
+  const pBadgeTxt = document.getElementById("pBadgeTxt");
+  const nDrainWire = document.getElementById("nDrainWire");
+  const nch = document.getElementById("nch");
+  const nDrainTab = document.getElementById("nDrainTab");
+  const nSourceTab = document.getElementById("nSourceTab");
+  const nSourceArrow = document.getElementById("nSourceArrow");
+  const gndStem = document.getElementById("gndStem");
+  const nAnimFlow = document.getElementById("nAnimFlow");
+  const nBadge = document.getElementById("nBadge");
+  const nBadgeTxt = document.getElementById("nBadgeTxt");
+  const voutDot = document.getElementById("voutDot");
+  const voutWire = document.getElementById("voutWire");
+  const vinStem = document.getElementById("vinStem");
+  const vinDot = document.getElementById("vinDot");
+  const gateBus = document.getElementById("gateBus");
+  const stateCardBg = document.getElementById("stateCardBg");
+  const svgStateTitle = document.getElementById("svgStateTitle");
+  const svgStatePmos = document.getElementById("svgStatePmos");
+  const svgStateNmos = document.getElementById("svgStateNmos");
+  const svgStatePath = document.getElementById("svgStatePath");
+  const svgStateVout = document.getElementById("svgStateVout");
+
   let cmosVin = 0;
 
   function updateCmosPowerSim() {
@@ -2956,6 +2946,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
     if (cmosVddVal) cmosVddVal.textContent = `${vdd.toFixed(2)} V`;
     if (cmosFreqVal) cmosFreqVal.textContent = `${freq} MHz`;
+    if (svgVddLabel) svgVddLabel.textContent = vdd.toFixed(2);
 
     // Dynamic power for 1000 gates: P = 0.5 * 1000 * 5fF * Vdd^2 * f
     const cTotal = 5.0e-12; // 5 pF total
@@ -2965,7 +2956,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
     if (cmosVin === 0) {
       if (btnCmosVin) {
-        btnCmosVin.textContent = "0.0V (Logic 0)";
+        btnCmosVin.textContent = "⇄ Toggle Vin: 0.0V (Logic 0)";
         btnCmosVin.classList.remove("is-on");
       }
       if (cmosPmosState) {
@@ -2979,9 +2970,56 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       if (cmosVoutVal) {
         cmosVoutVal.textContent = `${vdd.toFixed(2)} V (Logic 1)`;
       }
+
+      // Live Schematic visual updates
+      if (svgVinLabel) {
+        svgVinLabel.textContent = "= 0.0 V (LOW)";
+        svgVinLabel.setAttribute("fill", "#16a34a");
+      }
+      if (vinStem) vinStem.setAttribute("stroke", "#16a34a");
+      if (vinDot) vinDot.setAttribute("fill", "#16a34a");
+      if (gateBus) gateBus.setAttribute("stroke", "#16a34a");
+
+      if (svgVoutLabel) {
+        svgVoutLabel.textContent = `= ${vdd.toFixed(2)} V (HIGH)`;
+        svgVoutLabel.setAttribute("fill", "#0284c7");
+      }
+      if (voutDot) voutDot.setAttribute("fill", "#0284c7");
+      if (voutWire) voutWire.setAttribute("stroke", "#0284c7");
+
+      // pMOS: ON (green, thick, active flow)
+      if (vddStem) { vddStem.setAttribute("stroke", "#16a34a"); vddStem.setAttribute("stroke-width", "3"); }
+      if (pch) { pch.setAttribute("stroke", "#16a34a"); pch.setAttribute("stroke-width", "6"); pch.removeAttribute("stroke-dasharray"); }
+      if (pSourceTab) pSourceTab.setAttribute("stroke", "#16a34a");
+      if (pSourceArrow) pSourceArrow.setAttribute("fill", "#16a34a");
+      if (pDrainTab) pDrainTab.setAttribute("stroke", "#16a34a");
+      if (pDrainWire) { pDrainWire.setAttribute("stroke", "#16a34a"); pDrainWire.setAttribute("stroke-width", "3"); }
+      if (pAnimFlow) pAnimFlow.setAttribute("opacity", "1");
+      if (pBadge) pBadge.setAttribute("fill", "#16a34a");
+      if (pBadgeTxt) pBadgeTxt.textContent = "ON (Pull-up)";
+
+      // nMOS: OFF (gray, dashed, cut-off)
+      if (nDrainWire) { nDrainWire.setAttribute("stroke", "#94a3b8"); nDrainWire.setAttribute("stroke-width", "2"); }
+      if (nch) { nch.setAttribute("stroke", "#94a3b8"); nch.setAttribute("stroke-width", "4"); nch.setAttribute("stroke-dasharray", "4 3"); }
+      if (nDrainTab) nDrainTab.setAttribute("stroke", "#94a3b8");
+      if (nSourceTab) nSourceTab.setAttribute("stroke", "#94a3b8");
+      if (nSourceArrow) nSourceArrow.setAttribute("fill", "#94a3b8");
+      if (gndStem) { gndStem.setAttribute("stroke", "#94a3b8"); gndStem.setAttribute("stroke-width", "2"); }
+      if (nAnimFlow) nAnimFlow.setAttribute("opacity", "0");
+      if (nBadge) nBadge.setAttribute("fill", "#94a3b8");
+      if (nBadgeTxt) nBadgeTxt.textContent = "OFF (Cut-off)";
+
+      // Capacitor & state card
+      if (svgCapLabel) { svgCapLabel.textContent = "CHARGED"; svgCapLabel.setAttribute("fill", "#16a34a"); }
+      if (stateCardBg) { stateCardBg.setAttribute("fill", "#f0fdf4"); stateCardBg.setAttribute("stroke", "#16a34a"); }
+      if (svgStateTitle) { svgStateTitle.textContent = "▲ Vin = 0 (Logic 0)"; svgStateTitle.setAttribute("fill", "#15803d"); }
+      if (svgStatePmos) { svgStatePmos.textContent = "✓ ON (VGS = −VDD)"; svgStatePmos.setAttribute("fill", "#15803d"); }
+      if (svgStateNmos) { svgStateNmos.textContent = "✗ OFF (VGS = 0.0V)"; svgStateNmos.setAttribute("fill", "#dc2626"); }
+      if (svgStatePath) { svgStatePath.textContent = "VDD → pMOS → Output"; svgStatePath.setAttribute("fill", "#15803d"); }
+      if (svgStateVout) { svgStateVout.textContent = `Vout = ${vdd.toFixed(2)} V (1)`; svgStateVout.setAttribute("fill", "#0369a1"); }
     } else {
       if (btnCmosVin) {
-        btnCmosVin.textContent = `${vdd.toFixed(1)}V (Logic 1)`;
+        btnCmosVin.textContent = `⇄ Toggle Vin: ${vdd.toFixed(1)}V (Logic 1)`;
         btnCmosVin.classList.add("is-on");
       }
       if (cmosPmosState) {
@@ -2993,8 +3031,55 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         cmosNmosState.className = "m-status on";
       }
       if (cmosVoutVal) {
-        cmosVoutVal.textContent = "0.0 V (Ground / 0)";
+        cmosVoutVal.textContent = "0.00 V (Logic 0 / GND)";
       }
+
+      // Live Schematic visual updates
+      if (svgVinLabel) {
+        svgVinLabel.textContent = `= ${vdd.toFixed(1)} V (HIGH)`;
+        svgVinLabel.setAttribute("fill", "#2563eb");
+      }
+      if (vinStem) vinStem.setAttribute("stroke", "#2563eb");
+      if (vinDot) vinDot.setAttribute("fill", "#2563eb");
+      if (gateBus) gateBus.setAttribute("stroke", "#2563eb");
+
+      if (svgVoutLabel) {
+        svgVoutLabel.textContent = "= 0.00 V (LOW)";
+        svgVoutLabel.setAttribute("fill", "#1e40af");
+      }
+      if (voutDot) voutDot.setAttribute("fill", "#1e40af");
+      if (voutWire) voutWire.setAttribute("stroke", "#1e40af");
+
+      // pMOS: OFF (gray, dashed, cut-off)
+      if (vddStem) { vddStem.setAttribute("stroke", "#94a3b8"); vddStem.setAttribute("stroke-width", "2"); }
+      if (pch) { pch.setAttribute("stroke", "#94a3b8"); pch.setAttribute("stroke-width", "4"); pch.setAttribute("stroke-dasharray", "4 3"); }
+      if (pSourceTab) pSourceTab.setAttribute("stroke", "#94a3b8");
+      if (pSourceArrow) pSourceArrow.setAttribute("fill", "#94a3b8");
+      if (pDrainTab) pDrainTab.setAttribute("stroke", "#94a3b8");
+      if (pDrainWire) { pDrainWire.setAttribute("stroke", "#94a3b8"); pDrainWire.setAttribute("stroke-width", "2"); }
+      if (pAnimFlow) pAnimFlow.setAttribute("opacity", "0");
+      if (pBadge) pBadge.setAttribute("fill", "#94a3b8");
+      if (pBadgeTxt) pBadgeTxt.textContent = "OFF (Cut-off)";
+
+      // nMOS: ON (blue, thick, active flow)
+      if (nDrainWire) { nDrainWire.setAttribute("stroke", "#2563eb"); nDrainWire.setAttribute("stroke-width", "3"); }
+      if (nch) { nch.setAttribute("stroke", "#2563eb"); nch.setAttribute("stroke-width", "6"); nch.removeAttribute("stroke-dasharray"); }
+      if (nDrainTab) nDrainTab.setAttribute("stroke", "#2563eb");
+      if (nSourceTab) nSourceTab.setAttribute("stroke", "#2563eb");
+      if (nSourceArrow) nSourceArrow.setAttribute("fill", "#2563eb");
+      if (gndStem) { gndStem.setAttribute("stroke", "#2563eb"); gndStem.setAttribute("stroke-width", "3"); }
+      if (nAnimFlow) nAnimFlow.setAttribute("opacity", "1");
+      if (nBadge) nBadge.setAttribute("fill", "#2563eb");
+      if (nBadgeTxt) nBadgeTxt.textContent = "ON (Pull-down)";
+
+      // Capacitor & state card
+      if (svgCapLabel) { svgCapLabel.textContent = "DISCHARGED"; svgCapLabel.setAttribute("fill", "#2563eb"); }
+      if (stateCardBg) { stateCardBg.setAttribute("fill", "#eff6ff"); stateCardBg.setAttribute("stroke", "#2563eb"); }
+      if (svgStateTitle) { svgStateTitle.textContent = "▼ Vin = 1 (Logic 1)"; svgStateTitle.setAttribute("fill", "#1d4ed8"); }
+      if (svgStatePmos) { svgStatePmos.textContent = "✗ OFF (VGS = 0.0V)"; svgStatePmos.setAttribute("fill", "#dc2626"); }
+      if (svgStateNmos) { svgStateNmos.textContent = `✓ ON (VGS = +${vdd.toFixed(1)}V)`; svgStateNmos.setAttribute("fill", "#15803d"); }
+      if (svgStatePath) { svgStatePath.textContent = "Output → nMOS → GND"; svgStatePath.setAttribute("fill", "#1d4ed8"); }
+      if (svgStateVout) { svgStateVout.textContent = "Vout = 0.00 V (0)"; svgStateVout.setAttribute("fill", "#1e40af"); }
     }
   }
 
@@ -3006,6 +3091,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   cmosVddSlider?.addEventListener("input", updateCmosPowerSim);
   cmosFreqSlider?.addEventListener("input", updateCmosPowerSim);
+
+  // Initialize live simulation immediately
+  updateCmosPowerSim();
 
   // ==========================================
   // 2. STANDARD CELL GE EXPLORER
