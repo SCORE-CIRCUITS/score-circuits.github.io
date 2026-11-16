@@ -90,11 +90,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  MAIN WORKBENCH FRAME & CAD GRID                       -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect width="758" height="498" x="1" y="1" rx="8" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect width="758" height="498" x="1" y="1" rx="8" fill="#ffffff" stroke="#151b20" stroke-width="1.5"/>
                 <rect width="756" height="422" x="2" y="2" rx="7" fill="url(#edaGrid)"/>
 
                 <!-- Top status banner inside frame -->
-                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
+                <rect x="2" y="2" width="756" height="24" fill="#151b20" rx="6"/>
                 <circle cx="16" cy="14" r="4" fill="#22c55e"/>
                 <text x="26" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • CMOS INVERTER DYNAMIC SWITCHING SIMULATOR</text>
 
@@ -104,15 +104,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  VDD POWER SUPPLY TERMINAL (Top Rail with Stepper)     -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <line x1="160" y1="46" x2="280" y2="46" stroke="var(--coral, #f38469)" stroke-width="2.5" stroke-linecap="round"/>
-                <circle cx="220" cy="46" r="3" fill="var(--coral, #f38469)"/>
+                <line x1="160" y1="46" x2="280" y2="46" stroke="#f38469" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="220" cy="46" r="3" fill="#f38469"/>
 
                 <!-- VDD Stepper Controls directly at Top Rail -->
                 <g id="btnVddDown" cursor="pointer" role="button" aria-label="Decrease VDD">
                   <rect x="156" y="30" width="18" height="15" rx="2.5" fill="#1e293b" stroke="#334155"/>
                   <text x="165" y="41" font-size="11" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">&#8722;</text>
                 </g>
-                <text x="220" y="41" font-size="10.5" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace" text-anchor="middle">VDD = <tspan id="svgVddLabel">1.00</tspan> V</text>
+                <text x="220" y="41" font-size="10.5" font-weight="900" fill="#f38469" font-family="monospace" text-anchor="middle">VDD = <tspan id="svgVddLabel">1.00</tspan> V</text>
                 <g id="btnVddUp" cursor="pointer" role="button" aria-label="Increase VDD">
                   <rect x="266" y="30" width="18" height="15" rx="2.5" fill="#1e293b" stroke="#334155"/>
                   <text x="275" y="41" font-size="11" font-weight="900" fill="#f8fafc" font-family="sans-serif" text-anchor="middle">+</text>
@@ -122,9 +122,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <line id="vddStem" x1="220" y1="46" x2="220" y2="92" stroke="#16a34a" stroke-width="2.5"/>
 
                 <!-- Wire from VDD rail left to SPDT switch top contact -->
-                <line x1="160" y1="46" x2="55" y2="46" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <line x1="55" y1="46" x2="55" y2="165" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <line x1="55" y1="165" x2="71" y2="165" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
+                <line x1="160" y1="46" x2="55" y2="46" stroke="#f38469" stroke-width="1.5"/>
+                <line x1="55" y1="46" x2="55" y2="165" stroke="#f38469" stroke-width="1.5"/>
+                <line x1="55" y1="165" x2="71" y2="165" stroke="#f38469" stroke-width="1.5"/>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  INTERACTIVE SPDT INPUT SWITCH (ON THE CIRCUIT WIRE)   -->
@@ -138,46 +138,46 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <text id="svgSwitchBtnTxt" x="67" y="140" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">&#8644; SW: 0V (LOW)</text>
 
                   <!-- Top Contact: VDD -->
-                  <circle cx="75" cy="165" r="4.5" fill="var(--coral, #f38469)"/>
-                  <text x="64" y="168" font-size="8" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace" text-anchor="end">VDD</text>
+                  <circle cx="75" cy="165" r="4.5" fill="#f38469"/>
+                  <text x="64" y="168" font-size="8" font-weight="900" fill="#f38469" font-family="monospace" text-anchor="end">VDD</text>
 
                   <!-- Bottom Contact: GND -->
-                  <circle cx="75" cy="255" r="4.5" fill="var(--ink, #151b20)"/>
-                  <text x="64" y="258" font-size="8" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace" text-anchor="end">GND</text>
+                  <circle cx="75" cy="255" r="4.5" fill="#151b20"/>
+                  <text x="64" y="258" font-size="8" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="end">GND</text>
 
                   <!-- Center Pivot Pole -->
-                  <circle cx="75" cy="210" r="5" fill="var(--yellow, #ffc83e)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                  <circle cx="75" cy="210" r="5" fill="#ffc83e" stroke="#151b20" stroke-width="1.5"/>
 
                   <!-- Dynamic Switch Blade (Pivots between VDD and GND) -->
-                  <line id="svgSwitchBlade" x1="75" y1="210" x2="75" y2="252" stroke="var(--yellow, #ffc83e)" stroke-width="4" stroke-linecap="round"/>
+                  <line id="svgSwitchBlade" x1="75" y1="210" x2="75" y2="252" stroke="#ffc83e" stroke-width="4" stroke-linecap="round"/>
 
                   <text x="67" y="274" font-size="7.5" font-weight="700" fill="#64748b" font-family="sans-serif" text-anchor="middle">[Click to flip]</text>
                 </g>
 
                 <!-- Wire from GND rail left to SPDT switch bottom contact -->
-                <line x1="55" y1="255" x2="71" y2="255" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <line x1="55" y1="255" x2="55" y2="385" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <line x1="55" y1="385" x2="206" y2="385" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <line x1="55" y1="255" x2="71" y2="255" stroke="#151b20" stroke-width="1.5"/>
+                <line x1="55" y1="255" x2="55" y2="385" stroke="#151b20" stroke-width="1.5"/>
+                <line x1="55" y1="385" x2="206" y2="385" stroke="#151b20" stroke-width="1.5"/>
 
                 <!-- Wire from Switch Pivot to Inverter Gate Bus -->
-                <line id="vinStem" x1="75" y1="210" x2="130" y2="210" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <circle id="vinDot" cx="130" cy="210" r="3.5" fill="var(--ink, #151b20)"/>
+                <line id="vinStem" x1="75" y1="210" x2="130" y2="210" stroke="#151b20" stroke-width="2"/>
+                <circle id="vinDot" cx="130" cy="210" r="3.5" fill="#151b20"/>
 
                 <!-- Voltage Probe Flag on Input Wire -->
                 <polygon points="86,192 120,192 126,200 120,208 86,208" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
                 <text id="svgVinLabel" x="104" y="203" font-size="8.5" font-weight="900" fill="#166534" font-family="monospace" text-anchor="middle">0.0V (L)</text>
 
                 <!-- Vertical gate bus -->
-                <line id="gateBus" x1="130" y1="110" x2="130" y2="310" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <circle cx="130" cy="110" r="3" fill="var(--ink, #151b20)"/>
-                <circle cx="130" cy="310" r="3" fill="var(--ink, #151b20)"/>
+                <line id="gateBus" x1="130" y1="110" x2="130" y2="310" stroke="#151b20" stroke-width="2"/>
+                <circle cx="130" cy="110" r="3" fill="#151b20"/>
+                <circle cx="130" cy="310" r="3" fill="#151b20"/>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  pMOS TRANSISTOR (MP1) — Standard IEEE Symbol          -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <line x1="130" y1="110" x2="178" y2="110" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <circle cx="183" cy="110" r="5" fill="#ffffff" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <line x1="191" y1="92" x2="191" y2="128" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
+                <line x1="130" y1="110" x2="178" y2="110" stroke="#151b20" stroke-width="2"/>
+                <circle cx="183" cy="110" r="5" fill="#ffffff" stroke="#151b20" stroke-width="2"/>
+                <line x1="191" y1="92" x2="191" y2="128" stroke="#151b20" stroke-width="2.5"/>
 
                 <!-- Channel bar -->
                 <line id="pch" x1="197" y1="90" x2="197" y2="130" stroke="#16a34a" stroke-width="5" stroke-linecap="square"/>
@@ -189,7 +189,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <line id="pDrainWire" x1="220" y1="124" x2="220" y2="210" stroke="#16a34a" stroke-width="2.5"/>
 
                 <!-- Device annotations -->
-                <text x="234" y="98" font-size="11.5" font-weight="900" fill="var(--coral, #f38469)" font-family="sans-serif">MP1 (pMOS)</text>
+                <text x="234" y="98" font-size="11.5" font-weight="900" fill="#f38469" font-family="sans-serif">MP1 (pMOS)</text>
                 <text x="234" y="112" font-size="9.5" fill="#475569" font-family="monospace">W/L = 1.00µm / 45nm</text>
                 <rect id="pBadge" x="234" y="118" width="70" height="17" rx="3.5" fill="#16a34a"/>
                 <text id="pBadgeTxt" x="269" y="130" font-size="8.5" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="sans-serif">ON (Pull-up)</text>
@@ -201,8 +201,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  nMOS TRANSISTOR (MN1) — Standard IEEE Symbol          -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <line x1="130" y1="310" x2="191" y2="310" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <line x1="191" y1="292" x2="191" y2="328" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
+                <line x1="130" y1="310" x2="191" y2="310" stroke="#151b20" stroke-width="2"/>
+                <line x1="191" y1="292" x2="191" y2="328" stroke="#151b20" stroke-width="2.5"/>
 
                 <!-- Channel bar -->
                 <line id="nch" x1="197" y1="290" x2="197" y2="330" stroke="#94a3b8" stroke-width="3.5" stroke-dasharray="3 2" stroke-linecap="square"/>
@@ -214,38 +214,38 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <line id="gndStem" x1="220" y1="324" x2="220" y2="385" stroke="#94a3b8" stroke-width="2"/>
 
                 <!-- Device annotations -->
-                <text x="234" y="298" font-size="11.5" font-weight="900" fill="var(--cyan, #22bfd7)" font-family="sans-serif">MN1 (nMOS)</text>
+                <text x="234" y="298" font-size="11.5" font-weight="900" fill="#22bfd7" font-family="sans-serif">MN1 (nMOS)</text>
                 <text x="234" y="312" font-size="9.5" fill="#475569" font-family="monospace">W/L = 0.40µm / 45nm</text>
                 <rect id="nBadge" x="234" y="318" width="70" height="17" rx="3.5" fill="#94a3b8"/>
                 <text id="nBadgeTxt" x="269" y="330" font-size="8.5" font-weight="900" fill="#ffffff" text-anchor="middle" font-family="sans-serif">OFF (Cut-off)</text>
 
-                <text x="225" y="293" font-size="8" fill="var(--ink, #151b20)" font-family="monospace" font-weight="700">D</text>
-                <text x="225" y="335" font-size="8" fill="var(--ink, #151b20)" font-family="monospace" font-weight="700">S</text>
+                <text x="225" y="293" font-size="8" fill="#151b20" font-family="monospace" font-weight="700">D</text>
+                <text x="225" y="335" font-size="8" fill="#151b20" font-family="monospace" font-weight="700">S</text>
                 <text x="170" y="305" font-size="8" fill="#64748b" font-family="monospace">G</text>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  GND TERMINAL — Standard Earth Ground Symbol           -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <line x1="206" y1="385" x2="234" y2="385" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <line x1="211" y1="391" x2="229" y2="391" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <line x1="216" y1="397" x2="224" y2="397" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text x="220" y="410" font-size="10" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace" text-anchor="middle">GND (0V)</text>
+                <line x1="206" y1="385" x2="234" y2="385" stroke="#151b20" stroke-width="2.5"/>
+                <line x1="211" y1="391" x2="229" y2="391" stroke="#151b20" stroke-width="2"/>
+                <line x1="216" y1="397" x2="224" y2="397" stroke="#151b20" stroke-width="1.5"/>
+                <text x="220" y="410" font-size="10" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">GND (0V)</text>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  OUTPUT NODE & LOAD CAPACITOR (OUT)                    -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <circle id="voutDot" cx="220" cy="210" r="4.5" fill="var(--cyan, #22bfd7)"/>
-                <line id="voutWire" x1="220" y1="210" x2="360" y2="210" stroke="var(--cyan, #22bfd7)" stroke-width="2.5"/>
+                <circle id="voutDot" cx="220" cy="210" r="4.5" fill="#22bfd7"/>
+                <line id="voutWire" x1="220" y1="210" x2="360" y2="210" stroke="#22bfd7" stroke-width="2.5"/>
 
-                <polygon points="350,202 388,202 396,210 388,218 350,218" fill="#eff6ff" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
+                <polygon points="350,202 388,202 396,210 388,218 350,218" fill="#eff6ff" stroke="#22bfd7" stroke-width="1.5"/>
                 <text x="369" y="214" font-size="10" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">OUT</text>
 
                 <!-- Voltage Probe Flag on Output Wire -->
-                <rect x="340" y="180" width="68" height="18" rx="3" fill="var(--cyan, #22bfd7)"/>
+                <rect x="340" y="180" width="68" height="18" rx="3" fill="#22bfd7"/>
                 <text id="svgVoutLabel" x="374" y="193" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">1.00 V (H)</text>
 
                 <!-- Load Capacitor CL (Dynamic label) -->
-                <circle cx="300" cy="210" r="3" fill="var(--cyan, #22bfd7)"/>
+                <circle cx="300" cy="210" r="3" fill="#22bfd7"/>
                 <line x1="300" y1="210" x2="300" y2="265" stroke="#475569" stroke-width="1.5"/>
                 <!-- Capacitor Plates -->
                 <line x1="286" y1="265" x2="314" y2="265" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
@@ -271,7 +271,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  RIGHT-SIDE ANALYSIS & TIMING PANEL                    -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect x="426" y="32" width="320" height="22" rx="4" fill="var(--ink, #151b20)"/>
+                <rect x="426" y="32" width="320" height="22" rx="4" fill="#151b20"/>
                 <text x="436" y="47" font-size="9.5" font-weight="900" fill="#f8fafc" font-family="monospace">EDA ANALYSIS: DC OPERATING POINT &amp; SCOPE</text>
 
                 <!-- DC Operating Point Table Card -->
@@ -283,8 +283,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
                 <!-- Table Header -->
                 <text x="442" y="102" font-size="8.5" font-weight="900" fill="#64748b" font-family="monospace">PARAMETER</text>
-                <text x="552" y="102" font-size="8.5" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace">pMOS (MP1)</text>
-                <text x="652" y="102" font-size="8.5" font-weight="900" fill="var(--cyan, #22bfd7)" font-family="monospace">nMOS (MN1)</text>
+                <text x="552" y="102" font-size="8.5" font-weight="900" fill="#f38469" font-family="monospace">pMOS (MP1)</text>
+                <text x="652" y="102" font-size="8.5" font-weight="900" fill="#22bfd7" font-family="monospace">nMOS (MN1)</text>
                 <line x1="436" y1="108" x2="736" y2="108" stroke="#cbd5e1" stroke-width="1"/>
 
                 <!-- Row 1: V_GS -->
@@ -304,13 +304,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
                 <!-- Row 4: Path Summary -->
                 <line x1="436" y1="168" x2="736" y2="168" stroke="#e2e8f0" stroke-width="1"/>
-                <text x="442" y="183" font-size="9" font-weight="800" fill="var(--ink, #151b20)" font-family="sans-serif">Active Path:</text>
+                <text x="442" y="183" font-size="9" font-weight="800" fill="#151b20" font-family="sans-serif">Active Path:</text>
                 <text id="svgStatePath" x="506" y="183" font-size="9" font-weight="800" fill="#15803d" font-family="sans-serif">VDD &#8594; MP1 &#8594; CL (Pull-Up Active)</text>
 
                 <!-- Static DC Power Confirmation -->
                 <rect x="436" y="193" width="300" height="32" rx="4" fill="#f1f5f9"/>
-                <text x="444" y="206" font-size="8.5" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace">DC Static Current: I_static &#8776; 0.00 &#956;A</text>
-                <text x="444" y="218" font-size="8" fill="#64748b" font-family="sans-serif">No direct VDD&#8209;to&#8209;GND path &bull; One FET is always OFF</text>
+                <text x="444" y="206" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">DC Static Current: I_static &#8776; 0.00 &#956;A</text>
+                <text x="444" y="218" font-size="8" fill="#64748b" font-family="sans-serif">No direct VDD&#8209;to&#8209;GND path &#8226; One FET is always OFF</text>
 
                 <!-- Sub-card: Transient Scope Window (Reticle) -->
                 <rect x="426" y="238" width="320" height="178" rx="6" fill="#090d16" stroke="#1e293b" stroke-width="1.5"/>
@@ -322,11 +322,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <text id="svgScopeInfo" x="668" y="250" font-size="8" font-weight="700" fill="#94a3b8" font-family="monospace">CL = 5.0 fF</text>
 
                 <!-- Waveform Traces (Dynamically calculated based on CL and VDD!) -->
-                <path id="scopeTraceVin" d="M 440 286 L 530 286 L 536 376 L 730 376" fill="none" stroke="var(--yellow, #ffc83e)" stroke-width="2"/>
+                <path id="scopeTraceVin" d="M 440 286 L 530 286 L 536 376 L 730 376" fill="none" stroke="#ffc83e" stroke-width="2"/>
                 <path id="scopeTraceVout" d="M 440 376 L 530 376 Q 544 320 582 286 L 730 286" fill="none" stroke="#06b6d4" stroke-width="2.5"/>
 
-                <circle cx="445" cy="268" r="3.5" fill="var(--yellow, #ffc83e)"/>
-                <text x="453" y="271" font-size="7.5" font-weight="800" fill="var(--yellow, #ffc83e)" font-family="monospace">CH1: Vin</text>
+                <circle cx="445" cy="268" r="3.5" fill="#ffc83e"/>
+                <text x="453" y="271" font-size="7.5" font-weight="800" fill="#ffc83e" font-family="monospace">CH1: Vin</text>
 
                 <circle cx="510" cy="268" r="3.5" fill="#06b6d4"/>
                 <text x="518" y="271" font-size="7.5" font-weight="800" fill="#06b6d4" font-family="monospace">CH2: Vout</text>
@@ -339,7 +339,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!--  BOTTOM INSTRUMENT RACK (CL, FREQ & DYNAMIC POWER)     -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect x="6" y="424" width="748" height="70" rx="6" fill="var(--ink, #151b20)" stroke="#1e293b" stroke-width="1.5"/>
+                <rect x="6" y="424" width="748" height="70" rx="6" fill="#151b20" stroke="#1e293b" stroke-width="1.5"/>
 
                 <!-- MODULE 1: LOAD CAPACITANCE (CL) -->
                 <text x="16" y="439" font-size="8.5" font-weight="900" fill="#94a3b8" font-family="monospace">LOAD CAPACITANCE (CL)</text>
@@ -359,7 +359,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
                 <!-- Capacitance Presets -->
                 <g id="btnCapPreset02" cursor="pointer" role="button"><rect id="pillCap02" x="144" y="446" width="24" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="156" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">2fF</text></g>
-                <g id="btnCapPreset05" cursor="pointer" role="button"><rect id="pillCap05" x="172" y="446" width="24" height="22" rx="3" fill="var(--cyan, #22bfd7)" stroke="#38bdf8"/><text x="184" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">5fF</text></g>
+                <g id="btnCapPreset05" cursor="pointer" role="button"><rect id="pillCap05" x="172" y="446" width="24" height="22" rx="3" fill="#22bfd7" stroke="#38bdf8"/><text x="184" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">5fF</text></g>
                 <g id="btnCapPreset10" cursor="pointer" role="button"><rect id="pillCap10" x="200" y="446" width="26" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="213" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">10fF</text></g>
                 <g id="btnCapPreset20" cursor="pointer" role="button"><rect id="pillCap20" x="230" y="446" width="26" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="243" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">20fF</text></g>
                 <text x="16" y="484" font-size="7.5" fill="#64748b" font-family="sans-serif">Scales rise/fall times &amp; Pdyn</text>
@@ -385,7 +385,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
                 <!-- Frequency Presets -->
                 <g id="btnFreqPreset500" cursor="pointer" role="button"><rect id="pillFreq500" x="412" y="446" width="28" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="426" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">500M</text></g>
-                <g id="btnFreqPreset1000" cursor="pointer" role="button"><rect id="pillFreq1000" x="444" y="446" width="28" height="22" rx="3" fill="var(--cyan, #22bfd7)" stroke="#38bdf8"/><text x="458" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">1.0G</text></g>
+                <g id="btnFreqPreset1000" cursor="pointer" role="button"><rect id="pillFreq1000" x="444" y="446" width="28" height="22" rx="3" fill="#22bfd7" stroke="#38bdf8"/><text x="458" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">1.0G</text></g>
                 <g id="btnFreqPreset2500" cursor="pointer" role="button"><rect id="pillFreq2500" x="476" y="446" width="28" height="22" rx="3" fill="#1e293b" stroke="#334155"/><text x="490" y="460" font-size="7.5" font-weight="800" fill="#f8fafc" font-family="monospace" text-anchor="middle">2.5G</text></g>
                 <text x="274" y="484" font-size="7.5" fill="#64748b" font-family="sans-serif">Linear power scale: P &#8733; f</text>
 
@@ -402,7 +402,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <rect x="644" y="449" width="98" height="16" rx="3" fill="#1e293b"/>
                 <rect id="svgPowerBar" x="646" y="451" width="30" height="12" rx="2" fill="#f59e0b"/>
 
-                <text x="524" y="484" font-size="7.5" fill="#94a3b8" font-family="sans-serif">P = &alpha;&middot;C<tspan font-size="6" dy="1">L</tspan><tspan dy="-1">&middot;V</tspan><tspan font-size="6" dy="1">DD</tspan><tspan dy="-1">&#178;&middot;f (1,000 gates)</tspan></text>
+                <text x="524" y="484" font-size="7.5" fill="#94a3b8" font-family="sans-serif">P = &#945;&#183;C<tspan font-size="6" dy="1">L</tspan><tspan dy="-1">&#183;V</tspan><tspan font-size="6" dy="1">DD</tspan><tspan dy="-1">&#178;&#183;f (1,000 gates)</tspan></text>
               </svg>
             </div>
 
@@ -455,7 +455,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
               <span class="sub-w-tag">ALL-IN-ONE INTERACTIVE EDA BENCH</span>
               <h4 class="sub-w-title">CMOS Universal Logic — Interactive NAND2 vs. NOR2 Conduction &amp; Area Trade-off</h4>
               <p class="sub-w-desc">
-                Toggle <strong>Input A</strong> and <strong>Input B</strong> directly on the control deck to watch conduction currents illuminate through complementary pMOS and nMOS channels. Switch between <strong>Minimum Sizing</strong> and <strong>Delay-Matched Sizing</strong> to see why carrier physics (electrons $\mu_n \approx 2.5\times \mu_p$) forces NOR2 into a severe silicon area ($+67\%$) and input capacitance penalty, establishing <strong>NAND2 as the universal 1 Gate Equivalent (GE) standard</strong>.
+                Toggle <strong>Input A</strong> and <strong>Input B</strong> directly on the control deck to watch conduction currents illuminate through complementary pMOS and nMOS channels. Switch between <strong>Minimum Sizing</strong> and <strong>Delay-Matched Sizing</strong> to see why carrier physics (electrons $\mu_n \approx 2.5\times \mu_p$) forces NOR2 into a severe silicon area (+67%) and input capacitance penalty, establishing <strong>NAND2 as the universal 1 Gate Equivalent (GE) standard</strong>.
               </p>
             </div>
 
@@ -464,282 +464,282 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!-- TOP WORKBENCH STATUS BANNER                           -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="5"/>
-                <circle cx="16" cy="14" r="4" fill="var(--lime, #b7df69)"/>
-                <text x="26" y="18" font-size="9" font-weight="900" fill="var(--cream, #fffaf0)" font-family="monospace">SCORE EDA WORKBENCH • DUAL CMOS GATE CONDUCTION &amp; GATE EQUIVALENT (GE) SIMULATOR</text>
+                <rect x="2" y="2" width="756" height="24" fill="#151b20" rx="5"/>
+                <circle cx="16" cy="14" r="4" fill="#b7df69"/>
+                <text x="26" y="18" font-size="9" font-weight="900" fill="#fffaf0" font-family="monospace">SCORE EDA WORKBENCH • DUAL CMOS GATE CONDUCTION &amp; GATE EQUIVALENT (GE) SIMULATOR</text>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!-- TOP CONTROL DECK: INPUTS A, B & SIZING MODE           -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect x="10" y="30" width="740" height="42" rx="6" fill="var(--paper, #f6f0dc)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <rect x="10" y="30" width="740" height="42" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
 
                 <!-- Left Group: Inputs A & B -->
-                <text x="20" y="55" font-size="9" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace">INPUT CONTROLS:</text>
+                <text x="20" y="55" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">INPUT CONTROLS:</text>
                 
                 <!-- Input A Button -->
                 <g id="btnDualInA" cursor="pointer" role="button" aria-label="Toggle Input A">
-                  <rect id="btnDualInABg" x="110" y="36" width="74" height="30" rx="4" fill="var(--paper-deep, #eee4c8)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                  <text id="btnDualInATxt" x="147" y="55" font-size="9" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace" text-anchor="middle">A = 0 (0.0V)</text>
+                  <rect id="btnDualInABg" x="110" y="36" width="74" height="30" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.5"/>
+                  <text id="btnDualInATxt" x="147" y="55" font-size="9" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">A = 0 (0.0V)</text>
                 </g>
 
                 <!-- Input B Button -->
                 <g id="btnDualInB" cursor="pointer" role="button" aria-label="Toggle Input B">
-                  <rect id="btnDualInBBg" x="190" y="36" width="74" height="30" rx="4" fill="var(--paper-deep, #eee4c8)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                  <text id="btnDualInBTxt" x="227" y="55" font-size="9" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace" text-anchor="middle">B = 0 (0.0V)</text>
+                  <rect id="btnDualInBBg" x="190" y="36" width="74" height="30" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.5"/>
+                  <text id="btnDualInBTxt" x="227" y="55" font-size="9" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">B = 0 (0.0V)</text>
                 </g>
 
                 <!-- Quick Truth Table Preset Pills -->
-                <g id="pillDual00" cursor="pointer"><rect x="270" y="40" width="22" height="22" rx="3" fill="var(--yellow, #ffc83e)" stroke="var(--ink, #151b20)"/><text x="281" y="55" font-size="8" font-weight="900" text-anchor="middle">00</text></g>
-                <g id="pillDual01" cursor="pointer"><rect x="296" y="40" width="22" height="22" rx="3" fill="var(--paper-deep, #eee4c8)" stroke="var(--ink, #151b20)"/><text x="307" y="55" font-size="8" font-weight="900" text-anchor="middle">01</text></g>
-                <g id="pillDual10" cursor="pointer"><rect x="322" y="40" width="22" height="22" rx="3" fill="var(--paper-deep, #eee4c8)" stroke="var(--ink, #151b20)"/><text x="333" y="55" font-size="8" font-weight="900" text-anchor="middle">10</text></g>
-                <g id="pillDual11" cursor="pointer"><rect x="348" y="40" width="22" height="22" rx="3" fill="var(--paper-deep, #eee4c8)" stroke="var(--ink, #151b20)"/><text x="359" y="55" font-size="8" font-weight="900" text-anchor="middle">11</text></g>
+                <g id="pillDual00" cursor="pointer"><rect x="270" y="40" width="22" height="22" rx="3" fill="#ffc83e" stroke="#151b20"/><text x="281" y="55" font-size="8" font-weight="900" text-anchor="middle">00</text></g>
+                <g id="pillDual01" cursor="pointer"><rect x="296" y="40" width="22" height="22" rx="3" fill="#eee4c8" stroke="#151b20"/><text x="307" y="55" font-size="8" font-weight="900" text-anchor="middle">01</text></g>
+                <g id="pillDual10" cursor="pointer"><rect x="322" y="40" width="22" height="22" rx="3" fill="#eee4c8" stroke="#151b20"/><text x="333" y="55" font-size="8" font-weight="900" text-anchor="middle">10</text></g>
+                <g id="pillDual11" cursor="pointer"><rect x="348" y="40" width="22" height="22" rx="3" fill="#eee4c8" stroke="#151b20"/><text x="359" y="55" font-size="8" font-weight="900" text-anchor="middle">11</text></g>
 
                 <!-- Right Group: Sizing Mode Selector -->
-                <text x="382" y="55" font-size="9" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace">PUN SIZING MODE:</text>
+                <text x="382" y="55" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">PUN SIZING MODE:</text>
                 
                 <!-- Min Sizing Button -->
                 <g id="btnSizingMin" cursor="pointer" role="button" aria-label="Minimum Sizing Mode">
-                  <rect id="btnSizingMinBg" x="480" y="36" width="124" height="30" rx="4" fill="var(--yellow, #ffc83e)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                  <text x="542" y="54" font-size="8.5" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace" text-anchor="middle">Min Wp (1.00 GE)</text>
+                  <rect id="btnSizingMinBg" x="480" y="36" width="124" height="30" rx="4" fill="#ffc83e" stroke="#151b20" stroke-width="1.5"/>
+                  <text x="542" y="54" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">Min Wp (1.00 GE)</text>
                 </g>
 
                 <!-- Matched Sizing Button -->
                 <g id="btnSizingMatch" cursor="pointer" role="button" aria-label="Delay Matched Sizing Mode">
-                  <rect id="btnSizingMatchBg" x="612" y="36" width="130" height="30" rx="4" fill="var(--paper-deep, #eee4c8)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                  <text x="677" y="54" font-size="8.5" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace" text-anchor="middle">Matched Wp (1.67 GE)</text>
+                  <rect id="btnSizingMatchBg" x="612" y="36" width="130" height="30" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.5"/>
+                  <text x="677" y="54" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">Matched Wp (1.67 GE)</text>
                 </g>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!-- LEFT PANEL: CMOS NAND2 SCHEMATIC                      -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect x="10" y="78" width="365" height="318" rx="8" fill="var(--cream, #fffaf0)" stroke="var(--ink, #151b20)" stroke-width="2"/>
+                <rect x="10" y="78" width="365" height="318" rx="8" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
                 <!-- Header Badge -->
-                <rect x="18" y="86" width="349" height="24" rx="4" fill="var(--lime, #b7df69)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text x="26" y="102" font-size="10.5" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace">CMOS NAND2 (REFERENCE STANDARD: 1.00 GE)</text>
+                <rect x="18" y="86" width="349" height="24" rx="4" fill="#b7df69" stroke="#151b20" stroke-width="1.5"/>
+                <text x="26" y="102" font-size="10.5" font-weight="900" fill="#151b20" font-family="monospace">CMOS NAND2 (REFERENCE STANDARD: 1.00 GE)</text>
 
                 <!-- VDD Rail -->
-                <line x1="50" y1="126" x2="255" y2="126" stroke="var(--coral, #f38469)" stroke-width="2.5"/>
-                <circle cx="155" cy="126" r="3" fill="var(--coral, #f38469)"/>
-                <text x="50" y="120" font-size="9.5" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace">VDD (1.0V)</text>
+                <line x1="50" y1="126" x2="255" y2="126" stroke="#f38469" stroke-width="2.5"/>
+                <circle cx="155" cy="126" r="3" fill="#f38469"/>
+                <text x="50" y="120" font-size="9.5" font-weight="900" fill="#f38469" font-family="monospace">VDD (1.0V)</text>
 
                 <!-- Wires from Top Deck Inputs A & B to NAND gates -->
-                <line x1="28" y1="72" x2="28" y2="155" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <line x1="28" y1="155" x2="94" y2="155" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <circle cx="28" cy="155" r="2.5" fill="var(--ink, #151b20)"/>
-                <line x1="28" y1="155" x2="28" y2="225" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <line x1="28" y1="225" x2="155" y2="225" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <line x1="28" y1="72" x2="28" y2="155" stroke="#151b20" stroke-width="1.5"/>
+                <line x1="28" y1="155" x2="94" y2="155" stroke="#151b20" stroke-width="1.5"/>
+                <circle cx="28" cy="155" r="2.5" fill="#151b20"/>
+                <line x1="28" y1="155" x2="28" y2="225" stroke="#151b20" stroke-width="1.5"/>
+                <line x1="28" y1="225" x2="155" y2="225" stroke="#151b20" stroke-width="1.5"/>
 
-                <line x1="40" y1="72" x2="40" y2="135" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <path d="M 40 135 L 218 135 L 218 152" fill="none" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <circle cx="40" cy="135" r="2.5" fill="var(--ink, #151b20)"/>
-                <line x1="40" y1="135" x2="40" y2="270" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <line x1="40" y1="270" x2="155" y2="270" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <line x1="40" y1="72" x2="40" y2="135" stroke="#151b20" stroke-width="1.5"/>
+                <path d="M 40 135 L 218 135 L 218 152" fill="none" stroke="#151b20" stroke-width="1.5"/>
+                <circle cx="40" cy="135" r="2.5" fill="#151b20"/>
+                <line x1="40" y1="135" x2="40" y2="270" stroke="#151b20" stroke-width="1.5"/>
+                <line x1="40" y1="270" x2="155" y2="270" stroke="#151b20" stroke-width="1.5"/>
 
                 <!-- pMOS MP_A (Parallel Left) -->
-                <line x1="105" y1="126" x2="105" y2="142" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line x1="105" y1="142" x2="113" y2="142" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <circle cx="105" cy="126" r="2.5" fill="var(--coral, #f38469)"/>
-                <line id="nandMpA_ch" x1="113" y1="142" x2="113" y2="170" stroke="var(--lime, #b7df69)" stroke-width="5"/>
-                <line x1="105" y1="144" x2="105" y2="168" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <circle cx="98" cy="155" r="3.5" fill="var(--cream, #fffaf0)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <polygon points="113,155 119,152 119,158" fill="var(--coral, #f38469)"/>
-                <line x1="113" y1="170" x2="105" y2="170" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line x1="105" y1="170" x2="105" y2="188" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <text x="122" y="152" font-size="9" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace">MP_A</text>
-                <text id="nandMpA_badge" x="122" y="164" font-size="8" font-weight="800" fill="var(--lime, #b7df69)">ON</text>
+                <line x1="105" y1="126" x2="105" y2="142" stroke="#f38469" stroke-width="2"/>
+                <line x1="105" y1="142" x2="113" y2="142" stroke="#f38469" stroke-width="2"/>
+                <circle cx="105" cy="126" r="2.5" fill="#f38469"/>
+                <line id="nandMpA_ch" x1="113" y1="142" x2="113" y2="170" stroke="#b7df69" stroke-width="5"/>
+                <line x1="105" y1="144" x2="105" y2="168" stroke="#151b20" stroke-width="2.5"/>
+                <circle cx="98" cy="155" r="3.5" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
+                <polygon points="113,155 119,152 119,158" fill="#f38469"/>
+                <line x1="113" y1="170" x2="105" y2="170" stroke="#f38469" stroke-width="2"/>
+                <line x1="105" y1="170" x2="105" y2="188" stroke="#f38469" stroke-width="2"/>
+                <text x="122" y="152" font-size="9" font-weight="900" fill="#f38469" font-family="monospace">MP_A</text>
+                <text id="nandMpA_badge" x="122" y="164" font-size="8" font-weight="800" fill="#b7df69">ON</text>
 
                 <!-- pMOS MP_B (Parallel Right) -->
-                <line x1="205" y1="126" x2="205" y2="142" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line x1="205" y1="142" x2="197" y2="142" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <circle cx="205" cy="126" r="2.5" fill="var(--coral, #f38469)"/>
-                <line id="nandMpB_ch" x1="197" y1="142" x2="197" y2="170" stroke="var(--lime, #b7df69)" stroke-width="5"/>
-                <line x1="205" y1="144" x2="205" y2="168" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <circle cx="212" cy="155" r="3.5" fill="var(--cream, #fffaf0)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <polygon points="197,155 191,152 191,158" fill="var(--coral, #f38469)"/>
-                <line x1="197" y1="170" x2="205" y2="170" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line x1="205" y1="170" x2="205" y2="188" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <text x="168" y="152" font-size="9" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace">MP_B</text>
-                <text id="nandMpB_badge" x="168" y="164" font-size="8" font-weight="800" fill="var(--lime, #b7df69)">ON</text>
+                <line x1="205" y1="126" x2="205" y2="142" stroke="#f38469" stroke-width="2"/>
+                <line x1="205" y1="142" x2="197" y2="142" stroke="#f38469" stroke-width="2"/>
+                <circle cx="205" cy="126" r="2.5" fill="#f38469"/>
+                <line id="nandMpB_ch" x1="197" y1="142" x2="197" y2="170" stroke="#b7df69" stroke-width="5"/>
+                <line x1="205" y1="144" x2="205" y2="168" stroke="#151b20" stroke-width="2.5"/>
+                <circle cx="212" cy="155" r="3.5" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
+                <polygon points="197,155 191,152 191,158" fill="#f38469"/>
+                <line x1="197" y1="170" x2="205" y2="170" stroke="#f38469" stroke-width="2"/>
+                <line x1="205" y1="170" x2="205" y2="188" stroke="#f38469" stroke-width="2"/>
+                <text x="168" y="152" font-size="9" font-weight="900" fill="#f38469" font-family="monospace">MP_B</text>
+                <text id="nandMpB_badge" x="168" y="164" font-size="8" font-weight="800" fill="#b7df69">ON</text>
 
                 <!-- Parallel Drain Bus -->
-                <line id="nandPullUpFlow" x1="105" y1="188" x2="205" y2="188" stroke="var(--lime, #b7df69)" stroke-width="3"/>
-                <circle cx="105" cy="188" r="2.5" fill="var(--ink, #151b20)"/>
-                <circle cx="205" cy="188" r="2.5" fill="var(--ink, #151b20)"/>
-                <circle cx="155" cy="188" r="3" fill="var(--ink, #151b20)"/>
+                <line id="nandPullUpFlow" x1="105" y1="188" x2="205" y2="188" stroke="#b7df69" stroke-width="3"/>
+                <circle cx="105" cy="188" r="2.5" fill="#151b20"/>
+                <circle cx="205" cy="188" r="2.5" fill="#151b20"/>
+                <circle cx="155" cy="188" r="3" fill="#151b20"/>
 
                 <!-- Output Wire & Node -->
-                <line x1="155" y1="188" x2="280" y2="188" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <circle id="nandOutDot" cx="280" cy="188" r="4" fill="var(--lime, #b7df69)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text id="nandOutLogic" x="290" y="192" font-size="10.5" font-weight="900" fill="var(--lime, #b7df69)" font-family="monospace">Y = 1 (1.0V)</text>
+                <line x1="155" y1="188" x2="280" y2="188" stroke="#151b20" stroke-width="2"/>
+                <circle id="nandOutDot" cx="280" cy="188" r="4" fill="#b7df69" stroke="#151b20" stroke-width="1.5"/>
+                <text id="nandOutLogic" x="290" y="192" font-size="10.5" font-weight="900" fill="#b7df69" font-family="monospace">Y = 1 (1.0V)</text>
 
                 <!-- nMOS MN_A (Series Top) -->
-                <line id="nandPullDownFlow" x1="155" y1="188" x2="155" y2="210" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <line x1="155" y1="210" x2="163" y2="210" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
+                <line id="nandPullDownFlow" x1="155" y1="188" x2="155" y2="210" stroke="#151b20" stroke-width="1.5"/>
+                <line x1="155" y1="210" x2="163" y2="210" stroke="#22bfd7" stroke-width="2"/>
                 <line id="nandMnA_ch" x1="163" y1="210" x2="163" y2="238" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3 2"/>
-                <line x1="155" y1="212" x2="155" y2="236" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <polygon points="163,224 169,221 169,227" fill="var(--cyan, #22bfd7)"/>
-                <line x1="163" y1="238" x2="163" y2="255" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <circle cx="163" cy="255" r="2.5" fill="var(--ink, #151b20)"/>
-                <text x="175" y="222" font-size="9" font-weight="900" fill="var(--cyan, #22bfd7)" font-family="monospace">MN_A</text>
+                <line x1="155" y1="212" x2="155" y2="236" stroke="#151b20" stroke-width="2.5"/>
+                <polygon points="163,224 169,221 169,227" fill="#22bfd7"/>
+                <line x1="163" y1="238" x2="163" y2="255" stroke="#22bfd7" stroke-width="2"/>
+                <circle cx="163" cy="255" r="2.5" fill="#151b20"/>
+                <text x="175" y="222" font-size="9" font-weight="900" fill="#22bfd7" font-family="monospace">MN_A</text>
                 <text id="nandMnA_badge" x="175" y="233" font-size="8" font-weight="800" fill="#94a3b8">OFF</text>
 
                 <!-- nMOS MN_B (Series Bottom) -->
                 <line id="nandMnB_ch" x1="163" y1="255" x2="163" y2="283" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3 2"/>
-                <line x1="155" y1="257" x2="155" y2="281" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <polygon points="163,269 169,266 169,272" fill="var(--cyan, #22bfd7)"/>
-                <line x1="163" y1="283" x2="163" y2="300" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <text x="175" y="267" font-size="9" font-weight="900" fill="var(--cyan, #22bfd7)" font-family="monospace">MN_B</text>
+                <line x1="155" y1="257" x2="155" y2="281" stroke="#151b20" stroke-width="2.5"/>
+                <polygon points="163,269 169,266 169,272" fill="#22bfd7"/>
+                <line x1="163" y1="283" x2="163" y2="300" stroke="#22bfd7" stroke-width="2"/>
+                <text x="175" y="267" font-size="9" font-weight="900" fill="#22bfd7" font-family="monospace">MN_B</text>
                 <text id="nandMnB_badge" x="175" y="278" font-size="8" font-weight="800" fill="#94a3b8">OFF</text>
 
                 <!-- Ground Symbol -->
-                <line x1="150" y1="300" x2="176" y2="300" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <line x1="155" y1="304" x2="171" y2="304" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <line x1="159" y1="308" x2="167" y2="308" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text x="163" y="320" font-size="8.5" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace" text-anchor="middle">GND (0V)</text>
+                <line x1="150" y1="300" x2="176" y2="300" stroke="#151b20" stroke-width="2.5"/>
+                <line x1="155" y1="304" x2="171" y2="304" stroke="#151b20" stroke-width="2"/>
+                <line x1="159" y1="308" x2="167" y2="308" stroke="#151b20" stroke-width="1.5"/>
+                <text x="163" y="320" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">GND (0V)</text>
 
                 <!-- Pedagogical Callout Badges -->
-                <rect x="240" y="126" width="125" height="32" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.2"/>
-                <text x="246" y="139" font-size="8" font-weight="900" fill="var(--ink, #151b20)">✓ PARALLEL pMOS</text>
-                <text x="246" y="150" font-size="7.5" fill="var(--ink-light, #242c33)">Single Rp pull-up delay</text>
+                <rect x="240" y="126" width="125" height="32" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.2"/>
+                <text x="246" y="139" font-size="8" font-weight="900" fill="#151b20">✓ PARALLEL pMOS</text>
+                <text x="246" y="150" font-size="7.5" fill="#242c33">Single Rp pull-up delay</text>
 
-                <rect x="230" y="248" width="135" height="42" rx="4" fill="var(--cyan-soft, #c9f3f4)" stroke="var(--cyan, #22bfd7)" stroke-width="1.2"/>
-                <text x="236" y="261" font-size="8" font-weight="900" fill="var(--ink, #151b20)">✓ SERIES nMOS STACK</text>
-                <text x="236" y="272" font-size="7.5" fill="var(--ink-light, #242c33)">Electrons fast (μn ≈ 2.5× μp)</text>
-                <text x="236" y="283" font-size="7.5" font-weight="700" fill="var(--ink, #151b20)">2× Rn balances Rp!</text>
+                <rect x="230" y="248" width="135" height="42" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.2"/>
+                <text x="236" y="261" font-size="8" font-weight="900" fill="#151b20">✓ SERIES nMOS STACK</text>
+                <text x="236" y="272" font-size="7.5" fill="#242c33">Electrons fast (μn ≈ 2.5× μp)</text>
+                <text x="236" y="283" font-size="7.5" font-weight="700" fill="#151b20">2× Rn balances Rp!</text>
 
                 <!-- NAND2 Footer Metric Card -->
-                <rect x="18" y="332" width="349" height="54" rx="5" fill="var(--paper, #f6f0dc)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text x="28" y="349" font-size="9" font-weight="900" fill="var(--ink, #151b20)">AREA BENCHMARK: 1.00 GE • SYMMETRIC TIMING</text>
-                <text x="28" y="363" font-size="8" fill="var(--ink-light, #242c33)">• Wn = 2λ, Wp = 1λ &rarr; Total Width = 3λ</text>
-                <text x="28" y="376" font-size="8" fill="var(--ink-light, #242c33)">• Slower carriers (holes) never stack in series!</text>
+                <rect x="18" y="332" width="349" height="54" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="28" y="349" font-size="9" font-weight="900" fill="#151b20">AREA BENCHMARK: 1.00 GE • SYMMETRIC TIMING</text>
+                <text x="28" y="363" font-size="8" fill="#242c33">• Wn = 2λ, Wp = 1λ &#8594; Total Width = 3λ</text>
+                <text x="28" y="376" font-size="8" fill="#242c33">• Slower carriers (holes) never stack in series!</text>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!-- RIGHT PANEL: CMOS NOR2 SCHEMATIC                      -->
                 <!-- ══════════════════════════════════════════════════════ -->
-                <rect x="385" y="78" width="365" height="318" rx="8" fill="var(--cream, #fffaf0)" stroke="var(--ink, #151b20)" stroke-width="2"/>
+                <rect x="385" y="78" width="365" height="318" rx="8" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
                 <!-- Header Badge -->
-                <rect x="393" y="86" width="349" height="24" rx="4" fill="var(--coral, #f38469)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text x="401" y="102" font-size="10.5" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace">CMOS NOR2 (SERIES pMOS CARRIER BOTTLENECK)</text>
+                <rect x="393" y="86" width="349" height="24" rx="4" fill="#f38469" stroke="#151b20" stroke-width="1.5"/>
+                <text x="401" y="102" font-size="10.5" font-weight="900" fill="#151b20" font-family="monospace">CMOS NOR2 (SERIES pMOS CARRIER BOTTLENECK)</text>
 
                 <!-- VDD Rail -->
-                <line x1="490" y1="126" x2="570" y2="126" stroke="var(--coral, #f38469)" stroke-width="2.5"/>
-                <circle cx="530" cy="126" r="3" fill="var(--coral, #f38469)"/>
-                <text x="490" y="120" font-size="9.5" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace">VDD (1.0V)</text>
+                <line x1="490" y1="126" x2="570" y2="126" stroke="#f38469" stroke-width="2.5"/>
+                <circle cx="530" cy="126" r="3" fill="#f38469"/>
+                <text x="490" y="120" font-size="9.5" font-weight="900" fill="#f38469" font-family="monospace">VDD (1.0V)</text>
 
                 <!-- Wires from Top Deck Inputs A & B to NOR gates -->
-                <line x1="28" y1="72" x2="415" y2="72" stroke="var(--ink, #151b20)" stroke-dasharray="3 3" opacity="0.3"/>
-                <line x1="415" y1="72" x2="415" y2="150" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <line x1="415" y1="150" x2="512" y2="150" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <circle cx="415" cy="150" r="2.5" fill="var(--ink, #151b20)"/>
-                <line x1="415" y1="150" x2="415" y2="255" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <line x1="415" y1="255" x2="467" y2="255" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <line x1="28" y1="72" x2="415" y2="72" stroke="#151b20" stroke-dasharray="3 3" opacity="0.3"/>
+                <line x1="415" y1="72" x2="415" y2="150" stroke="#151b20" stroke-width="1.5"/>
+                <line x1="415" y1="150" x2="512" y2="150" stroke="#151b20" stroke-width="1.5"/>
+                <circle cx="415" cy="150" r="2.5" fill="#151b20"/>
+                <line x1="415" y1="150" x2="415" y2="255" stroke="#151b20" stroke-width="1.5"/>
+                <line x1="415" y1="255" x2="467" y2="255" stroke="#151b20" stroke-width="1.5"/>
 
-                <line x1="40" y1="72" x2="428" y2="72" stroke="var(--ink, #151b20)" stroke-dasharray="3 3" opacity="0.3"/>
-                <line x1="428" y1="72" x2="428" y2="195" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <line x1="428" y1="195" x2="512" y2="195" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <circle cx="428" cy="195" r="2.5" fill="var(--ink, #151b20)"/>
-                <path d="M 428 195 L 428 215 L 560 215 L 560 255 L 577 255" fill="none" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
+                <line x1="40" y1="72" x2="428" y2="72" stroke="#151b20" stroke-dasharray="3 3" opacity="0.3"/>
+                <line x1="428" y1="72" x2="428" y2="195" stroke="#151b20" stroke-width="1.5"/>
+                <line x1="428" y1="195" x2="512" y2="195" stroke="#151b20" stroke-width="1.5"/>
+                <circle cx="428" cy="195" r="2.5" fill="#151b20"/>
+                <path d="M 428 195 L 428 215 L 560 215 L 560 255 L 577 255" fill="none" stroke="#151b20" stroke-width="1.5"/>
 
                 <!-- pMOS MP_A (Series Top) -->
-                <line x1="530" y1="126" x2="530" y2="136" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line x1="530" y1="136" x2="538" y2="136" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line id="norMpA_ch" x1="538" y1="136" x2="538" y2="164" stroke="var(--coral, #f38469)" stroke-width="4"/>
-                <line x1="530" y1="138" x2="530" y2="162" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <circle cx="523" cy="150" r="3.5" fill="var(--cream, #fffaf0)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <polygon points="538,150 544,147 544,153" fill="var(--coral, #f38469)"/>
-                <line x1="538" y1="164" x2="530" y2="164" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line x1="530" y1="164" x2="530" y2="181" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <circle cx="530" cy="181" r="2.5" fill="var(--ink, #151b20)"/>
-                <text x="550" y="147" font-size="9" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace">MP_A</text>
-                <text id="norMpA_badge" x="550" y="159" font-size="8" font-weight="800" fill="var(--coral, #f38469)">ON</text>
+                <line x1="530" y1="126" x2="530" y2="136" stroke="#f38469" stroke-width="2"/>
+                <line x1="530" y1="136" x2="538" y2="136" stroke="#f38469" stroke-width="2"/>
+                <line id="norMpA_ch" x1="538" y1="136" x2="538" y2="164" stroke="#f38469" stroke-width="4"/>
+                <line x1="530" y1="138" x2="530" y2="162" stroke="#151b20" stroke-width="2.5"/>
+                <circle cx="523" cy="150" r="3.5" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
+                <polygon points="538,150 544,147 544,153" fill="#f38469"/>
+                <line x1="538" y1="164" x2="530" y2="164" stroke="#f38469" stroke-width="2"/>
+                <line x1="530" y1="164" x2="530" y2="181" stroke="#f38469" stroke-width="2"/>
+                <circle cx="530" cy="181" r="2.5" fill="#151b20"/>
+                <text x="550" y="147" font-size="9" font-weight="900" fill="#f38469" font-family="monospace">MP_A</text>
+                <text id="norMpA_badge" x="550" y="159" font-size="8" font-weight="800" fill="#f38469">ON</text>
 
                 <!-- pMOS MP_B (Series Bottom) -->
-                <line x1="530" y1="181" x2="538" y2="181" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line id="norMpB_ch" x1="538" y1="181" x2="538" y2="209" stroke="var(--coral, #f38469)" stroke-width="4"/>
-                <line x1="530" y1="183" x2="530" y2="207" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <circle cx="523" cy="195" r="3.5" fill="var(--cream, #fffaf0)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <polygon points="538,195 544,192 544,198" fill="var(--coral, #f38469)"/>
-                <line x1="538" y1="209" x2="530" y2="209" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line id="norPullUpFlow" x1="530" y1="209" x2="530" y2="227" stroke="var(--coral, #f38469)" stroke-width="3"/>
-                <text x="550" y="192" font-size="9" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace">MP_B</text>
-                <text id="norMpB_badge" x="550" y="204" font-size="8" font-weight="800" fill="var(--coral, #f38469)">ON</text>
+                <line x1="530" y1="181" x2="538" y2="181" stroke="#f38469" stroke-width="2"/>
+                <line id="norMpB_ch" x1="538" y1="181" x2="538" y2="209" stroke="#f38469" stroke-width="4"/>
+                <line x1="530" y1="183" x2="530" y2="207" stroke="#151b20" stroke-width="2.5"/>
+                <circle cx="523" cy="195" r="3.5" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
+                <polygon points="538,195 544,192 544,198" fill="#f38469"/>
+                <line x1="538" y1="209" x2="530" y2="209" stroke="#f38469" stroke-width="2"/>
+                <line id="norPullUpFlow" x1="530" y1="209" x2="530" y2="227" stroke="#f38469" stroke-width="3"/>
+                <text x="550" y="192" font-size="9" font-weight="900" fill="#f38469" font-family="monospace">MP_B</text>
+                <text id="norMpB_badge" x="550" y="204" font-size="8" font-weight="800" fill="#f38469">ON</text>
 
                 <!-- Parallel Drain Bus -->
-                <line x1="475" y1="227" x2="585" y2="227" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <circle cx="475" cy="227" r="2.5" fill="var(--ink, #151b20)"/>
-                <circle cx="585" cy="227" r="2.5" fill="var(--ink, #151b20)"/>
-                <circle cx="530" cy="227" r="3" fill="var(--ink, #151b20)"/>
+                <line x1="475" y1="227" x2="585" y2="227" stroke="#151b20" stroke-width="2"/>
+                <circle cx="475" cy="227" r="2.5" fill="#151b20"/>
+                <circle cx="585" cy="227" r="2.5" fill="#151b20"/>
+                <circle cx="530" cy="227" r="3" fill="#151b20"/>
 
                 <!-- Output Wire & Node -->
-                <line x1="585" y1="227" x2="660" y2="227" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <circle id="norOutDot" cx="660" cy="227" r="4" fill="var(--coral, #f38469)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text id="norOutLogic" x="670" y="231" font-size="10.5" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace">Y = 1 (1.0V)</text>
+                <line x1="585" y1="227" x2="660" y2="227" stroke="#151b20" stroke-width="2"/>
+                <circle id="norOutDot" cx="660" cy="227" r="4" fill="#f38469" stroke="#151b20" stroke-width="1.5"/>
+                <text id="norOutLogic" x="670" y="231" font-size="10.5" font-weight="900" fill="#f38469" font-family="monospace">Y = 1 (1.0V)</text>
 
                 <!-- nMOS MN_A (Parallel Left) -->
-                <line id="norPullDownFlow" x1="475" y1="227" x2="475" y2="243" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <line x1="475" y1="243" x2="483" y2="243" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
+                <line id="norPullDownFlow" x1="475" y1="227" x2="475" y2="243" stroke="#22bfd7" stroke-width="2"/>
+                <line x1="475" y1="243" x2="483" y2="243" stroke="#22bfd7" stroke-width="2"/>
                 <line id="norMnA_ch" x1="483" y1="243" x2="483" y2="271" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3 2"/>
-                <line x1="475" y1="245" x2="475" y2="269" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <polygon points="483,257 489,254 489,260" fill="var(--cyan, #22bfd7)"/>
-                <line x1="483" y1="271" x2="475" y2="271" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <line x1="475" y1="271" x2="475" y2="300" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <text x="435" y="254" font-size="9" font-weight="900" fill="var(--cyan, #22bfd7)" font-family="monospace">MN_A</text>
+                <line x1="475" y1="245" x2="475" y2="269" stroke="#151b20" stroke-width="2.5"/>
+                <polygon points="483,257 489,254 489,260" fill="#22bfd7"/>
+                <line x1="483" y1="271" x2="475" y2="271" stroke="#22bfd7" stroke-width="2"/>
+                <line x1="475" y1="271" x2="475" y2="300" stroke="#22bfd7" stroke-width="2"/>
+                <text x="435" y="254" font-size="9" font-weight="900" fill="#22bfd7" font-family="monospace">MN_A</text>
                 <text id="norMnA_badge" x="435" y="265" font-size="8" font-weight="800" fill="#94a3b8">OFF</text>
 
                 <!-- nMOS MN_B (Parallel Right) -->
-                <line x1="585" y1="227" x2="585" y2="243" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <line x1="585" y1="243" x2="593" y2="243" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
+                <line x1="585" y1="227" x2="585" y2="243" stroke="#22bfd7" stroke-width="2"/>
+                <line x1="585" y1="243" x2="593" y2="243" stroke="#22bfd7" stroke-width="2"/>
                 <line id="norMnB_ch" x1="593" y1="243" x2="593" y2="271" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3 2"/>
-                <line x1="585" y1="245" x2="585" y2="269" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <polygon points="593,257 599,254 599,260" fill="var(--cyan, #22bfd7)"/>
-                <line x1="593" y1="271" x2="585" y2="271" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <line x1="585" y1="271" x2="585" y2="300" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <text x="600" y="254" font-size="9" font-weight="900" fill="var(--cyan, #22bfd7)" font-family="monospace">MN_B</text>
+                <line x1="585" y1="245" x2="585" y2="269" stroke="#151b20" stroke-width="2.5"/>
+                <polygon points="593,257 599,254 599,260" fill="#22bfd7"/>
+                <line x1="593" y1="271" x2="585" y2="271" stroke="#22bfd7" stroke-width="2"/>
+                <line x1="585" y1="271" x2="585" y2="300" stroke="#22bfd7" stroke-width="2"/>
+                <text x="600" y="254" font-size="9" font-weight="900" fill="#22bfd7" font-family="monospace">MN_B</text>
                 <text id="norMnB_badge" x="600" y="265" font-size="8" font-weight="800" fill="#94a3b8">OFF</text>
 
                 <!-- Ground Symbol -->
-                <line x1="475" y1="300" x2="585" y2="300" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <circle cx="475" cy="300" r="2.5" fill="var(--ink, #151b20)"/>
-                <circle cx="585" cy="300" r="2.5" fill="var(--ink, #151b20)"/>
-                <line x1="517" y1="300" x2="543" y2="300" stroke="var(--ink, #151b20)" stroke-width="2.5"/>
-                <line x1="522" y1="304" x2="538" y2="304" stroke="var(--ink, #151b20)" stroke-width="2"/>
-                <line x1="526" y1="308" x2="534" y2="308" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text x="530" y="320" font-size="8.5" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace" text-anchor="middle">GND (0V)</text>
+                <line x1="475" y1="300" x2="585" y2="300" stroke="#151b20" stroke-width="2"/>
+                <circle cx="475" cy="300" r="2.5" fill="#151b20"/>
+                <circle cx="585" cy="300" r="2.5" fill="#151b20"/>
+                <line x1="517" y1="300" x2="543" y2="300" stroke="#151b20" stroke-width="2.5"/>
+                <line x1="522" y1="304" x2="538" y2="304" stroke="#151b20" stroke-width="2"/>
+                <line x1="526" y1="308" x2="534" y2="308" stroke="#151b20" stroke-width="1.5"/>
+                <text x="530" y="320" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">GND (0V)</text>
 
                 <!-- Pedagogical Callout Badges -->
-                <rect x="600" y="126" width="142" height="42" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1.2"/>
-                <text x="606" y="139" font-size="8" font-weight="900" fill="var(--ink, #151b20)">⚠ SERIES pMOS PENALTY</text>
-                <text x="606" y="150" font-size="7.5" fill="var(--ink-light, #242c33)">Holes slow (μp ≈ 0.4× μn)</text>
-                <text x="606" y="161" font-size="7.5" font-weight="800" fill="var(--coral, #f38469)">2× Rp stack doubles delay!</text>
+                <rect x="600" y="126" width="142" height="42" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.2"/>
+                <text x="606" y="139" font-size="8" font-weight="900" fill="#151b20">⚠ SERIES pMOS PENALTY</text>
+                <text x="606" y="150" font-size="7.5" fill="#242c33">Holes slow (μp ≈ 0.4× μn)</text>
+                <text x="606" y="161" font-size="7.5" font-weight="800" fill="#f38469">2× Rp stack doubles delay!</text>
 
-                <rect x="620" y="248" width="122" height="32" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.2"/>
-                <text x="626" y="261" font-size="8" font-weight="900" fill="var(--ink, #151b20)">PARALLEL nMOS</text>
-                <text x="626" y="272" font-size="7.5" fill="var(--ink-light, #242c33)">Single Rn pull-down</text>
+                <rect x="620" y="248" width="122" height="32" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.2"/>
+                <text x="626" y="261" font-size="8" font-weight="900" fill="#151b20">PARALLEL nMOS</text>
+                <text x="626" y="272" font-size="7.5" fill="#242c33">Single Rn pull-down</text>
 
                 <!-- NOR2 Footer Metric Card -->
-                <rect x="393" y="332" width="349" height="54" rx="5" fill="var(--paper, #f6f0dc)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text id="norGeBadge" x="403" y="349" font-size="9" font-weight="900" fill="var(--coral, #f38469)">SILICON AREA: 1.00 GE (DELAY PENALTY) / 1.67 GE (MATCHED)</text>
-                <text id="norSizingNote" x="403" y="363" font-size="8" fill="var(--ink-light, #242c33)">• Min Wp = 1λ: 1.00 GE, but 2× slower pull-up!</text>
-                <text x="403" y="376" font-size="8" fill="var(--ink-light, #242c33)">• High input capacitance Cin slows down preceding cells across chip</text>
+                <rect x="393" y="332" width="349" height="54" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
+                <text id="norGeBadge" x="403" y="349" font-size="9" font-weight="900" fill="#f38469">SILICON AREA: 1.00 GE (DELAY PENALTY) / 1.67 GE (MATCHED)</text>
+                <text id="norSizingNote" x="403" y="363" font-size="8" fill="#242c33">• Min Wp = 1λ: 1.00 GE, but 2× slower pull-up!</text>
+                <text x="403" y="376" font-size="8" fill="#242c33">• High input capacitance Cin slows down preceding cells across chip</text>
 
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!-- BOTTOM COMPARISON DECK: REAL-TIME CONDUCTION & DELAY   -->
                 <!-- ══════════════════════════════════════════════════════ -->
                 <!-- NAND2 Readout Card -->
-                <rect x="10" y="405" width="365" height="110" rx="6" fill="var(--paper, #f6f0dc)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text x="20" y="423" font-size="9" font-weight="900" fill="var(--ink, #151b20)" font-family="monospace">NAND2 REAL-TIME CONDUCTION &amp; DELAY</text>
-                <text id="nandPathTxt" x="20" y="443" font-size="8.5" font-weight="800" fill="var(--lime, #b7df69)">● PATH: MP_A || MP_B conducting (Rp/2 ≈ 120 Ω)</text>
-                <text id="nandDelayTxt" x="20" y="462" font-size="8.5" font-weight="700" fill="var(--ink, #151b20)">Delay: tr = 18 ps, tf = 17 ps (Symmetric &amp; Fast)</text>
-                <text x="20" y="482" font-size="9" font-weight="900" fill="var(--ink, #151b20)">Silicon Area: 1.00 GE (Reference Yardstick)</text>
-                <text x="20" y="500" font-size="8.5" font-weight="700" fill="var(--ink-light, #242c33)">Input Capacitance: Cin = 3.0 fF (Low driving load)</text>
+                <rect x="10" y="405" width="365" height="110" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="20" y="423" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">NAND2 REAL-TIME CONDUCTION &amp; DELAY</text>
+                <text id="nandPathTxt" x="20" y="443" font-size="8.5" font-weight="800" fill="#b7df69">● PATH: MP_A || MP_B conducting (Rp/2 ≈ 120 Ω)</text>
+                <text id="nandDelayTxt" x="20" y="462" font-size="8.5" font-weight="700" fill="#151b20">Delay: tr = 18 ps, tf = 17 ps (Symmetric &amp; Fast)</text>
+                <text x="20" y="482" font-size="9" font-weight="900" fill="#151b20">Silicon Area: 1.00 GE (Reference Yardstick)</text>
+                <text x="20" y="500" font-size="8.5" font-weight="700" fill="#242c33">Input Capacitance: Cin = 3.0 fF (Low driving load)</text>
 
                 <!-- NOR2 Readout Card -->
-                <rect x="385" y="405" width="365" height="110" rx="6" fill="var(--paper, #f6f0dc)" stroke="var(--ink, #151b20)" stroke-width="1.5"/>
-                <text x="395" y="423" font-size="9" font-weight="900" fill="var(--coral, #f38469)" font-family="monospace">NOR2 REAL-TIME CONDUCTION &amp; DELAY</text>
-                <text id="norPathTxt" x="395" y="443" font-size="8.5" font-weight="800" fill="var(--coral, #f38469)">● PATH: MP_A + MP_B Series Stack (2·Rp ≈ 480 Ω!)</text>
-                <text id="norDelayTxt" x="395" y="462" font-size="8.5" font-weight="700" fill="var(--coral, #f38469)">Delay: tr = 34 ps (BOTTLENECK: 1.9× slower than NAND2!)</text>
-                <text id="norGeTxt" x="395" y="482" font-size="9" font-weight="900" fill="var(--coral, #f38469)">Silicon Area: 1.00 GE (Standard footprint, slow tr)</text>
-                <text id="norCapTxt" x="395" y="500" font-size="8.5" font-weight="700" fill="var(--ink-light, #242c33)">Input Capacitance: Cin = 3.0 fF (Min sizing)</text>
+                <rect x="385" y="405" width="365" height="110" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="395" y="423" font-size="9" font-weight="900" fill="#f38469" font-family="monospace">NOR2 REAL-TIME CONDUCTION &amp; DELAY</text>
+                <text id="norPathTxt" x="395" y="443" font-size="8.5" font-weight="800" fill="#f38469">● PATH: MP_A + MP_B Series Stack (2·Rp ≈ 480 Ω!)</text>
+                <text id="norDelayTxt" x="395" y="462" font-size="8.5" font-weight="700" fill="#f38469">Delay: tr = 34 ps (BOTTLENECK: 1.9× slower than NAND2!)</text>
+                <text id="norGeTxt" x="395" y="482" font-size="9" font-weight="900" fill="#f38469">Silicon Area: 1.00 GE (Standard footprint, slow tr)</text>
+                <text id="norCapTxt" x="395" y="500" font-size="8.5" font-weight="700" fill="#242c33">Input Capacitance: Cin = 3.0 fF (Min sizing)</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -942,69 +942,69 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 230" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Top Half: Ripple Carry Chain -->
-                <text x="25" y="24" font-weight="900" font-size="12" fill="var(--coral, #f38469)">Ripple-Carry Adder: Linear Delay O(N)</text>
+                <text x="25" y="24" font-weight="900" font-size="12" fill="#f38469">Ripple-Carry Adder: Linear Delay O(N)</text>
                 <!-- 4 bit stages -->
-                <rect x="25" y="35" width="85" height="42" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="45" y="55" font-weight="800" font-size="10" fill="var(--coral, #f38469)">FA Bit 0</text>
-                <text x="35" y="68" font-size="8" fill="var(--ink-light, #242c33)">Delay: 1 t_carry</text>
+                <rect x="25" y="35" width="85" height="42" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.5"/>
+                <text x="45" y="55" font-weight="800" font-size="10" fill="#f38469">FA Bit 0</text>
+                <text x="35" y="68" font-size="8" fill="#242c33">Delay: 1 t_carry</text>
 
-                <path d="M 110 56 L 140 56" stroke="var(--coral, #f38469)" stroke-width="2" marker-end="url(#arrowRed)"/>
+                <path d="M 110 56 L 140 56" stroke="#f38469" stroke-width="2" marker-end="url(#arrowRed)"/>
 
-                <rect x="145" y="35" width="85" height="42" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="165" y="55" font-weight="800" font-size="10" fill="var(--coral, #f38469)">FA Bit 1</text>
-                <text x="155" y="68" font-size="8" fill="var(--ink-light, #242c33)">Delay: 2 t_carry</text>
+                <rect x="145" y="35" width="85" height="42" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.5"/>
+                <text x="165" y="55" font-weight="800" font-size="10" fill="#f38469">FA Bit 1</text>
+                <text x="155" y="68" font-size="8" fill="#242c33">Delay: 2 t_carry</text>
 
-                <path d="M 230 56 L 260 56" stroke="var(--coral, #f38469)" stroke-width="2"/>
+                <path d="M 230 56 L 260 56" stroke="#f38469" stroke-width="2"/>
 
-                <rect x="265" y="35" width="85" height="42" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="285" y="55" font-weight="800" font-size="10" fill="var(--coral, #f38469)">FA Bit 2</text>
-                <text x="275" y="68" font-size="8" fill="var(--ink-light, #242c33)">Delay: 3 t_carry</text>
+                <rect x="265" y="35" width="85" height="42" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.5"/>
+                <text x="285" y="55" font-weight="800" font-size="10" fill="#f38469">FA Bit 2</text>
+                <text x="275" y="68" font-size="8" fill="#242c33">Delay: 3 t_carry</text>
 
-                <path d="M 350 56 L 380 56" stroke="var(--coral, #f38469)" stroke-width="2"/>
+                <path d="M 350 56 L 380 56" stroke="#f38469" stroke-width="2"/>
 
-                <rect x="385" y="35" width="115" height="42" rx="4" fill="var(--coral, #f38469)" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <text x="398" y="55" font-weight="900" font-size="10" fill="var(--coral, #f38469)">FA Bit 31 (MSB)</text>
-                <text x="395" y="68" font-size="8" fill="var(--ink-light, #242c33)">Total: 32 Gate Delays!</text>
+                <rect x="385" y="35" width="115" height="42" rx="4" fill="#f38469" stroke="#f38469" stroke-width="2"/>
+                <text x="398" y="55" font-weight="900" font-size="10" fill="#f38469">FA Bit 31 (MSB)</text>
+                <text x="395" y="68" font-size="8" fill="#242c33">Total: 32 Gate Delays!</text>
 
                 <!-- Divider -->
                 <line x1="20" y1="95" x2="520" y2="95" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 4"/>
 
                 <!-- Bottom Half: Kogge Stone Parallel Tree -->
-                <text x="25" y="118" font-weight="900" font-size="12" fill="var(--lime, #b7df69)">Kogge-Stone Parallel Prefix Adder: Logarithmic Delay O(log2 N)</text>
+                <text x="25" y="118" font-weight="900" font-size="12" fill="#b7df69">Kogge-Stone Parallel Prefix Adder: Logarithmic Delay O(log2 N)</text>
                 
                 <!-- Inputs row -->
-                <rect x="25" y="130" width="100" height="26" rx="3" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="35" y="147" font-weight="800" font-size="9" fill="var(--lime, #b7df69)">P0, G0 (Bit 0..7)</text>
+                <rect x="25" y="130" width="100" height="26" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="35" y="147" font-weight="800" font-size="9" fill="#b7df69">P0, G0 (Bit 0..7)</text>
 
-                <rect x="155" y="130" width="100" height="26" rx="3" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="162" y="147" font-weight="800" font-size="9" fill="var(--lime, #b7df69)">P1, G1 (Bit 8..15)</text>
+                <rect x="155" y="130" width="100" height="26" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="162" y="147" font-weight="800" font-size="9" fill="#b7df69">P1, G1 (Bit 8..15)</text>
 
-                <rect x="285" y="130" width="100" height="26" rx="3" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="290" y="147" font-weight="800" font-size="9" fill="var(--lime, #b7df69)">P2, G2 (Bit 16..23)</text>
+                <rect x="285" y="130" width="100" height="26" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="290" y="147" font-weight="800" font-size="9" fill="#b7df69">P2, G2 (Bit 16..23)</text>
 
-                <rect x="415" y="130" width="100" height="26" rx="3" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="420" y="147" font-weight="800" font-size="9" fill="var(--lime, #b7df69)">P3, G3 (Bit 24..31)</text>
+                <rect x="415" y="130" width="100" height="26" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="420" y="147" font-weight="800" font-size="9" fill="#b7df69">P3, G3 (Bit 24..31)</text>
 
                 <!-- Binary Tree Merging Nodes -->
-                <circle cx="105" cy="180" r="12" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="98" y="184" font-weight="900" font-size="9" fill="var(--ink, #151b20)">&bull;&bull;</text>
+                <circle cx="105" cy="180" r="12" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="98" y="184" font-weight="900" font-size="9" fill="#151b20">&#8226;&#8226;</text>
 
-                <circle cx="235" cy="180" r="12" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="228" y="184" font-weight="900" font-size="9" fill="var(--ink, #151b20)">&bull;&bull;</text>
+                <circle cx="235" cy="180" r="12" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="228" y="184" font-weight="900" font-size="9" fill="#151b20">&#8226;&#8226;</text>
 
-                <circle cx="365" cy="180" r="12" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="358" y="184" font-weight="900" font-size="9" fill="var(--ink, #151b20)">&bull;&bull;</text>
+                <circle cx="365" cy="180" r="12" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="358" y="184" font-weight="900" font-size="9" fill="#151b20">&#8226;&#8226;</text>
 
-                <circle cx="485" cy="180" r="12" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="478" y="184" font-weight="900" font-size="9" fill="var(--ink, #151b20)">&bull;&bull;</text>
+                <circle cx="485" cy="180" r="12" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="478" y="184" font-weight="900" font-size="9" fill="#151b20">&#8226;&#8226;</text>
 
                 <!-- Tree Connections -->
-                <line x1="75" y1="156" x2="105" y2="168" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <line x1="205" y1="156" x2="235" y2="168" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <line x1="335" y1="156" x2="365" y2="168" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <line x1="465" y1="156" x2="485" y2="168" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
+                <line x1="75" y1="156" x2="105" y2="168" stroke="#b7df69" stroke-width="1.5"/>
+                <line x1="205" y1="156" x2="235" y2="168" stroke="#b7df69" stroke-width="1.5"/>
+                <line x1="335" y1="156" x2="365" y2="168" stroke="#b7df69" stroke-width="1.5"/>
+                <line x1="465" y1="156" x2="485" y2="168" stroke="#b7df69" stroke-width="1.5"/>
 
-                <rect x="25" y="200" width="490" height="22" rx="3" fill="var(--lime, #b7df69)"/>
+                <rect x="25" y="200" width="490" height="22" rx="3" fill="#b7df69"/>
                 <text x="75" y="215" font-weight="900" font-size="10" fill="#ffffff">All 32 Carries Computed in Parallel: Only log2(32) = 5 Gate Delays!</text>
               </svg>
             </div>
@@ -1113,9 +1113,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 210" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Control Line: sub_ctrl -->
-                <line x1="30" y1="35" x2="480" y2="35" stroke="var(--purple, #8275e8)" stroke-width="2.5"/>
-                <circle cx="30" cy="35" r="4" fill="var(--purple, #8275e8)"/>
-                <text x="35" y="25" font-weight="900" font-size="11" fill="var(--purple, #8275e8)">sub_ctrl (0 = ADD, 1 = SUB)</text>
+                <line x1="30" y1="35" x2="480" y2="35" stroke="#8275e8" stroke-width="2.5"/>
+                <circle cx="30" cy="35" r="4" fill="#8275e8"/>
+                <text x="35" y="25" font-weight="900" font-size="11" fill="#8275e8">sub_ctrl (0 = ADD, 1 = SUB)</text>
 
                 <!-- Operand A Bus -->
                 <line x1="60" y1="80" x2="160" y2="80" stroke="#151b20" stroke-width="2.5"/>
@@ -1127,37 +1127,37 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <text x="40" y="125" font-weight="800" font-size="11" fill="#151b20">Operand B [31:0]</text>
                 
                 <!-- XOR Inversion Box -->
-                <rect x="110" y="112" width="70" height="36" rx="4" fill="var(--purple-soft, #e2dfff)" stroke="var(--purple, #8275e8)" stroke-width="1.5"/>
-                <text x="120" y="127" font-weight="900" font-size="10" fill="var(--purple, #8275e8)">32&times; XOR</text>
-                <text x="117" y="139" font-size="8" fill="var(--purple, #8275e8)">B &oplus; sub_ctrl</text>
+                <rect x="110" y="112" width="70" height="36" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.5"/>
+                <text x="120" y="127" font-weight="900" font-size="10" fill="#8275e8">32&#215; XOR</text>
+                <text x="117" y="139" font-size="8" fill="#8275e8">B &#8853; sub_ctrl</text>
 
                 <!-- Connect sub_ctrl to XOR box -->
-                <line x1="145" y1="35" x2="145" y2="112" stroke="var(--purple, #8275e8)" stroke-width="1.5" stroke-dasharray="3 3"/>
-                <circle cx="145" cy="35" r="3.5" fill="var(--purple, #8275e8)"/>
+                <line x1="145" y1="35" x2="145" y2="112" stroke="#8275e8" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <circle cx="145" cy="35" r="3.5" fill="#8275e8"/>
 
                 <!-- XOR output to Adder input B -->
                 <line x1="180" y1="130" x2="220" y2="130" stroke="#151b20" stroke-width="2.5"/>
 
                 <!-- Connect sub_ctrl to Cin of Adder -->
-                <line x1="280" y1="35" x2="280" y2="60" stroke="var(--purple, #8275e8)" stroke-width="1.5"/>
-                <circle cx="280" cy="35" r="3.5" fill="var(--purple, #8275e8)"/>
-                <text x="290" y="55" font-weight="800" font-size="10" fill="var(--purple, #8275e8)">Cin = sub_ctrl</text>
+                <line x1="280" y1="35" x2="280" y2="60" stroke="#8275e8" stroke-width="1.5"/>
+                <circle cx="280" cy="35" r="3.5" fill="#8275e8"/>
+                <text x="290" y="55" font-weight="800" font-size="10" fill="#8275e8">Cin = sub_ctrl</text>
 
                 <!-- Unified 32-Bit Adder Block -->
-                <rect x="220" y="60" width="160" height="95" rx="6" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="2"/>
+                <rect x="220" y="60" width="160" height="95" rx="6" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
                 <text x="245" y="95" font-weight="900" font-size="13" fill="#151b20">32-Bit Adder</text>
-                <text x="238" y="115" font-size="9" fill="var(--ink-light, #242c33)">Computes: A + B_eff + Cin</text>
-                <text x="235" y="135" font-size="8" fill="var(--ink, #151b20)">Outputs: Sum[31:0] + Cout</text>
+                <text x="238" y="115" font-size="9" fill="#242c33">Computes: A + B_eff + Cin</text>
+                <text x="235" y="135" font-size="8" fill="#151b20">Outputs: Sum[31:0] + Cout</text>
 
                 <!-- Result Out -->
-                <line x1="380" y1="105" x2="480" y2="105" stroke="var(--cyan, #22bfd7)" stroke-width="3"/>
-                <circle cx="480" cy="105" r="4" fill="var(--cyan, #22bfd7)"/>
-                <text x="400" y="100" font-weight="900" font-size="12" fill="var(--cyan, #22bfd7)">Result [31:0]</text>
+                <line x1="380" y1="105" x2="480" y2="105" stroke="#22bfd7" stroke-width="3"/>
+                <circle cx="480" cy="105" r="4" fill="#22bfd7"/>
+                <text x="400" y="100" font-weight="900" font-size="12" fill="#22bfd7">Result [31:0]</text>
 
                 <!-- Overflow Flag logic -->
-                <line x1="380" y1="75" x2="440" y2="75" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <rect x="440" y="65" width="65" height="22" rx="3" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1"/>
-                <text x="447" y="80" font-weight="800" font-size="9" fill="var(--coral, #f38469)">Overflow V</text>
+                <line x1="380" y1="75" x2="440" y2="75" stroke="#f38469" stroke-width="1.5"/>
+                <rect x="440" y="65" width="65" height="22" rx="3" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
+                <text x="447" y="80" font-weight="800" font-size="9" fill="#f38469">Overflow V</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -1210,44 +1210,44 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 180" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Data Input -->
-                <rect x="15" y="60" width="65" height="40" rx="4" fill="var(--cyan-soft, #c9f3f4)" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
-                <text x="25" y="78" font-weight="900" font-size="9" fill="var(--cyan, #22bfd7)">32-Bit In</text>
-                <text x="25" y="90" font-size="8" fill="var(--cyan, #22bfd7)">Operand A</text>
+                <rect x="15" y="60" width="65" height="40" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.5"/>
+                <text x="25" y="78" font-weight="900" font-size="9" fill="#22bfd7">32-Bit In</text>
+                <text x="25" y="90" font-size="8" fill="#22bfd7">Operand A</text>
 
                 <!-- Stage 0: Shift 16 -->
                 <line x1="80" y1="80" x2="105" y2="80" stroke="#151b20" stroke-width="2"/>
-                <rect x="105" y="45" width="60" height="70" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="112" y="68" font-weight="900" font-size="9" fill="var(--coral, #f38469)">Stage 4</text>
-                <text x="115" y="82" font-size="8" fill="var(--ink-light, #242c33)">Shift 16b</text>
-                <text x="110" y="105" font-size="8" font-weight="700" fill="var(--coral, #f38469)">shamt[4]</text>
+                <rect x="105" y="45" width="60" height="70" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.5"/>
+                <text x="112" y="68" font-weight="900" font-size="9" fill="#f38469">Stage 4</text>
+                <text x="115" y="82" font-size="8" fill="#242c33">Shift 16b</text>
+                <text x="110" y="105" font-size="8" font-weight="700" fill="#f38469">shamt[4]</text>
 
                 <!-- Stage 1: Shift 8 -->
                 <line x1="165" y1="80" x2="190" y2="80" stroke="#151b20" stroke-width="2"/>
-                <rect x="190" y="45" width="60" height="70" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="197" y="68" font-weight="900" font-size="9" fill="var(--coral, #f38469)">Stage 3</text>
-                <text x="203" y="82" font-size="8" fill="var(--ink-light, #242c33)">Shift 8b</text>
-                <text x="195" y="105" font-size="8" font-weight="700" fill="var(--coral, #f38469)">shamt[3]</text>
+                <rect x="190" y="45" width="60" height="70" rx="4" fill="#fff0b9" stroke="#f38469" stroke-width="1.5"/>
+                <text x="197" y="68" font-weight="900" font-size="9" fill="#f38469">Stage 3</text>
+                <text x="203" y="82" font-size="8" fill="#242c33">Shift 8b</text>
+                <text x="195" y="105" font-size="8" font-weight="700" fill="#f38469">shamt[3]</text>
 
                 <!-- Stage 2: Shift 4 -->
                 <line x1="250" y1="80" x2="275" y2="80" stroke="#151b20" stroke-width="2"/>
-                <rect x="275" y="45" width="60" height="70" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="var(--yellow, #ffc83e)" stroke-width="1.5"/>
-                <text x="282" y="68" font-weight="900" font-size="9" fill="var(--yellow, #ffc83e)">Stage 2</text>
-                <text x="288" y="82" font-size="8" fill="var(--ink, #151b20)">Shift 4b</text>
-                <text x="280" y="105" font-size="8" font-weight="700" fill="var(--yellow, #ffc83e)">shamt[2]</text>
+                <rect x="275" y="45" width="60" height="70" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.5"/>
+                <text x="282" y="68" font-weight="900" font-size="9" fill="#ffc83e">Stage 2</text>
+                <text x="288" y="82" font-size="8" fill="#151b20">Shift 4b</text>
+                <text x="280" y="105" font-size="8" font-weight="700" fill="#ffc83e">shamt[2]</text>
 
                 <!-- Stage 3: Shift 2 -->
                 <line x1="335" y1="80" x2="360" y2="80" stroke="#151b20" stroke-width="2"/>
-                <rect x="360" y="45" width="60" height="70" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="367" y="68" font-weight="900" font-size="9" fill="var(--lime, #b7df69)">Stage 1</text>
-                <text x="373" y="82" font-size="8" fill="var(--ink, #151b20)">Shift 2b</text>
-                <text x="365" y="105" font-size="8" font-weight="700" fill="var(--lime, #b7df69)">shamt[1]</text>
+                <rect x="360" y="45" width="60" height="70" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="367" y="68" font-weight="900" font-size="9" fill="#b7df69">Stage 1</text>
+                <text x="373" y="82" font-size="8" fill="#151b20">Shift 2b</text>
+                <text x="365" y="105" font-size="8" font-weight="700" fill="#b7df69">shamt[1]</text>
 
                 <!-- Stage 4: Shift 1 -->
                 <line x1="420" y1="80" x2="445" y2="80" stroke="#151b20" stroke-width="2"/>
-                <rect x="445" y="45" width="60" height="70" rx="4" fill="var(--purple-soft, #e2dfff)" stroke="var(--purple, #8275e8)" stroke-width="1.5"/>
-                <text x="452" y="68" font-weight="900" font-size="9" fill="var(--purple, #8275e8)">Stage 0</text>
-                <text x="458" y="82" font-size="8" fill="var(--ink, #151b20)">Shift 1b</text>
-                <text x="450" y="105" font-size="8" font-weight="700" fill="var(--purple, #8275e8)">shamt[0]</text>
+                <rect x="445" y="45" width="60" height="70" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.5"/>
+                <text x="452" y="68" font-weight="900" font-size="9" fill="#8275e8">Stage 0</text>
+                <text x="458" y="82" font-size="8" fill="#151b20">Shift 1b</text>
+                <text x="450" y="105" font-size="8" font-weight="700" fill="#8275e8">shamt[0]</text>
 
                 <line x1="505" y1="80" x2="530" y2="80" stroke="#151b20" stroke-width="2.5"/>
                 <text x="130" y="150" font-weight="900" font-size="11" fill="#151b20">Total Delay: Only 5 Multiplexer Gate Delays for Any Arbitrary 0..31 Shift!</text>
@@ -1415,38 +1415,38 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 220" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Left: CISC -->
-                <rect x="20" y="10" width="240" height="200" rx="8" fill="var(--cream, #fffaf0)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="35" y="32" font-weight="900" font-size="12" fill="var(--coral, #f38469)">CISC Approach: Microcoded Memory Op</text>
-                <text x="35" y="52" font-family="monospace" font-size="11" font-weight="800" fill="var(--coral, #f38469)">ADD [EAX + 0x10], EBX</text>
+                <rect x="20" y="10" width="240" height="200" rx="8" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
+                <text x="35" y="32" font-weight="900" font-size="12" fill="#f38469">CISC Approach: Microcoded Memory Op</text>
+                <text x="35" y="52" font-family="monospace" font-size="11" font-weight="800" fill="#f38469">ADD [EAX + 0x10], EBX</text>
 
                 <!-- Flow of CISC steps inside 1 instruction -->
-                <rect x="40" y="65" width="200" height="26" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1"/>
-                <text x="50" y="82" font-size="9" font-weight="800" fill="var(--ink-light, #242c33)">1. Calculate Effective Address</text>
+                <rect x="40" y="65" width="200" height="26" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
+                <text x="50" y="82" font-size="9" font-weight="800" fill="#242c33">1. Calculate Effective Address</text>
 
-                <rect x="40" y="98" width="200" height="26" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1"/>
-                <text x="50" y="115" font-size="9" font-weight="800" fill="var(--ink-light, #242c33)">2. Read DRAM/Cache Memory (Wait 50ns)</text>
+                <rect x="40" y="98" width="200" height="26" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
+                <text x="50" y="115" font-size="9" font-weight="800" fill="#242c33">2. Read DRAM/Cache Memory (Wait 50ns)</text>
 
-                <rect x="40" y="131" width="200" height="26" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1"/>
-                <text x="50" y="148" font-size="9" font-weight="800" fill="var(--ink-light, #242c33)">3. Execute Arithmetic Addition in ALU</text>
+                <rect x="40" y="131" width="200" height="26" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
+                <text x="50" y="148" font-size="9" font-weight="800" fill="#242c33">3. Execute Arithmetic Addition in ALU</text>
 
-                <rect x="40" y="164" width="200" height="26" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1"/>
-                <text x="50" y="181" font-size="9" font-weight="800" fill="var(--ink-light, #242c33)">4. Write Result Back to DRAM Memory</text>
+                <rect x="40" y="164" width="200" height="26" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
+                <text x="50" y="181" font-size="9" font-weight="800" fill="#242c33">4. Write Result Back to DRAM Memory</text>
 
                 <!-- Right: RISC-V -->
-                <rect x="280" y="10" width="240" height="200" rx="8" fill="var(--cream, #fffaf0)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="295" y="32" font-weight="900" font-size="12" fill="var(--lime, #b7df69)">RISC-V Load-Store: Decoupled Stages</text>
+                <rect x="280" y="10" width="240" height="200" rx="8" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="295" y="32" font-weight="900" font-size="12" fill="#b7df69">RISC-V Load-Store: Decoupled Stages</text>
 
-                <rect x="300" y="55" width="200" height="36" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1"/>
-                <text x="310" y="72" font-family="monospace" font-size="11" font-weight="800" fill="var(--ink, #151b20)">lw  t0, 16(a0)</text>
-                <text x="310" y="85" font-size="8" fill="var(--lime, #b7df69)">Explicit memory read into register t0</text>
+                <rect x="300" y="55" width="200" height="36" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/>
+                <text x="310" y="72" font-family="monospace" font-size="11" font-weight="800" fill="#151b20">lw  t0, 16(a0)</text>
+                <text x="310" y="85" font-size="8" fill="#b7df69">Explicit memory read into register t0</text>
 
-                <rect x="300" y="102" width="200" height="36" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1"/>
-                <text x="310" y="119" font-family="monospace" font-size="11" font-weight="800" fill="var(--ink, #151b20)">add t0, t0, a1</text>
-                <text x="310" y="132" font-size="8" fill="var(--lime, #b7df69)">Pure register-register ALU operation</text>
+                <rect x="300" y="102" width="200" height="36" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/>
+                <text x="310" y="119" font-family="monospace" font-size="11" font-weight="800" fill="#151b20">add t0, t0, a1</text>
+                <text x="310" y="132" font-size="8" fill="#b7df69">Pure register-register ALU operation</text>
 
-                <rect x="300" y="149" width="200" height="36" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1"/>
-                <text x="310" y="166" font-family="monospace" font-size="11" font-weight="800" fill="var(--ink, #151b20)">sw  t0, 16(a0)</text>
-                <text x="310" y="179" font-size="8" fill="var(--lime, #b7df69)">Explicit writeback of result to memory</text>
+                <rect x="300" y="149" width="200" height="36" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/>
+                <text x="310" y="166" font-family="monospace" font-size="11" font-weight="800" fill="#151b20">sw  t0, 16(a0)</text>
+                <text x="310" y="179" font-size="8" fill="#b7df69">Explicit writeback of result to memory</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -1499,38 +1499,38 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 210" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Main Register Array Box -->
-                <rect x="180" y="25" width="180" height="160" rx="8" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="2"/>
-                <text x="210" y="50" font-weight="900" font-size="13" fill="#151b20">32 &times; 32-Bit SRAM</text>
-                <text x="225" y="70" font-size="10" fill="var(--ink-light, #242c33)">Registers x0..x31</text>
-                <rect x="200" y="85" width="140" height="25" rx="3" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1"/>
-                <text x="210" y="102" font-weight="900" font-size="9" fill="var(--coral, #f38469)">x0: Hardwired to 0x0</text>
+                <rect x="180" y="25" width="180" height="160" rx="8" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
+                <text x="210" y="50" font-weight="900" font-size="13" fill="#151b20">32 &#215; 32-Bit SRAM</text>
+                <text x="225" y="70" font-size="10" fill="#242c33">Registers x0..x31</text>
+                <rect x="200" y="85" width="140" height="25" rx="3" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
+                <text x="210" y="102" font-weight="900" font-size="9" fill="#f38469">x0: Hardwired to 0x0</text>
 
                 <!-- Read Port 1 (Top Left) -->
-                <line x1="40" y1="55" x2="180" y2="55" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <text x="50" y="48" font-size="10" font-weight="800" fill="var(--cyan, #22bfd7)">rs1 Address [4:0]</text>
+                <line x1="40" y1="55" x2="180" y2="55" stroke="#22bfd7" stroke-width="2"/>
+                <text x="50" y="48" font-size="10" font-weight="800" fill="#22bfd7">rs1 Address [4:0]</text>
                 
                 <!-- Read Data 1 (Top Right) -->
-                <line x1="360" y1="55" x2="500" y2="55" stroke="var(--cyan, #22bfd7)" stroke-width="2.5"/>
-                <text x="380" y="48" font-size="10" font-weight="800" fill="var(--cyan, #22bfd7)">Read Data 1 [31:0] &rarr; ALU In A</text>
+                <line x1="360" y1="55" x2="500" y2="55" stroke="#22bfd7" stroke-width="2.5"/>
+                <text x="380" y="48" font-size="10" font-weight="800" fill="#22bfd7">Read Data 1 [31:0] &#8594; ALU In A</text>
 
                 <!-- Read Port 2 (Mid Left) -->
-                <line x1="40" y1="105" x2="180" y2="105" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <text x="50" y="98" font-size="10" font-weight="800" fill="var(--cyan, #22bfd7)">rs2 Address [4:0]</text>
+                <line x1="40" y1="105" x2="180" y2="105" stroke="#22bfd7" stroke-width="2"/>
+                <text x="50" y="98" font-size="10" font-weight="800" fill="#22bfd7">rs2 Address [4:0]</text>
 
                 <!-- Read Data 2 (Mid Right) -->
-                <line x1="360" y1="105" x2="500" y2="105" stroke="var(--cyan, #22bfd7)" stroke-width="2.5"/>
-                <text x="380" y="98" font-size="10" font-weight="800" fill="var(--cyan, #22bfd7)">Read Data 2 [31:0] &rarr; ALU In B</text>
+                <line x1="360" y1="105" x2="500" y2="105" stroke="#22bfd7" stroke-width="2.5"/>
+                <text x="380" y="98" font-size="10" font-weight="800" fill="#22bfd7">Read Data 2 [31:0] &#8594; ALU In B</text>
 
                 <!-- Write Port (Bottom Left) -->
-                <line x1="40" y1="150" x2="180" y2="150" stroke="var(--lime, #b7df69)" stroke-width="2"/>
-                <text x="50" y="143" font-size="10" font-weight="800" fill="var(--lime, #b7df69)">rd Address [4:0]</text>
+                <line x1="40" y1="150" x2="180" y2="150" stroke="#b7df69" stroke-width="2"/>
+                <text x="50" y="143" font-size="10" font-weight="800" fill="#b7df69">rd Address [4:0]</text>
 
-                <line x1="40" y1="175" x2="180" y2="175" stroke="var(--lime, #b7df69)" stroke-width="2"/>
-                <text x="50" y="168" font-size="10" font-weight="800" fill="var(--lime, #b7df69)">Write Enable (we)</text>
+                <line x1="40" y1="175" x2="180" y2="175" stroke="#b7df69" stroke-width="2"/>
+                <text x="50" y="168" font-size="10" font-weight="800" fill="#b7df69">Write Enable (we)</text>
 
                 <!-- Write Data (Bottom Right) -->
-                <line x1="500" y1="165" x2="360" y2="165" stroke="var(--lime, #b7df69)" stroke-width="2.5"/>
-                <text x="380" y="158" font-size="10" font-weight="800" fill="var(--lime, #b7df69)">&larr; Write Data [31:0] (from WB)</text>
+                <line x1="500" y1="165" x2="360" y2="165" stroke="#b7df69" stroke-width="2.5"/>
+                <text x="380" y="158" font-size="10" font-weight="800" fill="#b7df69">&#8592; Write Data [31:0] (from WB)</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -1786,58 +1786,58 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         <div class="schematic-svg-wrap">
           <svg viewBox="0 0 540 200" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
             <!-- Stage 1: IF -->
-            <rect x="15" y="40" width="85" height="110" rx="6" fill="var(--paper, #f6f0dc)" stroke="#151b20" stroke-width="1.5"/>
+            <rect x="15" y="40" width="85" height="110" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
             <text x="35" y="65" font-weight="900" font-size="11" fill="#151b20">1. FETCH</text>
-            <rect x="25" y="75" width="65" height="25" rx="3" fill="var(--paper-deep, #eee4c8)"/>
+            <rect x="25" y="75" width="65" height="25" rx="3" fill="#eee4c8"/>
             <text x="32" y="91" font-size="9" font-weight="800">PC + 4</text>
-            <rect x="25" y="105" width="65" height="35" rx="3" fill="var(--paper-deep, #eee4c8)"/>
+            <rect x="25" y="105" width="65" height="35" rx="3" fill="#eee4c8"/>
             <text x="35" y="126" font-size="9" font-weight="800">I-Cache</text>
 
             <!-- Register IF/ID -->
             <rect x="105" y="25" width="12" height="140" rx="2" fill="#151b20"/>
-            <text x="108" y="180" font-size="8" font-weight="700" fill="var(--ink-light, #242c33)">IF/ID</text>
+            <text x="108" y="180" font-size="8" font-weight="700" fill="#242c33">IF/ID</text>
 
             <!-- Stage 2: ID -->
-            <rect x="123" y="40" width="85" height="110" rx="6" fill="var(--paper, #f6f0dc)" stroke="#151b20" stroke-width="1.5"/>
+            <rect x="123" y="40" width="85" height="110" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
             <text x="135" y="65" font-weight="900" font-size="11" fill="#151b20">2. DECODE</text>
-            <rect x="133" y="75" width="65" height="30" rx="3" fill="var(--coral-soft, #ffd8ce)"/>
-            <text x="145" y="94" font-size="9" font-weight="800" fill="var(--coral, #f38469)">Decoder</text>
-            <rect x="133" y="110" width="65" height="30" rx="3" fill="var(--yellow-soft, #fff0b9)"/>
-            <text x="142" y="129" font-size="9" font-weight="800" fill="var(--ink, #151b20)">RegFile</text>
+            <rect x="133" y="75" width="65" height="30" rx="3" fill="#ffd8ce"/>
+            <text x="145" y="94" font-size="9" font-weight="800" fill="#f38469">Decoder</text>
+            <rect x="133" y="110" width="65" height="30" rx="3" fill="#fff0b9"/>
+            <text x="142" y="129" font-size="9" font-weight="800" fill="#151b20">RegFile</text>
 
             <!-- Register ID/EX -->
             <rect x="214" y="25" width="12" height="140" rx="2" fill="#151b20"/>
-            <text x="216" y="180" font-size="8" font-weight="700" fill="var(--ink-light, #242c33)">ID/EX</text>
+            <text x="216" y="180" font-size="8" font-weight="700" fill="#242c33">ID/EX</text>
 
             <!-- Stage 3: EX -->
-            <rect x="232" y="40" width="85" height="110" rx="6" fill="var(--paper, #f6f0dc)" stroke="#151b20" stroke-width="1.5"/>
+            <rect x="232" y="40" width="85" height="110" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
             <text x="240" y="65" font-weight="900" font-size="11" fill="#151b20">3. EXECUTE</text>
-            <path d="M 245 80 L 295 95 L 295 115 L 245 130 Z" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-            <text x="255" y="108" font-weight="900" font-size="10" fill="var(--ink, #151b20)">ALU</text>
+            <path d="M 245 80 L 295 95 L 295 115 L 245 130 Z" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+            <text x="255" y="108" font-weight="900" font-size="10" fill="#151b20">ALU</text>
 
             <!-- Register EX/MEM -->
             <rect x="323" y="25" width="12" height="140" rx="2" fill="#151b20"/>
-            <text x="323" y="180" font-size="8" font-weight="700" fill="var(--ink-light, #242c33)">EX/MEM</text>
+            <text x="323" y="180" font-size="8" font-weight="700" fill="#242c33">EX/MEM</text>
 
             <!-- Stage 4: MEM -->
-            <rect x="341" y="40" width="85" height="110" rx="6" fill="var(--paper, #f6f0dc)" stroke="#151b20" stroke-width="1.5"/>
+            <rect x="341" y="40" width="85" height="110" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
             <text x="355" y="65" font-weight="900" font-size="11" fill="#151b20">4. MEMORY</text>
-            <rect x="351" y="85" width="65" height="45" rx="3" fill="var(--yellow-soft, #fff0b9)" stroke="var(--coral, #f38469)" stroke-width="1"/>
-            <text x="362" y="110" font-size="9" font-weight="800" fill="var(--ink-light, #242c33)">D-Cache</text>
+            <rect x="351" y="85" width="65" height="45" rx="3" fill="#fff0b9" stroke="#f38469" stroke-width="1"/>
+            <text x="362" y="110" font-size="9" font-weight="800" fill="#242c33">D-Cache</text>
 
             <!-- Register MEM/WB -->
             <rect x="432" y="25" width="12" height="140" rx="2" fill="#151b20"/>
-            <text x="430" y="180" font-size="8" font-weight="700" fill="var(--ink-light, #242c33)">MEM/WB</text>
+            <text x="430" y="180" font-size="8" font-weight="700" fill="#242c33">MEM/WB</text>
 
             <!-- Stage 5: WB -->
-            <rect x="450" y="40" width="75" height="110" rx="6" fill="var(--paper, #f6f0dc)" stroke="#151b20" stroke-width="1.5"/>
+            <rect x="450" y="40" width="75" height="110" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
             <text x="465" y="65" font-weight="900" font-size="10" fill="#151b20">5. WRITE</text>
-            <rect x="458" y="85" width="60" height="45" rx="3" fill="var(--purple-soft, #e2dfff)" stroke="var(--purple, #8275e8)" stroke-width="1"/>
-            <text x="465" y="105" font-size="8" font-weight="800" fill="var(--ink, #151b20)">Mux &rarr; rd</text>
-            <text x="465" y="118" font-size="7" fill="var(--ink, #151b20)">Commit</text>
+            <rect x="458" y="85" width="60" height="45" rx="3" fill="#e2dfff" stroke="#8275e8" stroke-width="1"/>
+            <text x="465" y="105" font-size="8" font-weight="800" fill="#151b20">Mux &#8594; rd</text>
+            <text x="465" y="118" font-size="7" fill="#151b20">Commit</text>
 
             <!-- Writeback loopback arrow -->
-            <path d="M 490 150 L 490 190 L 165 190 L 165 140" stroke="var(--purple, #8275e8)" stroke-width="1.5" stroke-dasharray="3 3" fill="none"/>
+            <path d="M 490 150 L 490 190 L 165 190 L 165 140" stroke="#8275e8" stroke-width="1.5" stroke-dasharray="3 3" fill="none"/>
           </svg>
         </div>
         <div class="schematic-caption">
@@ -1876,7 +1876,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             A structural hazard occurs when two instructions need the same hardware resource simultaneously. For example, if instruction fetch (IF) and data memory access (MEM) share a single physical memory port, both cannot happen in the same cycle!
           </p>
           <div class="schematic-caption" style="margin-top: 0.5rem;">
-            <strong>Solution:</strong> Modern microprocessors adopt the <strong>Harvard Memory Architecture</strong>—splitting cache into an independent <strong>Instruction Cache (I$)</strong> and <strong>Data Cache (D$)</strong>, each with dedicated address and data buses.
+            <strong>Solution:</strong> Modern microprocessors adopt the <strong>Harvard Memory Architecture</strong>—splitting cache into an independent <strong>Instruction Cache (I-Cache)</strong> and <strong>Data Cache (D-Cache)</strong>, each with dedicated address and data buses.
           </div>
         </div>
 
@@ -1903,34 +1903,34 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 180" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Clock Cycle Axis -->
-                <text x="30" y="25" font-weight="900" font-size="10" fill="var(--ink-light, #242c33)">CYCLE:</text>
-                <text x="100" y="25" font-weight="900" font-size="10" fill="var(--ink-light, #242c33)">CC1</text>
-                <text x="180" y="25" font-weight="900" font-size="10" fill="var(--ink-light, #242c33)">CC2</text>
-                <text x="260" y="25" font-weight="900" font-size="10" fill="var(--ink-light, #242c33)">CC3</text>
-                <text x="340" y="25" font-weight="900" font-size="10" fill="var(--ink-light, #242c33)">CC4</text>
-                <text x="420" y="25" font-weight="900" font-size="10" fill="var(--ink-light, #242c33)">CC5</text>
+                <text x="30" y="25" font-weight="900" font-size="10" fill="#242c33">CYCLE:</text>
+                <text x="100" y="25" font-weight="900" font-size="10" fill="#242c33">CC1</text>
+                <text x="180" y="25" font-weight="900" font-size="10" fill="#242c33">CC2</text>
+                <text x="260" y="25" font-weight="900" font-size="10" fill="#242c33">CC3</text>
+                <text x="340" y="25" font-weight="900" font-size="10" fill="#242c33">CC4</text>
+                <text x="420" y="25" font-weight="900" font-size="10" fill="#242c33">CC5</text>
 
                 <!-- Instruction 1: add x1 -->
                 <text x="10" y="60" font-family="monospace" font-weight="800" font-size="10" fill="#151b20">add x1:</text>
-                <rect x="80" y="45" width="60" height="25" rx="3" fill="var(--paper-deep, #eee4c8)"/><text x="100" y="61" font-size="9" font-weight="700">IF</text>
-                <rect x="160" y="45" width="60" height="25" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="180" y="61" font-size="9" font-weight="700">ID</text>
-                <rect x="240" y="45" width="60" height="25" rx="3" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="2"/><text x="257" y="61" font-size="9" font-weight="900" fill="var(--lime, #b7df69)">EX (x1 ready!)</text>
-                <rect x="320" y="45" width="60" height="25" rx="3" fill="var(--yellow-soft, #fff0b9)"/><text x="335" y="61" font-size="9" font-weight="700">MEM</text>
-                <rect x="400" y="45" width="60" height="25" rx="3" fill="var(--purple-soft, #e2dfff)"/><text x="415" y="61" font-size="9" font-weight="700">WB</text>
+                <rect x="80" y="45" width="60" height="25" rx="3" fill="#eee4c8"/><text x="100" y="61" font-size="9" font-weight="700">IF</text>
+                <rect x="160" y="45" width="60" height="25" rx="3" fill="#ffd8ce"/><text x="180" y="61" font-size="9" font-weight="700">ID</text>
+                <rect x="240" y="45" width="60" height="25" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="2"/><text x="257" y="61" font-size="9" font-weight="900" fill="#b7df69">EX (x1 ready!)</text>
+                <rect x="320" y="45" width="60" height="25" rx="3" fill="#fff0b9"/><text x="335" y="61" font-size="9" font-weight="700">MEM</text>
+                <rect x="400" y="45" width="60" height="25" rx="3" fill="#e2dfff"/><text x="415" y="61" font-size="9" font-weight="700">WB</text>
 
                 <!-- Instruction 2: sub x4 -->
                 <text x="10" y="110" font-family="monospace" font-weight="800" font-size="10" fill="#151b20">sub x4:</text>
-                <rect x="160" y="95" width="60" height="25" rx="3" fill="var(--paper-deep, #eee4c8)"/><text x="180" y="111" font-size="9" font-weight="700">IF</text>
-                <rect x="240" y="95" width="60" height="25" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="260" y="111" font-size="9" font-weight="700">ID</text>
-                <rect x="320" y="95" width="60" height="25" rx="3" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="2"/><text x="330" y="111" font-size="9" font-weight="900" fill="var(--lime, #b7df69)">EX (Needs x1)</text>
-                <rect x="400" y="95" width="60" height="25" rx="3" fill="var(--yellow-soft, #fff0b9)"/><text x="415" y="111" font-size="9" font-weight="700">MEM</text>
+                <rect x="160" y="95" width="60" height="25" rx="3" fill="#eee4c8"/><text x="180" y="111" font-size="9" font-weight="700">IF</text>
+                <rect x="240" y="95" width="60" height="25" rx="3" fill="#ffd8ce"/><text x="260" y="111" font-size="9" font-weight="700">ID</text>
+                <rect x="320" y="95" width="60" height="25" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="2"/><text x="330" y="111" font-size="9" font-weight="900" fill="#b7df69">EX (Needs x1)</text>
+                <rect x="400" y="95" width="60" height="25" rx="3" fill="#fff0b9"/><text x="415" y="111" font-size="9" font-weight="700">MEM</text>
 
                 <!-- Forwarding Curve Arrow -->
-                <path d="M 300 65 C 320 75, 320 85, 320 95" stroke="var(--lime, #b7df69)" stroke-width="3" fill="none"/>
-                <polygon points="320,95 315,87 325,87" fill="var(--lime, #b7df69)"/>
-                <text x="330" y="85" font-size="9" font-weight="900" fill="var(--lime, #b7df69)">Direct EX-to-EX Bypass Bus</text>
+                <path d="M 300 65 C 320 75, 320 85, 320 95" stroke="#b7df69" stroke-width="3" fill="none"/>
+                <polygon points="320,95 315,87 325,87" fill="#b7df69"/>
+                <text x="330" y="85" font-size="9" font-weight="900" fill="#b7df69">Direct EX-to-EX Bypass Bus</text>
 
-                <text x="25" y="155" font-size="10" font-weight="800" fill="var(--lime, #b7df69)">&check; 0 Stall Cycles! Forwarding routes the newly calculated ALU result directly to the next cycle's ALU input.</text>
+                <text x="25" y="155" font-size="10" font-weight="800" fill="#b7df69">&#10003; 0 Stall Cycles! Forwarding routes the newly calculated ALU result directly to the next cycle's ALU input.</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -2024,48 +2024,48 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 170" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- State 00: Strongly Not Taken -->
-                <circle cx="70" cy="85" r="32" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <text x="50" y="80" font-weight="900" font-size="11" fill="var(--coral, #f38469)">00: SNT</text>
-                <text x="40" y="95" font-size="8" fill="var(--ink-light, #242c33)">Predict: NOT</text>
+                <circle cx="70" cy="85" r="32" fill="#ffd8ce" stroke="#f38469" stroke-width="2"/>
+                <text x="50" y="80" font-weight="900" font-size="11" fill="#f38469">00: SNT</text>
+                <text x="40" y="95" font-size="8" fill="#242c33">Predict: NOT</text>
 
                 <!-- Transition 00 -> 01 (Taken) -->
-                <path d="M 102 75 C 130 60, 160 60, 188 75" stroke="var(--coral, #f38469)" stroke-width="1.5" fill="none"/>
-                <text x="135" y="60" font-size="8" font-weight="800" fill="var(--coral, #f38469)">Taken</text>
+                <path d="M 102 75 C 130 60, 160 60, 188 75" stroke="#f38469" stroke-width="1.5" fill="none"/>
+                <text x="135" y="60" font-size="8" font-weight="800" fill="#f38469">Taken</text>
 
                 <!-- Transition 01 -> 00 (Not Taken) -->
-                <path d="M 188 95 C 160 110, 130 110, 102 95" stroke="var(--lime, #b7df69)" stroke-width="1.5" fill="none"/>
-                <text x="130" y="115" font-size="8" font-weight="800" fill="var(--lime, #b7df69)">Not Taken</text>
+                <path d="M 188 95 C 160 110, 130 110, 102 95" stroke="#b7df69" stroke-width="1.5" fill="none"/>
+                <text x="130" y="115" font-size="8" font-weight="800" fill="#b7df69">Not Taken</text>
 
                 <!-- State 01: Weakly Not Taken -->
-                <circle cx="220" cy="85" r="32" fill="var(--yellow-soft, #fff0b9)" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <text x="200" y="80" font-weight="900" font-size="11" fill="var(--coral, #f38469)">01: WNT</text>
-                <text x="190" y="95" font-size="8" fill="var(--ink-light, #242c33)">Predict: NOT</text>
+                <circle cx="220" cy="85" r="32" fill="#fff0b9" stroke="#f38469" stroke-width="2"/>
+                <text x="200" y="80" font-weight="900" font-size="11" fill="#f38469">01: WNT</text>
+                <text x="190" y="95" font-size="8" fill="#242c33">Predict: NOT</text>
 
                 <!-- Transition 01 -> 10 (Taken) -->
-                <path d="M 252 75 C 275 60, 295 60, 318 75" stroke="var(--coral, #f38469)" stroke-width="1.5" fill="none"/>
-                <text x="275" y="60" font-size="8" font-weight="800" fill="var(--coral, #f38469)">Taken</text>
+                <path d="M 252 75 C 275 60, 295 60, 318 75" stroke="#f38469" stroke-width="1.5" fill="none"/>
+                <text x="275" y="60" font-size="8" font-weight="800" fill="#f38469">Taken</text>
 
                 <!-- Transition 10 -> 01 (Not Taken) -->
-                <path d="M 318 95 C 295 110, 275 110, 252 95" stroke="var(--lime, #b7df69)" stroke-width="1.5" fill="none"/>
-                <text x="270" y="115" font-size="8" font-weight="800" fill="var(--lime, #b7df69)">Not Taken</text>
+                <path d="M 318 95 C 295 110, 275 110, 252 95" stroke="#b7df69" stroke-width="1.5" fill="none"/>
+                <text x="270" y="115" font-size="8" font-weight="800" fill="#b7df69">Not Taken</text>
 
                 <!-- State 10: Weakly Taken -->
-                <circle cx="350" cy="85" r="32" fill="#fef9c3" stroke="var(--yellow, #ffc83e)" stroke-width="2"/>
-                <text x="332" y="80" font-weight="900" font-size="11" fill="var(--yellow, #ffc83e)">10: WT</text>
-                <text x="325" y="95" font-size="8" fill="var(--ink, #151b20)">Predict: TAKEN</text>
+                <circle cx="350" cy="85" r="32" fill="#fef9c3" stroke="#ffc83e" stroke-width="2"/>
+                <text x="332" y="80" font-weight="900" font-size="11" fill="#ffc83e">10: WT</text>
+                <text x="325" y="95" font-size="8" fill="#151b20">Predict: TAKEN</text>
 
                 <!-- Transition 10 -> 11 (Taken) -->
-                <path d="M 382 75 C 405 60, 435 60, 468 75" stroke="var(--coral, #f38469)" stroke-width="1.5" fill="none"/>
-                <text x="415" y="60" font-size="8" font-weight="800" fill="var(--coral, #f38469)">Taken</text>
+                <path d="M 382 75 C 405 60, 435 60, 468 75" stroke="#f38469" stroke-width="1.5" fill="none"/>
+                <text x="415" y="60" font-size="8" font-weight="800" fill="#f38469">Taken</text>
 
                 <!-- Transition 11 -> 10 (Not Taken) -->
-                <path d="M 468 95 C 435 110, 405 110, 382 95" stroke="var(--lime, #b7df69)" stroke-width="1.5" fill="none"/>
-                <text x="410" y="115" font-size="8" font-weight="800" fill="var(--lime, #b7df69)">Not Taken</text>
+                <path d="M 468 95 C 435 110, 405 110, 382 95" stroke="#b7df69" stroke-width="1.5" fill="none"/>
+                <text x="410" y="115" font-size="8" font-weight="800" fill="#b7df69">Not Taken</text>
 
                 <!-- State 11: Strongly Taken -->
-                <circle cx="490" cy="85" r="32" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="2"/>
-                <text x="472" y="80" font-weight="900" font-size="11" fill="var(--lime, #b7df69)">11: ST</text>
-                <text x="465" y="95" font-size="8" fill="var(--ink, #151b20)">Predict: TAKEN</text>
+                <circle cx="490" cy="85" r="32" fill="#e7f4c8" stroke="#b7df69" stroke-width="2"/>
+                <text x="472" y="80" font-weight="900" font-size="11" fill="#b7df69">11: ST</text>
+                <text x="465" y="95" font-size="8" fill="#151b20">Predict: TAKEN</text>
 
                 <text x="110" y="150" font-size="10" font-weight="900" fill="#151b20">Prevents Loop Exit Flutter: Requires 2 consecutive mispredictions to flip prediction!</text>
               </svg>
@@ -2193,46 +2193,46 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <rect x="30" y="20" width="480" height="36" rx="4" fill="#151b20"/>
                 <text x="40" y="36" font-size="9" fill="#94a3b8">39-Bit Virtual Address (VA)</text>
                 
-                <rect x="35" y="40" width="105" height="14" fill="var(--yellow-soft, #fff0b9)"/>
-                <text x="45" y="51" font-size="8" font-weight="900" fill="var(--ink-light, #242c33)">VPN[2] (Bits 38:30)</text>
+                <rect x="35" y="40" width="105" height="14" fill="#fff0b9"/>
+                <text x="45" y="51" font-size="8" font-weight="900" fill="#242c33">VPN[2] (Bits 38:30)</text>
 
-                <rect x="145" y="40" width="105" height="14" fill="var(--lime-soft, #e7f4c8)"/>
-                <text x="155" y="51" font-size="8" font-weight="900" fill="var(--ink, #151b20)">VPN[1] (Bits 29:21)</text>
+                <rect x="145" y="40" width="105" height="14" fill="#e7f4c8"/>
+                <text x="155" y="51" font-size="8" font-weight="900" fill="#151b20">VPN[1] (Bits 29:21)</text>
 
-                <rect x="255" y="40" width="105" height="14" fill="var(--cyan-soft, #c9f3f4)"/>
-                <text x="265" y="51" font-size="8" font-weight="900" fill="var(--ink, #151b20)">VPN[0] (Bits 20:12)</text>
+                <rect x="255" y="40" width="105" height="14" fill="#c9f3f4"/>
+                <text x="265" y="51" font-size="8" font-weight="900" fill="#151b20">VPN[0] (Bits 20:12)</text>
 
-                <rect x="365" y="40" width="140" height="14" fill="var(--yellow-soft, #fff0b9)"/>
-                <text x="385" y="51" font-size="8" font-weight="900" fill="var(--ink-light, #242c33)">Page Offset [11:0] (4 KiB)</text>
+                <rect x="365" y="40" width="140" height="14" fill="#fff0b9"/>
+                <text x="385" y="51" font-size="8" font-weight="900" fill="#242c33">Page Offset [11:0] (4 KiB)</text>
 
                 <!-- Page Table Walk Levels -->
                 <!-- Level 2 Root -->
-                <rect x="35" y="85" width="105" height="50" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="42" y="102" font-size="8" font-weight="800" fill="var(--ink-light, #242c33)">Level 2 Table</text>
-                <text x="42" y="115" font-size="7" fill="var(--ink-light, #242c33)">satp &rarr; Root PPN</text>
-                <text x="42" y="126" font-size="7" fill="var(--ink-light, #242c33)">Indexed by VPN[2]</text>
+                <rect x="35" y="85" width="105" height="50" rx="4" fill="#fff0b9" stroke="#f38469" stroke-width="1.5"/>
+                <text x="42" y="102" font-size="8" font-weight="800" fill="#242c33">Level 2 Table</text>
+                <text x="42" y="115" font-size="7" fill="#242c33">satp &#8594; Root PPN</text>
+                <text x="42" y="126" font-size="7" fill="#242c33">Indexed by VPN[2]</text>
 
                 <!-- Arrow Level 2 -> Level 1 -->
-                <path d="M 140 110 L 165 110" stroke="var(--coral, #f38469)" stroke-width="2"/>
+                <path d="M 140 110 L 165 110" stroke="#f38469" stroke-width="2"/>
 
                 <!-- Level 1 Table -->
-                <rect x="170" y="85" width="105" height="50" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="177" y="102" font-size="8" font-weight="800" fill="var(--lime, #b7df69)">Level 1 Table</text>
-                <text x="177" y="115" font-size="7" fill="var(--ink, #151b20)">Middle Page Table</text>
-                <text x="177" y="126" font-size="7" fill="var(--ink, #151b20)">Indexed by VPN[1]</text>
+                <rect x="170" y="85" width="105" height="50" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="177" y="102" font-size="8" font-weight="800" fill="#b7df69">Level 1 Table</text>
+                <text x="177" y="115" font-size="7" fill="#151b20">Middle Page Table</text>
+                <text x="177" y="126" font-size="7" fill="#151b20">Indexed by VPN[1]</text>
 
                 <!-- Arrow Level 1 -> Level 0 -->
-                <path d="M 275 110 L 300 110" stroke="var(--lime, #b7df69)" stroke-width="2"/>
+                <path d="M 275 110 L 300 110" stroke="#b7df69" stroke-width="2"/>
 
                 <!-- Level 0 Leaf -->
-                <rect x="305" y="85" width="105" height="50" rx="4" fill="var(--cyan-soft, #c9f3f4)" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
-                <text x="312" y="102" font-size="8" font-weight="800" fill="var(--cyan, #22bfd7)">Level 0 Leaf Table</text>
-                <text x="312" y="115" font-size="7" fill="var(--ink, #151b20)">Returns Leaf PTE</text>
-                <text x="312" y="126" font-size="7" fill="var(--ink, #151b20)">Indexed by VPN[0]</text>
+                <rect x="305" y="85" width="105" height="50" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.5"/>
+                <text x="312" y="102" font-size="8" font-weight="800" fill="#22bfd7">Level 0 Leaf Table</text>
+                <text x="312" y="115" font-size="7" fill="#151b20">Returns Leaf PTE</text>
+                <text x="312" y="126" font-size="7" fill="#151b20">Indexed by VPN[0]</text>
 
                 <!-- Output 56-Bit Physical Address (PA) -->
-                <rect x="170" y="155" width="340" height="35" rx="4" fill="var(--cream, #fffaf0)" stroke="#151b20" stroke-width="2"/>
-                <text x="180" y="177" font-weight="900" font-size="11" fill="var(--cyan, #22bfd7)">56-Bit Physical Address (PA): [ PPN[43:0] | Offset[11:0] ]</text>
+                <rect x="170" y="155" width="340" height="35" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+                <text x="180" y="177" font-weight="900" font-size="11" fill="#22bfd7">56-Bit Physical Address (PA): [ PPN[43:0] | Offset[11:0] ]</text>
 
                 <!-- Offset bypass line -->
                 <path d="M 435 54 L 435 155" stroke="#854d0e" stroke-width="1.5" stroke-dasharray="3 3"/>
@@ -2335,36 +2335,36 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 220" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- In-Order Frontend -->
-                <rect x="15" y="25" width="115" height="175" rx="6" fill="var(--cream, #fffaf0)" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="15" y="25" width="115" height="175" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
                 <text x="25" y="45" font-weight="900" font-size="10" fill="#151b20">IN-ORDER FRONTEND</text>
-                <rect x="25" y="55" width="95" height="28" rx="3" fill="var(--paper-deep, #eee4c8)"/><text x="35" y="73" font-size="9" font-weight="800">Fetch + Branch Pred</text>
-                <rect x="25" y="92" width="95" height="28" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="35" y="110" font-size="9" font-weight="800">Decode (4-Wide)</text>
-                <rect x="25" y="130" width="95" height="35" rx="3" fill="var(--yellow-soft, #fff0b9)"/><text x="32" y="148" font-size="8" font-weight="900">Register Renaming</text><text x="35" y="158" font-size="7">RAT / Free List</text>
+                <rect x="25" y="55" width="95" height="28" rx="3" fill="#eee4c8"/><text x="35" y="73" font-size="9" font-weight="800">Fetch + Branch Pred</text>
+                <rect x="25" y="92" width="95" height="28" rx="3" fill="#ffd8ce"/><text x="35" y="110" font-size="9" font-weight="800">Decode (4-Wide)</text>
+                <rect x="25" y="130" width="95" height="35" rx="3" fill="#fff0b9"/><text x="32" y="148" font-size="8" font-weight="900">Register Renaming</text><text x="35" y="158" font-size="7">RAT / Free List</text>
 
                 <!-- Out-of-Order Execution Engine -->
-                <rect x="145" y="25" width="240" height="175" rx="6" fill="var(--cream, #fffaf0)" stroke="var(--lime, #b7df69)" stroke-width="2"/>
-                <text x="160" y="45" font-weight="900" font-size="10" fill="var(--lime, #b7df69)">OUT-OF-ORDER EXECUTION ENGINE</text>
+                <rect x="145" y="25" width="240" height="175" rx="6" fill="#fffaf0" stroke="#b7df69" stroke-width="2"/>
+                <text x="160" y="45" font-weight="900" font-size="10" fill="#b7df69">OUT-OF-ORDER EXECUTION ENGINE</text>
                 
-                <rect x="160" y="55" width="210" height="30" rx="3" fill="var(--lime-soft, #e7f4c8)"/><text x="175" y="74" font-size="9" font-weight="800" fill="var(--ink, #151b20)">Reservation Stations (Issue Queues)</text>
+                <rect x="160" y="55" width="210" height="30" rx="3" fill="#e7f4c8"/><text x="175" y="74" font-size="9" font-weight="800" fill="#151b20">Reservation Stations (Issue Queues)</text>
 
                 <!-- Parallel Execution Units -->
-                <rect x="160" y="95" width="45" height="40" rx="3" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/><text x="170" y="118" font-size="8" font-weight="900">ALU 0</text>
-                <rect x="215" y="95" width="45" height="40" rx="3" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/><text x="225" y="118" font-size="8" font-weight="900">ALU 1</text>
-                <rect x="270" y="95" width="45" height="40" rx="3" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/><text x="277" y="118" font-size="8" font-weight="900">Branch</text>
-                <rect x="325" y="95" width="45" height="40" rx="3" fill="var(--yellow-soft, #fff0b9)" stroke="var(--coral, #f38469)"/><text x="333" y="118" font-size="8" font-weight="900">LSU</text>
+                <rect x="160" y="95" width="45" height="40" rx="3" fill="#e7f4c8" stroke="#b7df69"/><text x="170" y="118" font-size="8" font-weight="900">ALU 0</text>
+                <rect x="215" y="95" width="45" height="40" rx="3" fill="#e7f4c8" stroke="#b7df69"/><text x="225" y="118" font-size="8" font-weight="900">ALU 1</text>
+                <rect x="270" y="95" width="45" height="40" rx="3" fill="#e7f4c8" stroke="#b7df69"/><text x="277" y="118" font-size="8" font-weight="900">Branch</text>
+                <rect x="325" y="95" width="45" height="40" rx="3" fill="#fff0b9" stroke="#f38469"/><text x="333" y="118" font-size="8" font-weight="900">LSU</text>
 
-                <text x="175" y="155" font-size="8" fill="var(--lime, #b7df69)">Executes immediately when operands ready!</text>
+                <text x="175" y="155" font-size="8" fill="#b7df69">Executes immediately when operands ready!</text>
 
                 <!-- In-Order Commit (ROB) -->
-                <rect x="400" y="25" width="125" height="175" rx="6" fill="var(--cream, #fffaf0)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="410" y="45" font-weight="900" font-size="10" fill="var(--coral, #f38469)">IN-ORDER COMMIT</text>
-                <rect x="410" y="65" width="105" height="80" rx="4" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1"/>
-                <text x="420" y="90" font-weight="900" font-size="9" fill="var(--ink, #151b20)">Reorder Buffer (ROB)</text>
-                <text x="420" y="105" font-size="8" fill="var(--ink-light, #242c33)">Circular FIFO Queue</text>
-                <text x="420" y="120" font-size="7" fill="var(--ink-light, #242c33)">Commits in program order</text>
-                <text x="420" y="132" font-size="7" fill="var(--ink-light, #242c33)">Guarantees precise exceptions!</text>
+                <rect x="400" y="25" width="125" height="175" rx="6" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
+                <text x="410" y="45" font-weight="900" font-size="10" fill="#f38469">IN-ORDER COMMIT</text>
+                <rect x="410" y="65" width="105" height="80" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
+                <text x="420" y="90" font-weight="900" font-size="9" fill="#151b20">Reorder Buffer (ROB)</text>
+                <text x="420" y="105" font-size="8" fill="#242c33">Circular FIFO Queue</text>
+                <text x="420" y="120" font-size="7" fill="#242c33">Commits in program order</text>
+                <text x="420" y="132" font-size="7" fill="#242c33">Guarantees precise exceptions!</text>
 
-                <rect x="410" y="155" width="105" height="28" rx="3" fill="var(--coral, #f38469)"/><text x="420" y="173" font-size="9" font-weight="800" fill="#ffffff">Architectural RF</text>
+                <rect x="410" y="155" width="105" height="28" rx="3" fill="#f38469"/><text x="420" y="173" font-size="9" font-weight="800" fill="#ffffff">Architectural RF</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -2519,49 +2519,49 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 210" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Scalar Host Core (Left) -->
-                <rect x="15" y="45" width="105" height="120" rx="6" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/>
+                <rect x="15" y="45" width="105" height="120" rx="6" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/>
                 <text x="25" y="70" font-weight="900" font-size="10" fill="#151b20">SCALAR HOST</text>
-                <text x="35" y="88" font-size="9" fill="var(--ink, #151b20)">CVA6 Core</text>
-                <text x="25" y="115" font-size="8" fill="var(--ink-light, #242c33)">Dispatches RVV</text>
-                <text x="25" y="128" font-size="8" fill="var(--ink-light, #242c33)">instructions via</text>
-                <text x="25" y="141" font-size="8" fill="var(--ink-light, #242c33)">co-processor bus</text>
+                <text x="35" y="88" font-size="9" fill="#151b20">CVA6 Core</text>
+                <text x="25" y="115" font-size="8" fill="#242c33">Dispatches RVV</text>
+                <text x="25" y="128" font-size="8" fill="#242c33">instructions via</text>
+                <text x="25" y="141" font-size="8" fill="#242c33">co-processor bus</text>
 
                 <!-- Vector Dispatcher -->
                 <line x1="120" y1="105" x2="160" y2="105" stroke="#151b20" stroke-width="2.5"/>
-                <rect x="160" y="35" width="85" height="140" rx="6" fill="var(--coral-soft, #ffd8ce)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="170" y="58" font-weight="900" font-size="10" fill="var(--coral, #f38469)">VECTOR CTRL</text>
-                <text x="170" y="75" font-size="8" fill="var(--coral, #f38469)">Sequencer</text>
-                <text x="170" y="90" font-size="8" fill="var(--coral, #f38469)">Loop Stripping</text>
-                <text x="170" y="105" font-size="8" fill="var(--coral, #f38469)">Hazard Check</text>
-                <text x="170" y="145" font-size="8" fill="var(--coral, #f38469)">Multi-cast bus &rarr;</text>
+                <rect x="160" y="35" width="85" height="140" rx="6" fill="#ffd8ce" stroke="#f38469" stroke-width="1.5"/>
+                <text x="170" y="58" font-weight="900" font-size="10" fill="#f38469">VECTOR CTRL</text>
+                <text x="170" y="75" font-size="8" fill="#f38469">Sequencer</text>
+                <text x="170" y="90" font-size="8" fill="#f38469">Loop Stripping</text>
+                <text x="170" y="105" font-size="8" fill="#f38469">Hazard Check</text>
+                <text x="170" y="145" font-size="8" fill="#f38469">Multi-cast bus &#8594;</text>
 
                 <!-- 4 Parallel Vector Lanes (Right) -->
-                <rect x="270" y="25" width="250" height="160" rx="8" fill="var(--cream, #fffaf0)" stroke="var(--lime, #b7df69)" stroke-width="2"/>
-                <text x="285" y="45" font-weight="900" font-size="11" fill="var(--lime, #b7df69)">PARALLEL VECTOR EXECUTION LANES</text>
+                <rect x="270" y="25" width="250" height="160" rx="8" fill="#fffaf0" stroke="#b7df69" stroke-width="2"/>
+                <text x="285" y="45" font-weight="900" font-size="11" fill="#b7df69">PARALLEL VECTOR EXECUTION LANES</text>
 
                 <!-- Lane 0 -->
-                <rect x="285" y="55" width="50" height="115" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/>
-                <text x="293" y="75" font-weight="900" font-size="9" fill="var(--lime, #b7df69)">Lane 0</text>
-                <rect x="290" y="85" width="40" height="30" rx="2" fill="var(--lime-soft, #e7f4c8)"/><text x="295" y="103" font-size="7">VRF Bank</text>
-                <rect x="290" y="125" width="40" height="35" rx="2" fill="var(--lime, #b7df69)"/><text x="297" y="142" font-size="7" font-weight="800">FMA/ALU</text>
+                <rect x="285" y="55" width="50" height="115" rx="4" fill="#e7f4c8" stroke="#b7df69"/>
+                <text x="293" y="75" font-weight="900" font-size="9" fill="#b7df69">Lane 0</text>
+                <rect x="290" y="85" width="40" height="30" rx="2" fill="#e7f4c8"/><text x="295" y="103" font-size="7">VRF Bank</text>
+                <rect x="290" y="125" width="40" height="35" rx="2" fill="#b7df69"/><text x="297" y="142" font-size="7" font-weight="800">FMA/ALU</text>
 
                 <!-- Lane 1 -->
-                <rect x="345" y="55" width="50" height="115" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/>
-                <text x="353" y="75" font-weight="900" font-size="9" fill="var(--lime, #b7df69)">Lane 1</text>
-                <rect x="350" y="85" width="40" height="30" rx="2" fill="var(--lime-soft, #e7f4c8)"/><text x="355" y="103" font-size="7">VRF Bank</text>
-                <rect x="350" y="125" width="40" height="35" rx="2" fill="var(--lime, #b7df69)"/><text x="357" y="142" font-size="7" font-weight="800">FMA/ALU</text>
+                <rect x="345" y="55" width="50" height="115" rx="4" fill="#e7f4c8" stroke="#b7df69"/>
+                <text x="353" y="75" font-weight="900" font-size="9" fill="#b7df69">Lane 1</text>
+                <rect x="350" y="85" width="40" height="30" rx="2" fill="#e7f4c8"/><text x="355" y="103" font-size="7">VRF Bank</text>
+                <rect x="350" y="125" width="40" height="35" rx="2" fill="#b7df69"/><text x="357" y="142" font-size="7" font-weight="800">FMA/ALU</text>
 
                 <!-- Lane 2 -->
-                <rect x="405" y="55" width="50" height="115" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/>
-                <text x="413" y="75" font-weight="900" font-size="9" fill="var(--lime, #b7df69)">Lane 2</text>
-                <rect x="410" y="85" width="40" height="30" rx="2" fill="var(--lime-soft, #e7f4c8)"/><text x="415" y="103" font-size="7">VRF Bank</text>
-                <rect x="410" y="125" width="40" height="35" rx="2" fill="var(--lime, #b7df69)"/><text x="417" y="142" font-size="7" font-weight="800">FMA/ALU</text>
+                <rect x="405" y="55" width="50" height="115" rx="4" fill="#e7f4c8" stroke="#b7df69"/>
+                <text x="413" y="75" font-weight="900" font-size="9" fill="#b7df69">Lane 2</text>
+                <rect x="410" y="85" width="40" height="30" rx="2" fill="#e7f4c8"/><text x="415" y="103" font-size="7">VRF Bank</text>
+                <rect x="410" y="125" width="40" height="35" rx="2" fill="#b7df69"/><text x="417" y="142" font-size="7" font-weight="800">FMA/ALU</text>
 
                 <!-- Lane 3 -->
-                <rect x="465" y="55" width="50" height="115" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/>
-                <text x="473" y="75" font-weight="900" font-size="9" fill="var(--lime, #b7df69)">Lane 3</text>
-                <rect x="470" y="85" width="40" height="30" rx="2" fill="var(--lime-soft, #e7f4c8)"/><text x="475" y="103" font-size="7">VRF Bank</text>
-                <rect x="470" y="125" width="40" height="35" rx="2" fill="var(--lime, #b7df69)"/><text x="477" y="142" font-size="7" font-weight="800">FMA/ALU</text>
+                <rect x="465" y="55" width="50" height="115" rx="4" fill="#e7f4c8" stroke="#b7df69"/>
+                <text x="473" y="75" font-weight="900" font-size="9" fill="#b7df69">Lane 3</text>
+                <rect x="470" y="85" width="40" height="30" rx="2" fill="#e7f4c8"/><text x="475" y="103" font-size="7">VRF Bank</text>
+                <rect x="470" y="125" width="40" height="35" rx="2" fill="#b7df69"/><text x="477" y="142" font-size="7" font-weight="800">FMA/ALU</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -2676,50 +2676,50 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 220" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- North Inputs (Matrix B streaming down) -->
-                <text x="210" y="20" font-weight="900" font-size="10" fill="var(--cyan, #22bfd7)">Matrix B Inputs &darr;</text>
-                <line x1="215" y1="25" x2="215" y2="50" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <line x1="295" y1="25" x2="295" y2="50" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
-                <line x1="375" y1="25" x2="375" y2="50" stroke="var(--cyan, #22bfd7)" stroke-width="2"/>
+                <text x="210" y="20" font-weight="900" font-size="10" fill="#22bfd7">Matrix B Inputs &#8595;</text>
+                <line x1="215" y1="25" x2="215" y2="50" stroke="#22bfd7" stroke-width="2"/>
+                <line x1="295" y1="25" x2="295" y2="50" stroke="#22bfd7" stroke-width="2"/>
+                <line x1="375" y1="25" x2="375" y2="50" stroke="#22bfd7" stroke-width="2"/>
 
                 <!-- West Inputs (Matrix A streaming right) -->
-                <text x="15" y="90" font-weight="900" font-size="10" fill="var(--coral, #f38469)">Matrix A &rarr;</text>
-                <line x1="100" y1="75" x2="185" y2="75" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line x1="100" y1="125" x2="185" y2="125" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <line x1="100" y1="175" x2="185" y2="175" stroke="var(--coral, #f38469)" stroke-width="2"/>
+                <text x="15" y="90" font-weight="900" font-size="10" fill="#f38469">Matrix A &#8594;</text>
+                <line x1="100" y1="75" x2="185" y2="75" stroke="#f38469" stroke-width="2"/>
+                <line x1="100" y1="125" x2="185" y2="125" stroke="#f38469" stroke-width="2"/>
+                <line x1="100" y1="175" x2="185" y2="175" stroke="#f38469" stroke-width="2"/>
 
                 <!-- Row 0 -->
-                <rect x="185" y="55" width="60" height="40" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/><text x="195" y="79" font-size="9" font-weight="900">PE (0,0)</text>
-                <line x1="245" y1="75" x2="265" y2="75" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <rect x="265" y="55" width="60" height="40" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/><text x="275" y="79" font-size="9" font-weight="900">PE (0,1)</text>
-                <line x1="325" y1="75" x2="345" y2="75" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <rect x="345" y="55" width="60" height="40" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/><text x="355" y="79" font-size="9" font-weight="900">PE (0,2)</text>
+                <rect x="185" y="55" width="60" height="40" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/><text x="195" y="79" font-size="9" font-weight="900">PE (0,0)</text>
+                <line x1="245" y1="75" x2="265" y2="75" stroke="#f38469" stroke-width="1.5"/>
+                <rect x="265" y="55" width="60" height="40" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/><text x="275" y="79" font-size="9" font-weight="900">PE (0,1)</text>
+                <line x1="325" y1="75" x2="345" y2="75" stroke="#f38469" stroke-width="1.5"/>
+                <rect x="345" y="55" width="60" height="40" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/><text x="355" y="79" font-size="9" font-weight="900">PE (0,2)</text>
 
                 <!-- Row 1 -->
-                <line x1="215" y1="95" x2="215" y2="105" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
-                <line x1="295" y1="95" x2="295" y2="105" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
-                <line x1="375" y1="95" x2="375" y2="105" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
+                <line x1="215" y1="95" x2="215" y2="105" stroke="#22bfd7" stroke-width="1.5"/>
+                <line x1="295" y1="95" x2="295" y2="105" stroke="#22bfd7" stroke-width="1.5"/>
+                <line x1="375" y1="95" x2="375" y2="105" stroke="#22bfd7" stroke-width="1.5"/>
 
-                <rect x="185" y="105" width="60" height="40" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/><text x="195" y="129" font-size="9" font-weight="900">PE (1,0)</text>
-                <line x1="245" y1="125" x2="265" y2="125" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <rect x="265" y="105" width="60" height="40" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/><text x="275" y="129" font-size="9" font-weight="900">PE (1,1)</text>
-                <line x1="325" y1="125" x2="345" y2="125" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <rect x="345" y="105" width="60" height="40" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/><text x="355" y="129" font-size="9" font-weight="900">PE (1,2)</text>
+                <rect x="185" y="105" width="60" height="40" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/><text x="195" y="129" font-size="9" font-weight="900">PE (1,0)</text>
+                <line x1="245" y1="125" x2="265" y2="125" stroke="#f38469" stroke-width="1.5"/>
+                <rect x="265" y="105" width="60" height="40" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/><text x="275" y="129" font-size="9" font-weight="900">PE (1,1)</text>
+                <line x1="325" y1="125" x2="345" y2="125" stroke="#f38469" stroke-width="1.5"/>
+                <rect x="345" y="105" width="60" height="40" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/><text x="355" y="129" font-size="9" font-weight="900">PE (1,2)</text>
 
                 <!-- Row 2 -->
-                <line x1="215" y1="145" x2="215" y2="155" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
-                <line x1="295" y1="145" x2="295" y2="155" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
-                <line x1="375" y1="145" x2="375" y2="155" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
+                <line x1="215" y1="145" x2="215" y2="155" stroke="#22bfd7" stroke-width="1.5"/>
+                <line x1="295" y1="145" x2="295" y2="155" stroke="#22bfd7" stroke-width="1.5"/>
+                <line x1="375" y1="145" x2="375" y2="155" stroke="#22bfd7" stroke-width="1.5"/>
 
-                <rect x="185" y="155" width="60" height="40" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/><text x="195" y="179" font-size="9" font-weight="900">PE (2,0)</text>
-                <line x1="245" y1="175" x2="265" y2="175" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <rect x="265" y="155" width="60" height="40" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/><text x="275" y="179" font-size="9" font-weight="900">PE (2,1)</text>
-                <line x1="325" y1="175" x2="345" y2="175" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <rect x="345" y="155" width="60" height="40" rx="4" fill="var(--yellow-soft, #fff0b9)" stroke="#151b20" stroke-width="1.5"/><text x="355" y="179" font-size="9" font-weight="900">PE (2,2)</text>
+                <rect x="185" y="155" width="60" height="40" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/><text x="195" y="179" font-size="9" font-weight="900">PE (2,0)</text>
+                <line x1="245" y1="175" x2="265" y2="175" stroke="#f38469" stroke-width="1.5"/>
+                <rect x="265" y="155" width="60" height="40" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/><text x="275" y="179" font-size="9" font-weight="900">PE (2,1)</text>
+                <line x1="325" y1="175" x2="345" y2="175" stroke="#f38469" stroke-width="1.5"/>
+                <rect x="345" y="155" width="60" height="40" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/><text x="355" y="179" font-size="9" font-weight="900">PE (2,2)</text>
 
                 <!-- Annotations -->
-                <text x="420" y="100" font-size="9" font-weight="800" fill="var(--lime, #b7df69)">Zero Memory Stalls:</text>
-                <text x="420" y="115" font-size="8" fill="var(--lime, #b7df69)">Data passes neighbor-to-</text>
-                <text x="420" y="128" font-size="8" fill="var(--lime, #b7df69)">neighbor every clock tick</text>
+                <text x="420" y="100" font-size="9" font-weight="800" fill="#b7df69">Zero Memory Stalls:</text>
+                <text x="420" y="115" font-size="8" fill="#b7df69">Data passes neighbor-to-</text>
+                <text x="420" y="128" font-size="8" fill="#b7df69">neighbor every clock tick</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -2852,53 +2852,53 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 200" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Bus (Left) -->
-                <rect x="15" y="15" width="155" height="170" rx="6" fill="var(--cream, #fffaf0)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="25" y="35" font-weight="900" font-size="10" fill="var(--coral, #f38469)">SHARED BUS (AXI-Lite)</text>
-                <rect x="25" y="45" width="40" height="25" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="32" y="61" font-size="8">Core 0</text>
-                <rect x="75" y="45" width="40" height="25" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="82" y="61" font-size="8">Core 1</text>
-                <rect x="125" y="45" width="35" height="25" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="130" y="61" font-size="8">Core 2</text>
-                <line x1="25" y1="95" x2="160" y2="95" stroke="var(--coral, #f38469)" stroke-width="3"/>
-                <text x="30" y="112" font-size="8" font-weight="900" fill="var(--coral, #f38469)">Shared Wire (1 Talker!)</text>
-                <rect x="50" y="130" width="85" height="30" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="60" y="149" font-size="8">DRAM / Memory</text>
+                <rect x="15" y="15" width="155" height="170" rx="6" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
+                <text x="25" y="35" font-weight="900" font-size="10" fill="#f38469">SHARED BUS (AXI-Lite)</text>
+                <rect x="25" y="45" width="40" height="25" rx="3" fill="#ffd8ce"/><text x="32" y="61" font-size="8">Core 0</text>
+                <rect x="75" y="45" width="40" height="25" rx="3" fill="#ffd8ce"/><text x="82" y="61" font-size="8">Core 1</text>
+                <rect x="125" y="45" width="35" height="25" rx="3" fill="#ffd8ce"/><text x="130" y="61" font-size="8">Core 2</text>
+                <line x1="25" y1="95" x2="160" y2="95" stroke="#f38469" stroke-width="3"/>
+                <text x="30" y="112" font-size="8" font-weight="900" fill="#f38469">Shared Wire (1 Talker!)</text>
+                <rect x="50" y="130" width="85" height="30" rx="3" fill="#ffd8ce"/><text x="60" y="149" font-size="8">DRAM / Memory</text>
 
                 <!-- Crossbar (Center) -->
-                <rect x="185" y="15" width="165" height="170" rx="6" fill="var(--yellow-soft, #fff0b9)" stroke="var(--yellow, #ffc83e)" stroke-width="1.5"/>
-                <text x="195" y="35" font-weight="900" font-size="10" fill="var(--ink, #151b20)">FULL CROSSBAR MATRIX</text>
-                <rect x="195" y="45" width="40" height="22" rx="3" fill="var(--cream, #fffaf0)"/><text x="202" y="60" font-size="8">Core 0</text>
-                <rect x="245" y="45" width="40" height="22" rx="3" fill="var(--cream, #fffaf0)"/><text x="252" y="60" font-size="8">Core 1</text>
-                <rect x="295" y="45" width="45" height="22" rx="3" fill="var(--cream, #fffaf0)"/><text x="302" y="60" font-size="8">Core 2</text>
+                <rect x="185" y="15" width="165" height="170" rx="6" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.5"/>
+                <text x="195" y="35" font-weight="900" font-size="10" fill="#151b20">FULL CROSSBAR MATRIX</text>
+                <rect x="195" y="45" width="40" height="22" rx="3" fill="#fffaf0"/><text x="202" y="60" font-size="8">Core 0</text>
+                <rect x="245" y="45" width="40" height="22" rx="3" fill="#fffaf0"/><text x="252" y="60" font-size="8">Core 1</text>
+                <rect x="295" y="45" width="45" height="22" rx="3" fill="#fffaf0"/><text x="302" y="60" font-size="8">Core 2</text>
 
                 <!-- Crossbar switch grid -->
-                <line x1="215" y1="75" x2="215" y2="135" stroke="var(--yellow, #ffc83e)" stroke-width="1.5"/>
-                <line x1="265" y1="75" x2="265" y2="135" stroke="var(--yellow, #ffc83e)" stroke-width="1.5"/>
-                <line x1="315" y1="75" x2="315" y2="135" stroke="var(--yellow, #ffc83e)" stroke-width="1.5"/>
+                <line x1="215" y1="75" x2="215" y2="135" stroke="#ffc83e" stroke-width="1.5"/>
+                <line x1="265" y1="75" x2="265" y2="135" stroke="#ffc83e" stroke-width="1.5"/>
+                <line x1="315" y1="75" x2="315" y2="135" stroke="#ffc83e" stroke-width="1.5"/>
 
-                <line x1="200" y1="85" x2="335" y2="85" stroke="var(--yellow, #ffc83e)" stroke-width="1.5"/>
-                <line x1="200" y1="105" x2="335" y2="105" stroke="var(--yellow, #ffc83e)" stroke-width="1.5"/>
-                <line x1="200" y1="125" x2="335" y2="125" stroke="var(--yellow, #ffc83e)" stroke-width="1.5"/>
+                <line x1="200" y1="85" x2="335" y2="85" stroke="#ffc83e" stroke-width="1.5"/>
+                <line x1="200" y1="105" x2="335" y2="105" stroke="#ffc83e" stroke-width="1.5"/>
+                <line x1="200" y1="125" x2="335" y2="125" stroke="#ffc83e" stroke-width="1.5"/>
 
                 <circle cx="215" cy="85" r="3" fill="#b45309"/>
                 <circle cx="265" cy="105" r="3" fill="#b45309"/>
                 <circle cx="315" cy="125" r="3" fill="#b45309"/>
-                <text x="200" y="155" font-size="8" font-weight="800" fill="var(--ink-light, #242c33)">O(N&sup2;) Crosspoint Muxes</text>
+                <text x="200" y="155" font-size="8" font-weight="800" fill="#242c33">O(N&#178;) Crosspoint Muxes</text>
 
                 <!-- 2D Mesh NoC (Right) -->
-                <rect x="365" y="15" width="160" height="170" rx="6" fill="var(--cream, #fffaf0)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="375" y="35" font-weight="900" font-size="10" fill="var(--lime, #b7df69)">2D MESH NOC (FlooNoC)</text>
+                <rect x="365" y="15" width="160" height="170" rx="6" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="375" y="35" font-weight="900" font-size="10" fill="#b7df69">2D MESH NOC (FlooNoC)</text>
                 
                 <!-- 4 Router Nodes -->
-                <rect x="380" y="55" width="55" height="40" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/><text x="388" y="72" font-size="8" font-weight="800">Node (0,0)</text><text x="390" y="86" font-size="7">Router</text>
-                <rect x="455" y="55" width="55" height="40" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/><text x="463" y="72" font-size="8" font-weight="800">Node (0,1)</text><text x="465" y="86" font-size="7">Router</text>
-                <rect x="380" y="115" width="55" height="40" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/><text x="388" y="132" font-size="8" font-weight="800">Node (1,0)</text><text x="390" y="146" font-size="7">Router</text>
-                <rect x="455" y="115" width="55" height="40" rx="4" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)"/><text x="463" y="132" font-size="8" font-weight="800">Node (1,1)</text><text x="465" y="146" font-size="7">Router</text>
+                <rect x="380" y="55" width="55" height="40" rx="4" fill="#e7f4c8" stroke="#b7df69"/><text x="388" y="72" font-size="8" font-weight="800">Node (0,0)</text><text x="390" y="86" font-size="7">Router</text>
+                <rect x="455" y="55" width="55" height="40" rx="4" fill="#e7f4c8" stroke="#b7df69"/><text x="463" y="72" font-size="8" font-weight="800">Node (0,1)</text><text x="465" y="86" font-size="7">Router</text>
+                <rect x="380" y="115" width="55" height="40" rx="4" fill="#e7f4c8" stroke="#b7df69"/><text x="388" y="132" font-size="8" font-weight="800">Node (1,0)</text><text x="390" y="146" font-size="7">Router</text>
+                <rect x="455" y="115" width="55" height="40" rx="4" fill="#e7f4c8" stroke="#b7df69"/><text x="463" y="132" font-size="8" font-weight="800">Node (1,1)</text><text x="465" y="146" font-size="7">Router</text>
 
                 <!-- Mesh bidirectional links -->
-                <line x1="435" y1="75" x2="455" y2="75" stroke="var(--lime, #b7df69)" stroke-width="2"/>
-                <line x1="435" y1="135" x2="455" y2="135" stroke="var(--lime, #b7df69)" stroke-width="2"/>
-                <line x1="407" y1="95" x2="407" y2="115" stroke="var(--lime, #b7df69)" stroke-width="2"/>
-                <line x1="482" y1="95" x2="482" y2="115" stroke="var(--lime, #b7df69)" stroke-width="2"/>
+                <line x1="435" y1="75" x2="455" y2="75" stroke="#b7df69" stroke-width="2"/>
+                <line x1="435" y1="135" x2="455" y2="135" stroke="#b7df69" stroke-width="2"/>
+                <line x1="407" y1="95" x2="407" y2="115" stroke="#b7df69" stroke-width="2"/>
+                <line x1="482" y1="95" x2="482" y2="115" stroke="#b7df69" stroke-width="2"/>
 
-                <text x="385" y="172" font-size="8" font-weight="800" fill="var(--ink, #151b20)">Scales linearly to 432 cores!</text>
+                <text x="385" y="172" font-size="8" font-weight="800" fill="#151b20">Scales linearly to 432 cores!</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -2991,35 +2991,35 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <div class="schematic-svg-wrap">
               <svg viewBox="0 0 540 180" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
                 <!-- Left: Software Spinlock -->
-                <rect x="20" y="15" width="240" height="150" rx="6" fill="var(--cream, #fffaf0)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-                <text x="30" y="35" font-weight="900" font-size="10" fill="var(--coral, #f38469)">SOFTWARE ATOMIC SPINLOCK</text>
-                <text x="30" y="55" font-size="8" fill="var(--coral, #f38469)">256 cores hammering shared DRAM address:</text>
+                <rect x="20" y="15" width="240" height="150" rx="6" fill="#fffaf0" stroke="#f38469" stroke-width="1.5"/>
+                <text x="30" y="35" font-weight="900" font-size="10" fill="#f38469">SOFTWARE ATOMIC SPINLOCK</text>
+                <text x="30" y="55" font-size="8" fill="#f38469">256 cores hammering shared DRAM address:</text>
                 
                 <!-- Cores spinning -->
-                <rect x="30" y="65" width="45" height="25" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="35" y="81" font-size="8">Core 0</text>
-                <rect x="85" y="65" width="45" height="25" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="90" y="81" font-size="8">Core 1</text>
-                <rect x="140" y="65" width="45" height="25" rx="3" fill="var(--coral-soft, #ffd8ce)"/><text x="145" y="81" font-size="8">Core 2</text>
-                <text x="195" y="80" font-weight="900" font-size="11" fill="var(--coral, #f38469)">&bull;&bull;&bull;</text>
+                <rect x="30" y="65" width="45" height="25" rx="3" fill="#ffd8ce"/><text x="35" y="81" font-size="8">Core 0</text>
+                <rect x="85" y="65" width="45" height="25" rx="3" fill="#ffd8ce"/><text x="90" y="81" font-size="8">Core 1</text>
+                <rect x="140" y="65" width="45" height="25" rx="3" fill="#ffd8ce"/><text x="145" y="81" font-size="8">Core 2</text>
+                <text x="195" y="80" font-weight="900" font-size="11" fill="#f38469">&#8226;&#8226;&#8226;</text>
 
-                <path d="M 120 95 L 120 120" stroke="var(--coral, #f38469)" stroke-width="2"/>
-                <rect x="50" y="120" width="180" height="30" rx="4" fill="var(--coral, #f38469)"/><text x="65" y="139" font-size="9" font-weight="900" fill="#ffffff">Shared Lock Variable (Bus Congested!)</text>
+                <path d="M 120 95 L 120 120" stroke="#f38469" stroke-width="2"/>
+                <rect x="50" y="120" width="180" height="30" rx="4" fill="#f38469"/><text x="65" y="139" font-size="9" font-weight="900" fill="#ffffff">Shared Lock Variable (Bus Congested!)</text>
 
                 <!-- Right: Hardware Barrier -->
-                <rect x="280" y="15" width="240" height="150" rx="6" fill="var(--cream, #fffaf0)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-                <text x="295" y="35" font-weight="900" font-size="10" fill="var(--lime, #b7df69)">1-CYCLE HARDWARE BARRIER TREE</text>
-                <text x="295" y="55" font-size="8" fill="var(--lime, #b7df69)">Dedicated combinational AND reduction wires:</text>
+                <rect x="280" y="15" width="240" height="150" rx="6" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/>
+                <text x="295" y="35" font-weight="900" font-size="10" fill="#b7df69">1-CYCLE HARDWARE BARRIER TREE</text>
+                <text x="295" y="55" font-size="8" fill="#b7df69">Dedicated combinational AND reduction wires:</text>
 
                 <!-- Dedicated wires arriving -->
-                <text x="295" y="78" font-size="8" fill="var(--ink, #151b20)">Core 0..255 "Arrive" Wires &rarr;</text>
-                <path d="M 405 75 L 435 95" stroke="var(--lime, #b7df69)" stroke-width="2"/>
+                <text x="295" y="78" font-size="8" fill="#151b20">Core 0..255 "Arrive" Wires &#8594;</text>
+                <path d="M 405 75 L 435 95" stroke="#b7df69" stroke-width="2"/>
 
                 <!-- Combinational Tree Node -->
-                <circle cx="445" cy="100" r="16" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="2"/>
-                <text x="437" y="104" font-weight="900" font-size="11" fill="var(--ink, #151b20)">&amp;</text>
+                <circle cx="445" cy="100" r="16" fill="#e7f4c8" stroke="#b7df69" stroke-width="2"/>
+                <text x="437" y="104" font-weight="900" font-size="11" fill="#151b20">&amp;</text>
 
                 <!-- Release Broadcast -->
-                <path d="M 461 100 L 505 100" stroke="var(--lime, #b7df69)" stroke-width="2.5"/>
-                <text x="350" y="140" font-weight="900" font-size="9" fill="var(--lime, #b7df69)">&check; 1 Clock Cycle: Instant global release!</text>
+                <path d="M 461 100 L 505 100" stroke="#b7df69" stroke-width="2.5"/>
+                <text x="350" y="140" font-weight="900" font-size="9" fill="#b7df69">&#10003; 1 Clock Cycle: Instant global release!</text>
               </svg>
             </div>
             <div class="schematic-caption">
@@ -3179,36 +3179,36 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         <div class="schematic-svg-wrap">
           <svg viewBox="0 0 540 180" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
             <!-- Level 1 -->
-            <rect x="15" y="20" width="120" height="140" rx="6" fill="var(--yellow-soft, #fff0b9)" stroke="var(--yellow, #ffc83e)" stroke-width="1.5"/>
-            <text x="25" y="45" font-weight="900" font-size="9" fill="var(--ink, #151b20)">LEVEL 1: SCALAR</text>
-            <text x="25" y="65" font-size="8" fill="var(--ink-light, #242c33)">&bull; Pipeline Stalls</text>
-            <text x="25" y="80" font-size="8" fill="var(--ink-light, #242c33)">&bull; Branch Accuracy</text>
-            <text x="25" y="95" font-size="8" fill="var(--ink-light, #242c33)">&bull; CoreMark/MHz</text>
-            <rect x="22" y="115" width="105" height="35" rx="3" fill="var(--yellow, #ffc83e)"/><text x="28" y="132" font-size="8" font-weight="900" fill="#ffffff">&rarr; Category 1:</text><text x="28" y="143" font-size="8" fill="var(--cream, #fffaf0)">MCU &amp; In-Order Cores</text>
+            <rect x="15" y="20" width="120" height="140" rx="6" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.5"/>
+            <text x="25" y="45" font-weight="900" font-size="9" fill="#151b20">LEVEL 1: SCALAR</text>
+            <text x="25" y="65" font-size="8" fill="#242c33">&#8226; Pipeline Stalls</text>
+            <text x="25" y="80" font-size="8" fill="#242c33">&#8226; Branch Accuracy</text>
+            <text x="25" y="95" font-size="8" fill="#242c33">&#8226; CoreMark/MHz</text>
+            <rect x="22" y="115" width="105" height="35" rx="3" fill="#ffc83e"/><text x="28" y="132" font-size="8" font-weight="900" fill="#ffffff">&#8594; Category 1:</text><text x="28" y="143" font-size="8" fill="#fffaf0">MCU &amp; In-Order Cores</text>
 
             <!-- Level 2 -->
-            <rect x="145" y="20" width="120" height="140" rx="6" fill="var(--yellow-soft, #fff0b9)" stroke="var(--coral, #f38469)" stroke-width="1.5"/>
-            <text x="155" y="45" font-weight="900" font-size="9" fill="var(--ink-light, #242c33)">LEVEL 2: MEMORY</text>
-            <text x="155" y="65" font-size="8" fill="var(--ink-light, #242c33)">&bull; Sv39 MMU Walk</text>
-            <text x="155" y="80" font-size="8" fill="var(--ink-light, #242c33)">&bull; TLB Hit Rates</text>
-            <text x="155" y="95" font-size="8" fill="var(--ink-light, #242c33)">&bull; Linux Boot IPC</text>
-            <rect x="152" y="115" width="105" height="35" rx="3" fill="var(--coral, #f38469)"/><text x="158" y="132" font-size="8" font-weight="900" fill="#ffffff">&rarr; Category 2:</text><text x="158" y="143" font-size="8" fill="var(--cream, #fffaf0)">Application Cores</text>
+            <rect x="145" y="20" width="120" height="140" rx="6" fill="#fff0b9" stroke="#f38469" stroke-width="1.5"/>
+            <text x="155" y="45" font-weight="900" font-size="9" fill="#242c33">LEVEL 2: MEMORY</text>
+            <text x="155" y="65" font-size="8" fill="#242c33">&#8226; Sv39 MMU Walk</text>
+            <text x="155" y="80" font-size="8" fill="#242c33">&#8226; TLB Hit Rates</text>
+            <text x="155" y="95" font-size="8" fill="#242c33">&#8226; Linux Boot IPC</text>
+            <rect x="152" y="115" width="105" height="35" rx="3" fill="#f38469"/><text x="158" y="132" font-size="8" font-weight="900" fill="#ffffff">&#8594; Category 2:</text><text x="158" y="143" font-size="8" fill="#fffaf0">Application Cores</text>
 
             <!-- Level 3 -->
-            <rect x="275" y="20" width="120" height="140" rx="6" fill="var(--lime-soft, #e7f4c8)" stroke="var(--lime, #b7df69)" stroke-width="1.5"/>
-            <text x="285" y="45" font-weight="900" font-size="9" fill="var(--ink, #151b20)">LEVEL 3: VECTOR</text>
-            <text x="285" y="65" font-size="8" fill="var(--lime, #b7df69)">&bull; VRF Bank Conflict</text>
-            <text x="285" y="80" font-size="8" fill="var(--lime, #b7df69)">&bull; Lane Utilization</text>
-            <text x="285" y="95" font-size="8" fill="var(--lime, #b7df69)">&bull; GEMM / FFT PPA</text>
-            <rect x="282" y="115" width="105" height="35" rx="3" fill="var(--lime, #b7df69)"/><text x="288" y="132" font-size="8" font-weight="900" fill="#ffffff">&rarr; Category 3:</text><text x="288" y="143" font-size="8" fill="var(--cream, #fffaf0)">Vector Coprocessors</text>
+            <rect x="275" y="20" width="120" height="140" rx="6" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
+            <text x="285" y="45" font-weight="900" font-size="9" fill="#151b20">LEVEL 3: VECTOR</text>
+            <text x="285" y="65" font-size="8" fill="#b7df69">&#8226; VRF Bank Conflict</text>
+            <text x="285" y="80" font-size="8" fill="#b7df69">&#8226; Lane Utilization</text>
+            <text x="285" y="95" font-size="8" fill="#b7df69">&#8226; GEMM / FFT PPA</text>
+            <rect x="282" y="115" width="105" height="35" rx="3" fill="#b7df69"/><text x="288" y="132" font-size="8" font-weight="900" fill="#ffffff">&#8594; Category 3:</text><text x="288" y="143" font-size="8" fill="#fffaf0">Vector Coprocessors</text>
 
             <!-- Level 4 -->
-            <rect x="405" y="20" width="120" height="140" rx="6" fill="var(--cyan-soft, #c9f3f4)" stroke="var(--cyan, #22bfd7)" stroke-width="1.5"/>
-            <text x="415" y="45" font-weight="900" font-size="9" fill="var(--ink, #151b20)">LEVEL 4: SOC</text>
-            <text x="415" y="65" font-size="8" fill="var(--cyan, #22bfd7)">&bull; NoC Bisection BW</text>
-            <text x="415" y="80" font-size="8" fill="var(--cyan, #22bfd7)">&bull; Barrier Latency</text>
-            <text x="415" y="95" font-size="8" fill="var(--cyan, #22bfd7)">&bull; DMA Concurrency</text>
-            <rect x="412" y="115" width="105" height="35" rx="3" fill="var(--cyan, #22bfd7)"/><text x="418" y="132" font-size="8" font-weight="900" fill="#ffffff">&rarr; Category 4:</text><text x="418" y="143" font-size="8" fill="var(--cream, #fffaf0)">SoC Fabrics &amp; Clusters</text>
+            <rect x="405" y="20" width="120" height="140" rx="6" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.5"/>
+            <text x="415" y="45" font-weight="900" font-size="9" fill="#151b20">LEVEL 4: SOC</text>
+            <text x="415" y="65" font-size="8" fill="#22bfd7">&#8226; NoC Bisection BW</text>
+            <text x="415" y="80" font-size="8" fill="#22bfd7">&#8226; Barrier Latency</text>
+            <text x="415" y="95" font-size="8" fill="#22bfd7">&#8226; DMA Concurrency</text>
+            <rect x="412" y="115" width="105" height="35" rx="3" fill="#22bfd7"/><text x="418" y="132" font-size="8" font-weight="900" fill="#ffffff">&#8594; Category 4:</text><text x="418" y="143" font-size="8" fill="#fffaf0">SoC Fabrics &amp; Clusters</text>
           </svg>
         </div>
         <div class="schematic-caption">
@@ -3685,10 +3685,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     if (btnDualInATxt) btnDualInATxt.textContent = dualInA === 1 ? "A = 1 (1.0V)" : "A = 0 (0.0V)";
     if (btnDualInBTxt) btnDualInBTxt.textContent = dualInB === 1 ? "B = 1 (1.0V)" : "B = 0 (0.0V)";
     if (btnDualInABg) {
-      btnDualInABg.setAttribute("fill", dualInA === 1 ? "var(--cyan, #22bfd7)" : "var(--paper-deep, #eee4c8)");
+      btnDualInABg.setAttribute("fill", dualInA === 1 ? "#22bfd7" : "#eee4c8");
     }
     if (btnDualInBBg) {
-      btnDualInBBg.setAttribute("fill", dualInB === 1 ? "var(--cyan, #22bfd7)" : "var(--paper-deep, #eee4c8)");
+      btnDualInBBg.setAttribute("fill", dualInB === 1 ? "#22bfd7" : "#eee4c8");
     }
 
     // Update Presets
@@ -3696,15 +3696,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     const is01 = dualInA === 0 && dualInB === 1;
     const is10 = dualInA === 1 && dualInB === 0;
     const is11 = dualInA === 1 && dualInB === 1;
-    pillDual00?.setAttribute("fill", is00 ? "var(--yellow, #ffc83e)" : "var(--paper-deep, #eee4c8)");
-    pillDual01?.setAttribute("fill", is01 ? "var(--yellow, #ffc83e)" : "var(--paper-deep, #eee4c8)");
-    pillDual10?.setAttribute("fill", is10 ? "var(--yellow, #ffc83e)" : "var(--paper-deep, #eee4c8)");
-    pillDual11?.setAttribute("fill", is11 ? "var(--yellow, #ffc83e)" : "var(--paper-deep, #eee4c8)");
+    pillDual00?.setAttribute("fill", is00 ? "#ffc83e" : "#eee4c8");
+    pillDual01?.setAttribute("fill", is01 ? "#ffc83e" : "#eee4c8");
+    pillDual10?.setAttribute("fill", is10 ? "#ffc83e" : "#eee4c8");
+    pillDual11?.setAttribute("fill", is11 ? "#ffc83e" : "#eee4c8");
 
     // Sizing Mode UI
     const isMatch = dualSizingMode === "MATCH";
-    btnSizingMinBg?.setAttribute("fill", !isMatch ? "var(--yellow, #ffc83e)" : "var(--paper-deep, #eee4c8)");
-    btnSizingMatchBg?.setAttribute("fill", isMatch ? "var(--yellow, #ffc83e)" : "var(--paper-deep, #eee4c8)");
+    btnSizingMinBg?.setAttribute("fill", !isMatch ? "#ffc83e" : "#eee4c8");
+    btnSizingMatchBg?.setAttribute("fill", isMatch ? "#ffc83e" : "#eee4c8");
 
     // 2. Conduction logic
     const nandY = (dualInA === 1 && dualInB === 1) ? 0 : 1;
@@ -3718,59 +3718,59 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
     // --- NAND2 Circuit Updates ---
     if (nandMpA_ch) {
-      nandMpA_ch.setAttribute("stroke", mpA_on ? "var(--lime, #b7df69)" : "#94a3b8");
+      nandMpA_ch.setAttribute("stroke", mpA_on ? "#b7df69" : "#94a3b8");
       nandMpA_ch.setAttribute("stroke-width", mpA_on ? "5" : "2");
       if (mpA_on) nandMpA_ch.removeAttribute("stroke-dasharray");
       else nandMpA_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (nandMpA_badge) {
       nandMpA_badge.textContent = mpA_on ? "ON" : "OFF";
-      nandMpA_badge.setAttribute("fill", mpA_on ? "var(--lime, #b7df69)" : "#94a3b8");
+      nandMpA_badge.setAttribute("fill", mpA_on ? "#b7df69" : "#94a3b8");
     }
 
     if (nandMpB_ch) {
-      nandMpB_ch.setAttribute("stroke", mpB_on ? "var(--lime, #b7df69)" : "#94a3b8");
+      nandMpB_ch.setAttribute("stroke", mpB_on ? "#b7df69" : "#94a3b8");
       nandMpB_ch.setAttribute("stroke-width", mpB_on ? "5" : "2");
       if (mpB_on) nandMpB_ch.removeAttribute("stroke-dasharray");
       else nandMpB_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (nandMpB_badge) {
       nandMpB_badge.textContent = mpB_on ? "ON" : "OFF";
-      nandMpB_badge.setAttribute("fill", mpB_on ? "var(--lime, #b7df69)" : "#94a3b8");
+      nandMpB_badge.setAttribute("fill", mpB_on ? "#b7df69" : "#94a3b8");
     }
 
     if (nandMnA_ch) {
-      nandMnA_ch.setAttribute("stroke", mnA_on ? "var(--cyan, #22bfd7)" : "#94a3b8");
+      nandMnA_ch.setAttribute("stroke", mnA_on ? "#22bfd7" : "#94a3b8");
       nandMnA_ch.setAttribute("stroke-width", mnA_on ? "5" : "2");
       if (mnA_on) nandMnA_ch.removeAttribute("stroke-dasharray");
       else nandMnA_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (nandMnA_badge) {
       nandMnA_badge.textContent = mnA_on ? "ON" : "OFF";
-      nandMnA_badge.setAttribute("fill", mnA_on ? "var(--cyan, #22bfd7)" : "#94a3b8");
+      nandMnA_badge.setAttribute("fill", mnA_on ? "#22bfd7" : "#94a3b8");
     }
 
     if (nandMnB_ch) {
-      nandMnB_ch.setAttribute("stroke", mnB_on ? "var(--cyan, #22bfd7)" : "#94a3b8");
+      nandMnB_ch.setAttribute("stroke", mnB_on ? "#22bfd7" : "#94a3b8");
       nandMnB_ch.setAttribute("stroke-width", mnB_on ? "5" : "2");
       if (mnB_on) nandMnB_ch.removeAttribute("stroke-dasharray");
       else nandMnB_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (nandMnB_badge) {
       nandMnB_badge.textContent = mnB_on ? "ON" : "OFF";
-      nandMnB_badge.setAttribute("fill", mnB_on ? "var(--cyan, #22bfd7)" : "#94a3b8");
+      nandMnB_badge.setAttribute("fill", mnB_on ? "#22bfd7" : "#94a3b8");
     }
 
     // NAND Output & Conduction paths
     if (nandY === 1) {
       if (nandOutLogic) {
         nandOutLogic.textContent = "Y = 1 (1.0V)";
-        nandOutLogic.setAttribute("fill", "var(--lime, #b7df69)");
+        nandOutLogic.setAttribute("fill", "#b7df69");
       }
-      nandOutDot?.setAttribute("fill", "var(--lime, #b7df69)");
-      nandPullUpFlow?.setAttribute("stroke", "var(--lime, #b7df69)");
+      nandOutDot?.setAttribute("fill", "#b7df69");
+      nandPullUpFlow?.setAttribute("stroke", "#b7df69");
       nandPullUpFlow?.setAttribute("stroke-width", "3");
-      nandPullDownFlow?.setAttribute("stroke", "var(--ink, #151b20)");
+      nandPullDownFlow?.setAttribute("stroke", "#151b20");
       nandPullDownFlow?.setAttribute("stroke-width", "1.5");
       if (nandPathTxt) {
         if (is00) {
@@ -3780,22 +3780,22 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         } else {
           nandPathTxt.textContent = "● PATH: MP_B conducting pull-up (Rp ≈ 240 Ω)";
         }
-        nandPathTxt.setAttribute("fill", "var(--lime, #b7df69)");
+        nandPathTxt.setAttribute("fill", "#b7df69");
       }
       if (nandDelayTxt) nandDelayTxt.textContent = "Delay: tr = 18 ps (Fast parallel pull-up)";
     } else {
       if (nandOutLogic) {
         nandOutLogic.textContent = "Y = 0 (0.0V)";
-        nandOutLogic.setAttribute("fill", "var(--cyan, #22bfd7)");
+        nandOutLogic.setAttribute("fill", "#22bfd7");
       }
-      nandOutDot?.setAttribute("fill", "var(--cyan, #22bfd7)");
-      nandPullUpFlow?.setAttribute("stroke", "var(--ink, #151b20)");
+      nandOutDot?.setAttribute("fill", "#22bfd7");
+      nandPullUpFlow?.setAttribute("stroke", "#151b20");
       nandPullUpFlow?.setAttribute("stroke-width", "1.5");
-      nandPullDownFlow?.setAttribute("stroke", "var(--cyan, #22bfd7)");
+      nandPullDownFlow?.setAttribute("stroke", "#22bfd7");
       nandPullDownFlow?.setAttribute("stroke-width", "3");
       if (nandPathTxt) {
         nandPathTxt.textContent = "● PATH: MN_A + MN_B in series (2·Rn ≈ 210 Ω)";
-        nandPathTxt.setAttribute("fill", "var(--cyan, #22bfd7)");
+        nandPathTxt.setAttribute("fill", "#22bfd7");
       }
       if (nandDelayTxt) nandDelayTxt.textContent = "Delay: tf = 17 ps (Fast electron stack)";
     }
@@ -3803,67 +3803,67 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     // --- NOR2 Circuit Updates ---
     const norWpWidth = isMatch ? "8" : "4";
     if (norMpA_ch) {
-      norMpA_ch.setAttribute("stroke", mpA_on ? "var(--coral, #f38469)" : "#94a3b8");
+      norMpA_ch.setAttribute("stroke", mpA_on ? "#f38469" : "#94a3b8");
       norMpA_ch.setAttribute("stroke-width", mpA_on ? norWpWidth : "2");
       if (mpA_on) norMpA_ch.removeAttribute("stroke-dasharray");
       else norMpA_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (norMpA_badge) {
       norMpA_badge.textContent = mpA_on ? (isMatch ? "ON (4x)" : "ON (1x)") : "OFF";
-      norMpA_badge.setAttribute("fill", mpA_on ? "var(--coral, #f38469)" : "#94a3b8");
+      norMpA_badge.setAttribute("fill", mpA_on ? "#f38469" : "#94a3b8");
     }
 
     if (norMpB_ch) {
-      norMpB_ch.setAttribute("stroke", mpB_on ? "var(--coral, #f38469)" : "#94a3b8");
+      norMpB_ch.setAttribute("stroke", mpB_on ? "#f38469" : "#94a3b8");
       norMpB_ch.setAttribute("stroke-width", mpB_on ? norWpWidth : "2");
       if (mpB_on) norMpB_ch.removeAttribute("stroke-dasharray");
       else norMpB_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (norMpB_badge) {
       norMpB_badge.textContent = mpB_on ? (isMatch ? "ON (4x)" : "ON (1x)") : "OFF";
-      norMpB_badge.setAttribute("fill", mpB_on ? "var(--coral, #f38469)" : "#94a3b8");
+      norMpB_badge.setAttribute("fill", mpB_on ? "#f38469" : "#94a3b8");
     }
 
     if (norMnA_ch) {
-      norMnA_ch.setAttribute("stroke", mnA_on ? "var(--cyan, #22bfd7)" : "#94a3b8");
+      norMnA_ch.setAttribute("stroke", mnA_on ? "#22bfd7" : "#94a3b8");
       norMnA_ch.setAttribute("stroke-width", mnA_on ? "4.5" : "2");
       if (mnA_on) norMnA_ch.removeAttribute("stroke-dasharray");
       else norMnA_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (norMnA_badge) {
       norMnA_badge.textContent = mnA_on ? "ON" : "OFF";
-      norMnA_badge.setAttribute("fill", mnA_on ? "var(--cyan, #22bfd7)" : "#94a3b8");
+      norMnA_badge.setAttribute("fill", mnA_on ? "#22bfd7" : "#94a3b8");
     }
 
     if (norMnB_ch) {
-      norMnB_ch.setAttribute("stroke", mnB_on ? "var(--cyan, #22bfd7)" : "#94a3b8");
+      norMnB_ch.setAttribute("stroke", mnB_on ? "#22bfd7" : "#94a3b8");
       norMnB_ch.setAttribute("stroke-width", mnB_on ? "4.5" : "2");
       if (mnB_on) norMnB_ch.removeAttribute("stroke-dasharray");
       else norMnB_ch.setAttribute("stroke-dasharray", "3 2");
     }
     if (norMnB_badge) {
       norMnB_badge.textContent = mnB_on ? "ON" : "OFF";
-      norMnB_badge.setAttribute("fill", mnB_on ? "var(--cyan, #22bfd7)" : "#94a3b8");
+      norMnB_badge.setAttribute("fill", mnB_on ? "#22bfd7" : "#94a3b8");
     }
 
     // NOR Output & Conduction paths
     if (norY === 1) {
       if (norOutLogic) {
         norOutLogic.textContent = "Y = 1 (1.0V)";
-        norOutLogic.setAttribute("fill", "var(--coral, #f38469)");
+        norOutLogic.setAttribute("fill", "#f38469");
       }
-      norOutDot?.setAttribute("fill", "var(--coral, #f38469)");
-      norPullUpFlow?.setAttribute("stroke", "var(--coral, #f38469)");
+      norOutDot?.setAttribute("fill", "#f38469");
+      norPullUpFlow?.setAttribute("stroke", "#f38469");
       norPullUpFlow?.setAttribute("stroke-width", "3");
-      norPullDownFlow?.setAttribute("stroke", "var(--ink, #151b20)");
+      norPullDownFlow?.setAttribute("stroke", "#151b20");
       norPullDownFlow?.setAttribute("stroke-width", "1.5");
       if (norPathTxt) {
         if (isMatch) {
           norPathTxt.textContent = "● PATH: MP_A + MP_B Series (Wp=4x → 120 Ω)";
-          norPathTxt.setAttribute("fill", "var(--yellow, #ffc83e)");
+          norPathTxt.setAttribute("fill", "#ffc83e");
         } else {
           norPathTxt.textContent = "● PATH: MP_A + MP_B Series Stack (2·Rp ≈ 480 Ω!)";
-          norPathTxt.setAttribute("fill", "var(--coral, #f38469)");
+          norPathTxt.setAttribute("fill", "#f38469");
         }
       }
       if (norDelayTxt) {
@@ -3876,12 +3876,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     } else {
       if (norOutLogic) {
         norOutLogic.textContent = "Y = 0 (0.0V)";
-        norOutLogic.setAttribute("fill", "var(--cyan, #22bfd7)");
+        norOutLogic.setAttribute("fill", "#22bfd7");
       }
-      norOutDot?.setAttribute("fill", "var(--cyan, #22bfd7)");
-      norPullUpFlow?.setAttribute("stroke", "var(--ink, #151b20)");
+      norOutDot?.setAttribute("fill", "#22bfd7");
+      norPullUpFlow?.setAttribute("stroke", "#151b20");
       norPullUpFlow?.setAttribute("stroke-width", "1.5");
-      norPullDownFlow?.setAttribute("stroke", "var(--cyan, #22bfd7)");
+      norPullDownFlow?.setAttribute("stroke", "#22bfd7");
       norPullDownFlow?.setAttribute("stroke-width", "3");
       if (norPathTxt) {
         if (is11) {
@@ -3889,7 +3889,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         } else {
           norPathTxt.textContent = "● PATH: Single nMOS pull-down (Rn ≈ 105 Ω)";
         }
-        norPathTxt.setAttribute("fill", "var(--cyan, #22bfd7)");
+        norPathTxt.setAttribute("fill", "#22bfd7");
       }
       if (norDelayTxt) norDelayTxt.textContent = "Delay: tf = 14 ps (Fast parallel pull-down)";
     }
@@ -3898,12 +3898,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     if (norGeTxt && norCapTxt && norSizingNote) {
       if (isMatch) {
         norGeTxt.textContent = "Silicon Area: 1.67 GE (+67% Area Penalty!)";
-        norGeTxt.setAttribute("fill", "var(--coral, #f38469)");
+        norGeTxt.setAttribute("fill", "#f38469");
         norCapTxt.textContent = "Input Capacitance: Cin = 6.0 fF (+100% Load Penalty!)";
         norSizingNote.textContent = "• Sized Wp = 4λ: tr matched to 18ps, but +67% area & 2x Cin!";
       } else {
         norGeTxt.textContent = "Silicon Area: 1.00 GE (Standard footprint, slow tr)";
-        norGeTxt.setAttribute("fill", "var(--ink, #151b20)");
+        norGeTxt.setAttribute("fill", "#151b20");
         norCapTxt.textContent = "Input Capacitance: Cin = 3.0 fF (Min sizing)";
         norSizingNote.textContent = "• Min Wp = 1λ: 1.00 GE, but 2x slower pull-up delay (tr=34ps)!";
       }
