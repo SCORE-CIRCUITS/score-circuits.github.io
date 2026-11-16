@@ -475,7 +475,7 @@ const bespokeDossiers = [
 ];
 '''
 
-DOSSIER_SECTION_TEMPLATE = '''  <!-- SECTION 7: NATIVE DETAILED ARCHITECTURAL DOSSIERS (NO MD LINKS) -->
+DOSSIER_SECTION_TEMPLATE = '''  <!-- SECTION 7: NATIVE DETAILED ARCHITECTURAL DOSSIERS (STRICT TOP-DOWN MOBILE-FRIENDLY) -->
   <section id="core-dossiers" class="dossiers-container">
     <div class="section-title-wrap">
       <div class="badge badge-primary">&sect; 7. NATIVE ARCHITECTURAL SPECIFICATIONS</div>
@@ -511,36 +511,31 @@ DOSSIER_SECTION_TEMPLATE = '''  <!-- SECTION 7: NATIVE DETAILED ARCHITECTURAL DO
           <h3 class="dossier-core-name">{core.name}</h3>
           <p class="dossier-lead">{core.subtitle}</p>
 
-          <!-- Specifications Grid -->
-          <div class="dossier-specs-grid">
-            <div class="ds-col">
-              <table class="ds-table">
-                <tbody>
-                  <tr><th>Target ISA:</th><td><code>{core.isa}</code></td></tr>
-                  <tr><th>Bus Interface:</th><td>{core.bus}</td></tr>
-                  <tr><th>Silicon Area:</th><td><strong>{core.area}</strong></td></tr>
-                  <tr><th>Target Fmax:</th><td>{core.fmax}</td></tr>
-                </tbody>
-              </table>
+          <!-- Specifications & Empirical Benchmarks (Top-Down Card) -->
+          <div class="dossier-specs-stack">
+            <div class="ds-stack-header">
+              <span class="ds-stack-title">&#128203; Microarchitectural Specifications &amp; Verified Benchmarks</span>
             </div>
-            <div class="ds-col">
-              <table class="ds-table">
-                <tbody>
-                  <tr><th>Measured CoreMark:</th><td><span class="score-badge">{core.measuredCoremark}</span></td></tr>
-                  <tr><th>Measured Dhrystone:</th><td>{core.measuredDhrystone}</td></tr>
-                  <tr><th>Silicon Evidence:</th><td>{core.siliconEvidence}</td></tr>
-                  <tr><th>Verification Rigor:</th><td>{core.verificationRigor}</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <table class="ds-table">
+              <tbody>
+                <tr><th>Target ISA:</th><td><code>{core.isa}</code></td></tr>
+                <tr><th>Bus Interface:</th><td>{core.bus}</td></tr>
+                <tr><th>Silicon Area:</th><td><strong>{core.area}</strong></td></tr>
+                <tr><th>Target Fmax:</th><td>{core.fmax}</td></tr>
+                <tr><th>Measured CoreMark:</th><td><span class="score-badge">{core.measuredCoremark}</span></td></tr>
+                <tr><th>Measured Dhrystone:</th><td>{core.measuredDhrystone}</td></tr>
+                <tr><th>Silicon Evidence:</th><td>{core.siliconEvidence}</td></tr>
+                <tr><th>Verification Rigor:</th><td>{core.verificationRigor}</td></tr>
+              </tbody>
+            </table>
           </div>
 
-          <!-- Deep Microarchitectural Breakdown Grid -->
-          <div class="dossier-deep-grid">
+          <!-- Deep Microarchitectural Breakdown Stack (Top-Down Flow) -->
+          <div class="dossier-deep-stack">
             <div class="deep-card">
               <div class="deep-card-header">
                 <span class="deep-icon">&#9881;</span>
-                <span class="deep-title">Pipeline &amp; Datapath Topology</span>
+                <span class="deep-title">1. Pipeline &amp; Datapath Topology</span>
               </div>
               <p class="deep-desc">{core.pipelineDeepDive}</p>
             </div>
@@ -548,7 +543,7 @@ DOSSIER_SECTION_TEMPLATE = '''  <!-- SECTION 7: NATIVE DETAILED ARCHITECTURAL DO
             <div class="deep-card">
               <div class="deep-card-header">
                 <span class="deep-icon">&#128256;</span>
-                <span class="deep-title">Branch Resolution &amp; Prediction</span>
+                <span class="deep-title">2. Branch Resolution &amp; Prediction Strategy</span>
               </div>
               <p class="deep-desc">{core.branchArch}</p>
             </div>
@@ -556,7 +551,7 @@ DOSSIER_SECTION_TEMPLATE = '''  <!-- SECTION 7: NATIVE DETAILED ARCHITECTURAL DO
             <div class="deep-card">
               <div class="deep-card-header">
                 <span class="deep-icon">&#128421;</span>
-                <span class="deep-title">Memory Subsystem &amp; Caches</span>
+                <span class="deep-title">3. Memory Subsystem, Interconnect &amp; Caches</span>
               </div>
               <p class="deep-desc">{core.memSubsystem}</p>
             </div>
@@ -564,7 +559,7 @@ DOSSIER_SECTION_TEMPLATE = '''  <!-- SECTION 7: NATIVE DETAILED ARCHITECTURAL DO
             <div class="deep-card">
               <div class="deep-card-header">
                 <span class="deep-icon">&#128737;</span>
-                <span class="deep-title">Interrupts, Privilege &amp; Security</span>
+                <span class="deep-title">4. Interrupts, Privilege Modes &amp; Silicon Security</span>
               </div>
               <p class="deep-desc">{core.privAndSecurity}</p>
             </div>
@@ -609,8 +604,8 @@ DOSSIER_SECTION_TEMPLATE = '''  <!-- SECTION 7: NATIVE DETAILED ARCHITECTURAL DO
             </div>
           )}
 
-          <!-- Architectural Assessment (Strengths & Trade-offs) -->
-          <div class="dossier-assessment-grid">
+          <!-- Architectural Assessment (Strengths & Trade-offs Stack) -->
+          <div class="dossier-assessment-stack">
             <div class="assess-item strength">
               <strong>&#10003; Architectural Strengths:</strong> {core.strengths}
             </div>
@@ -624,11 +619,39 @@ DOSSIER_SECTION_TEMPLATE = '''  <!-- SECTION 7: NATIVE DETAILED ARCHITECTURAL DO
   </section>
 '''
 
-DOSSIER_EXTRA_STYLES = '''  /* Expanded Deep Dossier Cards & Manifest Tables */
-  .dossier-deep-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+DOSSIER_EXTRA_STYLES = '''  /* Expanded Deep Dossier Cards & Manifest Tables (Strict Top-Down Mobile Friendly) */
+  .dossier-specs-stack {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--paper, #fffaf0);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    box-sizing: border-box;
+  }
+
+  .ds-stack-header {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1.5px dashed var(--line, #eee4c8);
+  }
+
+  .ds-stack-title {
+    font-size: 0.92rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .dossier-deep-stack {
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
+    width: 100%;
     margin-bottom: 1.25rem;
   }
 
@@ -636,11 +659,13 @@ DOSSIER_EXTRA_STYLES = '''  /* Expanded Deep Dossier Cards & Manifest Tables */
     background: #ffffff;
     border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
-    padding: 1.15rem;
+    padding: 1.15rem 1.25rem;
     box-shadow: 3px 3px 0 var(--ink, #151b20);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .deep-card-header {
@@ -664,7 +689,7 @@ DOSSIER_EXTRA_STYLES = '''  /* Expanded Deep Dossier Cards & Manifest Tables */
 
   .deep-desc {
     font-size: 0.88rem;
-    line-height: 1.55;
+    line-height: 1.6;
     color: #242c33;
     margin: 0;
   }
@@ -677,6 +702,8 @@ DOSSIER_EXTRA_STYLES = '''  /* Expanded Deep Dossier Cards & Manifest Tables */
     padding: 1rem 1.25rem;
     margin-bottom: 1.25rem;
     box-shadow: 3px 3px 0 var(--ink, #151b20);
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .coproc-header {
@@ -693,7 +720,7 @@ DOSSIER_EXTRA_STYLES = '''  /* Expanded Deep Dossier Cards & Manifest Tables */
 
   .coproc-desc {
     font-size: 0.88rem;
-    line-height: 1.55;
+    line-height: 1.6;
     color: #242c33;
     margin: 0;
   }
@@ -702,9 +729,11 @@ DOSSIER_EXTRA_STYLES = '''  /* Expanded Deep Dossier Cards & Manifest Tables */
     background: #ffffff;
     border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
-    padding: 1.15rem;
+    padding: 1.15rem 1.25rem;
     margin-bottom: 1.25rem;
     box-shadow: 3px 3px 0 var(--ink, #151b20);
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .params-header {
@@ -726,7 +755,7 @@ DOSSIER_EXTRA_STYLES = '''  /* Expanded Deep Dossier Cards & Manifest Tables */
   }
 
   .rtl-params-table th, .rtl-params-table td {
-    padding: 0.45rem 0.65rem;
+    padding: 0.5rem 0.65rem;
     border: 1px solid #d1d5db;
     text-align: left;
   }
@@ -763,10 +792,29 @@ DOSSIER_EXTRA_STYLES = '''  /* Expanded Deep Dossier Cards & Manifest Tables */
     border: 1px solid #cbd5e1;
   }
 
-  @media (max-width: 768px) {
-    .dossier-deep-grid {
-      grid-template-columns: 1fr;
-    }
+  .dossier-assessment-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    width: 100%;
+    margin-bottom: 1.25rem;
+  }
+
+  .assess-item {
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  /* Responsive Table Wrapper */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 '''
 
@@ -813,3 +861,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
