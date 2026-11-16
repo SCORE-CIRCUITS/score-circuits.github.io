@@ -4694,22 +4694,19 @@ const bespokeDossiers = [
                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
                   </marker>
                   <marker id="arrowBlueVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#22bfd7"/>
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
                   </marker>
                   <marker id="arrowRedVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#f38469"/>
-                  </marker>
-                  <marker id="arrowCrimsonVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#f38469"/>
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
                   </marker>
                   <marker id="arrowGoldVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#ffc83e"/>
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706"/>
                   </marker>
                   <marker id="arrowTealVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                     <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
                   </marker>
                   <marker id="arrowPurpleVeer" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#8275e8"/>
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
                   </marker>
                 </defs>
 
@@ -4719,54 +4716,67 @@ const bespokeDossiers = [
 
                 <!-- Status Header Banner -->
                 <rect x="2" y="2" width="956" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
-                <circle cx="16" cy="15" r="4.5" fill="#ffc83e"/>
-                <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH &#8226; VEER EL2 4-STAGE DUAL-ISSUE SUPERSCALAR ARCHITECTURE (WESTERN DIGITAL / CHIPS ALLIANCE)</text>
+                <circle cx="16" cy="15" r="4.5" fill="#d97706"/>
+                <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • VEER EL2 4-STAGE DUAL-ISSUE SUPERSCALAR ARCHITECTURE (WD / CHIPS ALLIANCE)</text>
 
                 <!-- ============================================================ -->
                 <!-- TOP DEDICATED CONTROL REDIRECTION HIGHWAYS -->
                 <!-- ============================================================ -->
-                <!-- Highway 1 (y=44): Branch Mispredict Flush Loop (Crimson) -->
-                <!-- Originates at BRU illuminated terminal chip (672, 120), rises to y=44, runs west to x=24, enters PC Mux [1] and Flush Queue -->
-                <path d="M 672 120 L 672 44 L 24 44 L 24 195 L 38 195" fill="none" stroke="#f38469" stroke-width="2" marker-end="url(#arrowCrimsonVeer)"/>
+                <!-- Highway 1 (y=44): Branch Mispredict Flush & Redirect Loop (Crimson) -->
+                <!-- Originates at BRU chip ▲ BR_MISP at (635, 104), rises to y=44, runs west to x=14, enters PC Mux [1] -->
+                <path d="M 635 104 L 635 44 L 14 44 L 14 195 L 38 195" fill="none" stroke="#dc2626" stroke-width="2.2" marker-end="url(#arrowRedVeer)"/>
                 <!-- Branch to Flush Instruction Buffer -->
-                <path d="M 120 44 L 120 260" fill="none" stroke="#f38469" stroke-width="1.6" stroke-dasharray="3,3" marker-end="url(#arrowCrimsonVeer)"/>
-                <polygon points="530,41 524,44 530,47" fill="#f38469"/>
-                <polygon points="360,41 354,44 360,47" fill="#f38469"/>
-                <polygon points="190,41 184,44 190,47" fill="#f38469"/>
-                <rect x="170" y="35" width="410" height="18" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.2"/>
-                <circle cx="180" cy="44" r="3.5" fill="#f38469"/>
-                <text x="188" y="47.5" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">BRANCH MISPREDICT FLUSH: [FROM EX1 BRU] &#8594; FETCH &amp; DISPATCH QUEUE &#8226; 3-Cycle Pipeline Rollback</text>
+                <path d="M 115 44 L 115 262" fill="none" stroke="#dc2626" stroke-width="1.6" stroke-dasharray="3,3" marker-end="url(#arrowRedVeer)"/>
+                <polygon points="530,41 524,44 530,47" fill="#dc2626"/>
+                <polygon points="360,41 354,44 360,47" fill="#dc2626"/>
+                <polygon points="190,41 184,44 190,47" fill="#dc2626"/>
+                <!-- Callout Banner -->
+                <rect x="140" y="35" width="410" height="18" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
+                <circle cx="150" cy="44" r="3.5" fill="#dc2626"/>
+                <text x="160" y="47.5" font-size="7.2" font-weight="900" fill="#dc2626" font-family="monospace">BRANCH MISPREDICT FLUSH: [FROM EX1 BRU] → PC MUX [1] &amp; FETCH QUEUE • 3-Cycle Rollback</text>
 
-                <!-- Highway 2 (y=70): Dynamic Gshare & BTB Update Highway (Gold/Amber) -->
-                <!-- Originates at BRU illuminated terminal chip (775, 120), rises to y=70, runs west to x=140 into 512-Entry BTB -->
-                <path d="M 775 120 L 775 70 L 140 70 L 140 130" fill="none" stroke="#ffc83e" stroke-width="1.8" marker-end="url(#arrowGoldVeer)"/>
-                <polygon points="500,67 494,70 500,73" fill="#ffc83e"/>
-                <polygon points="340,67 334,70 340,73" fill="#ffc83e"/>
-                <polygon points="220,67 214,70 220,73" fill="#ffc83e"/>
-                <rect x="130" y="61" width="430" height="18" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.2"/>
-                <circle cx="140" cy="70" r="3.5" fill="#ffc83e"/>
-                <text x="148" y="73.5" font-size="7.2" font-weight="900" fill="#ffc83e" font-family="monospace">DYNAMIC GSHARE &amp; BTB UPDATE: [FROM EX1 BRU] &#8594; 512-ENTRY BTB &#8226; 2-Bit Saturating History (&gt;94% Acc)</text>
+                <!-- Highway 2 (y=68): Trap Vector Redirection (Purple) -->
+                <!-- Originates at Privileged CSR chip ▲ MTVEC at (695, 104), rises to y=68, runs west to x=24, enters PC Mux [2] -->
+                <path d="M 695 104 L 695 68 L 24 68 L 24 220 L 38 220" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowPurpleVeer)"/>
+                <polygon points="550,65 544,68 550,71" fill="#7c3aed"/>
+                <polygon points="380,65 374,68 380,71" fill="#7c3aed"/>
+                <polygon points="210,65 204,68 210,71" fill="#7c3aed"/>
+                <!-- Callout Banner -->
+                <rect x="130" y="59" width="370" height="18" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
+                <circle cx="140" cy="68" r="3.5" fill="#7c3aed"/>
+                <text x="150" y="71.5" font-size="6.8" font-weight="900" fill="#7c3aed" font-family="monospace">TRAP REDIRECT: [FROM CSR CTRL: mtvec BASE] → PC MUX [2] • Fast Exception Vector</text>
+
+                <!-- Highway 3 (y=88): Dynamic Gshare & BTB Update Highway (Gold/Amber) -->
+                <!-- Originates at BRU chip ▲ BTB_UPD at (665, 104), rises to y=88, runs west to x=175 into 512-Entry BTB -->
+                <path d="M 665 104 L 665 88 L 175 88 L 175 125" fill="none" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowGoldVeer)"/>
+                <polygon points="500,85 494,88 500,91" fill="#d97706"/>
+                <polygon points="340,85 334,88 340,91" fill="#d97706"/>
+                <polygon points="230,85 224,88 230,91" fill="#d97706"/>
+                <!-- Callout Banner -->
+                <rect x="200" y="79" width="410" height="18" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+                <circle cx="210" cy="88" r="3.5" fill="#d97706"/>
+                <text x="218" y="91.5" font-size="7" font-weight="900" fill="#d97706" font-family="monospace">DYNAMIC GSHARE &amp; BTB UPDATE: [FROM EX1 BRU] → 512-ENTRY BTB • 2-Bit Saturating History (&gt;94% Acc)</text>
 
                 <!-- ============================================================ -->
-                <!-- PIPELINE STAGE ZONE HEADERS -->
+                <!-- PIPELINE STAGE ZONE HEADERS (y=96) -->
                 <!-- ============================================================ -->
-                <rect x="25" y="96" width="200" height="18" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-dasharray="2,2"/>
-                <text x="40" y="108" font-size="8.5" font-weight="900" fill="#ffc83e" font-family="monospace">STAGE 1: 64b DUAL FETCH (IF)</text>
+                <rect x="25" y="96" width="200" height="18" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-dasharray="2,2"/>
+                <text x="40" y="108.5" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace">STAGE 1: 64b DUAL FETCH (IF)</text>
 
                 <rect x="230" y="96" width="20" height="18" rx="3" fill="#eee4c8" stroke="#242c33"/>
-                <text x="233" y="108" font-size="7" font-weight="900" fill="#242c33" font-family="monospace">L1</text>
+                <text x="233" y="108.5" font-size="7.5" font-weight="900" fill="#242c33" font-family="monospace">L1</text>
 
-                <rect x="255" y="96" width="230" height="18" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-dasharray="2,2"/>
-                <text x="272" y="108" font-size="8.5" font-weight="900" fill="#ffc83e" font-family="monospace">STAGE 2: DUAL DECODE &amp; DISPATCH (ID)</text>
+                <rect x="255" y="96" width="230" height="18" rx="4" fill="#fef3c7" stroke="#d97706" stroke-dasharray="2,2"/>
+                <text x="272" y="108.5" font-size="8.5" font-weight="900" fill="#d97706" font-family="monospace">STAGE 2: DUAL DECODE &amp; DISPATCH (ID)</text>
 
                 <rect x="490" y="96" width="20" height="18" rx="3" fill="#eee4c8" stroke="#242c33"/>
-                <text x="493" y="108" font-size="7" font-weight="900" fill="#242c33" font-family="monospace">L2</text>
+                <text x="493" y="108.5" font-size="7.5" font-weight="900" fill="#242c33" font-family="monospace">L2</text>
 
-                <rect x="515" y="96" width="215" height="18" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-dasharray="2,2"/>
-                <text x="530" y="108" font-size="8.5" font-weight="900" fill="#ffc83e" font-family="monospace">STAGE 3: PARALLEL PIPES (EX1)</text>
+                <rect x="515" y="96" width="210" height="18" rx="4" fill="#f3e8ff" stroke="#7c3aed" stroke-dasharray="2,2"/>
+                <text x="535" y="108.5" font-size="8.5" font-weight="900" fill="#7c3aed" font-family="monospace">STAGE 3: PARALLEL PIPES (EX1)</text>
 
-                <rect x="735" y="96" width="205" height="18" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-dasharray="2,2"/>
-                <text x="748" y="108" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">STAGE 4: DUAL COMMIT &amp; DCCM (WB)</text>
+                <rect x="730" y="96" width="205" height="18" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-dasharray="2,2"/>
+                <text x="745" y="108.5" font-size="8.5" font-weight="900" fill="#0d9488" font-family="monospace">STAGE 4: DUAL COMMIT &amp; DCCM (WB)</text>
 
                 <!-- ============================================================ -->
                 <!-- STAGE 1: 64-BIT DUAL INSTRUCTION FETCH (IF) -->
@@ -4774,12 +4784,12 @@ const bespokeDossiers = [
                 <!-- Dual Next PC Mux -->
                 <polygon points="38,150 64,160 64,235 38,245" fill="#eee4c8" stroke="#151b20" stroke-width="2"/>
                 <text x="51" y="193" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">PC<tspan x="51" dy="8">MUX</tspan></text>
-                <circle cx="38" cy="170" r="2.5" fill="#22bfd7"/>
-                <text x="42" y="169" font-size="6.5" font-weight="900" fill="#22bfd7" font-family="monospace">[0]</text>
-                <circle cx="38" cy="195" r="2.5" fill="#f38469"/>
-                <text x="42" y="191" font-size="6.5" font-weight="900" fill="#f38469" font-family="monospace">[1]</text>
-                <circle cx="38" cy="220" r="2.5" fill="#ffc83e"/>
-                <text x="42" y="217" font-size="6.5" font-weight="900" fill="#ffc83e" font-family="monospace">[2]</text>
+                <circle cx="38" cy="170" r="2.5" fill="#0284c7"/>
+                <text x="42" y="169" font-size="6.5" font-weight="900" fill="#0284c7" font-family="monospace">[0]</text>
+                <circle cx="38" cy="195" r="2.5" fill="#dc2626"/>
+                <text x="42" y="191" font-size="6.5" font-weight="900" fill="#dc2626" font-family="monospace">[1]</text>
+                <circle cx="38" cy="220" r="2.5" fill="#7c3aed"/>
+                <text x="42" y="217" font-size="6.5" font-weight="900" fill="#7c3aed" font-family="monospace">[2]</text>
 
                 <!-- PC Mux to PC Register -->
                 <line x1="64" y1="195" x2="76" y2="195" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVeer)"/>
@@ -4792,227 +4802,291 @@ const bespokeDossiers = [
                 <text x="80" y="213" font-size="6.8" fill="#242c33">Clocked</text>
 
                 <!-- Dual Word Incrementer (+8 / +4) -->
-                <path d="M 102 165 L 102 135 L 52 135 L 52 165" fill="none" stroke="#22bfd7" stroke-width="1.6" marker-end="url(#arrowBlueVeer)"/>
-                <rect x="62" y="128" width="30" height="14" rx="2" fill="#c9f3f4" stroke="#22bfd7" stroke-width="0.8"/>
-                <text x="66" y="138" font-size="6.5" font-weight="900" fill="#22bfd7" font-family="monospace">+8 / +4</text>
+                <path d="M 102 165 L 102 135 L 52 135 L 52 165" fill="none" stroke="#0284c7" stroke-width="1.6" marker-end="url(#arrowBlueVeer)"/>
+                <rect x="62" y="128" width="30" height="14" rx="2" fill="#e0f2fe" stroke="#0284c7" stroke-width="0.8"/>
+                <text x="66" y="138" font-size="6.5" font-weight="900" fill="#0284c7" font-family="monospace">+8 / +4</text>
 
                 <!-- 512-Entry BTB & Dynamic Gshare BHT -->
-                <rect x="134" y="130" width="92" height="60" rx="5" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.8"/>
-                <rect x="134" y="130" width="92" height="15" rx="4" fill="#fff0b9"/>
-                <text x="138" y="141" font-size="7" font-weight="900" fill="#ffc83e" font-family="monospace">512-ENTRY BTB</text>
-                <text x="138" y="155" font-size="6.8" font-weight="800" fill="#151b20">Gshare Predictor</text>
-                <text x="138" y="166" font-size="6.2" fill="#242c33">&#8226; 2-bit Saturating BHT</text>
-                <text x="138" y="176" font-size="6.2" fill="#242c33">&#8226; Target Address Cache</text>
-                <text x="138" y="186" font-size="6.2" font-weight="800" fill="#ffc83e">&#8226; &gt;94% Accuracy</text>
+                <rect x="134" y="125" width="92" height="65" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.8"/>
+                <rect x="134" y="125" width="92" height="15" rx="4" fill="#fef3c7"/>
+                <text x="138" y="136" font-size="7" font-weight="900" fill="#d97706" font-family="monospace">512-ENTRY BTB</text>
+                <text x="138" y="150" font-size="6.8" font-weight="800" fill="#151b20">Gshare Predictor</text>
+                <text x="138" y="161" font-size="6.2" fill="#242c33">• 2-bit Saturating BHT</text>
+                <text x="138" y="171" font-size="6.2" fill="#242c33">• Target Address Cache</text>
+                <text x="138" y="181" font-size="6.2" font-weight="800" fill="#d97706">• &gt;94% Accuracy</text>
 
                 <!-- 64-Bit Tightly-Coupled Instruction Memory (ICCM) -->
                 <rect x="134" y="196" width="92" height="60" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
                 <rect x="134" y="196" width="92" height="16" rx="4" fill="#ccfbf1"/>
                 <text x="138" y="208" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">64-BIT ICCM SRAM</text>
                 <text x="138" y="222" font-size="6.8" font-weight="800" fill="#151b20">Dual-Port 64b SRAM</text>
-                <text x="138" y="233" font-size="6.2" fill="#242c33">&#8226; Fetches 2x32b instrs</text>
-                <text x="138" y="244" font-size="6.2" fill="#242c33">&#8226; or up to 4x16b RVC</text>
+                <text x="138" y="233" font-size="6.2" fill="#242c33">• Fetches 2x32b instrs</text>
+                <text x="138" y="244" font-size="6.2" fill="#242c33">• or up to 4x16b RVC</text>
 
                 <!-- PC to ICCM -->
                 <line x1="128" y1="195" x2="134" y2="195" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVeer)"/>
 
                 <!-- 8-Entry Instruction Fetch Queue (FIFO) & RVC Expander -->
-                <rect x="25" y="260" width="200" height="106" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
-                <rect x="25" y="260" width="200" height="18" rx="5" fill="#eee4c8"/>
-                <text x="32" y="273" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">INSTRUCTION BUFFER &amp; RVC EXPANDER</text>
+                <rect x="25" y="262" width="200" height="106" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+                <rect x="25" y="262" width="200" height="18" rx="5" fill="#eee4c8"/>
+                <text x="32" y="275" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">INSTRUCTION BUFFER &amp; RVC EXPANDER</text>
 
-                <text x="32" y="292" font-size="7.5" font-weight="800" fill="#151b20">8-Entry Instruction FIFO Queue:</text>
-                <text x="32" y="304" font-size="7" fill="#242c33">&#8226; Re-aligns unaligned instructions across 64-bit boundaries</text>
-                <text x="32" y="316" font-size="7" fill="#242c33">&#8226; Decompresses RVC 16-bit into 32-bit RV32I on the fly</text>
-                <text x="32" y="328" font-size="7" font-weight="800" fill="#ffc83e">&#8226; Delivers aligned Instruction 0 &amp; Instruction 1 pair</text>
+                <text x="32" y="294" font-size="7.5" font-weight="800" fill="#151b20">8-Entry Instruction FIFO Queue:</text>
+                <text x="32" y="306" font-size="7" fill="#242c33">• Re-aligns unaligned instructions across 64b boundary</text>
+                <text x="32" y="318" font-size="7" fill="#242c33">• Decompresses RVC 16-bit into 32-bit RV32I on the fly</text>
+                <text x="32" y="330" font-size="7" font-weight="800" fill="#d97706">• Delivers aligned Instruction 0 &amp; Instruction 1 pair</text>
 
-                <rect x="30" y="336" width="190" height="24" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1"/>
-                <text x="34" y="347" font-size="6.5" font-weight="800" fill="#ffc83e">Sustains dual-issue feed even through branch targets</text>
-                <text x="34" y="356" font-size="6.2" fill="#242c33">Decoupled Fetch isolates memory bubbles from execution</text>
+                <rect x="30" y="338" width="190" height="24" rx="3" fill="#fffaf0" stroke="#d97706" stroke-width="1"/>
+                <text x="34" y="349" font-size="6.5" font-weight="800" fill="#d97706">Sustains dual-issue feed even through branch targets</text>
+                <text x="34" y="358" font-size="6.2" fill="#242c33">Decoupled Fetch isolates memory bubbles from execution</text>
 
-                <path d="M 180 256 L 180 260" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowVeer)"/>
+                <path d="M 180 256 L 180 262" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowVeer)"/>
 
                 <!-- External AXI Instruction Interface Pins (Left Edge) -->
-                <line x1="25" y1="285" x2="6" y2="285" stroke="#ffc83e" stroke-width="2"/>
-                <rect x="6" y="277" width="16" height="16" rx="2" fill="#fff0b9" stroke="#ffc83e"/>
-                <line x1="25" y1="315" x2="6" y2="315" stroke="#ffc83e" stroke-width="2"/>
-                <rect x="6" y="307" width="16" height="16" rx="2" fill="#fff0b9" stroke="#ffc83e"/>
-                <text x="10" y="270" font-size="6.5" font-weight="900" fill="#ffc83e" font-family="monospace">AXI_ICCM</text>
-                <text x="10" y="332" font-size="5.8" fill="#242c33" font-family="monospace">(Off-Chip)</text>
+                <rect x="4" y="304" width="21" height="18" rx="2" fill="#0d9488" stroke="#042f2e" stroke-width="1"/>
+                <text x="14.5" y="316" font-size="6.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">AXI_I◄</text>
+                <line x1="25" y1="313" x2="4" y2="313" stroke="#0d9488" stroke-width="2"/>
 
                 <!-- ============================================================ -->
-                <!-- PIPELINE LATCH 1: IF / ID REGISTER -->
+                <!-- PIPELINE LATCH 1: IF / ID REGISTER (L1) -->
                 <!-- ============================================================ -->
-                <rect x="225" y="90" width="20" height="280" rx="4" fill="#eee4c8" stroke="#242c33" stroke-width="1.8"/>
-                <line x1="228" y1="230" x2="235" y2="235" stroke="#242c33" stroke-width="1.5"/>
-                <line x1="235" y1="235" x2="242" y2="230" stroke="#242c33" stroke-width="1.5"/>
-                <text x="232" y="160" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" transform="rotate(-90 232 160)">IF/ID LATCH (64b)</text>
-                <text x="232" y="340" font-size="6.8" font-weight="800" fill="#242c33" font-family="monospace" transform="rotate(-90 232 340)">Inst 0 [31:0] • Inst 1 [31:0]</text>
+                <rect x="230" y="122" width="20" height="246" rx="4" fill="#eee4c8" stroke="#242c33" stroke-width="1.8"/>
+                <line x1="233" y1="246" x2="240" y2="251" stroke="#242c33" stroke-width="1.5"/>
+                <line x1="240" y1="251" x2="247" y2="246" stroke="#242c33" stroke-width="1.5"/>
+                <text x="237" y="160" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" transform="rotate(-90 237 160)">L1: IF/ID (64b)</text>
+                <text x="237" y="330" font-size="6.8" font-weight="800" fill="#242c33" font-family="monospace" transform="rotate(-90 237 330)">Inst 0 • Inst 1</text>
 
-                <path d="M 215 310 L 250 310" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVeer)"/>
+                <!-- Instruction Buffer into L1 -->
+                <path d="M 225 300 L 230 300" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVeer)"/>
+                <!-- L1 into Dual Decoders -->
+                <path d="M 250 160 L 255 160" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVeer)"/>
 
                 <!-- ============================================================ -->
                 <!-- STAGE 2: ALIGN, DUAL DECODE & DISPATCH (ID) -->
                 <!-- ============================================================ -->
                 <!-- Dual Instruction Decoders -->
-                <rect x="250" y="95" width="225" height="85" rx="6" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
-                <rect x="250" y="95" width="225" height="18" rx="5" fill="#fff0b9"/>
-                <text x="258" y="108" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">DUAL DECODE &amp; DISPATCH ENGINE</text>
+                <rect x="255" y="122" width="230" height="92" rx="6" fill="#fef3c7" stroke="#151b20" stroke-width="2"/>
+                <rect x="255" y="122" width="230" height="18" rx="5" fill="#fef3c7"/>
+                <text x="262" y="135" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">DUAL DECODE &amp; DISPATCH ENGINE</text>
 
-                <rect x="256" y="118" width="102" height="28" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="260" y="129" font-size="6.8" font-weight="900" fill="#0d9488" font-family="monospace">Pipe 0 Decoder</text>
-                <text x="260" y="139" font-size="6" fill="#242c33">ALU1 / Branch / CSR</text>
+                <rect x="260" y="144" width="105" height="28" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
+                <text x="264" y="155" font-size="6.8" font-weight="900" fill="#0d9488" font-family="monospace">Pipe 0 Decoder</text>
+                <text x="264" y="165" font-size="6" fill="#242c33">ALU1 / Branch / CSR</text>
 
-                <rect x="366" y="118" width="102" height="28" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="370" y="129" font-size="6.8" font-weight="900" fill="#ffc83e" font-family="monospace">Pipe 1 Decoder</text>
-                <text x="370" y="139" font-size="6" fill="#242c33">ALU2 / Load-Store / Mul</text>
+                <rect x="374" y="144" width="105" height="28" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
+                <text x="378" y="155" font-size="6.8" font-weight="900" fill="#d97706" font-family="monospace">Pipe 1 Decoder</text>
+                <text x="378" y="165" font-size="6" fill="#242c33">ALU2 / LSU / MulDiv</text>
 
-                <rect x="256" y="150" width="212" height="24" rx="3" fill="#fff0b9" stroke="#ffc83e" stroke-width="1"/>
-                <text x="260" y="161" font-size="6.5" font-weight="900" fill="#ffc83e">SUPERSCALAR PAIRING &amp; RAW HAZARD LOGIC:</text>
-                <text x="260" y="170" font-size="6.2" fill="#151b20">Checks RAW dependencies; issues dual-op when independent.</text>
+                <rect x="260" y="176" width="220" height="32" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+                <text x="264" y="188" font-size="6.5" font-weight="900" fill="#d97706">SUPERSCALAR PAIRING &amp; RAW HAZARD LOGIC:</text>
+                <text x="264" y="198" font-size="6.2" fill="#151b20">Checks RAW dependencies; issues dual-op when independent.</text>
+
+                <!-- Decoders address bus down to Register File -->
+                <path d="M 312 214 L 312 228" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowVeer)"/>
+                <text x="316" y="223" font-size="6" font-weight="900" font-family="monospace">P0:rs1,rs2,rd</text>
+                <path d="M 426 214 L 426 228" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowVeer)"/>
+                <text x="430" y="223" font-size="6" font-weight="900" font-family="monospace">P1:rs1,rs2,rd</text>
 
                 <!-- 4R / 2W Register File -->
-                <rect x="250" y="190" width="225" height="180" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
-                <rect x="250" y="190" width="225" height="18" rx="5" fill="#eee4c8"/>
-                <text x="258" y="203" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">QUAD-READ DUAL-WRITE REG FILE (4R / 2W)</text>
+                <rect x="255" y="228" width="230" height="140" rx="5" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+                <rect x="255" y="228" width="230" height="18" rx="4" fill="#eee4c8"/>
+                <text x="262" y="241" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">QUAD-READ DUAL-WRITE REG FILE (4R / 2W)</text>
 
-                <text x="258" y="222" font-size="7.5" font-weight="800" fill="#151b20">4 Concurrent Read Ports (Simultaneous 2-Inst Read):</text>
-                <text x="258" y="235" font-size="7" fill="#0d9488">&#8226; Pipe 0: <code>rs1_0 [31:0], rs2_0 [31:0]</code> &#8594; ALU1 / BRU</text>
-                <text x="258" y="247" font-size="7" fill="#ffc83e">&#8226; Pipe 1: <code>rs1_1 [31:0], rs2_1 [31:0]</code> &#8594; ALU2 / LSU</text>
+                <text x="262" y="258" font-size="7.2" font-weight="800" fill="#151b20">4 Concurrent Read Ports (Simultaneous 2-Inst Read):</text>
+                <text x="262" y="270" font-size="6.8" fill="#0d9488">• Pipe 0: rs1_0[31:0], rs2_0[31:0] → ALU1 / BRU</text>
+                <text x="262" y="282" font-size="6.8" fill="#d97706">• Pipe 1: rs1_1[31:0], rs2_1[31:0] → ALU2 / LSU</text>
 
-                <text x="258" y="266" font-size="7.5" font-weight="800" fill="#0d9488">2 Concurrent Write Ports (Simultaneous Dual Commit):</text>
-                <text x="258" y="279" font-size="7" fill="#242c33">&#8226; Port W0: <code>rd_0 [4:0] + wdata_0 [31:0]</code> (Pipe 0)</text>
-                <text x="258" y="291" font-size="7" fill="#242c33">&#8226; Port W1: <code>rd_1 [4:0] + wdata_1 [31:0]</code> (Pipe 1)</text>
+                <text x="262" y="296" font-size="7.2" font-weight="800" fill="#0d9488">2 Concurrent Write Ports (Simultaneous Dual Commit):</text>
+                <text x="262" y="308" font-size="6.8" fill="#242c33">• Port W0: rd_0[4:0] + wdata_0[31:0] (Pipe 0 Commit)</text>
+                <text x="262" y="320" font-size="6.8" fill="#242c33">• Port W1: rd_1[4:0] + wdata_1[31:0] (Pipe 1 Commit)</text>
 
-                <rect x="256" y="300" width="212" height="42" rx="3" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
-                <text x="260" y="313" font-size="6.8" font-weight="900" fill="#0d9488">ZERO PORT-CONTENTION OVERHEAD:</text>
-                <text x="260" y="324" font-size="6.5" fill="#151b20">Allows two independent instructions to read 4 operands</text>
-                <text x="260" y="334" font-size="6.5" font-weight="800" fill="#0d9488">and commit 2 results simultaneously in the exact same cycle.</text>
+                <rect x="260" y="326" width="220" height="36" rx="3" fill="#ccfbf1" stroke="#0d9488" stroke-width="0.8"/>
+                <text x="264" y="338" font-size="6.5" font-weight="900" fill="#0d9488">ZERO PORT-CONTENTION ARCHITECTURE:</text>
+                <text x="264" y="348" font-size="6.2" fill="#151b20">Sustains dual-issue execution with zero structural register stalls.</text>
+                <text x="264" y="357" font-size="6.2" font-weight="800" fill="#0d9488">Allows two independent ALU instructions to commit simultaneously.</text>
 
-                <text x="258" y="356" font-size="6.5" fill="#242c33">&#8226; Full internal register renaming &amp; bypass tracking</text>
+                <!-- Port W0 and W1 terminal badges -->
+                <rect x="280" y="356" width="22" height="12" rx="2" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
+                <text x="291" y="365" font-size="6.5" font-weight="900" fill="#0d9488" font-family="monospace" text-anchor="middle">W0</text>
+                <rect x="310" y="356" width="22" height="12" rx="2" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
+                <text x="321" y="365" font-size="6.5" font-weight="900" fill="#0d9488" font-family="monospace" text-anchor="middle">W1</text>
 
                 <!-- ============================================================ -->
-                <!-- PIPELINE LATCH 2: ID / EX1 REGISTER -->
+                <!-- PIPELINE LATCH 2: ID / EX1 REGISTER (L2) -->
                 <!-- ============================================================ -->
-                <rect x="485" y="90" width="20" height="280" rx="4" fill="#eee4c8" stroke="#242c33" stroke-width="1.8"/>
-                <line x1="488" y1="230" x2="495" y2="235" stroke="#242c33" stroke-width="1.5"/>
-                <line x1="495" y1="235" x2="502" y2="230" stroke="#242c33" stroke-width="1.5"/>
-                <text x="492" y="160" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" transform="rotate(-90 492 160)">ID/EX1 LATCH</text>
-                <text x="492" y="340" font-size="6.8" font-weight="800" fill="#242c33" font-family="monospace" transform="rotate(-90 492 340)">P0 &amp; P1 Operands • Controls</text>
+                <rect x="490" y="122" width="20" height="246" rx="4" fill="#eee4c8" stroke="#242c33" stroke-width="1.8"/>
+                <line x1="493" y1="246" x2="500" y2="251" stroke="#242c33" stroke-width="1.5"/>
+                <line x1="500" y1="251" x2="507" y2="246" stroke="#242c33" stroke-width="1.5"/>
+                <text x="497" y="160" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" transform="rotate(-90 497 160)">L2: ID/EX1</text>
+                <text x="497" y="330" font-size="6.8" font-weight="800" fill="#242c33" font-family="monospace" transform="rotate(-90 497 330)">P0 &amp; P1 Operands</text>
+
+                <!-- Operands & Controls into L2 -->
+                <path d="M 485 160 L 490 160" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVeer)"/>
+                <path d="M 485 270 L 490 270" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowVeer)"/>
+                <path d="M 485 282 L 490 282" stroke="#d97706" stroke-width="2" marker-end="url(#arrowVeer)"/>
 
                 <!-- ============================================================ -->
                 <!-- STAGE 3: PARALLEL EXECUTION PIPES (EX1) -->
                 <!-- ============================================================ -->
                 <!-- Pipe 0: Primary ALU 1 -->
-                <polygon points="515,95 575,115 575,155 515,175 515,150 525,135 515,120" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
-                <text x="532" y="132" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">ALU 1</text>
-                <text x="526" y="144" font-size="7" fill="#0d9488">Primary Pipe 0</text>
+                <rect x="515" y="122" width="85" height="58" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+                <rect x="515" y="122" width="85" height="15" rx="4" fill="#ccfbf1"/>
+                <text x="520" y="133" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">ALU 1 (PIPE 0)</text>
+                <text x="520" y="147" font-size="6.8" font-weight="800" fill="#151b20">Primary Integer</text>
+                <text x="520" y="158" font-size="6.2" fill="#242c33">Add / Sub / Compare</text>
+                <text x="520" y="169" font-size="6.2" font-weight="800" fill="#0d9488">Single-cycle IPC=1.0</text>
+
+                <!-- L2 into ALU 1 -->
+                <path d="M 510 150 L 515 150" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVeer)"/>
 
                 <!-- Pipe 0: Dedicated Branch Resolution Unit (BRU) -->
-                <rect x="585" y="95" width="125" height="75" rx="5" fill="#ffd8ce" stroke="#f38469" stroke-width="1.8"/>
-                <rect x="585" y="95" width="125" height="15" rx="4" fill="#ffd8ce"/>
-                <text x="590" y="106" font-size="7.2" font-weight="900" fill="#f38469" font-family="monospace">BRANCH UNIT (BRU)</text>
-                <text x="590" y="122" font-size="7" font-weight="800" fill="#151b20">Early Branch Resolution</text>
-                <text x="590" y="133" font-size="6.5" fill="#242c33">&#8226; Compares condition in EX1</text>
-                <text x="590" y="144" font-size="6.5" fill="#242c33">&#8226; Verifies BTB prediction</text>
-                <text x="590" y="156" font-size="6.5" font-weight="800" fill="#f38469">&#8226; Triggers 3-cyc flush if mispred</text>
+                <rect x="605" y="122" width="115" height="58" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="1.8"/>
+                <rect x="605" y="122" width="115" height="15" rx="4" fill="#fee2e2"/>
+                <text x="610" y="133" font-size="7.2" font-weight="900" fill="#dc2626" font-family="monospace">BRANCH UNIT (BRU)</text>
+                <text x="610" y="147" font-size="6.8" font-weight="800" fill="#151b20">Early Branch Resolution</text>
+                <text x="610" y="158" font-size="6.2" fill="#242c33">Compares condition in EX1</text>
+                <text x="610" y="169" font-size="6.2" font-weight="800" fill="#dc2626">3-Cycle Mispredict Penalty</text>
 
-                <!-- Line from ALU1 to BRU -->
-                <line x1="575" y1="135" x2="585" y2="135" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowVeer)"/>
+                <!-- ALU1 to BRU compare line -->
+                <line x1="600" y1="150" x2="605" y2="150" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowVeer)"/>
+
+                <!-- BRU Chips: ▲ BR_MISP and ▲ BTB_UPD on BRU -->
+                <rect x="610" y="104" width="50" height="15" rx="3" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
+                <text x="635" y="114.5" font-size="6.5" font-weight="900" fill="#dc2626" font-family="monospace" text-anchor="middle">▲ BR_MISP</text>
+                <circle cx="635" cy="104" r="2.5" fill="#dc2626"/>
+
+                <rect x="665" y="104" width="52" height="15" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+                <text x="691" y="114.5" font-size="6.5" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">▲ BTB_UPD</text>
+                <circle cx="665" cy="104" r="2.5" fill="#d97706"/>
+
+                <!-- Pipe 0: Privileged CSR & Trap Controller -->
+                <rect x="605" y="184" width="115" height="42" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.8"/>
+                <text x="610" y="196" font-size="7.2" font-weight="900" fill="#7c3aed" font-family="monospace">PRIVILEGED CSRs</text>
+                <text x="610" y="208" font-size="6.8" font-weight="800" fill="#151b20">mtvec, mepc, mcause</text>
+                <text x="610" y="219" font-size="6.2" fill="#242c33">Fast Exception FSM</text>
+
+                <!-- Chip MTVEC directly on Privileged CSRs -->
+                <rect x="680" y="104" width="48" height="15" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
+                <text x="704" y="114.5" font-size="6.5" font-weight="900" fill="#7c3aed" font-family="monospace" text-anchor="middle">▲ MTVEC</text>
+                <circle cx="695" cy="104" r="2.5" fill="#7c3aed"/>
+                <!-- Trace connecting mtvec inside CSRs up to MTVEC chip -->
+                <path d="M 695 184 L 695 119" stroke="#7c3aed" stroke-width="1.6"/>
 
                 <!-- Pipe 1: Secondary ALU 2 -->
-                <polygon points="515,190 575,210 575,250 515,270 515,245 525,230 515,215" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
-                <text x="532" y="227" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">ALU 2</text>
-                <text x="524" y="239" font-size="7" fill="#0d9488">Secondary Pipe 1</text>
+                <rect x="515" y="230" width="85" height="58" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+                <rect x="515" y="230" width="85" height="15" rx="4" fill="#ccfbf1"/>
+                <text x="520" y="241" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">ALU 2 (PIPE 1)</text>
+                <text x="520" y="255" font-size="6.8" font-weight="800" fill="#151b20">Secondary Integer</text>
+                <text x="520" y="266" font-size="6.2" fill="#242c33">Logic &amp; Address Gen</text>
+                <text x="520" y="277" font-size="6.2" font-weight="800" fill="#d97706">Concurrent with ALU1</text>
 
-                <!-- Pipe 1: Pipelined Multiplier & Divider -->
-                <rect x="585" y="190" width="125" height="75" rx="5" fill="#fff0b9" stroke="#151b20" stroke-width="1.8"/>
-                <rect x="585" y="190" width="125" height="15" rx="4" fill="#fff0b9"/>
-                <text x="590" y="206" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">MULDIV PIPELINE</text>
-                <text x="590" y="222" font-size="7" font-weight="800" fill="#151b20">Pipelined MAC &amp; Divider</text>
-                <text x="590" y="233" font-size="6.5" fill="#242c33">&#8226; 1-Cyc Pipelined Mul</text>
-                <text x="590" y="244" font-size="6.5" fill="#242c33">&#8226; Radix-4 16-Cyc Divider</text>
-                <text x="590" y="256" font-size="6.5" font-weight="800" fill="#ffc83e">&#8226; Runs in parallel with ALU1</text>
+                <!-- L2 into ALU 2 -->
+                <path d="M 510 255 L 515 255" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVeer)"/>
+
+                <!-- Pipe 1: Pipelined Multiplier & Radix-4 Divider -->
+                <rect x="605" y="230" width="115" height="58" rx="5" fill="#fef3c7" stroke="#151b20" stroke-width="1.8"/>
+                <rect x="605" y="230" width="115" height="15" rx="4" fill="#fef3c7"/>
+                <text x="610" y="241" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">MULDIV PIPELINE</text>
+                <text x="610" y="255" font-size="6.8" font-weight="800" fill="#151b20">Pipelined MAC &amp; Div</text>
+                <text x="610" y="266" font-size="6.2" fill="#242c33">• 1-Cyc Pipelined Mul</text>
+                <text x="610" y="277" font-size="6.2" font-weight="800" fill="#d97706">• 16-Cyc Radix-4 Div</text>
+
+                <!-- ALU2 into MULDIV -->
+                <path d="M 600 255 L 605 255" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowVeer)"/>
 
                 <!-- Superscalar Cross-Forwarding Network -->
-                <rect x="515" y="285" width="195" height="85" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
-                <rect x="515" y="285" width="195" height="16" rx="5" fill="#ccfbf1"/>
-                <text x="522" y="297" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">DUAL CROSS-FORWARDING MATRIX</text>
-                <text x="522" y="315" font-size="7" font-weight="800" fill="#151b20">EX1 &#8594; EX1 Bypass &amp; EX2 &#8594; EX1 Bypass</text>
-                <text x="522" y="328" font-size="6.5" fill="#242c33">&#8226; Routes Pipe 0 ALU1 result to Pipe 1 ALU2 input</text>
-                <text x="522" y="340" font-size="6.5" fill="#242c33">&#8226; Routes Pipe 1 Load result to Pipe 0 ALU1 input</text>
-                <text x="522" y="352" font-size="6.5" font-weight="800" fill="#0d9488">&#8226; Sustains peak CPI = 0.5 (2 instructions/cycle)</text>
+                <rect x="515" y="296" width="205" height="72" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
+                <rect x="515" y="296" width="205" height="16" rx="5" fill="#ccfbf1"/>
+                <text x="522" y="308" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">DUAL CROSS-FORWARDING MATRIX</text>
+                <text x="522" y="324" font-size="6.8" font-weight="800" fill="#151b20">EX1 → EX1 Bypass &amp; EX2 → EX1 Bypass</text>
+                <text x="522" y="336" font-size="6.2" fill="#242c33">• Routes Pipe 0 ALU1 result to Pipe 1 ALU2 input</text>
+                <text x="522" y="347" font-size="6.2" fill="#242c33">• Routes Pipe 1 Load result to Pipe 0 ALU1 input</text>
+                <text x="522" y="358" font-size="6.2" font-weight="800" fill="#0d9488">• Sustains peak CPI = 0.5 (2 instructions/cycle)</text>
 
                 <!-- ============================================================ -->
                 <!-- STAGE 4: DUAL COMMIT & DCCM (EX2 / COMMIT / WB) -->
                 <!-- ============================================================ -->
                 <!-- 64-Bit Data Closely Coupled Memory (DCCM) -->
-                <rect x="725" y="95" width="175" height="135" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
-                <rect x="725" y="95" width="175" height="18" rx="5" fill="#ccfbf1"/>
-                <text x="733" y="108" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT DCCM SRAM (DATA MEMORY)</text>
+                <rect x="730" y="122" width="180" height="114" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
+                <rect x="730" y="122" width="180" height="18" rx="5" fill="#ccfbf1"/>
+                <text x="738" y="135" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT DCCM SRAM (DATA MEMORY)</text>
 
-                <text x="733" y="128" font-size="7.5" font-weight="800" fill="#151b20">4-Bank Interleaved SRAM Array:</text>
-                <text x="733" y="140" font-size="7" fill="#242c33">&#8226; Bank 0, 1, 2, 3 (Independent Addressing)</text>
-                <text x="733" y="152" font-size="7" fill="#242c33">&#8226; Non-blocking dual access without bank stall</text>
-                <text x="733" y="164" font-size="7" font-weight="800" fill="#0d9488">&#8226; Concurrent Load + Store execution</text>
+                <text x="738" y="153" font-size="7.5" font-weight="800" fill="#151b20">4-Bank Interleaved SRAM Array:</text>
+                <text x="738" y="165" font-size="6.8" fill="#242c33">• Bank 0, 1, 2, 3 (Independent Addressing)</text>
+                <text x="738" y="177" font-size="6.8" fill="#242c33">• Non-blocking dual access without bank stall</text>
+                <text x="738" y="189" font-size="6.8" font-weight="800" fill="#0d9488">• Concurrent Load + Store execution</text>
 
-                <text x="733" y="180" font-size="7.5" font-weight="800" fill="#151b20">Load Alignment &amp; Sign Extension:</text>
-                <text x="733" y="192" font-size="7" fill="#242c33">&#8226; Formats lb, lh, lw, lbu, lhu to 32b</text>
-                <text x="733" y="204" font-size="7" fill="#242c33">&#8226; Direct bypass to commit &amp; forwarding</text>
+                <text x="738" y="204" font-size="7.2" font-weight="800" fill="#151b20">Load Alignment &amp; Sign Extension:</text>
+                <text x="738" y="215" font-size="6.5" fill="#242c33">• Formats lb, lh, lw, lbu, lhu to 32b</text>
+                <text x="738" y="226" font-size="6.5" font-weight="800" fill="#0d9488">• Direct bypass to commit &amp; forwarding</text>
 
-                <rect x="730" y="212" width="165" height="14" rx="2" fill="#fffaf0" stroke="#0d9488" stroke-width="0.8"/>
-                <text x="734" y="222" font-size="6.2" font-weight="800" fill="#151b20">High-IOPS FTL flash controller throughput</text>
+                <!-- External AXI Data Bus Pins -->
+                <rect x="914" y="155" width="20" height="18" rx="2" fill="#0d9488" stroke="#042f2e" stroke-width="1"/>
+                <text x="924" y="167" font-size="6.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">AXI_D►</text>
+                <line x1="910" y1="164" x2="914" y2="164" stroke="#0d9488" stroke-width="2"/>
+
+                <!-- Address bus from ALU2/Pipe 1 into DCCM -->
+                <path d="M 720 255 L 725 255 L 725 180 L 730 180" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowVeer)"/>
+                <text x="715" y="210" font-size="6" font-weight="900" font-family="monospace">daddr</text>
 
                 <!-- Dual Architectural Commit Engine -->
-                <rect x="725" y="240" width="175" height="130" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
-                <rect x="725" y="240" width="175" height="18" rx="5" fill="#eee4c8"/>
-                <text x="733" y="253" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">DUAL COMMIT &amp; RETIRE ENGINE</text>
+                <rect x="730" y="244" width="180" height="124" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+                <rect x="730" y="244" width="180" height="18" rx="5" fill="#eee4c8"/>
+                <text x="738" y="257" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">DUAL COMMIT &amp; RETIRE ENGINE</text>
 
-                <text x="733" y="272" font-size="7.5" font-weight="800" fill="#151b20">Simultaneous Retirement (2 Insts/Cyc):</text>
-                <text x="733" y="285" font-size="7" fill="#0d9488">&#8226; Commit 0: ALU1 / BRU / CSR Result</text>
-                <text x="733" y="297" font-size="7" fill="#ffc83e">&#8226; Commit 1: ALU2 / DCCM Load / Mul Result</text>
+                <text x="738" y="275" font-size="7.2" font-weight="800" fill="#151b20">Simultaneous Retirement (2 Insts/Cyc):</text>
+                <text x="738" y="287" font-size="6.8" fill="#0d9488">• Commit 0: ALU1 / BRU / CSR Result</text>
+                <text x="738" y="299" font-size="6.8" fill="#d97706">• Commit 1: ALU2 / DCCM Load / Mul Result</text>
                 
-                <text x="733" y="315" font-size="7.5" font-weight="800" fill="#ffc83e">Precise Exception Rollback:</text>
-                <text x="733" y="327" font-size="7" fill="#242c33">&#8226; Guarantees in-order architectural state</text>
-                <text x="733" y="339" font-size="7" font-weight="800" fill="#0d9488">&#8226; Measured CoreMark CPI: 1.030</text>
+                <text x="738" y="315" font-size="7.2" font-weight="800" fill="#d97706">Precise Exception Rollback:</text>
+                <text x="738" y="327" font-size="6.5" fill="#242c33">• Guarantees in-order architectural state</text>
+                <text x="738" y="338" font-size="6.5" font-weight="800" fill="#0d9488">• Measured CoreMark CPI: 1.030</text>
 
-                <rect x="730" y="347" width="165" height="18" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1"/>
-                <text x="734" y="359" font-size="6.5" font-weight="800" fill="#ffc83e">Breaks the theoretical CPI = 1.0 limit!</text>
+                <rect x="735" y="344" width="170" height="18" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+                <text x="740" y="356" font-size="6.5" font-weight="800" fill="#d97706">Breaks the theoretical CPI = 1.0 limit!</text>
+
+                <!-- Results entering Dual Commit Engine from Stage 3 -->
+                <!-- Pipe 0 Result into Commit 0 -->
+                <path d="M 720 150 L 725 150 L 725 287 L 730 287" fill="none" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowVeer)"/>
+                <!-- Pipe 1 Result into Commit 1 -->
+                <path d="M 720 270 L 730 270" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowVeer)"/>
 
                 <!-- ============================================================ -->
                 <!-- DUAL COMMIT WRITEBACK HIGHWAY (TEAL DUAL LANES) -->
                 <!-- ============================================================ -->
                 <!-- Lane 0: Commit 0 to Port W0 -->
-                <path d="M 800 370 L 800 422 L 310 422 L 310 370" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowTealVeer)"/>
+                <path d="M 790 368 L 790 418 L 291 418 L 291 368" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowTealVeer)"/>
                 <!-- Lane 1: Commit 1 to Port W1 -->
-                <path d="M 830 370 L 830 435 L 340 435 L 340 370" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowTealVeer)"/>
+                <path d="M 830 368 L 830 434 L 321 434 L 321 368" fill="none" stroke="#0d9488" stroke-width="2" marker-end="url(#arrowTealVeer)"/>
                 
                 <!-- Chevrons -->
-                <polygon points="560,419 554,422 560,425" fill="#0d9488"/>
-                <polygon points="680,419 674,422 680,425" fill="#0d9488"/>
-                <polygon points="580,432 574,435 580,438" fill="#0d9488"/>
+                <polygon points="560,415 554,418 560,421" fill="#0d9488"/>
+                <polygon points="680,415 674,418 680,421" fill="#0d9488"/>
+                <polygon points="580,431 574,434 580,437" fill="#0d9488"/>
 
-                <rect x="380" y="415" width="370" height="25" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
-                <circle cx="390" cy="427.5" r="3.5" fill="#0d9488"/>
-                <text x="400" y="426" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">DUAL COMMIT HIGHWAY: Lane 0 &#8594; Port W0 (rd_0) &#8226; Lane 1 &#8594; Port W1 (rd_1)</text>
-                <text x="400" y="436" font-size="6.5" font-weight="800" fill="#0d9488" font-family="monospace">Simultaneous 2-Word Register Writeback &#8226; CPI = 1.030 Sustained Throughput</text>
+                <rect x="345" y="411" width="375" height="26" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
+                <circle cx="355" cy="424" r="3.5" fill="#0d9488"/>
+                <text x="365" y="422" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">DUAL COMMIT HIGHWAY: Lane 0 → Port W0 (rd_0) • Lane 1 → Port W1 (rd_1)</text>
+                <text x="365" y="433" font-size="6.5" font-weight="800" fill="#0d9488" font-family="monospace">Simultaneous 2-Word Register Writeback • CPI = 1.030 Sustained Throughput</text>
 
                 <!-- ============================================================ -->
                 <!-- DUAL-ROW LEGEND & TIMING SPECIFICATION STRIP -->
                 <!-- ============================================================ -->
                 <!-- Row 1: Protocol Key -->
-                <rect x="20" y="446" width="920" height="40" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-                <text x="30" y="460" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">VEER EL2 SUPERSCALAR BUS &amp; CONTROL PROTOCOL KEY:</text>
+                <rect x="20" y="446" width="920" height="40" rx="5" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+                <text x="30" y="460" font-size="7.5" font-weight="900" fill="#0f172a" font-family="monospace">VEER EL2 SUPERSCALAR BUS &amp; CONTROL PROTOCOL KEY:</text>
                 <circle cx="35" cy="474" r="4" fill="#dc2626"/>
-                <text x="44" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Crimson: Branch Mispredict Flush</text>
-                <circle cx="215" cy="474" r="4" fill="#d97706"/>
-                <text x="224" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Gold: Dynamic Gshare / BTB Update</text>
-                <circle cx="410" cy="474" r="4" fill="#0d9488"/>
-                <text x="419" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Teal: Dual Commit Highway (W0/W1)</text>
-                <circle cx="620" cy="474" r="4" fill="#7c3aed"/>
-                <text x="629" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Purple: 4-Bank Interleaved DCCM</text>
-                <circle cx="800" cy="474" r="4" fill="#15803d"/>
-                <text x="809" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Emerald: Dual Superscalar</text>
+                <text x="44" y="477" font-size="7" font-weight="700" fill="#334155" font-family="monospace">Crimson: Branch Mispredict Flush</text>
+                <circle cx="215" cy="474" r="4" fill="#7c3aed"/>
+                <text x="224" y="477" font-size="7" font-weight="700" fill="#334155" font-family="monospace">Purple: Trap Vector (mtvec)</text>
+                <circle cx="375" cy="474" r="4" fill="#d97706"/>
+                <text x="384" y="477" font-size="7" font-weight="700" fill="#334155" font-family="monospace">Gold: Dynamic Gshare / BTB Update</text>
+                <circle cx="565" cy="474" r="4" fill="#0d9488"/>
+                <text x="574" y="477" font-size="7" font-weight="700" fill="#334155" font-family="monospace">Teal: Dual Commit Highway (W0/W1)</text>
+                <circle cx="765" cy="474" r="4" fill="#0284c7"/>
+                <text x="774" y="477" font-size="7" font-weight="700" fill="#334155" font-family="monospace">Cyan: PC Sequencing (+8/+4)</text>
+                <circle cx="865" cy="474" r="4" fill="#64748b"/>
+                <text x="874" y="477" font-size="7" font-weight="700" fill="#334155" font-family="monospace">Slate: L1/L2 Latches</text>
 
                 <!-- Row 2: Silicon Metrics Strip -->
                 <rect x="20" y="492" width="920" height="48" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
@@ -5023,7 +5097,8 @@ const bespokeDossiers = [
                 <text x="815" y="524" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">Bus: 64b Dual-Issue</text>
               </svg>
             </div>
-            <p class="schematic-caption">
+            <div class="mobile-scroll-hint">&#8596; Interactive Schematic: Scroll horizontally on touchscreens to inspect full datapath interconnects</div>
+            <p class="schematic-caption" style="margin-top: 0.75rem;">
               <strong>Figure 2.8:</strong> VeeR EL2 4-stage dual-issue superscalar datapath architecture. A 64-bit dual-fetch engine retrieves two instructions per cycle from tightly-coupled ICCM SRAM backed by a 512-entry BTB. The dual-dispatch unit steers instructions simultaneously into four parallel execution pipes (ALU1, ALU2, Mult/Div, Branch). A 4R/2W register file commits up to two results concurrently, achieving sustained CPI of 1.030 in commercial storage controllers.
             </p>
           </div>
