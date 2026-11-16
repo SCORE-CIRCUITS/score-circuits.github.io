@@ -43,23 +43,30 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         At the most fundamental physical level, a computer chip is fabricated from pure monocrystalline <strong>silicon (sand)</strong> doped with trace elements (boron, phosphorus) to create microscopic electrical switches called <strong>MOSFET transistors</strong>.
       </p>
 
-      <div class="concept-dual-grid">
-        <div class="concept-box">
-          <h4>Complementary MOS (CMOS) Technology</h4>
+      <!-- Top-Down Progression: Transistors to Gates -->
+      <div class="concept-stream">
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">1.1 PHYSICAL SWITCH</span>
+            <h3 class="step-card-title">Complementary MOS (CMOS) Technology</h3>
+          </div>
           <p>
-            Modern processors combine two complementary transistor types to achieve near-zero static power dissipation:
+            Modern microprocessors combine two complementary transistor types to create near-zero static power dissipation switches:
           </p>
           <ul class="concept-list">
-            <li><strong>nMOS (Negative-channel):</strong> Turns <strong>ON</strong> (conducts) when gate voltage is HIGH (logic <code>1</code>, <em>V</em><sub>DD</sub>), pulling output to Ground (logic <code>0</code>).</li>
-            <li><strong>pMOS (Positive-channel):</strong> Turns <strong>ON</strong> when gate voltage is LOW (logic <code>0</code>, Ground), pulling output up to <em>V</em><sub>DD</sub> (logic <code>1</code>).</li>
-            <li><strong>CMOS Inverter (NOT Gate):</strong> Pairs one pMOS pull-up with one nMOS pull-down. Current flows only during the split-picosecond transition between states!</li>
+            <li><strong>nMOS (Negative-channel):</strong> Turns <strong>ON</strong> (conducts) when gate voltage is HIGH (logic <code>1</code>, <em>V</em><sub>DD</sub>), pulling the output line to Ground (logic <code>0</code>).</li>
+            <li><strong>pMOS (Positive-channel):</strong> Turns <strong>ON</strong> when gate voltage is LOW (logic <code>0</code>, Ground), pulling the output line up to <em>V</em><sub>DD</sub> (logic <code>1</code>).</li>
+            <li><strong>CMOS Inverter (NOT Gate):</strong> Pairs one pMOS pull-up with one nMOS pull-down. Static current is virtually zero because one transistor is always turned off—power is consumed almost entirely during the picosecond transition between logic states!</li>
           </ul>
         </div>
 
-        <div class="concept-box">
-          <h4>Universal Logic: NAND &amp; Silicon Gate Count</h4>
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">1.2 SILICON AREA UNIT</span>
+            <h3 class="step-card-title">Universal Logic: NAND &amp; Silicon Gate Count</h3>
+          </div>
           <p>
-            From simple transistors, we construct fundamental boolean logic gates: <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>XOR</code>, <code>NAND</code>, and <code>NOR</code>.
+            From simple transistors, we construct fundamental boolean logic gates: <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>XOR</code>, <code>NAND</code>, and <code>NOR</code>. Among these, the 2-input NAND gate serves as the universal silicon benchmark:
           </p>
           <div class="formula-box">
             <span class="formula-label">Area Benchmark:</span> 1 Gate Equivalent (GE) &equiv; Silicon Area of a Standard 2-Input CMOS NAND Gate
@@ -158,12 +165,15 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         The <strong>Arithmetic Logic Unit (ALU)</strong> is the computational heart of every microprocessor core. It receives binary operands from processor registers and performs fundamental integer math (addition, subtraction), bitwise logic (AND, OR, XOR), shifts, and comparisons in a fraction of a nanosecond.
       </p>
 
-      <!-- Binary Math Derivations -->
-      <div class="alu-deep-grid">
-        <div class="alu-col">
-          <div class="sub-header-pill">1. The Full Adder Building Block</div>
+      <!-- Top-Down Progression: ALU Architecture & Primitives -->
+      <div class="concept-stream">
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">2.1 ADDITION PRIMITIVE</span>
+            <h3 class="step-card-title">The Full Adder &amp; Carry-Lookahead Chains</h3>
+          </div>
           <p>
-            Addition is the primitive from which almost all arithmetic derives. While a <em>Half Adder</em> adds two bits, a <strong>Full Adder</strong> adds three bits (<em>A</em>, <em>B</em>, and a Carry-In <em>C</em><sub>in</sub> from the preceding column):
+            Addition is the fundamental primitive from which almost all microprocessor arithmetic derives. While a <em>Half Adder</em> adds two bits, a <strong>Full Adder</strong> adds three bits (<em>A</em>, <em>B</em>, and a Carry-In <em>C</em><sub>in</sub> from the preceding bit column):
           </p>
           <div class="formula-box">
             <div style="margin-bottom: 0.35rem;"><strong>Sum:</strong> <em>S</em> = <em>A</em> &oplus; <em>B</em> &oplus; <em>C</em><sub>in</sub></div>
@@ -174,8 +184,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </p>
         </div>
 
-        <div class="alu-col">
-          <div class="sub-header-pill">2. Two's Complement Subtraction Trick</div>
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">2.2 HARDWARE REUSE</span>
+            <h3 class="step-card-title">Two's Complement Subtraction Trick</h3>
+          </div>
           <p>
             Hardware designers avoid building dedicated subtractors. Instead, subtraction <em>A</em> &minus; <em>B</em> is mathematically converted into addition using <strong>Two's Complement</strong>:
           </p>
@@ -187,15 +200,19 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </p>
         </div>
 
-        <div class="alu-col">
-          <div class="sub-header-pill">3. Barrel Shifter &amp; Logic Operations</div>
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">2.3 LOGIC &amp; SHIFTS</span>
+            <h3 class="step-card-title">Barrel Shifter, Logic Gates &amp; Condition Flags</h3>
+          </div>
           <p>
-            Besides addition, the ALU datapath integrates:
+            Besides addition and subtraction, the ALU datapath integrates:
           </p>
           <ul class="concept-list">
             <li><strong>Bitwise Logic:</strong> Parallel banks of 32 <code>AND</code>, <code>OR</code>, and <code>XOR</code> gates evaluate boolean operations in a single gate delay.</li>
             <li><strong>Barrel Shifter:</strong> Shifts an operand left or right by 0 to 31 bit positions in a single cycle using multiplexer stages, implementing Logical Shift Left (<code>SLL</code>), Logical Shift Right (<code>SRL</code>), and Arithmetic Shift Right (<code>SRA</code>, which preserves sign bits for signed division).</li>
             <li><strong>Set Less Than (SLT/SLTU):</strong> Subtracts operands and checks the sign and overflow flags to return <code>1</code> if $A \lt B$, else <code>0</code>.</li>
+            <li><strong>Condition Flags ($Z, N, C, V$):</strong> Evaluates Zero ($Z=1$ if result is zero), Negative ($N=1$ if MSB is 1), Carry-Out ($C=1$ on unsigned carry), and Overflow ($V=1$ on signed two's complement overflow).</li>
           </ul>
         </div>
       </div>
@@ -290,21 +307,28 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         An <strong>Instruction Set Architecture (ISA)</strong> is the formal contract between software and hardware. It defines the registers, memory addressing rules, and exact binary machine code formats that the microprocessor executes.
       </p>
 
-      <div class="concept-dual-grid">
-        <div class="concept-box">
-          <h4>The Load-Store Architecture Principle</h4>
+      <!-- Top-Down Progression: ISA Principles & Registers -->
+      <div class="concept-stream">
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">3.1 DESIGN PHILOSOPHY</span>
+            <h3 class="step-card-title">The Load-Store Architecture Principle</h3>
+          </div>
           <p>
             Unlike complex legacy ISAs (such as x86) where single instructions can directly modify DRAM memory, RISC-V is a strict <strong>Load-Store Architecture</strong>:
           </p>
           <ul class="concept-list">
-            <li>Arithmetic instructions (<code>add</code>, <code>sub</code>, <code>xor</code>) can <em>only</em> operate on data already inside processor registers.</li>
+            <li>Arithmetic instructions (<code>add</code>, <code>sub</code>, <code>xor</code>) can <em>only</em> operate on data already held inside processor registers.</li>
             <li>Memory access is restricted exclusively to explicit load (<code>lw</code>, <code>ld</code>) and store (<code>sw</code>, <code>sd</code>) instructions.</li>
             <li>This decouples memory latency from arithmetic pipeline execution, keeping silicon execution units simple and blistering fast.</li>
           </ul>
         </div>
 
-        <div class="concept-box">
-          <h4>The 32 General-Purpose Registers (x0–x31)</h4>
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">3.2 REGISTER FILE</span>
+            <h3 class="step-card-title">The 32 General-Purpose Registers (x0–x31)</h3>
+          </div>
           <p>
             Standard 32-bit RISC-V (RV32I) provides 32 registers, each 32 bits wide. By architectural rule:
           </p>
@@ -517,22 +541,36 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
       </div>
 
-      <!-- The Three Hazards -->
-      <div class="hazards-trio-grid" style="margin-top: 1.5rem;">
-        <div class="hazard-card">
-          <span class="h-badge">HAZARD 1</span>
-          <h4>Structural Hazards</h4>
-          <p>Hardware cannot support two operations simultaneously (e.g. instruction fetch and data read both competing for single memory port). Solved by separating Instruction Cache (I$) and Data Cache (D$) in Harvard architectures.</p>
+      <!-- Top-Down Progression: The Three Pipeline Hazards -->
+      <div class="concept-stream" style="margin-top: 1.5rem;">
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="h-badge">HAZARD 1</span>
+            <h3 class="step-card-title">Structural Hazards &amp; Harvard Split Memory</h3>
+          </div>
+          <p>
+            Hardware cannot support two operations simultaneously (e.g. instruction fetch and data read both competing for a single memory port). Solved by separating Instruction Cache (I$) and Data Cache (D$) into distinct Harvard architecture memory interfaces.
+          </p>
         </div>
-        <div class="hazard-card">
-          <span class="h-badge">HAZARD 2</span>
-          <h4>Data Hazards (RAW)</h4>
-          <p>Instruction $B$ needs the result of Instruction $A$, but $A$ hasn't written to registers yet! Solved by <strong>Data Forwarding (Bypassing)</strong>: routing ALU output directly from EX/MEM stages into the ALU input of the next instruction without waiting for writeback.</p>
+
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="h-badge">HAZARD 2</span>
+            <h3 class="step-card-title">Data Hazards (RAW) &amp; Forwarding Bypasses</h3>
+          </div>
+          <p>
+            Instruction $B$ needs the result of Instruction $A$, but $A$ has not written back to registers yet! Solved by <strong>Data Forwarding (Bypassing)</strong>: routing ALU output directly from EX/MEM pipeline registers into the ALU input multiplexers of the next instruction without waiting for writeback.
+          </p>
         </div>
-        <div class="hazard-card">
-          <span class="h-badge">HAZARD 3</span>
-          <h4>Control Hazards</h4>
-          <p>A conditional branch (<code>beq</code>) changes the Program Counter, but the next instructions have already entered the pipeline! If branch is taken, the wrong instructions must be flushed (idle pipeline bubbles). Solved by <strong>Branch Predictors</strong>.</p>
+
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="h-badge">HAZARD 3</span>
+            <h3 class="step-card-title">Control Hazards &amp; Dynamic Branch Prediction</h3>
+          </div>
+          <p>
+            A conditional branch (<code>beq</code>) changes the Program Counter, but subsequent instructions have already entered the pipeline! If the branch is taken, wrong-path instructions must be flushed (idle bubble cycles). Solved by dynamic <strong>Branch Predictors</strong> (2-bit saturating counters, BHT, BTB).
+          </p>
         </div>
       </div>
 
@@ -588,26 +626,33 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         While processors operate in gigahertz (&lt;1 nanosecond), external DRAM memory takes 50 to 100 nanoseconds to respond. This is the <strong>Memory Wall</strong>. Category 2 Application Cores solve this through multi-level caches, hardware virtual memory (MMU), and Out-of-Order (OoO) superscalar execution.
       </p>
 
-      <div class="concept-dual-grid">
-        <div class="concept-box">
-          <h4>Virtual Memory &amp; The Sv39 MMU</h4>
+      <!-- Top-Down Progression: Virtual Memory & OoO Cores -->
+      <div class="concept-stream">
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">5.1 VIRTUAL MEMORY</span>
+            <h3 class="step-card-title">Virtual Memory &amp; The Sv39 MMU</h3>
+          </div>
           <p>
-            An operating system like Linux cannot give programs direct physical access to DRAM (programs would corrupt each other's memory). The <strong>Memory Management Unit (MMU)</strong> translates program <em>virtual addresses</em> into real <em>physical addresses</em>:
+            An operating system like Linux cannot give user programs direct physical access to DRAM (programs would corrupt each other's memory). The <strong>Memory Management Unit (MMU)</strong> translates program <em>virtual addresses</em> into real <em>physical addresses</em>:
           </p>
           <ul class="concept-list">
             <li><strong>Sv39 Standard:</strong> 39-bit virtual addresses mapped via a 3-level radix tree (Page Table Walk: VPN2 &rarr; VPN1 &rarr; VPN0) with 4 KiB memory pages.</li>
-            <li><strong>TLB (Translation Lookaside Buffer):</strong> An ultra-fast hardware cache that stores recent page translations, avoiding the 3-step DRAM walk on every load and store.</li>
+            <li><strong>TLB (Translation Lookaside Buffer):</strong> An ultra-fast hardware cache that stores recent page translations, avoiding the multi-cycle DRAM page walk on every load and store.</li>
           </ul>
         </div>
 
-        <div class="concept-box">
-          <h4>In-Order vs. Out-of-Order (OoO) Execution</h4>
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">5.2 OUT-OF-ORDER (OoO)</span>
+            <h3 class="step-card-title">In-Order vs. Out-of-Order (OoO) Superscalar Execution</h3>
+          </div>
           <p>
-            Why do high-performance cores like <code>BOOM</code> and <code>XiangShan</code> take 400+ kGE of silicon?
+            Why do high-performance Category 2 cores like <code>BOOM</code> and <code>XiangShan</code> take 400+ kGE of silicon?
           </p>
           <ul class="concept-list">
             <li><strong>In-Order Bottleneck:</strong> If instruction 1 suffers a cache miss and waits 100 cycles for DRAM, the <em>entire pipeline freezes</em>, even if instructions 2, 3, and 4 are completely independent!</li>
-            <li><strong>The OoO Breakthrough:</strong> Instructions are decoded in order, <strong>renamed</strong> to eliminate false register dependencies, placed into <strong>Reservation Stations</strong>, and executed <em>as soon as operands are ready</em>. Finally, the <strong>Reorder Buffer (ROB)</strong> commits them in original program order to guarantee precise exceptions.</li>
+            <li><strong>The OoO Breakthrough:</strong> Instructions are decoded in order, <strong>renamed</strong> to eliminate false register dependencies (WAR/WAW), placed into <strong>Reservation Stations</strong>, and executed <em>as soon as operands are ready</em>. Finally, the <strong>Reorder Buffer (ROB)</strong> commits them in original program order to guarantee precise exceptions.</li>
           </ul>
         </div>
       </div>
@@ -694,9 +739,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         Adding two 1,000-element arrays on a scalar processor requires a loop executing 1,000 separate load, add, and store instructions. <strong>Vector processors (RVV 1.0)</strong> eliminate loop overhead by computing wide vectors of data with a single instruction across parallel execution lanes.
       </p>
 
-      <div class="concept-dual-grid">
-        <div class="concept-box">
-          <h4>The RISC-V Vector (RVV 1.0) Architecture</h4>
+      <!-- Top-Down Progression: Vector & Systolic Paradigms -->
+      <div class="concept-stream">
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">6.1 VECTOR EXTENSION</span>
+            <h3 class="step-card-title">The RISC-V Vector (RVV 1.0) Architecture</h3>
+          </div>
           <p>
             Unlike fixed-width multimedia extensions (such as x86 AVX or ARM NEON), RISC-V Vector (RVV) is <em>vector-length agnostic</em>:
           </p>
@@ -707,8 +756,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </ul>
         </div>
 
-        <div class="concept-box">
-          <h4>2D Systolic Arrays (Gemmini Matrix Engines)</h4>
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">6.2 MATRIX ACCELERATION</span>
+            <h3 class="step-card-title">2D Systolic Arrays (Gemmini Matrix Engines)</h3>
+          </div>
           <p>
             For Deep Learning and dense Matrix Multiplication ($C = A \times B$):
           </p>
@@ -780,9 +832,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         A processor core in isolation cannot run an application without peripherals, memory controllers, and interconnect fabrics. <strong>System-on-Chip (SoC)</strong> architecture integrates dozens to hundreds of cores with coherent crossbars, Direct Memory Access (DMA) engines, and hardware synchronization units.
       </p>
 
-      <div class="concept-dual-grid">
-        <div class="concept-box">
-          <h4>Interconnect Topologies: Bus vs. Crossbar vs. NoC</h4>
+      <!-- Top-Down Progression: Interconnects & Manycore Scaling -->
+      <div class="concept-stream">
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">7.1 INTERCONNECT EVOLUTION</span>
+            <h3 class="step-card-title">Interconnect Topologies: Bus vs. Crossbar vs. NoC</h3>
+          </div>
           <p>
             How multiple cores communicate with multi-banked L2 memory:
           </p>
@@ -793,8 +849,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </ul>
         </div>
 
-        <div class="concept-box">
-          <h4>DMA &amp; Hardware Barrier Synchronization</h4>
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">7.2 HARDWARE SYNCHRONIZATION</span>
+            <h3 class="step-card-title">DMA &amp; Hardware Barrier Synchronization</h3>
+          </div>
           <p>
             Overcoming manycore software bottlenecks:
           </p>
@@ -833,10 +892,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </div>
       </div>
 
-      <div class="fund-grid" style="margin-top: 1.5rem;">
-        <div class="fund-box">
-          <h4>Efficiency &amp; Speed Metrics</h4>
-          <ul>
+      <!-- Top-Down Progression: Metrics Categorization -->
+      <div class="concept-stream" style="margin-top: 1.5rem;">
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">SPEED &bull; THROUGHPUT</span>
+            <h3 class="step-card-title">Efficiency &amp; Speed Metrics</h3>
+          </div>
+          <ul class="concept-list">
             <li><strong>CPI (Cycles per Instruction):</strong> Average cycles per instruction. Single-issue in-order targets CPI &approx; 1.0; superscalar dual-issue targets CPI &lt; 0.8.</li>
             <li><strong>CoreMark / MHz:</strong> Standard embedded benchmark measuring integer processing throughput per megahertz.</li>
             <li><strong>DMIPS / MHz:</strong> Dhrystone million instructions per second normalized per megahertz.</li>
@@ -844,9 +907,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </ul>
         </div>
 
-        <div class="fund-box">
-          <h4>Physical Silicon Metrics</h4>
-          <ul>
+        <div class="concept-step-card">
+          <div class="step-card-header">
+            <span class="step-tag">AREA &bull; POWER</span>
+            <h3 class="step-card-title">Physical Silicon Metrics</h3>
+          </div>
+          <ul class="concept-list">
             <li><strong>Gate Count (kGE):</strong> Silicon area normalized in thousands of 2-input NAND gates. <code>SERV</code> = 2.1 kGE, <code>Ibex</code> = 24.5 kGE, <code>CVA6</code> = 148 kGE, <code>BOOM</code> = 420 kGE.</li>
             <li><strong>ASIC <em>F</em><sub>max</sub>:</strong> Peak achievable operating frequency under target foundry technology nodes (e.g. TSMC 16nm, GlobalFoundries 22FDX, SkyWater 130nm).</li>
             <li><strong>Energy Efficiency:</strong> Computed in GFLOPS/Watt or CoreMark/milliwatt.</li>
@@ -1525,18 +1591,72 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     }
   }
 
-  .concept-dual-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+  /* Top-Down Concept Stream System */
+  .concept-stream {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
     margin-bottom: 1.5rem;
   }
 
-  @media (max-width: 768px) {
-    .concept-dual-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
+  .concept-step-card {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 10px;
+    padding: 1.35rem 1.5rem;
+    box-shadow: 2.5px 2.5px 0px var(--ink);
+    position: relative;
+  }
+
+  @media (max-width: 640px) {
+    .concept-step-card {
+      padding: 1.1rem 0.9rem;
+      border-radius: 8px;
+      box-shadow: 2px 2px 0px var(--ink);
     }
+  }
+
+  .step-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  .step-tag {
+    background: var(--yellow);
+    color: var(--ink);
+    font-family: var(--md-code-font, monospace);
+    font-weight: 900;
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    border: 1.5px solid var(--ink);
+    line-height: 1.2;
+    display: inline-block;
+  }
+
+  .step-card-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 850;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  @media (max-width: 640px) {
+    .step-card-title {
+      font-size: 1.05rem;
+    }
+  }
+
+  .concept-step-card p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ink-light);
+    margin-top: 0;
+    margin-bottom: 0.65rem;
   }
 
   .concept-box {
@@ -1731,17 +1851,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .gate-sim-body {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 1.5rem;
-    align-items: center;
-  }
-
-  @media (max-width: 768px) {
-    .gate-sim-body {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
   }
 
   .circuit-interactive-panel {
@@ -2426,17 +2538,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     color: #b45309;
   }
 
-  /* Vector Compare Box */
+  /* Vector Compare Box - Top-Down Flow */
   .vector-compare-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1.25rem;
-  }
-
-  @media (max-width: 768px) {
-    .vector-compare-grid {
-      grid-template-columns: 1fr;
-    }
   }
 
   .v-comp-box {
@@ -2591,16 +2697,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
   }
 
   .blc-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  @media (max-width: 640px) {
-    .blc-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
   }
 
   .blc-col-lbl {
