@@ -71,6 +71,7 @@ The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open
       <a href="#core-foundations" class="core-jump-pill">&sect; 1. Architectural Foundations</a>
       <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. The Four Archetypes</a>
       <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Common Architectural DNA</a>
+      <a href="#microarchitectural-differences" class="core-jump-pill">&sect; 4. Microarchitectural Diversity</a>
       <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Benchmark Leaderboard</a>
       <a href="#core-dossiers" class="core-jump-pill">&sect; 6. Native Core Dossiers</a>
     </div>
@@ -2036,6 +2037,219 @@ The Berkeley Out-of-Order Machine (BOOM) is a synthesizable, parameterized, open
     </div>
   </section>
 
+  <!-- ============================================================ -->
+  <!-- SECTION 4: MICROARCHITECTURAL DIFFERENCES & DIVERSITY       -->
+  <!-- ============================================================ -->
+  <section id="microarchitectural-differences" class="content-block">
+    <div class="block-header-wrap">
+      <div class="badge badge-coral">&sect; 4. MICROARCHITECTURAL DIVERSITY</div>
+      <h2 class="block-title">Cross-Core Differences: Engineering Trade-Offs &amp; Diversity</h2>
+      <p class="block-lead">
+        While strict RV64GC compliance guarantees software portability, the underlying microarchitectural implementations diverge dramatically. Engineering teams make radically different silicon trade-offs across issue width, memory concurrency (MSHRs), system interconnects, and speculative branch prediction to satisfy competing power, area, and throughput targets.
+      </p>
+    </div>
+
+    <!-- Differences Dimension Cards -->
+    <div class="diff-cards-deck">
+      <!-- Difference 1: Issue Width & Pipeline Scheduling -->
+      <div class="diff-spec-card diff-hazards">
+        <div class="diff-spec-head">
+          <span class="diff-tag badge-coral">PIPELINE SCHEDULING</span>
+          <h4>Issue Width &amp; Hazard Resolution: In-Order vs. Scoreboard vs. Out-of-Order PRF</h4>
+        </div>
+        <p class="diff-lead">
+          The instruction dispatch and dependency-tracking strategy dictates how the processor handles data hazards and long-latency multicycle operations:
+        </p>
+        <div class="diff-points-stack">
+          <div class="diff-point-row">
+            <span class="diff-point-title">5-Stage Rigid In-Order (Rocket Chip)</span>
+            <span class="diff-point-text">Single-issue in-order dispatch. Stalls the entire front-end on multicycle operations (FPU division, unaligned memory accesses, or DRAM cache misses). Eliminates register rename logic and reservation stations, achieving the smallest gate count (~135 kGE) and lowest dynamic power.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">6-Stage Decoupled Scoreboard (CVA6 / Ariane)</span>
+            <span class="diff-point-text">Decouples instruction issue from execution via a central scoreboard table. Independent 1-cycle integer ALU instructions can bypass long-latency operations (division or floating-point FMA), while results commit to architectural state strictly in program order to guarantee precise traps.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Modular Elastic Scoreboard (BlackParrot)</span>
+            <span class="diff-point-text">Decoupled Front-End (FE) and Back-End (BE) connected by credit-based elastic FIFOs. Features scoreboard-based dependency resolution with dual issue channels and distributed trap handling across modular partitions.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">3-Wide Out-of-Order with Unified PRF (SonicBOOM)</span>
+            <span class="diff-point-text">Fetches 4 instructions and renames/dispatches 3 uOPs per clock cycle. Maps 32 architectural registers onto a 128-entry Physical Register File (PRF), completely eliminating false WAR/WAW hazards. Instructions execute speculatively out-of-order via distributed reservation stations and commit through a 128-entry circular Reorder Buffer (RoB).</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Difference 2: Memory Wall & MSHR Concurrency -->
+      <div class="diff-spec-card diff-math">
+        <div class="diff-spec-head">
+          <span class="diff-tag badge-yellow">MEMORY WALL CONCURRENCY</span>
+          <h4>Cache Miss Concurrency: Blocking vs. Non-Blocking MSHR Pools</h4>
+        </div>
+        <p class="diff-lead">
+          A major bottleneck in 64-bit application computing is the Memory Wall: servicing a DRAM line fill takes 50 to 100 clock cycles. Cores diverge fundamentally in how they handle memory latency:
+        </p>
+        <div class="diff-points-stack">
+          <div class="diff-point-row">
+            <span class="diff-point-title">Blocking Single-Miss Cache (Rocket Chip)</span>
+            <span class="diff-point-text">4-way set-associative VIPT cache without MSHRs. On a cache miss, the pipeline freezes completely until the TileLink-UH bus refills the entire 64-byte line from DRAM. Instantaneous CPI degrades to 50&ndash;100 cycles during DRAM latency.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Non-Blocking Hit-Under-Miss (BlackParrot)</span>
+            <span class="diff-point-text">The L1 Data Cache incorporates dedicated Miss Status Holding Registers. Subsequent load and store instructions that hit in L1-D continue executing uninterrupted while a prior cache miss is being serviced across the BedRock interconnect.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">8-Entry Concurrent MSHR Pool (SonicBOOM)</span>
+            <span class="diff-point-text">Features an 8-entry MSHR pool supporting both "hits-under-miss" and "misses-under-miss". Sustains up to 8 concurrent outstanding 64-byte DRAM line requests simultaneously. Combined with a 16-entry Load Queue (LDQ) and 16-entry Store Queue (STQ) providing speculative load bypassing and dynamic store-to-load forwarding.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Difference 3: System Interconnect & Coherence Fabric -->
+      <div class="diff-spec-card diff-memory">
+        <div class="diff-spec-head">
+          <span class="diff-tag badge-teal">SYSTEM INTERCONNECT</span>
+          <h4>System Bus Interfaces &amp; Multi-Core Coherence Fabrics</h4>
+        </div>
+        <p class="diff-lead">
+          Interconnect architecture dictates how easily an application core integrates into industrial SoC platforms and how effectively it scales across multi-core cluster configurations:
+        </p>
+        <div class="diff-points-stack">
+          <div class="diff-point-row">
+            <span class="diff-point-title">TileLink-UH 64b (Rocket Chip)</span>
+            <span class="diff-point-text">Decoupled open-source bus protocol with independent Channel A (requests) and Channel D (responses). Highly optimized for low-gate-count single-core SoCs, but multi-core coherence requires adding a centralized TileLink Broadcast Hub or complex L2 directory controller.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Standard Industrial AXI4-64b (CVA6 / Ariane)</span>
+            <span class="diff-point-text">Full ARM AMBA AXI4 master interface with 5 independent channels (AW, W, B, AR, R). Provides native plug-and-play compatibility with commercial ASIC memory controllers, PCIe root complexes, and standard FPGA IP blocks without bridge translation logic.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">BedRock Directory MESI &amp; 2D-Mesh NoC (BlackParrot)</span>
+            <span class="diff-point-text">Embeds an on-chip Coherence Cache Engine (CCE) running the formal BedRock directory-based MESI protocol over credit-based packet FIFOs. Includes an integrated 5-port 2D-mesh packetized wormhole router directly inside each tile, supporting linear multi-core scaling up to 64 cores without broadcast storms.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Multi-Channel TileLink-C Coherent Bus (SonicBOOM)</span>
+            <span class="diff-point-text">Full 5-channel TileLink Coherent (TL-C) fabric with independent acquire, probe, and grant channels, interfacing with an interleaved multi-bank shared L2 cache and hardware directory snooper for high-bandwidth superscalar memory pipelines.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Difference 4: Branch Prediction & Speculative Window -->
+      <div class="diff-spec-card diff-security">
+        <div class="diff-spec-head">
+          <span class="diff-tag badge-purple">BRANCH SPECULATION</span>
+          <h4>Dynamic Branch Predictors &amp; Speculative Recovery Windows</h4>
+        </div>
+        <p class="diff-lead">
+          As pipeline depth increases, the penalty for branch mispredictions escalates from 2 cycles to over 10 cycles, driving increasingly sophisticated branch prediction hardware:
+        </p>
+        <div class="diff-points-stack">
+          <div class="diff-point-row">
+            <span class="diff-point-title">28-Entry BTB + 2-Bit BHT (Rocket Chip)</span>
+            <span class="diff-point-text">Simple Branch Target Buffer (28 entries) with a 2-bit saturating counter array. Branches resolve in the EX stage with a modest 2-cycle bubble penalty on mispredicts. Minimal silicon area footprint (~2.5 kGE).</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Two-Level BHT + BTB + 4-Entry RAS (CVA6 / Ariane)</span>
+            <span class="diff-point-text">Combines a 2-level Branch History Table (BHT), Branch Target Buffer, and 4-entry Return Address Stack (RAS). Bounding mispredict penalties strictly to 3 clock cycles.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Modular Elastic BPU (BlackParrot)</span>
+            <span class="diff-point-text">Decoupled branch prediction engine located in the Front-End partition, feeding an elastic instruction queue to absorb redirect latency from the execution back-end.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Advanced TAGE Predictor + 32-Entry RAS + FTQ (SonicBOOM)</span>
+            <span class="diff-point-text">Deploys an industry-grade TAgged GEometric history length (TAGE) branch predictor with multi-component global history tables, Next-Line Predictor (NLP), 32-entry RAS, and a 16-entry Fetch Target Queue (FTQ). Achieves &gt;96% accuracy on complex branch-heavy Linux workloads, avoiding devastating 8-to-10 cycle pipeline flushes.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side-by-Side Architectural Differences Matrix Table -->
+    <div class="table-title-box">
+      <div class="table-title-flex">
+        <div>
+          <h3 class="table-heading">Side-by-Side Architectural Differences Matrix</h3>
+          <p class="table-caption">Comprehensive structural comparison across evaluated open-source 64-bit application cores.</p>
+        </div>
+        <div class="matrix-filter-bar">
+          <button class="matrix-filter-btn active" data-tier="all">All Cores</button>
+          <button class="matrix-filter-btn" data-tier="inorder">Lean In-Order (&le;150 kGE)</button>
+          <button class="matrix-filter-btn" data-tier="multicore">Modular Multi-Core</button>
+          <button class="matrix-filter-btn" data-tier="ooo">Out-of-Order Superscalar (&gt;400 kGE)</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table class="data-table" id="matrix-table">
+        <thead>
+          <tr>
+            <th>Core</th>
+            <th>HDL</th>
+            <th>Pipeline Depth</th>
+            <th>Issue Width &amp; Type</th>
+            <th>L1-D Cache / MSHRs</th>
+            <th>System Interconnect</th>
+            <th>Branch Predictor</th>
+            <th>Area (kGE)</th>
+            <th>Fmax (16nm)</th>
+            <th>Primary Application Niche</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-tier="inorder">
+            <td><strong>Rocket Chip</strong></td>
+            <td>Chisel HDL</td>
+            <td>5 Stages</td>
+            <td>1-Wide In-Order</td>
+            <td>16/32 KiB VIPT &bull; Blocking (0 MSHR)</td>
+            <td>TileLink-UH 64b</td>
+            <td>28-Entry BTB + 2-bit BHT</td>
+            <td><span class="badge badge-coral">~135</span></td>
+            <td>~1.2 &ndash; 1.4 GHz</td>
+            <td>Academic reference, low-power Linux, edge gateways</td>
+          </tr>
+          <tr data-tier="inorder">
+            <td><strong>CVA6 (Ariane)</strong></td>
+            <td>SystemVerilog</td>
+            <td>6 Stages</td>
+            <td>1-Wide Decoupled Scoreboard</td>
+            <td>16 KiB VIPT &bull; In-Order LSU</td>
+            <td>Standard AXI4-64b</td>
+            <td>BHT + BTB + 4-entry RAS</td>
+            <td><span class="badge badge-teal">~148</span></td>
+            <td>~1.4 GHz</td>
+            <td>Industrial Linux ASICs, automotive, EPI space tapeouts</td>
+          </tr>
+          <tr data-tier="multicore">
+            <td><strong>BlackParrot</strong></td>
+            <td>SystemVerilog</td>
+            <td>Modular 3-Part</td>
+            <td>Decoupled Scoreboard Tile</td>
+            <td>Non-Blocking VIPT &bull; MSHRs</td>
+            <td>BedRock MESI &bull; 2D NoC</td>
+            <td>Decoupled Front-End BPU</td>
+            <td><span class="badge badge-lime">~165</span></td>
+            <td>~1.1 GHz</td>
+            <td>Massively tiled multi-core servers, accelerator hosts</td>
+          </tr>
+          <tr data-tier="ooo">
+            <td><strong>SonicBOOM</strong></td>
+            <td>Chisel HDL</td>
+            <td>7&ndash;10 Stages</td>
+            <td>3-Wide Out-of-Order (128 PRF)</td>
+            <td>32 KiB 8-Way &bull; 8-Entry MSHR Pool</td>
+            <td>TileLink-C 64b</td>
+            <td>TAGE + 32-Entry RAS + FTQ</td>
+            <td><span class="badge badge-yellow">~420</span></td>
+            <td>~1.5 GHz</td>
+            <td>High-performance Linux compute, RISC-V workstations</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <!-- Benchmark Leaderboard -->
   <section id="benchmark-leaderboard" class="content-block">
     <div class="block-header-flex">
@@ -2398,6 +2612,28 @@ BOOM        &amp; RV64GC &amp; 7--10 (OoO)  &amp; Sv39/48 &amp; \textbf&#123;780
       }
     });
   });
+
+  // Filter Matrix by Tier for Section 4
+  const filterBtns = document.querySelectorAll(".matrix-filter-btn");
+  const matrixRows = document.querySelectorAll("#matrix-table tbody tr");
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const tier = btn.getAttribute("data-tier");
+
+      matrixRows.forEach((row) => {
+        const rowTier = row.getAttribute("data-tier");
+        if (tier === "all" || rowTier === tier) {
+          (row as HTMLElement).style.display = "";
+        } else {
+          (row as HTMLElement).style.display = "none";
+        }
+      });
+    });
+  });
+
 </script>
 
 <style>
@@ -3776,6 +4012,161 @@ BOOM        &amp; RV64GC &amp; 7--10 (OoO)  &amp; Sv39/48 &amp; \textbf&#123;780
 
   @media (max-width: 680px) {
     .sim-point-row {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+  }
+
+
+  /* ============================================================ */
+  /* Section 4: Microarchitectural Differences & Matrix Styling   */
+  /* ============================================================ */
+  .diff-cards-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .diff-spec-card {
+    background: #ffffff;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.35rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .diff-spec-card.diff-hazards { border-left: 6px solid var(--coral, #f38469); }
+  .diff-spec-card.diff-math { border-left: 6px solid var(--yellow, #ffc83e); }
+  .diff-spec-card.diff-memory { border-left: 6px solid var(--teal, #0d9488); }
+  .diff-spec-card.diff-security { border-left: 6px solid var(--purple, #8275e8); }
+
+  .diff-spec-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .diff-tag {
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--ink, #151b20);
+    display: inline-block;
+    width: fit-content;
+    margin-bottom: 0.25rem;
+  }
+
+  .diff-spec-head h4 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+  }
+
+  .diff-lead {
+    font-size: 0.92rem;
+    color: var(--ink-light, #242c33);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .diff-points-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-top: 0.25rem;
+  }
+
+  .diff-point-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0.85rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-light, #242c33);
+    background: var(--paper, #fdfbf7);
+    padding: 0.6rem 0.85rem;
+    border-radius: 6px;
+    border: 1px solid var(--line, #e2d9c8);
+    align-items: baseline;
+  }
+
+  .diff-point-title {
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.82rem;
+    color: var(--ink, #151b20);
+    text-transform: uppercase;
+  }
+
+  .diff-point-text {
+    color: var(--ink-light, #242c33);
+  }
+
+  .table-title-box {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .table-title-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .table-heading {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0 0 0.35rem 0;
+  }
+
+  .table-caption {
+    font-size: 0.85rem;
+    color: var(--ink-light, #555);
+    margin: 0;
+  }
+
+  .matrix-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .matrix-filter-btn {
+    background: var(--paper, #fdfbf7);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    padding: 0.35rem 0.7rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+
+  .matrix-filter-btn:hover {
+    background: var(--yellow-soft, #fff8e1);
+    transform: translate(-1px, -1px);
+  }
+
+  .matrix-filter-btn.active {
+    background: var(--yellow, #ffc83e);
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+  }
+
+  @media (max-width: 680px) {
+    .diff-point-row {
       grid-template-columns: 1fr;
       gap: 0.3rem;
     }
