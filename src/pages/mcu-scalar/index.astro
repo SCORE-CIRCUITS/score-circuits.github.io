@@ -1,9 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import db from "../../data/score_db.json";
-import { formatNumber } from "../../lib/content";
-
-const cat1Tools = db.tools.filter(t => t.categoryNumber === 1);
 
 // Master Empirical Benchmark Leaderboard: Exact figures measured under SCORE cycle-accurate simulation profiles
 const masterBenchmarkData = [
@@ -424,9 +421,7 @@ const bespokeDossiers = [
     siliconEvidence: "Validated on multiple FPGA boards: Xilinx Spartan-6, Artix-7, Lattice iCE40, and Gowin GW1N.",
     verificationRigor: "SCORE Icarus Verilog simulation with automatic CRC-16 checksum matching and execution cycle verification.",
     strengths: "Ultra-compact logic footprint; near single-cycle execution when paired with LUT-RAM; straightforward HDL hierarchy for teaching and fast prototyping.",
-    tradeoffs: "Relies heavily on asynchronous distributed RAM timing; lacking standard bus wrapper (e.g. AXI/AHB) in default top-level; RV32E 16-register default limits compiler register allocation.",
-    reproCmd: "./scripts/benchmarks/run_darkriscv_coremark.sh",
-    topFiles: ["darkriscv.v", "darkriscv.core", "sim/darksimv.v"]
+    tradeoffs: "Relies heavily on asynchronous distributed RAM timing; lacking standard bus wrapper (e.g. AXI/AHB) in default top-level; RV32E 16-register default limits compiler register allocation."
   },
   {
     name: "Hazard3",
@@ -447,9 +442,7 @@ const bespokeDossiers = [
     siliconEvidence: "Mass-production commercial silicon on TSMC 40nm in the Raspberry Pi RP2350 microcontroller (dual Hazard3 cores).",
     verificationRigor: "Full formal assertion suite (SVA) with SymbiYosys, RISC-V Architectural Compatibility Tests (ACT), CXXRTL and Verilator testbenches.",
     strengths: "Top-tier 3.17 CoreMark/MHz efficiency; mass-production silicon heritage; full RV32_Zba/bb/bc/bs bit-manipulation support; dual AHB5 bus integration.",
-    tradeoffs: "Higher area than 2-stage cores; no MMU for virtual memory operating systems (strictly baremetal/RTOS).",
-    reproCmd: "./scripts/benchmarks/run_hazard3_coremark.sh",
-    topFiles: ["hazard3_core.v", "hazard3_alu.v", "hazard3_frontend.v", "hazard3_csr.v"]
+    tradeoffs: "Higher area than 2-stage cores; no MMU for virtual memory operating systems (strictly baremetal/RTOS)."
   },
   {
     name: "Ibex (zero-riscy)",
@@ -470,9 +463,7 @@ const bespokeDossiers = [
     siliconEvidence: "Silicon-proven across dozens of tapeouts; primary processor in Google / lowRISC OpenTitan silicon Root of Trust (Earl Grey).",
     verificationRigor: "Extensive UVM verification environment, Google RISCV-DV random instruction generator, 100% line/toggle coverage, nightly CI regression.",
     strengths: "World standard for open-source embedded security; Dual-Core Lockstep (DCLS) redundancy; side-channel attack countermeasures; Physical Memory Protection (PMP).",
-    tradeoffs: "2-stage pipeline limits maximum ASIC clock frequency relative to deeper pipelines; multi-cycle division.",
-    reproCmd: "./scripts/run_ibex.sh",
-    topFiles: ["ibex_core.sv", "ibex_id_stage.sv", "ibex_if_stage.sv", "ibex_ex_block.sv"]
+    tradeoffs: "2-stage pipeline limits maximum ASIC clock frequency relative to deeper pipelines; multi-cycle division."
   },
   {
     name: "NEORV32 (VHDL)",
@@ -493,9 +484,7 @@ const bespokeDossiers = [
     siliconEvidence: "Multiple ASIC tapeouts via open-source OpenLane/SkyWater 130nm and IHP 130nm; tested on AMD, Intel, Lattice, Gowin FPGAs.",
     verificationRigor: "Upstream continuous integration passing official RISC-V Architectural Compatibility Tests (ACT); SCORE GHDL simulation validation.",
     strengths: "Turn-key SoC ecosystem with rich built-in peripherals (UART, SPI, TWI, PWM, TRNG, CFS, WDT); pristine documentation; completely vendor-independent VHDL.",
-    tradeoffs: "Non-pipelined divider requires multi-cycle iterative computation; base configuration tuned for balanced area rather than maximum IPC.",
-    reproCmd: "./scripts/benchmarks/run_neorv32_coremark.sh",
-    topFiles: ["neorv32_cpu.vhd", "neorv32_top.vhd", "neorv32_cpu_alu.vhd", "neorv32_package.vhd"]
+    tradeoffs: "Non-pipelined divider requires multi-cycle iterative computation; base configuration tuned for balanced area rather than maximum IPC."
   },
   {
     name: "NEORV32 (Verilog)",
@@ -516,9 +505,7 @@ const bespokeDossiers = [
     siliconEvidence: "Verified against OpenLane SkyWater 130nm tapeout flow scripts.",
     verificationRigor: "Formal equivalence checking and GHDL synthesis verification in SCORE regression pipeline.",
     strengths: "Enables Verilog-only EDA toolchains (Verilator, OpenROAD, Icarus) to utilize the NEORV32 processor without requiring mixed-language licenses.",
-    tradeoffs: "Synthesized Verilog netlist is less modular for direct source-code modifications than the original VHDL source.",
-    reproCmd: "./scripts/run_neorv32_verilog.sh",
-    topFiles: ["neorv32_verilog.v", "neorv32_cpu.v"]
+    tradeoffs: "Synthesized Verilog netlist is less modular for direct source-code modifications than the original VHDL source."
   },
   {
     name: "PicoRV32",
@@ -539,9 +526,7 @@ const bespokeDossiers = [
     siliconEvidence: "Widely fabricated in hundreds of academic and commercial ASIC tapeouts (Google SkyWater 130nm shuttles, efabless Caravel).",
     verificationRigor: "Exhaustively verified with SymbiYosys formal verification suite; passes riscv-tests and torture suites.",
     strengths: "Extreme area efficiency; battle-tested reliability; ultra-simple memory interface for FPGA house-keeping and SoC power management.",
-    tradeoffs: "High CPI (~3.85 to 4.2) due to multi-cycle instruction execution; non-standard interrupt controller by default.",
-    reproCmd: "./scripts/benchmarks/run_picorv32_coremark.sh",
-    topFiles: ["picorv32.v", "picorv32.core", "picosoc/picosoc.v"]
+    tradeoffs: "High CPI (~3.85 to 4.2) due to multi-cycle instruction execution; non-standard interrupt controller by default."
   },
   {
     name: "SCR1",
@@ -562,9 +547,7 @@ const bespokeDossiers = [
     siliconEvidence: "Silicon-proven in full-wafer commercial ASIC mass production across TSMC, GlobalFoundries, and SMIC foundry processes.",
     verificationRigor: "Industrial verification methodology; upstream compliance tests passing official RISC-V compliance test suites.",
     strengths: "Commercial-grade codebase maturity; dual AHB/AXI native bus bridges; fast hardware radix-4 divider; production ASIC silicon heritage.",
-    tradeoffs: "Machine-mode privilege only; non-trivial configuration generator script required for parameter alterations.",
-    reproCmd: "./scripts/benchmarks/run_scr1_coremark.sh",
-    topFiles: ["scr1_core_top.sv", "scr1_pipe_top.sv", "scr1_pipe_exu.sv", "scr1_pipe_ifu.sv"]
+    tradeoffs: "Machine-mode privilege only; non-trivial configuration generator script required for parameter alterations."
   },
   {
     name: "SERV",
@@ -585,9 +568,7 @@ const bespokeDossiers = [
     siliconEvidence: "Winner of the RISC-V SoftCPU contest; demonstrated on over 20 different FPGA boards from Lattice, AMD, Intel, and QuickLogic.",
     verificationRigor: "Continuous automated integration tests on GitHub Actions; extensive co-simulation against Spike RISC-V ISA simulator.",
     strengths: "Absolute world record for minimum silicon area; allows hundreds of independent RISC-V cores to be packed into a modest FPGA fabric.",
-    tradeoffs: "32-cycle latency per instruction results in very low IPC; unsuitable for high-throughput or latency-critical processing.",
-    reproCmd: "./scripts/benchmarks/run_serv_coremark.sh",
-    topFiles: ["serv_top.v", "serv_rf_top.v", "serv_alu.v", "serv_state.v"]
+    tradeoffs: "32-cycle latency per instruction results in very low IPC; unsuitable for high-throughput or latency-critical processing."
   },
   {
     name: "VeeR EL2",
@@ -607,10 +588,8 @@ const bespokeDossiers = [
     fmax: "500 MHz (TSMC 16nm / 200 MHz UltraScale+)",
     siliconEvidence: "Mass-production silicon deployed in hundreds of millions of commercial Western Digital solid-state drive (SSD) controllers.",
     verificationRigor: "Commercial-grade testbench with random instruction generators, extensive assertion coverage, and regression suites.",
-    strengths: "Highest instruction throughput in Category 1 (CPI ~1.03); dual-issue superscalar dispatch; commercial mass-production pedigree; robust ECC memory protection.",
-    tradeoffs: "Largest silicon footprint in Category 1 (~48.5 kGE); complex clock gating and memory initialization sequence.",
-    reproCmd: "./scripts/benchmarks/run_veer_el2_coremark.sh",
-    topFiles: ["el2_veer.sv", "el2_dec.sv", "el2_exu.sv", "el2_ifu.sv"]
+    strengths: "Highest instruction throughput among evaluated scalar cores (CPI ~1.03); dual-issue superscalar dispatch; commercial mass-production pedigree; robust ECC memory protection.",
+    tradeoffs: "Largest silicon footprint among evaluated scalar cores (~48.5 kGE); complex clock gating and memory initialization sequence."
   },
   {
     name: "VexRiscv",
@@ -631,9 +610,7 @@ const bespokeDossiers = [
     siliconEvidence: "Extensively deployed in FPGA systems via LiteX and taped out in multiple ASIC research shuttles.",
     verificationRigor: "Continuous automated integration with SpinalHDL formal checks and Verilator regression suites.",
     strengths: "Extreme parameterizability; clean hardware plugin architecture; can scale from a minimal microcontroller up to a full Linux-booting core.",
-    tradeoffs: "Generated Verilog RTL contains Scala-generated signal naming conventions, making manual debugging in gate netlists more involved.",
-    reproCmd: "./scripts/benchmarks/run_vexriscv_coremark.sh",
-    topFiles: ["VexRiscv.v", "VexRiscvAxi4.v", "VexRiscvSmallest.v"]
+    tradeoffs: "Generated Verilog RTL contains Scala-generated signal naming conventions, making manual debugging in gate netlists more involved."
   },
   {
     name: "RV12",
@@ -654,9 +631,7 @@ const bespokeDossiers = [
     siliconEvidence: "Targeted at industrial ASIC and FPGA commercial IP blocks.",
     verificationRigor: "SCORE Verilator --lint-only clean verification.",
     strengths: "Clean modular Verilog RTL code layout; integrated PLIC interrupt controller; supports 32-bit and 64-bit datapath configurations.",
-    tradeoffs: "Upstream simulation testbench relies on commercial EDA simulators; proprietary header restrictions limit open redistribution.",
-    reproCmd: "./scripts/run_rv12.sh",
-    topFiles: ["riscv_core.v", "riscv_alu.v", "riscv_id.v", "riscv_if.v"]
+    tradeoffs: "Upstream simulation testbench relies on commercial EDA simulators; proprietary header restrictions limit open redistribution."
   },
   {
     name: "RISC-V VHDL",
@@ -677,24 +652,35 @@ const bespokeDossiers = [
     siliconEvidence: "Demonstrated on Xilinx Artix-7 and Kintex-7 FPGA development platforms.",
     verificationRigor: "ModelSim and GHDL compilation and syntax lint validation in SCORE.",
     strengths: "Clear pedagogical structural VHDL hierarchy; transparent register transfer logic for computer engineering coursework.",
-    tradeoffs: "Upstream repository marked as historical reference relative to newer multi-core projects; modest IPC efficiency.",
-    reproCmd: "./scripts/generate_riscv_vhdl.sh",
-    topFiles: ["riscv_vhdl.vhd", "cpu_core.vhd"]
+    tradeoffs: "Upstream repository marked as historical reference relative to newer multi-core projects; modest IPC efficiency."
   }
 ];
 ---
 
 <BaseLayout
   title="MCU & Scalar Cores"
-  description="Category 1: Comprehensive microarchitectural taxonomy, Level 1 CoreMark & Dhrystone empirical benchmarking, cross-core similarity & difference analyses, and native architectural dossiers across 12 evaluated open-source RISC-V scalar cores."
+  description="Architectural deconstruction, Level 1 CoreMark &amp; Dhrystone empirical benchmarking, cross-core taxonomy, and native silicon dossiers across 12 evaluated open-source RISC-V scalar processors."
 >
   <!-- Hero Section -->
   <div class="page-header accent-yellow">
-    <div class="badge badge-accent">CATEGORY 1 &bull; MCU &amp; SCALAR CORES &bull; LEVEL 1 BENCHMARKS</div>
-    <h1 class="page-title">Microcontroller &amp; Scalar Embedded Cores</h1>
-    <p class="page-lead">
-      Area-constrained, deterministic, in-order RISC-V processor cores (<code>RV32I</code> / <code>RV32E</code>) optimized for deeply embedded control, baremetal sensors, IoT microcontrollers, and silicon security roots of trust. Rigorously benchmarked under the cycle-accurate <code>mcu_verilator</code>, <code>cxxrtl</code>, <code>icarus</code>, and <code>ghdl</code> simulation profiles.
-    </p>
+    <div class="badge badge-accent">OPEN-SOURCE SCALAR ARCHITECTURES &bull; HARDWARE SPECTRUM &amp; BENCHMARKS</div>
+    <h1 class="page-title">Understanding Microcontroller &amp; Scalar Cores</h1>
+    
+    <!-- First-Principles Intuitive Introduction -->
+    <div class="intro-narrative">
+      <p class="intro-p intro-lead-highlight">
+        Behind almost every electronic device you interact with daily—from the microwave on your kitchen counter and the anti-lock brake sensor in your car to smart thermostats, IoT sensor beacons, and flash memory controllers—sits a tiny embedded microcontroller core.
+      </p>
+      <p class="intro-p">
+        Unlike the high-power, multi-gigahertz processors in laptops and smartphones that burn tens of watts running full Linux operating systems, deeply embedded scalar cores operate silently in the background. They sip single-digit milliwatts (or even microwatts) of battery energy, occupy tiny fractions of a square millimeter of silicon die, and execute real-time firmware loops with cycle-by-cycle deterministic predictability.
+      </p>
+      <p class="intro-p">
+        In hardware engineering, however, <strong>silicon area directly equals manufacturing cost</strong>. If you give a core a wide 32-bit parallel adder, 32 registers, dynamic branch predictors, and a 5-stage pipeline, it completes instructions rapidly (high instructions-per-cycle, or IPC), but takes up substantial silicon area. If you strip it down to a minimalist state machine or a 1-bit serial shifter, the core shrinks to near-zero area—but an instruction might require dozens of clock cycles to finish.
+      </p>
+      <p class="intro-p">
+        This page is a top-down educational guide and empirical benchmark report covering <strong>12 prominent open-source RISC-V scalar architectures</strong>. Below, you will explore their internal datapath schematics, step through their clock-by-clock execution in an interactive simulator, compare their empirical CoreMark and Dhrystone scores measured on cycle-accurate HDL simulators (Verilator, CXXRTL, Icarus, and GHDL), and discover which core best fits your silicon or FPGA design constraints.
+      </p>
+    </div>
 
     <!-- Key Metrics Stats Deck -->
     <div class="hero-stats-deck">
@@ -723,7 +709,7 @@ const bespokeDossiers = [
     <!-- Quick Navigation Jump Bar -->
     <div class="core-jump-bar">
       <span class="jump-label">Jump to Section:</span>
-      <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 1. Spectrum Archetypes</a>
+      <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 1. Spectrum Archetypes &amp; Section 1.1</a>
       <a href="#architectural-similarities" class="core-jump-pill">&sect; 2. Shared DNA (Similarities)</a>
       <a href="#microarchitectural-differences" class="core-jump-pill">&sect; 3. Differences &amp; Taxonomy</a>
       <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 4. Empirical Leaderboard</a>
@@ -735,72 +721,187 @@ const bespokeDossiers = [
   <!-- SECTION 1: MICROARCHITECTURAL SPECTRUM & DEEP TAXONOMY -->
   <section id="microarchitectural-spectrum" class="content-block">
     <div class="block-header-wrap">
-      <div class="badge badge-primary">&sect; 1. ARCHITECTURAL TAXONOMY &amp; THE FOUR ARCHETYPES</div>
-      <h2 class="block-title">The Scalar Processor Design Space &amp; Microarchitectural Taxonomy</h2>
+      <div class="badge badge-primary">&sect; 1. ARCHITECTURAL SPECTRUM &amp; THE FOUR ARCHETYPES</div>
+      <h2 class="block-title">The Scalar Processor Design Space: A Top-Down Progression</h2>
       <p class="block-lead">
-        In deeply embedded computing, the central engineering challenge is balancing the eternal hardware triad: <strong>Silicon Area</strong> (<em>A</em>, in kGE or LUTs), <strong>Operating Frequency</strong> (<em>F</em><sub>max</sub>), and <strong>Execution Efficiency</strong> (CPI, CoreMark/MHz). Category 1 evaluates 12 open-source scalar implementations spanning four distinct microarchitectural philosophies.
+        In deeply embedded computing, the central engineering challenge is balancing the eternal hardware triad: <strong>Silicon Area</strong> (<em>A</em>, in kGE or LUTs), <strong>Operating Frequency</strong> (<em>F</em><sub>max</sub>), and <strong>Execution Efficiency</strong> (CPI, CoreMark/MHz). The 12 evaluated open-source scalar implementations span four distinct microarchitectural philosophies, organized below as a top-down progression from the smallest possible silicon footprint up to high-throughput dual-issue execution.
       </p>
     </div>
 
-    <!-- 1.0 ARCHETYPE OVERVIEW GRID -->
-    <div class="arch-features-grid">
-      <!-- Archetype 1 -->
-      <div class="feature-card archetype-coral">
-        <div class="card-top-tag">ARCHETYPE 1 &bull; 1.0 TO 9.5 kGE</div>
-        <h3>Ultra-Compact / Bit-Serial &amp; Minimal Multi-Cycle</h3>
-        <p class="arch-cores-list"><strong>Representative Cores:</strong> SERV, DarkRISCV, PicoRV32</p>
-        <p>
-          Architectures where silicon area is the absolute limiting constraint. <strong>SERV</strong> shifts operands 1 bit per clock cycle through a single 1-bit ALU across 32 cycles, consuming fewer than 150 FPGA LUTs. <strong>PicoRV32</strong> reuses a single 32-bit adder for PC increments, memory address calculation, and arithmetic over 3&ndash;4 clock cycles.
-        </p>
-        <div class="arch-meta-pills">
-          <span class="pill-metric">CPI: 1.6 &ndash; 32.0</span>
-          <span class="pill-metric">CoreMark/MHz: 0.03 &ndash; 0.90</span>
-          <span class="pill-metric">Niche: FPGA Glue / Enclaves</span>
+    <!-- 1.0 TOP-DOWN PROGRESSIVE ARCHITECTURAL LADDER -->
+    <div class="arch-ladder">
+      <!-- Step 1: Archetype 1 -->
+      <div class="ladder-step archetype-coral-border">
+        <div class="ladder-header">
+          <div class="ladder-num-badge badge-coral">01</div>
+          <div class="ladder-title-wrap">
+            <div class="ladder-eyebrow">ARCHETYPE 1 &bull; 1.0 TO 9.5 kGE &bull; ULTRA-COMPACT SILICON ENVELOPE</div>
+            <h3 class="ladder-title">Ultra-Compact Bit-Serial &amp; Minimal Multi-Cycle Cores</h3>
+          </div>
+        </div>
+        <div class="ladder-body">
+          <p class="ladder-narrative">
+            <strong>The Problem:</strong> When silicon area is the absolute limiting constraint (sub-10 kGE or fewer than 1,000 FPGA LUTs), conventional parallel 32-bit execution units cannot physically fit. A standard 32-bit dual-read register file and wide ALU alone consume tens of thousands of transistors.
+          </p>
+          <p class="ladder-narrative">
+            <strong>The Architectural Solution:</strong> These cores sacrifice single-cycle execution to save silicon. <strong>SERV</strong> strips the ALU down to a single 1-bit full adder and shifts 32-bit data through it 1 bit per clock cycle over 32 cycles. <strong>PicoRV32</strong> uses an FSM to time-multiplex a single shared 32-bit adder across instruction fetch, address calculation, and arithmetic over 3 to 4 cycles.
+          </p>
+          <div class="ladder-summary-bar">
+            <div class="ladder-metric">
+              <span class="lm-lbl">Representative Cores</span>
+              <span class="lm-val">SERV, PicoRV32, DarkRISCV</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CPI Span</span>
+              <span class="lm-val">1.64 &ndash; 32.0</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CoreMark/MHz</span>
+              <span class="lm-val">0.03 &ndash; 0.90</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Primary Niche</span>
+              <span class="lm-val">FPGA Housekeeping, Enclave Glue</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Archetype 2 -->
-      <div class="feature-card archetype-teal">
-        <div class="card-top-tag">ARCHETYPE 2 &bull; 18 TO 32 kGE</div>
-        <h3>Balanced Pipelined Microcontrollers</h3>
-        <p class="arch-cores-list"><strong>Representative Cores:</strong> Ibex (zero-riscy), SCR1 (MIN), NEORV32</p>
-        <p>
-          Standard 2-stage Harvard pipelines combining Instruction Fetch and Decode/Execute. Branch penalties are strictly 1 cycle. Optimized for embedded IoT sensor nodes, secure boot, and silicon Roots of Trust (e.g. Google/lowRISC OpenTitan), offering high clock frequency with minimal area.
-        </p>
-        <div class="arch-meta-pills">
-          <span class="pill-metric">CPI: 1.18 &ndash; 1.69</span>
-          <span class="pill-metric">CoreMark/MHz: 0.89 &ndash; 3.23</span>
-          <span class="pill-metric">Niche: Silicon RoT / Microcontrollers</span>
+      <!-- Ladder Connector 1 -> 2 -->
+      <div class="ladder-connector">
+        <div class="connector-line"></div>
+        <div class="connector-pill">
+          <span>&darr; Trade Silicon Area (+15 kGE) to Eliminate Multi-Cycle Stalls via 2-Stage Harvard Pipelining</span>
+        </div>
+        <div class="connector-line"></div>
+      </div>
+
+      <!-- Step 2: Archetype 2 -->
+      <div class="ladder-step archetype-teal-border">
+        <div class="ladder-header">
+          <div class="ladder-num-badge badge-teal">02</div>
+          <div class="ladder-title-wrap">
+            <div class="ladder-eyebrow">ARCHETYPE 2 &bull; 18 TO 32 kGE &bull; HARVARD MICROCONTROLLER SWEET SPOT</div>
+            <h3 class="ladder-title">Balanced 2-Stage Pipelined Microcontrollers</h3>
+          </div>
+        </div>
+        <div class="ladder-body">
+          <p class="ladder-narrative">
+            <strong>The Problem:</strong> Multi-cycle state machines spend 3 to 32 clock cycles on every instruction, resulting in low throughput that cannot service fast real-time sensor interrupts or secure boot cryptographic loops.
+          </p>
+          <p class="ladder-narrative">
+            <strong>The Architectural Solution:</strong> Introduce a 2-stage Harvard pipeline (Instruction Fetch &rarr; Execute/Writeback) with separate instruction and data memory buses. Because fetch occurs concurrently with execution of the previous instruction, standard arithmetic completes in exactly 1 clock cycle (CPI ~1.18 to 1.45), while branch penalties are strictly 1 cycle.
+          </p>
+          <div class="ladder-summary-bar">
+            <div class="ladder-metric">
+              <span class="lm-lbl">Representative Cores</span>
+              <span class="lm-val">Ibex, NEORV32, SCR1 (MIN)</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CPI Span</span>
+              <span class="lm-val">1.18 &ndash; 1.69</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CoreMark/MHz</span>
+              <span class="lm-val">0.89 &ndash; 3.23</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Primary Niche</span>
+              <span class="lm-val">Silicon Root-of-Trust (OpenTitan), IoT SoCs</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Archetype 3 -->
-      <div class="feature-card archetype-lime">
-        <div class="card-top-tag">ARCHETYPE 3 &bull; 28 TO 42 kGE</div>
-        <h3>High-Efficiency Deep Pipelined Harvard Cores</h3>
-        <p class="arch-cores-list"><strong>Representative Cores:</strong> Hazard3, SCR1 (MAX), VexRiscv (GenFull), RV12</p>
-        <p>
-          3 to 5 stage decoupled in-order pipelines featuring independent AHB5/AXI4 instruction and data buses, comprehensive operand forwarding paths, hardware bit-manipulation (Zba/Zbb/Zbc/Zbs), and fast radix-4 dividers. Delivers exceptional IPC (&gt;3.0 CoreMark/MHz) without superscalar complexity.
-        </p>
-        <div class="arch-meta-pills">
-          <span class="pill-metric">CPI: 1.15 &ndash; 1.30</span>
-          <span class="pill-metric">CoreMark/MHz: 2.01 &ndash; 3.17</span>
-          <span class="pill-metric">Niche: Real-Time Edge Control / RP2350</span>
+      <!-- Ladder Connector 2 -> 3 -->
+      <div class="ladder-connector">
+        <div class="connector-line"></div>
+        <div class="connector-pill">
+          <span>&darr; Deepen Pipeline (3&ndash;5 Stages) &amp; Forwarding Networks to Break the 400 MHz Critical-Path Ceiling</span>
+        </div>
+        <div class="connector-line"></div>
+      </div>
+
+      <!-- Step 3: Archetype 3 -->
+      <div class="ladder-step archetype-lime-border">
+        <div class="ladder-header">
+          <div class="ladder-num-badge badge-lime">03</div>
+          <div class="ladder-title-wrap">
+            <div class="ladder-eyebrow">ARCHETYPE 3 &bull; 28 TO 42 kGE &bull; HIGH-EFFICIENCY DEEP PIPELINES</div>
+            <h3 class="ladder-title">High-Efficiency Deep Pipelined Harvard Cores (3 to 5 Stages)</h3>
+          </div>
+        </div>
+        <div class="ladder-body">
+          <p class="ladder-narrative">
+            <strong>The Problem:</strong> In 2-stage cores, instruction decode, register access, ALU execution, and data bus handshaking all occur in a single clock cycle. This long combinational path limits maximum clock frequency (<em>F</em><sub>max</sub>) to ~300 MHz in standard cell libraries.
+          </p>
+          <p class="ladder-narrative">
+            <strong>The Architectural Solution:</strong> Decompose execution into 3 to 5 decoupled stages (Fetch, Decode, Execute, Memory, Writeback). Dedicated pipeline registers shorten critical paths, enabling &gt;450 MHz clock speeds. Full operand forwarding networks bypass data directly from Memory/Writeback back into the ALU, preventing data hazard stalls.
+          </p>
+          <div class="ladder-summary-bar">
+            <div class="ladder-metric">
+              <span class="lm-lbl">Representative Cores</span>
+              <span class="lm-val">Hazard3, SCR1 (MAX), VexRiscv, RV12</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CPI Span</span>
+              <span class="lm-val">1.15 &ndash; 1.30</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CoreMark/MHz</span>
+              <span class="lm-val">2.01 &ndash; 3.17</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Primary Niche</span>
+              <span class="lm-val">Commercial Edge SoCs (Raspberry Pi RP2350)</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Archetype 4 -->
-      <div class="feature-card archetype-yellow">
-        <div class="card-top-tag">ARCHETYPE 4 &bull; ~48.5 kGE</div>
-        <h3>Superscalar Dual-Issue Industrial Cores</h3>
-        <p class="arch-cores-list"><strong>Representative Cores:</strong> VeeR EL2</p>
-        <p>
-          Western Digital's 4-stage in-order superscalar embedded processor capable of dual instruction dispatch per clock cycle. Employs 4 parallel execution pipelines, dynamic Gshare branch prediction, a 512-entry BTB, and dual 64-bit AHB/AXI4 buses. Rivals commercial ARM Cortex-M7 throughput.
-        </p>
-        <div class="arch-meta-pills">
-          <span class="pill-metric">CPI: ~1.03</span>
-          <span class="pill-metric">CoreMark/MHz: 2.56</span>
-          <span class="pill-metric">Niche: High-IOPS NVMe / Industrial SSDs</span>
+      <!-- Ladder Connector 3 -> 4 -->
+      <div class="ladder-connector">
+        <div class="connector-line"></div>
+        <div class="connector-pill">
+          <span>&darr; Overcome Single-Issue Theoretical Floor (CPI &lt; 1.0) via Dual-Issue Dispatch &amp; Gshare Prediction</span>
+        </div>
+        <div class="connector-line"></div>
+      </div>
+
+      <!-- Step 4: Archetype 4 -->
+      <div class="ladder-step archetype-yellow-border">
+        <div class="ladder-header">
+          <div class="ladder-num-badge badge-yellow">04</div>
+          <div class="ladder-title-wrap">
+            <div class="ladder-eyebrow">ARCHETYPE 4 &bull; ~48.5 kGE &bull; DUAL-ISSUE SUPERSCALAR INDUSTRIAL CLASS</div>
+            <h3 class="ladder-title">Superscalar Dual-Issue Industrial Embedded Engines</h3>
+          </div>
+        </div>
+        <div class="ladder-body">
+          <p class="ladder-narrative">
+            <strong>The Problem:</strong> A single-issue in-order pipeline has a theoretical CPI floor of 1.0. Even with zero cache misses and perfect branch prediction, it can never execute more than one instruction per cycle, capping throughput for data-intensive storage controllers and high-IOPS storage networks.
+          </p>
+          <p class="ladder-narrative">
+            <strong>The Architectural Solution:</strong> Implement a dual-issue in-order superscalar datapath (Fetch 2 instructions, Decode 2, Dispatch to 4 execution units in parallel). Incorporate a 512-entry Branch Target Buffer (BTB) with a dynamic Gshare branch predictor and dual 64-bit memory ports, driving sustained CPI down to 1.03 in mass-production silicon.
+          </p>
+          <div class="ladder-summary-bar">
+            <div class="ladder-metric">
+              <span class="lm-lbl">Representative Cores</span>
+              <span class="lm-val">VeeR EL2 (Western Digital)</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CPI Span</span>
+              <span class="lm-val">~1.03 (Dual-Issue)</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">CoreMark/MHz</span>
+              <span class="lm-val">2.56</span>
+            </div>
+            <div class="ladder-metric">
+              <span class="lm-lbl">Primary Niche</span>
+              <span class="lm-val">High-Performance NVMe SSD Controllers</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1252,7 +1353,7 @@ const bespokeDossiers = [
       <div class="badge badge-accent">&sect; 2. COMMON ARCHITECTURAL DNA</div>
       <h2 class="block-title">Cross-Core Similarities: The Shared RISC-V Foundation</h2>
       <p class="block-lead">
-        Despite massive differences in pipeline depths and gate counts, all 12 Category 1 cores share an identical theoretical and practical foundation. This architectural convergence is what guarantees software portability across open silicon.
+        Despite massive differences in pipeline depths and gate counts, all 12 evaluated scalar cores share an identical theoretical and practical foundation. This architectural convergence is what guarantees software portability across open silicon.
       </p>
     </div>
 
@@ -1582,7 +1683,7 @@ const bespokeDossiers = [
           Empirical measurements generated from cycle-accurate Verilator 5.022, CXXRTL, Icarus, and GHDL simulation profiles. Zero mock data. Compiled with <code>-O3 -funroll-loops</code>.
         </p>
       </div>
-      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="cat1-latex-table">
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="mcu-latex-table">
         &lt;/&gt; Copy Publication LaTeX Table
       </button>
     </div>
@@ -1635,16 +1736,16 @@ const bespokeDossiers = [
     </p>
 
     <!-- LaTeX Export Code Box -->
-    <div class="latex-export-box" id="cat1-latex-table" style="display: none;">
+    <div class="latex-export-box" id="mcu-latex-table" style="display: none;">
       <div class="latex-head">
-        <span>LaTeX Table: Category 1 Microcontroller &amp; Scalar Core Empirical Benchmark Comparison</span>
+        <span>LaTeX Table: Microcontroller &amp; Scalar Core Empirical Benchmark Comparison</span>
         <button class="close-latex-btn">&times;</button>
       </div>
       <pre class="latex-code"><code>\begin&#123;table&#125;[t]
 \centering
 \small
-\caption&#123;Category 1 Microcontroller \&amp; Scalar Core Empirical Benchmark Comparison (SCORE Dataset)&#125;
-\label&#123;tab:cat1_benchmarks&#125;
+\caption&#123;Open-Source Microcontroller \&amp; Scalar Core Empirical Benchmark Comparison (SCORE Dataset)&#125;
+\label&#123;tab:mcu_benchmarks&#125;
 \begin&#123;tabular&#125;&#123;llcccccr&#125;
 \toprule
 \textbf&#123;Core&#125; &amp; \textbf&#123;Pipeline Archetype&#125; &amp; \textbf&#123;ISA&#125; &amp; \textbf&#123;CoreMark/MHz&#125; &amp; \textbf&#123;DMIPS/MHz&#125; &amp; \textbf&#123;CPI&#125; &amp; \textbf&#123;Fmax&#125; &amp; \textbf&#123;Area (kGE)&#125; \\
@@ -1726,7 +1827,7 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
       <div class="badge badge-primary">&sect; 6. NATIVE ARCHITECTURAL SPECIFICATIONS</div>
       <h2 class="section-heading">Detailed Dossiers for All 12 Evaluated Cores</h2>
       <p class="section-sub">
-        Comprehensive native microarchitectural breakdowns, memory bus specifications, silicon and FPGA deployment evidence, verified SCORE benchmark metrics, and exact reproduction commands.
+        Comprehensive native microarchitectural breakdowns, memory bus specifications, silicon and FPGA deployment evidence, verified empirical benchmark metrics, and engineering trade-offs.
       </p>
 
       <!-- Quick Dossier Jump Bar -->
@@ -1799,27 +1900,6 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
             </div>
             <div class="assess-item limitation">
               <strong>&#9888; Engineering Trade-offs:</strong> {core.tradeoffs}
-            </div>
-          </div>
-
-          <!-- Reproduction Scripts -->
-          <div class="dossier-repro-box">
-            <span class="repro-title">SCORE Empirical Reproduction Command:</span>
-            <div class="repro-cmd-row">
-              <div class="cmd-item">
-                <span class="cmd-tag">Execute Benchmark:</span>
-                <code>{core.reproCmd}</code>
-              </div>
-            </div>
-          </div>
-
-          <!-- Key Source Files on Disk -->
-          <div class="dossier-files-summary">
-            <strong>Key Architecture RTL (<code>tools/{core.slug}/</code>):</strong>
-            <div class="file-tags-wrap">
-              {core.topFiles.map((f) => (
-                <span class="file-tag">{f}</span>
-              ))}
             </div>
           </div>
         </article>
@@ -2164,39 +2244,185 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     margin-bottom: 1.25rem;
   }
 
-  /* Archetypes Cards */
-  .arch-features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+  /* First-Principles Intuitive Introduction */
+  .intro-narrative {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+    margin-top: 1rem;
+    margin-bottom: 1.75rem;
+    max-width: 950px;
   }
 
-  .feature-card {
+  .intro-p {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink-light, #242c33);
+    margin: 0;
+  }
+
+  .intro-lead-highlight {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink, #151b20);
+    border-left: 4px solid var(--yellow, #ffc83e);
+    padding-left: 1rem;
+  }
+
+  /* Top-Down Progressive Architectural Ladder */
+  .arch-ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 2rem;
+  }
+
+  .ladder-step {
     background: var(--paper, #fdfbf7);
     border: 2px solid var(--ink, #151b20);
     border-radius: 12px;
     box-shadow: 4px 4px 0 var(--ink, #151b20);
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
+    padding: 1.75rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .card-top-tag {
+  .ladder-step:hover {
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0 var(--ink, #151b20);
+  }
+
+  .ladder-step.archetype-coral-border {
+    border-left: 8px solid var(--coral, #ff6b4a) !important;
+  }
+
+  .ladder-step.archetype-teal-border {
+    border-left: 8px solid var(--teal, #0d9488) !important;
+  }
+
+  .ladder-step.archetype-lime-border {
+    border-left: 8px solid var(--lime, #22c55e) !important;
+  }
+
+  .ladder-step.archetype-yellow-border {
+    border-left: 8px solid var(--yellow, #ffc83e) !important;
+  }
+
+  .ladder-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ladder-num-badge {
+    font-size: 1.35rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    border: 2px solid var(--ink, #151b20);
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ladder-title-wrap {
+    flex: 1;
+  }
+
+  .ladder-eyebrow {
     font-size: 0.72rem;
     font-weight: 900;
     font-family: var(--md-code-font, monospace);
-    letter-spacing: 0.03em;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    border: 1px solid var(--ink, #151b20);
-    width: fit-content;
-    margin-bottom: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-light, #555);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
   }
 
-  .archetype-coral .card-top-tag { background: var(--coral, #ff6b4a); color: #fff; }
-  .archetype-teal .card-top-tag { background: var(--teal, #0d9488); color: #fff; }
-  .archetype-lime .card-top-tag { background: var(--lime, #22c55e); color: var(--ink); }
-  .archetype-yellow .card-top-tag { background: var(--yellow, #ffc83e); color: var(--ink); }
+  .ladder-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .ladder-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .ladder-narrative {
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: var(--ink-light, #242c33);
+    margin: 0;
+  }
+
+  .ladder-summary-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    background: #ffffff;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+  }
+
+  .ladder-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .lm-lbl {
+    font-size: 0.7rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .lm-val {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+  }
+
+  /* Ladder Transition Connector */
+  .ladder-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.85rem 0;
+  }
+
+  .connector-line {
+    width: 2px;
+    height: 14px;
+    background: var(--ink, #151b20);
+  }
+
+  .connector-pill {
+    background: var(--paper-deep, #f4eee1);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 999px;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    padding: 0.35rem 1rem;
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    text-align: center;
+    max-width: 90%;
+  }
 
   /* Section 1.1 Styles */
   .archetype-coral-border {
@@ -3062,8 +3288,66 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   }
 
   @media (max-width: 768px) {
+    .page-header {
+      padding: 1.5rem;
+    }
+
+    .content-block {
+      padding: 1.5rem;
+    }
+
+    .hero-stats-deck {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ladder-header {
+      gap: 0.85rem;
+    }
+
+    .ladder-num-badge {
+      width: 40px;
+      height: 40px;
+      font-size: 1.15rem;
+    }
+
+    .ladder-title {
+      font-size: 1.2rem;
+    }
+
+    .ladder-summary-bar {
+      grid-template-columns: 1fr 1fr;
+    }
+
     .dossier-specs-grid {
       grid-template-columns: 1fr;
+    }
+
+    .sim-ctrl-deck {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.85rem;
+    }
+
+    .sim-core-toggle-group, .sim-action-group {
+      width: 100%;
+      display: flex;
+    }
+
+    .sim-toggle-btn, .sim-act-btn {
+      flex: 1;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .monitor-top-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .live-metrics-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
     }
   }
 
@@ -3123,8 +3407,92 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   }
 
   @media (max-width: 640px) {
+    .page-header {
+      padding: 1.15rem;
+    }
+
+    .page-title {
+      font-size: 1.75rem;
+    }
+
+    .intro-p {
+      font-size: 0.96rem;
+    }
+
+    .intro-lead-highlight {
+      font-size: 1.02rem;
+      padding-left: 0.75rem;
+    }
+
+    .content-block {
+      padding: 1.15rem;
+    }
+
+    .block-title {
+      font-size: 1.45rem;
+    }
+
+    .hero-stats-deck {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    .stat-num {
+      font-size: 1.3rem;
+    }
+
+    .stat-lbl {
+      font-size: 0.7rem;
+    }
+
+    .ladder-step {
+      padding: 1.15rem;
+    }
+
+    .ladder-title {
+      font-size: 1.1rem;
+    }
+
+    .ladder-summary-bar {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .connector-pill {
+      font-size: 0.7rem;
+      padding: 0.3rem 0.6rem;
+    }
+
+    .concept-step-card {
+      padding: 1.15rem;
+    }
+
+    .sub-topic-card {
+      padding: 1rem;
+    }
+
     .dossier-assessment-grid {
       grid-template-columns: 1fr;
+    }
+
+    .schematic-svg-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+      padding: 0.25rem;
+    }
+
+    .schematic-svg {
+      min-width: 580px;
+    }
+
+    .sim-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .live-metrics-strip {
+      grid-template-columns: 1fr 1fr;
     }
   }
 
@@ -3139,78 +3507,6 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
 
   .assess-item.strength { background: var(--lime-soft, #e8f7ec); color: var(--ink, #151b20); }
   .assess-item.limitation { background: var(--yellow-soft, #fff8e1); color: var(--ink, #151b20); }
-
-  .dossier-repro-box {
-    background: var(--ink, #151b20);
-    color: #ffffff;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.25rem;
-    border: 2px solid var(--ink, #151b20);
-    border-radius: 10px;
-    box-shadow: 4px 4px 0 var(--yellow, #ffc83e);
-  }
-
-  .repro-title {
-    display: block;
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: var(--yellow, #ffc83e);
-    margin-bottom: 0.5rem;
-  }
-
-  .repro-cmd-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .cmd-item {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    font-size: 0.84rem;
-  }
-
-  .cmd-tag {
-    color: #bbb;
-  }
-
-  .cmd-item code {
-    background: #000000;
-    color: var(--lime, #22c55e);
-    padding: 0.25rem 0.6rem;
-    border-radius: 4px;
-    font-family: var(--md-code-font, monospace);
-    font-size: 0.84rem;
-    border: 1px solid #333;
-  }
-
-  .dossier-files-summary {
-    font-size: 0.85rem;
-    color: var(--ink-light, #555);
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .file-tags-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .file-tag {
-    background: var(--paper, #fdfbf7);
-    border: 1.5px solid var(--ink, #151b20);
-    border-radius: 4px;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.78rem;
-    font-family: var(--md-code-font, monospace);
-    font-weight: 700;
-    color: var(--ink, #151b20);
-  }
 
   /* Badge Utilities */
   .badge-coral { background: var(--coral, #ff6b4a); color: #fff; border: 1px solid var(--ink); }
