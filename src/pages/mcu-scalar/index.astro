@@ -2424,67 +2424,103 @@ const bespokeDossiers = [
 
     <div class="similarities-grid">
       <!-- Similarity 1 -->
-      <div class="sim-card">
+      <div class="sim-card sim-isa">
         <div class="sim-header">
-          <span class="sim-num">01</span>
+          <span class="sim-num num-teal">01</span>
           <h4>Base ISA Compliance (RV32I / RV32E)</h4>
         </div>
-        <p>
+        <p class="sim-lead">
           Every single core implements the unprivileged RISC-V base integer instruction set specification. All cores support:
         </p>
-        <ul class="sim-list">
-          <li><strong>Fixed 32-bit Instruction Length:</strong> Standardized 6 instruction formats (R-type, I-type, S-type, B-type, U-type, J-type) with uniform opcode placement in bits [6:0] to simplify instruction decode logic.</li>
-          <li><strong>Standard Register File:</strong> 32 general-purpose 32-bit registers (<code>x0&ndash;x31</code>) with register <code>x0</code> permanently hardwired to constant zero, or 16 registers (<code>x0&ndash;x15</code>) under the RV32E embedded profile (DarkRISCV, SERV-E).</li>
-          <li><strong>Two's Complement Arithmetic:</strong> Identical sign-extension rules, arithmetic right shifts (<code>sra</code>), and unsigned comparison logic (<code>sltu</code>).</li>
-        </ul>
+        <div class="sim-points-stack">
+          <div class="sim-point-row">
+            <span class="point-badge">32-Bit Instruction Encodings</span>
+            <span class="point-desc">Standardized 6 instruction formats (R-type, I-type, S-type, B-type, U-type, J-type) with uniform opcode placement in bits [6:0] to simplify instruction decode logic.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Standard Architectural Registers</span>
+            <span class="point-desc">32 general-purpose 32-bit registers (<code>x0&ndash;x31</code>) with register <code>x0</code> permanently hardwired to constant zero, or 16 registers (<code>x0&ndash;x15</code>) under the RV32E embedded profile (DarkRISCV, SERV-E).</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Two's Complement Arithmetic</span>
+            <span class="point-desc">Identical sign-extension rules, arithmetic right shifts (<code>sra</code>), and unsigned comparison logic (<code>sltu</code>).</span>
+          </div>
+        </div>
       </div>
 
       <!-- Similarity 2 -->
-      <div class="sim-card">
+      <div class="sim-card sim-mmode">
         <div class="sim-header">
-          <span class="sim-num">02</span>
+          <span class="sim-num num-purple">02</span>
           <h4>Machine-Mode (M-Mode) Privileged Control &amp; CSRs</h4>
         </div>
-        <p>
+        <p class="sim-lead">
           All evaluated cores operate natively in Machine Mode (M-mode), the mandatory hardware root privilege tier:
         </p>
-        <ul class="sim-list">
-          <li><strong>Standard Trap Handling Registers:</strong> <code>mstatus</code> (interrupt enable bits), <code>mtvec</code> (trap vector base address), <code>mepc</code> (exception return PC), <code>mcause</code> (trap etiology identifier), and <code>mtval</code>.</li>
-          <li><strong>Performance Instrumentation Counters:</strong> 64-bit hardware cycle counter (<code>mcycle</code>) and retired instruction counter (<code>minstret</code>), read via standard <code>rdcycle</code> and <code>rdinstret</code> pseudoinstructions.</li>
-          <li><strong>Deterministic Exception Vectoring:</strong> Support for direct trap vectoring or vectored mode for timer, software, and external interrupts.</li>
-        </ul>
+        <div class="sim-points-stack">
+          <div class="sim-point-row">
+            <span class="point-badge">Standard Trap Registers</span>
+            <span class="point-desc"><code>mstatus</code> (interrupt enable bits), <code>mtvec</code> (trap vector base address), <code>mepc</code> (exception return PC), <code>mcause</code> (trap etiology identifier), and <code>mtval</code>.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Instrumentation Counters</span>
+            <span class="point-desc">64-bit hardware cycle counter (<code>mcycle</code>) and retired instruction counter (<code>minstret</code>), read via standard <code>rdcycle</code> and <code>rdinstret</code> pseudoinstructions.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Deterministic Trap Vectoring</span>
+            <span class="point-desc">Support for direct trap vectoring or vectored mode for timer, software, and external interrupts.</span>
+          </div>
+        </div>
       </div>
 
       <!-- Similarity 3 -->
-      <div class="sim-card">
+      <div class="sim-card sim-abi">
         <div class="sim-header">
-          <span class="sim-num">03</span>
+          <span class="sim-num num-yellow">03</span>
           <h4>Unified Toolchain &amp; Software ABI Portability</h4>
         </div>
-        <p>
+        <p class="sim-lead">
           A single C firmware binary compiled with the open standard GNU toolchain runs on any of the evaluated cores:
         </p>
-        <ul class="sim-list">
-          <li><strong>Calling Convention (ILP32 / ILP32E):</strong> Function arguments passed in <code>a0&ndash;a7</code>, return values in <code>a0/a1</code>, saved registers in <code>s0&ndash;s11</code>, and stack pointer <code>sp</code> kept 16-byte aligned.</li>
-          <li><strong>Standard Startup Routine (<code>crt0.S</code>):</strong> Reset vector execution initializes stack pointer (<code>sp</code>), clears <code>.bss</code> section, populates <code>mtvec</code>, and branches to <code>main()</code>.</li>
-          <li><strong>Shared Compiler Backend:</strong> All cores consume code produced by upstream <code>riscv32-unknown-elf-gcc</code> without vendor-specific proprietary toolchain forks.</li>
-        </ul>
+        <div class="sim-points-stack">
+          <div class="sim-point-row">
+            <span class="point-badge">Calling Convention (ILP32 / ILP32E)</span>
+            <span class="point-desc">Function arguments passed in <code>a0&ndash;a7</code>, return values in <code>a0/a1</code>, saved registers in <code>s0&ndash;s11</code>, and stack pointer <code>sp</code> kept 16-byte aligned.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Standard Baremetal Startup</span>
+            <span class="point-desc">Reset vector execution initializes stack pointer (<code>sp</code>), clears <code>.bss</code> section, populates <code>mtvec</code>, and branches to <code>main()</code>.</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Shared Upstream GCC Backend</span>
+            <span class="point-desc">All cores consume code produced by upstream <code>riscv32-unknown-elf-gcc</code> without vendor-specific proprietary toolchain forks.</span>
+          </div>
+        </div>
       </div>
 
       <!-- Similarity 4 -->
-      <div class="sim-card">
+      <div class="sim-card sim-bench">
         <div class="sim-header">
-          <span class="sim-num">04</span>
+          <span class="sim-num num-lime">04</span>
           <h4>Deterministic SCORE Benchmarking Verification</h4>
         </div>
-        <p>
+        <p class="sim-lead">
           All benchmark results reported in SCORE share an uncompromising verification methodology:
         </p>
-        <ul class="sim-list">
-          <li><strong>Identical Workload Sources:</strong> Standard CoreMark v1.0 and Dhrystone v2.1 benchmark source code compiled with matching optimization flags (<code>-O3 -funroll-loops</code>).</li>
-          <li><strong>Zero Mocked Data:</strong> Every cycle, instruction, and execution metric is extracted from cycle-accurate HDL simulations (Verilator, Icarus, CXXRTL, GHDL).</li>
-          <li><strong>Automatic CRC Checksum Validation:</strong> CoreMark matrices, linked lists, and state machines are validated against expected reference CRC checksums before benchmark acceptance.</li>
-        </ul>
+        <div class="sim-points-stack">
+          <div class="sim-point-row">
+            <span class="point-badge">Workload Parity</span>
+            <span class="point-desc">Standard CoreMark v1.0 and Dhrystone v2.1 benchmark source code compiled with matching optimization flags (<code>-O3 -funroll-loops</code>).</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Cycle-Accurate HDL Execution</span>
+            <span class="point-desc">Every cycle, instruction, and execution metric is extracted directly from cycle-accurate HDL simulations (Verilator, Icarus, CXXRTL, GHDL).</span>
+          </div>
+          <div class="sim-point-row">
+            <span class="point-badge">Automatic Checksum Validation</span>
+            <span class="point-desc">CoreMark matrices, linked lists, and state machines are validated against expected reference CRC checksums before benchmark acceptance.</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -2501,70 +2537,128 @@ const bespokeDossiers = [
 
     <!-- Differences Dimension Cards -->
     <div class="diff-cards-deck">
-      <div class="diff-spec-card">
+      <!-- Difference 1 -->
+      <div class="diff-spec-card diff-hazards">
         <div class="diff-spec-head">
-          <span class="diff-tag">PIPELINE HAZARDS</span>
+          <span class="diff-tag badge-coral">PIPELINE HAZARDS</span>
           <h4>Pipeline Depth vs. Branch Penalty</h4>
         </div>
-        <p>
-          Deeping the pipeline increases maximum clock frequency (<em>F</em><sub>max</sub>) but increases the latency penalty incurred on branch mispredictions and load-use data hazards:
+        <p class="diff-lead">
+          Deepening the pipeline increases maximum operating frequency (<em>F</em><sub>max</sub>) but increases the latency penalty incurred on branch mispredictions and load-use data hazards:
         </p>
-        <ul class="concept-list">
-          <li><strong>1-Stage Serial (SERV):</strong> Zero pipeline hazards. Operands shift serially; branch instructions take 32 clock cycles with zero speculative stalls.</li>
-          <li><strong>2-Stage In-Order (Ibex, SCR1 MIN, NEORV32):</strong> Fetch and Decode/Execute stages. Branch penalty is exactly <strong>1 clock cycle</strong> on taken branches.</li>
-          <li><strong>3-Stage Harvard (Hazard3, RV12):</strong> Fetch, Decode, Execute/Writeback. Employs single-cycle branch hazard forwarding to keep branch penalties to 1–2 cycles.</li>
-          <li><strong>4-Stage Superscalar (VeeR EL2):</strong> 2-wide dispatch with 4 execution pipes. Branch misprediction costs <strong>3 clock cycles</strong>, necessitating a dynamic Gshare branch predictor.</li>
-          <li><strong>5-Stage Classic (VexRiscv GenFull):</strong> Classical IF-ID-EX-MEM-WB with full data forwarding bypass network and load-delay slot resolution.</li>
-        </ul>
+        <div class="diff-points-stack">
+          <div class="diff-point-row">
+            <span class="diff-point-title">1-Stage Serial (SERV)</span>
+            <span class="diff-point-text">Zero pipeline hazards. Operands shift serially; branch instructions take 32 clock cycles with zero speculative stalls.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">2-Stage In-Order (Ibex, NEORV32)</span>
+            <span class="diff-point-text">Overlaps Fetch with Decode/Execute. Branch penalty is strictly <strong>1 clock cycle</strong> on taken branches without data hazards.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">3-Stage Harvard (Hazard3, DarkRISCV)</span>
+            <span class="diff-point-text">Fetch, Decode, Execute/Writeback. Employs single-cycle branch hazard forwarding to keep branch penalties to 1&ndash;2 cycles.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">4-Stage Superscalar (VeeR EL2)</span>
+            <span class="diff-point-text">2-wide dispatch with 4 execution pipes. Branch misprediction costs <strong>3 clock cycles</strong>, necessitating a dynamic Gshare branch predictor.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">5-Stage Classic (VexRiscv GenFull)</span>
+            <span class="diff-point-text">Classical IF-ID-EX-MEM-WB pipeline with full operand forwarding bypass networks and load-delay slot resolution.</span>
+          </div>
+        </div>
       </div>
 
-      <div class="diff-spec-card">
+      <!-- Difference 2 -->
+      <div class="diff-spec-card diff-math">
         <div class="diff-spec-head">
-          <span class="diff-tag">ARITHMETIC UNITS</span>
+          <span class="diff-tag badge-yellow">ARITHMETIC UNITS</span>
           <h4>Multiplier &amp; Divider Microarchitectures</h4>
         </div>
-        <p>
-          The implementation of the M-extension (`mul`, `mulh`, `div`, `rem`) represents the single largest area-versus-performance trade-off in embedded processors:
+        <p class="diff-lead">
+          The implementation of the M-extension (<code>mul</code>, <code>mulh</code>, <code>div</code>, <code>rem</code>) represents the single largest area-versus-performance trade-off in embedded processors:
         </p>
-        <ul class="concept-list">
-          <li><strong>Software Emulation (SERV, RV32I-only):</strong> Multiplications execute via software library functions (<code>__mulsi3</code>), consuming 80 to 250 clock cycles per operation.</li>
-          <li><strong>Bit-Serial / Multi-Cycle Shift-and-Add (Ibex small, PicoRV32):</strong> Shifts operands over 32–34 clock cycles, saving silicon area by avoiding wide DSP multipliers.</li>
-          <li><strong>Fast Radix-4 Non-Restoring Divider (Hazard3, SCR1):</strong> Resolves 2 bits of quotient per clock cycle (16 cycles for 32-bit division).</li>
-          <li><strong>Pipelined Single-Cycle DSP Multiplier (VeeR EL2, Ibex maxperf, VexRiscv):</strong> Dedicated 32&times;32 multiplier completing in 1 cycle, crucial for CoreMark matrix multiplications.</li>
-        </ul>
+        <div class="diff-points-stack">
+          <div class="diff-point-row">
+            <span class="diff-point-title">Software Emulation (SERV, DarkRISCV)</span>
+            <span class="diff-point-text">Multiplications execute via software library functions (<code>__mulsi3</code>), consuming 80 to 250 clock cycles per operation with near-zero logic overhead.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Bit-Serial / Shift-and-Add (PicoRV32, Ibex small)</span>
+            <span class="diff-point-text">Shifts operands over 32&ndash;34 clock cycles, saving silicon area by avoiding wide dedicated DSP multipliers.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Fast Radix-4 Divider (Hazard3, SCR1)</span>
+            <span class="diff-point-text">Resolves 2 bits of quotient per clock cycle (16 cycles for 32-bit division) to accelerate math loops.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Pipelined Single-Cycle DSP (VeeR EL2, VexRiscv)</span>
+            <span class="diff-point-text">Dedicated 32&times;32 multiplier completing in 1 cycle, crucial for CoreMark matrix multiplications and DSP processing.</span>
+          </div>
+        </div>
       </div>
 
-      <div class="diff-spec-card">
+      <!-- Difference 3 -->
+      <div class="diff-spec-card diff-memory">
         <div class="diff-spec-head">
-          <span class="diff-tag">MEMORY FABRIC</span>
+          <span class="diff-tag badge-teal">MEMORY FABRIC</span>
           <h4>Memory Buses &amp; Bus Handshakes</h4>
         </div>
-        <p>
+        <p class="diff-lead">
           Interconnect architecture dictates how efficiently the processor can access instructions and data without inducing pipeline wait-states:
         </p>
-        <ul class="concept-list">
-          <li><strong>Open Bus Interface (OBI) (Ibex):</strong> Advanced pipelined request/grant protocol with independent address and data phases.</li>
-          <li><strong>Wishbone b4 Pipelined (SERV, NEORV32, VexRiscv):</strong> Classic open standard bus interface enabling master-slave crossbar interconnects.</li>
-          <li><strong>Dual AHB-Lite / AHB5 (Hazard3, SCR1, VeeR EL2):</strong> Industrial standard offering separate instruction and data channels with burst pipelining.</li>
-          <li><strong>AXI4 / AXI4-Lite (VeeR EL2, VexRiscv, PicoRV32 AXI):</strong> Full crossbar connectivity with separate read/write data channels for high-bandwidth SoC integration.</li>
-          <li><strong>Direct LUT-RAM (DarkRISCV):</strong> Asynchronous memory interface mapped directly to dual-port distributed FPGA RAM.</li>
-        </ul>
+        <div class="diff-points-stack">
+          <div class="diff-point-row">
+            <span class="diff-point-title">Open Bus Interface (OBI) (Ibex)</span>
+            <span class="diff-point-text">Advanced pipelined request/grant protocol with independent address and data phases for zero-bubble SRAM access.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Wishbone b4 Pipelined (SERV, NEORV32, VexRiscv)</span>
+            <span class="diff-point-text">Classic open standard bus interface enabling master-slave crossbar interconnects and modular peripheral attach.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Dual AHB-Lite / AHB5 (Hazard3, SCR1, VeeR EL2)</span>
+            <span class="diff-point-text">Industrial standard offering separate instruction and data channels with burst pipelining for high-frequency SoCs.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">AXI4 / AXI4-Lite (VeeR EL2, VexRiscv, PicoRV32 AXI)</span>
+            <span class="diff-point-text">Full crossbar connectivity with separate read/write data channels for high-bandwidth multi-master SoC integration.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Direct LUT-RAM (DarkRISCV)</span>
+            <span class="diff-point-text">Asynchronous memory interface mapped directly to dual-port distributed FPGA RAM for 0-cycle combinational readouts.</span>
+          </div>
+        </div>
       </div>
 
-      <div class="diff-spec-card">
+      <!-- Difference 4 -->
+      <div class="diff-spec-card diff-security">
         <div class="diff-spec-head">
-          <span class="diff-tag">SECURITY HARDENING</span>
+          <span class="diff-tag badge-purple">SECURITY HARDENING</span>
           <h4>Silicon Security &amp; Fault Injection Resistance</h4>
         </div>
-        <p>
+        <p class="diff-lead">
           For cryptographic enclaves and safety-critical automotive deployments, raw CoreMark scores are secondary to physical attack resistance:
         </p>
-        <ul class="concept-list">
-          <li><strong>Dual-Core Lockstep (DCLS) (Ibex in OpenTitan):</strong> Runs two identical cores with staggered clock offsets to detect physical laser/clock fault injection attacks.</li>
-          <li><strong>Physical Memory Protection (PMP):</strong> Hardware access control isolating secure enclave memory regions from untrusted software (up to 16 regions in Ibex and SCR1).</li>
-          <li><strong>Dummy Instruction Insertion:</strong> Randomizes pipeline execution timing to defeat Differential Power Analysis (DPA) side-channel attacks.</li>
-          <li><strong>Register File Parity &amp; ECC:</strong> Detects and corrects bit-flips in register files and tightly-coupled memories (ICCM/DCCM in VeeR EL2).</li>
-        </ul>
+        <div class="diff-points-stack">
+          <div class="diff-point-row">
+            <span class="diff-point-title">Dual-Core Lockstep (DCLS) (Ibex in OpenTitan)</span>
+            <span class="diff-point-text">Runs two identical cores with staggered clock offsets to detect physical laser/clock fault injection attacks.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Physical Memory Protection (PMP)</span>
+            <span class="diff-point-text">Hardware access control isolating secure enclave memory regions from untrusted software (up to 16 regions in Ibex and SCR1).</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Dummy Instruction Insertion</span>
+            <span class="diff-point-text">Randomizes pipeline execution timing to defeat Differential Power Analysis (DPA) side-channel attacks.</span>
+          </div>
+          <div class="diff-point-row">
+            <span class="diff-point-title">Register File Parity &amp; ECC</span>
+            <span class="diff-point-text">Detects and corrects bit-flips in register files and tightly-coupled memories (ICCM/DCCM in VeeR EL2).</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -4291,32 +4385,37 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     color: var(--ink, #151b20);
   }
 
-  /* Similarities Grid */
+  /* Similarities Stack (Top-Down) */
   .similarities-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
   }
 
   .sim-card {
-    background: var(--paper, #fdfbf7);
+    background: #ffffff;
     border: 2px solid var(--ink, #151b20);
     border-radius: 12px;
-    box-shadow: 4px 4px 0 var(--ink, #151b20);
-    padding: 1.5rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.35rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
+
+  .sim-card.sim-isa { border-left: 6px solid var(--teal, #0d9488); }
+  .sim-card.sim-mmode { border-left: 6px solid var(--purple, #8275e8); }
+  .sim-card.sim-abi { border-left: 6px solid var(--yellow, #ffc83e); }
+  .sim-card.sim-bench { border-left: 6px solid var(--lime, #b7df69); }
 
   .sim-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    gap: 0.85rem;
   }
 
   .sim-num {
-    background: var(--yellow, #ffc83e);
-    color: var(--ink, #151b20);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 900;
     font-family: var(--md-code-font, monospace);
     width: 36px;
@@ -4329,6 +4428,11 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     flex-shrink: 0;
   }
 
+  .sim-num.num-teal { background: var(--teal, #0d9488); color: #ffffff; }
+  .sim-num.num-purple { background: var(--purple, #8275e8); color: #ffffff; }
+  .sim-num.num-yellow { background: var(--yellow, #ffc83e); color: var(--ink, #151b20); }
+  .sim-num.num-lime { background: var(--lime, #b7df69); color: var(--ink, #151b20); }
+
   .sim-header h4 {
     font-size: 1.15rem;
     font-weight: 900;
@@ -4336,56 +4440,86 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     margin: 0;
   }
 
-  .sim-card p {
-    font-size: 0.9rem;
-    color: var(--ink-light, #333);
-    margin-bottom: 0.75rem;
-    line-height: 1.5;
-  }
-
-  .sim-list {
-    margin: 0;
-    padding-left: 1.25rem;
-    font-size: 0.88rem;
+  .sim-lead {
+    font-size: 0.92rem;
+    color: var(--ink-light, #242c33);
     line-height: 1.55;
-    color: var(--ink-light, #333);
+    margin: 0;
   }
 
-  .sim-list li {
-    margin-bottom: 0.45rem;
+  .sim-points-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-top: 0.25rem;
   }
 
-  /* Differences Cards Deck */
-  .diff-cards-deck {
+  .sim-point-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 240px 1fr;
+    gap: 0.85rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-light, #242c33);
+    background: var(--paper, #fdfbf7);
+    padding: 0.6rem 0.85rem;
+    border-radius: 6px;
+    border: 1px solid var(--line, #e2d9c8);
+    align-items: baseline;
+  }
+
+  .point-badge {
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.82rem;
+    color: var(--ink, #151b20);
+    text-transform: uppercase;
+  }
+
+  .point-desc {
+    color: var(--ink-light, #242c33);
+  }
+
+  /* Differences Cards Deck (Top-Down) */
+  .diff-cards-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
     margin-bottom: 2rem;
   }
 
   .diff-spec-card {
-    background: var(--paper, #fdfbf7);
+    background: #ffffff;
     border: 2px solid var(--ink, #151b20);
     border-radius: 12px;
-    box-shadow: 4px 4px 0 var(--ink, #151b20);
-    padding: 1.5rem;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    padding: 1.35rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
+  .diff-spec-card.diff-hazards { border-left: 6px solid var(--coral, #f38469); }
+  .diff-spec-card.diff-math { border-left: 6px solid var(--yellow, #ffc83e); }
+  .diff-spec-card.diff-memory { border-left: 6px solid var(--teal, #0d9488); }
+  .diff-spec-card.diff-security { border-left: 6px solid var(--purple, #8275e8); }
+
   .diff-spec-head {
-    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
   }
 
   .diff-tag {
     font-size: 0.72rem;
     font-weight: 900;
     font-family: var(--md-code-font, monospace);
-    background: var(--coral, #ff6b4a);
-    color: #ffffff;
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
     border: 1px solid var(--ink, #151b20);
     display: inline-block;
-    margin-bottom: 0.4rem;
+    width: fit-content;
+    margin-bottom: 0.25rem;
   }
 
   .diff-spec-head h4 {
@@ -4395,11 +4529,44 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     margin: 0;
   }
 
-  .diff-spec-card p {
-    font-size: 0.88rem;
-    color: var(--ink-light, #333);
+  .diff-lead {
+    font-size: 0.92rem;
+    color: var(--ink-light, #242c33);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .diff-points-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-top: 0.25rem;
+  }
+
+  .diff-point-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 0.85rem;
+    font-size: 0.9rem;
     line-height: 1.5;
-    margin-bottom: 0.75rem;
+    color: var(--ink-light, #242c33);
+    background: var(--paper, #fdfbf7);
+    padding: 0.6rem 0.85rem;
+    border-radius: 6px;
+    border: 1px solid var(--line, #e2d9c8);
+    align-items: baseline;
+  }
+
+  .diff-point-title {
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    font-size: 0.82rem;
+    color: var(--ink, #151b20);
+    text-transform: uppercase;
+  }
+
+  .diff-point-text {
+    color: var(--ink-light, #242c33);
   }
 
   .concept-list {
@@ -4989,6 +5156,12 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     .isa-metric-item {
       grid-template-columns: 1fr;
       gap: 0.2rem;
+    }
+
+    .sim-point-row,
+    .diff-point-row {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
     }
   }
 
