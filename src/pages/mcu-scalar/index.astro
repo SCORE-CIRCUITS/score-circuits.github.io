@@ -766,9 +766,9 @@ const bespokeDossiers = [
             <rect width="916" height="462" x="2" y="2" rx="9" fill="url(#cadGridBaseline)"/>
 
             <!-- Top Title Banner -->
-            <rect x="2" y="2" width="916" height="26" fill="var(--ink, #151b20)" rx="8"/>
-            <circle cx="16" cy="15" r="4.5" fill="#22c55e"/>
-            <text x="28" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH &bull; BASELINE SCALAR RISC-V (RV32I/E) ARCHITECTURAL DATAPATH &amp; CONTROL</text>
+            <rect x="2" y="2" width="916" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
+            <circle cx="16" cy="15" r="4.5" fill="#16a34a"/>
+            <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH &#8226; BASELINE SCALAR RISC-V (RV32I/E) ARCHITECTURAL DATAPATH &amp; CONTROL</text>
 
             <!-- ============================================================ -->
             <!-- TOP DEDICATED REDIRECTION HIGHWAYS (CONTROL HAZARD RESOLUTION) -->
@@ -781,7 +781,7 @@ const bespokeDossiers = [
             <!-- Channel 1 Origin & Route Callout Banner -->
             <rect x="75" y="24" width="320" height="18" rx="4" fill="#fff1f2" stroke="#be123c" stroke-width="1.2"/>
             <circle cx="84" cy="33" r="3.5" fill="#be123c"/>
-            <text x="92" y="36.5" font-size="7.2" font-weight="900" fill="#be123c" font-family="monospace">TRAP REDIRECT: [FROM BLOCK 6: CSR &amp; TRAP CTRL &bull; mtvec] &#8594; Next PC MUX [In 2]</text>
+            <text x="92" y="36.5" font-size="7.2" font-weight="900" fill="#be123c" font-family="monospace">TRAP REDIRECT: [FROM BLOCK 6: CSR &amp; TRAP CTRL &#8226; mtvec] &#8594; Next PC MUX [In 2]</text>
 
             <!-- Channel 2: Branch Taken Redirection (Target PC) from Stage 3 to Next PC MUX -->
             <path d="M 581 83 L 581 48 L 22 48 L 22 202 L 28 202" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRedBase)"/>
@@ -916,7 +916,7 @@ const bespokeDossiers = [
             <rect x="235" y="235" width="120" height="140" rx="6" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
             <rect x="235" y="235" width="120" height="18" rx="5" fill="#fef3c7"/>
             <text x="240" y="248" font-size="8" font-weight="900" fill="#b45309" font-family="monospace">4. REG FILE (x0-x31)</text>
-            <text x="240" y="268" font-size="8.5" font-weight="800" fill="#151b20">32 &times; 32-Bit GPRs</text>
+            <text x="240" y="268" font-size="8.5" font-weight="800" fill="#151b20">32 &#215; 32-Bit GPRs</text>
             <text x="240" y="285" font-size="7.5" fill="#92400e">Port 1: rs1_data (Async)</text>
             <text x="240" y="302" font-size="7.5" fill="#92400e">Port 2: rs2_data (Async)</text>
             <text x="240" y="319" font-size="7.5" font-weight="800" fill="#b45309">Write: rd_data (Sync)</text>
@@ -1041,7 +1041,7 @@ const bespokeDossiers = [
             <!-- ============================================================ -->
             <path d="M 635 418 L 620 418 L 620 446 L 215 446 L 215 350 L 235 350" fill="none" stroke="#0d9488" stroke-width="2.6" marker-end="url(#arrowTealBase)"/>
             <rect x="290" y="438" width="285" height="16" rx="4" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
-            <text x="296" y="449" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">WRITEBACK HIGHWAY: rd_data[31:0] &rarr; REG FILE WRITE PORT [rd]</text>
+            <text x="296" y="449" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">WRITEBACK HIGHWAY: rd_data[31:0] &#8594; REG FILE WRITE PORT [rd]</text>
 
             <!-- ============================================================ -->
             <!-- BOTTOM BUS KEY LEGEND -->
@@ -2446,9 +2446,9 @@ const bespokeDossiers = [
                 <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridServ)"/>
 
                 <!-- Status Header Banner -->
-                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
-                <circle cx="16" cy="14" r="4" fill="#22c55e"/>
-                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • SERV BIT-SERIAL 1-STAGE DATAPATH TOPOLOGY</text>
+                <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#16a34a"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • SERV BIT-SERIAL 1-STAGE DATAPATH TOPOLOGY</text>
 
                 <!-- 1. Source Register rs1 Shift Register Block -->
                 <rect x="40" y="60" width="180" height="65" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
@@ -2508,10 +2508,10 @@ const bespokeDossiers = [
                 <text x="430" y="142" font-size="9.5" font-weight="900" fill="#151b20">rd_bit (1-bit / clk)</text>
 
                 <!-- 6. 5-bit Cycle Counter & FSM -->
-                <rect x="520" y="240" width="200" height="65" rx="6" fill="#151b20" stroke="#151b20" stroke-width="2"/>
-                <text x="535" y="260" font-size="10" font-weight="900" fill="#ffc83e" font-family="monospace">5-BIT CYCLE COUNTER</text>
-                <text x="535" y="280" font-size="11" font-weight="700" fill="#ffffff">Cycles: [0 .. 31]</text>
-                <text x="535" y="295" font-size="9" fill="#cbd5e1">Triggers WB &amp; PC increment</text>
+                <rect x="520" y="240" width="200" height="65" rx="6" fill="#fff8e1" stroke="#151b20" stroke-width="2"/>
+                <text x="535" y="260" font-size="10" font-weight="900" fill="#b45309" font-family="monospace">5-BIT CYCLE COUNTER</text>
+                <text x="535" y="280" font-size="11" font-weight="700" fill="#151b20">Cycles: [0 .. 31]</text>
+                <text x="535" y="295" font-size="9" fill="#475569">Triggers WB &amp; PC increment</text>
 
                 <!-- Control flow from counter to rd -->
                 <path d="M 620 240 L 620 185" fill="none" stroke="#ffc83e" stroke-dasharray="3,3" stroke-width="2" marker-end="url(#arrowServ)"/>
@@ -2576,9 +2576,9 @@ const bespokeDossiers = [
                 <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridPico)"/>
 
                 <!-- Status Header Banner -->
-                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
+                <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
                 <circle cx="16" cy="14" r="4" fill="#0d9488"/>
-                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • PICORV32 MULTI-CYCLE SHARED ADDER TOPOLOGY</text>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • PICORV32 MULTI-CYCLE SHARED ADDER TOPOLOGY</text>
 
                 <!-- Left Column: Input Sources -->
                 <rect x="30" y="55" width="140" height="45" rx="5" fill="#fdfbf7" stroke="#151b20" stroke-width="1.5"/>
@@ -2648,8 +2648,8 @@ const bespokeDossiers = [
                 <path d="M 460 185 L 460 267 L 500 267" fill="none" stroke="#151b20" stroke-width="1.5" marker-end="url(#arrowPico)"/>
 
                 <!-- FSM Controller Badge -->
-                <rect x="30" y="320" width="690" height="30" rx="6" fill="#151b20"/>
-                <text x="45" y="339" font-size="9.5" font-weight="900" fill="#ffc83e" font-family="monospace">STATE MACHINE CONTROLLER: [State 0: Fetch] &rarr; [State 1: Decode] &rarr; [State 2: Execute] &rarr; [State 3: Writeback] &bull; CPI ~3.85</text>
+                <rect x="30" y="320" width="690" height="30" rx="6" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="45" y="339" font-size="9.5" font-weight="900" fill="#b45309" font-family="monospace">STATE MACHINE CONTROLLER: [State 0: Fetch] &#8594; [State 1: Decode] &#8594; [State 2: Execute] &#8594; [State 3: Writeback] &#8226; CPI ~3.85</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -2718,9 +2718,9 @@ const bespokeDossiers = [
                 <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridDark)"/>
 
                 <!-- Status Header Banner -->
-                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
-                <circle cx="16" cy="14" r="4" fill="#eab308"/>
-                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • DARKRISCV ASYNCHRONOUS LUT-RAM 1-2 STAGE TOPOLOGY</text>
+                <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#b45309"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • DARKRISCV ASYNCHRONOUS LUT-RAM 1-2 STAGE TOPOLOGY</text>
 
                 <!-- 1. Program Counter (IFPC) -->
                 <rect x="25" y="60" width="105" height="70" rx="5" fill="#f8fafc" stroke="#151b20" stroke-width="1.8"/>
@@ -2728,7 +2728,7 @@ const bespokeDossiers = [
                 <text x="32" y="73" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">IFPC [31:0]</text>
                 <text x="32" y="94" font-size="9.5" font-weight="800" fill="#151b20">Clocked PC</text>
                 <text x="32" y="108" font-size="7.5" fill="#64748b">Updates @ posedge</text>
-                <text x="32" y="122" font-size="7" fill="#0284c7">PC &larr; Next_PC</text>
+                <text x="32" y="122" font-size="7" fill="#0284c7">PC &#8592; Next_PC</text>
 
                 <!-- IADDR bus from PC to LUT-RAM IMEM -->
                 <line x1="130" y1="95" x2="160" y2="95" stroke="#151b20" stroke-width="2" marker-end="url(#arrowDark)"/>
@@ -2739,7 +2739,7 @@ const bespokeDossiers = [
                 <rect x="160" y="55" width="145" height="18" rx="5" fill="#fef3c7"/>
                 <text x="166" y="68" font-size="8.5" font-weight="900" fill="#b45309" font-family="monospace">ASYNC LUT-RAM IMEM</text>
                 <text x="166" y="88" font-size="9" font-weight="800" fill="#151b20">Distributed SelectRAM</text>
-                <text x="166" y="103" font-size="7.5" font-weight="900" fill="#d97706">T_read &approx; 0 ns (No Clock!)</text>
+                <text x="166" y="103" font-size="7.5" font-weight="900" fill="#d97706">T_read &#8776; 0 ns (No Clock!)</text>
                 <text x="166" y="118" font-size="7.5" fill="#64748b">Instant Combinational Out</text>
                 <text x="166" y="132" font-size="7" fill="#b45309">No BRAM 1-Cycle Wait State</text>
 
@@ -2757,7 +2757,7 @@ const bespokeDossiers = [
                 <text x="346" y="126" font-size="7.5" fill="#64748b">SIMM: Sign-Extended Imm</text>
                 <!-- FLUSH Target Badge in Decoder -->
                 <rect x="344" y="133" width="137" height="15" rx="3" fill="#ffe4e6" stroke="#be123c" stroke-width="1"/>
-                <text x="348" y="144" font-size="6.8" font-weight="900" fill="#9f1239" font-family="monospace">FLUSH: Squash Inst &rarr; NOP</text>
+                <text x="348" y="144" font-size="6.8" font-weight="900" fill="#9f1239" font-family="monospace">FLUSH: Squash Inst &#8594; NOP</text>
 
                 <!-- Register pointers from Decoder down to Register File -->
                 <path d="M 400 153 L 400 175 L 290 175 L 290 190" fill="none" stroke="#7e22ce" stroke-width="1.8" marker-end="url(#arrowPurpleDark)"/>
@@ -2836,11 +2836,11 @@ const bespokeDossiers = [
                 <rect x="648" y="74" width="98" height="13" rx="2" fill="#fee2e2" stroke="#dc2626" stroke-width="0.8"/>
                 <text x="653" y="83" font-size="6.2" font-weight="900" fill="#991b1b" font-family="monospace">DATA MEMORY ONLY</text>
                 <text x="650" y="98" font-size="8" font-weight="800" fill="#151b20">3-Cycle Bus FSM</text>
-                <text x="650" y="111" font-size="7" fill="#991b1b">&bull; State 0: IDLE</text>
-                <text x="650" y="123" font-size="7" fill="#991b1b">&bull; State 1: ADDR</text>
-                <text x="650" y="135" font-size="7" fill="#991b1b">&bull; State 2: DATA</text>
+                <text x="650" y="111" font-size="7" fill="#991b1b">&#8226; State 0: IDLE</text>
+                <text x="650" y="123" font-size="7" fill="#991b1b">&#8226; State 1: ADDR</text>
+                <text x="650" y="135" font-size="7" fill="#991b1b">&#8226; State 2: DATA</text>
                 <text x="650" y="148" font-size="6.8" fill="#64748b">Handles Wait-States</text>
-                <text x="650" y="161" font-size="6.2" font-weight="800" fill="#dc2626" font-family="monospace">(Loads/Stores &bull; No Br)</text>
+                <text x="650" y="161" font-size="6.2" font-weight="800" fill="#dc2626" font-family="monospace">(Loads/Stores &#8226; No Br)</text>
 
                 <!-- ALU address to DarkBridge -->
                 <path d="M 635 257 L 635 125 L 645 125" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowDark)"/>
@@ -2857,7 +2857,7 @@ const bespokeDossiers = [
                 <polygon points="420,31 414,34 420,37" fill="#ef4444"/>
                 <rect x="95" y="25" width="375" height="17" rx="3" fill="#fff1f2" stroke="#ef4444" stroke-width="1.2"/>
                 <circle cx="103" cy="33.5" r="3" fill="#ef4444"/>
-                <text x="110" y="37" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH REDIRECT: [FROM ALU &amp; BR LOGIC &bull; NOT BUS] &#8594; IFPC [Next_PC]</text>
+                <text x="110" y="37" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH REDIRECT: [FROM ALU &amp; BR LOGIC &#8226; NOT BUS] &#8594; IFPC [Next_PC]</text>
 
                 <!-- Synchronous Register Commit Highway (Teal Line) -->
                 <path d="M 635 257 L 635 340 L 120 340 L 120 280 L 140 280" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowTealDark)"/>
@@ -2865,8 +2865,8 @@ const bespokeDossiers = [
                 <text x="206" y="343" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">SYNCHRONOUS COMMIT: REGS[DPTR] &lt;= ALU_RES @ posedge CLK (Cycle 1 / 2)</text>
 
                 <!-- Bottom Timing Analysis Callout -->
-                <rect x="15" y="354" width="730" height="20" rx="4" fill="#151b20"/>
-                <text x="25" y="367" font-size="8" font-weight="800" fill="#ffc83e" font-family="monospace">METRICS: 1-Cycle ALU Math &bull; Empirical CPI: 1.64 &bull; CoreMark/MHz: 0.6435 &bull; Area: ~8.2 kGE (850 LUTs) &bull; Fmax: 250 MHz</text>
+                <rect x="15" y="354" width="730" height="20" rx="4" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="25" y="367" font-size="8" font-weight="800" fill="#151b20" font-family="monospace">METRICS: 1-Cycle ALU Math &#8226; Empirical CPI: 1.64 &#8226; CoreMark/MHz: 0.6435 &#8226; Area: ~8.2 kGE (850 LUTs) &#8226; Fmax: 250 MHz</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -3111,9 +3111,9 @@ const bespokeDossiers = [
                 <rect width="916" height="442" x="2" y="2" rx="9" fill="url(#cadGridIbex)"/>
 
                 <!-- Status Header Banner -->
-                <rect x="2" y="2" width="916" height="26" fill="var(--ink, #151b20)" rx="8"/>
+                <rect x="2" y="2" width="916" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
                 <circle cx="16" cy="15" r="4.5" fill="#0d9488"/>
-                <text x="28" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH &bull; IBEX 2-STAGE DECOUPLED HARVARD TOPOLOGY (OBI BUS INTERCONNECT)</text>
+                <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH &#8226; IBEX 2-STAGE DECOUPLED HARVARD TOPOLOGY (OBI BUS INTERCONNECT)</text>
 
                 <!-- ============================================================ -->
                 <!-- TOP DEDICATED CONTROL REDIRECTION HIGHWAYS -->
@@ -3127,7 +3127,7 @@ const bespokeDossiers = [
                 <!-- Callout Banner -->
                 <rect x="70" y="25" width="370" height="17" rx="3" fill="#fef2f2" stroke="#ef4444" stroke-width="1.2"/>
                 <circle cx="78" cy="33.5" r="3" fill="#ef4444"/>
-                <text x="86" y="37" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH REDIRECT: [FROM ID/EX: ALU &amp; BRANCH EVAL] &#8594; PC MUX [In 1] &bull; Strictly 1-Cycle Penalty</text>
+                <text x="86" y="37" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH REDIRECT: [FROM ID/EX: ALU &amp; BRANCH EVAL] &#8594; PC MUX [In 1] &#8226; Strictly 1-Cycle Penalty</text>
 
                 <!-- Channel 2: Trap Vector Redirection (mtvec from CSR Unit) -->
                 <path d="M 705 95 L 705 48 L 22 48 L 22 225 L 28 225" fill="none" stroke="#7e22ce" stroke-width="1.8" marker-end="url(#arrowPurpleIbex)"/>
@@ -3137,7 +3137,7 @@ const bespokeDossiers = [
                 <!-- Callout Banner -->
                 <rect x="110" y="42" width="330" height="15" rx="3" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1"/>
                 <circle cx="118" cy="49.5" r="2.8" fill="#7e22ce"/>
-                <text x="125" y="52.5" font-size="6.8" font-weight="900" fill="#7e22ce" font-family="monospace">TRAP REDIRECT: [FROM PRIVILEGED CSR UNIT: mtvec] &#8594; PC MUX [In 2] &bull; Fast Vector</text>
+                <text x="125" y="52.5" font-size="6.8" font-weight="900" fill="#7e22ce" font-family="monospace">TRAP REDIRECT: [FROM PRIVILEGED CSR UNIT: mtvec] &#8594; PC MUX [In 2] &#8226; Fast Vector</text>
 
                 <!-- ============================================================ -->
                 <!-- PIPELINE STAGE ZONE HEADERS -->
@@ -3223,7 +3223,7 @@ const bespokeDossiers = [
                 <text x="140" y="324" font-size="7.2" fill="#64748b">Split Data Phase (Zero Bubble)</text>
 
                 <rect x="32" y="336" width="231" height="24" rx="3" fill="#ffffff" stroke="#059669" stroke-width="1"/>
-                <text x="36" y="348" font-size="6.8" font-weight="800" fill="#065f46">&bull; Decoupled request/grant enables back-to-back</text>
+                <text x="36" y="348" font-size="6.8" font-weight="800" fill="#065f46">&#8226; Decoupled request/grant enables back-to-back</text>
                 <text x="36" y="357" font-size="6.8" font-weight="800" fill="#065f46">  single-cycle SRAM streaming without stalls.</text>
 
                 <!-- Connections from Prefetch to OBI -->
@@ -3249,9 +3249,9 @@ const bespokeDossiers = [
                 <rect x="325" y="95" width="135" height="16" rx="5" fill="#fef3c7"/>
                 <text x="330" y="107" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">DECODER &amp; CTRL FSM</text>
                 <text x="330" y="122" font-size="7.2" font-weight="800" fill="#151b20">Single-Cycle Decode</text>
-                <text x="330" y="133" font-size="6.8" fill="#64748b">&bull; Opcode / Funct3 / Funct7</text>
-                <text x="330" y="144" font-size="6.8" fill="#64748b">&bull; Immediate Gen (imm[31:0])</text>
-                <text x="330" y="156" font-size="6.8" font-weight="800" fill="#d97706">&bull; Exception &amp; Illegal Trap</text>
+                <text x="330" y="133" font-size="6.8" fill="#64748b">&#8226; Opcode / Funct3 / Funct7</text>
+                <text x="330" y="144" font-size="6.8" fill="#64748b">&#8226; Immediate Gen (imm[31:0])</text>
+                <text x="330" y="156" font-size="6.8" font-weight="800" fill="#d97706">&#8226; Exception &amp; Illegal Trap</text>
 
                 <!-- Immediate line from Decoder to OpB Mux -->
                 <path d="M 460 144 L 485 144 L 485 210 L 495 210" fill="none" stroke="#d97706" stroke-width="1.6" marker-end="url(#arrowAmberIbex)"/>
@@ -3262,8 +3262,8 @@ const bespokeDossiers = [
                 <rect x="325" y="185" width="135" height="18" rx="5" fill="#f4eee1"/>
                 <text x="330" y="198" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">REG FILE (32x32)</text>
                 <text x="330" y="216" font-size="8" font-weight="800" fill="#151b20">x0 &#8211; x31 (RV32I / E)</text>
-                <text x="330" y="230" font-size="7.2" fill="#151b20">&bull; Dual Read: <code>rs1, rs2</code> (2R)</text>
-                <text x="330" y="243" font-size="7.2" fill="#151b20">&bull; Writeback: <code>rd</code> Port (1W)</text>
+                <text x="330" y="230" font-size="7.2" fill="#151b20">&#8226; Dual Read: <code>rs1, rs2</code> (2R)</text>
+                <text x="330" y="243" font-size="7.2" fill="#151b20">&#8226; Writeback: <code>rd</code> Port (1W)</text>
                 
                 <rect x="330" y="255" width="125" height="52" rx="3" fill="#f0fdfa" stroke="#0d9488" stroke-width="1"/>
                 <text x="334" y="268" font-size="6.8" font-weight="900" fill="#0d9488">ZERO-BYPASS ADVANTAGE:</text>
@@ -3273,7 +3273,7 @@ const bespokeDossiers = [
 
                 <text x="330" y="324" font-size="7" fill="#64748b">No forwarding multiplexers</text>
                 <text x="330" y="336" font-size="7" fill="#64748b">Saves ~25% core power &amp; area</text>
-                <text x="330" y="358" font-size="6.8" font-weight="800" fill="#7e22ce">&bull; Optional Reg ECC Protect</text>
+                <text x="330" y="358" font-size="6.8" font-weight="800" fill="#7e22ce">&#8226; Optional Reg ECC Protect</text>
 
                 <!-- Operand Multiplexers (OpA & OpB) -->
                 <!-- OpA Mux -->
@@ -3310,9 +3310,9 @@ const bespokeDossiers = [
                 <rect x="510" y="260" width="105" height="16" rx="5" fill="#fef3c7"/>
                 <text x="515" y="272" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">M-EXT COPROCESSOR</text>
                 <text x="515" y="288" font-size="7.2" font-weight="800" fill="#151b20">Fast DSP vs Serial</text>
-                <text x="515" y="300" font-size="6.5" fill="#64748b">&bull; Fast: 1-Cyc Booth Mul</text>
-                <text x="515" y="311" font-size="6.5" fill="#64748b">&bull; Small: 32-Cyc Serial Div</text>
-                <text x="515" y="323" font-size="6.5" fill="#64748b">&bull; Non-blocking pipeline</text>
+                <text x="515" y="300" font-size="6.5" fill="#64748b">&#8226; Fast: 1-Cyc Booth Mul</text>
+                <text x="515" y="311" font-size="6.5" fill="#64748b">&#8226; Small: 32-Cyc Serial Div</text>
+                <text x="515" y="323" font-size="6.5" fill="#64748b">&#8226; Non-blocking pipeline</text>
                 <text x="515" y="336" font-size="6.5" font-weight="800" fill="#b45309">Configurable via Param</text>
 
                 <!-- Inputs to Coprocessor from rs1/rs2 -->
@@ -3323,9 +3323,9 @@ const bespokeDossiers = [
                 <rect x="635" y="95" width="140" height="16" rx="5" fill="#f3e8ff"/>
                 <text x="640" y="107" font-size="7.5" font-weight="900" fill="#7e22ce" font-family="monospace">CSR &amp; SECURITY CORE</text>
                 <text x="640" y="122" font-size="7.2" font-weight="800" fill="#151b20">Machine CSRs &amp; Traps</text>
-                <text x="640" y="133" font-size="6.5" fill="#64748b">&bull; mstatus, mie, mtvec, mepc</text>
-                <text x="640" y="144" font-size="6.5" fill="#64748b">&bull; PMP: 16 Physical Regions</text>
-                <text x="640" y="156" font-size="6.5" font-weight="800" fill="#7e22ce">&bull; Dual-Core Lockstep (DCLS)</text>
+                <text x="640" y="133" font-size="6.5" fill="#64748b">&#8226; mstatus, mie, mtvec, mepc</text>
+                <text x="640" y="144" font-size="6.5" fill="#64748b">&#8226; PMP: 16 Physical Regions</text>
+                <text x="640" y="156" font-size="6.5" font-weight="800" fill="#7e22ce">&#8226; Dual-Core Lockstep (DCLS)</text>
 
                 <!-- 6. LSU & OBI Data Master Interface -->
                 <rect x="635" y="185" width="140" height="185" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
@@ -3381,11 +3381,11 @@ const bespokeDossiers = [
                 <polygon points="700,422 694,425 700,428" fill="#0d9488"/>
                 <rect x="420" y="416" width="360" height="18" rx="4" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
                 <circle cx="428" cy="425" r="3" fill="#0d9488"/>
-                <text x="435" y="428.5" font-size="7.2" font-weight="900" fill="#0f766e" font-family="monospace">SYNCHRONOUS COMMIT: [WRITEBACK MUX] &#8594; REGFILE PORT W &bull; Cycle-Boundary Write (Zero Stall)</text>
+                <text x="435" y="428.5" font-size="7.2" font-weight="900" fill="#0f766e" font-family="monospace">SYNCHRONOUS COMMIT: [WRITEBACK MUX] &#8594; REGFILE PORT W &#8226; Cycle-Boundary Write (Zero Stall)</text>
 
                 <!-- Bottom Timing & Metrics Strip -->
-                <rect x="20" y="445" width="880" height="25" rx="4" fill="#151b20"/>
-                <text x="30" y="461" font-size="8.5" font-weight="800" fill="#ffc83e" font-family="monospace">METRICS: CPI: 1.18 &#8211; 1.69 &bull; Fmax: 380 MHz (40nm) &bull; Area: 18.5 &#8211; 32.0 kGE &bull; Zero Bypass Muxes &bull; Silicon-Proven in OpenTitan Root-of-Trust</text>
+                <rect x="20" y="445" width="880" height="25" rx="4" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="30" y="461" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace">METRICS: CPI: 1.18 &#8211; 1.69 &#8226; Fmax: 380 MHz (40nm) &#8226; Area: 18.5 &#8211; 32.0 kGE &#8226; Zero Bypass Muxes &#8226; Silicon-Proven in OpenTitan Root-of-Trust</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -3450,9 +3450,9 @@ const bespokeDossiers = [
                 <rect width="916" height="442" x="2" y="2" rx="9" fill="url(#cadGridNeorv)"/>
 
                 <!-- Status Header Banner -->
-                <rect x="2" y="2" width="916" height="26" fill="var(--ink, #151b20)" rx="8"/>
+                <rect x="2" y="2" width="916" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
                 <circle cx="16" cy="15" r="4.5" fill="#0d9488"/>
-                <text x="28" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH &bull; NEORV32 2-STAGE MODULAR PIPELINE &amp; WISHBONE b4 SOC FABRIC (VHDL-93)</text>
+                <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH &#8226; NEORV32 2-STAGE MODULAR PIPELINE &amp; WISHBONE b4 SOC FABRIC (VHDL-93)</text>
 
                 <!-- ============================================================ -->
                 <!-- TOP DEDICATED CONTROL REDIRECTION HIGHWAYS -->
@@ -3466,7 +3466,7 @@ const bespokeDossiers = [
                 <!-- Callout Banner -->
                 <rect x="65" y="25" width="375" height="17" rx="3" fill="#fef2f2" stroke="#ef4444" stroke-width="1.2"/>
                 <circle cx="73" cy="33.5" r="3" fill="#ef4444"/>
-                <text x="81" y="37" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH REDIRECT: [FROM CENTRAL ALU &amp; BR EVAL] &#8594; PC MUX [In 1] &bull; Static 1-Cycle Penalty</text>
+                <text x="81" y="37" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH REDIRECT: [FROM CENTRAL ALU &amp; BR EVAL] &#8594; PC MUX [In 1] &#8226; Static 1-Cycle Penalty</text>
 
                 <!-- Channel 2: Fast Vectored Trap / FIRQ Highway -->
                 <path d="M 210 95 L 210 48 L 22 48 L 22 220 L 28 220" fill="none" stroke="#7e22ce" stroke-width="1.8" marker-end="url(#arrowPurpleNeorv)"/>
@@ -3529,17 +3529,17 @@ const bespokeDossiers = [
                 <rect x="145" y="95" width="125" height="15" rx="4" fill="#f3e8ff"/>
                 <text x="150" y="106" font-size="7" font-weight="900" fill="#7e22ce" font-family="monospace">TRAP &amp; FIRQ CORE</text>
                 <text x="150" y="122" font-size="6.8" font-weight="800" fill="#151b20">16 Fast IRQs (FIRQ0-15)</text>
-                <text x="150" y="133" font-size="6.2" fill="#64748b">&bull; Direct / Vectored Mode</text>
-                <text x="150" y="143" font-size="6.2" fill="#64748b">&bull; mstatus, mie, mtvec, mepc</text>
+                <text x="150" y="133" font-size="6.2" fill="#64748b">&#8226; Direct / Vectored Mode</text>
+                <text x="150" y="143" font-size="6.2" fill="#64748b">&#8226; mstatus, mie, mtvec, mepc</text>
 
                 <!-- Internal Tightly-Coupled IMEM (Block RAM) -->
                 <rect x="145" y="160" width="125" height="85" rx="5" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
                 <rect x="145" y="160" width="125" height="16" rx="4" fill="#d1fae5"/>
                 <text x="150" y="172" font-size="7.5" font-weight="900" fill="#065f46" font-family="monospace">INTERNAL IMEM (RAM)</text>
                 <text x="150" y="188" font-size="7.2" font-weight="800" fill="#151b20">Dual-Port Block RAM</text>
-                <text x="150" y="200" font-size="6.5" fill="#64748b">&bull; 1-Cycle Zero Wait-State</text>
-                <text x="150" y="211" font-size="6.5" fill="#64748b">&bull; Optional Bootloader ROM</text>
-                <text x="150" y="223" font-size="6.5" font-weight="800" fill="#047857">&bull; No external bus stall</text>
+                <text x="150" y="200" font-size="6.5" fill="#64748b">&#8226; 1-Cycle Zero Wait-State</text>
+                <text x="150" y="211" font-size="6.5" fill="#64748b">&#8226; Optional Bootloader ROM</text>
+                <text x="150" y="223" font-size="6.5" font-weight="800" fill="#047857">&#8226; No external bus stall</text>
                 <text x="150" y="235" font-size="6.2" fill="#64748b">Size: 4KB &#8211; 512KB Config</text>
 
                 <!-- Decoupled Prefetch Buffer FIFO -->
@@ -3555,9 +3555,9 @@ const bespokeDossiers = [
                 <text x="156" y="312" font-size="6.8" font-weight="900" fill="#d97706" font-family="monospace">RVC 16b Decompressor</text>
                 <text x="156" y="319" font-size="5.8" fill="#64748b">Expands to 32b RV32I on fly</text>
 
-                <text x="150" y="337" font-size="6.5" fill="#64748b">&bull; Eliminates branch bubbles</text>
-                <text x="150" y="348" font-size="6.5" fill="#64748b">&bull; Decoupled streaming</text>
-                <text x="150" y="360" font-size="6.5" font-weight="800" fill="#0d9488">&bull; Sustained CPI: ~1.35</text>
+                <text x="150" y="337" font-size="6.5" fill="#64748b">&#8226; Eliminates branch bubbles</text>
+                <text x="150" y="348" font-size="6.5" fill="#64748b">&#8226; Decoupled streaming</text>
+                <text x="150" y="360" font-size="6.5" font-weight="800" fill="#0d9488">&#8226; Sustained CPI: ~1.35</text>
 
                 <!-- IMEM to Prefetch FIFO -->
                 <line x1="207" y1="245" x2="207" y2="255" stroke="#059669" stroke-width="2" marker-end="url(#arrowNeorv)"/>
@@ -3582,17 +3582,17 @@ const bespokeDossiers = [
                 <rect x="325" y="95" width="135" height="16" rx="5" fill="#fef3c7"/>
                 <text x="330" y="107" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">CENTRAL CONTROL FSM</text>
                 <text x="330" y="122" font-size="7.2" font-weight="800" fill="#151b20">VHDL-93 Modular Decoder</text>
-                <text x="330" y="133" font-size="6.5" fill="#64748b">&bull; Multi-format Opcode Slicer</text>
-                <text x="330" y="144" font-size="6.5" fill="#64748b">&bull; Immediate Generator (imm)</text>
-                <text x="330" y="156" font-size="6.5" font-weight="800" fill="#b45309">&bull; CFU Instruction Slicer</text>
+                <text x="330" y="133" font-size="6.5" fill="#64748b">&#8226; Multi-format Opcode Slicer</text>
+                <text x="330" y="144" font-size="6.5" fill="#64748b">&#8226; Immediate Generator (imm)</text>
+                <text x="330" y="156" font-size="6.5" font-weight="800" fill="#b45309">&#8226; CFU Instruction Slicer</text>
 
                 <!-- 2. Register File (32x32 GPRs) -->
                 <rect x="325" y="185" width="135" height="185" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
                 <rect x="325" y="185" width="135" height="18" rx="5" fill="#f4eee1"/>
                 <text x="330" y="198" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">REG FILE (32x32)</text>
                 <text x="330" y="216" font-size="8" font-weight="800" fill="#151b20">x0 &#8211; x31 (RV32I / E)</text>
-                <text x="330" y="230" font-size="7.2" fill="#151b20">&bull; Dual Read: <code>rs1, rs2</code> (2R)</text>
-                <text x="330" y="243" font-size="7.2" fill="#151b20">&bull; Synchronous Write: <code>rd</code> (1W)</text>
+                <text x="330" y="230" font-size="7.2" fill="#151b20">&#8226; Dual Read: <code>rs1, rs2</code> (2R)</text>
+                <text x="330" y="243" font-size="7.2" fill="#151b20">&#8226; Synchronous Write: <code>rd</code> (1W)</text>
                 
                 <rect x="330" y="255" width="125" height="52" rx="3" fill="#f0fdfa" stroke="#0d9488" stroke-width="1"/>
                 <text x="334" y="268" font-size="6.8" font-weight="900" fill="#0d9488">CLEAN SYNCHRONOUS:</text>
@@ -3602,7 +3602,7 @@ const bespokeDossiers = [
 
                 <text x="330" y="324" font-size="7" fill="#64748b">100% portable synthesis</text>
                 <text x="330" y="336" font-size="7" fill="#64748b">Xilinx, Intel, Lattice, Microchip</text>
-                <text x="330" y="358" font-size="6.8" font-weight="800" fill="#0d9488">&bull; Optional RV32E (16 Regs)</text>
+                <text x="330" y="358" font-size="6.8" font-weight="800" fill="#0d9488">&#8226; Optional RV32E (16 Regs)</text>
 
                 <!-- Operand Multiplexers -->
                 <!-- OpA Mux -->
@@ -3636,10 +3636,10 @@ const bespokeDossiers = [
                 <rect x="500" y="260" width="130" height="16" rx="5" fill="#f3e8ff"/>
                 <text x="505" y="272" font-size="7.5" font-weight="900" fill="#7e22ce" font-family="monospace">MODULAR COPROCESSOR</text>
                 <text x="505" y="288" font-size="7.2" font-weight="800" fill="#151b20">Custom Function Unit (CFU)</text>
-                <text x="505" y="300" font-size="6.5" fill="#64748b">&bull; Zfinx (Single-Prec FPU)</text>
-                <text x="505" y="311" font-size="6.5" fill="#64748b">&bull; AES-128 / SHA-256 Crypto</text>
-                <text x="505" y="323" font-size="6.5" fill="#64748b">&bull; MULDIV (Booth / Serial)</text>
-                <text x="505" y="336" font-size="6.5" font-weight="800" fill="#7e22ce">&bull; Custom Algorithmic Accel</text>
+                <text x="505" y="300" font-size="6.5" fill="#64748b">&#8226; Zfinx (Single-Prec FPU)</text>
+                <text x="505" y="311" font-size="6.5" fill="#64748b">&#8226; AES-128 / SHA-256 Crypto</text>
+                <text x="505" y="323" font-size="6.5" fill="#64748b">&#8226; MULDIV (Booth / Serial)</text>
+                <text x="505" y="336" font-size="6.5" font-weight="800" fill="#7e22ce">&#8226; Custom Algorithmic Accel</text>
 
                 <!-- Inputs to CFU from rs1/rs2 -->
                 <path d="M 470 235 L 470 305 L 500 305" fill="none" stroke="#151b20" stroke-width="1.6" marker-end="url(#arrowNeorv)"/>
@@ -3681,7 +3681,7 @@ const bespokeDossiers = [
                 <text x="790" y="198" font-size="7" fill="#64748b">Zero Wait-State Handshake</text>
 
                 <rect x="668" y="206" width="218" height="18" rx="3" fill="#ffffff" stroke="#059669" stroke-width="1"/>
-                <text x="672" y="218" font-size="6.5" font-weight="800" fill="#047857">Standardized SoC Interconnect &bull; Pipelined Handshakes</text>
+                <text x="672" y="218" font-size="6.5" font-weight="800" fill="#047857">Standardized SoC Interconnect &#8226; Pipelined Handshakes</text>
 
                 <!-- Connection from ALU/LSU into Wishbone -->
                 <path d="M 575 195 L 660 145" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowNeorv)"/>
@@ -3703,11 +3703,11 @@ const bespokeDossiers = [
                 <!-- Plug-and-Play Peripherals -->
                 <rect x="780" y="270" width="105" height="85" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
                 <text x="786" y="282" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">PERIPHERAL CROSSBAR</text>
-                <text x="786" y="295" font-size="6.5" fill="#64748b">&bull; UART (Console)</text>
-                <text x="786" y="307" font-size="6.5" fill="#64748b">&bull; SPI (Flash / SD)</text>
-                <text x="786" y="319" font-size="6.5" fill="#64748b">&bull; TMR / Watchdog</text>
-                <text x="786" y="331" font-size="6.5" fill="#64748b">&bull; GPIO / PWM / TRNG</text>
-                <text x="786" y="343" font-size="6.5" font-weight="800" fill="#0d9488">&bull; Machine Timer (mtime)</text>
+                <text x="786" y="295" font-size="6.5" fill="#64748b">&#8226; UART (Console)</text>
+                <text x="786" y="307" font-size="6.5" fill="#64748b">&#8226; SPI (Flash / SD)</text>
+                <text x="786" y="319" font-size="6.5" fill="#64748b">&#8226; TMR / Watchdog</text>
+                <text x="786" y="331" font-size="6.5" fill="#64748b">&#8226; GPIO / PWM / TRNG</text>
+                <text x="786" y="343" font-size="6.5" font-weight="800" fill="#0d9488">&#8226; Machine Timer (mtime)</text>
 
                 <text x="668" y="325" font-size="6.8" font-weight="800" fill="#151b20">Plug-and-play fabric</text>
                 <text x="668" y="337" font-size="6.2" fill="#64748b">Trivial custom peripheral</text>
@@ -3725,11 +3725,11 @@ const bespokeDossiers = [
                 <polygon points="540,422 534,425 540,428" fill="#0d9488"/>
                 <rect x="375" y="416" width="350" height="18" rx="4" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
                 <circle cx="383" cy="425" r="3" fill="#0d9488"/>
-                <text x="390" y="428.5" font-size="7.2" font-weight="900" fill="#0f766e" font-family="monospace">SYNCHRONOUS COMMIT: [WB MUX] &#8594; REGFILE PORT W &bull; Cycle-Boundary Register Update</text>
+                <text x="390" y="428.5" font-size="7.2" font-weight="900" fill="#0f766e" font-family="monospace">SYNCHRONOUS COMMIT: [WB MUX] &#8594; REGFILE PORT W &#8226; Cycle-Boundary Register Update</text>
 
                 <!-- Bottom Timing & Metrics Strip -->
-                <rect x="20" y="445" width="880" height="25" rx="4" fill="#151b20"/>
-                <text x="30" y="461" font-size="8.5" font-weight="800" fill="#ffc83e" font-family="monospace">METRICS: CoreMark/MHz: 2.15 &bull; Measured CPI: 1.35 &bull; Area: ~24.5 kGE &bull; 100% Portable VHDL-93 &bull; Modular Wishbone b4 SoC Fabric</text>
+                <rect x="20" y="445" width="880" height="25" rx="4" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="30" y="461" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace">METRICS: CoreMark/MHz: 2.15 &#8226; Measured CPI: 1.35 &#8226; Area: ~24.5 kGE &#8226; 100% Portable VHDL-93 &#8226; Modular Wishbone b4 SoC Fabric</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -3909,9 +3909,9 @@ const bespokeDossiers = [
                 <rect width="916" height="442" x="2" y="2" rx="9" fill="url(#cadGridHazard)"/>
 
                 <!-- Status Header Banner -->
-                <rect x="2" y="2" width="916" height="26" fill="var(--ink, #151b20)" rx="8"/>
-                <circle cx="16" cy="15" r="4.5" fill="#22c55e"/>
-                <text x="28" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH &bull; HAZARD3 3-STAGE DECOUPLED HARVARD PIPELINE (RP2350 HARDWARE HERITAGE)</text>
+                <rect x="2" y="2" width="916" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
+                <circle cx="16" cy="15" r="4.5" fill="#16a34a"/>
+                <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH &#8226; HAZARD3 3-STAGE DECOUPLED HARVARD PIPELINE (RP2350 HARDWARE HERITAGE)</text>
 
                 <!-- ============================================================ -->
                 <!-- TOP DEDICATED CONTROL REDIRECTION HIGHWAYS -->
@@ -3925,7 +3925,7 @@ const bespokeDossiers = [
                 <!-- Callout Banner -->
                 <rect x="70" y="25" width="380" height="17" rx="3" fill="#fef2f2" stroke="#ef4444" stroke-width="1.2"/>
                 <circle cx="78" cy="33.5" r="3" fill="#ef4444"/>
-                <text x="86" y="37" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH FORWARDING: [FROM EX BRU &amp; ALU] &#8594; PC MUX [In 1] &bull; Accelerated 1-Cycle Forwarding</text>
+                <text x="86" y="37" font-size="7" font-weight="900" fill="#ef4444" font-family="monospace">BRANCH FORWARDING: [FROM EX BRU &amp; ALU] &#8594; PC MUX [In 1] &#8226; Accelerated 1-Cycle Forwarding</text>
 
                 <!-- Channel 2: Load-Use Hazard Interlock Stall Line -->
                 <path d="M 515 95 L 515 48 L 105 48 L 105 130" fill="none" stroke="#d97706" stroke-width="1.8" stroke-dasharray="3,3" marker-end="url(#arrowAmberHazard)"/>
@@ -3996,8 +3996,8 @@ const bespokeDossiers = [
                 <text x="140" y="188" font-size="6.5" font-weight="900" fill="#d97706" font-family="monospace">FIFO Slot 1: Next</text>
                 <text x="140" y="196" font-size="5.8" fill="#64748b">RVC 16b Decompress</text>
 
-                <text x="134" y="215" font-size="6.2" fill="#64748b">&bull; Non-blocking streaming</text>
-                <text x="134" y="226" font-size="6.2" font-weight="800" fill="#0d9488">&bull; Absorbs AHB5 wait states</text>
+                <text x="134" y="215" font-size="6.2" fill="#64748b">&#8226; Non-blocking streaming</text>
+                <text x="134" y="226" font-size="6.2" font-weight="800" fill="#0d9488">&#8226; Absorbs AHB5 wait states</text>
 
                 <line x1="122" y1="195" x2="130" y2="195" stroke="#151b20" stroke-width="2" marker-end="url(#arrowHazard)"/>
 
@@ -4043,37 +4043,37 @@ const bespokeDossiers = [
                 <rect x="282" y="95" width="120" height="16" rx="5" fill="#fef3c7"/>
                 <text x="288" y="107" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">DECODER &amp; IMM GEN</text>
                 <text x="288" y="122" font-size="7.2" font-weight="800" fill="#151b20">Instruction Slicer</text>
-                <text x="288" y="133" font-size="6.5" fill="#64748b">&bull; RV32I/E, M, C, B Dec</text>
-                <text x="288" y="144" font-size="6.5" fill="#64748b">&bull; Immediate (imm[31:0])</text>
-                <text x="288" y="156" font-size="6.5" font-weight="800" fill="#047857">&bull; Zba/bb/bc/bs Dec</text>
+                <text x="288" y="133" font-size="6.5" fill="#64748b">&#8226; RV32I/E, M, C, B Dec</text>
+                <text x="288" y="144" font-size="6.5" fill="#64748b">&#8226; Immediate (imm[31:0])</text>
+                <text x="288" y="156" font-size="6.5" font-weight="800" fill="#047857">&#8226; Zba/bb/bc/bs Dec</text>
 
                 <!-- Hazard Detection Unit -->
                 <rect x="410" y="95" width="115" height="75" rx="6" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
                 <rect x="410" y="95" width="115" height="16" rx="5" fill="#fef3c7"/>
                 <text x="416" y="107" font-size="7.2" font-weight="900" fill="#b45309" font-family="monospace">HAZARD DETECTION</text>
                 <text x="416" y="122" font-size="7" font-weight="800" fill="#151b20">Load-Use Interlock</text>
-                <text x="416" y="133" font-size="6.5" fill="#64748b">&bull; Monitors EX rd vs ID rs</text>
-                <text x="416" y="144" font-size="6.5" fill="#64748b">&bull; Injects 1-cyc bubble</text>
-                <text x="416" y="156" font-size="6.5" font-weight="800" fill="#d97706">&bull; Stalls PC &amp; IF/ID</text>
+                <text x="416" y="133" font-size="6.5" fill="#64748b">&#8226; Monitors EX rd vs ID rs</text>
+                <text x="416" y="144" font-size="6.5" fill="#64748b">&#8226; Injects 1-cyc bubble</text>
+                <text x="416" y="156" font-size="6.5" font-weight="800" fill="#d97706">&#8226; Stalls PC &amp; IF/ID</text>
 
                 <!-- 32x32 Register File -->
                 <rect x="282" y="185" width="242" height="185" rx="6" fill="#fdfbf7" stroke="#151b20" stroke-width="2"/>
                 <rect x="282" y="185" width="242" height="18" rx="5" fill="#f4eee1"/>
-                <text x="290" y="198" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">REGISTER FILE (32x32 GPRs &bull; RV32I/E)</text>
+                <text x="290" y="198" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">REGISTER FILE (32x32 GPRs &#8226; RV32I/E)</text>
                 
                 <text x="290" y="216" font-size="7.5" font-weight="800" fill="#151b20">Dual Read Ports (2R):</text>
-                <text x="290" y="228" font-size="7" fill="#64748b">&bull; Port A: <code>rs1_data [31:0]</code> &#8594; Forwarding Mux A</text>
-                <text x="290" y="240" font-size="7" fill="#64748b">&bull; Port B: <code>rs2_data [31:0]</code> &#8594; Forwarding Mux B</text>
+                <text x="290" y="228" font-size="7" fill="#64748b">&#8226; Port A: <code>rs1_data [31:0]</code> &#8594; Forwarding Mux A</text>
+                <text x="290" y="240" font-size="7" fill="#64748b">&#8226; Port B: <code>rs2_data [31:0]</code> &#8594; Forwarding Mux B</text>
 
                 <text x="290" y="258" font-size="7.5" font-weight="800" fill="#0d9488">Single Writeback Port (1W):</text>
-                <text x="290" y="270" font-size="7" fill="#64748b">&bull; Port W: <code>rd_data [31:0]</code> &bull; Commits from EX/WB stage</text>
+                <text x="290" y="270" font-size="7" fill="#64748b">&#8226; Port W: <code>rd_data [31:0]</code> &#8226; Commits from EX/WB stage</text>
 
                 <rect x="290" y="280" width="225" height="42" rx="3" fill="#f0fdfa" stroke="#0d9488" stroke-width="1"/>
                 <text x="295" y="293" font-size="6.8" font-weight="900" fill="#0d9488">EARLY BRANCH RESOLUTION TARGET:</text>
                 <text x="295" y="304" font-size="6.5" fill="#151b20">Target PC calculated via dedicated adder: PC + imm.</text>
                 <text x="295" y="314" font-size="6.5" font-weight="800" fill="#047857">Branch evaluated in EX stage with 1-cycle forward.</text>
 
-                <text x="290" y="338" font-size="6.8" fill="#64748b">Single-cycle register access &bull; Zero wait-states</text>
+                <text x="290" y="338" font-size="6.8" fill="#64748b">Single-cycle register access &#8226; Zero wait-states</text>
                 <text x="290" y="350" font-size="6.8" fill="#64748b">Bypass forwarding eliminates RAW dependency stalls</text>
 
                 <!-- ============================================================ -->
@@ -4114,14 +4114,14 @@ const bespokeDossiers = [
                 <rect x="670" y="95" width="115" height="15" rx="4" fill="#f3e8ff"/>
                 <text x="675" y="106" font-size="7.2" font-weight="900" fill="#7e22ce" font-family="monospace">BITMANIP (Zba/b/c/s)</text>
                 <text x="675" y="120" font-size="6.8" font-weight="800" fill="#151b20">Address &amp; Bit Ops</text>
-                <text x="675" y="130" font-size="6.2" fill="#64748b">&bull; sh1add, sh2add, sh3add</text>
-                <text x="675" y="140" font-size="6.2" fill="#64748b">&bull; clz, ctz, cpop, rev8, clmul</text>
+                <text x="675" y="130" font-size="6.2" fill="#64748b">&#8226; sh1add, sh2add, sh3add</text>
+                <text x="675" y="140" font-size="6.2" fill="#64748b">&#8226; clz, ctz, cpop, rev8, clmul</text>
 
                 <!-- Radix-4 Fast Hardware Divider -->
                 <rect x="670" y="160" width="115" height="42" rx="5" fill="#fff8e1" stroke="#151b20" stroke-width="1.8"/>
                 <text x="675" y="172" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">RADIX-4 DIVIDER</text>
                 <text x="675" y="184" font-size="6.8" font-weight="800" fill="#151b20">16-Cycle Division</text>
-                <text x="675" y="195" font-size="6.2" fill="#64748b">2 bits/cycle &bull; Fast Math</text>
+                <text x="675" y="195" font-size="6.2" fill="#64748b">2 bits/cycle &#8226; Fast Math</text>
 
                 <!-- Booth Multiplier -->
                 <rect x="670" y="208" width="115" height="38" rx="5" fill="#fff8e1" stroke="#151b20" stroke-width="1.8"/>
@@ -4179,11 +4179,11 @@ const bespokeDossiers = [
                 <polygon points="680,422 674,425 680,428" fill="#0d9488"/>
                 <rect x="420" y="416" width="350" height="18" rx="4" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
                 <circle cx="428" cy="425" r="3" fill="#0d9488"/>
-                <text x="435" y="428.5" font-size="7.2" font-weight="900" fill="#0f766e" font-family="monospace">SYNCHRONOUS COMMIT: [EX RES MUX] &#8594; REGFILE PORT W &bull; Cycle-Boundary Register Update</text>
+                <text x="435" y="428.5" font-size="7.2" font-weight="900" fill="#0f766e" font-family="monospace">SYNCHRONOUS COMMIT: [EX RES MUX] &#8594; REGFILE PORT W &#8226; Cycle-Boundary Register Update</text>
 
                 <!-- Bottom Timing & Metrics Strip -->
-                <rect x="20" y="445" width="880" height="25" rx="4" fill="#151b20"/>
-                <text x="30" y="461" font-size="8.5" font-weight="800" fill="#ffc83e" font-family="monospace">METRICS: CoreMark/MHz: 2.10 &bull; Measured CPI: 1.15 &bull; Fmax: &gt;450 MHz (40nm) &bull; Dual AHB5 Harvard Ports &bull; Silicon in Raspberry Pi RP2350</text>
+                <rect x="20" y="445" width="880" height="25" rx="4" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="30" y="461" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace">METRICS: CoreMark/MHz: 2.10 &#8226; Measured CPI: 1.15 &#8226; Fmax: &gt;450 MHz (40nm) &#8226; Dual AHB5 Harvard Ports &#8226; Silicon in Raspberry Pi RP2350</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -4237,9 +4237,9 @@ const bespokeDossiers = [
                 <rect width="756" height="344" x="2" y="2" rx="7" fill="url(#cadGridVex)"/>
 
                 <!-- Status Header Banner -->
-                <rect x="2" y="2" width="756" height="24" fill="var(--ink, #151b20)" rx="6"/>
-                <circle cx="16" cy="14" r="4" fill="#22c55e"/>
-                <text x="28" y="17" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH • VEXRISCV CLASSICAL 5-STAGE PIPELINE &amp; FORWARDING MATRIX</text>
+                <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+                <circle cx="16" cy="14" r="4" fill="#16a34a"/>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • VEXRISCV CLASSICAL 5-STAGE PIPELINE &amp; FORWARDING MATRIX</text>
 
                 <!-- 5 Pipeline Stage Columns -->
                 <!-- IF -->
@@ -4304,8 +4304,8 @@ const bespokeDossiers = [
                 <!-- WB to EX Forwarding -->
                 <path d="M 670 135 L 670 350 L 270 350 L 270 195 L 325 195" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrowVex)"/>
 
-                <rect x="360" y="322" width="220" height="20" rx="4" fill="#151b20"/>
-                <text x="368" y="336" font-size="8" font-weight="800" fill="#f8fafc" font-family="monospace">FORWARDING MATRIX: EX&#8594;EX, MEM&#8594;EX, WB&#8594;EX</text>
+                <rect x="360" y="322" width="220" height="20" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+                <text x="368" y="336" font-size="8" font-weight="800" fill="#065f46" font-family="monospace">FORWARDING MATRIX: EX&#8594;EX, MEM&#8594;EX, WB&#8594;EX</text>
 
                 <!-- Stage Connecting Arrows -->
                 <path d="M 155 97 L 180 97" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVex)"/>
@@ -4314,8 +4314,8 @@ const bespokeDossiers = [
                 <path d="M 595 105 L 620 105" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowVex)"/>
 
                 <!-- Bottom Status Strip -->
-                <rect x="25" y="358" width="710" height="18" rx="3" fill="#151b20"/>
-                <text x="35" y="371" font-size="8.5" font-weight="800" fill="#cbd5e1" font-family="monospace">METRICS: CoreMark/MHz: 2.35 | CPI: 1.20 | DMIPS/MHz: 1.92 | Full Forwarding Matrix | Winner FSiC Soft CPU</text>
+                <rect x="25" y="358" width="710" height="18" rx="3" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="35" y="371" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace">METRICS: CoreMark/MHz: 2.35 | CPI: 1.20 | DMIPS/MHz: 1.92 | Full Forwarding Matrix | Winner FSiC Soft CPU</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -4492,9 +4492,9 @@ const bespokeDossiers = [
                 <rect width="916" height="452" x="2" y="2" rx="9" fill="url(#cadGridVeer)"/>
 
                 <!-- Status Header Banner -->
-                <rect x="2" y="2" width="916" height="26" fill="var(--ink, #151b20)" rx="8"/>
-                <circle cx="16" cy="15" r="4.5" fill="#eab308"/>
-                <text x="28" y="18" font-size="9" font-weight="900" fill="#f8fafc" font-family="monospace">SCORE EDA WORKBENCH &bull; VEER EL2 4-STAGE DUAL-ISSUE SUPERSCALAR ARCHITECTURE (WESTERN DIGITAL / CHIPS ALLIANCE)</text>
+                <rect x="2" y="2" width="916" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
+                <circle cx="16" cy="15" r="4.5" fill="#b45309"/>
+                <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH &#8226; VEER EL2 4-STAGE DUAL-ISSUE SUPERSCALAR ARCHITECTURE (WESTERN DIGITAL / CHIPS ALLIANCE)</text>
 
                 <!-- ============================================================ -->
                 <!-- TOP DEDICATED CONTROL REDIRECTION HIGHWAYS -->
@@ -4508,7 +4508,7 @@ const bespokeDossiers = [
                 <!-- Callout Banner -->
                 <rect x="65" y="25" width="410" height="17" rx="3" fill="#fff1f2" stroke="#be123c" stroke-width="1.2"/>
                 <circle cx="73" cy="33.5" r="3" fill="#be123c"/>
-                <text x="81" y="37" font-size="7" font-weight="900" fill="#9f1239" font-family="monospace">BRANCH MISPREDICT FLUSH: [FROM EX1 BRU] &#8594; FETCH &amp; DISPATCH QUEUE &bull; 3-Cycle Pipeline Rollback</text>
+                <text x="81" y="37" font-size="7" font-weight="900" fill="#9f1239" font-family="monospace">BRANCH MISPREDICT FLUSH: [FROM EX1 BRU] &#8594; FETCH &amp; DISPATCH QUEUE &#8226; 3-Cycle Pipeline Rollback</text>
 
                 <!-- Channel 2: Dynamic Gshare & BTB Update Highway -->
                 <path d="M 670 95 L 670 48 L 130 48 L 130 115" fill="none" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowGoldVeer)"/>
@@ -4518,7 +4518,7 @@ const bespokeDossiers = [
                 <!-- Callout Banner -->
                 <rect x="145" y="42" width="375" height="15" rx="3" fill="#fffbeb" stroke="#d97706" stroke-width="1"/>
                 <circle cx="153" cy="49.5" r="2.8" fill="#d97706"/>
-                <text x="160" y="52.5" font-size="6.8" font-weight="900" fill="#b45309" font-family="monospace">DYNAMIC GSHARE &amp; BTB UPDATE: [FROM EX1 BRU] &#8594; 512-ENTRY BTB &bull; 2-Bit Saturating History (&gt;94% Acc)</text>
+                <text x="160" y="52.5" font-size="6.8" font-weight="900" fill="#b45309" font-family="monospace">DYNAMIC GSHARE &amp; BTB UPDATE: [FROM EX1 BRU] &#8594; 512-ENTRY BTB &#8226; 2-Bit Saturating History (&gt;94% Acc)</text>
 
                 <!-- ============================================================ -->
                 <!-- PIPELINE STAGE ZONE HEADERS -->
@@ -4574,18 +4574,18 @@ const bespokeDossiers = [
                 <rect x="120" y="95" width="95" height="15" rx="4" fill="#fef3c7"/>
                 <text x="124" y="106" font-size="7" font-weight="900" fill="#b45309" font-family="monospace">512-ENTRY BTB</text>
                 <text x="124" y="120" font-size="6.8" font-weight="800" fill="#151b20">Gshare Predictor</text>
-                <text x="124" y="131" font-size="6.2" fill="#64748b">&bull; 2-bit Saturating BHT</text>
-                <text x="124" y="141" font-size="6.2" fill="#64748b">&bull; Target Address Cache</text>
-                <text x="124" y="152" font-size="6.2" font-weight="800" fill="#d97706">&bull; &gt;94% Accuracy</text>
+                <text x="124" y="131" font-size="6.2" fill="#64748b">&#8226; 2-bit Saturating BHT</text>
+                <text x="124" y="141" font-size="6.2" fill="#64748b">&#8226; Target Address Cache</text>
+                <text x="124" y="152" font-size="6.2" font-weight="800" fill="#d97706">&#8226; &gt;94% Accuracy</text>
 
                 <!-- 64-Bit Tightly-Coupled Instruction Memory (ICCM) -->
                 <rect x="120" y="165" width="95" height="85" rx="5" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
                 <rect x="120" y="165" width="95" height="16" rx="4" fill="#d1fae5"/>
                 <text x="124" y="177" font-size="7.2" font-weight="900" fill="#065f46" font-family="monospace">64-BIT ICCM SRAM</text>
                 <text x="124" y="193" font-size="7" font-weight="800" fill="#151b20">Dual-Port 64b SRAM</text>
-                <text x="124" y="205" font-size="6.5" fill="#64748b">&bull; Fetches 2x32b instrs</text>
-                <text x="124" y="216" font-size="6.5" fill="#64748b">&bull; or up to 4x16b RVC</text>
-                <text x="124" y="228" font-size="6.5" font-weight="800" fill="#047857">&bull; Zero Cache Miss Delay</text>
+                <text x="124" y="205" font-size="6.5" fill="#64748b">&#8226; Fetches 2x32b instrs</text>
+                <text x="124" y="216" font-size="6.5" fill="#64748b">&#8226; or up to 4x16b RVC</text>
+                <text x="124" y="228" font-size="6.5" font-weight="800" fill="#047857">&#8226; Zero Cache Miss Delay</text>
                 <text x="124" y="240" font-size="6.2" fill="#64748b">Size: 16KB &#8211; 512KB</text>
 
                 <!-- PC to ICCM -->
@@ -4597,9 +4597,9 @@ const bespokeDossiers = [
                 <text x="32" y="268" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">INSTRUCTION BUFFER &amp; RVC EXPANDER</text>
 
                 <text x="32" y="288" font-size="7.5" font-weight="800" fill="#151b20">8-Entry Instruction FIFO Queue:</text>
-                <text x="32" y="300" font-size="7" fill="#64748b">&bull; Re-aligns unaligned instructions across 64-bit boundaries</text>
-                <text x="32" y="312" font-size="7" fill="#64748b">&bull; Decompresses RVC 16-bit into 32-bit RV32I on the fly</text>
-                <text x="32" y="324" font-size="7" font-weight="800" fill="#d97706">&bull; Delivers aligned Instruction 0 &amp; Instruction 1 pair</text>
+                <text x="32" y="300" font-size="7" fill="#64748b">&#8226; Re-aligns unaligned instructions across 64-bit boundaries</text>
+                <text x="32" y="312" font-size="7" fill="#64748b">&#8226; Decompresses RVC 16-bit into 32-bit RV32I on the fly</text>
+                <text x="32" y="324" font-size="7" font-weight="800" fill="#d97706">&#8226; Delivers aligned Instruction 0 &amp; Instruction 1 pair</text>
 
                 <rect x="30" y="334" width="180" height="24" rx="3" fill="#ffffff" stroke="#d97706" stroke-width="1"/>
                 <text x="34" y="346" font-size="6.5" font-weight="800" fill="#b45309">Sustains dual-issue feed even through branch targets</text>
@@ -4644,19 +4644,19 @@ const bespokeDossiers = [
                 <text x="258" y="203" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">QUAD-READ DUAL-WRITE REG FILE (4R / 2W)</text>
 
                 <text x="258" y="222" font-size="7.5" font-weight="800" fill="#151b20">4 Concurrent Read Ports (Simultaneous 2-Inst Read):</text>
-                <text x="258" y="235" font-size="7" fill="#047857">&bull; Pipe 0: <code>rs1_0 [31:0], rs2_0 [31:0]</code> &#8594; ALU1 / BRU</text>
-                <text x="258" y="247" font-size="7" fill="#b45309">&bull; Pipe 1: <code>rs1_1 [31:0], rs2_1 [31:0]</code> &#8594; ALU2 / LSU</text>
+                <text x="258" y="235" font-size="7" fill="#047857">&#8226; Pipe 0: <code>rs1_0 [31:0], rs2_0 [31:0]</code> &#8594; ALU1 / BRU</text>
+                <text x="258" y="247" font-size="7" fill="#b45309">&#8226; Pipe 1: <code>rs1_1 [31:0], rs2_1 [31:0]</code> &#8594; ALU2 / LSU</text>
 
                 <text x="258" y="266" font-size="7.5" font-weight="800" fill="#0d9488">2 Concurrent Write Ports (Simultaneous Dual Commit):</text>
-                <text x="258" y="279" font-size="7" fill="#64748b">&bull; Port W0: <code>rd_0 [4:0] + wdata_0 [31:0]</code> (Pipe 0)</text>
-                <text x="258" y="291" font-size="7" fill="#64748b">&bull; Port W1: <code>rd_1 [4:0] + wdata_1 [31:0]</code> (Pipe 1)</text>
+                <text x="258" y="279" font-size="7" fill="#64748b">&#8226; Port W0: <code>rd_0 [4:0] + wdata_0 [31:0]</code> (Pipe 0)</text>
+                <text x="258" y="291" font-size="7" fill="#64748b">&#8226; Port W1: <code>rd_1 [4:0] + wdata_1 [31:0]</code> (Pipe 1)</text>
 
                 <rect x="256" y="300" width="212" height="42" rx="3" fill="#f0fdfa" stroke="#0d9488" stroke-width="1"/>
                 <text x="260" y="313" font-size="6.8" font-weight="900" fill="#0d9488">ZERO PORT-CONTENTION OVERHEAD:</text>
                 <text x="260" y="324" font-size="6.5" fill="#151b20">Allows two independent instructions to read 4 operands</text>
                 <text x="260" y="334" font-size="6.5" font-weight="800" fill="#047857">and commit 2 results simultaneously in the exact same cycle.</text>
 
-                <text x="258" y="356" font-size="6.5" fill="#64748b">&bull; Full internal register renaming &amp; bypass tracking</text>
+                <text x="258" y="356" font-size="6.5" fill="#64748b">&#8226; Full internal register renaming &amp; bypass tracking</text>
 
                 <!-- ============================================================ -->
                 <!-- PIPELINE LATCH 2: ID / EX1 REGISTER -->
@@ -4680,9 +4680,9 @@ const bespokeDossiers = [
                 <rect x="585" y="95" width="125" height="15" rx="4" fill="#fee2e2"/>
                 <text x="590" y="106" font-size="7.2" font-weight="900" fill="#b91c1c" font-family="monospace">BRANCH UNIT (BRU)</text>
                 <text x="590" y="122" font-size="7" font-weight="800" fill="#151b20">Early Branch Resolution</text>
-                <text x="590" y="133" font-size="6.5" fill="#64748b">&bull; Compares condition in EX1</text>
-                <text x="590" y="144" font-size="6.5" fill="#64748b">&bull; Verifies BTB prediction</text>
-                <text x="590" y="156" font-size="6.5" font-weight="800" fill="#b91c1c">&bull; Triggers 3-cyc flush if mispred</text>
+                <text x="590" y="133" font-size="6.5" fill="#64748b">&#8226; Compares condition in EX1</text>
+                <text x="590" y="144" font-size="6.5" fill="#64748b">&#8226; Verifies BTB prediction</text>
+                <text x="590" y="156" font-size="6.5" font-weight="800" fill="#b91c1c">&#8226; Triggers 3-cyc flush if mispred</text>
 
                 <!-- Line from ALU1 to BRU -->
                 <line x1="575" y1="135" x2="585" y2="135" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowVeer)"/>
@@ -4697,18 +4697,18 @@ const bespokeDossiers = [
                 <rect x="585" y="190" width="125" height="15" rx="4" fill="#fef3c7"/>
                 <text x="590" y="206" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">MULDIV PIPELINE</text>
                 <text x="590" y="222" font-size="7" font-weight="800" fill="#151b20">Pipelined MAC &amp; Divider</text>
-                <text x="590" y="233" font-size="6.5" fill="#64748b">&bull; 1-Cyc Pipelined Mul</text>
-                <text x="590" y="244" font-size="6.5" fill="#64748b">&bull; Radix-4 16-Cyc Divider</text>
-                <text x="590" y="256" font-size="6.5" font-weight="800" fill="#b45309">&bull; Runs in parallel with ALU1</text>
+                <text x="590" y="233" font-size="6.5" fill="#64748b">&#8226; 1-Cyc Pipelined Mul</text>
+                <text x="590" y="244" font-size="6.5" fill="#64748b">&#8226; Radix-4 16-Cyc Divider</text>
+                <text x="590" y="256" font-size="6.5" font-weight="800" fill="#b45309">&#8226; Runs in parallel with ALU1</text>
 
                 <!-- Superscalar Cross-Forwarding Network -->
                 <rect x="515" y="285" width="195" height="85" rx="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.8"/>
                 <rect x="515" y="285" width="195" height="16" rx="5" fill="#ccfbf1"/>
                 <text x="522" y="297" font-size="7.5" font-weight="900" fill="#0f766e" font-family="monospace">DUAL CROSS-FORWARDING MATRIX</text>
                 <text x="522" y="315" font-size="7" font-weight="800" fill="#151b20">EX1 &#8594; EX1 Bypass &amp; EX2 &#8594; EX1 Bypass</text>
-                <text x="522" y="328" font-size="6.5" fill="#64748b">&bull; Routes Pipe 0 ALU1 result to Pipe 1 ALU2 input</text>
-                <text x="522" y="340" font-size="6.5" fill="#64748b">&bull; Routes Pipe 1 Load result to Pipe 0 ALU1 input</text>
-                <text x="522" y="352" font-size="6.5" font-weight="800" fill="#0d9488">&bull; Sustains peak CPI = 0.5 (2 instructions/cycle)</text>
+                <text x="522" y="328" font-size="6.5" fill="#64748b">&#8226; Routes Pipe 0 ALU1 result to Pipe 1 ALU2 input</text>
+                <text x="522" y="340" font-size="6.5" fill="#64748b">&#8226; Routes Pipe 1 Load result to Pipe 0 ALU1 input</text>
+                <text x="522" y="352" font-size="6.5" font-weight="800" fill="#0d9488">&#8226; Sustains peak CPI = 0.5 (2 instructions/cycle)</text>
 
                 <!-- ============================================================ -->
                 <!-- STAGE 4: DUAL COMMIT & DCCM (EX2 / COMMIT / WB) -->
@@ -4719,13 +4719,13 @@ const bespokeDossiers = [
                 <text x="733" y="108" font-size="8.5" font-weight="900" fill="#065f46" font-family="monospace">64-BIT DCCM SRAM (DATA MEMORY)</text>
 
                 <text x="733" y="128" font-size="7.5" font-weight="800" fill="#151b20">4-Bank Interleaved SRAM Array:</text>
-                <text x="733" y="140" font-size="7" fill="#64748b">&bull; Bank 0, 1, 2, 3 (Independent Addressing)</text>
-                <text x="733" y="152" font-size="7" fill="#64748b">&bull; Non-blocking dual access without bank stall</text>
-                <text x="733" y="164" font-size="7" font-weight="800" fill="#047857">&bull; Concurrent Load + Store execution</text>
+                <text x="733" y="140" font-size="7" fill="#64748b">&#8226; Bank 0, 1, 2, 3 (Independent Addressing)</text>
+                <text x="733" y="152" font-size="7" fill="#64748b">&#8226; Non-blocking dual access without bank stall</text>
+                <text x="733" y="164" font-size="7" font-weight="800" fill="#047857">&#8226; Concurrent Load + Store execution</text>
 
                 <text x="733" y="180" font-size="7.5" font-weight="800" fill="#151b20">Load Alignment &amp; Sign Extension:</text>
-                <text x="733" y="192" font-size="7" fill="#64748b">&bull; Formats lb, lh, lw, lbu, lhu to 32b</text>
-                <text x="733" y="204" font-size="7" fill="#64748b">&bull; Direct bypass to commit &amp; forwarding</text>
+                <text x="733" y="192" font-size="7" fill="#64748b">&#8226; Formats lb, lh, lw, lbu, lhu to 32b</text>
+                <text x="733" y="204" font-size="7" fill="#64748b">&#8226; Direct bypass to commit &amp; forwarding</text>
 
                 <rect x="730" y="212" width="165" height="14" rx="2" fill="#ffffff" stroke="#059669" stroke-width="0.8"/>
                 <text x="734" y="222" font-size="6.2" font-weight="800" fill="#065f46">High-IOPS FTL flash controller throughput</text>
@@ -4736,12 +4736,12 @@ const bespokeDossiers = [
                 <text x="733" y="253" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">DUAL COMMIT &amp; RETIRE ENGINE</text>
 
                 <text x="733" y="272" font-size="7.5" font-weight="800" fill="#151b20">Simultaneous Retirement (2 Insts/Cyc):</text>
-                <text x="733" y="285" font-size="7" fill="#047857">&bull; Commit 0: ALU1 / BRU / CSR Result</text>
-                <text x="733" y="297" font-size="7" fill="#b45309">&bull; Commit 1: ALU2 / DCCM Load / Mul Result</text>
+                <text x="733" y="285" font-size="7" fill="#047857">&#8226; Commit 0: ALU1 / BRU / CSR Result</text>
+                <text x="733" y="297" font-size="7" fill="#b45309">&#8226; Commit 1: ALU2 / DCCM Load / Mul Result</text>
                 
                 <text x="733" y="315" font-size="7.5" font-weight="800" fill="#d97706">Precise Exception Rollback:</text>
-                <text x="733" y="327" font-size="7" fill="#64748b">&bull; Guarantees in-order architectural state</text>
-                <text x="733" y="339" font-size="7" font-weight="800" fill="#0d9488">&bull; Measured CoreMark CPI: 1.030</text>
+                <text x="733" y="327" font-size="7" fill="#64748b">&#8226; Guarantees in-order architectural state</text>
+                <text x="733" y="339" font-size="7" font-weight="800" fill="#0d9488">&#8226; Measured CoreMark CPI: 1.030</text>
 
                 <rect x="730" y="347" width="165" height="18" rx="3" fill="#ffffff" stroke="#d97706" stroke-width="1"/>
                 <text x="734" y="359" font-size="6.5" font-weight="800" fill="#b45309">Breaks the theoretical CPI = 1.0 limit!</text>
@@ -4761,12 +4761,12 @@ const bespokeDossiers = [
 
                 <rect x="380" y="415" width="370" height="25" rx="4" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
                 <circle cx="390" cy="427.5" r="3.5" fill="#0d9488"/>
-                <text x="400" y="426" font-size="7.5" font-weight="900" fill="#0f766e" font-family="monospace">DUAL COMMIT HIGHWAY: Lane 0 &#8594; Port W0 (rd_0) &bull; Lane 1 &#8594; Port W1 (rd_1)</text>
-                <text x="400" y="436" font-size="6.5" font-weight="800" fill="#047857" font-family="monospace">Simultaneous 2-Word Register Writeback &bull; CPI = 1.030 Sustained Throughput</text>
+                <text x="400" y="426" font-size="7.5" font-weight="900" fill="#0f766e" font-family="monospace">DUAL COMMIT HIGHWAY: Lane 0 &#8594; Port W0 (rd_0) &#8226; Lane 1 &#8594; Port W1 (rd_1)</text>
+                <text x="400" y="436" font-size="6.5" font-weight="800" fill="#047857" font-family="monospace">Simultaneous 2-Word Register Writeback &#8226; CPI = 1.030 Sustained Throughput</text>
 
                 <!-- Bottom Timing & Metrics Strip -->
-                <rect x="20" y="455" width="880" height="25" rx="4" fill="#151b20"/>
-                <text x="30" y="471" font-size="8.5" font-weight="800" fill="#ffc83e" font-family="monospace">METRICS: Measured CPI: 1.030 (Breaks CPI=1.0 Single-Issue Wall) &bull; CoreMark/MHz: 2.56 &bull; DMIPS/MHz: 1.68 &bull; Silicon in Western Digital NVMe SSDs</text>
+                <rect x="20" y="455" width="880" height="25" rx="4" fill="#f8fafc" stroke="#151b20" stroke-width="1.5"/>
+                <text x="30" y="471" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace">METRICS: Measured CPI: 1.030 (Breaks CPI=1.0 Single-Issue Wall) &#8226; CoreMark/MHz: 2.56 &#8226; DMIPS/MHz: 1.68 &#8226; Silicon in Western Digital NVMe SSDs</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -5927,8 +5927,9 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   }
 
   .prim-step-pill {
-    background: var(--ink, #151b20);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
     font-size: 0.75rem;
     font-weight: 900;
     font-family: var(--md-code-font, monospace);
@@ -6447,9 +6448,9 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   }
 
   .connector-line {
-    width: 2px;
+    width: 0;
     height: 14px;
-    background: var(--ink, #151b20);
+    border-left: 2px solid var(--ink, #151b20);
   }
 
   .connector-pill {
@@ -6660,8 +6661,9 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     font-size: 0.72rem;
     font-weight: 900;
     font-family: var(--md-code-font, monospace);
-    background: var(--ink, #151b20);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
     padding: 0.2rem 0.5rem;
     border-radius: 4px;
     display: inline-block;
@@ -7217,12 +7219,13 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   }
 
   .data-table th {
-    background: var(--ink, #151b20);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
     font-weight: 800;
     font-size: 0.82rem;
     letter-spacing: 0.02em;
     white-space: nowrap;
+    border-bottom: 2px solid var(--ink, #151b20);
   }
 
   .data-table tr:nth-child(even) td {
@@ -7254,19 +7257,19 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
 
   /* LaTeX Code Box */
   .latex-export-box {
-    background: var(--ink, #151b20);
+    background: var(--paper-deep, #eee4c8);
     border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
     padding: 1.25rem;
     margin-top: 1.25rem;
-    box-shadow: 4px 4px 0 var(--yellow, #ffc83e);
+    box-shadow: 4px 4px 0 var(--ink, #151b20);
   }
 
   .latex-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--yellow, #ffc83e);
+    color: var(--ink, #151b20);
     font-size: 0.88rem;
     font-weight: 800;
     margin-bottom: 0.75rem;
@@ -7275,10 +7278,11 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   .close-latex-btn {
     background: transparent;
     border: none;
-    color: #ffffff;
+    color: var(--ink, #151b20);
     font-size: 1.4rem;
     cursor: pointer;
     line-height: 1;
+    font-weight: 700;
   }
 
   .latex-code {
@@ -7286,7 +7290,7 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     padding: 0;
     font-family: var(--md-code-font, monospace);
     font-size: 0.82rem;
-    color: #a8ffb2;
+    color: var(--ink, #151b20);
     overflow-x: auto;
     line-height: 1.45;
   }
@@ -7380,8 +7384,9 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   }
 
   .d-badge {
-    background: var(--ink, #151b20);
-    color: #ffffff;
+    background: var(--cream-soft, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1px solid var(--ink, #151b20);
     font-size: 0.75rem;
     font-weight: 800;
     padding: 0.2rem 0.55rem;
@@ -7725,7 +7730,7 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
   .assess-item.limitation { background: var(--yellow-soft, #fff8e1); color: var(--ink, #151b20); }
 
   /* Badge Utilities */
-  .badge-ink { background: var(--ink, #151b20) !important; color: #ffffff !important; border: 1px solid var(--ink, #151b20); }
+  .badge-ink { background: var(--cream-soft, #f6f0dc) !important; color: var(--ink, #151b20) !important; border: 1px solid var(--ink, #151b20) !important; }
   .badge-coral { background: var(--coral, #f38469) !important; color: #ffffff !important; border: 1px solid var(--ink, #151b20); }
   .badge-teal { background: var(--teal, #0d9488) !important; color: #ffffff !important; border: 1px solid var(--ink, #151b20); }
   .badge-lime { background: var(--lime, #b7df69) !important; color: var(--ink, #151b20) !important; border: 1px solid var(--ink, #151b20); }
@@ -7803,10 +7808,10 @@ VeeR EL2          &amp; 4-Stage Dual-Issue        &amp; RV32IMC      &amp; 2.56 
     box-shadow: 3px 3px 0 var(--ink, #151b20);
   }
   .isa-cat-btn.active {
-    background: var(--ink, #151b20);
-    color: #ffffff;
-    box-shadow: none;
-    transform: translate(1px, 1px);
+    background: var(--yellow, #ffc83e);
+    color: var(--ink, #151b20);
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    transform: translate(-1px, -1px);
   }
   .isa-search-field {
     border: 1.5px solid var(--ink, #151b20);
