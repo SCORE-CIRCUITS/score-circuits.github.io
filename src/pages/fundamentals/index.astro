@@ -61,71 +61,192 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
             <li><strong>CMOS Inverter (NOT Gate):</strong> Pairs one pMOS pull-up with one nMOS pull-down. In steady state (input solid 0 or 1), one transistor is completely OFF, so static DC current from <em>V</em><sub>DD</sub> to Ground is virtually zero! Power is consumed almost entirely during switching transitions.</li>
           </ul>
 
-          <!-- SCHEMATIC: CMOS INVERTER -->
+          <!-- SCHEMATIC: CMOS INVERTER — EDA-quality IEEE MOSFET symbols -->
           <div class="schematic-container">
             <div class="schematic-header">
               <span class="schematic-tag">SCHEMATIC DIAGRAM</span>
-              <span class="schematic-title">CMOS Inverter (NOT Gate) Circuit Topology &amp; Conduction Paths</span>
+              <span class="schematic-title">CMOS Inverter (NOT Gate) — IEEE Standard MOSFET Symbols &amp; Conduction Paths</span>
+              <a href="https://analog-canvas.tokenzhang.com" target="_blank" rel="noopener" class="canvas-link">&#9654; Open in Analog Canvas</a>
             </div>
             <div class="schematic-svg-wrap">
-              <svg viewBox="0 0 540 260" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
-                <!-- Power Rails -->
-                <line x1="80" y1="25" x2="460" y2="25" stroke="#b91c1c" stroke-width="3" stroke-linecap="round"/>
-                <text x="35" y="30" fill="#b91c1c" font-weight="900" font-size="12" font-family="monospace">VDD (1.0V)</text>
-                
-                <line x1="80" y1="235" x2="460" y2="235" stroke="#1e3a8a" stroke-width="3" stroke-linecap="round"/>
-                <text x="30" y="240" fill="#1e3a8a" font-weight="900" font-size="12" font-family="monospace">GND (0.0V)</text>
+              <!--
+                IEEE/EDA-standard MOSFET schematic symbols:
+                  pMOS: gate bar left, inversion bubble, source arrow pointing OUT from body, source at top (VDD)
+                  nMOS: gate bar left, NO bubble, drain arrow pointing INTO body, source at bottom (GND)
+                Layout (viewBox 0 0 620 400):
+                  VDD rail:  y=28
+                  pMOS body: gate_x=220, channel_x=260, source_y=28..80, drain_y=160
+                  Vout node: y=200
+                  nMOS body: gate_x=220, channel_x=260, drain_y=200..240, source_y=372
+                  GND rail:  y=372
+                  Vin wire:  x=100, connects vertically to both gates
+              -->
+              <svg viewBox="0 0 620 400" class="schematic-svg" xmlns="http://www.w3.org/2000/svg" aria-label="CMOS Inverter schematic with IEEE MOSFET symbols">
+                <defs>
+                  <!-- Arrow marker for current flow annotations -->
+                  <marker id="arr-g" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z" fill="#16a34a"/>
+                  </marker>
+                  <marker id="arr-b" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z" fill="#2563eb"/>
+                  </marker>
+                </defs>
 
-                <!-- Input Line Vin -->
-                <line x1="120" y1="130" x2="200" y2="130" stroke="#151b20" stroke-width="2.5"/>
-                <circle cx="120" cy="130" r="4" fill="#151b20"/>
-                <text x="95" y="125" font-weight="900" font-size="13" fill="#151b20">Vin</text>
+                <!-- ═══ POWER RAILS ═══ -->
+                <!-- VDD (positive supply) — red heavy rail -->
+                <line x1="30" y1="28" x2="440" y2="28" stroke="#b91c1c" stroke-width="3.5" stroke-linecap="round"/>
+                <text x="8" y="20" fill="#b91c1c" font-weight="900" font-size="13" font-family="monospace">V<tspan font-size="10" dy="2">DD</tspan><tspan dy="-2"> = 1 V</tspan></text>
+                <!-- VDD rail tick marks (EDA style) -->
+                <line x1="50" y1="22" x2="50" y2="34" stroke="#b91c1c" stroke-width="1.5"/>
+                <line x1="80" y1="22" x2="80" y2="34" stroke="#b91c1c" stroke-width="1.5"/>
 
-                <!-- Gate connection split -->
-                <line x1="200" y1="75" x2="200" y2="185" stroke="#151b20" stroke-width="2.5"/>
-                <line x1="200" y1="75" x2="230" y2="75" stroke="#151b20" stroke-width="2.5"/>
-                <line x1="200" y1="185" x2="240" y2="185" stroke="#151b20" stroke-width="2.5"/>
+                <!-- GND (ground) — blue heavy rail + GND symbol -->
+                <line x1="30" y1="372" x2="440" y2="372" stroke="#1e3a8a" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- GND comb symbol -->
+                <line x1="260" y1="372" x2="260" y2="388" stroke="#1e3a8a" stroke-width="2"/>
+                <line x1="244" y1="388" x2="276" y2="388" stroke="#1e3a8a" stroke-width="2.5"/>
+                <line x1="250" y1="393" x2="270" y2="393" stroke="#1e3a8a" stroke-width="2"/>
+                <line x1="255" y1="398" x2="265" y2="398" stroke="#1e3a8a" stroke-width="1.5"/>
+                <text x="8" y="376" fill="#1e3a8a" font-weight="900" font-size="13" font-family="monospace">GND</text>
 
-                <!-- pMOS Transistor (Top) -->
-                <circle cx="235" cy="75" r="4.5" fill="none" stroke="#151b20" stroke-width="2"/>
-                <rect x="245" y="55" width="50" height="40" rx="4" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
-                <text x="253" y="79" font-weight="900" font-size="11" fill="#b91c1c">pMOS</text>
-                <text x="248" y="91" font-size="9" fill="#7f1d1d">W/L &approx; 2.5</text>
-                <line x1="270" y1="25" x2="270" y2="55" stroke="#b91c1c" stroke-width="2"/>
-                <line x1="270" y1="95" x2="270" y2="130" stroke="#151b20" stroke-width="2.5"/>
+                <!-- ═══ VERTICAL SUPPLY STEMS ═══ -->
+                <!-- pMOS source → VDD -->
+                <line x1="260" y1="28" x2="260" y2="58" stroke="#b91c1c" stroke-width="2.5"/>
+                <!-- nMOS source → GND -->
+                <line x1="260" y1="342" x2="260" y2="372" stroke="#1e3a8a" stroke-width="2.5"/>
 
-                <!-- nMOS Transistor (Bottom) -->
-                <rect x="245" y="165" width="50" height="40" rx="4" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
-                <text x="253" y="189" font-weight="900" font-size="11" fill="#1e40af">nMOS</text>
-                <text x="248" y="201" font-size="9" fill="#1e3a8a">W/L &approx; 1.0</text>
-                <line x1="270" y1="130" x2="270" y2="165" stroke="#151b20" stroke-width="2.5"/>
-                <line x1="270" y1="205" x2="270" y2="235" stroke="#1e3a8a" stroke-width="2"/>
+                <!-- ═══ pMOS TRANSISTOR (IEEE 4-terminal enhancement MOSFET) ═══ -->
+                <!-- Source terminal (top, connected to VDD): S at y=58 -->
+                <!-- Drain terminal (bottom): D at y=160 -->
+                <!-- Gate contact at y=110 (midpoint of channel bar) -->
+                <!-- Channel bar: x=265, y=70..150 -->
+                <!-- Gate insulator gap: x=250..264 -->
+                <!-- Gate line: x=220..249, y=110 -->
 
-                <!-- Output Node Vout -->
-                <circle cx="270" cy="130" r="4.5" fill="#151b20"/>
-                <line x1="270" y1="130" x2="380" y2="130" stroke="#151b20" stroke-width="2.5"/>
-                <circle cx="380" cy="130" r="4" fill="#151b20"/>
-                <text x="390" y="135" font-weight="900" font-size="13" fill="#0369a1">Vout = ~Vin</text>
+                <!-- pMOS source arrow (pointing OUT = from body to source, as holes flow out) -->
+                <!-- Source stem: 260,58 → 260,70 -->
+                <line x1="260" y1="58" x2="260" y2="72" stroke="#b91c1c" stroke-width="2.5"/>
+                <!-- pMOS source-body horizontal tap at y=72 -->
+                <line x1="260" y1="72" x2="274" y2="72" stroke="#b91c1c" stroke-width="2.5"/>
 
-                <!-- Load Capacitance CL -->
-                <line x1="340" y1="130" x2="340" y2="170" stroke="#64748b" stroke-width="2" stroke-dasharray="3 3"/>
-                <rect x="330" y="170" width="20" height="4" fill="#64748b"/>
-                <rect x="330" y="177" width="20" height="4" fill="#64748b"/>
-                <line x1="340" y1="181" x2="340" y2="235" stroke="#64748b" stroke-width="2" stroke-dasharray="3 3"/>
-                <text x="360" y="178" font-size="10" fill="#64748b" font-weight="700">Load CL</text>
+                <!-- pMOS channel bar (the conducting channel) -->
+                <line x1="274" y1="68" x2="274" y2="152" stroke="#151b20" stroke-width="4" stroke-linecap="square"/>
 
-                <!-- Pull-up / Pull-down annotations -->
-                <path d="M 430 65 L 430 95 L 420 85" stroke="#16a34a" stroke-width="2" fill="none"/>
-                <text x="440" y="83" font-size="10" fill="#16a34a" font-weight="800">Vin=0: Pull-Up ON</text>
-                <text x="440" y="95" font-size="9" fill="#15803d">Charges CL to VDD</text>
+                <!-- pMOS drain horizontal tap at y=148 -->
+                <line x1="274" y1="148" x2="260" y2="148" stroke="#b91c1c" stroke-width="2.5"/>
+                <!-- pMOS drain stem down to Vout node -->
+                <line x1="260" y1="148" x2="260" y2="200" stroke="#151b20" stroke-width="2.5"/>
 
-                <path d="M 430 195 L 430 165 L 420 175" stroke="#2563eb" stroke-width="2" fill="none"/>
-                <text x="440" y="175" font-size="10" fill="#2563eb" font-weight="800">Vin=1: Pull-Down ON</text>
-                <text x="440" y="187" font-size="9" fill="#1d4ed8">Discharges CL to GND</text>
+                <!-- pMOS gate insulator (gap + thin bar) -->
+                <!-- Thin vertical bar on gate side -->
+                <line x1="253" y1="78" x2="253" y2="142" stroke="#151b20" stroke-width="2.5"/>
+                <!-- Gate horizontal wire from gate bar to gate node x=220 -->
+                <line x1="220" y1="110" x2="253" y2="110" stroke="#151b20" stroke-width="2"/>
+
+                <!-- pMOS inversion BUBBLE on gate (p-type, active low) -->
+                <circle cx="210" cy="110" r="9" fill="#fffbeb" stroke="#151b20" stroke-width="2"/>
+
+                <!-- pMOS body arrow pointing OUT (p-type holes flow from drain→source) -->
+                <!-- Arrow on the source tap: pointing left (out of channel toward source wire) -->
+                <polygon points="260,72 268,67 268,77" fill="#b91c1c"/>
+
+                <!-- pMOS label -->
+                <text x="295" y="96" font-size="11" font-weight="900" fill="#b91c1c" font-family="sans-serif">pMOS</text>
+                <text x="295" y="110" font-size="10" fill="#7f1d1d" font-family="sans-serif">W/L ≈ 2.5</text>
+                <text x="295" y="123" font-size="9" fill="#9f1239" font-family="sans-serif">(size 2.5× nMOS)</text>
+
+                <!-- ═══ nMOS TRANSISTOR (IEEE 4-terminal enhancement MOSFET) ═══ -->
+                <!-- Drain terminal (top): D at y=200 (Vout node) -->
+                <!-- Source terminal (bottom): S at y=342 -->
+                <!-- Gate contact at y=270 (midpoint of channel bar) -->
+                <!-- Channel bar: x=274, y=212..332 -->
+
+                <!-- nMOS drain horizontal tap at y=220 -->
+                <line x1="260" y1="200" x2="260" y2="212" stroke="#151b20" stroke-width="2.5"/>
+                <line x1="260" y1="212" x2="274" y2="212" stroke="#1e40af" stroke-width="2.5"/>
+
+                <!-- nMOS channel bar -->
+                <line x1="274" y1="208" x2="274" y2="332" stroke="#151b20" stroke-width="4" stroke-linecap="square"/>
+
+                <!-- nMOS source horizontal tap at y=328 -->
+                <line x1="274" y1="328" x2="260" y2="328" stroke="#1e40af" stroke-width="2.5"/>
+                <!-- nMOS source arrow (pointing IN = into body, electrons flow in) -->
+                <polygon points="260,328 268,323 268,333" fill="#1e40af"/>
+                <!-- nMOS source stem down to GND -->
+                <line x1="260" y1="328" x2="260" y2="342" stroke="#1e3a8a" stroke-width="2.5"/>
+
+                <!-- nMOS gate insulator thin bar -->
+                <line x1="253" y1="218" x2="253" y2="322" stroke="#151b20" stroke-width="2.5"/>
+                <!-- nMOS gate horizontal wire -->
+                <line x1="201" y1="270" x2="253" y2="270" stroke="#151b20" stroke-width="2"/>
+
+                <!-- nMOS label -->
+                <text x="295" y="262" font-size="11" font-weight="900" fill="#1e40af" font-family="sans-serif">nMOS</text>
+                <text x="295" y="276" font-size="10" fill="#1e3a8a" font-family="sans-serif">W/L ≈ 1.0</text>
+                <text x="295" y="289" font-size="9" fill="#1d4ed8" font-family="sans-serif">(reference size)</text>
+
+                <!-- ═══ INPUT WIRE Vin ═══ -->
+                <!-- Vin terminal at x=70, y=190 (midpoint between pMOS gate y=110 and nMOS gate y=270) -->
+                <line x1="70" y1="190" x2="150" y2="190" stroke="#151b20" stroke-width="2.5"/>
+                <!-- Vertical bus connecting both gates -->
+                <line x1="150" y1="110" x2="150" y2="270" stroke="#151b20" stroke-width="2"/>
+                <!-- Tap to pMOS gate bubble -->
+                <line x1="150" y1="110" x2="201" y2="110" stroke="#151b20" stroke-width="2"/>
+                <!-- Tap to nMOS gate -->
+                <line x1="150" y1="270" x2="201" y2="270" stroke="#151b20" stroke-width="2"/>
+                <!-- Junction dots on gate bus -->
+                <circle cx="150" cy="110" r="4" fill="#151b20"/>
+                <circle cx="150" cy="270" r="4" fill="#151b20"/>
+                <!-- Vin input dot + label -->
+                <circle cx="70" cy="190" r="5" fill="#151b20"/>
+                <text x="8" y="186" font-weight="900" font-size="14" fill="#151b20" font-family="sans-serif">V<tspan font-size="10" dy="2">in</tspan></text>
+
+                <!-- ═══ OUTPUT NODE Vout ═══ -->
+                <!-- Vout node at x=260, y=200 (between pMOS drain and nMOS drain) -->
+                <circle cx="260" cy="200" r="6" fill="#0369a1"/>
+                <!-- Output wire going right -->
+                <line x1="260" y1="200" x2="440" y2="200" stroke="#0369a1" stroke-width="2.5"/>
+                <circle cx="440" cy="200" r="4.5" fill="#0369a1"/>
+                <text x="448" y="196" font-weight="900" font-size="13" fill="#0369a1" font-family="sans-serif">V<tspan font-size="10" dy="2">out</tspan></text>
+                <text x="448" y="212" font-size="10" fill="#0369a1" font-family="sans-serif">= NOT V<tspan font-size="8" dy="1">in</tspan></text>
+
+                <!-- ═══ LOAD CAPACITOR CL ═══ -->
+                <!-- Capacitor plates at x=390, connecting Vout (y=200) to GND (y=372) -->
+                <line x1="390" y1="200" x2="390" y2="232" stroke="#64748b" stroke-width="2"/>
+                <line x1="372" y1="232" x2="408" y2="232" stroke="#64748b" stroke-width="3" stroke-linecap="round"/>
+                <line x1="372" y1="240" x2="408" y2="240" stroke="#64748b" stroke-width="3" stroke-linecap="round"/>
+                <line x1="390" y1="240" x2="390" y2="372" stroke="#64748b" stroke-width="2"/>
+                <!-- CL label -->
+                <text x="413" y="237" font-size="11" fill="#64748b" font-weight="800" font-family="sans-serif">C<tspan font-size="8" dy="2">L</tspan></text>
+                <text x="413" y="251" font-size="9" fill="#94a3b8" font-family="sans-serif">(load cap)</text>
+                <!-- Junction at Vout wire connecting to CL -->
+                <circle cx="390" cy="200" r="4" fill="#0369a1"/>
+
+                <!-- ═══ CONDUCTION STATE ANNOTATIONS ═══ -->
+                <!-- State A: Vin = 0 → pMOS ON (pull-up), nMOS OFF -->
+                <rect x="456" y="48" width="155" height="68" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+                <text x="463" y="66" font-size="11" font-weight="900" fill="#15803d" font-family="sans-serif">&#9650; V<tspan font-size="8" dy="1">in</tspan><tspan dy="-1"> = 0 (LOW)</tspan></text>
+                <text x="463" y="82" font-size="10" fill="#166534" font-family="sans-serif">&#8226; pMOS: <tspan font-weight="800">ON</tspan> (V<tspan font-size="8" dy="1">GS</tspan><tspan dy="-1"> = &#8722;V</tspan><tspan font-size="8" dy="1">DD</tspan><tspan dy="-1">)</tspan></text>
+                <text x="463" y="96" font-size="10" fill="#166534" font-family="sans-serif">&#8226; nMOS: <tspan font-weight="800">OFF</tspan> (V<tspan font-size="8" dy="1">GS</tspan><tspan dy="-1"> = 0)</tspan></text>
+                <text x="463" y="110" font-size="10" fill="#166534" font-family="sans-serif">&#8226; V<tspan font-size="8" dy="1">out</tspan><tspan dy="-1"> = V</tspan><tspan font-size="8" dy="1">DD</tspan><tspan dy="-1"> (HIGH)</tspan></text>
+
+                <!-- State B: Vin = 1 → nMOS ON (pull-down), pMOS OFF -->
+                <rect x="456" y="286" width="155" height="68" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+                <text x="463" y="304" font-size="11" font-weight="900" fill="#1d4ed8" font-family="sans-serif">&#9660; V<tspan font-size="8" dy="1">in</tspan><tspan dy="-1"> = 1 (HIGH)</tspan></text>
+                <text x="463" y="320" font-size="10" fill="#1e40af" font-family="sans-serif">&#8226; pMOS: <tspan font-weight="800">OFF</tspan> (V<tspan font-size="8" dy="1">GS</tspan><tspan dy="-1"> = 0)</tspan></text>
+                <text x="463" y="334" font-size="10" fill="#1e40af" font-family="sans-serif">&#8226; nMOS: <tspan font-weight="800">ON</tspan> (V<tspan font-size="8" dy="1">GS</tspan><tspan dy="-1"> = V</tspan><tspan font-size="8" dy="1">DD</tspan><tspan dy="-1">)</tspan></text>
+                <text x="463" y="348" font-size="10" fill="#1e40af" font-family="sans-serif">&#8226; V<tspan font-size="8" dy="1">out</tspan><tspan dy="-1"> = 0 (LOW)</tspan></text>
+
+                <!-- Current flow arrows when Vin=0 (pMOS conducting) -->
+                <line x1="246" y1="60" x2="246" y2="140" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-g)" opacity="0.7"/>
+                <text x="168" y="52" font-size="9" fill="#15803d" font-family="sans-serif">I&#8593; pull-up</text>
+                <!-- Current flow arrows when Vin=1 (nMOS conducting) -->
+                <line x1="274" y1="310" x2="274" y2="230" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr-b)" opacity="0.7"/>
+                <text x="168" y="358" font-size="9" fill="#1d4ed8" font-family="sans-serif">I&#8595; pull-down</text>
               </svg>
             </div>
             <div class="schematic-caption">
-              <strong>Figure 1.1:</strong> Transistor-level schematic of the static CMOS inverter. The gate inversion bubble on the pMOS indicates that a LOW gate input enables the channel. Because &mu;<sub>p</sub> &lt; &mu;<sub>n</sub>, pMOS channel width <em>W</em> is sized 2.0&times; to 2.5&times; wider to balance switching rise and fall times.
+              <strong>Figure 1.1:</strong> IEEE-standard transistor-level schematic of the static CMOS inverter. The inversion <em>bubble</em> on the pMOS gate indicates active-low enabling (conducts when V<sub>GS</sub> &lt; &minus;|V<sub>tp</sub>|). The body arrows distinguish hole-flow (pMOS, pointing out) from electron-flow (nMOS, pointing in). Because &mu;<sub>p</sub> &approx; 250 cm<sup>2</sup>/(V&middot;s) while &mu;<sub>n</sub> &approx; 480 cm<sup>2</sup>/(V&middot;s), pMOS width W is sized ~2&times; wider to equalize rise time t<sub>PLH</sub> &asymp; fall time t<sub>PHL</sub>. The load capacitor C<sub>L</sub> represents gate input capacitance of downstream logic plus wiring parasitics. <strong>Static power &asymp; 0:</strong> in both steady states exactly one transistor is fully OFF, blocking the VDD-to-GND current path.
             </div>
           </div>
 
@@ -4245,10 +4366,31 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   .schematic-svg {
     width: 100%;
-    max-width: 680px;
+    max-width: 720px;
     height: auto;
-    min-width: 480px;
+    min-width: 320px;   /* was 480px — allow scale-down on small screens */
     display: block;
+  }
+
+  .canvas-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    color: #0369a1;
+    background: #e0f2fe;
+    border: 1.5px solid #0369a1;
+    border-radius: 5px;
+    padding: 0.15rem 0.5rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s;
+    margin-left: auto;
+  }
+  .canvas-link:hover {
+    background: #bae6fd;
   }
 
   .schematic-caption {
