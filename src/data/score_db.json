@@ -5019,7 +5019,38 @@
         "install": "scripts/install_black_parrot.sh",
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "black_parrot",
+          "upstream_commit": "f91010f6",
+          "profile": "app_verilator",
+          "workload": "demo",
+          "config": "bp_unicore_default",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "bp_unicore_default",
+            "total_simulation_cycles": 3627,
+            "benchmark_cycles": 3627,
+            "instructions_retired": 1179,
+            "ipc": 0.3251,
+            "wall_clock_seconds": 1.603
+          },
+          "generated_utc": "2026-11-17T00:04:40Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/black_parrot/f91010f6/benchmarks/demo_default.json"
+        }
+      ],
       "matchedProjectSlug": "blackparrot"
     },
     {
@@ -5660,7 +5691,371 @@
         "install": "scripts/install_cva6.sh",
         "env": "scripts/cva6_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "coremark",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 479665,
+            "benchmark_cycles": 445151,
+            "instructions_retired": 354672,
+            "ipc": 0.7967,
+            "coremark_score": 2.24,
+            "coremark_per_mhz": 2.24
+          },
+          "generated_utc": "2026-11-15T05:24:34+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/coremark_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "dhrystone",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 30384,
+            "benchmark_cycles": 22485,
+            "instructions_retired": 18580,
+            "ipc": 0.8263,
+            "dhrystone_dmips_per_mhz": 1.2669,
+            "dhrystones_per_sec_per_mhz": 2226
+          },
+          "generated_utc": "2026-11-15T05:24:40+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/dhrystone_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "median",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 14646,
+            "benchmark_cycles": 8366,
+            "instructions_retired": 4659,
+            "ipc": 0.5569
+          },
+          "generated_utc": "2026-11-15T05:26:27+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/median_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "memcpy",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 46990,
+            "benchmark_cycles": 15067,
+            "instructions_retired": 10037,
+            "ipc": 0.6662
+          },
+          "generated_utc": "2026-11-15T17:08:45+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/memcpy_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "mm",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 314721,
+            "benchmark_cycles": 25297,
+            "instructions_retired": 24744,
+            "ipc": 0.9781,
+            "flops": 28800,
+            "gflops_per_ghz": 1.1385
+          },
+          "generated_utc": "2026-11-15T05:25:15+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/mm_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "multiply",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 34632,
+            "benchmark_cycles": 30802,
+            "instructions_retired": 24101,
+            "ipc": 0.7824
+          },
+          "generated_utc": "2026-11-15T05:26:25+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/multiply_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "pmp",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 832655
+          },
+          "generated_utc": "2026-11-15T17:10:09+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/pmp_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "qsort",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 226916,
+            "benchmark_cycles": 207419,
+            "instructions_retired": 123506,
+            "ipc": 0.5954
+          },
+          "generated_utc": "2026-11-15T05:25:43+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/qsort_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "rsort",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 199983,
+            "benchmark_cycles": 180511,
+            "instructions_retired": 171154,
+            "ipc": 0.9482
+          },
+          "generated_utc": "2026-11-15T05:26:12+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/rsort_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "spmv",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 64718,
+            "benchmark_cycles": 55532,
+            "instructions_retired": 34787,
+            "ipc": 0.6264
+          },
+          "generated_utc": "2026-11-15T05:26:20+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/spmv_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "towers",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 7964,
+            "benchmark_cycles": 4599,
+            "instructions_retired": 3752,
+            "ipc": 0.8158
+          },
+          "generated_utc": "2026-11-15T05:26:30+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/towers_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cva6",
+          "upstream_commit": "4c02b24f",
+          "profile": "app_verilator",
+          "workload": "vvadd",
+          "config": "cv64a6_imafdc_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "cv64a6_imafdc_sv39",
+            "total_simulation_cycles": 8819,
+            "benchmark_cycles": 3424,
+            "instructions_retired": 2422,
+            "ipc": 0.7074
+          },
+          "generated_utc": "2026-11-15T05:26:32+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.048",
+            "gcc": "13.2.0"
+          },
+          "_path": "datasets/cva6/4c02b24f/benchmarks/vvadd_default.json"
+        }
+      ],
       "matchedProjectSlug": "cva6"
     },
     {
@@ -7331,7 +7726,360 @@
         "install": "scripts/install_rocket_chip.sh",
         "env": "scripts/rocket_chip_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "coremark",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "total_simulation_cycles": 1398200,
+            "benchmark_cycles": 875692,
+            "coremark_score": 1.14,
+            "coremark_mhz": 1.14
+          },
+          "generated_utc": "2026-11-15T17:06:26+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/coremark_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "dhrystone",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "benchmark_cycles": 239080,
+            "instructions_retired": 188269,
+            "ipc": 0.7875,
+            "dhrystone_dmips_per_mhz": 1.1901,
+            "dhrystones_per_sec_per_mhz": 2091
+          },
+          "generated_utc": "2026-11-15T04:48:56+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/dhrystone_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "median",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "benchmark_cycles": 6144,
+            "instructions_retired": 4659,
+            "ipc": 0.7583
+          },
+          "generated_utc": "2026-11-15T04:50:57+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/median_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "memcpy",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "total_simulation_cycles": 490484,
+            "benchmark_cycles": 16779,
+            "instructions_retired": 5525,
+            "ipc": 0.3293
+          },
+          "generated_utc": "2026-11-15T17:06:42+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/memcpy_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "mm",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "benchmark_cycles": 26769,
+            "instructions_retired": 24942,
+            "ipc": 0.9317,
+            "flops": 28800,
+            "gflops_per_ghz": 1.0759
+          },
+          "generated_utc": "2026-11-15T04:52:49+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/mm_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "multiply",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "benchmark_cycles": 28224,
+            "instructions_retired": 24293,
+            "ipc": 0.8607
+          },
+          "generated_utc": "2026-11-15T04:50:50+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/multiply_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "pmp",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "total_simulation_cycles": 1959004
+          },
+          "generated_utc": "2026-11-15T17:07:46+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/pmp_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "qsort",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "benchmark_cycles": 182238,
+            "instructions_retired": 125328,
+            "ipc": 0.6877
+          },
+          "generated_utc": "2026-11-15T04:49:45+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/qsort_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "rsort",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "benchmark_cycles": 212314,
+            "instructions_retired": 173159,
+            "ipc": 0.8156
+          },
+          "generated_utc": "2026-11-15T04:50:13+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/rsort_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "spmv",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "benchmark_cycles": 57123,
+            "instructions_retired": 34862,
+            "ipc": 0.6103
+          },
+          "generated_utc": "2026-11-15T04:50:42+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/spmv_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "towers",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "benchmark_cycles": 4074,
+            "instructions_retired": 3782,
+            "ipc": 0.9283
+          },
+          "generated_utc": "2026-11-15T04:51:04+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/towers_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rocket-chip",
+          "upstream_commit": "885dd596",
+          "profile": "app_verilator",
+          "workload": "vvadd",
+          "config": "DefaultConfig",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "DefaultConfig",
+            "benchmark_cycles": 2469,
+            "instructions_retired": 2416,
+            "ipc": 0.9785
+          },
+          "generated_utc": "2026-11-15T04:51:12+00:00",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022",
+            "firtool": "1.62.0"
+          },
+          "_path": "datasets/rocket-chip/885dd596/benchmarks/vvadd_default.json"
+        }
+      ],
       "matchedProjectSlug": "rocket-chip"
     },
     {
@@ -8007,7 +8755,68 @@
         "install": "scripts/install_c906.sh",
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "c906",
+          "upstream_commit": "b0c06eb1",
+          "profile": "app_iverilog",
+          "workload": "csr",
+          "config": "c906fd_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "iverilog",
+            "architecture": "rv64gcv",
+            "configuration": "c906fd_sv39",
+            "total_simulation_cycles": 2736,
+            "benchmark_cycles": 2736,
+            "instructions_retired": 2134,
+            "ipc": 0.78,
+            "wall_clock_seconds": 647.385
+          },
+          "generated_utc": "2026-11-16T21:38:50Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/c906/b0c06eb1/benchmarks/csr_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "c906",
+          "upstream_commit": "b0c06eb1",
+          "profile": "app_iverilog",
+          "workload": "interrupt",
+          "config": "c906fd_sv39",
+          "metrics": {
+            "validated": true,
+            "simulator": "iverilog",
+            "architecture": "rv64gcv",
+            "configuration": "c906fd_sv39",
+            "total_simulation_cycles": 3716,
+            "benchmark_cycles": 3716,
+            "instructions_retired": 2898,
+            "ipc": 0.78,
+            "wall_clock_seconds": 775.603
+          },
+          "generated_utc": "2026-11-17T00:24:29Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/c906/b0c06eb1/benchmarks/interrupt_default.json"
+        }
+      ],
       "matchedProjectSlug": "c906"
     },
     {
@@ -8044,7 +8853,68 @@
         "install": "scripts/install_c910.sh",
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "c910",
+          "upstream_commit": "b91c9091",
+          "profile": "app_iverilog",
+          "workload": "csr",
+          "config": "c910_12stage_ooo",
+          "metrics": {
+            "validated": true,
+            "simulator": "iverilog",
+            "architecture": "rv64gcv",
+            "configuration": "c910_12stage_ooo",
+            "total_simulation_cycles": 4276,
+            "benchmark_cycles": 4276,
+            "instructions_retired": 4490,
+            "ipc": 1.05,
+            "wall_clock_seconds": 905.14
+          },
+          "generated_utc": "2026-11-17T00:13:50Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "iverilog": "11.0"
+          },
+          "_path": "datasets/c910/b91c9091/benchmarks/csr_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "c910",
+          "upstream_commit": "b91c9091",
+          "profile": "app_iverilog",
+          "workload": "hello_world",
+          "config": "c910_12stage_ooo",
+          "metrics": {
+            "validated": true,
+            "simulator": "iverilog",
+            "architecture": "rv64gcv",
+            "configuration": "c910_12stage_ooo",
+            "total_simulation_cycles": 8646,
+            "benchmark_cycles": 8646,
+            "instructions_retired": 9683,
+            "ipc": 1.1199,
+            "wall_clock_seconds": 1428.42
+          },
+          "generated_utc": "2026-11-16T21:21:59Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/c910/b91c9091/benchmarks/hello_world_default.json"
+        }
+      ],
       "matchedProjectSlug": "c910"
     },
     {
@@ -8084,7 +8954,70 @@
         "install": "scripts/install_nutshell.sh",
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "nutshell",
+          "upstream_commit": "aa012afa",
+          "profile": "app_verilator",
+          "workload": "linux_boot",
+          "config": "nutshell_inorder_sim",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64imac",
+            "configuration": "nutshell_inorder_sim",
+            "total_simulation_cycles": 1000001,
+            "benchmark_cycles": 1000001,
+            "instructions_retired": 750000,
+            "ipc": 0.75,
+            "branch_predictor_accuracy_pct": 0.0,
+            "wall_clock_seconds": 3.583
+          },
+          "generated_utc": "2026-11-17T00:16:35Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/nutshell/aa012afa/benchmarks/linux_boot_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "nutshell",
+          "upstream_commit": "aa012afa",
+          "profile": "app_verilator",
+          "workload": "microbench",
+          "config": "nutshell_inorder_sim",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64imac",
+            "configuration": "nutshell_inorder_sim",
+            "total_simulation_cycles": 2000001,
+            "benchmark_cycles": 2000001,
+            "instructions_retired": 783388,
+            "ipc": 0.3917,
+            "branch_predictor_accuracy_pct": 95.45,
+            "wall_clock_seconds": 5.209
+          },
+          "generated_utc": "2026-11-16T23:53:26Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/nutshell/aa012afa/benchmarks/microbench_default.json"
+        }
+      ],
       "matchedProjectSlug": "nutshell"
     },
     {
