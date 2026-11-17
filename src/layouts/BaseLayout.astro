@@ -1,4 +1,7 @@
 ---
+import TableOfContents from "../components/TableOfContents.astro";
+import CoreComparisonModal from "../components/CoreComparisonModal.astro";
+
 interface Props {
   title: string;
   description?: string;
@@ -309,6 +312,17 @@ function isActive(href: string) {
         </a>
 
         <div class="score-header-right">
+          <button
+            id="score-open-compare-btn"
+            class="score-compare-nav-btn"
+            title="Open Interactive Core Comparison Matrix (Keyboard: C)"
+            aria-label="Open Interactive Core Comparison Matrix"
+          >
+            <span class="compare-icon">&#9878;</span>
+            <span class="compare-btn-text">Compare</span>
+            <span class="compare-count-badge" id="score-compare-nav-count">3</span>
+          </button>
+
           <a
             href="https://github.com/SCORE-CIRCUITS/score"
             target="_blank"
@@ -377,6 +391,10 @@ function isActive(href: string) {
           .catch(() => {});
       })();
     </script>
+    <!-- Interactive Core Comparison Tool (Side-by-Side Modal) -->
+    <CoreComparisonModal />
+    <!-- Sticky Table of Contents, ScrollSpy, Reading Progress & Back-to-Top -->
+    <TableOfContents />
   </body>
 </html>
 

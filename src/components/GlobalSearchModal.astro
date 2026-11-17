@@ -1,0 +1,732 @@
+---
+// GlobalSearchModal.astro
+// Global Command Palette / Quick Search (Ctrl+K / Cmd+K) across all 80 cores & EDA tools
+import db from "../data/score_db.json";
+
+const base = import.meta.env.BASE_URL;
+
+const searchableItems = db.tools.map((t) => {
+  let url = "";
+  switch (t.categoryNumber) {
+    case 1: url = `${base}mcu-scalar/#core-${t.slug}`; break;
+    case 2: url = `${base}app-cores/#core-${t.slug}`; break;
+    case 3: url = `${base}vector-coprocessors/#core-${t.slug}`; break;
+    case 4: url = `${base}soc-multicore/#core-${t.slug}`; break;
+    default: url = `${base}fundamentals/#benchmarking-metrics`; break;
+  }
+
+  return {
+    slug: t.slug,
+    name: t.name,
+    subtitle: t.subtitle || "",
+    categoryNumber: t.categoryNumber,
+    categoryName: t.categoryName,
+    categoryBadge: t.categoryBadge,
+    isa: t.isa || "",
+    bus: t.bus || "",
+    language: t.language || "",
+    license: t.license || "",
+    organization: t.organization || "",
+    url
+  };
+});
+---
+
+<!-- Global Search Modal Overlay -->
+<div id="score-search-modal" class="score-search-overlay" aria-hidden="true" role="dialog" aria-label="Global Search">
+  <div class="score-search-dialog">
+    <!-- Search Bar Top Input -->
+    <div class="score-search-input-wrap">
+      <svg class="search-input-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/>
+      </svg>
+      <input
+        type="text"
+        id="score-global-search-input"
+        class="score-search-input"
+        placeholder="Search 80 cores, ISAs, buses, or EDA tools (e.g., CVA6, AXI4, RVV, Ibex)..."
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button id="score-search-clear-btn" class="search-clear-btn" aria-label="Clear search query" title="Clear">
+        &times;
+      </button>
+      <button id="score-search-close-btn" class="search-close-btn" aria-label="Close search (Esc)" title="Close">
+        <kbd>Esc</kbd>
+      </button>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="score-search-filters">
+      <button class="search-filter-pill active" data-filter="all">All (80)</button>
+      <button class="search-filter-pill" data-filter="1">MCU / Scalar (16)</button>
+      <button class="search-filter-pill" data-filter="2">App Cores (9)</button>
+      <button class="search-filter-pill" data-filter="3">Vector (9)</button>
+      <button class="search-filter-pill" data-filter="4">SoC &amp; Manycore (22)</button>
+      <button class="search-filter-pill" data-filter="0">EDA &amp; Tools (24)</button>
+    </div>
+
+    <!-- Results List -->
+    <div class="score-search-results-wrap" id="scoreSearchResultsWrap">
+      <ul class="score-search-results-list" id="scoreSearchResultsList">
+        <!-- Dynamically populated results -->
+      </ul>
+
+      <!-- Empty State -->
+      <div id="scoreSearchEmptyState" class="score-search-empty" style="display: none;">
+        <span class="empty-icon">&#128269;</span>
+        <h4>No matching architecture or tool found</h4>
+        <p>Try searching for core names (<em>Ibex, CVA6, Ara, Occamy</em>), bus protocols (<em>AXI4, TileLink, OBI</em>), or ISAs (<em>RV64GC, RV32IMC, RVV 1.0</em>).</p>
+      </div>
+    </div>
+
+    <!-- Footer Shortcuts -->
+    <div class="score-search-footer">
+      <div class="search-nav-hints">
+        <span class="hint-item"><kbd>&uarr;</kbd> <kbd>&darr;</kbd> Navigate</span>
+        <span class="hint-item"><kbd>&crarr;</kbd> Select</span>
+        <span class="hint-item"><kbd>Esc</kbd> Close</span>
+      </div>
+      <div class="search-results-count" id="scoreSearchResultsCount">
+        Showing 80 results
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ══════════════════════════════════════════════════════════ */
+  /* SEARCH MODAL OVERLAY                                       */
+  /* ══════════════════════════════════════════════════════════ */
+  .score-search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(21, 27, 32, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2100;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4rem 1.25rem 2rem 1.25rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  .score-search-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Dialog Window */
+  .score-search-dialog {
+    width: 780px;
+    max-width: 95vw;
+    max-height: 80vh;
+    background: var(--cream, #fffaf0);
+    border: 2.5px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 8px 8px 0px var(--ink, #151b20);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(-16px) scale(0.98);
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .score-search-overlay.open .score-search-dialog {
+    transform: translateY(0) scale(1);
+  }
+
+  /* Top Input Bar */
+  .score-search-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.25rem;
+    background: var(--paper, #f6f0dc);
+    border-bottom: 2px solid var(--ink, #151b20);
+  }
+
+  .search-input-icon {
+    width: 22px;
+    height: 22px;
+    color: var(--ink, #151b20);
+    flex-shrink: 0;
+  }
+
+  .score-search-input {
+    flex: 1 1 auto;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-family: var(--md-text-font, 'Inter', sans-serif);
+    color: var(--ink, #151b20);
+  }
+
+  .score-search-input::placeholder {
+    color: rgba(21, 27, 32, 0.5);
+    font-weight: 500;
+  }
+
+  .search-clear-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--ink, #151b20);
+    padding: 0.1rem 0.35rem;
+    display: none;
+  }
+
+  .search-clear-btn.visible {
+    display: block;
+  }
+
+  .search-clear-btn:hover {
+    background: rgba(21, 27, 32, 0.1);
+  }
+
+  .search-close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .search-close-btn kbd {
+    background: var(--cream, #fffaf0);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 4px;
+    padding: 0.15rem 0.4rem;
+    font-size: 0.72rem;
+    font-family: var(--md-code-font, monospace);
+    font-weight: 800;
+    color: var(--ink, #151b20);
+  }
+
+  /* Filters */
+  .score-search-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    background: var(--cream, #fffaf0);
+    border-bottom: 1.5px solid rgba(21, 27, 32, 0.15);
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .search-filter-pill {
+    background: var(--paper, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    user-select: none;
+  }
+
+  .search-filter-pill:hover {
+    background: var(--yellow, #ffc83e);
+  }
+
+  .search-filter-pill.active {
+    background: var(--yellow, #ffc83e);
+    box-shadow: 1.5px 1.5px 0px var(--ink, #151b20);
+    transform: translate(-0.5px, -0.5px);
+  }
+
+  /* Results List Wrap */
+  .score-search-results-wrap {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 0.5rem 0.65rem;
+    scroll-behavior: smooth;
+  }
+
+  .score-search-results-wrap::-webkit-scrollbar {
+    width: 6px;
+  }
+  .score-search-results-wrap::-webkit-scrollbar-thumb {
+    background: rgba(21, 27, 32, 0.2);
+    border-radius: 999px;
+  }
+
+  .score-search-results-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  /* Item */
+  :global(.search-result-item) {
+    margin: 0;
+    padding: 0;
+  }
+
+  :global(.search-result-link) {
+    display: block;
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    text-decoration: none !important;
+    color: var(--ink, #151b20);
+    border: 1.5px solid transparent;
+    transition: all 0.1s ease;
+    background: transparent;
+  }
+
+  :global(.search-result-link:hover),
+  :global(.search-result-item.selected .search-result-link) {
+    background: var(--yellow, #ffc83e) !important;
+    border-color: var(--ink, #151b20) !important;
+    box-shadow: 2.5px 2.5px 0px var(--ink, #151b20);
+    transform: translate(-1px, -1px);
+  }
+
+  :global(.sri-top) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  :global(.sri-left) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  :global(.sri-title) {
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: var(--ink, #151b20);
+  }
+
+  :global(.sri-badge) {
+    display: inline-block;
+    padding: 0.05rem 0.4rem;
+    font-size: 0.68rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 4px;
+    line-height: 1.3;
+  }
+
+  :global(.sri-action) {
+    font-size: 0.72rem;
+    font-family: var(--md-code-font, monospace);
+    font-weight: 800;
+    color: var(--ink-light, #333);
+    flex-shrink: 0;
+  }
+
+  :global(.sri-meta-row) {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.25rem;
+  }
+
+  :global(.sri-pill) {
+    background: var(--cream, #fffaf0);
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    font-family: var(--md-code-font, monospace);
+  }
+
+  :global(.sri-sub) {
+    font-size: 0.78rem;
+    color: rgba(21, 27, 32, 0.85);
+    margin: 0;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :global(mark.search-highlight) {
+    background: #ff9f1c;
+    color: #000;
+    font-weight: 900;
+    padding: 0 0.15rem;
+    border-radius: 2px;
+  }
+
+  /* Empty State */
+  .score-search-empty {
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    color: var(--ink, #151b20);
+  }
+
+  .score-search-empty .empty-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .score-search-empty h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.05rem;
+    font-weight: 900;
+  }
+
+  .score-search-empty p {
+    font-size: 0.82rem;
+    color: var(--ink-light, #444);
+    max-width: 450px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .score-search-footer {
+    background: var(--paper-deep, #eee4c8);
+    border-top: 1.5px solid var(--ink, #151b20);
+    padding: 0.5rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    font-family: var(--md-code-font, monospace);
+    color: var(--ink-light, #333);
+  }
+
+  .search-nav-hints {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .search-nav-hints kbd {
+    background: var(--cream, #fffaf0);
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 3px;
+    padding: 0.05rem 0.25rem;
+    font-weight: 700;
+  }
+
+  /* Header Search Button */
+  :global(.score-header-search-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--cream, #fffaf0);
+    color: var(--ink, #151b20);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-family: var(--md-text-font, 'Inter', sans-serif);
+    cursor: pointer;
+    box-shadow: 2.5px 2.5px 0px var(--ink, #151b20);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+    user-select: none;
+  }
+
+  :global(.score-header-search-btn:hover) {
+    background: var(--yellow, #ffc83e);
+    transform: translate(-1px, -1px);
+    box-shadow: 3.5px 3.5px 0px var(--ink, #151b20);
+  }
+
+  :global(.score-header-search-btn:active) {
+    transform: translate(1px, 1px);
+    box-shadow: 1.5px 1.5px 0px var(--ink, #151b20);
+  }
+
+  :global(.search-btn-icon) {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+
+  :global(.search-btn-kbd) {
+    background: var(--paper-deep, #eee4c8);
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+  }
+
+  @media (max-width: 600px) {
+    .score-search-overlay {
+      padding: 1.5rem 0.65rem;
+    }
+    .search-btn-text,
+    .search-btn-kbd {
+      display: none;
+    }
+    .search-nav-hints {
+      display: none;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ searchableItems, base }}>
+  (function initGlobalSearch() {
+    const items = searchableItems;
+
+    const modal = document.getElementById("score-search-modal");
+    const input = document.getElementById("score-global-search-input");
+    const clearBtn = document.getElementById("score-search-clear-btn");
+    const closeBtn = document.getElementById("score-search-close-btn");
+    const resultsList = document.getElementById("scoreSearchResultsList");
+    const emptyState = document.getElementById("scoreSearchEmptyState");
+    const countDisplay = document.getElementById("scoreSearchResultsCount");
+    const filterPills = document.querySelectorAll(".search-filter-pill");
+
+    let activeFilter = "all";
+    let selectedIndex = 0;
+    let currentResults = [];
+
+    function openSearch() {
+      if (!modal) return;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      if (input) {
+        input.value = "";
+        input.focus();
+      }
+      activeFilter = "all";
+      filterPills.forEach(p => p.classList.toggle("active", p.getAttribute("data-filter") === "all"));
+      if (clearBtn) clearBtn.classList.remove("visible");
+      filterAndRender();
+    }
+
+    function closeSearch() {
+      if (!modal) return;
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    // Trigger buttons
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("#score-header-search-btn, .open-search-modal-btn");
+      if (btn) {
+        e.preventDefault();
+        openSearch();
+      }
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", closeSearch);
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        if (input) {
+          input.value = "";
+          input.focus();
+          clearBtn.classList.remove("visible");
+          filterAndRender();
+        }
+      });
+    }
+
+    // Click on backdrop to close
+    if (modal) {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeSearch();
+      });
+    }
+
+    // Keyboard Shortcuts (Ctrl+K, Cmd+K, /, Esc, Down, Up, Enter)
+    document.addEventListener("keydown", (e) => {
+      const isSearchOpen = modal && modal.classList.contains("open");
+
+      // Toggle Search via Ctrl+K / Cmd+K
+      if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) {
+        e.preventDefault();
+        if (isSearchOpen) closeSearch();
+        else openSearch();
+        return;
+      }
+
+      // '/' trigger when not in input
+      if (e.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        openSearch();
+        return;
+      }
+
+      if (!isSearchOpen) return;
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeSearch();
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        moveSelection(1);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        moveSelection(-1);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        chooseSelected();
+      }
+    });
+
+    function moveSelection(direction) {
+      if (currentResults.length === 0) return;
+      selectedIndex = (selectedIndex + direction + currentResults.length) % currentResults.length;
+      updateSelectedVisual();
+    }
+
+    function updateSelectedVisual() {
+      const elements = resultsList.querySelectorAll(".search-result-item");
+      elements.forEach((el, idx) => {
+        if (idx === selectedIndex) {
+          el.classList.add("selected");
+          el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        } else {
+          el.classList.remove("selected");
+        }
+      });
+    }
+
+    function chooseSelected() {
+      if (currentResults.length > 0 && currentResults[selectedIndex]) {
+        const item = currentResults[selectedIndex];
+        window.location.href = item.url;
+        closeSearch();
+      }
+    }
+
+    // Filter pill click handlers
+    filterPills.forEach(pill => {
+      pill.addEventListener("click", () => {
+        filterPills.forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        activeFilter = pill.getAttribute("data-filter");
+        selectedIndex = 0;
+        filterAndRender();
+      });
+    });
+
+    // Real-time input search
+    if (input) {
+      input.addEventListener("input", () => {
+        if (clearBtn) {
+          clearBtn.classList.toggle("visible", input.value.length > 0);
+        }
+        selectedIndex = 0;
+        filterAndRender();
+      });
+    }
+
+    function highlightText(text, query) {
+      if (!query || !text) return text;
+      const terms = query.trim().split(/\s+/).filter(Boolean);
+      if (terms.length === 0) return text;
+      const pattern = new RegExp(`(${terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
+      return text.replace(pattern, '<mark class="search-highlight">$1</mark>');
+    }
+
+    function filterAndRender() {
+      const q = input ? input.value.trim().toLowerCase() : "";
+      const tokens = q.split(/\s+/).filter(Boolean);
+
+      currentResults = items.filter(item => {
+        // Category check
+        if (activeFilter !== "all") {
+          const catNum = parseInt(activeFilter, 10);
+          if (item.categoryNumber !== catNum) return false;
+        }
+
+        // Query check
+        if (tokens.length === 0) return true;
+
+        const searchStr = `${item.name} ${item.slug} ${item.isa} ${item.bus} ${item.language} ${item.license} ${item.organization} ${item.subtitle} ${item.categoryName}`.toLowerCase();
+        return tokens.every(token => searchStr.includes(token));
+      });
+
+      // Update count
+      if (countDisplay) {
+        countDisplay.textContent = `Showing ${currentResults.length} of ${items.length} tools`;
+      }
+
+      // Empty state
+      if (currentResults.length === 0) {
+        if (emptyState) emptyState.style.display = "block";
+        if (resultsList) resultsList.innerHTML = "";
+        return;
+      }
+
+      if (emptyState) emptyState.style.display = "none";
+
+      // Render items
+      let html = "";
+      currentResults.forEach((c, idx) => {
+        const badgeClass = c.categoryNumber === 1 ? "badge-yellow"
+          : c.categoryNumber === 2 ? "badge-cyan"
+          : c.categoryNumber === 3 ? "badge-coral"
+          : c.categoryNumber === 4 ? "badge-lime"
+          : "badge-teal";
+
+        const tierLabel = c.categoryNumber === 0 ? "EDA Tool" : `Tier 0${c.categoryNumber}`;
+
+        const isSelected = idx === selectedIndex ? "selected" : "";
+
+        html += `
+          <li class="search-result-item ${isSelected}" data-index="${idx}">
+            <a href="${c.url}" class="search-result-link">
+              <div class="sri-top">
+                <div class="sri-left">
+                  <span class="sri-badge ${badgeClass}">${tierLabel}</span>
+                  <span class="sri-title">${highlightText(c.name, q)}</span>
+                  <small style="font-family: var(--md-code-font, monospace); font-weight: 700; color: rgba(21,27,32,0.65);">${c.organization}</small>
+                </div>
+                <span class="sri-action">Jump &rarr;</span>
+              </div>
+              <div class="sri-meta-row">
+                ${c.isa && c.isa !== "N/A" ? `<span class="sri-pill">ISA: ${highlightText(c.isa, q)}</span>` : ""}
+                ${c.bus && c.bus !== "N/A" ? `<span class="sri-pill">Bus: ${highlightText(c.bus, q)}</span>` : ""}
+                ${c.language && c.language !== "N/A" ? `<span class="sri-pill">${highlightText(c.language, q)}</span>` : ""}
+                ${c.license && c.license !== "N/A" ? `<span class="sri-pill">${highlightText(c.license, q)}</span>` : ""}
+              </div>
+              ${c.subtitle ? `<p class="sri-sub">${highlightText(c.subtitle, q)}</p>` : ""}
+            </a>
+          </li>
+        `;
+      });
+
+      resultsList.innerHTML = html;
+
+      // Mouse hover event
+      const resultElements = resultsList.querySelectorAll(".search-result-item");
+      resultElements.forEach((el, idx) => {
+        el.addEventListener("mouseenter", () => {
+          selectedIndex = idx;
+          updateSelectedVisual();
+        });
+      });
+    }
+  })();
+</script>

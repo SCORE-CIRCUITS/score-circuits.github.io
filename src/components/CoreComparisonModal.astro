@@ -1,0 +1,979 @@
+---
+// CoreComparisonModal.astro
+// Interactive Side-by-Side Architectural Specification Comparison Tool
+import db from "../data/score_db.json";
+
+const base = import.meta.env.BASE_URL;
+
+// Filter processor cores and platforms (Categories 1 to 4)
+const comparisonCores = db.tools
+  .filter((t) => t.categoryNumber >= 1 && t.categoryNumber <= 4)
+  .map((t) => {
+    let pageUrl = "";
+    switch (t.categoryNumber) {
+      case 1: pageUrl = `${base}mcu-scalar/#core-${t.slug}`; break;
+      case 2: pageUrl = `${base}app-cores/#core-${t.slug}`; break;
+      case 3: pageUrl = `${base}vector-coprocessors/#core-${t.slug}`; break;
+      case 4: pageUrl = `${base}soc-multicore/#core-${t.slug}`; break;
+      default: pageUrl = `${base}mcu-scalar/#core-${t.slug}`; break;
+    }
+
+    return {
+      slug: t.slug,
+      name: t.name,
+      subtitle: t.subtitle || "",
+      categoryNumber: t.categoryNumber,
+      categoryName: t.categoryName,
+      categoryBadge: t.categoryBadge,
+      isa: t.isa || "N/A",
+      bus: t.bus || "N/A",
+      language: t.language || "N/A",
+      license: t.license || "N/A",
+      organization: t.organization || "N/A",
+      siliconEvidence: t.siliconEvidence || "Simulation / FPGA only",
+      verificationEvidence: t.verificationEvidence || "RTL Simulation",
+      notableStrengths: t.notableStrengths || "",
+      notableLimitations: t.notableLimitations || "",
+      benchmarks: t.benchmarks || [],
+      pageUrl
+    };
+  });
+---
+
+<!-- Comparison Modal Overlay -->
+<div id="score-compare-modal" class="score-compare-overlay" aria-hidden="true" role="dialog" aria-label="Core Comparison Matrix">
+  <div class="score-compare-dialog">
+    <!-- Modal Header -->
+    <div class="score-compare-header">
+      <div class="sch-title-group">
+        <span class="sch-badge">&#9878; ARCHITECTURAL COMPARISON MATRIX</span>
+        <h3 class="sch-title">Side-by-Side Microarchitectural &amp; Silicon Specification Matrix</h3>
+        <p class="sch-sub">Compare evaluated open-source processor architectures, verification evidence, and empirical benchmark results.</p>
+      </div>
+      <div class="sch-actions">
+        <button id="score-compare-share" class="btn-sch-tool" title="Copy shareable link with current comparison">
+          <span class="tool-icon">&#128279;</span>
+          <span class="tool-text">Share Link</span>
+        </button>
+        <button id="score-compare-clear" class="btn-sch-tool" title="Clear all selected cores">
+          <span class="tool-icon">&#128465;</span>
+          <span class="tool-text">Clear</span>
+        </button>
+        <button id="score-compare-close" class="btn-sch-close" aria-label="Close comparison modal" title="Close (Esc)">
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <!-- Presets Bar -->
+    <div class="score-compare-presets-bar">
+      <span class="presets-label">&#128302; Quick Presets:</span>
+      <div class="presets-pills">
+        <button class="preset-btn" data-preset="ibex,cv32e40p,hazard3">
+          Embedded MCUs (Ibex &bull; CV32E40P &bull; Hazard3)
+        </button>
+        <button class="preset-btn" data-preset="cva6,boom,xiangshan">
+          64-Bit App Cores (CVA6 &bull; BOOM &bull; XiangShan)
+        </button>
+        <button class="preset-btn" data-preset="ara,gemmini,spatz">
+          Vector &amp; Coprocessors (Ara &bull; Gemmini &bull; Spatz)
+        </button>
+        <button class="preset-btn" data-preset="cheshire,mempool,occamy">
+          SoC &amp; Manycore (Cheshire &bull; MemPool &bull; Occamy)
+        </button>
+      </div>
+      <div class="diff-toggle-wrap">
+        <label class="diff-label">
+          <input type="checkbox" id="score-diff-toggle" />
+          <span>Highlight Differences</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Modal Content: Scrollable Matrix -->
+    <div class="score-compare-body">
+      <!-- Selector Dropdowns Slot Header -->
+      <div class="compare-selectors-grid">
+        <div class="selector-slot" id="slot-0">
+          <div class="slot-label">Core 1:</div>
+          <select class="core-select" data-slot="0">
+            <option value="">-- Choose a Core --</option>
+            {comparisonCores.map((c) => (
+              <option value={c.slug}>[L{c.categoryNumber}] {c.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="selector-slot" id="slot-1">
+          <div class="slot-label">Core 2:</div>
+          <select class="core-select" data-slot="1">
+            <option value="">-- Choose a Core --</option>
+            {comparisonCores.map((c) => (
+              <option value={c.slug}>[L{c.categoryNumber}] {c.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="selector-slot" id="slot-2">
+          <div class="slot-label">Core 3:</div>
+          <select class="core-select" data-slot="2">
+            <option value="">-- Choose a Core --</option>
+            {comparisonCores.map((c) => (
+              <option value={c.slug}>[L{c.categoryNumber}] {c.name}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <!-- Main Comparison Table Matrix -->
+      <div class="table-responsive-matrix">
+        <table class="compare-matrix-table" id="compareMatrixTable">
+          <thead id="compareTableHead">
+            <!-- Dynamically populated core header columns -->
+          </thead>
+          <tbody id="compareTableBody">
+            <!-- Dynamically populated row groups -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State Notice (When 0 cores selected) -->
+      <div id="compareEmptyState" class="compare-empty-state" style="display: none;">
+        <span class="empty-icon">&#9878;</span>
+        <h4>No Cores Selected for Comparison</h4>
+        <p>Select up to 3 processor architectures from the dropdowns above, choose one of the quick presets, or click <strong>"+ Compare"</strong> next to any core in the leaderboards.</p>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="score-compare-footer">
+      <div class="scf-info">
+        <span>Displaying metrics from SCORE unified hardware database &bull; CC BY 4.0</span>
+      </div>
+      <div class="scf-shortcuts">
+        <kbd>Esc</kbd> Close &middot; <kbd>C</kbd> Toggle Compare
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ══════════════════════════════════════════════════════════ */
+  /* MODAL OVERLAY & BACKDROP                                   */
+  /* ══════════════════════════════════════════════════════════ */
+  .score-compare-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(21, 27, 32, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.22s ease, visibility 0.22s ease;
+  }
+
+  .score-compare-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Dialog Window */
+  .score-compare-dialog {
+    width: 1220px;
+    max-width: 95vw;
+    height: 90vh;
+    max-height: 880px;
+    background: var(--cream, #fffaf0);
+    border: 2.5px solid var(--ink, #151b20);
+    border-radius: 14px;
+    box-shadow: 8px 8px 0px var(--ink, #151b20);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .score-compare-overlay.open .score-compare-dialog {
+    transform: translateY(0) scale(1);
+  }
+
+  /* Header */
+  .score-compare-header {
+    background: var(--paper-deep, #eee4c8);
+    border-bottom: 2px solid var(--ink, #151b20);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .sch-badge {
+    display: inline-block;
+    background: var(--yellow, #ffc83e);
+    color: var(--ink, #151b20);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 4px;
+    padding: 0.1rem 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+  }
+
+  .sch-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin: 0 0 0.25rem 0;
+    color: var(--ink, #151b20);
+    letter-spacing: -0.01em;
+  }
+
+  .sch-sub {
+    font-size: 0.82rem;
+    color: var(--ink-light, #333);
+    margin: 0;
+  }
+
+  .sch-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .btn-sch-tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--cream, #fffaf0);
+    color: var(--ink, #151b20);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    cursor: pointer;
+    box-shadow: 1.5px 1.5px 0px var(--ink, #151b20);
+    transition: all 0.12s ease;
+  }
+
+  .btn-sch-tool:hover {
+    background: var(--yellow, #ffc83e);
+    transform: translate(-1px, -1px);
+    box-shadow: 2.5px 2.5px 0px var(--ink, #151b20);
+  }
+
+  .btn-sch-tool:active {
+    transform: translate(1px, 1px);
+    box-shadow: 0.5px 0.5px 0px var(--ink, #151b20);
+  }
+
+  .btn-sch-close {
+    background: transparent;
+    border: 1.5px solid transparent;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+    color: var(--ink, #151b20);
+    transition: all 0.12s ease;
+  }
+
+  .btn-sch-close:hover {
+    background: rgba(21, 27, 32, 0.1);
+    border-color: var(--ink, #151b20);
+  }
+
+  /* Presets Bar */
+  .score-compare-presets-bar {
+    background: var(--cream, #fffaf0);
+    border-bottom: 2px solid var(--ink, #151b20);
+    padding: 0.65rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .presets-label {
+    font-size: 0.78rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    color: var(--ink, #151b20);
+  }
+
+  .presets-pills {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .preset-btn {
+    background: var(--paper, #f6f0dc);
+    color: var(--ink, #151b20);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--md-code-font, monospace);
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+
+  .preset-btn:hover {
+    background: var(--yellow, #ffc83e);
+    box-shadow: 1.5px 1.5px 0px var(--ink, #151b20);
+    transform: translate(-1px, -1px);
+  }
+
+  .diff-toggle-wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  .diff-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    color: var(--ink, #151b20);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .diff-label input[type="checkbox"] {
+    accent-color: var(--ink, #151b20);
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+
+  /* Body Content */
+  .score-compare-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Selectors Grid */
+  .compare-selectors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    background: var(--paper, #f6f0dc);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+  }
+
+  .selector-slot {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .slot-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    color: var(--ink, #151b20);
+  }
+
+  .core-select {
+    width: 100%;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-family: var(--md-code-font, monospace);
+    background: var(--cream, #fffaf0);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    color: var(--ink, #151b20);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .core-select:focus {
+    border-color: #000;
+    box-shadow: 0 0 0 2px var(--yellow, #ffc83e);
+  }
+
+  /* Matrix Table */
+  .table-responsive-matrix {
+    overflow-x: auto;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    background: var(--cream, #fffaf0);
+  }
+
+  .compare-matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    table-layout: fixed;
+  }
+
+  .compare-matrix-table th,
+  .compare-matrix-table td {
+    padding: 0.65rem 0.85rem;
+    border: 1px solid rgba(21, 27, 32, 0.2);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+
+  /* Sticky first column */
+  .compare-matrix-table th:first-child,
+  .compare-matrix-table td:first-child {
+    width: 220px;
+    min-width: 200px;
+    background: var(--paper, #f6f0dc);
+    font-weight: 800;
+    color: var(--ink, #151b20);
+    border-right: 2px solid var(--ink, #151b20);
+  }
+
+  /* Sticky Header */
+  .compare-matrix-table thead th {
+    position: sticky;
+    top: 0;
+    background: var(--paper-deep, #eee4c8);
+    border-bottom: 2px solid var(--ink, #151b20);
+    z-index: 10;
+    font-weight: 900;
+  }
+
+  /* Row Category Divider */
+  :global(.matrix-section-divider) {
+    background: var(--paper-deep, #eee4c8) !important;
+    font-size: 0.78rem;
+    font-weight: 900;
+    font-family: var(--md-code-font, monospace);
+    letter-spacing: 0.05em;
+    color: var(--ink, #151b20);
+    padding: 0.45rem 0.85rem !important;
+    border-top: 2px solid var(--ink, #151b20) !important;
+    border-bottom: 2px solid var(--ink, #151b20) !important;
+  }
+
+  /* Diff Highlighting */
+  :global(.compare-matrix-table tr.has-diff td:not(:first-child)) {
+    background-color: rgba(255, 200, 62, 0.2) !important;
+  }
+
+  :global(.compare-col-header) {
+    text-align: left;
+  }
+
+  :global(.cch-name) {
+    font-size: 1rem;
+    font-weight: 900;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  :global(.cch-badge) {
+    display: inline-block;
+    padding: 0.05rem 0.4rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 4px;
+    font-family: var(--md-code-font, monospace);
+    margin-right: 0.35rem;
+  }
+
+  :global(.cch-remove-btn) {
+    float: right;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0.1rem 0.35rem;
+    cursor: pointer;
+    color: var(--ink, #151b20);
+  }
+
+  :global(.cch-remove-btn:hover) {
+    background: rgba(21, 27, 32, 0.1);
+    border-color: var(--ink, #151b20);
+  }
+
+  :global(.matrix-dossier-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--yellow, #ffc83e);
+    color: var(--ink, #151b20) !important;
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 6px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    text-decoration: none !important;
+    box-shadow: 1.5px 1.5px 0px var(--ink, #151b20);
+    transition: all 0.12s ease;
+  }
+
+  :global(.matrix-dossier-btn:hover) {
+    background: #ffe066;
+    transform: translate(-0.5px, -0.5px);
+    box-shadow: 2px 2px 0px var(--ink, #151b20);
+  }
+
+  /* Empty State */
+  .compare-empty-state {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    background: var(--paper, #f6f0dc);
+    border: 2px dashed var(--ink, #151b20);
+    border-radius: 10px;
+    margin: 1rem 0;
+  }
+
+  .empty-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .compare-empty-state h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 900;
+  }
+
+  .compare-empty-state p {
+    max-width: 500px;
+    margin: 0 auto;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .score-compare-footer {
+    background: var(--paper-deep, #eee4c8);
+    border-top: 1.5px solid var(--ink, #151b20);
+    padding: 0.6rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-family: var(--md-code-font, monospace);
+    color: var(--ink-light, #333);
+  }
+
+  .scf-shortcuts kbd {
+    background: var(--cream, #fffaf0);
+    border: 1px solid var(--ink, #151b20);
+    border-radius: 3px;
+    padding: 0.05rem 0.3rem;
+    font-weight: 700;
+  }
+
+  /* Header Trigger Button */
+  :global(.score-compare-nav-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--cream, #fffaf0);
+    color: var(--ink, #151b20);
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    font-family: var(--md-text-font, 'Inter', sans-serif);
+    cursor: pointer;
+    box-shadow: 2.5px 2.5px 0px var(--ink, #151b20);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+    user-select: none;
+  }
+
+  :global(.score-compare-nav-btn:hover) {
+    background: var(--yellow, #ffc83e);
+    transform: translate(-1px, -1px);
+    box-shadow: 3.5px 3.5px 0px var(--ink, #151b20);
+  }
+
+  :global(.score-compare-nav-btn:active) {
+    transform: translate(1px, 1px);
+    box-shadow: 1.5px 1.5px 0px var(--ink, #151b20);
+  }
+
+  :global(.compare-count-badge) {
+    background: var(--yellow, #ffc83e);
+    color: var(--ink, #151b20);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 999px;
+    padding: 0.05rem 0.45rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    font-family: var(--md-code-font, monospace);
+    min-width: 18px;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .compare-selectors-grid {
+      grid-template-columns: 1fr;
+    }
+    .score-compare-dialog {
+      height: 95vh;
+      max-width: 98vw;
+    }
+    .score-compare-presets-bar {
+      padding: 0.5rem 0.75rem;
+    }
+    .preset-btn {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ comparisonCores, base }}>
+  (function initCoreComparison() {
+    const coresData = comparisonCores;
+    const coresBySlug = Object.fromEntries(coresData.map(c => [c.slug, c]));
+
+    // Elements
+    const modal = document.getElementById("score-compare-modal");
+    const closeBtn = document.getElementById("score-compare-close");
+    const shareBtn = document.getElementById("score-compare-share");
+    const clearBtn = document.getElementById("score-compare-clear");
+    const diffToggle = document.getElementById("score-diff-toggle");
+    const presetsBtns = document.querySelectorAll(".preset-btn");
+    const selectElements = document.querySelectorAll(".core-select");
+    const tableHead = document.getElementById("compareTableHead");
+    const tableBody = document.getElementById("compareTableBody");
+    const emptyState = document.getElementById("compareEmptyState");
+    const matrixTable = document.getElementById("compareMatrixTable");
+
+    // Selected cores array (up to 3)
+    let selectedSlugs = ["cva6", "boom", "xiangshan"];
+
+    // 1. Load initial state from URL params or localStorage
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCompare = urlParams.get("compare");
+      if (urlCompare) {
+        selectedSlugs = urlCompare.split(",").filter(s => coresBySlug[s]);
+      } else {
+        const saved = localStorage.getItem("score_compare_cores");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            selectedSlugs = parsed.filter(s => coresBySlug[s]);
+          }
+        }
+      }
+    } catch (e) {}
+
+    // Ensure array length up to 3
+    selectedSlugs = selectedSlugs.slice(0, 3);
+
+    function saveState() {
+      try {
+        localStorage.setItem("score_compare_cores", JSON.stringify(selectedSlugs));
+      } catch (e) {}
+      updateNavBadges();
+    }
+
+    function updateNavBadges() {
+      const count = selectedSlugs.length;
+      const badges = document.querySelectorAll("#score-compare-nav-count");
+      badges.forEach(b => {
+        b.textContent = String(count);
+      });
+    }
+
+    function openModal() {
+      if (!modal) return;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      renderMatrix();
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    // Attach open buttons
+    document.addEventListener("click", (e) => {
+      const trigger = e.target.closest("#score-open-compare-btn, .open-compare-modal-btn");
+      if (trigger) {
+        e.preventDefault();
+        openModal();
+      }
+
+      // Add to compare button from dossiers or tables
+      const addBtn = e.target.closest(".add-to-compare-btn, [data-compare-slug]");
+      if (addBtn) {
+        e.preventDefault();
+        const slug = addBtn.getAttribute("data-compare-slug");
+        if (slug && coresBySlug[slug]) {
+          if (!selectedSlugs.includes(slug)) {
+            if (selectedSlugs.length >= 3) {
+              selectedSlugs.shift(); // remove oldest
+            }
+            selectedSlugs.push(slug);
+            saveState();
+            renderMatrix();
+          }
+          openModal();
+        }
+      }
+    });
+
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+    // Close on backdrop click
+    if (modal) {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal && modal.classList.contains("open")) {
+        closeModal();
+      } else if ((e.key === "c" || e.key === "C") && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) {
+        if (modal.classList.contains("open")) closeModal();
+        else openModal();
+      }
+    });
+
+    // Preset button handlers
+    presetsBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const presetStr = btn.getAttribute("data-preset");
+        if (presetStr) {
+          selectedSlugs = presetStr.split(",").filter(s => coresBySlug[s]);
+          saveState();
+          renderMatrix();
+        }
+      });
+    });
+
+    // Clear all
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        selectedSlugs = [];
+        saveState();
+        renderMatrix();
+      });
+    }
+
+    // Share link
+    if (shareBtn) {
+      shareBtn.addEventListener("click", () => {
+        const url = new URL(window.location.href);
+        if (selectedSlugs.length > 0) {
+          url.searchParams.set("compare", selectedSlugs.join(","));
+        } else {
+          url.searchParams.delete("compare");
+        }
+        navigator.clipboard.writeText(url.toString()).then(() => {
+          const originalText = shareBtn.querySelector(".tool-text").textContent;
+          shareBtn.querySelector(".tool-text").textContent = "Copied!";
+          setTimeout(() => {
+            shareBtn.querySelector(".tool-text").textContent = originalText;
+          }, 1800);
+        });
+      });
+    }
+
+    // Diff toggle
+    if (diffToggle) {
+      diffToggle.addEventListener("change", () => {
+        renderMatrix();
+      });
+    }
+
+    // Select dropdown changes
+    selectElements.forEach(sel => {
+      sel.addEventListener("change", () => {
+        const slotIdx = parseInt(sel.getAttribute("data-slot"), 10);
+        const val = sel.value;
+        if (val) {
+          selectedSlugs[slotIdx] = val;
+        } else {
+          selectedSlugs.splice(slotIdx, 1);
+        }
+        // filter unique and defined
+        selectedSlugs = selectedSlugs.filter((s, idx, self) => s && self.indexOf(s) === idx);
+        saveState();
+        renderMatrix();
+      });
+    });
+
+    // 2. Render Matrix Table
+    function renderMatrix() {
+      // Update dropdown selections
+      selectElements.forEach(sel => {
+        const slotIdx = parseInt(sel.getAttribute("data-slot"), 10);
+        sel.value = selectedSlugs[slotIdx] || "";
+      });
+
+      if (selectedSlugs.length === 0) {
+        if (emptyState) emptyState.style.display = "block";
+        if (matrixTable) matrixTable.style.display = "none";
+        return;
+      }
+
+      if (emptyState) emptyState.style.display = "none";
+      if (matrixTable) matrixTable.style.display = "table";
+
+      const activeCores = selectedSlugs.map(s => coresBySlug[s]).filter(Boolean);
+      const isDiffOnly = diffToggle ? diffToggle.checked : false;
+
+      // Render thead
+      let headHtml = `<tr><th>Architectural Metric</th>`;
+      activeCores.forEach((c, idx) => {
+        const badgeClass = c.categoryNumber === 1 ? "badge-yellow" : c.categoryNumber === 2 ? "badge-cyan" : c.categoryNumber === 3 ? "badge-coral" : "badge-lime";
+        headHtml += `
+          <th class="compare-col-header">
+            <button class="cch-remove-btn" data-remove-slot="${idx}" title="Remove ${c.name}">&times;</button>
+            <span class="cch-badge ${badgeClass}">Tier 0${c.categoryNumber}</span>
+            <span class="cch-name">${c.name}</span>
+            <small style="font-weight: 500; font-family: var(--md-code-font, monospace); display: block;">${c.organization}</small>
+          </th>
+        `;
+      });
+      headHtml += `</tr>`;
+      tableHead.innerHTML = headHtml;
+
+      // Attach column remove handlers
+      const removeBtns = tableHead.querySelectorAll(".cch-remove-btn");
+      removeBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const slot = parseInt(btn.getAttribute("data-remove-slot"), 10);
+          selectedSlugs.splice(slot, 1);
+          saveState();
+          renderMatrix();
+        });
+      });
+
+      // Definition of matrix rows
+      const sections = [
+        {
+          title: "1. CORE IDENTITY & GOVERNANCE",
+          rows: [
+            { label: "Architecture Name", getter: c => `<strong>${c.name}</strong>` },
+            { label: "Category / Evaluation Tier", getter: c => `<span class="score-badge">${c.categoryName}</span>` },
+            { label: "Sponsoring Organization", getter: c => c.organization },
+            { label: "HDL Language", getter: c => `<code>${c.language}</code>` },
+            { label: "Hardware License", getter: c => `<code>${c.license}</code>` }
+          ]
+        },
+        {
+          title: "2. MICROARCHITECTURE & INTERCONNECT",
+          rows: [
+            { label: "Instruction Set (ISA)", getter: c => `<code>${c.isa}</code>` },
+            { label: "Primary Bus / Interconnect", getter: c => `<code>${c.bus}</code>` },
+            { label: "Architectural Focus", getter: c => c.subtitle }
+          ]
+        },
+        {
+          title: "3. SILICON PROVENANCE & VERIFICATION RIGOR",
+          rows: [
+            { label: "Silicon Tapeout Evidence", getter: c => `<span class="score-badge">${c.siliconEvidence}</span>` },
+            { label: "Verification Tooling", getter: c => c.verificationEvidence }
+          ]
+        },
+        {
+          title: "4. ARCHITECTURAL TRADE-OFFS",
+          rows: [
+            { label: "Notable Strengths", getter: c => c.notableStrengths },
+            { label: "Notable Limitations", getter: c => c.notableLimitations }
+          ]
+        },
+        {
+          title: "5. VERIFIED BENCHMARKS & DOSSIER LINK",
+          rows: [
+            {
+              label: "Empirical Workloads",
+              getter: c => {
+                if (!c.benchmarks || c.benchmarks.length === 0) return "<em>Simulation verified</em>";
+                return c.benchmarks.slice(0, 3).map(b => {
+                  const m = b.metrics || {};
+                  let detail = "";
+                  if (m.coremark_per_mhz) detail = ` &bull; <strong>${m.coremark_per_mhz} CoreMark/MHz</strong>`;
+                  else if (m.ipc) detail = ` &bull; <strong>IPC: ${m.ipc}</strong>`;
+                  else if (m.performance_ops_per_cycle) detail = ` &bull; <strong>${m.performance_ops_per_cycle.toFixed(2)} Ops/Cycle</strong>`;
+                  else if (m.total_simulation_cycles) detail = ` &bull; ${m.total_simulation_cycles.toLocaleString()} cycles`;
+                  return `<div style="margin-bottom: 0.35rem;"><code>${b.workload}</code>${detail}</div>`;
+                }).join("");
+              }
+            },
+            {
+              label: "Native Dossier Permapage",
+              getter: c => `<a href="${c.pageUrl}" class="matrix-dossier-btn" target="_blank" rel="noopener">Inspect Full Dossier &rarr;</a>`
+            }
+          ]
+        }
+      ];
+
+      // Build tbody
+      let bodyHtml = "";
+      sections.forEach(sec => {
+        bodyHtml += `<tr><td colspan="${activeCores.length + 1}" class="matrix-section-divider">${sec.title}</td></tr>`;
+        sec.rows.forEach(r => {
+          const values = activeCores.map(c => r.getter(c));
+          // Check difference across active cores
+          const cleanVals = values.map(v => String(v).replace(/<[^>]+>/g, "").trim());
+          const hasDiff = cleanVals.length > 1 && new Set(cleanVals).size > 1;
+
+          const rowClass = hasDiff ? "has-diff" : "";
+          bodyHtml += `<tr class="${rowClass}">`;
+          bodyHtml += `<td><strong>${r.label}</strong></td>`;
+          values.forEach(v => {
+            bodyHtml += `<td>${v}</td>`;
+          });
+          bodyHtml += `</tr>`;
+        });
+      });
+
+      tableBody.innerHTML = bodyHtml;
+    }
+
+    // Initial setup on DOM ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        saveState();
+        updateNavBadges();
+      });
+    } else {
+      saveState();
+      updateNavBadges();
+    }
+  })();
+</script>
