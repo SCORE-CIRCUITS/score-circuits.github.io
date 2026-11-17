@@ -5,6 +5,7 @@ import db from "../data/score_db.json";
 const categories = db.categories;
 
 const toolsBySlug = Object.fromEntries(db.tools.map(t => [t.slug, t]));
+const getToolCount = (catNum: number) => db.tools.filter(t => t.categoryNumber === catNum).length;
 
 const categoryFeaturedTiers = [
   {
@@ -14,7 +15,7 @@ const categoryFeaturedTiers = [
     borderClass: "tier-border-yellow",
     title: "Microcontroller & Scalar Embedded Cores",
     scope: "Single-Threaded In-Order Embedded Pipelines",
-    ctaText: "Explore MCU & Scalar Cores (13 Cores)",
+    ctaText: `Explore MCU & Scalar Cores (${getToolCount(1)} Cores)`,
     href: "/mcu-scalar/",
     connectorText: "Scale from Single-Issue Microcontrollers to Virtual Memory (Sv39/Sv48 MMU) & Multi-Level Caches",
     slugs: ["ibex", "hazard3", "serv"]
@@ -26,10 +27,10 @@ const categoryFeaturedTiers = [
     borderClass: "tier-border-cyan",
     title: "Application Cores",
     scope: "Linux-Capable In-Order & Out-of-Order Superscalar Cores",
-    ctaText: "Explore Application Cores (8 Processors)",
+    ctaText: `Explore Application Cores (${getToolCount(2)} Processors)`,
     href: "/app-cores/",
     connectorText: "Scale from Memory-Bound Scalar Pipelines to Data-Parallel RVV 1.0 Vector Engines & Systolic Arrays",
-    slugs: ["c910", "boom", "cva6", "rocket-chip"]
+    slugs: ["c910", "cva6", "rocket-chip", "nutshell"]
   },
   {
     catNum: 3,
@@ -38,7 +39,7 @@ const categoryFeaturedTiers = [
     borderClass: "tier-border-coral",
     title: "Vector & Coprocessor Acceleration Engines",
     scope: "Data-Parallel SIMD / RVV 1.0 & Systolic Accelerators",
-    ctaText: "Explore Vector Engines (8 Processors)",
+    ctaText: `Explore Vector Engines (${getToolCount(3)} Processors)`,
     href: "/vector-coprocessors/",
     connectorText: "Scale from Coprocessor Accelerators to Many-Core Clusters (up to 432 Cores), NoC Fabrics & DMA Engines",
     slugs: ["ara", "gemmini", "spatz"]
@@ -50,7 +51,7 @@ const categoryFeaturedTiers = [
     borderClass: "tier-border-lime",
     title: "Full SoC Platforms & Multi-Core Clusters",
     scope: "Many-Core Compute Clusters & Complete Tapeout SoCs",
-    ctaText: "Explore SoCs & Manycore (23 Systems)",
+    ctaText: `Explore SoCs & Manycore (${getToolCount(4)} Systems)`,
     href: "/soc-multicore/",
     slugs: ["snitch-cluster", "cheshire", "mempool"]
   }
@@ -97,8 +98,8 @@ const categoryDetails: Record<number, {
     badgeClass: "badge-cyan",
     colorVar: "var(--cyan)",
     bottleneck: "Memory Wall latency (50–100 ns DRAM) on L1/L2 cache misses and serialized 3-level page table walk latency upon TLB misses.",
-    remedy: "Non-blocking split L1/L2 caches with MSHRs, hardware stream prefetchers, and out-of-order superscalar execution (BOOM).",
-    keyTools: "SonicBOOM (OoO), XuanTie C910 (3-issue OoO + VPU), CVA6 (6-stage in-order), XuanTie C906 (5-stage + VPU), Rocket Chip, NutShell (dual-issue), BlackParrot (BedRock multicore), OpenPiton (manycore)",
+    remedy: "Non-blocking split L1/L2 caches with MSHRs, hardware stream prefetchers, and out-of-order superscalar execution (XiangShan, BOOM, C910).",
+    keyTools: "XiangShan (6-issue OoO), SonicBOOM (OoO), XuanTie C910 (3-issue OoO + VPU), CVA6 (6-stage in-order), XuanTie C906 (5-stage + VPU), Rocket Chip, NutShell (dual-issue), BlackParrot (BedRock multicore)",
     ctaText: "Explore Application Cores",
     transitionText: "Scale from Memory-Bound Scalar Pipelines to Data-Parallel RVV 1.0 Vector Engines & Systolic Arrays",
   },

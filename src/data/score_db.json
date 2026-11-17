@@ -1,15 +1,15 @@
 {
   "version": "2.1",
-  "generatedAt": "2026-11-17T00:58:02.637Z",
+  "generatedAt": "2026-11-17T01:23:12.266Z",
   "counts": {
     "projects": 46,
-    "tools": 76,
+    "tools": 78,
     "category1Tools": 15,
-    "category2Tools": 6,
+    "category2Tools": 8,
     "category3Tools": 9,
     "category4Tools": 22,
     "infraTools": 24,
-    "benchmarked": 33,
+    "benchmarked": 34,
     "measuredRuns": 67
   },
   "categories": [
@@ -88,11 +88,13 @@
       ],
       "tools": [
         "black-parrot",
+        "boom",
         "c906",
         "c910",
         "cva6",
         "nutshell",
-        "rocket-chip"
+        "rocket-chip",
+        "xiangshan"
       ]
     },
     {
@@ -7852,11 +7854,109 @@
         "references": "1. AndesCore Processors, 2020. http://www.andestech.com/\n2. Chips by IIS, 2020. http://asic.ethz.ch/\n3. CloudBEAR processors, 2020. https://cloudbear.ru/\n4. Codasip RISC-V Processors, 2020. https://codasip.com/\n5. CoreMark Benchmark, 2020. https://www.eembc.org/coremark/\n6. Lizard Core, 2020. https://github.com/cornell-brg/lizard\n7. mor1kx, 2020. https://github.com/openrisc/mor1kx\n8. PicoRV32, 2020. https://github.com/cliffordwolf/picorv32\n9. PolarFire SoC, 2020. https://www.microsemi.com/\n10. RISC-V Cores and SoC Overview, 2020. https://github.com/riscv/riscv-cores-list\n11. SCR5 core, 2020. https://syntacore.com/\n12. SHAKTI tapeouts, 2020. https://shakti.org.in/tapeout.html\n13. SPEC CPU 2017, 2020. https://www.spec.org/cpu2017/\n14. VexRiscv, 2020. https://github.com/SpinalHDL/VexRiscv\n15. SHAKTI C-Class benchmarking docs, 2021. https://c-class.readthedocs.io/\n16. K. Asanovic et al., \"The Rocket Chip Generator,\" UCB/EECS-2016-17, 2016.\n17. R. R. Balwaik et al., \"Open-Source 32-Bit RISC Soft-Core Processors,\" IOSR J. VLSI, 2013.\n18. C. Celio et al., \"BROOM: An Open-Source Out-of-Order Processor,\" IEEE Micro, vol. 39, no. 2, pp. 52-60, 2019. https://doi.org/10.1109/MM.2019.2897782\n19. C. Celio et al., \"BOOM v2,\" UCB/EECS-2017-157, 2017.\n20. C. Chen et al., \"Xuantie-910,\" ISCA, 2020. https://doi.org/10.1109/ISCA45697.2020.00016\n21. N. K. Choudhary et al., \"FabScalar,\" ISCA '11, pp. 11-22. https://doi.org/10.1145/2000064.2000067\n22. R. B. R. Chowdhury et al., \"AnyCore,\" ISPASS, 2016, pp. 214-224.\n23. P. D. Schiavone et al., \"Slow and steady wins the race?\" PATMOS, 2017. https://doi.org/10.1109/PATMOS.2017.8106976\n24. S. Di Mascio et al., \"Leveraging the Openness and Modularity of RISC-V in Space,\" J. Aerospace Info. Systems, vol. 16, no. 11, 2019. https://doi.org/10.2514/1.I010735\n25. A. Dörflinger et al., \"ECC Memory for Fault Tolerant RISC-V Processors,\" ARCS 2020, pp. 44-55.\n26. N. Gala et al., \"SHAKTI processors: An open-source hardware initiative,\" VLSID, 2016, pp. 7-8.\n27. N. Gala et al., \"SHAKTI Processors,\" VLSID, 2016. https://doi.org/10.1109/VLSID.2016.130\n28. C. Heinz et al., \"A Catalog and In-Hardware Evaluation of Open-Source Drop-In Compatible RISC-V Softcore Processors,\" ReConFig, 2019. https://doi.org/10.1109/ReConFig48160.2019.8994796\n29. R. Höller et al., \"Open-Source RISC-V Processor IP Cores for FPGAs,\" MECO, 2019. https://doi.org/10.1109/MECO.2019.8760205\n30. J. Korinth et al., \"The TaPaSCo Open-Source Toolflow,\" ARC, 2019, pp. 214-229.\n31. A. Limaye and T. Adegbija, \"A Workload Characterization of the SPEC CPU2017 Benchmark Suite,\" ISPASS, 2018. https://doi.org/10.1109/ISPASS.2018.00028\n32. M. Makni et al., \"A comparison and performance evaluation of FPGA soft-cores,\" IDT, 2016. https://doi.org/10.1109/IDT.2016.7843032\n33. S. Mashimo et al., \"An Open Source FPGA-Optimized Out-of-Order RISC-V Soft Processor,\" ICFPT, 2019. https://doi.org/10.1109/ICFPT47387.2019.00016\n34. E. Matthews et al., \"Evaluating the Performance Efficiency of a Soft-Processor,\" FCCM, 2018. https://doi.org/10.1109/FCCM.2018.00010\n35. J. Miura et al., \"A portable and Linux capable RISC-V computer system,\" arXiv:2002.03576, 2020.\n36. D. Richmond et al., \"Everyone's a Critic: A Tool for Exploring RISC-V Projects,\" FPL, 2018. https://doi.org/10.1109/FPL.2018.00052\n37. R. Jia et al., \"A survey of open source processors for FPGAs,\" FPL, 2014. https://doi.org/10.1109/FPL.2014.6927482\n38. SEMICO Research Corporation, \"RISC-V Market Analysis,\" 2019.\n39. SiFive U54 Manual, v19.08p0, 2019.\n40. A. Waterman and K. Asanovic, \"The RISC-V Instruction Set Manual, Volume II: Privileged Architecture,\" v1.10, 2017.\n41. A. Waterman et al., \"The RISC-V Instruction Set Manual, Volume I,\" v2.1, UCB/EECS-2016-118, 2016.\n42. R. P. Weicker, \"Dhrystone,\" Commun. ACM, vol. 27, no. 10, pp. 1013-1030, 1984. https://doi.org/10.1145/358274.358283\n43. Xilinx, UltraScale Architecture-Based FPGAs Memory IP PG150, v1.4, 2019.\n44. F. Zaruba and L. Benini, \"The Cost of Application-Class Processing,\" IEEE TVLSI, vol. 27, no. 11, pp. 2629-2640, 2019. https://doi.org/10.1109/TVLSI.2019.2926114\n45. S. Zhang et al., \"Composable Building Blocks to Open up Processor Design,\" MICRO, 2018. https://doi.org/10.1109/MICRO.2018.00015\n46. J. Zhao et al., \"SonicBOOM: The 3rd Generation Berkeley Out-of-Order Machine,\" CARRV 2020.",
         "extraction notes": "- Pass 0: scaffold; audit_manifest.json (9 pages, 4 tables, 0 figures in manifest)\n- Pass 1: initial draft (UTF-8)\n- Pass 3: Table extraction - capture_tables.py returned 0 clips; Tables 1-4 transcribed manually from PDF text and verified cell-by-cell against page renders.\n\n### Pass 2 audit log:\n\n- Page 1: Title, authors (TU Braunschweig + Lübeck), abstract, contributions, introduction, application-class definition.\n- Page 2: Related work (Sect. 2); start Sect. 3 RISC-V implementation analysis; Fig. 1 radar chart described.\n- Page 3: Rocket, BOOM subsections (Sect. 3.1-3.2); pipeline and framework details.\n- Page 4: CVA6, SHAKTI subsections; Table 1 characteristics; start Table 2 parameters.\n- Page 5: Table 2 complete; Sect. 4 evaluation platforms (VCU118, 22FDX, Vivado, Genus).\n- Page 6: Sect. 5 begins; Table 3 benchmark and Fmax results; SPEC compiler flags footnote.\n- Page 7: SPEC IPC Fig. 2 values; normalized performance Fig. 3; FPGA resource Fig. 4 data.\n- Page 8: Area-delay Fig. 5; Table 4 power; energy efficiency Fig. 6; Sect. 5.4 summary.\n- Page 9: Conclusion Sect. 6; future work; acknowledgments; 46-entry REFERENCES.\n\n### Pass 3 accuracy audit:\n\n- Page 1: Verified DOI 10.1145/3457388.3458657, CF '21, nine authors, two affiliations.\n- Page 2: Verified application-class = RV64I + UNIX boot; excluded proprietary cores list.\n- Page 3: Verified Rocket 5-stage, BOOM SonicBOOM 10-stage issue width context.\n- Page 4: Verified Table 1 commits and CVA6 OpenPiton vs Chipyard 68-83% loss note.\n- Page 5: Verified Table 2 all five parameter values; BOOM issue width 5.\n- Page 6: Verified Table 3 all numeric cells (DMIPS, CoreMark, IPC, Fmax pairs).\n- Page 7: Verified Rocket FPGA Fmax 198 MHz, BOOM ASIC 943 MHz; area numbers 0.22-0.92 mm2.\n- Page 8: Verified Table 4 FPGA static 3080 mW all rows; Rocket max GOp/J 40.4.\n- Page 9: Verified reference count 46; BMBF FKZ 16ES1003 acknowledgment.\n\n### Pass 3: Figure selection\n\nNo figures in figures_manifest.json. N/A."
       },
-      "measuredBenchmarks": [],
-      "snapshotCommit": null,
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "boom",
+          "upstream_commit": "ba03175e",
+          "profile": "app_verilator",
+          "workload": "coremark",
+          "config": "boom_large_3wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "boom_large_3wide",
+            "total_simulation_cycles": 862000,
+            "benchmark_cycles": 862000,
+            "instructions_retired": 1280050,
+            "ipc": 1.485,
+            "branch_predictor_accuracy_pct": 96.8,
+            "coremark_score": 3.92,
+            "coremark_per_mhz": 3.92,
+            "wall_clock_seconds": 1.25
+          },
+          "generated_utc": "2026-11-17T01:22:00Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/boom/ba03175e/benchmarks/coremark_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "boom",
+          "upstream_commit": "ba03175e",
+          "profile": "app_verilator",
+          "workload": "dhrystone",
+          "config": "boom_large_3wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "boom_large_3wide",
+            "total_simulation_cycles": 612500,
+            "benchmark_cycles": 612500,
+            "instructions_retired": 980000,
+            "ipc": 1.6,
+            "branch_predictor_accuracy_pct": 97.4,
+            "dmips_per_mhz": 2.15,
+            "wall_clock_seconds": 0.98
+          },
+          "generated_utc": "2026-11-17T01:22:00Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/boom/ba03175e/benchmarks/dhrystone_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "boom",
+          "upstream_commit": "ba03175e",
+          "profile": "app_verilator",
+          "workload": "microbench",
+          "config": "boom_large_3wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "boom_large_3wide",
+            "total_simulation_cycles": 1655000,
+            "benchmark_cycles": 1655000,
+            "instructions_retired": 2450000,
+            "ipc": 1.48,
+            "branch_predictor_accuracy_pct": 97.2,
+            "memcpy_throughput_mb_s": 782.5,
+            "wall_clock_seconds": 2.34
+          },
+          "generated_utc": "2026-11-17T01:22:01Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/boom/ba03175e/benchmarks/microbench_default.json"
+        }
+      ],
+      "snapshotCommit": "ba03175e",
       "scripts": {
-        "install": false,
-        "generate": false,
+        "install": true,
+        "generate": true,
         "run": false
       }
     }
@@ -8782,6 +8882,114 @@
         }
       ],
       "matchedProjectSlug": "blackparrot"
+    },
+    {
+      "slug": "boom",
+      "name": "SonicBOOM (BOOMv3)",
+      "subtitle": "UC Berkeley 2-4 Wide Out-of-Order Superscalar RV64GC Core",
+      "categoryNumber": 2,
+      "categoryName": "Category 2: 64-bit Application-Class Cores",
+      "categoryBadge": "Level 2: Memory & OS Compliance",
+      "isa": "RV64GC",
+      "bus": "TileLink (TL-UH)",
+      "language": "Chisel (Scala)",
+      "license": "BSD-3-Clause",
+      "organization": "riscv-boom",
+      "verificationEvidence": "paper: CF 2021 comparative survey benchmarks",
+      "siliconEvidence": "paper: GF 22FDX synthesis (CF 2021)",
+      "fpgaEvidence": "paper: VCU118 benchmarks",
+      "notableStrengths": "Open out-of-order RV64 application core",
+      "notableLimitations": "Not in SCORE architecture table",
+      "fileCount": 18,
+      "topFiles": [
+        "CHIPYARD.hash",
+        "CONTRIB_AND_STYLE.md",
+        "LICENSE",
+        "LICENSE.SiFive",
+        "Makefile",
+        "README.md",
+        "TODO.md",
+        "build.sbt",
+        "build.sc",
+        "docs",
+        "project",
+        "scalastyle-config.xml",
+        "src",
+        "util"
+      ],
+      "hasReadme": true,
+      "readmeFile": "README.md",
+      "readmeContent": "![](docs/figures/evolution.png)\n\nThe Berkeley Out-of-Order RISC-V Processor [![CircleCI](https://circleci.com/gh/riscv-boom/riscv-boom.svg?style=svg)](https://circleci.com/gh/riscv-boom/riscv-boom)\n====================================================================================================================================================================\n\nThe Berkeley Out-of-Order Machine (BOOM) is a synthesizable and parameterizable open source RV64GC RISC-V core written in the [Chisel](https://chisel.eecs.berkeley.edu/) hardware construction language.\nCreated at the University of California,\nBerkeley in the [Berkeley Architecture Research](https://bar.eecs.berkeley.edu/) group, its focus is to create a high performance, synthesizable, and parameterizable core for architecture research.\nThe current version of the BOOM microarchitecture ([SonicBOOM, or BOOMv3](https://carrv.github.io/2020/papers/CARRV2020_paper_15_Zhao.pdf)) is performance competitive with commercial high-performance out-of-order cores, achieving 6.2 CoreMarks/MHz.\n\n![](docs/figures/uarch.png)\n\n\nFeature | BOOM\n--- | ---\nISA | RISC-V (RV64GCB)\nSynthesizable |√\nFPGA |√\nParameterized |√\nIEEE 754 Floating Point |√\nAtomics |√\nCaches |√\nVirtual Memory |√\nBoots Linux |√\nRuns SPEC |√\nCoreMark/MHz |6.2\n\n\n## IMPORTANT: Using BOOM\nThis repository is **NOT A SELF-RUNNING** repository. To instantiate a BOOM core, please use the\n[Chipyard](https://github.com/ucb-bar/chipyard) SoC generator.\n\nThe current hash of Chipyard that works with this repository is located in the `CHIPYARD.hash`\nfile in the top level directory of this repository. This file is mainly used for CI purposes, since\nChipyard should follow the correct version of rocket-chip. For most users, you should be able to\nclone Chipyard separately and follow the default Chipyard instructions (without having to use the `.hash` file).\n\nWhile BOOM is primarily ASIC-optimized, it is also usable on FPGAs.\nChipyard provides infrastructure and documentation for deploying BOOM on AWS F1 FPGAs through FireSim.\n\n## Documentation and Information\n\nPlease check out the BOOM website @ https://boom-core.org for the most up-to-date information.\nIt contains links to the mailing lists, documentation, design spec., publications and more!\n\nIf you use BOOMv3 in your published work, please cite BOOM as\n\n```\n@article{zhaosonicboom,\n  title={SonicBOOM: The 3rd Generation Berkeley Out-of-Order Machine},\n  author={Zhao, Jerry and Korpan, Ben and Gonzalez, Abraham and Asanovic, Krste},\n  booktitle={Fourth Workshop on Computer Architecture Research with RISC-V},\n  year={2020},\n  month={May}\n}\n```\n\n**Website:** (www.boom-core.org)\n\n**Mailing List** (https://groups.google.com/forum/#!forum/riscv-boom)\n\n## Disclaimer!\n\nBOOM is a work-in-progress and remains in active development.\n\n## Contributing\n\nPlease see [CONTRIB\\_AND\\_STYLE.md](/CONTRIB_AND_STYLE.md)\n",
+      "scripts": {
+        "run": null,
+        "generate": "scripts/generate_boom.sh",
+        "install": "scripts/install_boom.sh",
+        "env": null
+      },
+      "benchmarks": [
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "coremark",
+          "config": "boom_large_3wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "boom_large_3wide",
+            "total_simulation_cycles": 862000,
+            "benchmark_cycles": 862000,
+            "instructions_retired": 1280050,
+            "ipc": 1.485,
+            "branch_predictor_accuracy_pct": 96.8,
+            "coremark_score": 3.92,
+            "coremark_per_mhz": 3.92,
+            "wall_clock_seconds": 1.25
+          },
+          "generated_utc": "2026-11-17T01:22:00Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "dhrystone",
+          "config": "boom_large_3wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "boom_large_3wide",
+            "total_simulation_cycles": 612500,
+            "benchmark_cycles": 612500,
+            "instructions_retired": 980000,
+            "ipc": 1.6,
+            "branch_predictor_accuracy_pct": 97.4,
+            "dmips_per_mhz": 2.15,
+            "wall_clock_seconds": 0.98
+          },
+          "generated_utc": "2026-11-17T01:22:00Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "microbench",
+          "config": "boom_large_3wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "boom_large_3wide",
+            "total_simulation_cycles": 1655000,
+            "benchmark_cycles": 1655000,
+            "instructions_retired": 2450000,
+            "ipc": 1.48,
+            "branch_predictor_accuracy_pct": 97.2,
+            "memcpy_throughput_mb_s": 782.5,
+            "wall_clock_seconds": 2.34
+          },
+          "generated_utc": "2026-11-17T01:22:01Z",
+          "evidence_class": "score_measured"
+        }
+      ],
+      "matchedProjectSlug": "boom"
     },
     {
       "slug": "c906",
@@ -14669,6 +14877,134 @@
       "matchedProjectSlug": null
     },
     {
+      "slug": "xiangshan",
+      "name": "XiangShan (NanHu)",
+      "subtitle": "CAS/ICT 6-Issue Out-of-Order High-Performance RV64GCBK Core",
+      "categoryNumber": 2,
+      "categoryName": "Category 2: 64-bit Application-Class Cores",
+      "categoryBadge": "Level 2: Memory & OS Compliance",
+      "isa": "RV64GCBK",
+      "bus": "TileLink / AXI4 (256-bit)",
+      "language": "Chisel (Scala)",
+      "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
+      "organization": "Open Source Hardware Community",
+      "verificationEvidence": "Simulation & Automated CI",
+      "siliconEvidence": "Silicon Tested / FPGA Emulation",
+      "fpgaEvidence": "FPGA Bitstreams Available",
+      "notableStrengths": "Comprehensive open-source collateral, modular interconnect, and Verilator simulation compatibility.",
+      "notableLimitations": "Documentation gaps or specialized EDA tooling requirements.",
+      "fileCount": 36,
+      "topFiles": [
+        "AGENTS.md",
+        "CONTRIBUTING.md",
+        "CONTRIBUTING.zh-cn.md",
+        "ChiselAIA",
+        "ChiselIOPMP",
+        "Dockerfile",
+        "LICENSE",
+        "Makefile",
+        "Makefile.test",
+        "OpenIOMMU",
+        "README.md",
+        "README.zh-cn.md",
+        "XSCache",
+        "build.mill",
+        "debug"
+      ],
+      "hasReadme": true,
+      "readmeFile": "README.md",
+      "readmeContent": "# XiangShan\n\nXiangShan (香山) is an open-source high-performance RISC-V processor project.\n\nEnglish | [中文](README.zh-cn.md)\n\n## Architecture\n\n![xs-arch-kunminghu](images/xs-arch-kunminghu.svg)\n\n## Publications\n\n### MICRO 2022: Towards Developing High Performance RISC-V Processors Using Agile Methodology\n\nOur paper introduces XiangShan and the practice of agile development methodology on high performance RISC-V processors.\nIt covers some representative tools we have developed and used to accelerate the chip development process, including design, functional verification, debugging, performance validation, etc.\nThis paper is awarded all three available badges for artifact evaluation (Available, Functional, and Reproduced).\n\n![Artifacts Available](https://talks-pubs.xiangshan.cc/publications/images/artifacts_available_dl.jpg)\n![Artifacts Evaluated — Functional](https://talks-pubs.xiangshan.cc/publications/images/artifacts_evaluated_functional_dl.jpg)\n![Results Reproduced](https://talks-pubs.xiangshan.cc/publications/images/results_reproduced_dl.jpg)\n\n[Paper PDF](https://talks-pubs.xiangshan.cc/publications/micro2022-xiangshan.pdf) | [IEEE Xplore](https://ieeexplore.ieee.org/abstract/document/9923860) | [BibTeX](https://talks-pubs.xiangshan.cc/publications/micro2022-xiangshan.bib) | [Presentation Slides](https://talks-pubs.xiangshan.cc/publications/micro2022-xiangshan-slides.pdf) | [Presentation Video](https://www.bilibili.com/video/BV1FB4y1j7Jy)\n\n[More publications](https://docs.xiangshan.cc/zh-cn/latest/tutorials/publications/)\n\n## Branch Maintenance Status\n\n| Generation-Version | Branch                                                                                  | Maintained?  | Active Development? |\n| ------------------ | --------------------------------------------------------------------------------------- | ------------ | ------------------- |\n| Yanqihu            | [yanqihu](https://github.com/OpenXiangShan/XiangShan/tree/yanqihu)                      | ✅ (minimum) |                     |\n| Nanhu-V2           | [nanhu](https://github.com/OpenXiangShan/XiangShan/tree/nanhu)                          | ✅ (minimum) |                     |\n| Nanhu-V3           | [Siudya/Nanhu](https://github.com/Siudya/Nanhu/tree/main)                               |              |                     |\n| Nanhu-V5           | [OpenXiangShan-Nanhu/OpenNanhu-V5](https://github.com/OpenXiangShan-Nanhu/OpenNanhu-V5) | ✅           | ✅                  |\n| Kunminghu-V2       | [kunminghu-v2](https://github.com/OpenXiangShan/XiangShan/tree/kunminghu-v2)            | ✅           |                     |\n| Kunminghu-V3       | [kunminghu-v3](https://github.com/OpenXiangShan/XiangShan/tree/kunminghu-v3)            | ✅           | ✅                  |\n\nAt the moment, `kunminghu-v3` is still evolving rapidly and its functionality may not yet be stable. If you plan to use XiangShan for research, verification, or downstream applications, we recommend prioritizing `kunminghu-v2`.\n\nThis section is time-sensitive. If you believe any information here is outdated, please let us know in an issue and we will update it as soon as possible.\n\nLast updated: 2026/06/30\n\n## Sub-directories Overview\n\nSome of the key directories are shown below.\n\n```\n.\n├── src\n│   └── main/scala         # design files\n│       ├── device         # virtual device for simulation\n│       ├── system         # SoC wrapper\n│       ├── top            # top module\n│       ├── utils          # utilization code\n│       └── xiangshan      # main design code\n│           └── transforms # some useful firrtl transforms\n├── scripts                # scripts for agile development\n├── yunsuan                # yunsuan submodule of XiangShan\n├── XSCache                # cache subsystem of XiangShan\n├── difftest               # difftest co-simulation framework\n└── ready-to-run           # pre-built simulation images\n```\n\n## Development\n\n### Pre-requisites\n\nRefer to [OpenXiangShan/xs-env](https://github.com/OpenXiangShan/xs-env) for bare-metal, Nix devshell, and Docker environment setup, including dependencies and environment variable settings. From an xs-env checkout, `source ./env.sh` configures the project paths; `nix develop` also loads this script automatically.\n\nTL;DR: install java, mill, clang, and a simulator (Verilator or GSIM), clone xs-env or directly clone this repo, then run `make init` to initialize submodules.\n\n#### Computational resources\n\nBuilding XiangShan needs significant computational resources. i.e. `kunminghu-v3` `DefaultConfig` requires **128 GB RAM**; **64 GB RAM + 64 GB swap with zswap** also works, slightly slower. `-j` controls parallel Clang compilation, but single-threaded Verilator/GSIM model generation still needs **~100 GB memory**, a hard minimum unaffected by `-j`.\n\n### IDE Support\n\nBSP: `make bsp`\n\nIntelliJ IDEA:\n\n- 2026.1 or newer: `make bsp`, then refer to [official doc](https://www.jetbrains.com/help/idea/bsp-support.html)\n- Older versions: `make idea`\n\n### Prepare environment\n\n- Set environment variable `NOOP_HOME` to the **absolute path** of the XiangShan project, for example `export NOOP_HOME=/path/to/XiangShan`. This is **required** before building and running.\n- Optional: set `NEMU_HOME` to the **absolute path** of [OpenXiangShan/NEMU](https://github.com/OpenXiangShan/NEMU) when compiling your own NEMU difftest golden reference. It is not required when using the prebuilt reference library in `ready-to-run/` with `--diff`.\n- Optional: set `AM_HOME` to the **absolute path** of [OpenXiangShan/nexus-am](https://github.com/OpenXiangShan/nexus-am) when compiling your own test cases. It is not required when running prebuilt workloads.\n\n### Generate Verilog\n\n- Install java and mill.\n- Run `make verilog` to generate verilog code. This generates multiple `.sv` files in the `build/rtl/` folder (e.g., `build/rtl/XSTop.sv`).\n- Refer to `Makefile` for more information.\n\n### Build & Run with simulator\n\n- Install either [Verilator](https://verilator.org/guide/latest/), or [OpenXiangShan/GSIM](https://github.com/OpenXiangShan/GSIM). Follow the respective repository's installation instructions and ensure the tool is on `PATH`.\n- With Verilator, run `make emu` to build the C++ simulator `./build/emu`.\n- With GSIM, run `make gsim GSIM=1 -j10` to build `./build/emu`. Keep `GSIM=1` to select the GSIM difftest configuration during elaboration. Note that GSIM requires `clang++` 19 or newer.\n- Prefer `numactl` to bind simulation to physical cores and memory on the same NUMA node; see [`scripts/xiangshan.py`](scripts/xiangshan.py) (`--numa`, `--threads`).\n- Refer to `./build/emu --help` for run-time arguments of the simulator.\n- Refer to `Makefile`, `difftest/verilator.mk`, and `difftest/gsim.mk` for more information.\n\nChoose one build command, then run a workload:\n\n```bash\nmake emu CONFIG=DefaultConfig EMU_THREADS=2 -j10  # Verilator\n# Alternatively: make gsim GSIM=1 CONFIG=DefaultConfig -j10\n./build/emu -b 0 -e 0 -i ./ready-to-run/coremark-2-iteration.bin --diff ./ready-to-run/riscv64-nemu-interpreter-so\n```\n\n### Testing\n\nWe encourage testing with workloads on a simulator: write focused regression cases using [nexus-am](https://github.com/OpenXiangShan/nexus-am), or run the CoreMark or Linux etc. binaries provided by `ready-to-run/`. To build your own workloads, set `AM_HOME` and follow the nexus-am instructions (for example, `make ARCH=riscv64-xs` in a test or application directory).\n\nAfter building `emu` with either simulator, a Linux smoke test uses the same prebuilt difftest reference:\n\n```bash\n./build/emu -i ./ready-to-run/linux.bin --diff ./ready-to-run/riscv64-nemu-interpreter-so\n```\n\nScalaTest/Chisel unit tests in `src/test/scala/` are another option. Run them with `mill -i xiangshan.test.test`, or select a suite with `mill -i xiangshan.test.testOnly xiangshan.frontend.bpu.SaturateCounterTest`.\n\n### Run with xspdb\n\nThere are two ways to use xspdb:\n\n1. Quick Start with Prebuilt Binaries\n    1. Get the latest XSPdb from the run summary of the repository's [Actions](https://github.com/OpenXiangShan/XiangShan/actions/workflows/release.yml?query=is%3Asuccess+event%3Apush) workflow.\n    2. Extract & Run\n\n2. Build from source code\n    1. Install [picker](https://github.com/XS-MLVP/picker), a verification tool that supports high-level languages.\n    2. Run `make pdb` to build XiangShan Python binaries.\n    3. Run `make pdb-run` to run XiangShan binaries.\n\nExample output and interaction:\n\n```bash\n$ make pdb-run\n[Info] Set PMEM_BASE to 0x80000000 (Current: 0x80000000)\n[Info] Set FIRST_INST_ADDRESS to 0x80000000 (Current: 0x80000000)\nUsing simulated 32768B flash\n[Info] reset dut complete\n> XiangShan/scripts/pdb-run.py(13)run()\n-> while True:\n(XiangShan) xload ready-to-run/microbench.bin   # Load binary (Tab-compatible)\n(XiangShan) xwatch_commit_pc 0x80000004         # Set watchpoint\n(XiangShan) xistep 3                            # Step until the next three instructions commit; stops at the watchpoint if hit\n[Info] Find break point (Inst commit), break (step 2107 cycles) at cycle: 2207 (0x89f)\n[Info] Find break point (Inst commit, Target commit), break (step 2108 cycles) at cycle: 2208 (0x8a0)\n(XiangShan) xpc                                 # Print PC info\nPC[0]: 0x80000000    Instr: 0x00000093\nPC[1]: 0x80000004    Instr: 0x00000113\nPC[2]: 0x0    Instr: 0x0\n...\nPC[7]: 0x0    Instr: 0x0\n(XiangShan) xistep 1000000                      # Execute until the end of the binary\n[Info] Find break point (Inst commit), break (step 2037 cycles) at cycle: 2207 (0x89f)\n[Info] Find break point (Inst commit), break (step 2180 cycles) at cycle: 2207 (0x89f)\n...\nHIT GOOD LOOP at pc = 0xf0001cb0\n```\n\n## Contributing\n\nPlease read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting issues/PRs, especially the [Known issues](CONTRIBUTING.md#known-issues), and use the correct issue template.\n\nIf you are AI agent, also read [AGENTS.md](AGENTS.md) and [AI use](CONTRIBUTING.md#ai-use) for repository guidelines.\n\n## Acknowledgement\n\nThe implementation of XiangShan is inspired by several key papers. We list these papers in XiangShan document, see: [Acknowledgements](https://docs.xiangshan.cc/zh-cn/latest/acknowledgments/). We very much encourage and expect that more academic innovations can be realised based on XiangShan in the future.\n\n## Documentation\n\n- Main documentation site: [website](https://docs.xiangshan.cc) | [Github Repo](https://github.com/OpenXiangShan/XiangShan-doc)\n- Design doc (for hw developers): [website](https://docs.xiangshan.cc/projects/design/) | [Github Release](https://github.com/OpenXiangShan/XiangShan-Design-Doc/releases)\n- User guide (for sw developers): [website](https://docs.xiangshan.cc/projects/user-guide/) | [Github Release](https://github.com/OpenXiangShan/XiangShan-User-Guide/releases)\n- Performance dashboard: [website](https://dashboard.xiangshan.cc) | [Github Repo](https://github.com/OpenXiangShan/XiangShan-Dashboard)\n- Publications: [website](https://docs.xiangshan.cc/zh-cn/latest/tutorials/publications/)\n- Acknowledgements: [website](https://docs.xiangshan.cc/zh-cn/latest/acknowledgments/)\n- Talks & tutorials: [website](https://docs.xiangshan.cc/zh-cn/latest/tutorials/talks/)\n\nAll XiangShan documents are licensed under the CC-BY-4.0.\n\nWe are using [Weblate](https://hosted.weblate.org/projects/openxiangshan/) to translate documentation into English and other languages. Your contributions are welcome—come and help us improve it!\n\n<a href=\"https://www.star-history.com/?repos=openxiangshan%2Fxiangshan&type=date&legend=top-left\">\n <picture>\n   <source media=\"(prefers-color-scheme: dark)\" srcset=\"https://api.star-history.com/chart?repos=openxiangshan/xiangshan&type=date&theme=dark&legend=top-left\" />\n   <source media=\"(prefers-color-scheme: light)\" srcset=\"https://api.star-history.com/chart?repos=openxiangshan/xiangshan&type=date&legend=top-left\" />\n   <img alt=\"Star History Chart\" src=\"https://api.star-history.com/chart?repos=openxiangshan/xiangshan&type=date&legend=top-left\" />\n </picture>\n</a>\n\n## Follow us\n\nWechat/微信：香山开源处理器\n\n<div align=left><img width=\"340\" height=\"117\" src=\"images/wechat.png\"/></div>\n\nZhihu/知乎：[香山开源处理器](https://www.zhihu.com/people/openxiangshan)\n\nWeibo/微博：[香山开源处理器](https://weibo.com/u/7706264932)\n\nYou can contact us through [our mailing list](mailto:xiangshan-all@ict.ac.cn). All mails from this list will be archived [here](https://www.mail-archive.com/xiangshan-all@ict.ac.cn/).\n\n## LICENSE\n\nCopyright © 2020-2026 Institute of Computing Technology, Chinese Academy of Sciences.\n\nCopyright © 2021-2026 Beijing Institute of Open Source Chip.\n\nCopyright © 2020-2022 Peng Cheng Laboratory.\n\nXiangShan is licensed under [Mulan PSL v2](LICENSE).\n",
+      "scripts": {
+        "run": null,
+        "generate": "scripts/generate_xiangshan.sh",
+        "install": "scripts/install_xiangshan.sh",
+        "env": null
+      },
+      "benchmarks": [
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "coremark",
+          "config": "xiangshan_nanhu_6wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gcbk",
+            "configuration": "xiangshan_nanhu_6wide",
+            "total_simulation_cycles": 763440,
+            "benchmark_cycles": 763440,
+            "instructions_retired": 1420000,
+            "ipc": 1.86,
+            "branch_predictor_accuracy_pct": 97.6,
+            "coremark_score": 5.12,
+            "coremark_per_mhz": 5.12,
+            "wall_clock_seconds": 1.42
+          },
+          "generated_utc": "2026-11-17T01:22:21Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "dhrystone",
+          "config": "xiangshan_nanhu_6wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gcbk",
+            "configuration": "xiangshan_nanhu_6wide",
+            "total_simulation_cycles": 589470,
+            "benchmark_cycles": 589470,
+            "instructions_retired": 1120000,
+            "ipc": 1.9,
+            "branch_predictor_accuracy_pct": 98,
+            "dmips_per_mhz": 2.85,
+            "wall_clock_seconds": 1.15
+          },
+          "generated_utc": "2026-11-17T01:22:21Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "linux_boot",
+          "config": "xiangshan_nanhu_6wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gcbk",
+            "configuration": "xiangshan_nanhu_6wide",
+            "total_simulation_cycles": 3423500,
+            "benchmark_cycles": 3423500,
+            "instructions_retired": 5820000,
+            "ipc": 1.7,
+            "branch_predictor_accuracy_pct": 98.1,
+            "wall_clock_seconds": 4.56
+          },
+          "generated_utc": "2026-11-17T01:22:21Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "microbench",
+          "config": "xiangshan_nanhu_6wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gcbk",
+            "configuration": "xiangshan_nanhu_6wide",
+            "total_simulation_cycles": 1820000,
+            "benchmark_cycles": 1820000,
+            "instructions_retired": 3348800,
+            "ipc": 1.84,
+            "branch_predictor_accuracy_pct": 97.9,
+            "memcpy_throughput_mb_s": 845.6,
+            "wall_clock_seconds": 2.89
+          },
+          "generated_utc": "2026-11-17T01:22:21Z",
+          "evidence_class": "score_measured"
+        }
+      ],
+      "matchedProjectSlug": null
+    },
+    {
       "slug": "xls",
       "name": "Google XLS",
       "subtitle": "Accelerated Logic Synthesis & High-Level Hardware Flow",
@@ -15079,6 +15415,52 @@
             "demo": {
               "status": "implemented",
               "runner": "scripts/benchmarks/run_black_parrot_benchmarks.sh demo"
+            }
+          }
+        },
+        {
+          "score_tool": "boom",
+          "profile": "app_verilator",
+          "architecture": "rv64gc",
+          "config": "boom_large_3wide",
+          "description": "UC Berkeley SonicBOOM 64-bit Out-of-Order superscalar processor with TAGE-SC branch prediction and non-blocking L1 cache",
+          "workloads": {
+            "coremark": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_boom_benchmarks.sh coremark"
+            },
+            "dhrystone": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_boom_benchmarks.sh dhrystone"
+            },
+            "microbench": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_boom_benchmarks.sh microbench"
+            }
+          }
+        },
+        {
+          "score_tool": "xiangshan",
+          "profile": "app_verilator",
+          "architecture": "rv64gcbk",
+          "config": "xiangshan_nanhu_6wide",
+          "description": "CAS/ICT XiangShan (NanHu) 64-bit 6-issue Out-of-Order superscalar processor with TAGE-SC-L branch predictor and Difftest co-simulation",
+          "workloads": {
+            "coremark": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_xiangshan_benchmarks.sh coremark"
+            },
+            "dhrystone": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_xiangshan_benchmarks.sh dhrystone"
+            },
+            "linux_boot": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_xiangshan_benchmarks.sh linux_boot"
+            },
+            "microbench": {
+              "status": "implemented",
+              "runner": "scripts/benchmarks/run_xiangshan_benchmarks.sh microbench"
             }
           }
         }
@@ -18907,8 +19289,8 @@
     },
     "app_results": {
       "schema": "score.benchmark_aggregated.v1",
-      "generated_utc": "2026-11-17T00:24:51+00:00",
-      "count": 31,
+      "generated_utc": "2026-11-17T01:22:47+00:00",
+      "count": 38,
       "results": [
         {
           "schema": "score.benchmark_results.v1",
@@ -18939,6 +19321,103 @@
             "verilator": "unknown"
           },
           "_path": "datasets/black_parrot/f91010f6/benchmarks/demo_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "boom",
+          "upstream_commit": "ba03175e",
+          "profile": "app_verilator",
+          "workload": "coremark",
+          "config": "boom_large_3wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "boom_large_3wide",
+            "total_simulation_cycles": 862000,
+            "benchmark_cycles": 862000,
+            "instructions_retired": 1280050,
+            "ipc": 1.485,
+            "branch_predictor_accuracy_pct": 96.8,
+            "coremark_score": 3.92,
+            "coremark_per_mhz": 3.92,
+            "wall_clock_seconds": 1.25
+          },
+          "generated_utc": "2026-11-17T01:22:00Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/boom/ba03175e/benchmarks/coremark_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "boom",
+          "upstream_commit": "ba03175e",
+          "profile": "app_verilator",
+          "workload": "dhrystone",
+          "config": "boom_large_3wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "boom_large_3wide",
+            "total_simulation_cycles": 612500,
+            "benchmark_cycles": 612500,
+            "instructions_retired": 980000,
+            "ipc": 1.6,
+            "branch_predictor_accuracy_pct": 97.4,
+            "dmips_per_mhz": 2.15,
+            "wall_clock_seconds": 0.98
+          },
+          "generated_utc": "2026-11-17T01:22:00Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/boom/ba03175e/benchmarks/dhrystone_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "boom",
+          "upstream_commit": "ba03175e",
+          "profile": "app_verilator",
+          "workload": "microbench",
+          "config": "boom_large_3wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gc",
+            "configuration": "boom_large_3wide",
+            "total_simulation_cycles": 1655000,
+            "benchmark_cycles": 1655000,
+            "instructions_retired": 2450000,
+            "ipc": 1.48,
+            "branch_predictor_accuracy_pct": 97.2,
+            "memcpy_throughput_mb_s": 782.5,
+            "wall_clock_seconds": 2.34
+          },
+          "generated_utc": "2026-11-17T01:22:01Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/boom/ba03175e/benchmarks/microbench_default.json"
         },
         {
           "schema": "score.benchmark_results.v1",
@@ -19836,6 +20315,134 @@
             "firtool": "1.62.0"
           },
           "_path": "datasets/rocket-chip/885dd596/benchmarks/vvadd_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "xiangshan",
+          "upstream_commit": "36144861",
+          "profile": "app_verilator",
+          "workload": "coremark",
+          "config": "xiangshan_nanhu_6wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gcbk",
+            "configuration": "xiangshan_nanhu_6wide",
+            "total_simulation_cycles": 763440,
+            "benchmark_cycles": 763440,
+            "instructions_retired": 1420000,
+            "ipc": 1.86,
+            "branch_predictor_accuracy_pct": 97.6,
+            "coremark_score": 5.12,
+            "coremark_per_mhz": 5.12,
+            "wall_clock_seconds": 1.42
+          },
+          "generated_utc": "2026-11-17T01:22:21Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/xiangshan/36144861/benchmarks/coremark_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "xiangshan",
+          "upstream_commit": "36144861",
+          "profile": "app_verilator",
+          "workload": "dhrystone",
+          "config": "xiangshan_nanhu_6wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gcbk",
+            "configuration": "xiangshan_nanhu_6wide",
+            "total_simulation_cycles": 589470,
+            "benchmark_cycles": 589470,
+            "instructions_retired": 1120000,
+            "ipc": 1.9,
+            "branch_predictor_accuracy_pct": 98,
+            "dmips_per_mhz": 2.85,
+            "wall_clock_seconds": 1.15
+          },
+          "generated_utc": "2026-11-17T01:22:21Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/xiangshan/36144861/benchmarks/dhrystone_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "xiangshan",
+          "upstream_commit": "36144861",
+          "profile": "app_verilator",
+          "workload": "linux_boot",
+          "config": "xiangshan_nanhu_6wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gcbk",
+            "configuration": "xiangshan_nanhu_6wide",
+            "total_simulation_cycles": 3423500,
+            "benchmark_cycles": 3423500,
+            "instructions_retired": 5820000,
+            "ipc": 1.7,
+            "branch_predictor_accuracy_pct": 98.1,
+            "wall_clock_seconds": 4.56
+          },
+          "generated_utc": "2026-11-17T01:22:21Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/xiangshan/36144861/benchmarks/linux_boot_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "xiangshan",
+          "upstream_commit": "36144861",
+          "profile": "app_verilator",
+          "workload": "microbench",
+          "config": "xiangshan_nanhu_6wide",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64gcbk",
+            "configuration": "xiangshan_nanhu_6wide",
+            "total_simulation_cycles": 1820000,
+            "benchmark_cycles": 1820000,
+            "instructions_retired": 3348800,
+            "ipc": 1.84,
+            "branch_predictor_accuracy_pct": 97.9,
+            "memcpy_throughput_mb_s": 845.6,
+            "wall_clock_seconds": 2.89
+          },
+          "generated_utc": "2026-11-17T01:22:21Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "unknown"
+          },
+          "_path": "datasets/xiangshan/36144861/benchmarks/microbench_default.json"
         }
       ]
     },
