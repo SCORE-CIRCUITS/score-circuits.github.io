@@ -3100,146 +3100,153 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
         <h4 class="schematic-title">Microarchitectural Design Space: Silicon Area (kGE) vs Peak Measured Throughput (Ops/Cycle)</h4>
       </div>
       <div class="schematic-svg-wrap">
-        <svg viewBox="0 0 960 550" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="cadGridFig52" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(21, 27, 32, 0.08)" stroke-width="0.8"/>
-            </pattern>
-          </defs>
-          <rect width="958" height="548" x="1" y="1" rx="10" fill="#fffaf0" stroke="#151b20" stroke-width="2.5"/>
-          <rect width="956" height="546" x="2" y="2" rx="9" fill="url(#cadGridFig52)"/>
+        <svg viewBox="0 0 960 550" class="schematic-svg" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;">
+  <defs>
+    <pattern id="cadGridFig52" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(21, 27, 32, 0.08)" stroke-width="0.8"/>
+    </pattern>
+  </defs>
+  <rect width="958" height="548" x="1" y="1" rx="10" fill="#fffaf0" stroke="#151b20" stroke-width="2.5"/>
+  <rect width="956" height="546" x="2" y="2" rx="9" fill="url(#cadGridFig52)"/>
 
-          <!-- Status Header -->
-          <rect x="15" y="12" width="930" height="30" fill="#e7f4c8" stroke="#151b20" stroke-width="1.5" rx="6"/>
-          <circle cx="30" cy="27" r="5" fill="#151b20"/>
-          <text x="44" y="32" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">SCORE EDA WORKBENCH &#8226; LOG-LOG AREA VS. THROUGHPUT PARETO FRONTIER (PRECISION-TAGGED)</text>
+  <!-- Status Header -->
+  <rect x="15" y="12" width="930" height="30" fill="#e7f4c8" stroke="#151b20" stroke-width="1.5" rx="6"/>
+  <circle cx="30" cy="27" r="5" fill="#151b20"/>
+  <text x="44" y="32" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">SCORE EDA WORKBENCH • LOG-LOG AREA VS. THROUGHPUT PARETO FRONTIER (PRECISION-TAGGED)</text>
 
-          <!-- Axes: Log X (10 to 3,000 kGE), Log Y (0.1 to 1,000 Ops/Cycle) -->
-          <line x1="115" y1="455" x2="915" y2="455" stroke="#151b20" stroke-width="2.2"/>
-          <line x1="115" y1="455" x2="115" y2="75" stroke="#151b20" stroke-width="2.2"/>
-          <!-- X Ticks (Logarithmic Area in kGE) -->
-          <line x1="115.0" y1="455" x2="115.0" y2="462" stroke="#151b20" stroke-width="2"/>
-          <text x="115.0" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">10</text>
-          <line x1="212.2" y1="455" x2="212.2" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="212.2" y1="455" x2="212.2" y2="462" stroke="#151b20" stroke-width="2"/>
-          <text x="212.2" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">20</text>
-          <line x1="340.7" y1="455" x2="340.7" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="340.7" y1="455" x2="340.7" y2="462" stroke="#151b20" stroke-width="2"/>
-          <text x="340.7" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">50</text>
-          <line x1="438.0" y1="455" x2="438.0" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="438.0" y1="455" x2="438.0" y2="462" stroke="#151b20" stroke-width="2"/>
-          <text x="438.0" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">100</text>
-          <line x1="535.2" y1="455" x2="535.2" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="535.2" y1="455" x2="535.2" y2="462" stroke="#151b20" stroke-width="2"/>
-          <text x="535.2" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">200</text>
-          <line x1="663.7" y1="455" x2="663.7" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="663.7" y1="455" x2="663.7" y2="462" stroke="#151b20" stroke-width="2"/>
-          <text x="663.7" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">500</text>
-          <line x1="760.9" y1="455" x2="760.9" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="760.9" y1="455" x2="760.9" y2="462" stroke="#151b20" stroke-width="2"/>
-          <text x="760.9" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">1,000</text>
-          <line x1="858.1" y1="455" x2="858.1" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="858.1" y1="455" x2="858.1" y2="462" stroke="#151b20" stroke-width="2"/>
-          <text x="858.1" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">2,000</text>
-          <text x="515" y="514" font-size="14" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">SILICON GATE BUDGET (kGE &#8226; NAND2 EQUIVALENTS, LOG SCALE)</text>
-          <!-- Y Ticks (Logarithmic Throughput in Ops/Cycle) -->
-          <line x1="108" y1="455.0" x2="115" y2="455.0" stroke="#151b20" stroke-width="2"/>
-          <text x="102" y="460.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">0.1</text>
-          <line x1="115" y1="360.0" x2="915" y2="360.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="108" y1="360.0" x2="115" y2="360.0" stroke="#151b20" stroke-width="2"/>
-          <text x="102" y="365.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">1</text>
-          <line x1="115" y1="265.0" x2="915" y2="265.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="108" y1="265.0" x2="115" y2="265.0" stroke="#151b20" stroke-width="2"/>
-          <text x="102" y="270.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">10</text>
-          <line x1="115" y1="170.0" x2="915" y2="170.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="108" y1="170.0" x2="115" y2="170.0" stroke="#151b20" stroke-width="2"/>
-          <text x="102" y="175.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">100</text>
-          <line x1="115" y1="75.0" x2="915" y2="75.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
-          <line x1="108" y1="75.0" x2="115" y2="75.0" stroke="#151b20" stroke-width="2"/>
-          <text x="102" y="80.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">1,000</text>
-          <text x="36" y="265" font-size="14" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle" transform="rotate(-90 36 265)">PEAK MEASURED THROUGHPUT (OPS / CYCLE, LOG SCALE)</text>
+  <!-- Axes: Log X (10 to 3,000 kGE), Log Y (0.1 to 1,000 Ops/Cycle) -->
+  <line x1="115" y1="455" x2="915" y2="455" stroke="#151b20" stroke-width="2.2"/>
+  <line x1="115" y1="455" x2="115" y2="75" stroke="#151b20" stroke-width="2.2"/>
 
-          <!-- TRUE PARETO FRONTIER ENVELOPE (CV32E40P -> Spatz -> IME -> Gemmini) -->
-          <polygon points="237.8,455 237.8,430.5 316.3,218.1 596.6,159.8 684.5,107.9 915,107.9 915,455" fill="#e7f4c8" opacity="0.40"/>
-          <path d="M 237.8,430.5 L 316.3,218.1 L 596.6,159.8 L 684.5,107.9 L 915,107.9" stroke="#151b20" stroke-width="2.8" stroke-dasharray="8,5" fill="none"/>
-          <text x="322" y="203" font-size="11.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" transform="rotate(-11.8 322 203)">PARETO OPTIMAL FRONTIER</text>
+  <!-- X Ticks -->
+  <line x1="115.0" y1="455" x2="115.0" y2="462" stroke="#151b20" stroke-width="2"/>
+  <text x="115.0" y="480" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">10</text>
+  <line x1="212.2" y1="455" x2="212.2" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="212.2" y1="455" x2="212.2" y2="462" stroke="#151b20" stroke-width="2"/>
+  <text x="212.2" y="480" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">20</text>
+  <line x1="340.7" y1="455" x2="340.7" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="340.7" y1="455" x2="340.7" y2="462" stroke="#151b20" stroke-width="2"/>
+  <text x="340.7" y="480" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">50</text>
+  <line x1="438.0" y1="455" x2="438.0" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="438.0" y1="455" x2="438.0" y2="462" stroke="#151b20" stroke-width="2"/>
+  <text x="438.0" y="480" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">100</text>
+  <line x1="535.2" y1="455" x2="535.2" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="535.2" y1="455" x2="535.2" y2="462" stroke="#151b20" stroke-width="2"/>
+  <text x="535.2" y="480" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">200</text>
+  <line x1="663.7" y1="455" x2="663.7" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="663.7" y1="455" x2="663.7" y2="462" stroke="#151b20" stroke-width="2"/>
+  <text x="663.7" y="480" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">500</text>
+  <line x1="760.9" y1="455" x2="760.9" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="760.9" y1="455" x2="760.9" y2="462" stroke="#151b20" stroke-width="2"/>
+  <text x="760.9" y="480" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">1,000</text>
+  <line x1="858.1" y1="455" x2="858.1" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="858.1" y1="455" x2="858.1" y2="462" stroke="#151b20" stroke-width="2"/>
+  <text x="858.1" y="480" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">2,000</text>
+  <text x="515" y="514" font-size="14" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">SILICON GATE BUDGET (kGE • NAND2 EQUIVALENTS, LOG SCALE)</text>
 
-          <!-- Precision-scaling link for Spatz (FP64 -> FP32) -->
-          <line x1="316.3" y1="246.5" x2="316.3" y2="218.1" stroke="#151b20" stroke-width="1.8" stroke-dasharray="3,3"/>
+  <!-- Y Ticks -->
+  <line x1="108" y1="455.0" x2="115" y2="455.0" stroke="#151b20" stroke-width="2"/>
+  <text x="102" y="460.0" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">0.1</text>
+  <line x1="115" y1="360.0" x2="915" y2="360.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="108" y1="360.0" x2="115" y2="360.0" stroke="#151b20" stroke-width="2"/>
+  <text x="102" y="365.0" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">1</text>
+  <line x1="115" y1="265.0" x2="915" y2="265.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="108" y1="265.0" x2="115" y2="265.0" stroke="#151b20" stroke-width="2"/>
+  <text x="102" y="270.0" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">10</text>
+  <line x1="115" y1="170.0" x2="915" y2="170.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="108" y1="170.0" x2="115" y2="170.0" stroke="#151b20" stroke-width="2"/>
+  <text x="102" y="175.0" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">100</text>
+  <line x1="115" y1="75.0" x2="915" y2="75.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+  <line x1="108" y1="75.0" x2="115" y2="75.0" stroke="#151b20" stroke-width="2"/>
+  <text x="102" y="80.0" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">1,000</text>
+  <text x="36" y="265" font-size="14" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle" transform="rotate(-90 36 265)">PEAK MEASURED THROUGHPUT (OPS / CYCLE, LOG SCALE)</text>
 
-          <!-- SCATTER POINTS (Circles = SCORE Verilator Measured, Diamonds = Literature Reported) -->
-          <!-- Gemmini (580 kGE, 450.80 Ops, INT8) -->
-          <circle cx="684.5" cy="107.9" r="9" fill="#c9f3f4" stroke="#151b20" stroke-width="2.4"/>
-          <text x="698.5" y="85.9" font-size="13.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Gemmini (580 kGE)</text>
-          <text x="698.5" y="101.9" font-size="12" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)">450.8 Ops/cyc [INT8]</text>
+  <!-- TRUE PARETO FRONTIER ENVELOPE (CV32E40P 35k -> XLS HLS 45k -> Vicuna 48k -> Spatz 2-PE 84k -> IME 310k -> Gemmini 580k) -->
+  <polygon points="290.7,455 290.7,430.5 326.0,303.1 335.0,283.0 413.5,218.1 596.6,159.8 684.5,107.9 915,107.9 915,455" fill="#e7f4c8" opacity="0.40"/>
+  <path d="M 290.7,430.5 L 326.0,303.1 L 335.0,283.0 L 413.5,218.1 L 596.6,159.8 L 684.5,107.9 L 915,107.9" stroke="#151b20" stroke-width="2.8" stroke-dasharray="8,5" fill="none"/>
+  <text x="436" y="196" font-size="11.5" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" transform="rotate(-17.5 436 196)">PARETO OPTIMAL FRONTIER</text>
 
-          <!-- IME (310 kGE, 128.0 Ops, INT8, Lit Diamond) -->
-          <polygon points="596.6,150.8 605.6,159.8 596.6,168.8 587.6,159.8" fill="#c9f3f4" stroke="#151b20" stroke-width="2.2"/>
-          <text x="588.6" y="122.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">IME Tile (310 kGE)</text>
-          <text x="588.6" y="138.0" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="end">128.0 Ops [INT8]</text>
+  <!-- Precision-scaling link for Spatz 2-PE (FP64 -> FP32) -->
+  <line x1="413.5" y1="246.5" x2="413.5" y2="218.1" stroke="#151b20" stroke-width="1.8" stroke-dasharray="3,3"/>
 
-          <!-- Spatz FP32 (42 kGE, 31.13 Ops, FP32) -->
-          <circle cx="316.3" cy="218.1" r="8.5" fill="#b7df69" stroke="#151b20" stroke-width="2.4"/>
-          <text x="302.3" y="210.1" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">Spatz (42 kGE)</text>
-          <text x="302.3" y="226.1" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="end">31.13 Ops [FP32]</text>
+  <!-- SCATTER POINTS (Circles = SCORE Verilator Measured, Diamonds = Literature Reported) -->
+  <!-- Gemmini (580 kGE, 450.80 Ops, INT8) -->
+  <circle cx="684.5" cy="107.9" r="9" fill="#c9f3f4" stroke="#151b20" stroke-width="2.4"/>
+  <text x="699" y="86" font-size="13" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">Gemmini (580 kGE)</text>
+  <text x="699" y="102" font-size="11.5" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">450.8 Ops/cyc [INT8]</text>
 
-          <!-- Spatz FP64 (42 kGE, 15.64 Ops, FP64) -->
-          <circle cx="316.3" cy="246.5" r="6.5" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
-          <text x="328.3" y="250.5" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="start">15.64 Ops [FP64]</text>
+  <!-- IME Tile (310 kGE, 128.0 Ops, INT8, Lit Diamond) -->
+  <polygon points="596.6,150.8 605.6,159.8 596.6,168.8 587.6,159.8" fill="#c9f3f4" stroke="#151b20" stroke-width="2.2"/>
+  <text x="588" y="122" font-size="12.5" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">IME Tile (310 kGE)</text>
+  <text x="588" y="138" font-size="11.5" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">128.0 Ops [INT8]</text>
 
-          <!-- Vicuna (48 kGE, 6.46 Ops, INT8) -->
-          <circle cx="335.0" cy="283.0" r="7.5" fill="#c9f3f4" stroke="#151b20" stroke-width="2.2"/>
-          <text x="347.0" y="299.0" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Vicuna (48 kGE)</text>
-          <text x="347.0" y="314.0" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)">6.46 Ops [INT8]</text>
+  <!-- Spatz 2-PE FP32 (84 kGE = 2x42 kGE vector PEs, 31.13 Ops, FP32) -->
+  <circle cx="413.5" cy="218.1" r="8.5" fill="#b7df69" stroke="#151b20" stroke-width="2.4"/>
+  <text x="398" y="200" font-size="12.5" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">Spatz 2-PE (84 kGE)</text>
+  <text x="398" y="216" font-size="11.5" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">31.13 Ops [FP32]</text>
 
-          <!-- Ara 4-Lane (220 kGE, 7.87 Ops, FP64) -->
-          <circle cx="548.5" cy="274.9" r="8" fill="#fff0b9" stroke="#151b20" stroke-width="2.2"/>
-          <text x="538.5" y="300.9" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">Ara 4L (220 kGE)</text>
-          <text x="538.5" y="315.9" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">7.87 Ops [FP64]</text>
+  <!-- Spatz 2-PE FP64 (84 kGE, 15.64 Ops, FP64) -->
+  <circle cx="413.5" cy="246.5" r="6.5" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
+  <text x="426" y="250.5" font-size="11.2" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="start">15.64 Ops [FP64]</text>
 
-          <!-- AraXL 8-Lane (340 kGE, 7.82 Ops, FP64) -->
-          <circle cx="609.6" cy="275.1" r="8" fill="#fff0b9" stroke="#151b20" stroke-width="2.2"/>
-          <text x="623.6" y="301.1" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="start">AraXL 8L (340 kGE)</text>
-          <text x="623.6" y="316.1" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="start">7.82 Ops [FP64]</text>
+  <!-- Vicuna (48 kGE, 6.46 Ops, INT8) -->
+  <circle cx="335.0" cy="283.0" r="7.5" fill="#c9f3f4" stroke="#151b20" stroke-width="2.2"/>
+  <text x="321" y="274" font-size="12.2" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">Vicuna (48 kGE)</text>
+  <text x="321" y="289" font-size="11.2" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">6.46 Ops [INT8]</text>
 
-          <!-- Hwacha (410 kGE, 14.80 Ops, FP32, Lit Diamond) -->
-          <polygon points="635.9,240.3 644.4,248.8 635.9,257.3 627.4,248.8" fill="#b7df69" stroke="#151b20" stroke-width="2.2"/>
-          <text x="635.9" y="222.8" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">Hwacha (410 kGE)</text>
-          <text x="635.9" y="236.8" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">14.80 Ops [FP32]</text>
+  <!-- XLS HLS (45 kGE, 3.97 Ops, INT32) -->
+  <circle cx="326.0" cy="303.1" r="7.5" fill="#ffd8ce" stroke="#151b20" stroke-width="2.2"/>
+  <text x="313" y="324" font-size="12.2" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">XLS HLS (45 kGE)</text>
+  <text x="313" y="339" font-size="11.2" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="end">3.97 Ops [INT32]</text>
 
-          <!-- Vortex (1,650 kGE, 15.12 Ops, FP32, Lit Diamond) -->
-          <polygon points="831.1,238.9 840.1,247.9 831.1,256.9 822.1,247.9" fill="#b7df69" stroke="#151b20" stroke-width="2.2"/>
-          <text x="831.1" y="221.9" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">Vortex (1,650 kGE)</text>
-          <text x="831.1" y="235.9" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">15.12 Ops [FP32]</text>
+  <!-- Ara 4-Lane (220 kGE, 7.87 Ops, FP64) -->
+  <circle cx="548.5" cy="274.9" r="8" fill="#fff0b9" stroke="#151b20" stroke-width="2.2"/>
+  <text x="538" y="302" font-size="12.2" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">Ara 4L (220 kGE)</text>
+  <text x="538" y="317" font-size="11.2" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">7.87 Ops [FP64]</text>
 
-          <!-- CV32E40P (24 kGE, 0.18 Ops, INT32) -->
-          <circle cx="237.8" cy="430.5" r="7.5" fill="#ffd8ce" stroke="#151b20" stroke-width="2.2"/>
-          <text x="251.8" y="426.5" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">CV32E40P (24 kGE)</text>
-          <text x="251.8" y="441.5" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)">0.18 Ops [INT32 SIMD]</text>
+  <!-- AraXL 8-Lane (340 kGE, 7.82 Ops, FP64) -->
+  <circle cx="609.6" cy="275.1" r="8" fill="#fff0b9" stroke="#151b20" stroke-width="2.2"/>
+  <text x="625" y="302" font-size="12.2" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="start">AraXL 8L (340 kGE)</text>
+  <text x="625" y="317" font-size="11.2" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="start">7.82 Ops [FP64]</text>
 
-          <!-- LEGEND BOX (Bottom-Right Open Space) -->
-          <rect x="655" y="346" width="248" height="98" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.8"/>
-          <text x="668" y="365" font-size="11.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">PRECISION &amp; EVIDENCE LEGEND</text>
-          <line x1="665" y1="371" x2="893" y2="371" stroke="#151b20" stroke-width="1" opacity="0.3"/>
+  <!-- Hwacha (410 kGE, 14.80 Ops, FP32, Lit Diamond) -->
+  <polygon points="635.9,240.3 644.4,248.8 635.9,257.3 627.4,248.8" fill="#b7df69" stroke="#151b20" stroke-width="2.2"/>
+  <text x="635.9" y="222" font-size="12.2" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">Hwacha (410 kGE)</text>
+  <text x="635.9" y="236" font-size="11.2" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">14.80 Ops [FP32]</text>
 
-          <circle cx="674" cy="385" r="5.5" fill="#c9f3f4" stroke="#151b20" stroke-width="1.6"/>
-          <text x="685" y="389" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">INT8</text>
-          <circle cx="732" cy="385" r="5.5" fill="#b7df69" stroke="#151b20" stroke-width="1.6"/>
-          <text x="743" y="389" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">FP32</text>
-          <circle cx="790" cy="385" r="5.5" fill="#fff0b9" stroke="#151b20" stroke-width="1.6"/>
-          <text x="801" y="389" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">FP64</text>
-          <circle cx="848" cy="385" r="5.5" fill="#ffd8ce" stroke="#151b20" stroke-width="1.6"/>
-          <text x="859" y="389" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">INT32</text>
+  <!-- Vortex (1,650 kGE, 15.12 Ops, FP32, Lit Diamond) -->
+  <polygon points="831.1,238.9 840.1,247.9 831.1,256.9 822.1,247.9" fill="#b7df69" stroke="#151b20" stroke-width="2.2"/>
+  <text x="831.1" y="221" font-size="12.2" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">Vortex (1,650 kGE)</text>
+  <text x="831.1" y="235" font-size="11.2" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle">15.12 Ops [FP32]</text>
 
-          <circle cx="674" cy="408" r="5.5" fill="#ffffff" stroke="#151b20" stroke-width="2"/>
-          <text x="687" y="412" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">Circle: SCORE Verilator</text>
+  <!-- CV32E40P XPULP (35 kGE, 0.18 Ops, INT32 SIMD) -->
+  <circle cx="290.7" cy="430.5" r="7.5" fill="#ffd8ce" stroke="#151b20" stroke-width="2.2"/>
+  <text x="305" y="426" font-size="12.2" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">CV32E40P XPULP (35 kGE)</text>
+  <text x="305" y="441" font-size="11.2" font-weight="800" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">0.18 Ops [INT32 SIMD]</text>
 
-          <polygon points="674,422 680,428 674,434 668,428" fill="#ffffff" stroke="#151b20" stroke-width="2"/>
-          <text x="687" y="432" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">Diamond: Literature</text>
-        </svg>
+  <!-- LEGEND BOX -->
+  <rect x="655" y="346" width="248" height="98" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.8"/>
+  <text x="668" y="365" font-size="11.5" font-weight="900" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">PRECISION &amp; EVIDENCE LEGEND</text>
+  <line x1="665" y1="371" x2="893" y2="371" stroke="#151b20" stroke-width="1" opacity="0.3"/>
+
+  <circle cx="674" cy="385" r="5.5" fill="#c9f3f4" stroke="#151b20" stroke-width="1.6"/>
+  <text x="685" y="389" font-size="11" font-weight="800" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">INT8</text>
+  <circle cx="732" cy="385" r="5.5" fill="#b7df69" stroke="#151b20" stroke-width="1.6"/>
+  <text x="743" y="389" font-size="11" font-weight="800" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">FP32</text>
+  <circle cx="790" cy="385" r="5.5" fill="#fff0b9" stroke="#151b20" stroke-width="1.6"/>
+  <text x="801" y="389" font-size="11" font-weight="800" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">FP64</text>
+  <circle cx="848" cy="385" r="5.5" fill="#ffd8ce" stroke="#151b20" stroke-width="1.6"/>
+  <text x="859" y="389" font-size="11" font-weight="800" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">INT32</text>
+
+  <circle cx="674" cy="408" r="5.5" fill="#ffffff" stroke="#151b20" stroke-width="2"/>
+  <text x="687" y="412" font-size="11" font-weight="800" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">Circle: SCORE Verilator</text>
+
+  <polygon points="674,422 680,428 674,434 668,428" fill="#ffffff" stroke="#151b20" stroke-width="2"/>
+  <text x="687" y="432" font-size="11" font-weight="800" fill="#000000" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">Diamond: Literature</text>
+</svg>
       </div>
       <p class="schematic-caption">
-        <strong>Figure 5.2: Microarchitectural Pareto Frontier Envelope (Log&ndash;Log Scale).</strong> Normalized silicon gate area (kGE) plotted against peak measured arithmetic throughput (Ops/cycle) across precision domains (INT8, FP32, FP64, INT32) and evidence classes (circles: SCORE Verilator measured; diamonds: literature reported). The true Pareto-optimal frontier spans CV32E40P (24&thinsp;kGE, 0.18&thinsp;Ops/cyc) &rarr; Spatz (42&thinsp;kGE, 31.13&thinsp;Ops/cyc FP32 / 15.64&thinsp;Ops/cyc FP64) &rarr; IME Tile (310&thinsp;kGE, 128.0&thinsp;Ops/cyc INT8) &rarr; Gemmini (580&thinsp;kGE, 450.8&thinsp;Ops/cyc INT8).
+        <strong>Figure 5.2: Microarchitectural Pareto Frontier Envelope (Log&ndash;Log Scale).</strong> Normalized silicon gate area (kGE) plotted against peak measured arithmetic throughput (Ops/cycle) across precision domains (INT8, FP32, FP64, INT32) and evidence classes (circles: SCORE Verilator measured; diamonds: literature reported). The true Pareto-optimal frontier spans CV32E40P XPULP (35&thinsp;kGE, 0.18&thinsp;Ops/cyc) &rarr; XLS HLS (45&thinsp;kGE, 3.97&thinsp;Ops/cyc INT32) &rarr; Vicuna (48&thinsp;kGE, 6.46&thinsp;Ops/cyc INT8) &rarr; Spatz 2-PE (84&thinsp;kGE vector units, 31.13&thinsp;Ops/cyc FP32 / 15.64&thinsp;Ops/cyc FP64) &rarr; IME Tile (310&thinsp;kGE, 128.0&thinsp;Ops/cyc INT8) &rarr; Gemmini (580&thinsp;kGE, 450.8&thinsp;Ops/cyc INT8).
       </p>
     </div>
 
