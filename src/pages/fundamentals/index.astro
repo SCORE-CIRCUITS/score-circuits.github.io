@@ -3812,9 +3812,9 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
             How multiple cores communicate with multi-banked L2 memory:
           </p>
           <ul class="concept-list">
-            <li><strong>Shared Bus (Wishbone / AXI-Lite):</strong> Single shared communication wire. Only one master can talk at a time; saturates past 2 to 4 cores.</li>
-            <li><strong>Full Crossbar (TileLink / AXI4):</strong> Matrix of parallel switches allowing <em>M</em> masters to access <em>N</em> independent memory banks simultaneously without contention.</li>
-            <li><strong>Network-on-Chip (NoC, e.g. FlooNoC):</strong> Packet-switched 2D mesh router network for 16 to 432 cores (e.g. <code>MemPool</code>), transmitting packets through X-Y routing hops.</li>
+            <li><strong>Shared Bus (Wishbone / APB / OBI):</strong> Single shared communication backbone arbitrated by a central mux. Only one master transmits per cycle, saturating past 2 to 4 cores (e.g., <code>PULPissimo</code>, <code>CROC</code>, <code>OpenTitan</code>).</li>
+            <li><strong>Full &amp; Logarithmic Crossbar (AXI4 / TileLink / TCDM):</strong> Parallel switch fabric allowing <em>M</em> masters to access <em>N</em> independent memory banks concurrently without blocking (e.g., <code>Cheshire</code>, <code>Snitch Cluster</code>, and 256-core logarithmic TCDM in <code>MemPool</code>).</li>
+            <li><strong>2D Mesh Network-on-Chip (P-Mesh / FlooNoC):</strong> Packet-switched tiled router fabric scaling from 16 to 432+ cores via dimension-ordered X-Y routing hops (e.g., <code>OpenPiton</code>, <code>Picobello</code>, <code>Occamy</code>).</li>
           </ul>
 
 <!-- SCHEMATIC: INTERCONNECT TOPOLOGIES -->
@@ -3824,96 +3824,324 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
               <span class="schematic-title">Architectural Evolution of On-Chip Interconnect Fabrics</span>
             </div>
             <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
-              <svg viewBox="0 0 760 340" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
-  <!-- Status Banner (Light Theme) -->
-  <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
-  <circle cx="16" cy="14" r="4" fill="#0d9488"/>
-  <text x="26" y="17" font-size="9" font-weight="900" fill="#000000" font-family="monospace">SCORE ARCHITECTURE &#8226; ON-CHIP FABRIC EVOLUTION: SHARED BUS vs. CROSSBAR vs. 2D MESH NOC</text>
+              <svg viewBox="0 0 960 540" class="schematic-svg" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;">
+  <defs>
+    <pattern id="cadGridInterconnect" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(21, 27, 32, 0.06)" stroke-width="0.8"/>
+    </pattern>
+    <marker id="arrDark" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#151b20"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="5.2" markerHeight="5.2" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrBlue" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="5.2" markerHeight="5.2" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arrBlueSm" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+  </defs>
 
-  <!-- Frame Background -->
-  <rect x="8" y="30" width="744" height="302" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
+  <!-- Canvas Background & CAD Grid -->
+  <rect width="960" height="540" fill="#fffaf0" rx="10"/>
+  <rect width="960" height="540" fill="url(#cadGridInterconnect)" rx="10"/>
+  <rect x="10" y="10" width="940" height="520" rx="11" fill="none" stroke="#151b20" stroke-width="2.4"/>
 
-  <!-- Topology 1: Shared Bus (x=18 to 250) -->
-  <rect x="18" y="42" width="232" height="235" rx="5" fill="#f6f0dc" stroke="#f38469" stroke-width="1.5"/>
-  <rect x="18" y="42" width="232" height="22" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/><text x="134" y="57" font-size="8.5" font-weight="900" fill="#000000" text-anchor="middle">1. SHARED BUS (WISHBONE / APB)</text>
+  <!-- Top Header Banner -->
+  <path d="M 21 10 H 939 A 11 11 0 0 1 950 21 V 46 H 10 V 21 A 11 11 0 0 1 21 10 Z" fill="#e7f4c8" stroke="#151b20" stroke-width="2.4"/>
+  <circle cx="30" cy="28" r="5" fill="#0d9488"/>
+  <text x="480" y="33" font-size="14" font-weight="900" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace" text-anchor="middle" letter-spacing="0.6">
+    ON-CHIP INTERCONNECT FABRIC EVOLUTION: BUS, CROSSBAR, AND 2D MESH NOC
+  </text>
 
-  <!-- 4 Cores sharing bus -->
-  <rect x="28" y="75" width="45" height="32" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="50" y="95" font-size="7.5" font-weight="900" text-anchor="middle" fill="#000000">Core 0</text>
-  <rect x="80" y="75" width="45" height="32" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="102" y="95" font-size="7.5" font-weight="900" text-anchor="middle" fill="#000000">Core 1</text>
-  <rect x="132" y="75" width="45" height="32" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="154" y="95" font-size="7.5" font-weight="900" text-anchor="middle" fill="#000000">Core 2</text>
-  <rect x="184" y="75" width="45" height="32" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="206" y="95" font-size="7.5" font-weight="900" text-anchor="middle" fill="#000000">Core 3</text>
+  <!-- PANEL 1: (a) SHARED BUS -->
+  <g font-family="'Liberation Sans', 'DejaVu Sans', Arial, sans-serif">
+    <rect x="24" y="58" width="288" height="378" rx="8" fill="#fff6f3" stroke="#d9534f" stroke-width="2"/>
+    <path d="M 32 58 H 304 A 8 8 0 0 1 312 66 V 94 H 24 V 66 A 8 8 0 0 1 32 58 Z" fill="#ffd8ce" stroke="#d9534f" stroke-width="1.6"/>
+    <text x="168" y="74" font-size="12.5" font-weight="900" fill="#151b20" text-anchor="middle">(a) SHARED BUS</text>
+    <text x="168" y="88" font-size="10.2" font-weight="700" fill="#7f1d1d" text-anchor="middle">Wishbone / APB / OBI</text>
 
-  <!-- Shared Bus Backbone -->
-  <rect x="28" y="130" width="201" height="18" rx="3" fill="#ffd8ce" stroke="#f38469" stroke-width="1.5"/>
-  <text x="128" y="142" font-size="8" font-weight="900" fill="#000000" text-anchor="middle">SHARED BUS BACKBONE (1 SENDER)</text>
+    <rect x="37" y="104" width="58" height="32" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="66" y="118.5" font-size="10.5" font-weight="800" fill="#151b20" text-anchor="middle">Core 0</text>
+    <text x="66" y="131" font-size="8.8" font-weight="700" fill="#64748b" text-anchor="middle">Wait</text>
 
-  <!-- Taps from cores to bus -->
-  <line x1="50" y1="107" x2="50" y2="130" stroke="#f38469" stroke-width="2"/>
-  <line x1="102" y1="107" x2="102" y2="130" stroke="#f38469" stroke-width="2"/>
-  <line x1="154" y1="107" x2="154" y2="130" stroke="#f38469" stroke-width="2"/>
-  <line x1="206" y1="107" x2="206" y2="130" stroke="#f38469" stroke-width="2"/>
+    <rect x="105" y="104" width="58" height="32" rx="4" fill="#ffe4de" stroke="#dc2626" stroke-width="2"/>
+    <text x="134" y="118.5" font-size="10.5" font-weight="900" fill="#991b1b" text-anchor="middle">Core 1</text>
+    <text x="134" y="131" font-size="8.8" font-weight="800" fill="#dc2626" text-anchor="middle">Active</text>
 
-  <!-- Shared Memory Slave -->
-  <line x1="128" y1="148" x2="128" y2="175" stroke="#f38469" stroke-width="2"/>
-  <rect x="68" y="175" width="120" height="30" rx="3" fill="#fffaf0" stroke="#151b20"/><text x="128" y="194" font-size="8" font-weight="900" text-anchor="middle" fill="#000000">Shared Memory / Slave</text>
+    <rect x="173" y="104" width="58" height="32" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="202" y="118.5" font-size="10.5" font-weight="800" fill="#151b20" text-anchor="middle">Core 2</text>
+    <text x="202" y="131" font-size="8.8" font-weight="700" fill="#64748b" text-anchor="middle">Wait</text>
 
-  <text x="134" y="235" font-size="8" font-weight="900" fill="#000000" text-anchor="middle">&#10007; Serial Bottleneck: Max 4 Cores</text>
-  <text x="134" y="248" font-size="7" fill="#000000" text-anchor="middle" font-weight="900">Arbitration serializes all requests</text>
+    <rect x="241" y="104" width="58" height="32" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="270" y="118.5" font-size="10.5" font-weight="800" fill="#151b20" text-anchor="middle">Core 3</text>
+    <text x="270" y="131" font-size="8.8" font-weight="700" fill="#64748b" text-anchor="middle">Wait</text>
 
-  <!-- Topology 2: Full Crossbar (x=260 to 495) -->
-  <rect x="260" y="42" width="235" height="235" rx="5" fill="#f6f0dc" stroke="#ffc83e" stroke-width="1.5"/>
-  <rect x="260" y="42" width="235" height="22" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1"/><text x="377" y="57" font-size="8.5" font-weight="900" fill="#000000" text-anchor="middle">2. FULL CROSSBAR (AXI4 / TILELINK)</text>
+    <line x1="66" y1="136" x2="66" y2="156" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="3 2"/>
+    <line x1="134" y1="136" x2="134" y2="153" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrRed)"/>
+    <line x1="202" y1="136" x2="202" y2="156" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="3 2"/>
+    <line x1="270" y1="136" x2="270" y2="156" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="3 2"/>
 
-  <!-- Crossbar Matrix Grid -->
-  <text x="270" y="80" font-size="7.5" font-weight="900" fill="#000000">4 Masters (Cores):</text>
-  <line x1="310" y1="95" x2="475" y2="95" stroke="#22bfd7" stroke-width="2"/>
-  <line x1="310" y1="120" x2="475" y2="120" stroke="#22bfd7" stroke-width="2"/>
-  <line x1="310" y1="145" x2="475" y2="145" stroke="#22bfd7" stroke-width="2"/>
-  <line x1="310" y1="170" x2="475" y2="170" stroke="#22bfd7" stroke-width="2"/>
+    <rect x="37" y="157" width="262" height="23" rx="4" fill="#fff0b9" stroke="#b45309" stroke-width="1.5"/>
+    <text x="168" y="172.5" font-size="10" font-weight="900" fill="#78350f" text-anchor="middle">CENTRAL ARBITER &amp; 4:1 BUS MUX</text>
 
-  <text x="270" y="200" font-size="7.5" font-weight="900" fill="#000000">4 Slaves (Mem):</text>
-  <line x1="340" y1="85" x2="340" y2="185" stroke="#b7df69" stroke-width="2"/>
-  <line x1="375" y1="85" x2="375" y2="185" stroke="#b7df69" stroke-width="2"/>
-  <line x1="410" y1="85" x2="410" y2="185" stroke="#b7df69" stroke-width="2"/>
-  <line x1="445" y1="85" x2="445" y2="185" stroke="#b7df69" stroke-width="2"/>
+    <line x1="168" y1="180" x2="168" y2="195" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrRed)"/>
 
-  <!-- Crosspoints -->
-  <circle cx="340" cy="95" r="3.5" fill="#ffc83e"/>
-  <circle cx="375" cy="120" r="3.5" fill="#ffc83e"/>
-  <circle cx="410" cy="145" r="3.5" fill="#ffc83e"/>
-  <circle cx="445" cy="170" r="3.5" fill="#ffc83e"/>
+    <rect x="37" y="199" width="262" height="32" rx="5" fill="#ffd8ce" stroke="#dc2626" stroke-width="2"/>
+    <text x="168" y="213" font-size="11" font-weight="900" fill="#151b20" text-anchor="middle">SHARED BUS BACKBONE</text>
+    <text x="168" y="226" font-size="9.5" font-weight="700" fill="#991b1b" text-anchor="middle">1 Active Transaction / Cycle (Serialized)</text>
 
-  <text x="377" y="235" font-size="8" font-weight="900" fill="#000000" text-anchor="middle">&#9888; Area Explodes O(N&#178;): Max 16-32 Cores</text>
-  <text x="377" y="248" font-size="7" fill="#000000" text-anchor="middle" font-weight="900">Non-blocking, but wiring dominates die</text>
+    <line x1="77" y1="231" x2="77" y2="249" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrRed)"/>
+    <line x1="168" y1="231" x2="168" y2="253" stroke="#64748b" stroke-width="1.6"/>
+    <line x1="259" y1="231" x2="259" y2="253" stroke="#64748b" stroke-width="1.6"/>
 
-  <!-- Topology 3: 2D Mesh NoC (x=505 to 742) -->
-  <rect x="505" y="42" width="237" height="235" rx="5" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
-  <rect x="505" y="42" width="237" height="22" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/><text x="623" y="57" font-size="8.5" font-weight="900" fill="#000000" text-anchor="middle">3. 2D MESH NOC (SNITCH / CHESHIRE)</text>
+    <rect x="37" y="253" width="80" height="36" rx="4" fill="#ffe4de" stroke="#dc2626" stroke-width="1.8"/>
+    <text x="77" y="269" font-size="10.5" font-weight="900" fill="#151b20" text-anchor="middle">SRAM</text>
+    <text x="77" y="282" font-size="8.8" font-weight="700" fill="#991b1b" text-anchor="middle">Selected</text>
 
-  <!-- 4 Tile Routers arranged in 2x2 or 3x3 -->
-  <rect x="530" y="80" width="75" height="45" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="567" y="100" font-size="8" font-weight="900" fill="#000000" text-anchor="middle">Tile (0,0)</text><text x="567" y="114" font-size="7" fill="#000000" text-anchor="middle" font-weight="900">Core + Router</text>
-  <rect x="635" y="80" width="75" height="45" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="672" y="100" font-size="8" font-weight="900" fill="#000000" text-anchor="middle">Tile (0,1)</text><text x="672" y="114" font-size="7" fill="#000000" text-anchor="middle" font-weight="900">Core + Router</text>
-  <rect x="530" y="145" width="75" height="45" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="567" y="165" font-size="8" font-weight="900" fill="#000000" text-anchor="middle">Tile (1,0)</text><text x="567" y="179" font-size="7" fill="#000000" text-anchor="middle" font-weight="900">Core + Router</text>
-  <rect x="635" y="145" width="75" height="45" rx="4" fill="#fffaf0" stroke="#b7df69" stroke-width="1.5"/><text x="672" y="165" font-size="8" font-weight="900" fill="#000000" text-anchor="middle">Tile (1,1)</text><text x="672" y="179" font-size="7" fill="#000000" text-anchor="middle" font-weight="900">Core + Router</text>
+    <rect x="127" y="253" width="82" height="36" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="168" y="269" font-size="10.2" font-weight="800" fill="#151b20" text-anchor="middle">Peripherals</text>
+    <text x="168" y="282" font-size="8.6" font-weight="700" fill="#64748b" text-anchor="middle">SPI / UART</text>
 
-  <!-- Mesh Bidirectional Links -->
-  <line x1="605" y1="102" x2="635" y2="102" stroke="#b7df69" stroke-width="2.5"/>
-  <line x1="605" y1="167" x2="635" y2="167" stroke="#b7df69" stroke-width="2.5"/>
-  <line x1="567" y1="125" x2="567" y2="145" stroke="#b7df69" stroke-width="2.5"/>
-  <line x1="672" y1="125" x2="672" y2="145" stroke="#b7df69" stroke-width="2.5"/>
+    <rect x="219" y="253" width="80" height="36" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="1.3"/>
+    <text x="259" y="269" font-size="10.2" font-weight="800" fill="#151b20" text-anchor="middle">Boot ROM</text>
+    <text x="259" y="282" font-size="8.6" font-weight="700" fill="#64748b" text-anchor="middle">Idle</text>
 
-  <text x="623" y="235" font-size="8" font-weight="900" fill="#000000" text-anchor="middle">&#10003; Scales Linearly O(N): 256+ Cores!</text>
-  <text x="623" y="248" font-size="7" fill="#000000" text-anchor="middle" font-weight="900">X-Y packet routing with bounded latency</text>
+    <rect x="34" y="302" width="268" height="122" rx="6" fill="#ffffff" stroke="#d9534f" stroke-width="1.4"/>
+    <text x="46" y="322" font-size="10.2" font-weight="700" fill="#475569">Wiring Area:</text>
+    <text x="132" y="322" font-size="10.3" font-weight="900" fill="#151b20">O(N) minimal routing</text>
+    <text x="46" y="342" font-size="10.2" font-weight="700" fill="#475569">Bisection BW:</text>
+    <text x="132" y="342" font-size="10.3" font-weight="900" fill="#b91c1c">O(1) single-master</text>
+    <text x="46" y="362" font-size="10.2" font-weight="700" fill="#475569">Practical Span:</text>
+    <text x="132" y="362" font-size="10.3" font-weight="900" fill="#151b20">1&#8211;4 cores (MCU class)</text>
+    <line x1="46" y1="374" x2="290" y2="374" stroke="#fecaca" stroke-width="1.2"/>
+    <text x="168" y="393" font-size="9.8" font-weight="800" fill="#991b1b" text-anchor="middle">SCORE Archetype 1 (Autonomous MCUs)</text>
+    <text x="168" y="411" font-size="10.5" font-weight="900" fill="#151b20" text-anchor="middle">PULPissimo &#8226; CROC &#8226; OpenTitan</text>
+  </g>
 
-  <!-- Bottom Metric Summary Strip -->
-  <rect x="18" y="285" width="724" height="40" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1"/>
-  <text x="30" y="303" font-size="8" font-weight="900" fill="#000000" font-family="monospace">BANDWIDTH SCALING COMPARISON:</text>
-  <text x="200" y="303" font-size="7.5" fill="#000000" font-family="monospace" font-weight="900">Bus: &le;4 cores &#8226; Crossbar: O(N&sup2;) area (65K switches at 256c) &#8226; 2D Mesh: O(&#8730;N) bisection BW</text>
-  <text x="30" y="318" font-size="7.5" font-weight="900" fill="#000000">SCORE Archetypes: Single-Core Bus &#8594; Multi-Master Crossbar &#8594; Snitch 2D Mesh Cluster</text>
+  <line x1="314" y1="220" x2="332" y2="220" stroke="#151b20" stroke-width="2.6" marker-end="url(#arrDark)"/>
+
+  <!-- PANEL 2: (b) FULL / LOG CROSSBAR -->
+  <g font-family="'Liberation Sans', 'DejaVu Sans', Arial, sans-serif">
+    <rect x="336" y="58" width="288" height="378" rx="8" fill="#fffdf0" stroke="#d97706" stroke-width="2"/>
+    <path d="M 344 58 H 616 A 8 8 0 0 1 624 66 V 94 H 336 V 66 A 8 8 0 0 1 344 58 Z" fill="#fff0b9" stroke="#d97706" stroke-width="1.6"/>
+    <text x="480" y="74" font-size="12.5" font-weight="900" fill="#151b20" text-anchor="middle">(b) FULL / LOG CROSSBAR</text>
+    <text x="480" y="88" font-size="10.2" font-weight="700" fill="#92400e" text-anchor="middle">AXI4 / TileLink / TCDM</text>
+
+    <rect x="348" y="106" width="46" height="24" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="371" y="122" font-size="10.5" font-weight="900" fill="#0369a1" text-anchor="middle">M0</text>
+    <rect x="348" y="138" width="46" height="24" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="371" y="154" font-size="10.5" font-weight="900" fill="#0369a1" text-anchor="middle">M1</text>
+    <rect x="348" y="170" width="46" height="24" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="371" y="186" font-size="10.5" font-weight="900" fill="#0369a1" text-anchor="middle">M2</text>
+    <rect x="348" y="202" width="46" height="24" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="371" y="218" font-size="10.5" font-weight="900" fill="#0369a1" text-anchor="middle">M3</text>
+
+    <line x1="394" y1="118" x2="606" y2="118" stroke="#0284c7" stroke-width="2.3"/>
+    <line x1="394" y1="150" x2="606" y2="150" stroke="#0284c7" stroke-width="2.3"/>
+    <line x1="394" y1="182" x2="606" y2="182" stroke="#0284c7" stroke-width="2.3"/>
+    <line x1="394" y1="214" x2="606" y2="214" stroke="#0284c7" stroke-width="2.3"/>
+
+    <line x1="434" y1="104" x2="434" y2="235" stroke="#65a30d" stroke-width="2.3"/>
+    <line x1="484" y1="104" x2="484" y2="235" stroke="#65a30d" stroke-width="2.3"/>
+    <line x1="534" y1="104" x2="534" y2="235" stroke="#65a30d" stroke-width="2.3"/>
+    <line x1="584" y1="104" x2="584" y2="235" stroke="#65a30d" stroke-width="2.3"/>
+
+    <circle cx="434" cy="118" r="6" fill="#f59e0b" stroke="#151b20" stroke-width="1.8"/>
+    <circle cx="484" cy="118" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="534" cy="118" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="584" cy="118" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <circle cx="434" cy="150" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="484" cy="150" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="534" cy="150" r="6" fill="#f59e0b" stroke="#151b20" stroke-width="1.8"/>
+    <circle cx="584" cy="150" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <circle cx="434" cy="182" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="484" cy="182" r="6" fill="#f59e0b" stroke="#151b20" stroke-width="1.8"/>
+    <circle cx="534" cy="182" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="584" cy="182" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <circle cx="434" cy="214" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="484" cy="214" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="534" cy="214" r="4.2" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="584" cy="214" r="6" fill="#f59e0b" stroke="#151b20" stroke-width="1.8"/>
+
+    <rect x="416" y="235" width="36" height="15" rx="3" fill="#fef3c7" stroke="#b45309" stroke-width="1.1"/>
+    <text x="434" y="246" font-size="8.5" font-weight="800" fill="#78350f" text-anchor="middle">Arb</text>
+    <rect x="466" y="235" width="36" height="15" rx="3" fill="#fef3c7" stroke="#b45309" stroke-width="1.1"/>
+    <text x="484" y="246" font-size="8.5" font-weight="800" fill="#78350f" text-anchor="middle">Arb</text>
+    <rect x="516" y="235" width="36" height="15" rx="3" fill="#fef3c7" stroke="#b45309" stroke-width="1.1"/>
+    <text x="534" y="246" font-size="8.5" font-weight="800" fill="#78350f" text-anchor="middle">Arb</text>
+    <rect x="566" y="235" width="36" height="15" rx="3" fill="#fef3c7" stroke="#b45309" stroke-width="1.1"/>
+    <text x="584" y="246" font-size="8.5" font-weight="800" fill="#78350f" text-anchor="middle">Arb</text>
+
+    <line x1="434" y1="250" x2="434" y2="257" stroke="#65a30d" stroke-width="2"/>
+    <line x1="484" y1="250" x2="484" y2="257" stroke="#65a30d" stroke-width="2"/>
+    <line x1="534" y1="250" x2="534" y2="257" stroke="#65a30d" stroke-width="2"/>
+    <line x1="584" y1="250" x2="584" y2="257" stroke="#65a30d" stroke-width="2"/>
+
+    <rect x="413" y="257" width="42" height="30" rx="4" fill="#ecfccb" stroke="#4d7c0f" stroke-width="1.5"/>
+    <text x="434" y="276" font-size="10.5" font-weight="900" fill="#365314" text-anchor="middle">B0</text>
+    <rect x="463" y="257" width="42" height="30" rx="4" fill="#ecfccb" stroke="#4d7c0f" stroke-width="1.5"/>
+    <text x="484" y="276" font-size="10.5" font-weight="900" fill="#365314" text-anchor="middle">B1</text>
+    <rect x="513" y="257" width="42" height="30" rx="4" fill="#ecfccb" stroke="#4d7c0f" stroke-width="1.5"/>
+    <text x="534" y="276" font-size="10.5" font-weight="900" fill="#365314" text-anchor="middle">B2</text>
+    <rect x="563" y="257" width="42" height="30" rx="4" fill="#ecfccb" stroke="#4d7c0f" stroke-width="1.5"/>
+    <text x="584" y="276" font-size="10.5" font-weight="900" fill="#365314" text-anchor="middle">B3</text>
+
+    <circle cx="355" cy="246" r="4.8" fill="#f59e0b" stroke="#151b20" stroke-width="1.4"/>
+    <text x="364" y="250" font-size="8.8" font-weight="800" fill="#151b20">Active</text>
+    <circle cx="355" cy="264" r="3.8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
+    <text x="364" y="268" font-size="8.8" font-weight="700" fill="#475569">Idle</text>
+    <text x="350" y="284" font-size="8.6" font-weight="900" fill="#92400e">N&#215;M Matrix</text>
+
+    <rect x="346" y="302" width="268" height="122" rx="6" fill="#ffffff" stroke="#d97706" stroke-width="1.4"/>
+    <text x="356" y="322" font-size="10.2" font-weight="700" fill="#475569">Switch Area:</text>
+    <text x="438" y="322" font-size="10.0" font-weight="900" fill="#b45309">O(N&#178;) full / O(N log N) log</text>
+    <text x="356" y="342" font-size="10.2" font-weight="700" fill="#475569">Bisection BW:</text>
+    <text x="438" y="342" font-size="10.3" font-weight="900" fill="#151b20">O(N) concurrent paths</text>
+    <text x="356" y="362" font-size="10.2" font-weight="700" fill="#475569">Practical Span:</text>
+    <text x="438" y="362" font-size="10.3" font-weight="900" fill="#151b20">4&#8211;32 (256 log-TCDM)</text>
+    <line x1="356" y1="374" x2="604" y2="374" stroke="#fde68a" stroke-width="1.2"/>
+    <text x="480" y="393" font-size="9.8" font-weight="800" fill="#92400e" text-anchor="middle">SCORE Archetypes 2, 3 &amp; 5 (Host / Cluster)</text>
+    <text x="480" y="411" font-size="10.5" font-weight="900" fill="#151b20" text-anchor="middle">Cheshire &#8226; Snitch Cluster &#8226; MemPool</text>
+  </g>
+
+  <line x1="626" y1="220" x2="644" y2="220" stroke="#151b20" stroke-width="2.6" marker-end="url(#arrDark)"/>
+
+  <!-- PANEL 3: (c) 2D MESH PACKET NOC -->
+  <g font-family="'Liberation Sans', 'DejaVu Sans', Arial, sans-serif">
+    <rect x="648" y="58" width="288" height="378" rx="8" fill="#f4fae8" stroke="#15803d" stroke-width="2"/>
+    <path d="M 656 58 H 928 A 8 8 0 0 1 936 66 V 94 H 648 V 66 A 8 8 0 0 1 656 58 Z" fill="#dcf2b0" stroke="#15803d" stroke-width="1.6"/>
+    <text x="792" y="74" font-size="12.5" font-weight="900" fill="#151b20" text-anchor="middle">(c) 2D MESH PACKET NOC</text>
+    <text x="792" y="88" font-size="10.2" font-weight="700" fill="#14532d" text-anchor="middle">P-Mesh / FlooNoC (X-Y Routing)</text>
+
+    <line x1="732" y1="128" x2="754" y2="128" stroke="#0284c7" stroke-width="2.8" marker-end="url(#arrBlue)"/>
+    <line x1="826" y1="128" x2="848" y2="128" stroke="#0284c7" stroke-width="2.8" marker-end="url(#arrBlue)"/>
+    <line x1="732" y1="188" x2="758" y2="188" stroke="#65a30d" stroke-width="2.2"/>
+    <line x1="826" y1="188" x2="852" y2="188" stroke="#65a30d" stroke-width="2.2"/>
+    <line x1="732" y1="248" x2="758" y2="248" stroke="#65a30d" stroke-width="2.2"/>
+    <line x1="826" y1="248" x2="852" y2="248" stroke="#65a30d" stroke-width="2.2"/>
+
+    <line x1="698" y1="150" x2="698" y2="166" stroke="#65a30d" stroke-width="2.2"/>
+    <line x1="698" y1="210" x2="698" y2="226" stroke="#65a30d" stroke-width="2.2"/>
+    <line x1="792" y1="150" x2="792" y2="166" stroke="#65a30d" stroke-width="2.2"/>
+    <line x1="792" y1="210" x2="792" y2="226" stroke="#65a30d" stroke-width="2.2"/>
+    <line x1="886" y1="150" x2="886" y2="162" stroke="#0284c7" stroke-width="2.8" marker-end="url(#arrBlue)"/>
+    <line x1="886" y1="210" x2="886" y2="222" stroke="#0284c7" stroke-width="2.8" marker-end="url(#arrBlue)"/>
+
+    <line x1="745" y1="100" x2="745" y2="274" stroke="#dc2626" stroke-width="1.6" stroke-dasharray="4 3"/>
+
+    <rect x="664" y="106" width="68" height="44" rx="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.2"/>
+    <rect x="668" y="111" width="37" height="34" rx="3" fill="#ffffff" stroke="#0284c7" stroke-width="1.1"/>
+    <text x="686.5" y="125" font-size="9.5" font-weight="900" fill="#0369a1" text-anchor="middle">SRC</text>
+    <text x="686.5" y="139" font-size="8.5" font-weight="800" fill="#151b20" text-anchor="middle">(0,0)</text>
+    <rect x="708" y="111" width="20" height="34" rx="3" fill="#bae6fd" stroke="#0284c7" stroke-width="1.1"/>
+    <text x="718" y="132" font-size="10" font-weight="900" fill="#0369a1" text-anchor="middle">R</text>
+
+    <rect x="758" y="106" width="68" height="44" rx="5" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.8"/>
+    <rect x="762" y="111" width="37" height="34" rx="3" fill="#ffffff" stroke="#64748b" stroke-width="1"/>
+    <text x="780.5" y="125" font-size="9.5" font-weight="800" fill="#151b20" text-anchor="middle">Core</text>
+    <text x="780.5" y="139" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">(1,0)</text>
+    <rect x="802" y="111" width="20" height="34" rx="3" fill="#bae6fd" stroke="#0284c7" stroke-width="1.1"/>
+    <text x="812" y="132" font-size="10" font-weight="900" fill="#0369a1" text-anchor="middle">R</text>
+
+    <rect x="852" y="106" width="68" height="44" rx="5" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.8"/>
+    <rect x="856" y="111" width="37" height="34" rx="3" fill="#ffffff" stroke="#64748b" stroke-width="1"/>
+    <text x="874.5" y="125" font-size="9.5" font-weight="800" fill="#151b20" text-anchor="middle">Core</text>
+    <text x="874.5" y="139" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">(2,0)</text>
+    <rect x="896" y="111" width="20" height="34" rx="3" fill="#bae6fd" stroke="#0284c7" stroke-width="1.1"/>
+    <text x="906" y="132" font-size="10" font-weight="900" fill="#0369a1" text-anchor="middle">R</text>
+
+    <rect x="664" y="166" width="68" height="44" rx="5" fill="#ffffff" stroke="#65a30d" stroke-width="1.5"/>
+    <rect x="668" y="171" width="37" height="34" rx="3" fill="#fafdf5" stroke="#94a3b8" stroke-width="1"/>
+    <text x="686.5" y="185" font-size="9.5" font-weight="800" fill="#151b20" text-anchor="middle">Core</text>
+    <text x="686.5" y="199" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">(0,1)</text>
+    <rect x="708" y="171" width="20" height="34" rx="3" fill="#dcfce7" stroke="#15803d" stroke-width="1.1"/>
+    <text x="718" y="192" font-size="10" font-weight="900" fill="#14532d" text-anchor="middle">R</text>
+
+    <rect x="758" y="166" width="68" height="44" rx="5" fill="#ffffff" stroke="#65a30d" stroke-width="1.5"/>
+    <rect x="762" y="171" width="37" height="34" rx="3" fill="#fafdf5" stroke="#94a3b8" stroke-width="1"/>
+    <text x="780.5" y="185" font-size="9.5" font-weight="800" fill="#151b20" text-anchor="middle">Core</text>
+    <text x="780.5" y="199" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">(1,1)</text>
+    <rect x="802" y="171" width="20" height="34" rx="3" fill="#dcfce7" stroke="#15803d" stroke-width="1.1"/>
+    <text x="812" y="192" font-size="10" font-weight="900" fill="#14532d" text-anchor="middle">R</text>
+
+    <rect x="852" y="166" width="68" height="44" rx="5" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.8"/>
+    <rect x="856" y="171" width="37" height="34" rx="3" fill="#ffffff" stroke="#64748b" stroke-width="1"/>
+    <text x="874.5" y="185" font-size="9.5" font-weight="800" fill="#151b20" text-anchor="middle">Core</text>
+    <text x="874.5" y="199" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">(2,1)</text>
+    <rect x="896" y="171" width="20" height="34" rx="3" fill="#bae6fd" stroke="#0284c7" stroke-width="1.1"/>
+    <text x="906" y="192" font-size="10" font-weight="900" fill="#0369a1" text-anchor="middle">R</text>
+
+    <rect x="664" y="226" width="68" height="44" rx="5" fill="#ffffff" stroke="#65a30d" stroke-width="1.5"/>
+    <rect x="668" y="231" width="37" height="34" rx="3" fill="#fafdf5" stroke="#94a3b8" stroke-width="1"/>
+    <text x="686.5" y="245" font-size="9.5" font-weight="800" fill="#151b20" text-anchor="middle">Core</text>
+    <text x="686.5" y="259" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">(0,2)</text>
+    <rect x="708" y="231" width="20" height="34" rx="3" fill="#dcfce7" stroke="#15803d" stroke-width="1.1"/>
+    <text x="718" y="252" font-size="10" font-weight="900" fill="#14532d" text-anchor="middle">R</text>
+
+    <rect x="758" y="226" width="68" height="44" rx="5" fill="#ffffff" stroke="#65a30d" stroke-width="1.5"/>
+    <rect x="762" y="231" width="37" height="34" rx="3" fill="#fafdf5" stroke="#94a3b8" stroke-width="1"/>
+    <text x="780.5" y="245" font-size="9.5" font-weight="800" fill="#151b20" text-anchor="middle">Core</text>
+    <text x="780.5" y="259" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">(1,2)</text>
+    <rect x="802" y="231" width="20" height="34" rx="3" fill="#dcfce7" stroke="#15803d" stroke-width="1.1"/>
+    <text x="812" y="252" font-size="10" font-weight="900" fill="#14532d" text-anchor="middle">R</text>
+
+    <rect x="852" y="226" width="68" height="44" rx="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.2"/>
+    <rect x="856" y="231" width="37" height="34" rx="3" fill="#ffffff" stroke="#0284c7" stroke-width="1.1"/>
+    <text x="874.5" y="245" font-size="9.5" font-weight="900" fill="#0369a1" text-anchor="middle">DST</text>
+    <text x="874.5" y="259" font-size="8.5" font-weight="800" fill="#151b20" text-anchor="middle">(2,2)</text>
+    <rect x="896" y="231" width="20" height="34" rx="3" fill="#bae6fd" stroke="#0284c7" stroke-width="1.1"/>
+    <text x="906" y="252" font-size="10" font-weight="900" fill="#0369a1" text-anchor="middle">R</text>
+
+    <!-- Native SVG Mesh Micro-Legend -->
+    <line x1="664" y1="288" x2="679" y2="288" stroke="#0284c7" stroke-width="2.2" marker-end="url(#arrBlueSm)"/>
+    <text x="684" y="291.5" font-size="9.2" font-weight="800" fill="#0369a1">X-Y Path</text>
+    <line x1="737" y1="281" x2="737" y2="294" stroke="#dc2626" stroke-width="1.6" stroke-dasharray="3 2"/>
+    <text x="743" y="291.5" font-size="9.2" font-weight="800" fill="#b91c1c">Bisection (&#8730;N)</text>
+    <rect x="820" y="281" width="13" height="13" rx="2" fill="#dcfce7" stroke="#15803d" stroke-width="1"/>
+    <text x="826.5" y="291" font-size="8.2" font-weight="900" fill="#14532d" text-anchor="middle">R</text>
+    <text x="837" y="291.5" font-size="9.2" font-weight="800" fill="#14532d">5-Port Router</text>
+
+    <rect x="658" y="302" width="268" height="122" rx="6" fill="#ffffff" stroke="#15803d" stroke-width="1.4"/>
+    <text x="670" y="322" font-size="10.2" font-weight="700" fill="#475569">Router Area:</text>
+    <text x="752" y="322" font-size="10.3" font-weight="900" fill="#15803d">O(N) modular tiles</text>
+    <text x="670" y="342" font-size="10.2" font-weight="700" fill="#475569">BW / Hops:</text>
+    <text x="752" y="342" font-size="10.3" font-weight="900" fill="#151b20">O(&#8730;N) BW &#8226; O(&#8730;N) hops</text>
+    <text x="670" y="362" font-size="10.2" font-weight="700" fill="#475569">Practical Span:</text>
+    <text x="752" y="362" font-size="10.3" font-weight="900" fill="#151b20">16&#8211;432+ cores</text>
+    <line x1="670" y1="374" x2="914" y2="374" stroke="#bbf7d0" stroke-width="1.2"/>
+    <text x="792" y="393" font-size="9.8" font-weight="800" fill="#14532d" text-anchor="middle">SCORE Archetypes 4 &amp; 5 (Tiled Manycore)</text>
+    <text x="792" y="411" font-size="10.5" font-weight="900" fill="#151b20" text-anchor="middle">OpenPiton &#8226; Picobello &#8226; Occamy</text>
+  </g>
+
+  <!-- BOTTOM QUANTITATIVE SCALING SUMMARY BAR -->
+  <g font-family="'Liberation Sans', 'DejaVu Sans', Arial, sans-serif">
+    <rect x="24" y="448" width="912" height="70" rx="8" fill="#f6f0dc" stroke="#151b20" stroke-width="1.8"/>
+
+    <text x="40" y="468" font-size="10.5" font-weight="900" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">SWITCH COMPLEXITY (N = 256)</text>
+    <text x="40" y="487" font-size="10.2" font-weight="700" fill="#151b20">Bus: 1 arbiter &#8226; Full Xbar: 65,536 switches</text>
+    <text x="40" y="504" font-size="10.2" font-weight="700" fill="#475569">Log-Xbar: ~2K stages &#8226; 2D Mesh: 256 routers</text>
+
+    <line x1="334" y1="458" x2="334" y2="508" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <text x="350" y="468" font-size="10.5" font-weight="900" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">ACCESS LATENCY &amp; CONCURRENCY</text>
+    <text x="350" y="487" font-size="10.2" font-weight="700" fill="#151b20">Bus: 1 cyc (serialized) &#8226; Full Xbar: 1 cyc</text>
+    <text x="350" y="504" font-size="10.2" font-weight="700" fill="#475569">MemPool Log-TCDM: 2.6 cyc &#8226; NoC: 1&#8211;2 cyc/hop</text>
+
+    <line x1="650" y1="458" x2="650" y2="508" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <text x="666" y="468" font-size="10.5" font-weight="900" fill="#151b20" font-family="'Liberation Mono', 'DejaVu Sans Mono', monospace">ARCHITECTURAL TRANSITION WALLS</text>
+    <text x="666" y="487" font-size="10.2" font-weight="700" fill="#151b20">Bus to Crossbar at &gt;4 cores (arbitration)</text>
+    <text x="666" y="504" font-size="10.2" font-weight="700" fill="#475569">Crossbar to 2D NoC at &gt;32 masters (wiring)</text>
+  </g>
 </svg>
             </div>
             <div class="schematic-caption">
-              <strong>Figure 7.1:</strong> Architectural evolution of on-chip fabrics. A shared bus has zero scalability past 4 cores. A full crossbar allows concurrent non-blocking communication but its area explodes quadratically (<em>O</em>(<em>N</em><sup>2</sup>)). A 2D Mesh Network-on-Chip (NoC) scales linearly (<em>O</em>(<em>N</em>)) across hundreds of cores.
+              <strong>Figure 7.1:</strong> Architectural evolution of on-chip interconnect fabrics across SCORE Category 4 archetypes. Shared buses serialize access past 4 cores; full crossbars deliver non-blocking <em>O</em>(<em>N</em>) bandwidth with <em>O</em>(<em>N</em><sup>2</sup>) switch growth (mitigated to <em>O</em>(<em>N</em> log <em>N</em>) via logarithmic TCDM networks); and 2D mesh packet-switched NoCs scale modularly as <em>O</em>(<em>N</em>) across hundreds of tiles with <em>O</em>(&#8730;<em>N</em>) bisection bandwidth.
             </div>
           </div>
           <!-- THE PROBLEM & DESIGN TRADE-OFF: INTERCONNECTS -->
