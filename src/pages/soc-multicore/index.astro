@@ -3421,7 +3421,7 @@ const bespokeSocDossiers = [
         <div class="sim-dashboard">
           <div class="dash-metric">
             <span class="dash-label">Barrier Latency:</span>
-            <span class="dash-val highlight-lime" id="dispBarrierCycles">42,800 Cycles</span>
+            <span class="dash-val highlight-lime" id="dispBarrierCycles">38,400 Cycles</span>
           </div>
           <div class="dash-metric">
             <span class="dash-label">Crossbar Traffic:</span>
@@ -3447,7 +3447,7 @@ const bespokeSocDossiers = [
             <div class="progress-bar-fill" id="simBarrierFill" style="width: 88%;"></div>
           </div>
           <p class="vis-narrative" id="dispBarrierNarrative">
-            At 256 cores using software Atomic Memory Operations (AMO), every core repeatedly polls the same shared-memory barrier flag. Crossbar arbiters saturate exponentially, causing memory access queues to overflow and turning parallel scaling efficiency negative!
+            At 256 cores using software Atomic Memory Operations (AMO), every core repeatedly polls the same shared-memory barrier flag. Crossbar arbiters saturate quadratically (O(N²)), causing memory access queues to overflow and turning parallel scaling efficiency negative!
           </p>
         </div>
       </div>
@@ -4093,11 +4093,11 @@ OpenTitan   &amp; boot\_rom        &amp; TileLink-UL Crossbar   &amp; 1x Ibex   
   let activeSync = "amo";
 
   const barrierSpecs: Record<number, { amoCyc: number; fractCyc: number; amoTraffic: string; fractTraffic: string; amoConflict: string; fractConflict: string }> = {
-    4:   { amoCyc: 120,   fractCyc: 48,   amoTraffic: "16 pkts/cyc",    fractTraffic: "4 pkts/cyc",   amoConflict: "4.2%",  fractConflict: "0.0%" },
-    16:  { amoCyc: 840,   fractCyc: 96,   amoTraffic: "96 pkts/cyc",    fractTraffic: "16 pkts/cyc",  amoConflict: "14.8%", fractConflict: "0.0%" },
-    64:  { amoCyc: 4600,  fractCyc: 180,  amoTraffic: "420 pkts/cyc",   fractTraffic: "32 pkts/cyc",  amoConflict: "45.1%", fractConflict: "0.0%" },
-    128: { amoCyc: 16800, fractCyc: 290,  amoTraffic: "850 pkts/cyc",   fractTraffic: "48 pkts/cyc",  amoConflict: "72.4%", fractConflict: "0.0%" },
-    256: { amoCyc: 42800, fractCyc: 420,  amoTraffic: "1,024 pkts/cyc", fractTraffic: "64 pkts/cyc",  amoConflict: "88.4%", fractConflict: "0.0%" },
+    4:   { amoCyc: 120,   fractCyc: 95,   amoTraffic: "16 pkts/cyc",    fractTraffic: "4 pkts/cyc",   amoConflict: "4.2%",  fractConflict: "0.0%" },
+    16:  { amoCyc: 480,   fractCyc: 180,  amoTraffic: "96 pkts/cyc",    fractTraffic: "16 pkts/cyc",  amoConflict: "14.8%", fractConflict: "0.0%" },
+    64:  { amoCyc: 3200,  fractCyc: 310,  amoTraffic: "420 pkts/cyc",   fractTraffic: "32 pkts/cyc",  amoConflict: "45.1%", fractConflict: "0.0%" },
+    128: { amoCyc: 11800, fractCyc: 410,  amoTraffic: "850 pkts/cyc",   fractTraffic: "48 pkts/cyc",  amoConflict: "72.4%", fractConflict: "0.0%" },
+    256: { amoCyc: 38400, fractCyc: 515,  amoTraffic: "1,024 pkts/cyc", fractTraffic: "64 pkts/cyc",  amoConflict: "88.4%", fractConflict: "0.0%" },
     432: { amoCyc: 98500, fractCyc: 610,  amoTraffic: "1,850 pkts/cyc", fractTraffic: "96 pkts/cyc",  amoConflict: "96.2%", fractConflict: "0.0%" }
   };
 
@@ -4134,7 +4134,7 @@ OpenTitan   &amp; boot\_rom        &amp; TileLink-UL Crossbar   &amp; 1x Ibex   
         dispFill.style.backgroundColor = "var(--coral, #ff6b6b)";
       }
       if (dispNarrative) {
-        dispNarrative.textContent = `At ${activeCores} cores using software Atomic Memory Operations (AMO), all cores repeatedly poll the same shared-memory address. Crossbar arbiters saturate exponentially, causing memory access queues to overflow and turning parallel scaling efficiency negative!`;
+        dispNarrative.textContent = `At ${activeCores} cores using software Atomic Memory Operations (AMO), all cores repeatedly poll the same shared-memory address. Crossbar arbiters saturate quadratically (O(N²)), causing memory access queues to overflow and turning parallel scaling efficiency negative!`;
       }
     } else {
       if (dispEff) dispEff.textContent = "98.5% (Near-Ideal)";

@@ -1436,7 +1436,7 @@ const appCoreDossiers = [
       </div>
       <p class="step-card-lead">
         In deeply embedded microcontroller cores, instruction throughput is primarily bounded by ALU critical paths and simple branch bubble penalties. In 64-bit Application Cores, the fundamental engineering barrier shifts entirely to the <strong>Memory Wall</strong>: while 64-bit ALUs and FPU execution pipelines operate at gigahertz frequencies (&lt;1.0 ns clock period), external DDR DRAM memory takes 50 to 100 ns (100 to 200 clock cycles) to respond. Furthermore, running multi-user operating systems (such as Linux 6.1) mandates hardware-enforced privilege rings, dynamic virtual memory translation, and cache coherence.
-        Every evaluated 64-bit application core (from 135 kGE in-order cores up to 420 kGE out-of-order superscalar processors) implements seven coordinated hardware primitives to conquer memory latency and sustain instruction flow:
+        Every evaluated 64-bit application core (from 135 kGE in-order cores up to 680 kGE out-of-order superscalar processors) implements seven coordinated hardware primitives to conquer memory latency and sustain instruction flow:
       </p>
 
       <!-- Figure 1.0: Universal Baseline Application Processor Microarchitecture -->
@@ -1604,7 +1604,7 @@ const appCoreDossiers = [
 
             <!-- Miss Status Holding Registers (MSHR) -->
             <rect x="525" y="286" width="195" height="48" rx="4" fill="#ffd8ce" stroke="#151b20" stroke-width="1.5"/>
-            <text x="535" y="302" font-size="8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">MSHR SUBSYSTEM (4 TO 8 BUFFERS)</text>
+            <text x="535" y="302" font-size="8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">MSHR SUBSYSTEM (1 TO 16 BUFFERS)</text>
             <text x="535" y="315" font-size="7" fill="#000000" font-weight="900" font-family="var(--md-code-font, monospace)">Tracks Concurrent In-Flight DRAM Misses</text>
             <text x="535" y="327" font-size="6.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">&#8594; Enables Hit-Under-Miss Execution</text>
 
@@ -1695,7 +1695,7 @@ const appCoreDossiers = [
             <!-- Bottom Metrics Strip -->
             <rect x="20" y="488" width="900" height="26" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
             <circle cx="32" cy="501" r="3.5" fill="#151b20"/>
-            <text x="44" y="504.5" font-size="8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">METRICS: Fmax: 1.0 &#8211; 1.5 GHz (16nm/22nm) &#8226; Area: 135 &#8211; 420 kGE &#8226; Sv39 3-Level MMU &#8226; MSHR Concurrency: 4-8 &#8226; Full Linux 6.1 Boot</text>
+            <text x="44" y="504.5" font-size="8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">METRICS: Fmax: 1.0 &#8211; 2.0 GHz (16nm/22nm) &#8226; Area: 135 &#8211; 680 kGE &#8226; Sv39 3-Level MMU &#8226; MSHR Concurrency: 1&#8211;16 &#8226; Full Linux 6.1 Boot</text>
           </svg>
         </div>
         <p class="schematic-caption">
@@ -3140,7 +3140,7 @@ const appCoreDossiers = [
         <h3 class="step-card-title">Why Application Cores Diverge: The Hardware Triad</h3>
       </div>
       <p class="step-card-lead">
-        If all application cores implement the exact same RV64GC ISA and run the same compiled Linux distributions, why do their physical gate counts range from <strong>135 kGE up to 420 kGE</strong>?
+        If all application cores implement the exact same RV64GC ISA and run the same compiled Linux distributions, why do their physical gate counts range from <strong>135 kGE up to 680 kGE</strong>?
         The answer lies in how different engineering teams balance the eternal <strong>Application Hardware Triad</strong>:
       </p>
 
@@ -4593,7 +4593,7 @@ const appCoreDossiers = [
       <div class="badge badge-accent">&sect; 3. COMMON ARCHITECTURAL DNA</div>
       <h2 class="block-title">Cross-Core Similarities: The Shared RV64GC Linux Foundation</h2>
       <p class="block-lead">
-        Despite massive divergences in pipeline depth (5-stage in-order vs. 10-stage out-of-order) and silicon gate count (135 kGE to 420 kGE), all evaluated application cores converge on a non-negotiable architectural baseline. This strict standard compliance is what enables identical, unmodified Linux kernel binaries, OpenSBI firmware, and glibc user applications to boot and execute with 100% binary portability across diverse open silicon implementations.
+        Despite massive divergences in pipeline depth (5-stage in-order vs. 10-stage out-of-order) and silicon gate count (135 kGE to 680 kGE), all evaluated application cores converge on a non-negotiable architectural baseline. This strict standard compliance is what enables identical, unmodified Linux kernel binaries, OpenSBI firmware, and glibc user applications to boot and execute with 100% binary portability across diverse open silicon implementations.
       </p>
     </div>
 
