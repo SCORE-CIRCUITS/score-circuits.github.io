@@ -1724,83 +1724,89 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
         <span class="schematic-tag">FIGURE 2.1 COMPACT EMBEDDED DATAPATH</span>
         <h4 class="schematic-title">Spatz &amp; Vicuna &bull; Single-Lane Embedded RVV Coprocessor with Dual-Port OBI Memory Interconnect</h4>
       </div>
-      <div class="schematic-svg-wrap">
+      <div class="schematic-svg-wrap" style="background: #fffaf0;">
         <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="cadGridFig21" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="#151b20" opacity="0.12"/>
+              <circle cx="2" cy="2" r="1.2" fill="#38bdf8" opacity="0.2"/>
             </pattern>
+            <marker id="arrowOrange21" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ea580c"/>
+            </marker>
+            <marker id="arrowGreen21" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a"/>
+            </marker>
           </defs>
-          <rect width="758" height="378" x="1" y="1" rx="8" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+          <rect width="758" height="378" x="1" y="1" rx="8" fill="#fffaf0" stroke="#38bdf8" stroke-width="2"/>
           <rect width="756" height="340" x="2" y="2" rx="7" fill="url(#cadGridFig21)"/>
-          <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
-          <circle cx="14" cy="14" r="4" fill="#ffc83e"/>
-          <text x="24" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE CAD &#8226; SPATZ &amp; VICUNA COMPACT SINGLE-LANE OBI COPROCESSOR</text>
+          <rect x="2" y="2" width="756" height="24" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5" rx="6"/>
+          <circle cx="14" cy="14" r="4" fill="#f59e0b"/>
+          <text x="24" y="17" font-size="9" font-weight="900" fill="#0284c7" font-family="monospace">SCORE CAD &#8226; SPATZ &amp; VICUNA COMPACT SINGLE-LANE OBI COPROCESSOR</text>
 
           <!-- Host CPU -->
-          <rect x="25" y="50" width="160" height="280" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.8"/>
-          <rect x="25" y="50" width="160" height="22" rx="5" fill="#151b20"/>
+          <rect x="25" y="50" width="160" height="280" rx="6" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+          <rect x="25" y="50" width="160" height="22" rx="5" fill="#f59e0b"/>
           <text x="105" y="65" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">SNITCH / CV32E40P HOST</text>
           
-          <rect x="35" y="85" width="140" height="40" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="105" y="102" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Scalar Pipeline</text>
-          <text x="105" y="115" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">1-wide In-Order Issue</text>
+          <rect x="35" y="85" width="140" height="40" rx="3" fill="#ffffff" stroke="#fcd34d" stroke-width="1.2"/>
+          <text x="105" y="102" font-size="8" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Scalar Pipeline</text>
+          <text x="105" y="116" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">1-wide In-Order Issue</text>
 
-          <rect x="35" y="135" width="140" height="40" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="105" y="152" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Vector CSRs</text>
-          <text x="105" y="165" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">vtype / vl Tracker</text>
+          <rect x="35" y="135" width="140" height="40" rx="3" fill="#ffffff" stroke="#fcd34d" stroke-width="1.2"/>
+          <text x="105" y="152" font-size="8" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Vector CSRs</text>
+          <text x="105" y="166" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">vtype / vl Tracker</text>
 
-          <rect x="35" y="185" width="140" height="50" rx="3" fill="#ffedd5" stroke="#151b20" stroke-width="1.2"/>
-          <text x="105" y="205" font-size="8" font-weight="900" fill="#9a3412" font-family="monospace" text-anchor="middle">Decoupled Command Queue</text>
-          <text x="105" y="222" font-size="7" font-weight="700" fill="#9a3412" font-family="monospace" text-anchor="middle">Handshake FIFO</text>
+          <rect x="35" y="185" width="140" height="50" rx="3" fill="#ffedd5" stroke="#fb923c" stroke-width="1.2"/>
+          <text x="105" y="205" font-size="8" font-weight="900" fill="#ea580c" font-family="monospace" text-anchor="middle">Decoupled Command Queue</text>
+          <text x="105" y="222" font-size="7.5" font-weight="900" fill="#c2410c" font-family="monospace" text-anchor="middle">Handshake FIFO</text>
 
-          <rect x="35" y="245" width="140" height="65" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="105" y="265" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Scalar Instruction Bus</text>
-          <text x="105" y="280" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">OBI Master (32-bit)</text>
+          <rect x="35" y="245" width="140" height="65" rx="3" fill="#ffffff" stroke="#fcd34d" stroke-width="1.2"/>
+          <text x="105" y="265" font-size="8" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Scalar Instruction Bus</text>
+          <text x="105" y="280" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">OBI Master (32-bit)</text>
 
           <!-- Arrow Host -> Spatz -->
-          <line x1="185" y1="210" x2="235" y2="210" stroke="#151b20" stroke-width="2.2"/>
-          <text x="210" y="202" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">Cmd</text>
+          <line x1="185" y1="210" x2="233" y2="210" stroke="#ea580c" stroke-width="2.2" marker-end="url(#arrowOrange21)"/>
+          <text x="210" y="202" font-size="8" font-weight="900" fill="#ea580c" font-family="monospace" text-anchor="middle">Cmd</text>
 
           <!-- Spatz Coprocessor Box -->
-          <rect x="235" y="50" width="310" height="280" rx="6" fill="#fef3c7" stroke="#151b20" stroke-width="1.8"/>
-          <rect x="235" y="50" width="310" height="22" rx="5" fill="#151b20"/>
+          <rect x="235" y="50" width="310" height="280" rx="6" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+          <rect x="235" y="50" width="310" height="22" rx="5" fill="#f59e0b"/>
           <text x="390" y="65" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">SPATZ / VICUNA VECTOR COPROCESSOR</text>
 
-          <rect x="250" y="85" width="280" height="45" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
+          <rect x="250" y="85" width="280" height="45" rx="4" fill="#ffffff" stroke="#38bdf8" stroke-width="1.2"/>
           <text x="390" y="105" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Single-Port Latch VRF (VLEN=128b / 512b)</text>
-          <text x="390" y="120" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">32 Registers &bull; Time-Multiplexed Access</text>
+          <text x="390" y="120" font-size="7.5" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">32 Registers &bull; Time-Multiplexed Access</text>
 
-          <rect x="250" y="140" width="135" height="70" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="317" y="165" font-size="8" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">FPU Datapath</text>
-          <text x="317" y="180" font-size="7" font-weight="700" fill="#059669" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
-          <text x="317" y="195" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">1 Op / Cycle</text>
+          <rect x="250" y="140" width="135" height="70" rx="4" fill="#ffffff" stroke="#34d399" stroke-width="1.2"/>
+          <text x="317" y="164" font-size="8" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">FPU Datapath</text>
+          <text x="317" y="179" font-size="7.5" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
+          <text x="317" y="195" font-size="7.5" font-weight="900" fill="#10b981" font-family="monospace" text-anchor="middle">1 Op / Cycle</text>
 
-          <rect x="395" y="140" width="135" height="70" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="462" y="165" font-size="8" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">Integer ALU</text>
-          <text x="462" y="180" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">32b/64b ADD / SHIFT</text>
-          <text x="462" y="195" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Sub-word Packed</text>
+          <rect x="395" y="140" width="135" height="70" rx="4" fill="#ffffff" stroke="#60a5fa" stroke-width="1.2"/>
+          <text x="462" y="164" font-size="8" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">Integer ALU</text>
+          <text x="462" y="179" font-size="7.5" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">32b/64b ADD / SHIFT</text>
+          <text x="462" y="195" font-size="7.5" font-weight="900" fill="#3b82f6" font-family="monospace" text-anchor="middle">Sub-word Packed</text>
 
-          <rect x="250" y="220" width="280" height="40" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="390" y="238" font-size="8" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">Slide &amp; Permute Buffer</text>
-          <text x="390" y="250" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Serial Element Shifter (Zero Crossbar Overhead)</text>
+          <rect x="250" y="220" width="280" height="40" rx="4" fill="#ffffff" stroke="#f87171" stroke-width="1.2"/>
+          <text x="390" y="237" font-size="8" font-weight="900" fill="#e11d48" font-family="monospace" text-anchor="middle">Slide &amp; Permute Buffer</text>
+          <text x="390" y="250" font-size="7.5" font-weight="900" fill="#dc2626" font-family="monospace" text-anchor="middle">Serial Element Shifter (Zero Crossbar Overhead)</text>
 
-          <rect x="250" y="270" width="280" height="45" rx="4" fill="#dcfce7" stroke="#151b20" stroke-width="1.2"/>
-          <text x="390" y="290" font-size="8.5" font-weight="900" fill="#166534" font-family="monospace" text-anchor="middle">Vector Load-Store Unit (VLSU)</text>
-          <text x="390" y="303" font-size="7" font-weight="700" fill="#166534" font-family="monospace" text-anchor="middle">Dual-Port 64-bit OBI Interface</text>
+          <rect x="250" y="270" width="280" height="45" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1.2"/>
+          <text x="390" y="290" font-size="8.5" font-weight="900" fill="#16a34a" font-family="monospace" text-anchor="middle">Vector Load-Store Unit (VLSU)</text>
+          <text x="390" y="304" font-size="7.5" font-weight="900" fill="#15803d" font-family="monospace" text-anchor="middle">Dual-Port 64-bit OBI Interface</text>
 
           <!-- Memory System -->
-          <rect x="580" y="50" width="155" height="280" rx="6" fill="#e0f2fe" stroke="#151b20" stroke-width="1.8"/>
-          <rect x="580" y="50" width="155" height="22" rx="5" fill="#151b20"/>
+          <rect x="580" y="50" width="155" height="280" rx="6" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.8"/>
+          <rect x="580" y="50" width="155" height="22" rx="5" fill="#0284c7"/>
           <text x="657" y="65" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">TIGHTLY COUPLED SPM</text>
-          <text x="657" y="120" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">SRAM Banks (64-bit)</text>
-          <text x="657" y="150" font-size="7.5" font-weight="700" fill="#0284c7" font-family="monospace" text-anchor="middle">Multi-Banked TCDM</text>
-          <text x="657" y="200" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Dual OBI Ports</text>
-          <text x="657" y="220" font-size="7.5" font-weight="700" fill="#166534" font-family="monospace" text-anchor="middle">Port A: 64b Load</text>
-          <text x="657" y="235" font-size="7.5" font-weight="700" fill="#166534" font-family="monospace" text-anchor="middle">Port B: 64b Store</text>
+          <text x="657" y="120" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">SRAM Banks (64-bit)</text>
+          <text x="657" y="150" font-size="8" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">Multi-Banked TCDM</text>
+          <text x="657" y="200" font-size="8.5" font-weight="900" fill="#16a34a" font-family="monospace" text-anchor="middle">Dual OBI Ports</text>
+          <text x="657" y="220" font-size="8" font-weight="900" fill="#15803d" font-family="monospace" text-anchor="middle">Port A: 64b Load</text>
+          <text x="657" y="235" font-size="8" font-weight="900" fill="#15803d" font-family="monospace" text-anchor="middle">Port B: 64b Store</text>
 
-          <line x1="530" y1="292" x2="580" y2="292" stroke="#166534" stroke-width="2.5"/>
-          <text x="555" y="284" font-size="7.5" font-weight="900" fill="#166534" font-family="monospace" text-anchor="middle">OBI</text>
+          <line x1="530" y1="292" x2="578" y2="292" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrowGreen21)"/>
+          <text x="555" y="284" font-size="8" font-weight="900" fill="#16a34a" font-family="monospace" text-anchor="middle">OBI</text>
         </svg>
       </div>
       <p class="schematic-caption">
@@ -1814,95 +1820,98 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
         <span class="schematic-tag">FIGURE 2.2 MONOLITHIC RVV 1.0</span>
         <h4 class="schematic-title">Ara &bull; 4-Lane Standard Scalable RVV 1.0 Coprocessor with 8 SRAM Banks per Lane &amp; 128-bit AXI4 Bus</h4>
       </div>
-      <div class="schematic-svg-wrap">
+      <div class="schematic-svg-wrap" style="background: #fffaf0;">
         <svg viewBox="0 0 760 380" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="cadGridFig22" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="#151b20" opacity="0.12"/>
+              <circle cx="2" cy="2" r="1.2" fill="#38bdf8" opacity="0.2"/>
             </pattern>
+            <marker id="arrowOrange22" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ea580c"/>
+            </marker>
           </defs>
-          <rect width="758" height="378" x="1" y="1" rx="8" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+          <rect width="758" height="378" x="1" y="1" rx="8" fill="#fffaf0" stroke="#38bdf8" stroke-width="2"/>
           <rect width="756" height="340" x="2" y="2" rx="7" fill="url(#cadGridFig22)"/>
-          <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
-          <circle cx="14" cy="14" r="4" fill="#ffc83e"/>
-          <text x="24" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE CAD &#8226; ARA 4-LANE MONOLITHIC RVV 1.0 ARCHITECTURE</text>
+          <rect x="2" y="2" width="756" height="24" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5" rx="6"/>
+          <circle cx="14" cy="14" r="4" fill="#f59e0b"/>
+          <text x="24" y="17" font-size="9" font-weight="900" fill="#0284c7" font-family="monospace">SCORE CAD &#8226; ARA 4-LANE MONOLITHIC RVV 1.0 ARCHITECTURE</text>
 
           <!-- CVA6 Host CPU -->
-          <rect x="25" y="50" width="150" height="280" rx="6" fill="#f6f0dc" stroke="#151b20" stroke-width="1.8"/>
-          <rect x="25" y="50" width="150" height="22" rx="5" fill="#151b20"/>
+          <rect x="25" y="50" width="150" height="280" rx="6" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+          <rect x="25" y="50" width="150" height="22" rx="5" fill="#f59e0b"/>
           <text x="100" y="65" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">CVA6 SCALAR HOST</text>
           
-          <rect x="35" y="85" width="130" height="50" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="100" y="105" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">6-Stage In-Order</text>
-          <text x="100" y="120" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">1-Wide Issue Pipeline</text>
+          <rect x="35" y="85" width="130" height="50" rx="3" fill="#ffffff" stroke="#fcd34d" stroke-width="1.2"/>
+          <text x="100" y="105" font-size="8" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">6-Stage In-Order</text>
+          <text x="100" y="120" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">1-Wide Issue Pipeline</text>
 
-          <rect x="35" y="145" width="130" height="50" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="100" y="165" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Vector CSR Sync</text>
-          <text x="100" y="180" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">vsetvli / vtype</text>
+          <rect x="35" y="145" width="130" height="50" rx="3" fill="#ffffff" stroke="#fcd34d" stroke-width="1.2"/>
+          <text x="100" y="165" font-size="8" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Vector CSR Sync</text>
+          <text x="100" y="180" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">vsetvli / vtype</text>
 
-          <rect x="35" y="205" width="130" height="60" rx="3" fill="#ffedd5" stroke="#151b20" stroke-width="1.2"/>
-          <text x="100" y="225" font-size="8" font-weight="900" fill="#9a3412" font-family="monospace" text-anchor="middle">CVA6 Coprocessor IF</text>
-          <text x="100" y="240" font-size="7" font-weight="700" fill="#9a3412" font-family="monospace" text-anchor="middle">Asynchronous Handshake</text>
+          <rect x="35" y="205" width="130" height="60" rx="3" fill="#ffedd5" stroke="#fb923c" stroke-width="1.2"/>
+          <text x="100" y="225" font-size="8" font-weight="900" fill="#ea580c" font-family="monospace" text-anchor="middle">CVA6 Coprocessor IF</text>
+          <text x="100" y="240" font-size="7.5" font-weight="900" fill="#c2410c" font-family="monospace" text-anchor="middle">Asynchronous Handshake</text>
 
           <!-- Arrow Host -> Ara -->
-          <line x1="175" y1="235" x2="215" y2="235" stroke="#151b20" stroke-width="2.2"/>
-          <text x="195" y="227" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">Issue</text>
+          <line x1="175" y1="235" x2="213" y2="235" stroke="#ea580c" stroke-width="2.2" marker-end="url(#arrowOrange22)"/>
+          <text x="195" y="227" font-size="8" font-weight="900" fill="#ea580c" font-family="monospace" text-anchor="middle">Issue</text>
 
           <!-- Ara 4-Lane Body -->
-          <rect x="215" y="50" width="520" height="280" rx="6" fill="#fef3c7" stroke="#151b20" stroke-width="1.8"/>
-          <rect x="215" y="50" width="520" height="22" rx="5" fill="#151b20"/>
+          <rect x="215" y="50" width="520" height="280" rx="6" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+          <rect x="215" y="50" width="520" height="22" rx="5" fill="#f59e0b"/>
           <text x="475" y="65" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">ARA RVV 1.0 COPROCESSOR (4 LANES &bull; VLEN=4096b &bull; 8 FPUs)</text>
 
           <!-- Ara Sequencer -->
-          <rect x="230" y="85" width="490" height="40" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="475" y="102" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">VECTOR SEQUENCER &amp; HAZARD SCOREBOARD (ELEMENT-WISE CHAINING)</text>
-          <text x="475" y="116" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Converts high-level RVV instructions to 4-cycle lane micro-operations</text>
+          <rect x="230" y="85" width="490" height="40" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1.2"/>
+          <text x="475" y="102" font-size="8.5" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">VECTOR SEQUENCER &amp; HAZARD SCOREBOARD (ELEMENT-WISE CHAINING)</text>
+          <text x="475" y="116" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">Converts high-level RVV instructions to 4-cycle lane micro-operations</text>
 
           <!-- 4 Lane Blocks -->
           <g transform="translate(230, 135)">
-            <rect x="0" y="0" width="115" height="110" rx="4" fill="#e0f2fe" stroke="#151b20" stroke-width="1.2"/>
+            <rect x="0" y="0" width="115" height="110" rx="4" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
             <text x="57" y="16" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">LANE 0</text>
-            <rect x="8" y="24" width="99" height="24" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="57" y="38" font-size="7" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">8&times; VRF Banks</text>
-            <rect x="8" y="52" width="99" height="24" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="57" y="66" font-size="7" font-weight="800" fill="#059669" font-family="monospace" text-anchor="middle">2&times; FP64 FPUs</text>
-            <rect x="8" y="80" width="99" height="22" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="57" y="94" font-size="7" font-weight="800" fill="#64748b" font-family="monospace" text-anchor="middle">64b INT ALU</text>
+            <rect x="8" y="24" width="99" height="24" rx="2" fill="#ffffff" stroke="#38bdf8" stroke-width="1"/>
+            <text x="57" y="39" font-size="7.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">8&times; VRF Banks</text>
+            <rect x="8" y="52" width="99" height="24" rx="2" fill="#ffffff" stroke="#34d399" stroke-width="1"/>
+            <text x="57" y="67" font-size="7.5" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">2&times; FP64 FPUs</text>
+            <rect x="8" y="80" width="99" height="22" rx="2" fill="#ffffff" stroke="#60a5fa" stroke-width="1"/>
+            <text x="57" y="94" font-size="7.5" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">64b INT ALU</text>
 
-            <rect x="125" y="0" width="115" height="110" rx="4" fill="#e0f2fe" stroke="#151b20" stroke-width="1.2"/>
+            <rect x="125" y="0" width="115" height="110" rx="4" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
             <text x="182" y="16" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">LANE 1</text>
-            <rect x="133" y="24" width="99" height="24" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="182" y="38" font-size="7" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">8&times; VRF Banks</text>
-            <rect x="133" y="52" width="99" height="24" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="182" y="66" font-size="7" font-weight="800" fill="#059669" font-family="monospace" text-anchor="middle">2&times; FP64 FPUs</text>
-            <rect x="133" y="80" width="99" height="22" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="182" y="94" font-size="7" font-weight="800" fill="#64748b" font-family="monospace" text-anchor="middle">64b INT ALU</text>
+            <rect x="133" y="24" width="99" height="24" rx="2" fill="#ffffff" stroke="#38bdf8" stroke-width="1"/>
+            <text x="182" y="39" font-size="7.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">8&times; VRF Banks</text>
+            <rect x="133" y="52" width="99" height="24" rx="2" fill="#ffffff" stroke="#34d399" stroke-width="1"/>
+            <text x="182" y="67" font-size="7.5" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">2&times; FP64 FPUs</text>
+            <rect x="133" y="80" width="99" height="22" rx="2" fill="#ffffff" stroke="#60a5fa" stroke-width="1"/>
+            <text x="182" y="94" font-size="7.5" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">64b INT ALU</text>
 
-            <rect x="250" y="0" width="115" height="110" rx="4" fill="#e0f2fe" stroke="#151b20" stroke-width="1.2"/>
+            <rect x="250" y="0" width="115" height="110" rx="4" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
             <text x="307" y="16" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">LANE 2</text>
-            <rect x="258" y="24" width="99" height="24" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="307" y="38" font-size="7" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">8&times; VRF Banks</text>
-            <rect x="258" y="52" width="99" height="24" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="307" y="66" font-size="7" font-weight="800" fill="#059669" font-family="monospace" text-anchor="middle">2&times; FP64 FPUs</text>
-            <rect x="258" y="80" width="99" height="22" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="307" y="94" font-size="7" font-weight="800" fill="#64748b" font-family="monospace" text-anchor="middle">64b INT ALU</text>
+            <rect x="258" y="24" width="99" height="24" rx="2" fill="#ffffff" stroke="#38bdf8" stroke-width="1"/>
+            <text x="307" y="39" font-size="7.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">8&times; VRF Banks</text>
+            <rect x="258" y="52" width="99" height="24" rx="2" fill="#ffffff" stroke="#34d399" stroke-width="1"/>
+            <text x="307" y="67" font-size="7.5" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">2&times; FP64 FPUs</text>
+            <rect x="258" y="80" width="99" height="22" rx="2" fill="#ffffff" stroke="#60a5fa" stroke-width="1"/>
+            <text x="307" y="94" font-size="7.5" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">64b INT ALU</text>
 
-            <rect x="375" y="0" width="115" height="110" rx="4" fill="#e0f2fe" stroke="#151b20" stroke-width="1.2"/>
+            <rect x="375" y="0" width="115" height="110" rx="4" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.2"/>
             <text x="432" y="16" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">LANE 3</text>
-            <rect x="383" y="24" width="99" height="24" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="432" y="38" font-size="7" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">8&times; VRF Banks</text>
-            <rect x="383" y="52" width="99" height="24" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="432" y="66" font-size="7" font-weight="800" fill="#059669" font-family="monospace" text-anchor="middle">2&times; FP64 FPUs</text>
-            <rect x="383" y="80" width="99" height="22" rx="2" fill="#ffffff" stroke="#151b20" stroke-width="0.8"/>
-            <text x="432" y="94" font-size="7" font-weight="800" fill="#64748b" font-family="monospace" text-anchor="middle">64b INT ALU</text>
+            <rect x="383" y="24" width="99" height="24" rx="2" fill="#ffffff" stroke="#38bdf8" stroke-width="1"/>
+            <text x="432" y="39" font-size="7.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">8&times; VRF Banks</text>
+            <rect x="383" y="52" width="99" height="24" rx="2" fill="#ffffff" stroke="#34d399" stroke-width="1"/>
+            <text x="432" y="67" font-size="7.5" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">2&times; FP64 FPUs</text>
+            <rect x="383" y="80" width="99" height="22" rx="2" fill="#ffffff" stroke="#60a5fa" stroke-width="1"/>
+            <text x="432" y="94" font-size="7.5" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">64b INT ALU</text>
           </g>
 
           <!-- Crossbar & VLSU -->
-          <rect x="230" y="255" width="490" height="30" rx="3" fill="#fee2e2" stroke="#151b20" stroke-width="1.2"/>
-          <text x="475" y="274" font-size="8" font-weight="900" fill="#991b1b" font-family="monospace" text-anchor="middle">SLIDE &amp; PERMUTE CROSSBAR (vslide / vrgather / tree reduction)</text>
+          <rect x="230" y="255" width="490" height="30" rx="3" fill="#fee2e2" stroke="#f43f5e" stroke-width="1.2"/>
+          <text x="475" y="274" font-size="8" font-weight="900" fill="#e11d48" font-family="monospace" text-anchor="middle">SLIDE &amp; PERMUTE CROSSBAR (vslide / vrgather / tree reduction)</text>
 
-          <rect x="230" y="290" width="490" height="30" rx="3" fill="#dcfce7" stroke="#151b20" stroke-width="1.2"/>
-          <text x="475" y="309" font-size="8.5" font-weight="900" fill="#166534" font-family="monospace" text-anchor="middle">128-bit AXI4 MEMORY INTERCONNECT &rarr; L2 CACHE &amp; CHESHIRE SOC</text>
+          <rect x="230" y="290" width="490" height="30" rx="3" fill="#dcfce7" stroke="#16a34a" stroke-width="1.2"/>
+          <text x="475" y="309" font-size="8.5" font-weight="900" fill="#16a34a" font-family="monospace" text-anchor="middle">128-bit AXI4 MEMORY INTERCONNECT &rarr; L2 CACHE &amp; CHESHIRE SOC</text>
         </svg>
       </div>
       <p class="schematic-caption">
@@ -4791,23 +4800,23 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
     /* Schematics */
     .schematic-container {
       background: #ffffff;
-      border: 2px solid var(--ink, #151b20);
+      border: 2px solid #0284c7;
       border-radius: 12px;
-      box-shadow: 4px 4px 0 var(--ink, #151b20);
+      box-shadow: 4px 4px 0 #bae6fd;
       overflow: hidden;
     }
 
     .schematic-header {
-      background: #f6f0dc;
+      background: #e0f2fe;
       padding: 0.85rem 1.25rem;
-      border-bottom: 2px solid var(--ink, #151b20);
+      border-bottom: 2px solid #0284c7;
     }
 
     .schematic-tag {
       font-size: 0.72rem;
       font-weight: 900;
       font-family: var(--md-code-font, monospace);
-      color: #9a3412;
+      color: #0369a1;
       display: block;
       margin-bottom: 0.25rem;
     }
@@ -4815,7 +4824,7 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
     .schematic-title {
       font-size: 1.05rem;
       font-weight: 900;
-      color: var(--ink, #151b20);
+      color: #0284c7;
       margin: 0;
     }
 

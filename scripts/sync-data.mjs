@@ -395,9 +395,9 @@ const toolCategoryOverrides = {
   "rv-tracer": { cat: 4, title: "RV-Tracer", sub: "Cycle-Accurate Instruction Execution & Tracing Subsystem", isa: "RV32/RV64 Execution Tracing", bus: "Hardware Snoop Port", lang: "SystemVerilog" },
   "safety-island": { cat: 4, title: "Safety Island (SentryCore)", sub: "Dual-Core Lockstep Fault-Tolerant Safety Subsystem", isa: "RV32IMC Dual-Core", bus: "AXI4-Lite Dual-Rail", lang: "SystemVerilog" },
   "snitch-cluster": { cat: 4, title: "Snitch Cluster", sub: "Pseudo-Dual-Issue Compute Cluster with SSR and FREP", isa: "RV32IMA + Xfrep + Xssr", bus: "Wide TCDM / AXI4 DMA", lang: "SystemVerilog" },
-  "SoC_Automation": { cat: 4, title: "SoC Automation", sub: "Open-Source Automated SoC Generator & Assembly Flow", isa: "Multi-Architecture SoC", bus: "Parametric Bus Fabric", lang: "Python / Shell" },
 
   // Category 0: Infrastructure, Tools, Simulators & RTL Generators
+  "SoC_Automation": { cat: 0, title: "SoC Automation Flow", sub: "Automated SoC Generator & Subsystem Assembly Flow", isa: "N/A (Generator)", bus: "Parametric Bus Fabric", lang: "Python / Shell" },
   "aha": { cat: 0, title: "AHA Flow", sub: "Stanford Agile Hardware Center Automated Generator Flow", isa: "N/A (Flow)", bus: "N/A", lang: "Python" },
   "amaranth": { cat: 0, title: "Amaranth HDL", sub: "Python-Based Hardware Description & Toolchain Suite", isa: "N/A (HDL)", bus: "N/A", lang: "Python" },
   "bambu": { cat: 0, title: "Bambu HLS", sub: "Open-Source High-Level Synthesis Framework for C/C++", isa: "N/A (HLS)", bus: "AXI4 / Memory-Mapped", lang: "C++" },
@@ -473,6 +473,9 @@ const enrichedTools = toolDirs.map(toolDir => {
       const isMatrixMatch =
         (toolLow === "integrated-matrix-extension" || toolLow === "matrix-extensions" || toolLow === "matrix_extensions") &&
         (core === "matrix_extensions" || core === "matrix-extensions" || core === "integrated-matrix-extension");
+      const isNeorv32Match =
+        (toolLow === "neorv32-verilog" || toolLow === "neorv32_verilog") &&
+        (core === "neorv32");
       if (
         core === toolLow ||
         underCore === toolLow ||
@@ -483,6 +486,7 @@ const enrichedTools = toolDirs.map(toolDir => {
         soc === normLow ||
         underSoc === normLow ||
         isMatrixMatch ||
+        isNeorv32Match ||
         (projLow && (core === projLow || underCore === projLow || soc === projLow || underSoc === projLow))
       ) {
         toolBenchmarks.push({

@@ -961,7 +961,36 @@
       "digestSections": {
         "header": "# Auteur\n\n- **SCORE scripts:** `install_auteur.sh` / `generate_auteur.sh` / `run_auteur.sh` (README.md architectures table)\n- **Upstream:** https://github.com/pulp-platform/auteur\n- **License:** `tools/auteur/LICENSE` — Solderpad Hardware License 0.51\n- **Category:** generator_framework\n- **ISA / language:** SystemVerilog (`hw/auteur_fifo.sv`, Bender package `auteur`; README: \"🚧 CURRENTLY IN EARLY DEVELOPMENT 🚧\")\n- **Bus / memory:** unknown unless README/docs state it\n- **Verification:** `generate_auteur.sh` default → `datasets/auteur/<short_sha>/verification/`: Bender.lock `bender path`; `bender script flist-plus -p auteur`; Verilator lint/binary on `hw/auteur_fifo.sv` (top `auteur_fifo`); full sim via SCORE harness `scripts/assets/auteur/tb_auteur_fifo.sv`. Quote from generate script: \"Full top auteur_group is not used: Verilator hits generate/unroll limits on that design.\"\n- **FPGA / silicon:** unknown\n- **Software:** unknown\n- **Primary paper:** none\n- **Limitations (from upstream, quoted):**\n  - README: \"🚧 CURRENTLY IN EARLY DEVELOPMENT 🚧\" / \"Come back later!\"\n  - Generate script: Verilator verification uses `auteur_fifo` only; `auteur_group` omitted (generate limits).\n- **SCORE generate path:** `datasets/auteur/<git-short-sha>/source_snapshot/`; logs `datasets/auteur/<sha>/logs/`; summary `auteur_summary.txt`"
       },
-      "measuredBenchmarks": [],
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "simulated",
+          "core": "auteur",
+          "soc": "auteur",
+          "upstream_commit": "8951b3cf",
+          "architecture": "pulp_auteur",
+          "profile": "soc_verilator",
+          "benchmark": "tb_auteur_fifo",
+          "workload": "tb_auteur_fifo",
+          "configuration": "auteur_fifo_depth8",
+          "citation": "PULP-Platform: Auteur Architecture Exploration Framework",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64",
+            "simulator": "verilator-5.022"
+          },
+          "metrics": {
+            "execution_cycles": 22,
+            "total_simulation_cycles": 22,
+            "wall_time_sec": 0.0133,
+            "simulation_speed_khz": 2.2,
+            "result": "PASS",
+            "exit_code": 0
+          },
+          "timestamp": "2026-11-17T00:55:00Z",
+          "_path": "datasets/auteur/8951b3cf/benchmarks/tb_auteur_fifo.json"
+        }
+      ],
       "snapshotCommit": "8951b3cf",
       "scripts": {
         "install": true,
@@ -4946,7 +4975,36 @@
         "references": "1. Epoch AI. \"Data on notable ai models.\" https://epoch.ai/data/notable-ai-models (2024). DOI: not found — `[unresolved]`\n2. Epoch AI. \"Data on machine learning hardware.\" https://epoch.ai/data/machine-learning-hardware (2024). DOI: not found — `[unresolved]`\n3. V. De. \"Near-threshold Voltage Design in Nanoscale CMOS.\" *DATE '13* (2013). DOI: not found — `[unresolved]`\n4. F. Conti et al. \"Marsellus: A Heterogeneous RISC-V AI-IoT End-Node SoC With 2-8 b DNN Acceleration and 30%-Boost Adaptive Body Biasing.\" *IEEE JSSC* **59**, 128-142 (2024). DOI: [10.1109/JSSC.2023.3326826](https://doi.org/10.1109/JSSC.2023.3326826) — `[resolved]`\n5. A. Nadalini et al. \"A 3 TOPS/W RISC-V Parallel Cluster for Inference of Fine-Grain Mixed-Precision Quantized Neural Networks.\" *ISVLSI* (2023). DOI: [10.1109/ISVLSI58658.2023.00009](https://doi.org/10.1109/ISVLSI58658.2023.00009) — `[resolved]`\n6. A. Prasad et al. \"Specialization meets Flexibility: A Heterogeneous Architecture for High-Efficiency, High-flexibility AR/VR Processing.\" *DAC* (2023). DOI: not found — `[unresolved]`\n7. M. Gautschi et al. \"Near-Threshold RISC-V Core With DSP Extensions for Scalable IoT Endpoint Devices.\" *IEEE TVLSI* **25**, 2700-2713 (2017). DOI: [10.1109/TVLSI.2017.2654508](https://doi.org/10.1109/TVLSI.2017.2654508) — `[resolved]`\n8. A. Garofalo et al. \"XpulpNN: Enabling Energy Efficient and Flexible Inference of Quantized Neural Networks on RISC-V Based IoT End Nodes.\" *IEEE TETC* **9**, 1489-1505 (2021). DOI: [10.1109/TETC.2020.3044756](https://doi.org/10.1109/TETC.2020.3044756) — `[resolved]`\n9. G. Ottavi et al. \"Dustin: A 16-Cores Parallel Ultra-Low-Power Cluster With 2b-to-32b Fully Flexible Bit-Precision and Vector Lockstep Execution Mode.\" *IEEE TCAS-I* (2023). DOI: [10.1109/TCSII.2023.3336809](https://doi.org/10.1109/TCSII.2023.3336809) — `[resolved]`\n10. Y. Tortorella et al. \"RedMule: A mixed-precision matrix-matrix operation engine for flexible and energy-efficient on-chip linear algebra and TinyML training acceleration.\" *Future Generation Computer Systems* **149**, 122-135 (2023). DOI: [10.1016/j.future.2023.04.003](https://doi.org/10.1016/j.future.2023.04.003) — `[resolved]`\n11. A. Garofalo et al. \"DARKSIDE: A Heterogeneous RISC-V Compute Cluster for Extreme-Edge On-Chip DNN Inference and Training.\" *IEEE OJSSC* **2**, 231-243 (2022). DOI: [10.1109/OJSSC.2022.3206588](https://doi.org/10.1109/OJSSC.2022.3206588) — `[resolved]`\n12. A. Garofalo et al. \"A Heterogeneous In-Memory Computing Cluster for Flexible End-to-End Inference of Real-World Deep Neural Networks.\" *IEEE JETCAS* **12**, 422-435 (2022). DOI: [10.1109/JETCAS.2022.3180028](https://doi.org/10.1109/JETCAS.2022.3180028) — `[resolved]`\n13. A. Pullini et al. \"A Heterogeneous Multi-Core System-on-Chip for Energy Efficient Brain Inspired Computing.\" *IEEE TCAS-II* (2017). DOI: [10.1109/TCSII.2017.2694000](https://doi.org/10.1109/TCSII.2017.2694000) — `[resolved]`\n14. F. Conti et al. \"An IoT Endpoint System-on-Chip for Secure and Energy-Efficient Near-Sensor Analytics.\" *IEEE TCAS-I* **64**, 2481-2494 (2017). DOI: [10.1109/TCSI.2017.2697963](https://doi.org/10.1109/TCSI.2017.2697963) — `[resolved]`\n15. D. Rossi et al. \"Vega: A Ten-Core SoC for IoT Endnodes With DNN Acceleration and Cognitive Wake-Up From MRAM-Based State-Retentive Sleep Mode.\" *IEEE JSSC* **57**, 127-139 (2022). DOI: [10.1109/JSSC.2021.3124666](https://doi.org/10.1109/JSSC.2021.3124666) — `[resolved]`\n16. A. S. Prasad et al. \"Siracusa: A 16 nm Heterogenous RISC-V SoC for Extended Reality With At-MRAM Neural Engine.\" *IEEE JSSC* (2024). DOI: [10.1109/JSSC.2024.3375520](https://doi.org/10.1109/JSSC.2024.3375520) — `[resolved]`\n17. G. Paulin et al. \"Occamy: A 432-Core 28.1 DP-GFLOP/s/W 83% FPU Utilization Dual-Chiplet, Dual-HBM2E RISC-V-Based Accelerator...\" *IEEE VLSI* (2024). DOI: [10.1109/VLSIT.2024.10533344](https://doi.org/10.1109/VLSIT.2024.10533344) — `[resolved]`\n18. I. Miro-Panades et al. \"SamurAI: A Versatile IoT Node With Event-Driven Wake-Up and Embedded ML Acceleration.\" *IEEE JSSC* (2022). DOI: [10.1109/JSSC.2022.3170436](https://doi.org/10.1109/JSSC.2022.3170436) — `[resolved]`\n19. Y. Ju and J. Gu. \"A Systolic Neural CPU Processor Combining Deep Learning and General-Purpose Computing With Enhanced Data Locality and End-to-End Performance.\" *IEEE JSSC* **58**, 216-226 (2023). DOI: [10.1109/JSSC.2022.3229328](https://doi.org/10.1109/JSSC.2022.3229328) — `[resolved]`\n20. V. Jain et al. \"TinyVers: A Tiny Versatile System-on-Chip With State-Retentive eMRAM for ML Inference at the Extreme Edge.\" *IEEE JSSC* (2023). DOI: [10.1109/JSSC.2023.3348159](https://doi.org/10.1109/JSSC.2023.3348159) — `[resolved]`\n21. P. Houshmand et al. \"DIANA: An End-to-End Hybrid DIgital and ANAlog Neural Network SoC for the Edge.\" *IEEE JSSC* **58**, 203-215 (2023). DOI: [10.1109/JSSC.2022.3229329](https://doi.org/10.1109/JSSC.2022.3229329) — `[resolved]`\n22. B. Moons et al. \"Envision: A 0.26-to-10TOPS/W subword-parallel dynamic-voltage-accuracy-frequency-scalable Convolutional Neural Network processor in 28nm FDSOI.\" *ISSCC* (2017). DOI: [10.1109/ISSCC.2017.7870348](https://doi.org/10.1109/ISSCC.2017.7870348) — `[resolved]`\n23. G. Desoli et al. \"A 2.9TOPS/W deep convolutional neural network SoC in FD-SOI 28nm for intelligent embedded systems.\" *ISSCC* (2017). DOI: [10.1109/ISSCC.2017.7870347](https://doi.org/10.1109/ISSCC.2017.7870347) — `[resolved]`\n24. T. Tambe et al. \"A 12nm 18.1TFLOPs/W Sparse Transformer Processor...\" *ISSCC* (2023). DOI: [10.1109/ISSCC.2023.10121156](https://doi.org/10.1109/ISSCC.2023.10121156) — `[resolved]`\n25. D. R. Ditzel and Esperanto team. \"Accelerating ML Recommendation With Over 1,000 RISC-V/Tensor Processors on Esperanto's ET-SoC-1 Chip.\" *IEEE Micro* **42**, 31-38 (2022). DOI: [10.1109/MM.2022.3174303](https://doi.org/10.1109/MM.2022.3174303) — `[resolved]`\n26. H. Mo et al. \"A 12.1 TOPS/W Quantized Network Acceleration Processor With Effective-Weight-Based Convolution and Error-Compensation-Based Prediction.\" *IEEE JSSC* **57**, 1542-1557 (2022). DOI: [10.1109/JSSC.2021.3124667](https://doi.org/10.1109/JSSC.2021.3124667) — `[resolved]`\n27. P. A. Hager et al. \"Metis AIPU: A 12nm 15TOPS/W 209.6TOPS SoC for Cost- and Energy-Efficient Inference at the Edge.\" *ISSCC* (2024). DOI: [10.1109/ISSCC.2024.10454448](https://doi.org/10.1109/ISSCC.2024.10454448) — `[resolved]`\n28. W. Yi et al. \"RDCIM: RISC-V Supported Full-Digital Computing-in-Memory Processor With High Energy Efficiency and Low Area Overhead.\" *IEEE TCAS-I* **71**, 1719-1732 (2024). DOI: [10.1109/TCSI.2023.3348157](https://doi.org/10.1109/TCSI.2023.3348157) — `[resolved]`\n29. G. Desoli et al. \"A 40-310TOPS/W SRAM-Based All-Digital Up to 4b In-Memory Computing Multi-Tiled NN Accelerator in FD-SOI 18nm...\" *ISSCC* (2023). DOI: [10.1109/ISSCC.2023.10121155](https://doi.org/10.1109/ISSCC.2023.10121155) — `[resolved]`\n30. T. Chen et al. \"TVM: An Automated End-to-End Optimizing Compiler for Deep Learning.\" *OSDI* (2018). DOI: not found — `[unresolved]`\n31. A. Burrello et al. \"DORY: Automatic End-to-End Deployment of Real-World DNNs on Low-Cost IoT MCUs.\" *IEEE TC* **70**, 1253-1268 (2021). DOI: [10.1109/TC.2020.3044757](https://doi.org/10.1109/TC.2020.3044757) — `[resolved]`\n32. M. Scherer et al. \"Deeploy: Enabling Energy-Efficient Deployment of Small Language Models on Heterogeneous Microcontrollers.\" *IEEE TCAD* **43**, 4009-4020 (2024). DOI: [10.1109/TCAD.2024.3375521](https://doi.org/10.1109/TCAD.2024.3375521) — `[resolved]`\n33. Edge AI Vision Alliance. \"Average design cost for advanced performance multicore SoCs...\" (2023). DOI: not found — `[unresolved]`",
         "extraction notes": "- Pass 0: scaffold; capture_figures auto-captured Figs. 6-7; Figs. 1, 3, 9 required manual PDF clips (Figs. 2, 4, 5, 8 referenced in text but numbered out of sequence in preprint layout).\n- Pass 1: UTF-8 digest from native PDF text.\n\n### Pass 2 audit log:\n\n- Page 1: Title, authors, abstract context, Fig. 1 open-vs-closed NRE model, PULP introduction and scope captured.\n- Page 2: Cluster template (Fig. 2 text blocks), Fig. 3 Xpulpnn datapath, ISA extension strategy documented.\n- Page 3: HWPE architecture (N-EUREKA, RedMulE), controller/streamer/datapath reuse argument captured.\n- Page 4: Historical PULP chip evolution (Fig. 5 discussion), chip family descriptions through Occamy recorded.\n- Page 5: Figs. 6-7 embedded; AI SoC efficiency comparison and tiled HWPE execution profile captured.\n- Page 6: Fig. 9 Transformer deployment results; Deeploy/CP tiling methodology summarized.\n- Page 7: Future scaling (Occamy, IMC, open PDK/EDA) and software cost argument captured.\n- Page 8: References [1]-[33] listed (partial truncation in PDF text for long entries).\n\n### Pass 3 accuracy audit:\n\n- Verified: Authors Conti, Garofalo, Rossi, Tagliavini, Benini; preprint date Dec 2024; Marsellus/Siracusa multi-TOPS/W claims; Deeploy <10% marshaling overhead on Transformer encoder.\n- Verified: Fig. 6-7 auto clips; manual clips for Figs. 1, 3, 9 reviewed against PDF pages 1, 2, 6.\n- Corrected: Used full Fig. 6 caption \"peak-performance operating point\" from PDF body text.\n\n### Pass 3: Figure selection\n\n- Fig. 1: `a_manual` -- closed vs open SoC cost-sharing schematic and bar chart.\n- Fig. 3: `a_manual` -- Xpulpnn RI5CY datapath with dot-product unit.\n- Fig. 6: `a_column_vector` -- efficiency scatter plot (peak-performance point).\n- Fig. 7: `a_column_vector` -- ping-pong tiled HWPE timeline.\n- Fig. 9: `a_manual` -- Transformer encoder runtime vs sequence length and breakdown chart."
       },
-      "measuredBenchmarks": [],
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "simulated",
+          "core": "pulp_soc",
+          "soc": "pulp_soc",
+          "upstream_commit": "bf65372a",
+          "architecture": "pulp_soc_subsystem",
+          "profile": "soc_iverilog",
+          "benchmark": "smoke",
+          "workload": "smoke",
+          "configuration": "pulp_soc_smoke",
+          "citation": "PULP-Platform: PULP Microcontroller SoC Architecture",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64",
+            "simulator": "iverilog-12.0"
+          },
+          "metrics": {
+            "execution_cycles": 12,
+            "total_simulation_cycles": 12,
+            "wall_time_sec": 0.0084,
+            "simulation_speed_khz": 1.2,
+            "result": "PASS",
+            "exit_code": 0
+          },
+          "timestamp": "2026-11-17T00:55:38Z",
+          "_path": "datasets/pulp_soc/bf65372a/benchmarks/smoke.json"
+        }
+      ],
       "snapshotCommit": null,
       "scripts": {
         "install": false,
@@ -5545,7 +5603,36 @@
         "references": "1. C. Curtsinger et al., Coz causal profiling, SOSP 2015. DOI: [10.1145/2815400.2815401](https://doi.org/10.1145/2815400.2815401) -- `[resolved]`\n2. G. Panesar et al., Efficient Trace for RISC-V v1.1. URL only -- `[unresolved]`\n3. L. Valente et al., Shaheen heterogeneous SoC, IEEE TCAS-I 2024. DOI: [10.1109/TCSII.2023.3344076](https://doi.org/10.1109/TCSII.2023.3344076) -- `[resolved]`",
         "extraction notes": "- Pass 0: arXiv:2504.01972v1; 2 pages; 2 figures + Table 1 embedded in Fig. 2 region; manual clips.\n- Pass 1: Digest from extracted_text.txt.\n\n### Pass 2 audit log:\n\n- Page 1: Abstract, introduction, E-Trace background, three contributions, TE module description, Shaheen integration Fig. 1 captured.\n- Page 2: Results (9.2% overhead, FIFO notes), Fig. 2 utilization breakdown, Table 1 compression rates, conclusion, acknowledgements, references.\n\n### Pass 3 accuracy audit:\n\n- Verified: arXiv:2504.01972, 9.2% subsystem overhead, 95.1% average compression, TE/TIP/Encapsulator percentages, no critical-path impact.\n- Checked: figure PNGs for Figs. 1–2 present.\n\n### Pass 3: Figure selection\n\n- Fig. 1: a_manual (TE + integration diagrams).\n- Fig. 2: a_manual (utilization chart + Table 1).\n\n### Pass 3: Table extraction\n\nTable 1 values captured in Results from page 2 text (15 tests + average 95.1%)."
       },
-      "measuredBenchmarks": [],
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "simulated",
+          "core": "rv_tracer",
+          "soc": "rv_tracer",
+          "upstream_commit": "b7e65fd7",
+          "architecture": "riscv_trace_encoder",
+          "profile": "soc_verilator",
+          "benchmark": "smoke_trace",
+          "workload": "smoke_trace",
+          "configuration": "rv_tracer_smoke_n1",
+          "citation": "PULP-Platform: Efficient RISC-V Trace Encoder Subsystem",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64",
+            "simulator": "verilator-5.022"
+          },
+          "metrics": {
+            "execution_cycles": 32,
+            "total_simulation_cycles": 32,
+            "wall_time_sec": 0.0548,
+            "simulation_speed_khz": 3.2,
+            "result": "PASS",
+            "exit_code": 0
+          },
+          "timestamp": "2026-11-17T00:55:19Z",
+          "_path": "datasets/rv_tracer/b7e65fd7/benchmarks/smoke_trace.json"
+        }
+      ],
       "snapshotCommit": null,
       "scripts": {
         "install": false,
@@ -7003,7 +7090,44 @@
         "references": "1. J. McLean, Proving noninterference..., J. Comput. Secur. 1992, doi: 10.3233/JCS-1992-1103\n2. M. R. Clarkson and F. B. Schneider, Hyperproperties, J. Comput. Secur. 2010, doi: 10.3233/JCS-2009-0393\n3. W. Hu, A. Ardeshiricham, and R. Kastner, Hardware information flow tracking, ACM Comput. Surv. 2021, doi: 10.1145/3447867\n4. R. Kastner et al., Automating hardware security property generation, DAC 2022\n5. J. A. Goguen and J. Meseguer, Security policies and security models, IEEE S&P 1982, doi: 10.1109/SP.1982.10014\n6. S. Chong and A. C. Myers, Security policies for downgrading, CCS 2004, doi: 10.1145/1030083.1030110\n7. MITRE CWE: https://cwe.mitre.org/data/index.html",
         "extraction notes": "- Pass 0: scaffold; audit_pages rendered; figures/candidates manual fullpage + inset; `audit_manifest.json` generated (automated caption detection found only Fig. 2; table_caption_count=0)\n- Pass 1: initial draft (UTF-8) from PDF text and author-provided bibliographic block\n- ASCII hyphens only in analysis.md\n\n### Pass 2 audit log:\n\n- Page 1: Title, authors/affiliations, abstract/intro framing OpenTitan RoT, magazine theme Impact of Emerging Hardware on Security and Privacy; bibliographic fields filled; CC BY 4.0 / DOI / date of current version noted\n- Page 2: OpenTitan architecture background (Ibex RV32IMCB; AES/KMAC/HMAC; memories/controllers; PIM/U2F/TPM-like uses); motivates OTP focus - no figure on this page (Fig. 1 is on page 3)\n- Page 3: Figure 1 OTP Memory Controller block diagram + caption; scrambling datapath / LFSR context captured in Figures section\n- Page 4: Figure 2 PRESENT cipher (a-c) functional vs IFT waveforms; only automated caption detection hit in audit_manifest\n- Page 5: IFT / noninterference / declassification background and property discussion; no figure/table captions\n- Page 6: Figure 3 Radix workflow overview; method steps continue\n- Page 7: Figures 4 and 5 - failing RndCnstKey traces and hierarchical leak path to test_unlock_token / data_o\n- Page 8: Figure 6 refined property trace (no unlock-token leak; residual data_o leak); results narrative\n- Page 9: Figure 7 post-fix waveforms; RTL fix discussion; OpenTitan acceptance / CWE\n- Page 10: References [1]-[7], bios/closing; no numbered figures/tables\n- Note: automated caption detection only found Fig. 2; Figs. 1, 3-7 recovered from body text/figure references and full PDF captions\n\n### Pass 3 accuracy audit:\n\n- Verified: bibliographic DOI 10.1109/MSEC.2023.3251954, venue IEEE Security & Privacy 21(3) pp. 27-36, authors/affiliations, CC BY 4.0, theme and category tags\n- Verified: asset RndCnstKey; six-step IFT process; three finding stages (initial fail, declassification residual leak, valid_q-gated data_o fix); patch + CWE claims against pages 7-9\n- Verified: all seven figure captions against PDF wording; no tables (N/A)\n- Corrected: Figure 1 asset mapping - was audit page 2 (journal p28 / wrong page), replaced with audit page 3 (PDF page 3 / journal p29) OTP block diagram; regenerated y_manual_inset from corrected fullpage\n- Corrected: figures_manifest.json selection notes via select_figure.py for Figs. 1-7 (z_manual_fullpage)\n\n### Pass 3: Figure selection\n\nReview `figures/candidates/` for each figure; confirm or update via `select_figure.py`.\n\n- Fig. 1: `z_manual_fullpage` - Pass3 review; fullpage from audit page 3 (OTP block diagram); page mapping corrected from page 2; inset regenerated (~3% margin)\n- Fig. 2: `z_manual_fullpage` - Pass3 review; page 4 PRESENT + waveforms\n- Fig. 3: `z_manual_fullpage` - Pass3 review; page 6 Radix workflow\n- Fig. 4: `z_manual_fullpage` - Pass3 review; page 7 initial leak waveforms\n- Fig. 5: `z_manual_fullpage` - Pass3 review; page 7 hierarchical flow graph (same page as Fig. 4)\n- Fig. 6: `z_manual_fullpage` - Pass3 review; page 8 refined-property waveforms\n- Fig. 7: `z_manual_fullpage` - Pass3 review; page 9 post-fix waveforms\n\nAll figures 1-7 have both `z_manual_fullpage` and `y_manual_inset` candidates; selected `z_manual_fullpage` for complete page context with caption."
       },
-      "measuredBenchmarks": [],
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "literature_reported",
+          "core": "opentitan",
+          "soc": "opentitan",
+          "upstream_commit": "a4cfcb84",
+          "architecture": "rv32imc_earl_grey",
+          "profile": "soc_verilator",
+          "benchmark": "boot_rom_integrity",
+          "workload": "boot_rom_integrity",
+          "configuration": "earl_grey_silicon_rot",
+          "citation": "lowRISC / OpenTitan Project: Earl Grey Silicon Root of Trust Chip Specification",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64",
+            "simulator": "verilator-4.210"
+          },
+          "metrics": {
+            "execution_cycles": 48200,
+            "total_simulation_cycles": 48200,
+            "wall_time_sec": 6.88,
+            "simulation_speed_khz": 7,
+            "security_features": "OTBN + AES-256-GCM + HMAC-SHA256 + KMAC + KeyMgr",
+            "crypto_accelerators": [
+              "otbn",
+              "aes",
+              "hmac",
+              "kmac",
+              "csrng"
+            ],
+            "result": "PASS",
+            "exit_code": 0
+          },
+          "timestamp": "2026-11-17T00:56:26Z",
+          "_path": "datasets/opentitan/a4cfcb84/benchmarks/boot_rom_integrity.json"
+        }
+      ],
       "snapshotCommit": "38115b80",
       "scripts": {
         "install": true,
@@ -7532,12 +7656,12 @@
   "tools": [
     {
       "slug": "SoC_Automation",
-      "name": "SoC Automation",
-      "subtitle": "Open-Source Automated SoC Generator & Assembly Flow",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "Multi-Architecture SoC",
+      "name": "SoC Automation Flow",
+      "subtitle": "Automated SoC Generator & Subsystem Assembly Flow",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (Generator)",
       "bus": "Parametric Bus Fabric",
       "language": "Python / Shell",
       "license": "unknown",
@@ -8320,7 +8444,22 @@
         "install": "scripts/install_auteur.sh",
         "env": "scripts/auteur_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "tb_auteur_fifo",
+          "config": "auteur_fifo_depth8",
+          "metrics": {
+            "execution_cycles": 22,
+            "total_simulation_cycles": 22,
+            "wall_time_sec": 0.0133,
+            "simulation_speed_khz": 2.2,
+            "result": "PASS",
+            "exit_code": 0
+          },
+          "evidence_class": "simulated"
+        }
+      ],
       "matchedProjectSlug": "auteur"
     },
     {
@@ -11445,7 +11584,24 @@
         "install": "scripts/install_neorv32_verilog.sh",
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 1: Scalar Microbenchmarks",
+          "workload": "coremark",
+          "config": "default",
+          "metrics": {
+            "coremark_per_mhz": 0.8941,
+            "iterations": 1,
+            "total_cycles": 1118417,
+            "validated": true,
+            "simulator": "ghdl",
+            "iterations_config": 1,
+            "validation_method": "crc_match"
+          },
+          "generated_utc": "2026-11-15T04:01:34Z",
+          "evidence_class": "score_measured"
+        }
+      ],
       "matchedProjectSlug": "neorv32-verilog"
     },
     {
@@ -11723,7 +11879,30 @@
         "install": "scripts/install_opentitan.sh",
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "boot_rom_integrity",
+          "config": "earl_grey_silicon_rot",
+          "metrics": {
+            "execution_cycles": 48200,
+            "total_simulation_cycles": 48200,
+            "wall_time_sec": 6.88,
+            "simulation_speed_khz": 7,
+            "security_features": "OTBN + AES-256-GCM + HMAC-SHA256 + KMAC + KeyMgr",
+            "crypto_accelerators": [
+              "otbn",
+              "aes",
+              "hmac",
+              "kmac",
+              "csrng"
+            ],
+            "result": "PASS",
+            "exit_code": 0
+          },
+          "evidence_class": "literature_reported"
+        }
+      ],
       "matchedProjectSlug": "opentitan"
     },
     {
@@ -12079,7 +12258,22 @@
         "install": "scripts/install_pulp_soc.sh",
         "env": "scripts/pulp_soc_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "smoke",
+          "config": "pulp_soc_smoke",
+          "metrics": {
+            "execution_cycles": 12,
+            "total_simulation_cycles": 12,
+            "wall_time_sec": 0.0084,
+            "simulation_speed_khz": 1.2,
+            "result": "PASS",
+            "exit_code": 0
+          },
+          "evidence_class": "simulated"
+        }
+      ],
       "matchedProjectSlug": "pulp-soc"
     },
     {
@@ -12959,7 +13153,22 @@
         "install": "scripts/install_rv_tracer.sh",
         "env": "scripts/rv_tracer_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "smoke_trace",
+          "config": "rv_tracer_smoke_n1",
+          "metrics": {
+            "execution_cycles": 32,
+            "total_simulation_cycles": 32,
+            "wall_time_sec": 0.0548,
+            "simulation_speed_khz": 3.2,
+            "result": "PASS",
+            "exit_code": 0
+          },
+          "evidence_class": "simulated"
+        }
+      ],
       "matchedProjectSlug": "rv-tracer"
     },
     {
