@@ -86,16 +86,28 @@ try {
 }
 
 try {
+  benchmarks.core_results = JSON.parse(readFileSync(join(benchmarksDir, "core", "aggregated_results.json"), "utf8"));
+} catch (e) {}
+
+try {
   benchmarks.app = JSON.parse(readFileSync(join(benchmarksDir, "app", "suite.json"), "utf8"));
 } catch (e) {
   console.warn("Could not read app suite:", e.message);
 }
 
 try {
+  benchmarks.app_results = JSON.parse(readFileSync(join(benchmarksDir, "app", "aggregated_results.json"), "utf8"));
+} catch (e) {}
+
+try {
   benchmarks.vector = JSON.parse(readFileSync(join(benchmarksDir, "vector", "suite.json"), "utf8"));
 } catch (e) {
   console.warn("Could not read vector suite:", e.message);
 }
+
+try {
+  benchmarks.vector_results = JSON.parse(readFileSync(join(benchmarksDir, "vector", "aggregated_results.json"), "utf8"));
+} catch (e) {}
 
 try {
   benchmarks.soc = JSON.parse(readFileSync(join(benchmarksDir, "soc", "aggregated_results.json"), "utf8"));
@@ -232,13 +244,20 @@ const enrichedProjects = projectsData.map(proj => {
     contentRelpath = noteRel;
   }
 
-  // Find matching measured benchmark results
+  // Find matching measured benchmark results across all 4 levels
   const measuredBenchmarks = [];
-  if (benchmarks.soc && benchmarks.soc.results) {
-    for (const r of benchmarks.soc.results) {
-      if (r.core?.toLowerCase() === pageSlug || r.core?.toLowerCase() === name.toLowerCase()) {
-        measuredBenchmarks.push(r);
-      }
+  const allAggregated = [
+    ...(benchmarks.core_results?.results || []),
+    ...(benchmarks.app_results?.results || []),
+    ...(benchmarks.vector_results?.results || []),
+    ...(benchmarks.soc?.results || []),
+  ];
+  for (const r of allAggregated) {
+    const c = (r.core || "").toLowerCase().replace(/_/g, "-");
+    const p = pageSlug.toLowerCase().replace(/_/g, "-");
+    const n = name.toLowerCase().replace(/_/g, "-");
+    if (c === p || c === n) {
+      measuredBenchmarks.push(r);
     }
   }
 
@@ -319,6 +338,7 @@ enrichedProjects.forEach(p => {
 const toolCategoryOverrides = {
   // Category 1: MCU & Scalar Embedded
   "darkriscv": { cat: 1, title: "DarkRISCV", sub: "1-2 Stage RV32E/I Soft Core in Verilog", isa: "RV32E / RV32I", bus: "LUT RAM / Harvard", lang: "Verilog" },
+  "femtorv": { cat: 1, title: "FemtoRV", sub: "Minimalist RV32I/E Core Optimized for FPGA Logic Cell Usage", isa: "RV32I / RV32E", bus: "Memory-Mapped Native", lang: "Verilog" },
   "hazard3": { cat: 1, title: "Hazard3", sub: "3-Stage RV32I[M][A][C][B] Microcontroller Core", isa: "RV32IMACB", bus: "AHB-Lite / Hazard3 Bus", lang: "Verilog" },
   "ibex": { cat: 1, title: "Ibex (zero-riscy)", sub: "2-Stage RV32IMC Core for Secure Applications", isa: "RV32IMC", bus: "Open Bus Interface (OBI)", lang: "SystemVerilog" },
   "neorv32": { cat: 1, title: "NEORV32 (VHDL)", sub: "Customizable 32-bit RISC-V Microcontroller SoC", isa: "RV32[I/E]MACU_Zfinx_Zbb_Zcb", bus: "Wishbone / AXI4-Lite", lang: "VHDL" },
@@ -328,19 +348,29 @@ const toolCategoryOverrides = {
   "rv12": { cat: 1, title: "RV12", sub: "Configurable Single-Issue In-Order RV32/RV64 Core", isa: "RV32IMC / RV64IMC", bus: "AHB3-Lite / AXI4", lang: "Verilog" },
   "scr1": { cat: 1, title: "SCR1", sub: "Syntacore Open-Source Compact 2-4 Stage Core", isa: "RV32IMC", bus: "AHB-Lite / AXI4-Lite", lang: "SystemVerilog" },
   "serv": { cat: 1, title: "SERV", sub: "The World's Smallest Bit-Serial RISC-V Core", isa: "RV32I / RV32E", bus: "Wishbone", lang: "Verilog" },
+  "veer-eh1": { cat: 1, title: "VeeR EH1", sub: "9-Stage Dual-Issue Superscalar Embedded RV32IMC Core", isa: "RV32IMC", bus: "AHB-Lite / AXI4", lang: "SystemVerilog" },
+  "veer-eh2": { cat: 1, title: "VeeR EH2", sub: "9-Stage 2-Thread Dual-Issue Superscalar Embedded RV32IMC Core", isa: "RV32IMC", bus: "AHB-Lite / AXI4", lang: "SystemVerilog" },
   "veer-el2": { cat: 1, title: "VeeR EL2", sub: "Western Digital 4-Stage Dual-Issue Embedded Core", isa: "RV32IMC", bus: "AHB-Lite / AXI4", lang: "SystemVerilog" },
   "vexriscv": { cat: 1, title: "VexRiscv", sub: "SpinalHDL-Generated 5-Stage RV32IMAFDC Core", isa: "RV32IMAFDC", bus: "Avalon / Wishbone / AXI4", lang: "SpinalHDL (Scala)" },
 
   // Category 2: 64-bit Application-Class Cores
   "black-parrot": { cat: 2, title: "BlackParrot", sub: "Modular 64-bit Linux Multicore Processor", isa: "RV64GC", bus: "BedRock / TileLink", lang: "SystemVerilog" },
+  "c906": { cat: 2, title: "T-Head OpenC906", sub: "Commercial 5-Stage RV64GCV Core with Vector Processing Unit", isa: "RV64GCV", bus: "AXI4 (64-bit)", lang: "Verilog" },
+  "c910": { cat: 2, title: "T-Head OpenC910", sub: "3-Issue Out-of-Order Superscalar RV64GCV Core with Dual VPU", isa: "RV64GCV", bus: "Dual AXI4 (128-bit)", lang: "Verilog" },
   "cva6": { cat: 2, title: "CVA6 (Ariane)", sub: "6-Stage 64-bit In-Order Application Core with MMU", isa: "RV64GC", bus: "AXI4 (64-bit)", lang: "SystemVerilog" },
+  "nutshell": { cat: 2, title: "NutShell (Min-Cai)", sub: "UCAS 6-Stage Dual-Issue In-Order RV64GC Core", isa: "RV64GC", bus: "AXI4 (64-bit)", lang: "Chisel (Scala)" },
   "rocket-chip": { cat: 2, title: "Rocket Chip", sub: "UC Berkeley 5-Stage RV64GC Generator in Chisel", isa: "RV64GC", bus: "TileLink (TL-UH)", lang: "Chisel (Scala)" },
 
   // Category 3: Vector & Coprocessor Engines
   "ara": { cat: 3, title: "Ara (RVV 1.0)", sub: "Scalable 4-16 Lane Vector Coprocessor for CVA6", isa: "RV64GCV (Vector 1.0)", bus: "AXI4 (Wide 128-512b)", lang: "SystemVerilog" },
   "araxl": { cat: 3, title: "AraXL", sub: "Extended Vector Coprocessor with Clustered Lanes", isa: "RV64GCV", bus: "AXI4 Interconnect", lang: "SystemVerilog" },
+  "cv32e40p": { cat: 3, title: "CV32E40P", sub: "4-Stage In-Order Core with XpulpV2 Packed Sub-Word SIMD & DSP", isa: "RV32IMFCXpulpV2 (SIMD)", bus: "Open Bus Interface (OBI)", lang: "SystemVerilog" },
   "gemmini": { cat: 3, title: "Gemmini", sub: "Configurable Systolic Deep Learning Accelerator Array", isa: "RoCC Custom Instructions", bus: "TileLink / RoCC", lang: "Chisel" },
+  "hwacha": { cat: 3, title: "Hwacha", sub: "Decoupled Access-Execute (DAE) Vector-Fetch Coprocessor", isa: "Hwacha VT (RoCC DAE)", bus: "RoCC / TileLink", lang: "Chisel (Scala)" },
+  "integrated-matrix-extension": { cat: 3, title: "Matrix Engine (IME)", sub: "Integrated Matrix Extension 2D Outer-Product Tile Tensor Coprocessor", isa: "RV64GC + RISC-V SME", bus: "TileLink / AXI4", lang: "SystemVerilog" },
   "spatz": { cat: 3, title: "Spatz", sub: "Ultra-Lightweight Vector Coprocessor for Snitch Core", isa: "RV32IMFD + Custom Vector", bus: "Tightly-Coupled OBI", lang: "SystemVerilog" },
+  "vicuna": { cat: 3, title: "Vicuna", sub: "Compact Embedded 32-bit RVV 1.0 Vector Coprocessor (Zve32f)", isa: "RV32IMF_Zve32f (RVV 1.0)", bus: "OBI / AXI4-Lite", lang: "SystemVerilog" },
+  "vortex": { cat: 3, title: "Vortex GPGPU", sub: "Open-Source Many-Core SIMT GPGPU Supporting OpenCL 1.2", isa: "RV32IMF-SIMT", bus: "AXI4 Clustered Bus", lang: "SystemVerilog" },
 
   // Category 4: Full SoC Platforms & Multi-Core Clusters
   "astral": { cat: 4, title: "Astral", sub: "Scalable Tiled Multi-Cluster Architecture Platform", isa: "RV64GC", bus: "AXI4 / Network-on-Chip", lang: "SystemVerilog" },
@@ -414,22 +444,43 @@ const enrichedTools = toolDirs.map(toolDir => {
     env: existsSync(join(scriptsDir, `${under}_env.sh`)) ? `scripts/${under}_env.sh` : (existsSync(join(scriptsDir, `${toolDir}_env.sh`)) ? `scripts/${toolDir}_env.sh` : null),
   };
 
-  // Benchmark results detection
+  // Benchmark results detection across all 4 levels
   const toolBenchmarks = [];
-  if (benchmarks.soc && benchmarks.soc.results) {
-    for (const r of benchmarks.soc.results) {
-      if (r.core?.toLowerCase() === toolDir.toLowerCase() || r.core?.toLowerCase() === normSlug || (matchedProject && r.core?.toLowerCase() === matchedProject.slug.toLowerCase())) {
+  const checkResults = (resultsList, levelName) => {
+    if (!resultsList) return;
+    for (const r of resultsList) {
+      const core = (r.core || "").toLowerCase();
+      const underCore = core.replace(/_/g, "-");
+      const toolLow = toolDir.toLowerCase();
+      const normLow = normSlug.toLowerCase();
+      const projLow = matchedProject?.slug?.toLowerCase() || "";
+      const isMatrixMatch =
+        (toolLow === "integrated-matrix-extension" || toolLow === "matrix-extensions" || toolLow === "matrix_extensions") &&
+        (core === "matrix_extensions" || core === "matrix-extensions" || core === "integrated-matrix-extension");
+      if (
+        core === toolLow ||
+        underCore === toolLow ||
+        core === normLow ||
+        underCore === normLow ||
+        isMatrixMatch ||
+        (projLow && (core === projLow || underCore === projLow))
+      ) {
         toolBenchmarks.push({
-          level: "Level 4: Full SoC & Cluster Benchmarks",
-          workload: r.workload,
-          config: r.config,
+          level: levelName,
+          workload: r.workload || r.benchmark,
+          config: r.config || r.configuration,
           metrics: r.metrics,
-          generated_utc: r.generated_utc,
-          evidence_class: r.evidence_class
+          generated_utc: r.generated_utc || r.run_at_utc,
+          evidence_class: r.evidence_class || "score_measured"
         });
       }
     }
-  }
+  };
+
+  checkResults(benchmarks.core_results?.results, "Level 1: Scalar Microbenchmarks");
+  checkResults(benchmarks.app_results?.results, "Level 2: Memory & OS Compliance");
+  checkResults(benchmarks.vector_results?.results, "Level 3: Domain Vector Acceleration");
+  checkResults(benchmarks.soc?.results, "Level 4: Full SoC & Cluster Benchmarks");
 
   // Metadata override
   const meta = toolCategoryOverrides[toolDir] || {

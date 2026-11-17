@@ -15,7 +15,6 @@ Includes:
 - Master Empirical Benchmark Leaderboard (46 simulation runs) with LaTeX table export
 - Multi-Configuration Scaling & Sensitivity Analysis (Core scaling, TCDM banking, DMA burst)
 - 23 Bespoke Native Architectural Dossiers with 4 deep subsystem cards and verified RTL parameters
-- Category 0 Infrastructure & Tooling Dossiers
 """
 
 import os
@@ -40,7 +39,6 @@ import db from "../../data/score_db.json";
 import { renderMarkdown, formatNumber } from "../../lib/content";
 
 const cat4Tools = db.tools.filter(t => t.categoryNumber === 4);
-const infraTools = db.tools.filter(t => t.categoryNumber === 0);
 
 // Master Empirical Benchmark Leaderboard: Exact figures measured under SCORE cycle-accurate simulation profiles
 const masterBenchmarkData = [
@@ -1840,82 +1838,6 @@ const bespokeSocDossiers = [
     ]
   }
 ];
-
-// Fallback technical summaries for Category 0 Infrastructure & Tooling
-const infraToolsList = [
-  {
-    name: "DRAMSim2",
-    slug: "dramsim2",
-    org: "University of Maryland",
-    lang: "C++",
-    license: "BSD-3-Clause",
-    desc: "Cycle-accurate memory system simulator for DDR2/DDR3 memory systems. Used in SCORE to model realistic DRAM controller latencies and memory controller contention."
-  },
-  {
-    name: "GHDL",
-    slug: "ghdl",
-    org: "Tristan Gingold et al.",
-    lang: "VHDL / Ada / C++",
-    license: "GPL-2.0",
-    desc: "Open-source VHDL simulator capable of compiling VHDL 2008 designs down to native machine code via LLVM/GCC. Primary simulator for NEORV32 and VHDL RISC-V platforms."
-  },
-  {
-    name: "HERO Toolchain Installer",
-    slug: "hero-install",
-    org: "ETH Zürich",
-    lang: "Shell / Python",
-    license: "Apache-2.0",
-    desc: "Automated deployment harness installing LLVM heterogeneous OpenMP compilers and cross-compilers for ARMv8 and PULP cluster architectures."
-  },
-  {
-    name: "Ibex Host Tools",
-    slug: "ibex-host-tools",
-    org: "lowRISC",
-    lang: "Python / C++",
-    license: "Apache-2.0",
-    desc: "Host-side development utilities for lowRISC Ibex, including memory image converters, trace log analyzers, and co-simulation bridges."
-  },
-  {
-    name: "NOCulator",
-    slug: "noculator",
-    org: "Open-Source Research",
-    lang: "C++",
-    license: "MIT",
-    desc: "Cycle-accurate on-chip network simulator modeling virtual-channel routers, flit buffers, crossbar contention, and latency distributions."
-  },
-  {
-    name: "Py2HWSW",
-    slug: "py2hwsw",
-    org: "IObundle Lda",
-    lang: "Python",
-    license: "MIT",
-    desc: "Python framework for generating hardware designs, testbenches, and software drivers. Drives the IOb-SoC automated IP generation pipeline."
-  },
-  {
-    name: "RISC-V Compliance Suite",
-    slug: "riscv-compliance",
-    org: "RISC-V International",
-    lang: "Assembly / C",
-    license: "BSD-3-Clause",
-    desc: "Golden architectural validation test suites verifying core adherence to RV32I, RV64I, M, A, F, D, and C unprivileged and privileged specifications."
-  },
-  {
-    name: "RISC-V Toolchain Wrapper",
-    slug: "riscv_toolchain_wrapper",
-    org: "SCORE Project",
-    lang: "Shell",
-    license: "Apache-2.0",
-    desc: "Unified cross-compiler wrapper managing target ABI discovery, optimization flag injection (-O3, -funroll-loops), and link script mapping."
-  },
-  {
-    name: "Verilator Wrapper",
-    slug: "verilator_wrapper",
-    org: "SCORE Project",
-    lang: "C++ / Shell",
-    license: "Apache-2.0",
-    desc: "Standardized multithreaded Verilator compilation and execution runner with cycle-exact performance counters, trace generation, and memory checkers."
-  }
-];
 ---
 """)
 
@@ -1957,7 +1879,6 @@ const infraToolsList = [
       <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Empirical Leaderboard</a>
       <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Multi-Config Scaling</a>
       <a href="#soc-dossiers" class="core-jump-pill">&sect; 7. Native SoC Dossiers (23)</a>
-      <a href="#infra-section" class="core-jump-pill pill-infra">&#9881; Tooling (9)</a>
     </div>
   </div>
 
@@ -2878,38 +2799,6 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
       ))}
     </div>
   </section>
-
-  <!-- ============================================================ -->
-  <!-- SECTION 8: CATEGORY 0 INFRASTRUCTURE & TOOLING DOSSIERS -->
-  <!-- ============================================================ -->
-  <section class="dossiers-container" id="infra-section">
-    <div class="section-title-wrap">
-      <div class="badge badge-accent">&sect; 8. INFRASTRUCTURE &amp; COMPILER TOOLING</div>
-      <h2 class="section-heading">Category 0: Verification, Simulation &amp; Synthesis Tooling</h2>
-      <p class="section-sub">
-        Standardized compilers, wrappers, memory simulators, and compliance harnesses supporting the Level 4 SoC evaluation pipeline.
-      </p>
-    </div>
-
-    <div class="dossiers-list">
-      {infraToolsList.map((tool) => (
-        <article class="dossier-card tool-item" id={`tool-${tool.slug}`}>
-          <div class="dossier-header">
-            <div class="dh-left">
-              <span class="d-badge">{tool.lang}</span>
-              <span class="d-org">{tool.org}</span>
-            </div>
-            <div class="dh-right">
-              <span class="d-license">{tool.license}</span>
-            </div>
-          </div>
-
-          <h3 class="dossier-core-name">{tool.name}</h3>
-          <p class="dossier-lead">{tool.desc}</p>
-        </article>
-      ))}
-    </div>
-  </section>
 </BaseLayout>
 
 <!-- ============================================================ -->
@@ -3239,9 +3128,6 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     background: #eef2ff;
     color: #4338ca;
     border-color: #4338ca;
-  }
-  .pill-infra {
-    background: #f1f5f9;
   }
 
   /* Block Headers */

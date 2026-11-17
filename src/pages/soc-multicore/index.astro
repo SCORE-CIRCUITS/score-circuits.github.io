@@ -1815,30 +1815,6 @@ const bespokeSocDossiers = [
     ]
   }
 ];
-
-// Master Infrastructure, Verification & RTL Generation Tooling
-const toolingFallbacks: Record<string, string> = {
-  dramsim2: "Cycle-accurate memory system simulator for DDR2/DDR3 memory systems. Used in SCORE to model realistic DRAM controller latencies and memory controller contention.",
-  ghdl: "Open-source VHDL simulator capable of compiling VHDL 2008 designs down to native machine code via LLVM/GCC. Primary simulator for NEORV32 and VHDL RISC-V platforms.",
-  "hero-install": "Automated deployment harness installing LLVM heterogeneous OpenMP compilers and cross-compilers for ARMv8 and PULP cluster architectures.",
-  "ibex-host-tools": "Host-side development utilities for lowRISC Ibex, including memory image converters, trace log analyzers, and co-simulation bridges.",
-  noculator: "Cycle-accurate on-chip network simulator modeling virtual-channel routers, flit buffers, crossbar contention, and latency distributions.",
-  py2hwsw: "Python framework for generating hardware designs, testbenches, and software drivers. Drives the IOb-SoC automated IP generation pipeline.",
-  "riscv-compliance": "Golden architectural validation test suites verifying core adherence to RV32I, RV64I, M, A, F, D, and C unprivileged and privileged specifications.",
-  riscv_toolchain_wrapper: "Unified cross-compiler wrapper managing target ABI discovery, optimization flag injection (-O3, -funroll-loops), and link script mapping.",
-  verilator_wrapper: "Standardized multithreaded Verilator compilation and execution runner with cycle-exact performance counters, trace generation, and memory checkers."
-};
-
-const infraToolsList = ((db as any).tools || [])
-  .filter((tool: any) => tool.categoryNumber === 0)
-  .map((tool: any) => ({
-    name: tool.name,
-    slug: tool.slug,
-    org: tool.organization || tool.org || "Open Source Community",
-    lang: tool.language || tool.lang || "RTL / Tooling",
-    license: tool.license || "Open-Source",
-    desc: toolingFallbacks[tool.slug] || tool.subtitle || tool.notableStrengths || "Open-source hardware infrastructure and tooling framework."
-  }));
 ---
 
 <BaseLayout
@@ -1882,7 +1858,6 @@ const infraToolsList = ((db as any).tools || [])
       <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Empirical Leaderboard</a>
       <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Multi-Config Scaling</a>
       <a href="#soc-dossiers" class="core-jump-pill">&sect; 7. Native SoC Dossiers (23)</a>
-      <a href="#infra-section" class="core-jump-pill pill-infra">&#9881; Tooling &amp; HLS ({infraToolsList.length})</a>
     </div>
   </div>
 
@@ -2973,38 +2948,6 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     </div>
   </section>
 
-  <!-- ============================================================ -->
-  <!-- SECTION 8: VERIFICATION & TOOLING INFRASTRUCTURE DOSSIERS -->
-  <!-- ============================================================ -->
-  <section class="dossiers-container" id="infra-section">
-    <div class="section-title-wrap">
-      <div class="badge badge-accent">&sect; 8. INFRASTRUCTURE &amp; COMPILER TOOLING</div>
-      <h2 class="section-heading">Verification, Simulation &amp; Synthesis Tooling ({infraToolsList.length} Frameworks)</h2>
-      <p class="section-sub">
-        Standardized compilers, High-Level Synthesis (HLS) engines, Meta-HDLs, memory simulators, and compliance harnesses supporting the SCORE evaluation pipeline.
-      </p>
-    </div>
-
-    <div class="dossiers-list">
-      {infraToolsList.map((tool) => (
-        <article class="dossier-card tool-item" id={`tool-${tool.slug}`}>
-          <div class="dossier-header">
-            <div class="dh-left">
-              <span class="d-badge">{tool.lang}</span>
-              <span class="d-org">{tool.org}</span>
-            </div>
-            <div class="dh-right">
-              <span class="d-license">{tool.license}</span>
-            </div>
-          </div>
-
-          <h3 class="dossier-core-name">{tool.name}</h3>
-          <p class="dossier-lead">{tool.desc}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
   <!-- Track Navigation Pager -->
   <div class="score-pager">
     <a href="/vector-coprocessors/" class="score-pager-btn prev">
@@ -3348,9 +3291,6 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
   }
   .pill-sim:hover {
     background: #e0e7ff;
-  }
-  .pill-infra {
-    background: #f1f5f9;
   }
 
   /* Block Headers */
