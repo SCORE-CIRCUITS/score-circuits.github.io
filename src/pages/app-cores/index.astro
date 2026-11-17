@@ -1240,52 +1240,52 @@ const appCoreDossiers = [
             <!-- Status Header Banner -->
             <rect x="2" y="2" width="936" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
             <circle cx="16" cy="14" r="4" fill="#b7df69"/>
-            <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • UNIVERSAL RV64GC APPLICATION CORE &amp; MEMORY HIERARCHY TOPOLOGY</text>
+            <text x="28" y="17" font-size="9" font-weight="900" fill="#000000" font-family="monospace">SCORE EDA WORKBENCH • UNIVERSAL RV64GC APPLICATION CORE &amp; MEMORY HIERARCHY TOPOLOGY</text>
 
             <!-- ZONE 1: INSTRUCTION FETCH & BRANCH PREDICTION (x=20 to 220) -->
             <rect x="20" y="36" width="200" height="428" rx="6" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5" stroke-dasharray="3,3"/>
             <rect x="20" y="36" width="200" height="20" rx="5" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1"/>
-            <text x="28" y="50" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ZONE 1: FETCH &amp; PREDICTION</text>
+            <text x="28" y="50" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">ZONE 1: FETCH &amp; PREDICTION</text>
 
             <!-- PC MUX -->
             <rect x="30" y="68" width="75" height="38" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.8"/>
-            <text x="40" y="84" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">PC MUX</text>
-            <text x="38" y="96" font-size="7" fill="#242c33">+4/Br/Trap/PTW</text>
+            <text x="40" y="84" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">PC MUX</text>
+            <text x="38" y="96" font-size="7" fill="#000000" font-weight="900">+4/Br/Trap/PTW</text>
 
             <!-- PC Register -->
             <rect x="120" y="68" width="88" height="38" rx="4" fill="#c9f3f4" stroke="#151b20" stroke-width="1.8"/>
-            <text x="130" y="84" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">PC REG [63:0]</text>
-            <text x="128" y="96" font-size="7" fill="#242c33">Virtual Address</text>
+            <text x="130" y="84" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">PC REG [63:0]</text>
+            <text x="128" y="96" font-size="7" fill="#000000" font-weight="900">Virtual Address</text>
 
             <line x1="105" y1="87" x2="118" y2="87" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
 
             <!-- ITLB Block -->
             <rect x="30" y="118" width="180" height="48" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.8"/>
-            <text x="40" y="133" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">INSTRUCTION TLB (ITLB)</text>
-            <text x="40" y="146" font-size="7" fill="#151b20">32-Entry Fully Associative CAM</text>
-            <text x="40" y="157" font-size="6.5" font-weight="700" fill="#151b20">&#8594; 1-Cycle VPN &#8594; Physical PPN</text>
+            <text x="40" y="133" font-size="8" font-weight="900" fill="#000000" font-family="monospace">INSTRUCTION TLB (ITLB)</text>
+            <text x="40" y="146" font-size="7" fill="#000000" font-weight="900">32-Entry Fully Associative CAM</text>
+            <text x="40" y="157" font-size="6.5" font-weight="900" fill="#000000">&#8594; 1-Cycle VPN &#8594; Physical PPN</text>
 
             <!-- Virtual to Physical Address arrow -->
             <path d="M 164 106 L 164 118" fill="none" stroke="#22bfd7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
 
             <!-- L1-Instruction Cache -->
             <rect x="30" y="178" width="180" height="54" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.8"/>
-            <text x="40" y="194" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">L1-I CACHE (32 KB, 4-WAY)</text>
-            <text x="40" y="208" font-size="7" fill="#242c33">VIPT • 64-Byte Cache Lines</text>
-            <text x="40" y="221" font-size="6.8" font-weight="800" fill="#0d9488">&#10003; Hit: 1-Cycle 64-bit Fetch</text>
+            <text x="40" y="194" font-size="8" font-weight="900" fill="#000000" font-family="monospace">L1-I CACHE (32 KB, 4-WAY)</text>
+            <text x="40" y="208" font-size="7" fill="#000000" font-weight="900">VIPT • 64-Byte Cache Lines</text>
+            <text x="40" y="221" font-size="6.8" font-weight="900" fill="#000000">&#10003; Hit: 1-Cycle 64-bit Fetch</text>
 
             <!-- Branch Predictor Subsystem -->
             <rect x="30" y="244" width="180" height="78" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.8"/>
-            <text x="40" y="259" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">BRANCH PREDICTOR</text>
-            <text x="40" y="273" font-size="7" fill="#151b20">&#8226; BTB: 64-512 Target Buffer</text>
-            <text x="40" y="286" font-size="7" fill="#151b20">&#8226; BHT: 2-Level Direction Predictor</text>
-            <text x="40" y="299" font-size="6.8" fill="#151b20">&#8226; RAS: 8-16 Call/Return Stack</text>
-            <text x="40" y="312" font-size="6.8" font-weight="800" fill="#f38469">&#9888; Mispredict: 3 to 7 cycle flush</text>
+            <text x="40" y="259" font-size="8" font-weight="900" fill="#000000" font-family="monospace">BRANCH PREDICTOR</text>
+            <text x="40" y="273" font-size="7" fill="#000000" font-weight="900">&#8226; BTB: 64-512 Target Buffer</text>
+            <text x="40" y="286" font-size="7" fill="#000000" font-weight="900">&#8226; BHT: 2-Level Direction Predictor</text>
+            <text x="40" y="299" font-size="6.8" fill="#000000" font-weight="900">&#8226; RAS: 8-16 Call/Return Stack</text>
+            <text x="40" y="312" font-size="6.8" font-weight="900" fill="#000000">&#9888; Mispredict: 3 to 7 cycle flush</text>
 
             <!-- Fetch Queue FIFO -->
             <rect x="30" y="334" width="180" height="42" rx="4" fill="#c9f3f4" stroke="#151b20" stroke-width="1.8"/>
-            <text x="40" y="350" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">FETCH QUEUE / FIFO</text>
-            <text x="40" y="364" font-size="7" fill="#242c33">8-Entry Decoupled Instruction Stream</text>
+            <text x="40" y="350" font-size="8" font-weight="900" fill="#000000" font-family="monospace">FETCH QUEUE / FIFO</text>
+            <text x="40" y="364" font-size="7" fill="#000000" font-weight="900">8-Entry Decoupled Instruction Stream</text>
 
             <!-- Line from I-Cache to Fetch FIFO -->
             <path d="M 120 232 L 120 238 L 218 238 L 218 345 L 210 345" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
@@ -1293,87 +1293,87 @@ const appCoreDossiers = [
             <!-- ZONE 2: DECODE, RENAME & 64-BIT EXECUTION (x=235 to 495) -->
             <rect x="235" y="36" width="260" height="428" rx="6" fill="#fffaf0" stroke="#8275e8" stroke-width="1.5" stroke-dasharray="3,3"/>
             <rect x="235" y="36" width="260" height="20" rx="5" fill="#e2dfff" stroke="#8275e8" stroke-width="1"/>
-            <text x="243" y="50" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ZONE 2: DECODE, RENAME &amp; EXECUTE</text>
+            <text x="243" y="50" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">ZONE 2: DECODE, RENAME &amp; EXECUTE</text>
 
             <!-- Instruction Decoder & RVC Expander -->
             <rect x="245" y="68" width="240" height="48" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.8"/>
-            <text x="255" y="84" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">RV64GC DECODER &amp; RVC EXPANDER</text>
-            <text x="255" y="97" font-size="7" fill="#242c33">Decodes 32-bit &amp; expands 16-bit compressed ops</text>
-            <text x="255" y="107" font-size="6.8" font-weight="700" fill="#151b20">&#8594; Slices rs1, rs2, rd, imm64, funct3, opcode</text>
+            <text x="255" y="84" font-size="8" font-weight="900" fill="#000000" font-family="monospace">RV64GC DECODER &amp; RVC EXPANDER</text>
+            <text x="255" y="97" font-size="7" fill="#000000" font-weight="900">Decodes 32-bit &amp; expands 16-bit compressed ops</text>
+            <text x="255" y="107" font-size="6.8" font-weight="900" fill="#000000">&#8594; Slices rs1, rs2, rd, imm64, funct3, opcode</text>
 
             <!-- Feed from Fetch Queue to Decoder -->
             <path d="M 210 355 L 225 355 L 225 92 L 243 92" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
 
             <!-- Issue & Dispatch Controller -->
             <rect x="245" y="126" width="240" height="48" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.8"/>
-            <text x="255" y="142" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">ISSUE &amp; DISPATCH CONTROLLER</text>
-            <text x="255" y="154" font-size="7" fill="#151b20">In-Order: Scoreboard &amp; Hazard Dependency Table</text>
-            <text x="255" y="165" font-size="6.8" font-weight="700" fill="#242c33">Out-of-Order: RAT Rename + Reorder Buffer (ROB)</text>
+            <text x="255" y="142" font-size="8" font-weight="900" fill="#000000" font-family="monospace">ISSUE &amp; DISPATCH CONTROLLER</text>
+            <text x="255" y="154" font-size="7" fill="#000000" font-weight="900">In-Order: Scoreboard &amp; Hazard Dependency Table</text>
+            <text x="255" y="165" font-size="6.8" font-weight="900" fill="#000000">Out-of-Order: RAT Rename + Reorder Buffer (ROB)</text>
 
             <line x1="365" y1="116" x2="365" y2="124" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBaseApp)"/>
 
             <!-- 64-Bit Integer Register File -->
             <rect x="245" y="186" width="110" height="75" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.8"/>
-            <text x="252" y="202" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT REGFILE</text>
-            <text x="252" y="215" font-size="6.8" fill="#242c33">32 GPRs (x0-x31)</text>
-            <text x="252" y="227" font-size="6.8" fill="#151b20">2R / 1W Ports</text>
-            <text x="252" y="240" font-size="6.5" font-weight="800" fill="#151b20">Sync Clocked</text>
+            <text x="252" y="202" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">64-BIT REGFILE</text>
+            <text x="252" y="215" font-size="6.8" fill="#000000" font-weight="900">32 GPRs (x0-x31)</text>
+            <text x="252" y="227" font-size="6.8" fill="#000000" font-weight="900">2R / 1W Ports</text>
+            <text x="252" y="240" font-size="6.5" font-weight="900" fill="#000000">Sync Clocked</text>
 
             <!-- 64-Bit Floating-Point Register File -->
             <rect x="245" y="271" width="110" height="75" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.8"/>
-            <text x="252" y="287" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT FPU REGS</text>
-            <text x="252" y="300" font-size="6.8" fill="#242c33">32 FPRs (f0-f31)</text>
-            <text x="252" y="312" font-size="6.8" fill="#151b20">3R / 1W Ports</text>
-            <text x="252" y="325" font-size="6.5" font-weight="800" fill="#151b20">IEEE 754 DP</text>
+            <text x="252" y="287" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">64-BIT FPU REGS</text>
+            <text x="252" y="300" font-size="6.8" fill="#000000" font-weight="900">32 FPRs (f0-f31)</text>
+            <text x="252" y="312" font-size="6.8" fill="#000000" font-weight="900">3R / 1W Ports</text>
+            <text x="252" y="325" font-size="6.5" font-weight="900" fill="#000000">IEEE 754 DP</text>
 
             <!-- 64-Bit Execution Units Stack -->
             <rect x="368" y="186" width="117" height="42" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.8"/>
-            <text x="375" y="202" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT ALU &amp; AGU</text>
-            <text x="375" y="215" font-size="6.5" fill="#242c33">1-Cycle Int &amp; Effective Addr</text>
+            <text x="375" y="202" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">64-BIT ALU &amp; AGU</text>
+            <text x="375" y="215" font-size="6.5" fill="#000000" font-weight="900">1-Cycle Int &amp; Effective Addr</text>
 
             <rect x="368" y="238" width="117" height="42" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.8"/>
-            <text x="375" y="254" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">64-BIT MULDIV (M)</text>
-            <text x="375" y="267" font-size="6.8" fill="#242c33">Mul: 3-4 cyc • Div: Radix-4 Non-restoring</text>
+            <text x="375" y="254" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">64-BIT MULDIV (M)</text>
+            <text x="375" y="267" font-size="6.8" fill="#000000" font-weight="900">Mul: 3-4 cyc • Div: Radix-4 Non-restoring</text>
 
             <rect x="368" y="290" width="117" height="46" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.8"/>
-            <text x="375" y="306" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">IEEE 754 FPU (F/D)</text>
-            <text x="375" y="318" font-size="6.8" fill="#242c33">Fused Multiply-Add (FMA)</text>
-            <text x="375" y="328" font-size="6.5" fill="#242c33">Pipelined SP/DP • 4-5 cyc</text>
+            <text x="375" y="306" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">IEEE 754 FPU (F/D)</text>
+            <text x="375" y="318" font-size="6.8" fill="#000000" font-weight="900">Fused Multiply-Add (FMA)</text>
+            <text x="375" y="328" font-size="6.5" fill="#000000" font-weight="900">Pipelined SP/DP • 4-5 cyc</text>
 
             <!-- CSR, PMP & Privilege Controller -->
             <rect x="245" y="356" width="240" height="54" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.8"/>
-            <text x="255" y="372" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">PRIVILEGED CSR &amp; PMP CONTROLLER</text>
-            <text x="255" y="385" font-size="7" fill="#151b20">&#8226; Modes: Machine (M) &#8226; Supervisor (S) &#8226; User (U)</text>
-            <text x="255" y="396" font-size="6.8" fill="#f38469">&#8226; satp Base Register &#8226; 16-Region PMP Memory Firewall</text>
+            <text x="255" y="372" font-size="8" font-weight="900" fill="#000000" font-family="monospace">PRIVILEGED CSR &amp; PMP CONTROLLER</text>
+            <text x="255" y="385" font-size="7" fill="#000000" font-weight="900">&#8226; Modes: Machine (M) &#8226; Supervisor (S) &#8226; User (U)</text>
+            <text x="255" y="396" font-size="6.8" fill="#000000" font-weight="900">&#8226; satp Base Register &#8226; 16-Region PMP Memory Firewall</text>
 
             <!-- ZONE 3: VIRTUAL MEMORY, PTW & L1-D CACHE (x=510 to 735) -->
             <rect x="510" y="36" width="225" height="428" rx="6" fill="#fffaf0" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="3,3"/>
             <rect x="510" y="36" width="225" height="20" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
-            <text x="518" y="50" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ZONE 3: SV39 MMU &amp; L1-D CACHE</text>
+            <text x="518" y="50" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">ZONE 3: SV39 MMU &amp; L1-D CACHE</text>
 
             <!-- DTLB Block -->
             <rect x="525" y="68" width="195" height="50" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
-            <text x="535" y="84" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">DATA TLB (DTLB)</text>
-            <text x="535" y="97" font-size="7" fill="#151b20">32-Entry CAM • 1-Cycle Load/Store Translation</text>
-            <text x="535" y="108" font-size="6.8" font-weight="700" fill="#151b20">&#10003; Hit: Virtual VA[38:0] &#8594; Physical PA[55:0]</text>
+            <text x="535" y="84" font-size="8" font-weight="900" fill="#000000" font-family="monospace">DATA TLB (DTLB)</text>
+            <text x="535" y="97" font-size="7" fill="#000000" font-weight="900">32-Entry CAM • 1-Cycle Load/Store Translation</text>
+            <text x="535" y="108" font-size="6.8" font-weight="900" fill="#000000">&#10003; Hit: Virtual VA[38:0] &#8594; Physical PA[55:0]</text>
 
             <!-- Sv39 Radix-Tree Hardware Page Table Walker (PTW) -->
             <rect x="525" y="128" width="195" height="78" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
-            <text x="535" y="144" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">SV39 PAGE TABLE WALKER (PTW)</text>
-            <text x="535" y="157" font-size="7" fill="#151b20">3-Level Hardware DRAM Radix Walk on TLB Miss:</text>
-            <text x="535" y="169" font-size="6.8" fill="#242c33">1. Level 2 (VPN[2]): satp.PPN &#215; 4KB &#8594; PTE2</text>
-            <text x="535" y="180" font-size="6.8" fill="#242c33">2. Level 1 (VPN[1]): PTE2.PPN &#215; 4KB &#8594; PTE1</text>
-            <text x="535" y="191" font-size="6.8" font-weight="800" fill="#151b20">3. Level 0 (VPN[0]): Leaf PTE &#8594; Fill DTLB/ITLB</text>
+            <text x="535" y="144" font-size="8" font-weight="900" fill="#000000" font-family="monospace">SV39 PAGE TABLE WALKER (PTW)</text>
+            <text x="535" y="157" font-size="7" fill="#000000" font-weight="900">3-Level Hardware DRAM Radix Walk on TLB Miss:</text>
+            <text x="535" y="169" font-size="6.8" fill="#000000" font-weight="900">1. Level 2 (VPN[2]): satp.PPN &#215; 4KB &#8594; PTE2</text>
+            <text x="535" y="180" font-size="6.8" fill="#000000" font-weight="900">2. Level 1 (VPN[1]): PTE2.PPN &#215; 4KB &#8594; PTE1</text>
+            <text x="535" y="191" font-size="6.8" font-weight="900" fill="#000000">3. Level 0 (VPN[0]): Leaf PTE &#8594; Fill DTLB/ITLB</text>
 
             <!-- Arrow from DTLB to PTW on miss -->
             <path d="M 680 118 L 680 128" fill="none" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowTealApp)"/>
 
             <!-- Non-Blocking L1 Data Cache -->
             <rect x="525" y="216" width="195" height="66" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
-            <text x="535" y="232" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">L1-D CACHE (32 KB, 8-WAY)</text>
-            <text x="535" y="246" font-size="7" fill="#242c33">VIPT • Write-Back &amp; Write-Allocate</text>
-            <text x="535" y="258" font-size="7" fill="#151b20">Store-to-Load Forwarding Queue</text>
-            <text x="535" y="271" font-size="6.8" font-weight="800" fill="#0d9488">&#10003; Hit: 2-3 Clock Cycle Load-to-Use</text>
+            <text x="535" y="232" font-size="8" font-weight="900" fill="#000000" font-family="monospace">L1-D CACHE (32 KB, 8-WAY)</text>
+            <text x="535" y="246" font-size="7" fill="#000000" font-weight="900">VIPT • Write-Back &amp; Write-Allocate</text>
+            <text x="535" y="258" font-size="7" fill="#000000" font-weight="900">Store-to-Load Forwarding Queue</text>
+            <text x="535" y="271" font-size="6.8" font-weight="900" fill="#000000">&#10003; Hit: 2-3 Clock Cycle Load-to-Use</text>
 
             <!-- AGU line feeding DTLB and L1D -->
             <path d="M 485 200 L 515 200 L 515 95 L 523 95" fill="none" stroke="#22bfd7" stroke-width="1.8" marker-end="url(#arrowBlueApp)"/>
@@ -1381,50 +1381,50 @@ const appCoreDossiers = [
 
             <!-- Miss Status Holding Registers (MSHR) -->
             <rect x="525" y="292" width="195" height="52" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
-            <text x="535" y="308" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">MSHR SUBSYSTEM (4 TO 8 BUFFERS)</text>
-            <text x="535" y="321" font-size="7" fill="#151b20">Tracks Concurrent In-Flight DRAM Misses</text>
-            <text x="535" y="333" font-size="6.8" font-weight="800" fill="#0d9488">&#8594; Enables Hit-Under-Miss Execution</text>
+            <text x="535" y="308" font-size="8" font-weight="900" fill="#000000" font-family="monospace">MSHR SUBSYSTEM (4 TO 8 BUFFERS)</text>
+            <text x="535" y="321" font-size="7" fill="#000000" font-weight="900">Tracks Concurrent In-Flight DRAM Misses</text>
+            <text x="535" y="333" font-size="6.8" font-weight="900" fill="#000000">&#8594; Enables Hit-Under-Miss Execution</text>
 
             <!-- Physical Memory Protection Filter -->
             <rect x="525" y="356" width="195" height="54" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1.8"/>
-            <text x="535" y="372" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">PMP REGION FIREWALL (16 CHANNELS)</text>
-            <text x="535" y="385" font-size="7" fill="#242c33">Validates Physical Address vs. pmpaddr0-15</text>
-            <text x="535" y="396" font-size="6.5" font-weight="800" fill="#f38469">&#9888; Traps: Access Violation &#8594; Trap FSM</text>
+            <text x="535" y="372" font-size="8" font-weight="900" fill="#000000" font-family="monospace">PMP REGION FIREWALL (16 CHANNELS)</text>
+            <text x="535" y="385" font-size="7" fill="#000000" font-weight="900">Validates Physical Address vs. pmpaddr0-15</text>
+            <text x="535" y="396" font-size="6.5" font-weight="900" fill="#000000">&#9888; Traps: Access Violation &#8594; Trap FSM</text>
 
             <!-- ZONE 4: SYSTEM INTERCONNECT & COHERENCE (x=750 to 920) -->
             <rect x="750" y="36" width="170" height="428" rx="6" fill="#fffaf0" stroke="#0d9488" stroke-width="1.5" stroke-dasharray="3,3"/>
             <rect x="750" y="36" width="170" height="20" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
-            <text x="758" y="50" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ZONE 4: SYSTEM COHERENCE</text>
+            <text x="758" y="50" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">ZONE 4: SYSTEM COHERENCE</text>
 
             <!-- Coherent Cache Crossbar Interface -->
             <rect x="760" y="68" width="150" height="74" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.8"/>
-            <text x="768" y="84" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">COHERENT CROSSBAR</text>
-            <text x="768" y="98" font-size="7" fill="#242c33">TileLink-C / BedRock / AXI4</text>
-            <text x="768" y="112" font-size="7" fill="#151b20">5 Independent Channels:</text>
-            <text x="768" y="125" font-size="6.5" font-family="monospace" fill="#151b20">A:Acq B:Prb C:Rel D:Gnt E:Ack</text>
+            <text x="768" y="84" font-size="8" font-weight="900" fill="#000000" font-family="monospace">COHERENT CROSSBAR</text>
+            <text x="768" y="98" font-size="7" fill="#000000" font-weight="900">TileLink-C / BedRock / AXI4</text>
+            <text x="768" y="112" font-size="7" fill="#000000" font-weight="900">5 Independent Channels:</text>
+            <text x="768" y="125" font-size="6.5" font-family="monospace" fill="#000000" font-weight="900">A:Acq B:Prb C:Rel D:Gnt E:Ack</text>
 
             <!-- Directory-Based MESI Coherence -->
             <rect x="760" y="152" width="150" height="85" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1.8"/>
-            <text x="768" y="168" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">MESI COHERENCE ENGINE</text>
-            <text x="768" y="182" font-size="7" fill="#151b20">&#8226; Modified (M): Exclusive Dirty</text>
-            <text x="768" y="194" font-size="7" fill="#151b20">&#8226; Exclusive (E): Exclusive Clean</text>
-            <text x="768" y="206" font-size="7" fill="#151b20">&#8226; Shared (S): Read-only Copy</text>
-            <text x="768" y="218" font-size="7" fill="#151b20">&#8226; Invalid (I): Miss Required</text>
+            <text x="768" y="168" font-size="8" font-weight="900" fill="#000000" font-family="monospace">MESI COHERENCE ENGINE</text>
+            <text x="768" y="182" font-size="7" fill="#000000" font-weight="900">&#8226; Modified (M): Exclusive Dirty</text>
+            <text x="768" y="194" font-size="7" fill="#000000" font-weight="900">&#8226; Exclusive (E): Exclusive Clean</text>
+            <text x="768" y="206" font-size="7" fill="#000000" font-weight="900">&#8226; Shared (S): Read-only Copy</text>
+            <text x="768" y="218" font-size="7" fill="#000000" font-weight="900">&#8226; Invalid (I): Miss Required</text>
 
             <!-- 64-Bit Outbound Master Bus Port -->
             <rect x="760" y="248" width="150" height="98" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.8"/>
-            <text x="768" y="264" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">SYSTEM BUS MASTER</text>
-            <text x="768" y="278" font-size="7" font-weight="800" fill="#0d9488">&#9650; OUT: read/write req</text>
-            <text x="768" y="291" font-size="7" font-weight="800" fill="#242c33">&#9660; IN:  read/write grant</text>
-            <text x="768" y="304" font-size="7" font-weight="800" fill="#0d9488">&#9650; OUT: 64-bit addr &amp; data</text>
-            <text x="768" y="317" font-size="7" font-weight="800" fill="#242c33">&#9660; IN:  response data valid</text>
-            <text x="768" y="330" font-size="6.5" fill="#242c33">Burst transfer engine</text>
+            <text x="768" y="264" font-size="8" font-weight="900" fill="#000000" font-family="monospace">SYSTEM BUS MASTER</text>
+            <text x="768" y="278" font-size="7" font-weight="900" fill="#000000">&#9650; OUT: read/write req</text>
+            <text x="768" y="291" font-size="7" font-weight="900" fill="#000000">&#9660; IN:  read/write grant</text>
+            <text x="768" y="304" font-size="7" font-weight="900" fill="#000000">&#9650; OUT: 64-bit addr &amp; data</text>
+            <text x="768" y="317" font-size="7" font-weight="900" fill="#000000">&#9660; IN:  response data valid</text>
+            <text x="768" y="330" font-size="6.5" fill="#000000" font-weight="900">Burst transfer engine</text>
 
             <!-- Outbound to Shared L2 / System Fabric / DRAM -->
             <rect x="760" y="356" width="150" height="54" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1.8"/>
-            <text x="768" y="372" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">SHARED L2 &amp; DRAM</text>
-            <text x="768" y="385" font-size="7" fill="#242c33">External Memory Gateway</text>
-            <text x="768" y="396" font-size="6.8" font-weight="700" fill="#f38469">&#8594; 50-100 ns DRAM Latency</text>
+            <text x="768" y="372" font-size="8" font-weight="900" fill="#000000" font-family="monospace">SHARED L2 &amp; DRAM</text>
+            <text x="768" y="385" font-size="7" fill="#000000" font-weight="900">External Memory Gateway</text>
+            <text x="768" y="396" font-size="6.8" font-weight="900" fill="#000000">&#8594; 50-100 ns DRAM Latency</text>
 
             <!-- Connection lines between Memory Blocks and Bus -->
             <path d="M 720 160 L 758 160" fill="none" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowTealApp)"/>
@@ -1437,12 +1437,12 @@ const appCoreDossiers = [
             <path d="M 360 438 L 225 438 L 225 220 L 243 220" fill="none" stroke="#0d9488" stroke-width="2.5" marker-end="url(#arrowTealApp)"/>
             <rect x="360" y="428" width="300" height="18" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
             <circle cx="368" cy="437" r="3" fill="#0d9488"/>
-            <text x="375" y="440.5" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">SYNCHRONOUS COMMIT HIGHWAY: Writeback Result &#8594; RegFiles</text>
+            <text x="375" y="440.5" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">SYNCHRONOUS COMMIT HIGHWAY: Writeback Result &#8594; RegFiles</text>
 
             <!-- Branch Misprediction Redirection Line (Red) to PC Mux -->
             <path d="M 120 322 L 120 330 L 105 330" fill="none" stroke="#f38469" stroke-width="2"/>
             <rect x="25" y="322" width="80" height="16" rx="3" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
-            <text x="65" y="333" font-size="6.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">BR REDIRECT</text>
+            <text x="65" y="333" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">BR REDIRECT</text>
             <path d="M 25 330 L 15 330 L 15 87 L 28 87" fill="none" stroke="#f38469" stroke-width="2" marker-end="url(#arrowRedApp)"/>
 
             <!-- Trap Vector mtvec / stvec line from CSR to PC Mux -->
@@ -1451,26 +1451,26 @@ const appCoreDossiers = [
             <!-- BOTTOM BUS KEY LEGEND & METRICS STRIP -->
             <rect x="20" y="474" width="900" height="24" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
             <line x1="30" y1="486" x2="50" y2="486" stroke="#ffc83e" stroke-width="2.2"/>
-            <text x="55" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">ALU/FPU Datapath</text>
+            <text x="55" y="489" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">ALU/FPU Datapath</text>
 
             <line x1="160" y1="486" x2="180" y2="486" stroke="#22bfd7" stroke-width="2.2"/>
-            <text x="185" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">Virtual VA / Physical PA</text>
+            <text x="185" y="489" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">Virtual VA / Physical PA</text>
 
             <line x1="320" y1="486" x2="340" y2="486" stroke="#0d9488" stroke-width="2"/>
-            <text x="345" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">PTW Radix Walk</text>
+            <text x="345" y="489" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">PTW Radix Walk</text>
 
             <line x1="450" y1="486" x2="470" y2="486" stroke="#0d9488" stroke-width="2.5"/>
-            <text x="475" y="489" font-size="7.5" font-weight="800" fill="#0d9488" font-family="monospace">Commit Highway</text>
+            <text x="475" y="489" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">Commit Highway</text>
 
             <line x1="580" y1="486" x2="600" y2="486" stroke="#f38469" stroke-width="2"/>
-            <text x="605" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">Branch Redirection</text>
+            <text x="605" y="489" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">Branch Redirection</text>
 
             <line x1="720" y1="486" x2="740" y2="486" stroke="#f38469" stroke-width="1.8" stroke-dasharray="3,3"/>
-            <text x="745" y="489" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace">Trap Vector (mtvec/stvec)</text>
+            <text x="745" y="489" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">Trap Vector (mtvec/stvec)</text>
 
             <!-- Bottom Metrics Strip -->
             <rect x="20" y="502" width="900" height="22" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-            <text x="30" y="516" font-size="8" font-weight="800" fill="#151b20" font-family="monospace">METRICS: Fmax: 1.0 &#8211; 1.5 GHz (16nm/22nm) &#8226; Area: 135 &#8211; 420 kGE &#8226; Sv39 3-Level MMU &#8226; MSHR Concurrency: 4-8 &#8226; Full Linux 6.1 Boot</text>
+            <text x="30" y="516" font-size="8" font-weight="900" fill="#000000" font-family="monospace">METRICS: Fmax: 1.0 &#8211; 1.5 GHz (16nm/22nm) &#8226; Area: 135 &#8211; 420 kGE &#8226; Sv39 3-Level MMU &#8226; MSHR Concurrency: 4-8 &#8226; Full Linux 6.1 Boot</text>
           </svg>
         </div>
         <div class="mobile-scroll-hint">&#8596; Interactive Schematic: Scroll horizontally on touchscreens to inspect full memory &amp; execution datapath</div>
@@ -3485,125 +3485,125 @@ const appCoreDossiers = [
                 <!-- Status Header Banner -->
                 <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
                 <circle cx="16" cy="14" r="4" fill="#b7df69"/>
-                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • ROCKET CHIP 5-STAGE IN-ORDER PIPELINE &amp; TILELINK-UH TOPOLOGY</text>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#000000" font-family="monospace">SCORE EDA WORKBENCH • ROCKET CHIP 5-STAGE IN-ORDER PIPELINE &amp; TILELINK-UH TOPOLOGY</text>
 
                 <!-- 5 Stage Vertical Columns / Bounding Boxes -->
                 <!-- 1. IF Stage -->
                 <rect x="18" y="42" width="130" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="18" y="42" width="130" height="20" rx="5" fill="#22bfd7"/>
-                <text x="26" y="56" font-size="9" font-weight="900" fill="#fffaf0" font-family="monospace">STAGE 1: IF (FETCH)</text>
+                <rect x="18" y="42" width="130" height="20" rx="5" fill="#cffafe" stroke="#0891b2" stroke-width="1.5"/>
+                <text x="26" y="56" font-size="9" font-weight="900" fill="#000000" font-family="monospace">STAGE 1: IF (FETCH)</text>
                 
                 <rect x="26" y="70" width="114" height="32" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="32" y="85" font-size="9" font-weight="800" fill="#151b20">PC Register (64b)</text>
-                <text x="32" y="96" font-size="7.5" fill="#242c33">Next-PC Logic / BTB</text>
+                <text x="32" y="85" font-size="9" font-weight="900" fill="#000000">PC Register (64b)</text>
+                <text x="32" y="96" font-size="7.5" fill="#000000" font-weight="900">Next-PC Logic / BTB</text>
 
                 <rect x="26" y="112" width="114" height="42" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.2"/>
-                <text x="32" y="126" font-size="8.5" font-weight="900" fill="#22bfd7">ITLB (32-Entry CAM)</text>
-                <text x="32" y="138" font-size="7.5" fill="#22bfd7">VPN[38:12] &#8594; PPN</text>
-                <text x="32" y="148" font-size="7" fill="#242c33">Single-Cycle Translation</text>
+                <text x="32" y="126" font-size="8.5" font-weight="900" fill="#000000">ITLB (32-Entry CAM)</text>
+                <text x="32" y="138" font-size="7.5" fill="#000000" font-weight="900">VPN[38:12] &#8594; PPN</text>
+                <text x="32" y="148" font-size="7" fill="#000000" font-weight="900">Single-Cycle Translation</text>
 
                 <rect x="26" y="164" width="114" height="48" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-                <text x="32" y="179" font-size="8.5" font-weight="900" fill="#151b20">L1 I-Cache (VIPT)</text>
-                <text x="32" y="192" font-size="7.5" fill="#242c33">16/32 KiB 4-Way Set-Assoc</text>
-                <text x="32" y="204" font-size="7" fill="#242c33">32b Inst Packet Out</text>
+                <text x="32" y="179" font-size="8.5" font-weight="900" fill="#000000">L1 I-Cache (VIPT)</text>
+                <text x="32" y="192" font-size="7.5" fill="#000000" font-weight="900">16/32 KiB 4-Way Set-Assoc</text>
+                <text x="32" y="204" font-size="7" fill="#000000" font-weight="900">32b Inst Packet Out</text>
 
                 <rect x="26" y="222" width="114" height="36" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="32" y="236" font-size="8" font-weight="800" fill="#151b20">Branch Target Buffer</text>
-                <text x="32" y="248" font-size="7" fill="#242c33">28-Entry BTB + 2-bit BHT</text>
+                <text x="32" y="236" font-size="8" font-weight="900" fill="#000000">Branch Target Buffer</text>
+                <text x="32" y="248" font-size="7" fill="#000000" font-weight="900">28-Entry BTB + 2-bit BHT</text>
 
                 <!-- 2. ID Stage -->
                 <rect x="162" y="42" width="130" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="162" y="42" width="130" height="20" rx="5" fill="#8275e8"/>
-                <text x="170" y="56" font-size="9" font-weight="900" fill="#fffaf0" font-family="monospace">STAGE 2: ID (DECODE)</text>
+                <rect x="162" y="42" width="130" height="20" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+                <text x="170" y="56" font-size="9" font-weight="900" fill="#000000" font-family="monospace">STAGE 2: ID (DECODE)</text>
 
                 <rect x="170" y="70" width="114" height="44" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="176" y="85" font-size="8.5" font-weight="900" fill="#151b20">RVC Decompressor</text>
-                <text x="176" y="97" font-size="7.5" fill="#242c33">16-bit C &#8594; 32b Base</text>
-                <text x="176" y="107" font-size="7" fill="#242c33">Control Signal Decode</text>
+                <text x="176" y="85" font-size="8.5" font-weight="900" fill="#000000">RVC Decompressor</text>
+                <text x="176" y="97" font-size="7.5" fill="#000000" font-weight="900">16-bit C &#8594; 32b Base</text>
+                <text x="176" y="107" font-size="7" fill="#000000" font-weight="900">Control Signal Decode</text>
 
                 <rect x="170" y="124" width="114" height="66" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-                <text x="176" y="139" font-size="8.5" font-weight="900" fill="#151b20">Integer RegFile (GPR)</text>
-                <text x="176" y="152" font-size="7.5" fill="#242c33">31 &#215; 64-bit Registers</text>
-                <text x="176" y="164" font-size="7.5" fill="#22bfd7">2 Read Ports (rs1, rs2)</text>
-                <text x="176" y="176" font-size="7" fill="#242c33">1 Write Port (rd)</text>
+                <text x="176" y="139" font-size="8.5" font-weight="900" fill="#000000">Integer RegFile (GPR)</text>
+                <text x="176" y="152" font-size="7.5" fill="#000000" font-weight="900">31 &#215; 64-bit Registers</text>
+                <text x="176" y="164" font-size="7.5" fill="#000000" font-weight="900">2 Read Ports (rs1, rs2)</text>
+                <text x="176" y="176" font-size="7" fill="#000000" font-weight="900">1 Write Port (rd)</text>
 
                 <rect x="170" y="200" width="114" height="52" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="176" y="215" font-size="8.5" font-weight="800" fill="#151b20">FP RegFile (FPR)</text>
-                <text x="176" y="228" font-size="7.5" fill="#242c33">32 &#215; 64-bit (DP D-Ext)</text>
-                <text x="176" y="240" font-size="7" fill="#242c33">3 Read Ports (fs1, fs2, fs3)</text>
+                <text x="176" y="215" font-size="8.5" font-weight="900" fill="#000000">FP RegFile (FPR)</text>
+                <text x="176" y="228" font-size="7.5" fill="#000000" font-weight="900">32 &#215; 64-bit (DP D-Ext)</text>
+                <text x="176" y="240" font-size="7" fill="#000000" font-weight="900">3 Read Ports (fs1, fs2, fs3)</text>
 
                 <!-- 3. EX Stage -->
                 <rect x="306" y="42" width="130" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="306" y="42" width="130" height="20" rx="5" fill="#ffc83e"/>
-                <text x="314" y="56" font-size="9" font-weight="900" fill="#fffaf0" font-family="monospace">STAGE 3: EX (EXECUTE)</text>
+                <rect x="306" y="42" width="130" height="20" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+                <text x="314" y="56" font-size="9" font-weight="900" fill="#000000" font-family="monospace">STAGE 3: EX (EXECUTE)</text>
 
                 <polygon points="320,72 400,90 400,126 320,144 320,114 330,108 320,102" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
-                <text x="340" y="104" font-size="9" font-weight="900" fill="#151b20">64-bit ALU</text>
-                <text x="330" y="118" font-size="7" font-weight="700" fill="#b7df69">Add/Sub/Logic/Shift</text>
+                <text x="340" y="104" font-size="9" font-weight="900" fill="#000000">64-bit ALU</text>
+                <text x="330" y="118" font-size="7" font-weight="900" fill="#000000">Add/Sub/Logic/Shift</text>
 
                 <rect x="314" y="154" width="114" height="38" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="320" y="169" font-size="8" font-weight="800" fill="#151b20">M-Ext Pipelined Mul/Div</text>
-                <text x="320" y="181" font-size="7" fill="#242c33">64b Multiplier + Radix-2 Div</text>
+                <text x="320" y="169" font-size="8" font-weight="900" fill="#000000">M-Ext Pipelined Mul/Div</text>
+                <text x="320" y="181" font-size="7" fill="#000000" font-weight="900">64b Multiplier + Radix-2 Div</text>
 
                 <rect x="314" y="200" width="114" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="320" y="215" font-size="8" font-weight="800" fill="#151b20">IEEE-754 DP FPU</text>
-                <text x="320" y="227" font-size="7" fill="#242c33">HardFloat Pipelined FMA</text>
-                <text x="320" y="236" font-size="6.5" fill="#242c33">Single &amp; Double Precision</text>
+                <text x="320" y="215" font-size="8" font-weight="900" fill="#000000">IEEE-754 DP FPU</text>
+                <text x="320" y="227" font-size="7" fill="#000000" font-weight="900">HardFloat Pipelined FMA</text>
+                <text x="320" y="236" font-size="6.5" fill="#000000" font-weight="900">Single &amp; Double Precision</text>
 
                 <rect x="314" y="250" width="114" height="36" rx="4" fill="#ffd8ce" stroke="#f38469" stroke-width="1"/>
-                <text x="320" y="264" font-size="8" font-weight="800" fill="#f38469">Branch Resolution</text>
-                <text x="320" y="276" font-size="7" fill="#151b20">Redirect Signal &#8594; IF PC</text>
+                <text x="320" y="264" font-size="8" font-weight="900" fill="#000000">Branch Resolution</text>
+                <text x="320" y="276" font-size="7" fill="#000000" font-weight="900">Redirect Signal &#8594; IF PC</text>
 
                 <!-- 4. MEM Stage -->
                 <rect x="450" y="42" width="140" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="450" y="42" width="140" height="20" rx="5" fill="#0d9488"/>
-                <text x="458" y="56" font-size="9" font-weight="900" fill="#fffaf0" font-family="monospace">STAGE 4: MEM (MEMORY)</text>
+                <rect x="450" y="42" width="140" height="20" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.5"/>
+                <text x="458" y="56" font-size="9" font-weight="900" fill="#000000" font-family="monospace">STAGE 4: MEM (MEMORY)</text>
 
                 <rect x="458" y="70" width="124" height="44" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.2"/>
-                <text x="464" y="85" font-size="8.5" font-weight="900" fill="#22bfd7">DTLB (32-Entry CAM)</text>
-                <text x="464" y="98" font-size="7.5" fill="#22bfd7">Sv39 VPN[38:12] &#8594; PPN</text>
-                <text x="464" y="108" font-size="7" fill="#242c33">VIPT Tag Comparison</text>
+                <text x="464" y="85" font-size="8.5" font-weight="900" fill="#000000">DTLB (32-Entry CAM)</text>
+                <text x="464" y="98" font-size="7.5" fill="#000000" font-weight="900">Sv39 VPN[38:12] &#8594; PPN</text>
+                <text x="464" y="108" font-size="7" fill="#000000" font-weight="900">VIPT Tag Comparison</text>
 
                 <rect x="458" y="122" width="124" height="52" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-                <text x="464" y="137" font-size="8.5" font-weight="900" fill="#151b20">L1 D-Cache (VIPT)</text>
-                <text x="464" y="150" font-size="7.5" fill="#242c33">16/32 KiB 4-Way Set-Assoc</text>
-                <text x="464" y="162" font-size="7" fill="#242c33">Blocking &#8226; 64-bit Hit Path</text>
+                <text x="464" y="137" font-size="8.5" font-weight="900" fill="#000000">L1 D-Cache (VIPT)</text>
+                <text x="464" y="150" font-size="7.5" fill="#000000" font-weight="900">16/32 KiB 4-Way Set-Assoc</text>
+                <text x="464" y="162" font-size="7" fill="#000000" font-weight="900">Blocking &#8226; 64-bit Hit Path</text>
 
                 <rect x="458" y="182" width="124" height="54" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.2"/>
-                <text x="464" y="197" font-size="8" font-weight="900" fill="#ffc83e">Hardware PTW Arbiter</text>
-                <text x="464" y="210" font-size="7" fill="#151b20">Autonomous 3-Level Radix</text>
-                <text x="464" y="222" font-size="7" fill="#ffc83e">D-Cache Interconnect Master</text>
+                <text x="464" y="197" font-size="8" font-weight="900" fill="#000000">Hardware PTW Arbiter</text>
+                <text x="464" y="210" font-size="7" fill="#000000" font-weight="900">Autonomous 3-Level Radix</text>
+                <text x="464" y="222" font-size="7" fill="#000000" font-weight="900">D-Cache Interconnect Master</text>
 
                 <rect x="458" y="244" width="124" height="34" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="464" y="258" font-size="8" font-weight="800" fill="#151b20">PMP Checker (8 Regs)</text>
-                <text x="464" y="270" font-size="7" fill="#242c33">Physical Memory Protection</text>
+                <text x="464" y="258" font-size="8" font-weight="900" fill="#000000">PMP Checker (8 Regs)</text>
+                <text x="464" y="270" font-size="7" fill="#000000" font-weight="900">Physical Memory Protection</text>
 
                 <!-- 5. WB Stage -->
                 <rect x="604" y="42" width="138" height="150" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="604" y="42" width="138" height="20" rx="5" fill="#b7df69"/>
-                <text x="612" y="56" font-size="9" font-weight="900" fill="#fffaf0" font-family="monospace">STAGE 5: WB (WRITE)</text>
+                <rect x="604" y="42" width="138" height="20" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+                <text x="612" y="56" font-size="9" font-weight="900" fill="#000000" font-family="monospace">STAGE 5: WB (WRITE)</text>
 
                 <rect x="612" y="70" width="122" height="50" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="618" y="85" font-size="8.5" font-weight="800" fill="#151b20">Writeback Multiplexer</text>
-                <text x="618" y="98" font-size="7" fill="#242c33">Select: ALU / Mem / FP / CSR</text>
-                <text x="618" y="110" font-size="7" fill="#b7df69">rd_data / fd_data Commit</text>
+                <text x="618" y="85" font-size="8.5" font-weight="900" fill="#000000">Writeback Multiplexer</text>
+                <text x="618" y="98" font-size="7" fill="#000000" font-weight="900">Select: ALU / Mem / FP / CSR</text>
+                <text x="618" y="110" font-size="7" fill="#000000" font-weight="900">rd_data / fd_data Commit</text>
 
                 <rect x="612" y="128" width="122" height="40" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="618" y="143" font-size="8" font-weight="800" fill="#151b20">Forwarding Network</text>
-                <text x="618" y="155" font-size="7" fill="#242c33">Bypass EX/MEM &#8594; ID Operands</text>
+                <text x="618" y="143" font-size="8" font-weight="900" fill="#000000">Forwarding Network</text>
+                <text x="618" y="155" font-size="7" fill="#000000" font-weight="900">Bypass EX/MEM &#8594; ID Operands</text>
 
                 <!-- TileLink-UH System Bus Interface (Bottom Right) -->
                 <rect x="604" y="204" width="138" height="103" rx="6" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.5"/>
-                <rect x="604" y="204" width="138" height="20" rx="5" fill="#ffc83e"/>
-                <text x="612" y="218" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">TILELINK-UH BUS (64b)</text>
+                <rect x="604" y="204" width="138" height="20" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+                <text x="612" y="218" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">TILELINK-UH BUS (64b)</text>
 
                 <rect x="612" y="230" width="122" height="30" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1"/>
-                <text x="618" y="243" font-size="7.5" font-weight="800" fill="#ffc83e">Chan A: Get / Put Req</text>
-                <text x="618" y="253" font-size="6.8" fill="#151b20">Address &#8226; Size &#8226; Mask &#8226; Data</text>
+                <text x="618" y="243" font-size="7.5" font-weight="900" fill="#000000">Chan A: Get / Put Req</text>
+                <text x="618" y="253" font-size="6.8" fill="#000000" font-weight="900">Address &#8226; Size &#8226; Mask &#8226; Data</text>
 
                 <rect x="612" y="266" width="122" height="30" rx="3" fill="#fffaf0" stroke="#ffc83e" stroke-width="1"/>
-                <text x="618" y="279" font-size="7.5" font-weight="800" fill="#ffc83e">Chan D: AccessAck Resp</text>
-                <text x="618" y="289" font-size="6.8" fill="#151b20">Data &#8226; Corrupt &#8226; Denied</text>
+                <text x="618" y="279" font-size="7.5" font-weight="900" fill="#000000">Chan D: AccessAck Resp</text>
+                <text x="618" y="289" font-size="6.8" fill="#000000" font-weight="900">Data &#8226; Corrupt &#8226; Denied</text>
 
                 <!-- Inter-stage Piping Arrows -->
                 <path d="M 148 188 L 162 188" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowRocket)"/>
@@ -3616,11 +3616,11 @@ const appCoreDossiers = [
 
                 <!-- Branch Redirect Feedback Line (EX stage -> IF stage) -->
                 <path d="M 370 286 L 370 320 L 80 320 L 80 102" fill="none" stroke="#f38469" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrowRedR)"/>
-                <text x="180" y="333" font-size="7.5" font-weight="800" fill="#f38469">Branch Mispredict Redirect Signal (2-cycle bubble flush)</text>
+                <text x="180" y="333" font-size="7.5" font-weight="900" fill="#000000">Branch Mispredict Redirect Signal (2-cycle bubble flush)</text>
 
                 <!-- Metrics Strip Footer -->
                 <rect x="2" y="348" width="756" height="28" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
-                <text x="20" y="366" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace">METRICS: CPI: 1.45 &#8211; 1.95 &#8226; Area: ~135 kGE (16nm) &#8226; Fmax: 1.2 &#8211; 1.4 GHz &#8226; Bus: TileLink-UH 64b &#8226; MMU: Sv39 3-Level</text>
+                <text x="20" y="366" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">METRICS: CPI: 1.45 &#8211; 1.95 &#8226; Area: ~135 kGE (16nm) &#8226; Fmax: 1.2 &#8211; 1.4 GHz &#8226; Bus: TileLink-UH 64b &#8226; MMU: Sv39 3-Level</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -3736,121 +3736,121 @@ const appCoreDossiers = [
                 <!-- Status Header Banner -->
                 <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
                 <circle cx="16" cy="14" r="4" fill="#0d9488"/>
-                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • CVA6 DECOUPLED 6-STAGE SCOREBOARD &amp; AXI4-64b TOPOLOGY</text>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#000000" font-family="monospace">SCORE EDA WORKBENCH • CVA6 DECOUPLED 6-STAGE SCOREBOARD &amp; AXI4-64b TOPOLOGY</text>
 
                 <!-- Stage 1: PC Gen & IF -->
                 <rect x="18" y="42" width="115" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="18" y="42" width="115" height="20" rx="5" fill="#22bfd7"/>
-                <text x="24" y="56" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">STG 1: PC GEN / IF</text>
+                <rect x="18" y="42" width="115" height="20" rx="5" fill="#cffafe" stroke="#0891b2" stroke-width="1.5"/>
+                <text x="24" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">STG 1: PC GEN / IF</text>
 
                 <rect x="24" y="70" width="103" height="34" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="30" y="84" font-size="8" font-weight="800" fill="#151b20">PC Generation FSM</text>
-                <text x="30" y="95" font-size="7" fill="#242c33">Trap / Replay Mux</text>
+                <text x="30" y="84" font-size="8" font-weight="900" fill="#000000">PC Generation FSM</text>
+                <text x="30" y="95" font-size="7" fill="#000000" font-weight="900">Trap / Replay Mux</text>
 
                 <rect x="24" y="112" width="103" height="42" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
-                <text x="30" y="126" font-size="8" font-weight="900" fill="#0d9488">BHT + BTB + RAS</text>
-                <text x="30" y="138" font-size="7" fill="#0d9488">2-bit Saturating Predictor</text>
-                <text x="30" y="148" font-size="6.8" fill="#242c33">3-Cycle Mispredict Bound</text>
+                <text x="30" y="126" font-size="8" font-weight="900" fill="#000000">BHT + BTB + RAS</text>
+                <text x="30" y="138" font-size="7" fill="#000000" font-weight="900">2-bit Saturating Predictor</text>
+                <text x="30" y="148" font-size="6.8" fill="#000000" font-weight="900">3-Cycle Mispredict Bound</text>
 
                 <rect x="24" y="162" width="103" height="50" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="30" y="176" font-size="8" font-weight="800" fill="#151b20">16 KiB 4-Way I-Cache</text>
-                <text x="30" y="188" font-size="7" fill="#242c33">16-Entry ITLB CAM</text>
-                <text x="30" y="200" font-size="6.8" fill="#242c33">32-bit Fetch Packet</text>
+                <text x="30" y="176" font-size="8" font-weight="900" fill="#000000">16 KiB 4-Way I-Cache</text>
+                <text x="30" y="188" font-size="7" fill="#000000" font-weight="900">16-Entry ITLB CAM</text>
+                <text x="30" y="200" font-size="6.8" fill="#000000" font-weight="900">32-bit Fetch Packet</text>
 
                 <rect x="24" y="220" width="103" height="34" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="30" y="234" font-size="8" font-weight="800" fill="#151b20">Fetch FIFO Buffer</text>
-                <text x="30" y="245" font-size="7" fill="#242c33">Decouples IF from ID</text>
+                <text x="30" y="234" font-size="8" font-weight="900" fill="#000000">Fetch FIFO Buffer</text>
+                <text x="30" y="245" font-size="7" fill="#000000" font-weight="900">Decouples IF from ID</text>
 
                 <!-- Stage 2: ID (Decode) -->
                 <rect x="142" y="42" width="105" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="142" y="42" width="105" height="20" rx="5" fill="#8275e8"/>
-                <text x="148" y="56" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">STG 2: ID (DECODE)</text>
+                <rect x="142" y="42" width="105" height="20" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+                <text x="148" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">STG 2: ID (DECODE)</text>
 
                 <rect x="148" y="70" width="93" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="154" y="85" font-size="8" font-weight="800" fill="#151b20">RV64GC Decoder</text>
-                <text x="154" y="97" font-size="7" fill="#242c33">RVC 16b Expansion</text>
-                <text x="154" y="106" font-size="6.8" fill="#242c33">Illegal Inst Check</text>
+                <text x="154" y="85" font-size="8" font-weight="900" fill="#000000">RV64GC Decoder</text>
+                <text x="154" y="97" font-size="7" fill="#000000" font-weight="900">RVC 16b Expansion</text>
+                <text x="154" y="106" font-size="6.8" fill="#000000" font-weight="900">Illegal Inst Check</text>
 
                 <rect x="148" y="120" width="93" height="74" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-                <text x="154" y="135" font-size="8" font-weight="900" fill="#151b20">RegFile (31x64b)</text>
-                <text x="154" y="148" font-size="7" fill="#242c33">Dual Read Ports</text>
-                <text x="154" y="159" font-size="7" fill="#0d9488">Single Write Port</text>
-                <text x="154" y="170" font-size="6.8" fill="#242c33">FP Regs (32x64b)</text>
-                <text x="154" y="181" font-size="6.5" fill="#242c33">Bypass Operand Mux</text>
+                <text x="154" y="135" font-size="8" font-weight="900" fill="#000000">RegFile (31x64b)</text>
+                <text x="154" y="148" font-size="7" fill="#000000" font-weight="900">Dual Read Ports</text>
+                <text x="154" y="159" font-size="7" fill="#000000" font-weight="900">Single Write Port</text>
+                <text x="154" y="170" font-size="6.8" fill="#000000" font-weight="900">FP Regs (32x64b)</text>
+                <text x="154" y="181" font-size="6.5" fill="#000000" font-weight="900">Bypass Operand Mux</text>
 
                 <!-- Stage 3: Issue & Scoreboard -->
                 <rect x="256" y="42" width="125" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="256" y="42" width="125" height="20" rx="5" fill="#8275e8"/>
-                <text x="262" y="56" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">STG 3: ISSUE / SB</text>
+                <rect x="256" y="42" width="125" height="20" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+                <text x="262" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">STG 3: ISSUE / SB</text>
 
                 <rect x="262" y="70" width="113" height="96" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.5"/>
-                <text x="268" y="85" font-size="8.5" font-weight="900" fill="#0d9488">SCOREBOARD TABLE</text>
-                <text x="268" y="98" font-size="7" fill="#0d9488">&#8226; In-Flight Inst Tags</text>
-                <text x="268" y="109" font-size="7" fill="#0d9488">&#8226; Destination rd Check</text>
-                <text x="268" y="120" font-size="7" fill="#0d9488">&#8226; Functional Unit Busy</text>
-                <text x="268" y="131" font-size="7" fill="#0d9488">&#8226; RAW / WAW Resolution</text>
-                <text x="268" y="142" font-size="7" fill="#0d9488">&#8226; Issue Enable Logic</text>
-                <text x="268" y="154" font-size="6.8" fill="#151b20">Out-of-Order Execution Gate</text>
+                <text x="268" y="85" font-size="8.5" font-weight="900" fill="#000000">SCOREBOARD TABLE</text>
+                <text x="268" y="98" font-size="7" fill="#000000" font-weight="900">&#8226; In-Flight Inst Tags</text>
+                <text x="268" y="109" font-size="7" fill="#000000" font-weight="900">&#8226; Destination rd Check</text>
+                <text x="268" y="120" font-size="7" fill="#000000" font-weight="900">&#8226; Functional Unit Busy</text>
+                <text x="268" y="131" font-size="7" fill="#000000" font-weight="900">&#8226; RAW / WAW Resolution</text>
+                <text x="268" y="142" font-size="7" fill="#000000" font-weight="900">&#8226; Issue Enable Logic</text>
+                <text x="268" y="154" font-size="6.8" fill="#000000" font-weight="900">Out-of-Order Execution Gate</text>
 
                 <rect x="262" y="174" width="113" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="268" y="188" font-size="8" font-weight="800" fill="#151b20">Issue Control Unit</text>
-                <text x="268" y="200" font-size="7" fill="#242c33">Dispatches to EX Units</text>
-                <text x="268" y="210" font-size="6.8" fill="#242c33">Bypasses Stalled Units</text>
+                <text x="268" y="188" font-size="8" font-weight="900" fill="#000000">Issue Control Unit</text>
+                <text x="268" y="200" font-size="7" fill="#000000" font-weight="900">Dispatches to EX Units</text>
+                <text x="268" y="210" font-size="6.8" fill="#000000" font-weight="900">Bypasses Stalled Units</text>
 
                 <!-- Stage 4: EX (Parallel Execution Units) -->
                 <rect x="390" y="42" width="145" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="390" y="42" width="145" height="20" rx="5" fill="#ffc83e"/>
-                <text x="396" y="56" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">STG 4: EX (PARALLEL UNITS)</text>
+                <rect x="390" y="42" width="145" height="20" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+                <text x="396" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">STG 4: EX (PARALLEL UNITS)</text>
 
                 <rect x="396" y="70" width="133" height="30" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/>
-                <text x="402" y="84" font-size="8" font-weight="800" fill="#151b20">ALU (1-Cycle Integer)</text>
-                <text x="402" y="94" font-size="6.8" fill="#b7df69">Add / Sub / Logic / Shifts</text>
+                <text x="402" y="84" font-size="8" font-weight="900" fill="#000000">ALU (1-Cycle Integer)</text>
+                <text x="402" y="94" font-size="6.8" fill="#000000" font-weight="900">Add / Sub / Logic / Shifts</text>
 
                 <rect x="396" y="106" width="133" height="32" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="402" y="120" font-size="8" font-weight="800" fill="#151b20">Multiplier &amp; Divider</text>
-                <text x="402" y="131" font-size="6.8" fill="#242c33">Pipelined Mul &#8226; Radix-2 Div</text>
+                <text x="402" y="120" font-size="8" font-weight="900" fill="#000000">Multiplier &amp; Divider</text>
+                <text x="402" y="131" font-size="6.8" fill="#000000" font-weight="900">Pipelined Mul &#8226; Radix-2 Div</text>
 
                 <rect x="396" y="144" width="133" height="32" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="402" y="158" font-size="8" font-weight="800" fill="#151b20">Double-Precision FPU</text>
-                <text x="402" y="169" font-size="6.8" fill="#242c33">FMA &#8226; IEEE-754 HardFloat</text>
+                <text x="402" y="158" font-size="8" font-weight="900" fill="#000000">Double-Precision FPU</text>
+                <text x="402" y="169" font-size="6.8" fill="#000000" font-weight="900">FMA &#8226; IEEE-754 HardFloat</text>
 
                 <rect x="396" y="182" width="133" height="32" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="402" y="196" font-size="8" font-weight="800" fill="#151b20">Branch Unit (BRU)</text>
-                <text x="402" y="207" font-size="6.8" fill="#242c33">Jump / Call / Branch Eval</text>
+                <text x="402" y="196" font-size="8" font-weight="900" fill="#000000">Branch Unit (BRU)</text>
+                <text x="402" y="207" font-size="6.8" fill="#000000" font-weight="900">Jump / Call / Branch Eval</text>
 
                 <rect x="396" y="220" width="133" height="42" rx="3" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1"/>
-                <text x="402" y="234" font-size="8" font-weight="900" fill="#22bfd7">Load-Store Unit (LSU)</text>
-                <text x="402" y="246" font-size="6.8" fill="#22bfd7">16 KiB D-Cache &#8226; 16-Entry DTLB</text>
-                <text x="402" y="256" font-size="6.5" fill="#242c33">16-Region PMP Firewall</text>
+                <text x="402" y="234" font-size="8" font-weight="900" fill="#000000">Load-Store Unit (LSU)</text>
+                <text x="402" y="246" font-size="6.8" fill="#000000" font-weight="900">16 KiB D-Cache &#8226; 16-Entry DTLB</text>
+                <text x="402" y="256" font-size="6.5" fill="#000000" font-weight="900">16-Region PMP Firewall</text>
 
                 <!-- Stage 5: Commit & System Interconnect -->
                 <rect x="544" y="42" width="198" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="544" y="42" width="198" height="20" rx="5" fill="#0d9488"/>
-                <text x="550" y="56" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">STG 5/6: COMMIT &amp; AXI4 FABRIC</text>
+                <rect x="544" y="42" width="198" height="20" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.5"/>
+                <text x="550" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">STG 5/6: COMMIT &amp; AXI4 FABRIC</text>
 
                 <rect x="552" y="70" width="182" height="52" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-                <text x="558" y="85" font-size="8.5" font-weight="900" fill="#151b20">In-Order Commit Engine</text>
-                <text x="558" y="98" font-size="7" fill="#242c33">Retires instructions in program order</text>
-                <text x="558" y="109" font-size="7" fill="#0d9488">Guarantees precise architectural traps</text>
+                <text x="558" y="85" font-size="8.5" font-weight="900" fill="#000000">In-Order Commit Engine</text>
+                <text x="558" y="98" font-size="7" fill="#000000" font-weight="900">Retires instructions in program order</text>
+                <text x="558" y="109" font-size="7" fill="#000000" font-weight="900">Guarantees precise architectural traps</text>
 
                 <!-- AXI4 5-Channel Box -->
                 <rect x="552" y="130" width="182" height="135" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
-                <text x="558" y="145" font-size="8.5" font-weight="900" fill="#0d9488">AXI4-64b MASTER INTERFACE</text>
+                <text x="558" y="145" font-size="8.5" font-weight="900" fill="#000000">AXI4-64b MASTER INTERFACE</text>
                 
                 <rect x="558" y="152" width="170" height="18" rx="2" fill="#fffaf0" stroke="#0d9488" stroke-width="0.8"/>
-                <text x="564" y="164" font-size="7" font-weight="800" fill="#0d9488">AW Channel: Write Address (awaddr, awlen)</text>
+                <text x="564" y="164" font-size="7" font-weight="900" fill="#000000">AW Channel: Write Address (awaddr, awlen)</text>
 
                 <rect x="558" y="174" width="170" height="18" rx="2" fill="#fffaf0" stroke="#0d9488" stroke-width="0.8"/>
-                <text x="564" y="186" font-size="7" font-weight="800" fill="#0d9488">W Channel: Write Data (wdata[63:0], wstrb)</text>
+                <text x="564" y="186" font-size="7" font-weight="900" fill="#000000">W Channel: Write Data (wdata[63:0], wstrb)</text>
 
                 <rect x="558" y="196" width="170" height="18" rx="2" fill="#fffaf0" stroke="#0d9488" stroke-width="0.8"/>
-                <text x="564" y="208" font-size="7" font-weight="800" fill="#0d9488">B Channel: Write Response (bresp)</text>
+                <text x="564" y="208" font-size="7" font-weight="900" fill="#000000">B Channel: Write Response (bresp)</text>
 
                 <rect x="558" y="218" width="170" height="18" rx="2" fill="#fffaf0" stroke="#0d9488" stroke-width="0.8"/>
-                <text x="564" y="230" font-size="7" font-weight="800" fill="#0d9488">AR Channel: Read Address (araddr, arlen)</text>
+                <text x="564" y="230" font-size="7" font-weight="900" fill="#000000">AR Channel: Read Address (araddr, arlen)</text>
 
                 <rect x="558" y="240" width="170" height="18" rx="2" fill="#fffaf0" stroke="#0d9488" stroke-width="0.8"/>
-                <text x="564" y="252" font-size="7" font-weight="800" fill="#0d9488">R Channel: Read Data (rdata[63:0], rresp)</text>
+                <text x="564" y="252" font-size="7" font-weight="900" fill="#000000">R Channel: Read Data (rdata[63:0], rresp)</text>
 
                 <!-- Connecting Lines -->
                 <path d="M 133 188 L 142 188" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowCva6)"/>
@@ -3860,7 +3860,7 @@ const appCoreDossiers = [
 
                 <!-- Metrics Strip Footer -->
                 <rect x="2" y="348" width="756" height="28" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
-                <text x="20" y="366" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace">METRICS: CPI: 1.30 &#8211; 1.65 &#8226; Area: ~148 kGE (16nm) &#8226; Fmax: 1.4 GHz &#8226; Bus: Standard AXI4-64b &#8226; 16-Region PMP</text>
+                <text x="20" y="366" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">METRICS: CPI: 1.30 &#8211; 1.65 &#8226; Area: ~148 kGE (16nm) &#8226; Fmax: 1.4 GHz &#8226; Bus: Standard AXI4-64b &#8226; 16-Region PMP</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -3976,102 +3976,102 @@ const appCoreDossiers = [
                 <!-- Status Header Banner -->
                 <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
                 <circle cx="16" cy="14" r="4" fill="#b7df69"/>
-                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • BLACKPARROT MODULAR MULTI-CORE TILE &amp; BEDROCK COHERENCE TOPOLOGY</text>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#000000" font-family="monospace">SCORE EDA WORKBENCH • BLACKPARROT MODULAR MULTI-CORE TILE &amp; BEDROCK COHERENCE TOPOLOGY</text>
 
                 <!-- Partition 1: Front-End (FE) -->
                 <rect x="18" y="42" width="165" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="18" y="42" width="165" height="20" rx="5" fill="#22bfd7"/>
-                <text x="24" y="56" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">PARTITION 1: FRONT-END (FE)</text>
+                <rect x="18" y="42" width="165" height="20" rx="5" fill="#cffafe" stroke="#0891b2" stroke-width="1.5"/>
+                <text x="24" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">PARTITION 1: FRONT-END (FE)</text>
 
                 <rect x="26" y="70" width="149" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="32" y="85" font-size="8" font-weight="800" fill="#151b20">Branch Prediction Engine</text>
-                <text x="32" y="97" font-size="7" fill="#242c33">BHT + BTB + Return Stack</text>
-                <text x="32" y="106" font-size="6.8" fill="#242c33">Speculative Next-PC Gen</text>
+                <text x="32" y="85" font-size="8" font-weight="900" fill="#000000">Branch Prediction Engine</text>
+                <text x="32" y="97" font-size="7" fill="#000000" font-weight="900">BHT + BTB + Return Stack</text>
+                <text x="32" y="106" font-size="6.8" fill="#000000" font-weight="900">Speculative Next-PC Gen</text>
 
                 <rect x="26" y="120" width="149" height="46" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="32" y="135" font-size="8" font-weight="800" fill="#151b20">L1 I-Cache &amp; ITLB</text>
-                <text x="32" y="148" font-size="7" fill="#242c33">VIPT Set-Associative Array</text>
-                <text x="32" y="159" font-size="6.8" fill="#242c33">Sv39 Translation CAM</text>
+                <text x="32" y="135" font-size="8" font-weight="900" fill="#000000">L1 I-Cache &amp; ITLB</text>
+                <text x="32" y="148" font-size="7" fill="#000000" font-weight="900">VIPT Set-Associative Array</text>
+                <text x="32" y="159" font-size="6.8" fill="#000000" font-weight="900">Sv39 Translation CAM</text>
 
                 <rect x="26" y="174" width="149" height="44" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="32" y="189" font-size="8" font-weight="800" fill="#151b20">Instruction Queue</text>
-                <text x="32" y="201" font-size="7" fill="#242c33">RVC 16b Expansion</text>
-                <text x="32" y="211" font-size="6.8" fill="#242c33">Fetches 32b Instructions</text>
+                <text x="32" y="189" font-size="8" font-weight="900" fill="#000000">Instruction Queue</text>
+                <text x="32" y="201" font-size="7" fill="#000000" font-weight="900">RVC 16b Expansion</text>
+                <text x="32" y="211" font-size="6.8" fill="#000000" font-weight="900">Fetches 32b Instructions</text>
 
                 <rect x="26" y="226" width="149" height="34" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.2"/>
-                <text x="32" y="240" font-size="8" font-weight="900" fill="#151b20">Credit-Based Output FIFO</text>
-                <text x="32" y="252" font-size="7" fill="#b7df69">Elastic FE &#8594; BE Handshake</text>
+                <text x="32" y="240" font-size="8" font-weight="900" fill="#000000">Credit-Based Output FIFO</text>
+                <text x="32" y="252" font-size="7" fill="#000000" font-weight="900">Elastic FE &#8594; BE Handshake</text>
 
                 <!-- Partition 2: Back-End (BE) -->
                 <rect x="200" y="42" width="175" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="200" y="42" width="175" height="20" rx="5" fill="#ffc83e"/>
-                <text x="206" y="56" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">PARTITION 2: BACK-END (BE)</text>
+                <rect x="200" y="42" width="175" height="20" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+                <text x="206" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">PARTITION 2: BACK-END (BE)</text>
 
                 <rect x="208" y="70" width="159" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="214" y="85" font-size="8" font-weight="800" fill="#151b20">Decoupled Scoreboard</text>
-                <text x="214" y="97" font-size="7" fill="#242c33">Dual Issue Queue Logic</text>
-                <text x="214" y="106" font-size="6.8" fill="#242c33">Register Dependency Check</text>
+                <text x="214" y="85" font-size="8" font-weight="900" fill="#000000">Decoupled Scoreboard</text>
+                <text x="214" y="97" font-size="7" fill="#000000" font-weight="900">Dual Issue Queue Logic</text>
+                <text x="214" y="106" font-size="6.8" fill="#000000" font-weight="900">Register Dependency Check</text>
 
                 <rect x="208" y="120" width="159" height="52" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="214" y="135" font-size="8" font-weight="800" fill="#151b20">Integer ALU &amp; Multiplier</text>
-                <text x="214" y="148" font-size="7" fill="#242c33">64-bit Radix-4 Math Units</text>
-                <text x="214" y="160" font-size="6.8" fill="#242c33">HardFloat IEEE-754 FPU</text>
+                <text x="214" y="135" font-size="8" font-weight="900" fill="#000000">Integer ALU &amp; Multiplier</text>
+                <text x="214" y="148" font-size="7" fill="#000000" font-weight="900">64-bit Radix-4 Math Units</text>
+                <text x="214" y="160" font-size="6.8" fill="#000000" font-weight="900">HardFloat IEEE-754 FPU</text>
 
                 <rect x="208" y="180" width="159" height="40" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="214" y="195" font-size="8" font-weight="800" fill="#151b20">Privileged CSRs &amp; Trap FSM</text>
-                <text x="214" y="208" font-size="7" fill="#242c33">M/S/U Privilege Compliance</text>
+                <text x="214" y="195" font-size="8" font-weight="900" fill="#000000">Privileged CSRs &amp; Trap FSM</text>
+                <text x="214" y="208" font-size="7" fill="#000000" font-weight="900">M/S/U Privilege Compliance</text>
 
                 <rect x="208" y="228" width="159" height="34" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.2"/>
-                <text x="214" y="242" font-size="8" font-weight="900" fill="#151b20">Credit-Based Input/Output</text>
-                <text x="214" y="254" font-size="7" fill="#b7df69">Elastic BE &#8596; ME Handshake</text>
+                <text x="214" y="242" font-size="8" font-weight="900" fill="#000000">Credit-Based Input/Output</text>
+                <text x="214" y="254" font-size="7" fill="#000000" font-weight="900">Elastic BE &#8596; ME Handshake</text>
 
                 <!-- Partition 3: Memory-End (ME) & Coherence -->
                 <rect x="392" y="42" width="180" height="265" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="392" y="42" width="180" height="20" rx="5" fill="#0d9488"/>
-                <text x="398" y="56" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">PARTITION 3: MEMORY-END (ME)</text>
+                <rect x="392" y="42" width="180" height="20" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.5"/>
+                <text x="398" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">PARTITION 3: MEMORY-END (ME)</text>
 
                 <rect x="400" y="70" width="164" height="42" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1"/>
-                <text x="406" y="85" font-size="8" font-weight="900" fill="#22bfd7">L1 D-Cache &amp; DTLB CAM</text>
-                <text x="406" y="97" font-size="7" fill="#22bfd7">Non-Blocking VIPT Design</text>
-                <text x="406" y="106" font-size="6.8" fill="#242c33">Hits-Under-Miss Capable</text>
+                <text x="406" y="85" font-size="8" font-weight="900" fill="#000000">L1 D-Cache &amp; DTLB CAM</text>
+                <text x="406" y="97" font-size="7" fill="#000000" font-weight="900">Non-Blocking VIPT Design</text>
+                <text x="406" y="106" font-size="6.8" fill="#000000" font-weight="900">Hits-Under-Miss Capable</text>
 
                 <rect x="400" y="120" width="164" height="40" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="406" y="135" font-size="8" font-weight="800" fill="#151b20">MSHR Allocation Queue</text>
-                <text x="406" y="148" font-size="7" fill="#242c33">Tracks Outstanding DRAM Misses</text>
+                <text x="406" y="135" font-size="8" font-weight="900" fill="#000000">MSHR Allocation Queue</text>
+                <text x="406" y="148" font-size="7" fill="#000000" font-weight="900">Tracks Outstanding DRAM Misses</text>
 
                 <rect x="400" y="168" width="164" height="52" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.2"/>
-                <text x="406" y="183" font-size="8" font-weight="900" fill="#ffc83e">BedRock Coherence Engine (CCE)</text>
-                <text x="406" y="196" font-size="7" fill="#151b20">Directory-Based MESI Protocol</text>
-                <text x="406" y="208" font-size="6.8" fill="#ffc83e">Snooping / Invalidation FSM</text>
+                <text x="406" y="183" font-size="8" font-weight="900" fill="#000000">BedRock Coherence Engine (CCE)</text>
+                <text x="406" y="196" font-size="7" fill="#000000" font-weight="900">Directory-Based MESI Protocol</text>
+                <text x="406" y="208" font-size="6.8" fill="#000000" font-weight="900">Snooping / Invalidation FSM</text>
 
                 <rect x="400" y="228" width="164" height="34" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.2"/>
-                <text x="406" y="242" font-size="8" font-weight="900" fill="#151b20">Tile L2 Cache Slice</text>
-                <text x="406" y="254" font-size="7" fill="#b7df69">Shared Distributed Cache</text>
+                <text x="406" y="242" font-size="8" font-weight="900" fill="#000000">Tile L2 Cache Slice</text>
+                <text x="406" y="254" font-size="7" fill="#000000" font-weight="900">Shared Distributed Cache</text>
 
                 <!-- 2D-Mesh NoC Router (Right Side) -->
                 <rect x="588" y="42" width="154" height="265" rx="6" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
-                <rect x="588" y="42" width="154" height="20" rx="5" fill="#b7df69"/>
-                <text x="594" y="56" font-size="8.5" font-weight="900" fill="#fffaf0" font-family="monospace">2D-MESH NoC ROUTER (5P)</text>
+                <rect x="588" y="42" width="154" height="20" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+                <text x="594" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">2D-MESH NoC ROUTER (5P)</text>
 
                 <rect x="596" y="70" width="138" height="30" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1"/>
-                <text x="602" y="84" font-size="8" font-weight="800" fill="#151b20">&#8593; North Port (Packet Link)</text>
-                <text x="602" y="94" font-size="6.8" fill="#242c33">Credit-Based Flow Control</text>
+                <text x="602" y="84" font-size="8" font-weight="900" fill="#000000">&#8593; North Port (Packet Link)</text>
+                <text x="602" y="94" font-size="6.8" fill="#000000" font-weight="900">Credit-Based Flow Control</text>
 
                 <rect x="596" y="106" width="138" height="30" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1"/>
-                <text x="602" y="120" font-size="8" font-weight="800" fill="#151b20">&#8594; East Port (Packet Link)</text>
-                <text x="602" y="130" font-size="6.8" fill="#242c33">Inter-Core Mesh Packet</text>
+                <text x="602" y="120" font-size="8" font-weight="900" fill="#000000">&#8594; East Port (Packet Link)</text>
+                <text x="602" y="130" font-size="6.8" fill="#000000" font-weight="900">Inter-Core Mesh Packet</text>
 
                 <rect x="596" y="142" width="138" height="30" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1"/>
-                <text x="602" y="156" font-size="8" font-weight="800" fill="#151b20">&#8595; South Port (Packet Link)</text>
-                <text x="602" y="166" font-size="6.8" fill="#242c33">Credit-Based Flow Control</text>
+                <text x="602" y="156" font-size="8" font-weight="900" fill="#000000">&#8595; South Port (Packet Link)</text>
+                <text x="602" y="166" font-size="6.8" fill="#000000" font-weight="900">Credit-Based Flow Control</text>
 
                 <rect x="596" y="178" width="138" height="30" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1"/>
-                <text x="602" y="192" font-size="8" font-weight="800" fill="#151b20">&#8592; West Port (Packet Link)</text>
-                <text x="602" y="202" font-size="6.8" fill="#242c33">Inter-Core Mesh Packet</text>
+                <text x="602" y="192" font-size="8" font-weight="900" fill="#000000">&#8592; West Port (Packet Link)</text>
+                <text x="602" y="202" font-size="6.8" fill="#000000" font-weight="900">Inter-Core Mesh Packet</text>
 
                 <rect x="596" y="214" width="138" height="36" rx="3" fill="#fffaf0" stroke="#b7df69" stroke-width="1"/>
-                <text x="602" y="228" font-size="8" font-weight="800" fill="#151b20">&#8857; Local Core Port</text>
-                <text x="602" y="239" font-size="6.8" fill="#151b20">BedRock CCE Interface</text>
+                <text x="602" y="228" font-size="8" font-weight="900" fill="#000000">&#8857; Local Core Port</text>
+                <text x="602" y="239" font-size="6.8" fill="#000000" font-weight="900">BedRock CCE Interface</text>
 
                 <!-- Flow arrows -->
                 <path d="M 183 243 L 200 243" fill="none" stroke="#b7df69" stroke-width="2" marker-end="url(#arrowLime)"/>
@@ -4080,7 +4080,7 @@ const appCoreDossiers = [
 
                 <!-- Metrics Strip Footer -->
                 <rect x="2" y="348" width="756" height="28" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
-                <text x="20" y="366" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace">METRICS: CPI: 1.35 &#8211; 1.75 &#8226; Area: ~165 kGE / Tile &#8226; Scaling: 1 to 64 Cores &#8226; Coherence: BedRock MESI &#8226; NoC: 2D Mesh</text>
+                <text x="20" y="366" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">METRICS: CPI: 1.35 &#8211; 1.75 &#8226; Area: ~165 kGE / Tile &#8226; Scaling: 1 to 64 Cores &#8226; Coherence: BedRock MESI &#8226; NoC: 2D Mesh</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -4196,118 +4196,118 @@ const appCoreDossiers = [
                 <!-- Status Header Banner -->
                 <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
                 <circle cx="16" cy="14" r="4" fill="#ffc83e"/>
-                <text x="28" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • SONICBOOM 3-WIDE OUT-OF-ORDER SUPERSCALAR &amp; MSHR TOPOLOGY</text>
+                <text x="28" y="17" font-size="9" font-weight="900" fill="#000000" font-family="monospace">SCORE EDA WORKBENCH • SONICBOOM 3-WIDE OUT-OF-ORDER SUPERSCALAR &amp; MSHR TOPOLOGY</text>
 
                 <!-- 1. Fetch Stage (4-Wide) -->
                 <rect x="18" y="42" width="115" height="305" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="18" y="42" width="115" height="20" rx="5" fill="#22bfd7"/>
-                <text x="24" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">FETCH (4-WIDE)</text>
+                <rect x="18" y="42" width="115" height="20" rx="5" fill="#cffafe" stroke="#0891b2" stroke-width="1.5"/>
+                <text x="24" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">FETCH (4-WIDE)</text>
 
                 <rect x="24" y="70" width="103" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="30" y="85" font-size="8" font-weight="800" fill="#151b20">Next-Line Predictor</text>
-                <text x="30" y="97" font-size="7" fill="#242c33">TAGE &#8226; 32-Entry RAS</text>
-                <text x="30" y="106" font-size="6.8" fill="#242c33">Branch Target Queue</text>
+                <text x="30" y="85" font-size="8" font-weight="900" fill="#000000">Next-Line Predictor</text>
+                <text x="30" y="97" font-size="7" fill="#000000" font-weight="900">TAGE &#8226; 32-Entry RAS</text>
+                <text x="30" y="106" font-size="6.8" fill="#000000" font-weight="900">Branch Target Queue</text>
 
                 <rect x="24" y="120" width="103" height="54" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-                <text x="30" y="135" font-size="8" font-weight="900" fill="#151b20">32 KiB 8-Way I-Cache</text>
-                <text x="30" y="148" font-size="7" fill="#242c33">4-Wide Fetch Packet</text>
-                <text x="30" y="159" font-size="6.8" fill="#22bfd7">32-Entry ITLB CAM</text>
-                <text x="30" y="168" font-size="6.5" fill="#242c33">VIPT Tag Lookup</text>
+                <text x="30" y="135" font-size="8" font-weight="900" fill="#000000">32 KiB 8-Way I-Cache</text>
+                <text x="30" y="148" font-size="7" fill="#000000" font-weight="900">4-Wide Fetch Packet</text>
+                <text x="30" y="159" font-size="6.8" fill="#000000" font-weight="900">32-Entry ITLB CAM</text>
+                <text x="30" y="168" font-size="6.5" fill="#000000" font-weight="900">VIPT Tag Lookup</text>
 
                 <rect x="24" y="182" width="103" height="50" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="30" y="196" font-size="8" font-weight="800" fill="#151b20">Fetch Target Queue (FTQ)</text>
-                <text x="30" y="208" font-size="7" fill="#242c33">Decouples Front-End</text>
-                <text x="30" y="218" font-size="6.8" fill="#242c33">16-Entry Branch Metadata</text>
+                <text x="30" y="196" font-size="8" font-weight="900" fill="#000000">Fetch Target Queue (FTQ)</text>
+                <text x="30" y="208" font-size="7" fill="#000000" font-weight="900">Decouples Front-End</text>
+                <text x="30" y="218" font-size="6.8" fill="#000000" font-weight="900">16-Entry Branch Metadata</text>
 
                 <!-- 2. Decode & Rename (RAT) -->
                 <rect x="142" y="42" width="125" height="305" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="142" y="42" width="125" height="20" rx="5" fill="#8275e8"/>
-                <text x="148" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">DECODE &amp; RENAME</text>
+                <rect x="142" y="42" width="125" height="20" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+                <text x="148" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">DECODE &amp; RENAME</text>
 
                 <rect x="148" y="70" width="113" height="44" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="154" y="85" font-size="8" font-weight="800" fill="#151b20">3-Wide Decoder</text>
-                <text x="154" y="97" font-size="7" fill="#242c33">Translates Inst &#8594; uOPs</text>
-                <text x="154" y="107" font-size="6.8" fill="#242c33">RVC 16b Expansion</text>
+                <text x="154" y="85" font-size="8" font-weight="900" fill="#000000">3-Wide Decoder</text>
+                <text x="154" y="97" font-size="7" fill="#000000" font-weight="900">Translates Inst &#8594; uOPs</text>
+                <text x="154" y="107" font-size="6.8" fill="#000000" font-weight="900">RVC 16b Expansion</text>
 
                 <rect x="148" y="122" width="113" height="74" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.2"/>
-                <text x="154" y="137" font-size="8" font-weight="900" fill="#ffc83e">Register Alias Table</text>
-                <text x="154" y="150" font-size="7" fill="#151b20">Maps 32 GPR &#8594; 128 PRF</text>
-                <text x="154" y="161" font-size="7" fill="#ffc83e">Eliminates WAR / WAW</text>
-                <text x="154" y="172" font-size="6.8" fill="#242c33">Free-List Allocator</text>
-                <text x="154" y="184" font-size="6.5" fill="#ffc83e">Checkpoint Recovery</text>
+                <text x="154" y="137" font-size="8" font-weight="900" fill="#000000">Register Alias Table</text>
+                <text x="154" y="150" font-size="7" fill="#000000" font-weight="900">Maps 32 GPR &#8594; 128 PRF</text>
+                <text x="154" y="161" font-size="7" fill="#000000" font-weight="900">Eliminates WAR / WAW</text>
+                <text x="154" y="172" font-size="6.8" fill="#000000" font-weight="900">Free-List Allocator</text>
+                <text x="154" y="184" font-size="6.5" fill="#000000" font-weight="900">Checkpoint Recovery</text>
 
                 <rect x="148" y="204" width="113" height="52" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-                <text x="154" y="219" font-size="8" font-weight="900" fill="#151b20">Unified PRF (128x64b)</text>
-                <text x="154" y="232" font-size="7" fill="#242c33">Physical Register File</text>
-                <text x="154" y="244" font-size="6.8" fill="#22bfd7">6 Read Ports &#8226; 4 Write</text>
+                <text x="154" y="219" font-size="8" font-weight="900" fill="#000000">Unified PRF (128x64b)</text>
+                <text x="154" y="232" font-size="7" fill="#000000" font-weight="900">Physical Register File</text>
+                <text x="154" y="244" font-size="6.8" fill="#000000" font-weight="900">6 Read Ports &#8226; 4 Write</text>
 
                 <!-- 3. Issue Queues (Reservation Stations) -->
                 <rect x="276" y="42" width="135" height="305" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="276" y="42" width="135" height="20" rx="5" fill="#8275e8"/>
-                <text x="282" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">ISSUE QUEUES (RS)</text>
+                <rect x="276" y="42" width="135" height="20" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+                <text x="282" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">ISSUE QUEUES (RS)</text>
 
                 <rect x="282" y="70" width="123" height="64" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="288" y="85" font-size="8" font-weight="800" fill="#151b20">Integer Issue Window</text>
-                <text x="288" y="98" font-size="7" fill="#242c33">24-Entry Reservation Stn</text>
-                <text x="288" y="109" font-size="7" fill="#b7df69">CAM Tag Matching</text>
-                <text x="288" y="120" font-size="6.8" fill="#242c33">Speculative Wakeup</text>
+                <text x="288" y="85" font-size="8" font-weight="900" fill="#000000">Integer Issue Window</text>
+                <text x="288" y="98" font-size="7" fill="#000000" font-weight="900">24-Entry Reservation Stn</text>
+                <text x="288" y="109" font-size="7" fill="#000000" font-weight="900">CAM Tag Matching</text>
+                <text x="288" y="120" font-size="6.8" fill="#000000" font-weight="900">Speculative Wakeup</text>
 
                 <rect x="282" y="142" width="123" height="52" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="288" y="157" font-size="8" font-weight="800" fill="#151b20">Memory Issue Window</text>
-                <text x="288" y="170" font-size="7" fill="#242c33">16-Entry Queue (AGU)</text>
-                <text x="288" y="181" font-size="6.8" fill="#22bfd7">Address Dependency Sched</text>
+                <text x="288" y="157" font-size="8" font-weight="900" fill="#000000">Memory Issue Window</text>
+                <text x="288" y="170" font-size="7" fill="#000000" font-weight="900">16-Entry Queue (AGU)</text>
+                <text x="288" y="181" font-size="6.8" fill="#000000" font-weight="900">Address Dependency Sched</text>
 
                 <rect x="282" y="202" width="123" height="50" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="288" y="217" font-size="8" font-weight="800" fill="#151b20">FP Issue Window</text>
-                <text x="288" y="230" font-size="7" fill="#242c33">16-Entry Queue (FMA)</text>
-                <text x="288" y="240" font-size="6.8" fill="#242c33">Double-Precision Sched</text>
+                <text x="288" y="217" font-size="8" font-weight="900" fill="#000000">FP Issue Window</text>
+                <text x="288" y="230" font-size="7" fill="#000000" font-weight="900">16-Entry Queue (FMA)</text>
+                <text x="288" y="240" font-size="6.8" fill="#000000" font-weight="900">Double-Precision Sched</text>
 
                 <!-- 4. Parallel Execute Units -->
                 <rect x="420" y="42" width="135" height="305" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="420" y="42" width="135" height="20" rx="5" fill="#ffc83e"/>
-                <text x="426" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">EXECUTE PIPELINES</text>
+                <rect x="420" y="42" width="135" height="20" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+                <text x="426" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">EXECUTE PIPELINES</text>
 
                 <rect x="426" y="70" width="123" height="34" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/>
-                <text x="432" y="84" font-size="8" font-weight="800" fill="#151b20">ALU 0: Branch &amp; Int</text>
-                <text x="432" y="95" font-size="6.8" fill="#b7df69">1-Cycle Fast Integer Ops</text>
+                <text x="432" y="84" font-size="8" font-weight="900" fill="#000000">ALU 0: Branch &amp; Int</text>
+                <text x="432" y="95" font-size="6.8" fill="#000000" font-weight="900">1-Cycle Fast Integer Ops</text>
 
                 <rect x="426" y="112" width="123" height="34" rx="3" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/>
-                <text x="432" y="126" font-size="8" font-weight="800" fill="#151b20">ALU 1: Shift / Math</text>
-                <text x="432" y="137" font-size="6.8" fill="#b7df69">Pipelined Multiplier Unit</text>
+                <text x="432" y="126" font-size="8" font-weight="900" fill="#000000">ALU 1: Shift / Math</text>
+                <text x="432" y="137" font-size="6.8" fill="#000000" font-weight="900">Pipelined Multiplier Unit</text>
 
                 <rect x="426" y="154" width="123" height="34" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="432" y="168" font-size="8" font-weight="800" fill="#151b20">FPU: Pipelined FMA</text>
-                <text x="432" y="179" font-size="6.8" fill="#242c33">HardFloat Double-Precision</text>
+                <text x="432" y="168" font-size="8" font-weight="900" fill="#000000">FPU: Pipelined FMA</text>
+                <text x="432" y="179" font-size="6.8" fill="#000000" font-weight="900">HardFloat Double-Precision</text>
 
                 <rect x="426" y="196" width="123" height="48" rx="3" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1"/>
-                <text x="432" y="210" font-size="8" font-weight="900" fill="#22bfd7">Load/Store AGU</text>
-                <text x="432" y="222" font-size="7" fill="#22bfd7">Effective Addr Calc (64b)</text>
-                <text x="432" y="233" font-size="6.8" fill="#242c33">VIPT Tag Comparison</text>
+                <text x="432" y="210" font-size="8" font-weight="900" fill="#000000">Load/Store AGU</text>
+                <text x="432" y="222" font-size="7" fill="#000000" font-weight="900">Effective Addr Calc (64b)</text>
+                <text x="432" y="233" font-size="6.8" fill="#000000" font-weight="900">VIPT Tag Comparison</text>
 
                 <!-- 5. Memory Subsystem & Commit (RoB) -->
                 <rect x="564" y="42" width="178" height="305" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-                <rect x="564" y="42" width="178" height="20" rx="5" fill="#0d9488"/>
-                <text x="570" y="56" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">MEMORY &amp; REORDER BUFFER</text>
+                <rect x="564" y="42" width="178" height="20" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.5"/>
+                <text x="570" y="56" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">MEMORY &amp; REORDER BUFFER</text>
 
                 <rect x="572" y="70" width="162" height="66" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1.5"/>
-                <text x="578" y="85" font-size="8.5" font-weight="900" fill="#ffc83e">REORDER BUFFER (RoB)</text>
-                <text x="578" y="98" font-size="7" fill="#151b20">&#8226; 128-Entry Circular Array</text>
-                <text x="578" y="109" font-size="7" fill="#151b20">&#8226; Commits up to 4 uOPs/cycle</text>
-                <text x="578" y="120" font-size="7" fill="#ffc83e">&#8226; In-Order Architectural Commit</text>
-                <text x="578" y="131" font-size="6.8" fill="#151b20">Precise Exception Recovery</text>
+                <text x="578" y="85" font-size="8.5" font-weight="900" fill="#000000">REORDER BUFFER (RoB)</text>
+                <text x="578" y="98" font-size="7" fill="#000000" font-weight="900">&#8226; 128-Entry Circular Array</text>
+                <text x="578" y="109" font-size="7" fill="#000000" font-weight="900">&#8226; Commits up to 4 uOPs/cycle</text>
+                <text x="578" y="120" font-size="7" fill="#000000" font-weight="900">&#8226; In-Order Architectural Commit</text>
+                <text x="578" y="131" font-size="6.8" fill="#000000" font-weight="900">Precise Exception Recovery</text>
 
                 <rect x="572" y="144" width="162" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-                <text x="578" y="159" font-size="8" font-weight="800" fill="#151b20">Load / Store Queues (LDQ/STQ)</text>
-                <text x="578" y="171" font-size="7" fill="#242c33">16-Entry LDQ &#8226; 16-Entry STQ</text>
-                <text x="578" y="181" font-size="6.8" fill="#22bfd7">Store-to-Load Forwarding</text>
+                <text x="578" y="159" font-size="8" font-weight="900" fill="#000000">Load / Store Queues (LDQ/STQ)</text>
+                <text x="578" y="171" font-size="7" fill="#000000" font-weight="900">16-Entry LDQ &#8226; 16-Entry STQ</text>
+                <text x="578" y="181" font-size="6.8" fill="#000000" font-weight="900">Store-to-Load Forwarding</text>
 
                 <!-- Non-blocking Cache + MSHR -->
                 <rect x="572" y="194" width="162" height="74" rx="4" fill="#c9f3f4" stroke="#22bfd7" stroke-width="1.2"/>
-                <text x="578" y="209" font-size="8" font-weight="900" fill="#22bfd7">NON-BLOCKING L1 D-CACHE</text>
-                <text x="578" y="222" font-size="7" fill="#22bfd7">32 KiB 8-Way &#8226; 32-Entry DTLB</text>
-                <text x="578" y="233" font-size="7" font-weight="800" fill="#ffc83e">8-ENTRY MSHR POOL</text>
-                <text x="578" y="244" font-size="6.8" fill="#151b20">Sustains 8 Concurrent DRAM Misses</text>
-                <text x="578" y="255" font-size="6.5" fill="#242c33">TileLink-UH 64b System Bus Port</text>
+                <text x="578" y="209" font-size="8" font-weight="900" fill="#000000">NON-BLOCKING L1 D-CACHE</text>
+                <text x="578" y="222" font-size="7" fill="#000000" font-weight="900">32 KiB 8-Way &#8226; 32-Entry DTLB</text>
+                <text x="578" y="233" font-size="7" font-weight="900" fill="#000000">8-ENTRY MSHR POOL</text>
+                <text x="578" y="244" font-size="6.8" fill="#000000" font-weight="900">Sustains 8 Concurrent DRAM Misses</text>
+                <text x="578" y="255" font-size="6.5" fill="#000000" font-weight="900">TileLink-UH 64b System Bus Port</text>
 
                 <!-- Flow arrows -->
                 <path d="M 133 160 L 142 160" fill="none" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBoom)"/>
@@ -4317,7 +4317,7 @@ const appCoreDossiers = [
 
                 <!-- Metrics Strip Footer -->
                 <rect x="2" y="388" width="756" height="28" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
-                <text x="20" y="406" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace">METRICS: Sustained IPC: 1.05 &#8211; 1.55 (CPI: 0.65 &#8211; 0.95) &#8226; Area: ~420 kGE (16nm) &#8226; Fmax: 1.5 GHz &#8226; Rename: 128 PRF &#8226; MSHRs: 8</text>
+                <text x="20" y="406" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace">METRICS: Sustained IPC: 1.05 &#8211; 1.55 (CPI: 0.65 &#8211; 0.95) &#8226; Area: ~420 kGE (16nm) &#8226; Fmax: 1.5 GHz &#8226; Rename: 128 PRF &#8226; MSHRs: 8</text>
               </svg>
             </div>
             <p class="schematic-caption">
@@ -4802,203 +4802,203 @@ const appCoreDossiers = [
           <!-- Status Header Banner -->
           <rect x="2" y="2" width="956" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
           <circle cx="16" cy="15" r="4.5" fill="#ffc83e"/>
-          <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH &#8226; EMPIRICAL LINUX 6.1 LTS MEMCPY &amp; FMAX PERFORMANCE SPECTRUM</text>
+          <text x="28" y="18" font-size="9" font-weight="900" fill="#000000" font-family="monospace">SCORE EDA WORKBENCH &#8226; EMPIRICAL LINUX 6.1 LTS MEMCPY &amp; FMAX PERFORMANCE SPECTRUM</text>
 
           <!-- Grid Axes & Labels -->
           <!-- Vertical Ticks at 0, 100, 200, 300, 400, 500, 600, 700, 800 MB/s -->
           <!-- Scale: Origin x=230, 65px per 100 MB/s -> 800 MB/s at x=750 -->
           <line x1="230" y1="48" x2="230" y2="430" stroke="#151b20" stroke-width="1.8"/>
-          <text x="230" y="60" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">0</text>
+          <text x="230" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">0</text>
 
           <line x1="295" y1="48" x2="295" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="295" y="60" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">100</text>
+          <text x="295" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">100</text>
 
           <line x1="360" y1="48" x2="360" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="360" y="60" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">200</text>
+          <text x="360" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">200</text>
 
           <line x1="425" y1="48" x2="425" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="425" y="60" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">300</text>
+          <text x="425" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">300</text>
 
           <line x1="490" y1="48" x2="490" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="490" y="60" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">400</text>
+          <text x="490" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">400</text>
 
           <line x1="555" y1="48" x2="555" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="555" y="60" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">500</text>
+          <text x="555" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">500</text>
 
           <line x1="620" y1="48" x2="620" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="620" y="60" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">600</text>
+          <text x="620" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">600</text>
 
           <line x1="685" y1="48" x2="685" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="685" y="60" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">700</text>
+          <text x="685" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">700</text>
 
           <line x1="750" y1="48" x2="750" y2="430" stroke="#151b20" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.25"/>
-          <text x="750" y="60" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">800 MB/s</text>
+          <text x="750" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">800 MB/s</text>
 
           <!-- Table Header for Numerical Values on Right -->
           <rect x="790" y="44" width="154" height="22" rx="3" fill="#f6f0dc" stroke="#151b20" stroke-width="1"/>
-          <text x="798" y="58" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">Memcpy</text>
-          <text x="846" y="58" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">Fmax</text>
-          <text x="884" y="58" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">Area</text>
-          <text x="918" y="58" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">MSHR</text>
+          <text x="798" y="58" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">Memcpy</text>
+          <text x="846" y="58" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">Fmax</text>
+          <text x="884" y="58" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">Area</text>
+          <text x="918" y="58" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">MSHR</text>
 
           <!-- ============================================================ -->
           <!-- 9 EVALUATED HARDWARE CORE ROWS -->
           <!-- ============================================================ -->
 
           <!-- ROW 1: SonicBOOM (3-Wide Large) • 782.5 MB/s (width = 509px) -->
-          <text x="25" y="83" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">#1 SonicBOOM (3-Wide Large)</text>
+          <text x="25" y="83" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">#1 SonicBOOM (3-Wide Large)</text>
           <rect x="160" y="74" width="60" height="12" rx="2" fill="#fef3c7" stroke="#d97706" stroke-width="0.8"/>
-          <text x="190" y="82.5" font-size="6" font-weight="800" fill="#d97706" font-family="monospace" text-anchor="middle">OoO 3-W</text>
+          <text x="190" y="82.5" font-size="6" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">OoO 3-W</text>
           <!-- Primary Bar -->
           <rect x="230" y="71" width="509" height="14" rx="3" fill="url(#barGoldAppGrad)" stroke="#151b20" stroke-width="1.2"/>
           <rect x="670" y="71" width="66" height="14" rx="2" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
-          <text x="703" y="81" font-size="6.5" font-weight="900" fill="#dc2626" font-family="monospace" text-anchor="middle">&#9733; PEAK 782.5</text>
+          <text x="703" y="81" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">&#9733; PEAK 782.5</text>
           <!-- Secondary Fmax Bar: 1.5 GHz = 195px -->
           <rect x="230" y="87" width="195" height="4" rx="1.5" fill="#22bfd7"/>
           <!-- Right Metrics -->
-          <text x="798" y="83" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace">782.5M</text>
-          <text x="846" y="83" font-size="7.2" font-weight="800" fill="#0d9488" font-family="monospace">1.5G&#9733;</text>
-          <text x="884" y="83" font-size="7.2" fill="#151b20" font-family="monospace">420k</text>
-          <text x="922" y="83" font-size="7.2" font-weight="900" fill="#0d9488" font-family="monospace">8</text>
+          <text x="798" y="83" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">782.5M</text>
+          <text x="846" y="83" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">1.5G&#9733;</text>
+          <text x="884" y="83" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">420k</text>
+          <text x="922" y="83" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">8</text>
 
           <!-- ROW 2: SmallBOOM (1-Wide Decoupled) • 595.0 MB/s (width = 387px) -->
-          <text x="25" y="121" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">#2 SmallBOOM (1-Wide OoO)</text>
+          <text x="25" y="121" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">#2 SmallBOOM (1-Wide OoO)</text>
           <rect x="160" y="112" width="60" height="12" rx="2" fill="#fef3c7" stroke="#d97706" stroke-width="0.8"/>
-          <text x="190" y="120.5" font-size="6" font-weight="800" fill="#d97706" font-family="monospace" text-anchor="middle">OoO 1-W</text>
+          <text x="190" y="120.5" font-size="6" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">OoO 1-W</text>
           <rect x="230" y="109" width="387" height="14" rx="3" fill="url(#barGoldAppGrad)" stroke="#151b20" stroke-width="1.2"/>
-          <text x="624" y="119.5" font-size="7" font-weight="900" fill="#d97706" font-family="monospace">595.0 MB/s</text>
+          <text x="624" y="119.5" font-size="7" font-weight="900" fill="#000000" font-family="monospace">595.0 MB/s</text>
           <!-- Fmax Bar: 1.3 GHz = 169px -->
           <rect x="230" y="125" width="169" height="4" rx="1.5" fill="#22bfd7"/>
-          <text x="798" y="121" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace">595.0M</text>
-          <text x="846" y="121" font-size="7.2" fill="#151b20" font-family="monospace">1.3G</text>
-          <text x="884" y="121" font-size="7.2" fill="#151b20" font-family="monospace">245k</text>
-          <text x="922" y="121" font-size="7.2" fill="#151b20" font-family="monospace">4</text>
+          <text x="798" y="121" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">595.0M</text>
+          <text x="846" y="121" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1.3G</text>
+          <text x="884" y="121" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">245k</text>
+          <text x="922" y="121" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">4</text>
 
           <!-- ROW 3: Rocket Chip (Max-Cache 32K) • 512.0 MB/s (width = 333px) -->
-          <text x="25" y="159" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">#3 Rocket Chip (Max 32K)</text>
+          <text x="25" y="159" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">#3 Rocket Chip (Max 32K)</text>
           <rect x="160" y="150" width="60" height="12" rx="2" fill="#e0f2fe" stroke="#0284c7" stroke-width="0.8"/>
-          <text x="190" y="158.5" font-size="6" font-weight="800" fill="#0284c7" font-family="monospace" text-anchor="middle">5-STAGE</text>
+          <text x="190" y="158.5" font-size="6" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">5-STAGE</text>
           <rect x="230" y="147" width="333" height="14" rx="3" fill="url(#barBlueAppGrad)" stroke="#151b20" stroke-width="1.2"/>
-          <text x="570" y="157.5" font-size="7" font-weight="900" fill="#0284c7" font-family="monospace">512.0 MB/s</text>
+          <text x="570" y="157.5" font-size="7" font-weight="900" fill="#000000" font-family="monospace">512.0 MB/s</text>
           <!-- Fmax Bar: 1.2 GHz = 156px -->
           <rect x="230" y="163" width="156" height="4" rx="1.5" fill="#22bfd7"/>
-          <text x="798" y="159" font-size="7.5" font-weight="900" fill="#0284c7" font-family="monospace">512.0M</text>
-          <text x="846" y="159" font-size="7.2" fill="#151b20" font-family="monospace">1.2G</text>
-          <text x="884" y="159" font-size="7.2" fill="#151b20" font-family="monospace">158k</text>
-          <text x="922" y="159" font-size="7.2" fill="#151b20" font-family="monospace">0</text>
+          <text x="798" y="159" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">512.0M</text>
+          <text x="846" y="159" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1.2G</text>
+          <text x="884" y="159" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">158k</text>
+          <text x="922" y="159" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">0</text>
 
           <!-- ROW 4: Rocket Chip (Standard Linux) • 485.4 MB/s (width = 316px) -->
-          <text x="25" y="197" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">#4 Rocket Chip (Standard)</text>
+          <text x="25" y="197" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">#4 Rocket Chip (Standard)</text>
           <rect x="160" y="188" width="60" height="12" rx="2" fill="#e0f2fe" stroke="#0284c7" stroke-width="0.8"/>
-          <text x="190" y="196.5" font-size="6" font-weight="800" fill="#0284c7" font-family="monospace" text-anchor="middle">5-STAGE</text>
+          <text x="190" y="196.5" font-size="6" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">5-STAGE</text>
           <rect x="230" y="185" width="316" height="14" rx="3" fill="url(#barBlueAppGrad)" stroke="#151b20" stroke-width="1.2"/>
           <rect x="553" y="185" width="70" height="14" rx="2" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
-          <text x="588" y="195" font-size="6.5" font-weight="900" fill="#16a34a" font-family="monospace" text-anchor="middle">&#128142; 135 kGE</text>
+          <text x="588" y="195" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">&#128142; 135 kGE</text>
           <!-- Fmax Bar: 1.2 GHz = 156px -->
           <rect x="230" y="201" width="156" height="4" rx="1.5" fill="#22bfd7"/>
-          <text x="798" y="197" font-size="7.5" font-weight="900" fill="#0284c7" font-family="monospace">485.4M</text>
-          <text x="846" y="197" font-size="7.2" fill="#151b20" font-family="monospace">1.2G</text>
-          <text x="884" y="197" font-size="7.2" font-weight="900" fill="#16a34a" font-family="monospace">135k&#9733;</text>
-          <text x="922" y="197" font-size="7.2" fill="#151b20" font-family="monospace">0</text>
+          <text x="798" y="197" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">485.4M</text>
+          <text x="846" y="197" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1.2G</text>
+          <text x="884" y="197" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">135k&#9733;</text>
+          <text x="922" y="197" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">0</text>
 
           <!-- ROW 5: CVA6 (HP Clustered Node) • 468.2 MB/s (width = 304px) -->
-          <text x="25" y="235" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">#5 CVA6 (HP Clustered Node)</text>
+          <text x="25" y="235" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">#5 CVA6 (HP Clustered Node)</text>
           <rect x="160" y="226" width="60" height="12" rx="2" fill="#ccfbf1" stroke="#0d9488" stroke-width="0.8"/>
-          <text x="190" y="234.5" font-size="6" font-weight="800" fill="#0d9488" font-family="monospace" text-anchor="middle">6-STAGE</text>
+          <text x="190" y="234.5" font-size="6" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">6-STAGE</text>
           <rect x="230" y="223" width="304" height="14" rx="3" fill="url(#barTealAppGrad)" stroke="#151b20" stroke-width="1.2"/>
-          <text x="541" y="233.5" font-size="7" font-weight="900" fill="#0d9488" font-family="monospace">468.2 MB/s</text>
+          <text x="541" y="233.5" font-size="7" font-weight="900" fill="#000000" font-family="monospace">468.2 MB/s</text>
           <!-- Fmax Bar: 1.4 GHz = 182px -->
           <rect x="230" y="239" width="182" height="4" rx="1.5" fill="#22bfd7"/>
-          <text x="798" y="235" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">468.2M</text>
-          <text x="846" y="235" font-size="7.2" fill="#151b20" font-family="monospace">1.4G</text>
-          <text x="884" y="235" font-size="7.2" fill="#151b20" font-family="monospace">162k</text>
-          <text x="922" y="235" font-size="7.2" fill="#151b20" font-family="monospace">2</text>
+          <text x="798" y="235" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">468.2M</text>
+          <text x="846" y="235" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1.4G</text>
+          <text x="884" y="235" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">162k</text>
+          <text x="922" y="235" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">2</text>
 
           <!-- ROW 6: CVA6 (Standard Single-Core) • 442.8 MB/s (width = 288px) -->
-          <text x="25" y="273" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">#6 CVA6 (Standard AXI4)</text>
+          <text x="25" y="273" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">#6 CVA6 (Standard AXI4)</text>
           <rect x="160" y="264" width="60" height="12" rx="2" fill="#ccfbf1" stroke="#0d9488" stroke-width="0.8"/>
-          <text x="190" y="272.5" font-size="6" font-weight="800" fill="#0d9488" font-family="monospace" text-anchor="middle">6-STAGE</text>
+          <text x="190" y="272.5" font-size="6" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">6-STAGE</text>
           <rect x="230" y="261" width="288" height="14" rx="3" fill="url(#barTealAppGrad)" stroke="#151b20" stroke-width="1.2"/>
-          <text x="525" y="271.5" font-size="7" font-weight="900" fill="#0d9488" font-family="monospace">442.8 MB/s</text>
+          <text x="525" y="271.5" font-size="7" font-weight="900" fill="#000000" font-family="monospace">442.8 MB/s</text>
           <!-- Fmax Bar: 1.4 GHz = 182px -->
           <rect x="230" y="277" width="182" height="4" rx="1.5" fill="#22bfd7"/>
-          <text x="798" y="273" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">442.8M</text>
-          <text x="846" y="273" font-size="7.2" fill="#151b20" font-family="monospace">1.4G</text>
-          <text x="884" y="273" font-size="7.2" fill="#151b20" font-family="monospace">148k</text>
-          <text x="922" y="273" font-size="7.2" fill="#151b20" font-family="monospace">1</text>
+          <text x="798" y="273" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">442.8M</text>
+          <text x="846" y="273" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1.4G</text>
+          <text x="884" y="273" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">148k</text>
+          <text x="922" y="273" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1</text>
 
           <!-- ROW 7: BlackParrot (Uni-Core Minimal) • 425.0 MB/s (width = 276px) -->
-          <text x="25" y="311" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">#7 BlackParrot (Uni-Core)</text>
+          <text x="25" y="311" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">#7 BlackParrot (Uni-Core)</text>
           <rect x="160" y="302" width="60" height="12" rx="2" fill="#fee2e2" stroke="#e11d48" stroke-width="0.8"/>
-          <text x="190" y="310.5" font-size="6" font-weight="800" fill="#e11d48" font-family="monospace" text-anchor="middle">BEDROCK</text>
+          <text x="190" y="310.5" font-size="6" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">BEDROCK</text>
           <rect x="230" y="299" width="276" height="14" rx="3" fill="url(#barCoralAppGrad)" stroke="#151b20" stroke-width="1.2"/>
-          <text x="513" y="309.5" font-size="7" font-weight="900" fill="#e11d48" font-family="monospace">425.0 MB/s</text>
+          <text x="513" y="309.5" font-size="7" font-weight="900" fill="#000000" font-family="monospace">425.0 MB/s</text>
           <!-- Fmax Bar: 1.15 GHz = 150px -->
           <rect x="230" y="315" width="150" height="4" rx="1.5" fill="#22bfd7"/>
-          <text x="798" y="311" font-size="7.5" font-weight="900" fill="#e11d48" font-family="monospace">425.0M</text>
-          <text x="846" y="311" font-size="7.2" fill="#151b20" font-family="monospace">1.15G</text>
-          <text x="884" y="311" font-size="7.2" fill="#151b20" font-family="monospace">142k</text>
-          <text x="922" y="311" font-size="7.2" fill="#151b20" font-family="monospace">1</text>
+          <text x="798" y="311" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">425.0M</text>
+          <text x="846" y="311" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1.15G</text>
+          <text x="884" y="311" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">142k</text>
+          <text x="922" y="311" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1</text>
 
           <!-- ROW 8: BlackParrot (Dual-Core Cluster) • 412.6 MB/s (width = 268px) -->
-          <text x="25" y="349" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">#8 BlackParrot (Dual-Core)</text>
+          <text x="25" y="349" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">#8 BlackParrot (Dual-Core)</text>
           <rect x="160" y="340" width="60" height="12" rx="2" fill="#fee2e2" stroke="#e11d48" stroke-width="0.8"/>
-          <text x="190" y="348.5" font-size="6" font-weight="800" fill="#e11d48" font-family="monospace" text-anchor="middle">BEDROCK</text>
+          <text x="190" y="348.5" font-size="6" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">BEDROCK</text>
           <rect x="230" y="337" width="268" height="14" rx="3" fill="url(#barCoralAppGrad)" stroke="#151b20" stroke-width="1.2"/>
-          <text x="505" y="347.5" font-size="7" font-weight="900" fill="#e11d48" font-family="monospace">412.6 MB/s</text>
+          <text x="505" y="347.5" font-size="7" font-weight="900" fill="#000000" font-family="monospace">412.6 MB/s</text>
           <!-- Fmax Bar: 1.1 GHz = 143px -->
           <rect x="230" y="353" width="143" height="4" rx="1.5" fill="#22bfd7"/>
-          <text x="798" y="349" font-size="7.5" font-weight="900" fill="#e11d48" font-family="monospace">412.6M</text>
-          <text x="846" y="349" font-size="7.2" fill="#151b20" font-family="monospace">1.1G</text>
-          <text x="884" y="349" font-size="7.2" fill="#151b20" font-family="monospace">165k</text>
-          <text x="922" y="349" font-size="7.2" fill="#151b20" font-family="monospace">2</text>
+          <text x="798" y="349" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">412.6M</text>
+          <text x="846" y="349" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1.1G</text>
+          <text x="884" y="349" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">165k</text>
+          <text x="922" y="349" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">2</text>
 
           <!-- ROW 9: BlackParrot (Quad-Core Coherent Mesh) • 398.0 MB/s (width = 259px) -->
-          <text x="25" y="387" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">#9 BlackParrot (Quad-Core Mesh)</text>
+          <text x="25" y="387" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">#9 BlackParrot (Quad-Core Mesh)</text>
           <rect x="160" y="378" width="60" height="12" rx="2" fill="#fee2e2" stroke="#e11d48" stroke-width="0.8"/>
-          <text x="190" y="386.5" font-size="6" font-weight="800" fill="#e11d48" font-family="monospace" text-anchor="middle">2D-MESH</text>
+          <text x="190" y="386.5" font-size="6" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">2D-MESH</text>
           <rect x="230" y="375" width="259" height="14" rx="3" fill="url(#barCoralAppGrad)" stroke="#151b20" stroke-width="1.2"/>
           <rect x="496" y="375" width="84" height="14" rx="2" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
-          <text x="538" y="385" font-size="6.5" font-weight="900" fill="#7c3aed" font-family="monospace" text-anchor="middle">&#9889; 4x COHERENT</text>
+          <text x="538" y="385" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">&#9889; 4x COHERENT</text>
           <!-- Fmax Bar: 1.0 GHz = 130px -->
           <rect x="230" y="391" width="130" height="4" rx="1.5" fill="#22bfd7"/>
-          <text x="798" y="387" font-size="7.5" font-weight="900" fill="#e11d48" font-family="monospace">398.0M</text>
-          <text x="846" y="387" font-size="7.2" fill="#151b20" font-family="monospace">1.0G</text>
-          <text x="884" y="387" font-size="7.2" fill="#151b20" font-family="monospace">170k</text>
-          <text x="922" y="387" font-size="7.2" fill="#151b20" font-family="monospace">2</text>
+          <text x="798" y="387" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">398.0M</text>
+          <text x="846" y="387" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">1.0G</text>
+          <text x="884" y="387" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">170k</text>
+          <text x="922" y="387" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">2</text>
 
           <!-- ROW 10: Reference Golden Line -->
           <rect x="25" y="411" width="750" height="16" rx="3" fill="#f6f0dc" stroke="#151b20" stroke-width="1" stroke-dasharray="4,3"/>
-          <text x="35" y="422" font-size="7" font-weight="800" fill="#151b20" font-family="monospace">All 9 configurations verified with Sv39/Sv48 MMU Linux 6.1 LTS boot &amp; cycle-accurate Verilator hardware traces</text>
-          <text x="798" y="422" font-size="7.2" fill="#151b20" font-family="monospace">&#8212;</text>
-          <text x="846" y="422" font-size="7.2" fill="#151b20" font-family="monospace">&#8212;</text>
-          <text x="884" y="422" font-size="7.2" fill="#151b20" font-family="monospace">&#8212;</text>
-          <text x="922" y="422" font-size="7.2" font-weight="900" fill="#151b20" font-family="monospace">100%</text>
+          <text x="35" y="422" font-size="7" font-weight="900" fill="#000000" font-family="monospace">All 9 configurations verified with Sv39/Sv48 MMU Linux 6.1 LTS boot &amp; cycle-accurate Verilator hardware traces</text>
+          <text x="798" y="422" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">&#8212;</text>
+          <text x="846" y="422" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">&#8212;</text>
+          <text x="884" y="422" font-size="7.2" fill="#000000" font-family="monospace" font-weight="900">&#8212;</text>
+          <text x="922" y="422" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">100%</text>
 
           <!-- ============================================================ -->
           <!-- DUAL-ROW LEGEND & SPECIFICATION STRIP -->
           <!-- ============================================================ -->
           <!-- Row 1: Protocol Key -->
           <rect x="20" y="446" width="920" height="40" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-          <text x="30" y="460" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">MICROARCHITECTURAL ARCHETYPE SPECTRUM KEY:</text>
+          <text x="30" y="460" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">MICROARCHITECTURAL ARCHETYPE SPECTRUM KEY:</text>
           <circle cx="35" cy="474" r="4" fill="#d97706"/>
-          <text x="44" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Gold: Out-of-Order Superscalar (BOOM)</text>
+          <text x="44" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Gold: Out-of-Order Superscalar (BOOM)</text>
           <circle cx="275" cy="474" r="4" fill="#0284c7"/>
-          <text x="284" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Blue: Minimal In-Order (Rocket)</text>
+          <text x="284" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Blue: Minimal In-Order (Rocket)</text>
           <circle cx="475" cy="474" r="4" fill="#0d9488"/>
-          <text x="484" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Teal: Decoupled Scoreboard (CVA6)</text>
+          <text x="484" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Teal: Decoupled Scoreboard (CVA6)</text>
           <circle cx="685" cy="474" r="4" fill="#e11d48"/>
-          <text x="694" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Coral: Modular Multicore (BlackParrot)</text>
+          <text x="694" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Coral: Modular Multicore (BlackParrot)</text>
           <rect x="850" y="471" width="14" height="6" rx="2" fill="#22bfd7"/>
-          <text x="870" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Cyan: Fmax</text>
+          <text x="870" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Cyan: Fmax</text>
 
           <!-- Row 2: Standardized Benchmark Specification -->
           <rect x="20" y="492" width="920" height="48" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-          <text x="30" y="506" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">STANDARDIZED BENCHMARK HARNESS SPECIFICATIONS &amp; SIMULATION METHODOLOGY</text>
-          <text x="30" y="524" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">Benchmark: Linux 6.1 unaligned memcpy sweeps</text>
-          <text x="280" y="524" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">Compiler: GCC 13.2 (-O3 -funroll-loops)</text>
-          <text x="540" y="524" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">Simulation: Verilator 5.022 Cycle-Accurate Trace</text>
-          <text x="810" y="524" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">9 Evaluated Profiles</text>
+          <text x="30" y="506" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">STANDARDIZED BENCHMARK HARNESS SPECIFICATIONS &amp; SIMULATION METHODOLOGY</text>
+          <text x="30" y="524" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">Benchmark: Linux 6.1 unaligned memcpy sweeps</text>
+          <text x="280" y="524" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">Compiler: GCC 13.2 (-O3 -funroll-loops)</text>
+          <text x="540" y="524" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">Simulation: Verilator 5.022 Cycle-Accurate Trace</text>
+          <text x="810" y="524" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">9 Evaluated Profiles</text>
         </svg>
       </div>
       <div class="mobile-scroll-hint">&#8596; Interactive Schematic: Scroll horizontally on touchscreens to inspect full datapath interconnects</div>
@@ -5032,7 +5032,7 @@ const appCoreDossiers = [
           <!-- Status Header Banner -->
           <rect x="2" y="2" width="956" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
           <circle cx="16" cy="15" r="4.5" fill="#d97706"/>
-          <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH &#8226; APPLICATION CORE PARETO FRONTIER: THROUGHPUT VS SILICON AREA</text>
+          <text x="28" y="18" font-size="9" font-weight="900" fill="#000000" font-family="monospace">SCORE EDA WORKBENCH &#8226; APPLICATION CORE PARETO FRONTIER: THROUGHPUT VS SILICON AREA</text>
 
           <!-- ============================================================ -->
           <!-- 4 BACKGROUND ARCHITECTURAL DOMAIN SHADING REGIONS -->
@@ -5040,89 +5040,89 @@ const appCoreDossiers = [
           <!-- Region 1: Lean In-Order Baselines (100–160 kGE) -->
           <rect x="95" y="70" width="145" height="340" fill="#e0f2fe" opacity="0.3"/>
           <rect x="100" y="75" width="135" height="15" rx="3" fill="#e0f2fe" stroke="#0284c7" stroke-width="0.8"/>
-          <text x="105" y="85.5" font-size="6.5" font-weight="900" fill="#0284c7" font-family="monospace">1. LEAN IN-ORDER (100&#8211;160 kGE)</text>
+          <text x="105" y="85.5" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace">1. LEAN IN-ORDER (100&#8211;160 kGE)</text>
 
           <!-- Region 2: Industrial Scoreboard & Modular Tiles (160–200 kGE) -->
           <rect x="240" y="70" width="120" height="340" fill="#ccfbf1" opacity="0.3"/>
           <rect x="245" y="75" width="110" height="15" rx="3" fill="#ccfbf1" stroke="#0d9488" stroke-width="0.8"/>
-          <text x="250" y="85.5" font-size="6.5" font-weight="900" fill="#0d9488" font-family="monospace">2. CLUSTER / SCOREBOARD</text>
+          <text x="250" y="85.5" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace">2. CLUSTER / SCOREBOARD</text>
 
           <!-- Region 3: Decoupled Out-of-Order Entry (200–300 kGE) -->
           <rect x="360" y="70" width="290" height="340" fill="#fef3c7" opacity="0.25"/>
           <rect x="365" y="75" width="140" height="15" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="0.8"/>
-          <text x="370" y="85.5" font-size="6.5" font-weight="900" fill="#d97706" font-family="monospace">3. DECOUPLED OoO SWEET-SPOT</text>
+          <text x="370" y="85.5" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace">3. DECOUPLED OoO SWEET-SPOT</text>
 
           <!-- Region 4: High-Performance Multi-Wide OoO (>300 kGE) -->
           <rect x="650" y="70" width="270" height="340" fill="#fee2e2" opacity="0.25"/>
           <rect x="655" y="75" width="145" height="15" rx="3" fill="#fee2e2" stroke="#e11d48" stroke-width="0.8"/>
-          <text x="660" y="85.5" font-size="6.5" font-weight="900" fill="#e11d48" font-family="monospace">4. SUPERSCALAR FLAGSHIP</text>
+          <text x="660" y="85.5" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace">4. SUPERSCALAR FLAGSHIP</text>
 
           <!-- ============================================================ -->
           <!-- AXES, TICKS & GRIDLINES -->
           <!-- ============================================================ -->
           <!-- X-Axis: 100 to 450 kGE (Origin x=95, y=410, width=825px) -->
           <line x1="95" y1="410" x2="920" y2="410" stroke="#151b20" stroke-width="2"/>
-          <text x="507" y="432" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">NORMALIZED POST-SYNTHESIS SILICON GATE COUNT (kGE)</text>
+          <text x="507" y="432" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">NORMALIZED POST-SYNTHESIS SILICON GATE COUNT (kGE)</text>
 
           <!-- X Ticks: 100, 150, 200, 250, 300, 350, 400, 450 -->
           <line x1="95" y1="410" x2="95" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="95" y="424" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">100</text>
+          <text x="95" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">100</text>
 
           <line x1="213" y1="70" x2="213" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="213" y1="410" x2="213" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="213" y="424" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">150 kGE</text>
+          <text x="213" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">150 kGE</text>
 
           <line x1="331" y1="70" x2="331" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="331" y1="410" x2="331" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="331" y="424" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">200 kGE</text>
+          <text x="331" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">200 kGE</text>
 
           <line x1="448" y1="70" x2="448" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="448" y1="410" x2="448" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="448" y="424" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">250 kGE</text>
+          <text x="448" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">250 kGE</text>
 
           <line x1="566" y1="70" x2="566" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="566" y1="410" x2="566" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="566" y="424" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">300 kGE</text>
+          <text x="566" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">300 kGE</text>
 
           <line x1="684" y1="70" x2="684" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="684" y1="410" x2="684" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="684" y="424" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">350 kGE</text>
+          <text x="684" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">350 kGE</text>
 
           <line x1="802" y1="70" x2="802" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="802" y1="410" x2="802" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="802" y="424" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">400 kGE</text>
+          <text x="802" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">400 kGE</text>
 
           <line x1="920" y1="70" x2="920" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="920" y1="410" x2="920" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="920" y="424" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">450</text>
+          <text x="920" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">450</text>
 
           <!-- Y-Axis: 350 to 850 MB/s (Origin x=95, y=410, height=340px) -->
           <line x1="95" y1="70" x2="95" y2="410" stroke="#151b20" stroke-width="2"/>
-          <text x="30" y="240" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace" transform="rotate(-90 30 240)" text-anchor="middle">MEMORY THROUGHPUT (memcpy MB/s)</text>
+          <text x="30" y="240" font-size="8.5" font-weight="900" fill="#000000" font-family="monospace" transform="rotate(-90 30 240)" text-anchor="middle">MEMORY THROUGHPUT (memcpy MB/s)</text>
 
           <!-- Y Ticks -->
           <line x1="90" y1="410" x2="95" y2="410" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="413" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="end">350</text>
+          <text x="85" y="413" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="end">350</text>
 
           <line x1="95" y1="342" x2="920" y2="342" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="90" y1="342" x2="95" y2="342" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="345" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="end">450</text>
+          <text x="85" y="345" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="end">450</text>
 
           <line x1="95" y1="274" x2="920" y2="274" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="90" y1="274" x2="95" y2="274" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="277" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="end">550</text>
+          <text x="85" y="277" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="end">550</text>
 
           <line x1="95" y1="206" x2="920" y2="206" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="90" y1="206" x2="95" y2="206" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="209" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="end">650</text>
+          <text x="85" y="209" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="end">650</text>
 
           <line x1="95" y1="138" x2="920" y2="138" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
           <line x1="90" y1="138" x2="95" y2="138" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="141" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="end">750</text>
+          <text x="85" y="141" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="end">750</text>
 
           <line x1="95" y1="70" x2="920" y2="70" stroke="#151b20" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.25"/>
           <line x1="90" y1="70" x2="95" y2="70" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="73" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="end">850 MB/s</text>
+          <text x="85" y="73" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="end">850 MB/s</text>
 
           <!-- ============================================================ -->
           <!-- PARETO FRONTIER OPTIMAL ENVELOPE (POLYGON & CURVE) -->
@@ -5137,7 +5137,7 @@ const appCoreDossiers = [
           <!-- Pareto Frontier Callout Label -->
           <rect x="520" y="165" width="230" height="20" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
           <circle cx="530" cy="175" r="3.5" fill="#d97706"/>
-          <text x="538" y="178.5" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace">CONVEX PARETO OPTIMAL FRONTIER</text>
+          <text x="538" y="178.5" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">CONVEX PARETO OPTIMAL FRONTIER</text>
 
           <!-- ============================================================ -->
           <!-- DATA POINTS (NODES) -->
@@ -5148,27 +5148,27 @@ const appCoreDossiers = [
           <circle cx="178" cy="318" r="2.5" fill="#ffffff"/>
           <!-- Callout -->
           <rect x="110" y="332" width="135" height="26" rx="3" fill="#ffffff" stroke="#0284c7" stroke-width="1.2"/>
-          <text x="177" y="343" font-size="7" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Rocket Standard</text>
-          <text x="177" y="353" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">135k &#8226; 485 MB/s &#8226; 0 MSHR</text>
+          <text x="177" y="343" font-size="7" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">Rocket Standard</text>
+          <text x="177" y="353" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">135k &#8226; 485 MB/s &#8226; 0 MSHR</text>
 
           <!-- Point 2: Rocket Max-Cache 32K (158 kGE, 512.0 MB/s) -> (232, 300) -->
           <circle cx="232" cy="300" r="7.5" fill="#0284c7" stroke="#151b20" stroke-width="1.8"/>
           <circle cx="232" cy="300" r="2.5" fill="#ffffff"/>
           <rect x="180" y="260" width="125" height="26" rx="3" fill="#ffffff" stroke="#0284c7" stroke-width="1.2"/>
-          <text x="242" y="271" font-size="7" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Rocket Max-Cache</text>
-          <text x="242" y="281" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">158k &#8226; 512 MB/s &#8226; 32K</text>
+          <text x="242" y="271" font-size="7" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">Rocket Max-Cache</text>
+          <text x="242" y="281" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">158k &#8226; 512 MB/s &#8226; 32K</text>
 
           <!-- Point 3: CVA6 Standard (148 kGE, 442.8 MB/s) -> (208, 347) -->
           <circle cx="208" cy="347" r="7" fill="#0d9488" stroke="#151b20" stroke-width="1.5"/>
           <circle cx="208" cy="347" r="2" fill="#ffffff"/>
           <rect x="160" y="366" width="115" height="17" rx="3" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
-          <text x="217" y="377" font-size="6.5" font-weight="800" fill="#0d9488" font-family="monospace" text-anchor="middle">CVA6 Std (148k, 443M)</text>
+          <text x="217" y="377" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">CVA6 Std (148k, 443M)</text>
 
           <!-- Point 4: CVA6 HP Clustered (162 kGE, 468.2 MB/s) -> (241, 330) -->
           <circle cx="241" cy="330" r="7.5" fill="#0d9488" stroke="#151b20" stroke-width="1.5"/>
           <circle cx="241" cy="330" r="2" fill="#ffffff"/>
           <rect x="252" y="322" width="115" height="17" rx="3" fill="#ffffff" stroke="#0d9488" stroke-width="0.8"/>
-          <text x="309" y="333" font-size="6.5" font-weight="800" fill="#0d9488" font-family="monospace" text-anchor="middle">CVA6 HP (162k, 468M)</text>
+          <text x="309" y="333" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">CVA6 HP (162k, 468M)</text>
 
           <!-- Point 5: BlackParrot Uni-Core (142 kGE, 425.0 MB/s) -> (194, 359) -->
           <circle cx="194" cy="359" r="6.5" fill="#e11d48" stroke="#151b20" stroke-width="1.5"/>
@@ -5178,53 +5178,53 @@ const appCoreDossiers = [
           <circle cx="248" cy="367" r="7.5" fill="#e11d48" stroke="#151b20" stroke-width="1.5"/>
           <circle cx="248" cy="367" r="2" fill="#ffffff"/>
           <rect x="258" y="360" width="125" height="17" rx="3" fill="#ffffff" stroke="#e11d48" stroke-width="0.8"/>
-          <text x="320" y="371" font-size="6.5" font-weight="800" fill="#e11d48" font-family="monospace" text-anchor="middle">BlackParrot Dual (165k)</text>
+          <text x="320" y="371" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">BlackParrot Dual (165k)</text>
 
           <!-- Point 7: BlackParrot Quad-Core (170 kGE, 398.0 MB/s) -> (260, 377) -->
           <circle cx="260" cy="377" r="8" fill="#e11d48" stroke="#151b20" stroke-width="1.5"/>
           <circle cx="260" cy="377" r="2" fill="#ffffff"/>
           <rect x="272" y="380" width="130" height="17" rx="3" fill="#ffffff" stroke="#e11d48" stroke-width="0.8"/>
-          <text x="337" y="391" font-size="6.5" font-weight="800" fill="#e11d48" font-family="monospace" text-anchor="middle">BlackParrot Quad Mesh (170k)</text>
+          <text x="337" y="391" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">BlackParrot Quad Mesh (170k)</text>
 
           <!-- Point 8: SmallBOOM 1-Wide (245 kGE, 595.0 MB/s) -> (436, 243) -->
           <circle cx="436" cy="243" r="9" fill="#d97706" stroke="#151b20" stroke-width="2"/>
           <circle cx="436" cy="243" r="3" fill="#ffffff"/>
           <!-- Callout -->
           <rect x="365" y="208" width="135" height="26" rx="3" fill="#ffffff" stroke="#d97706" stroke-width="1.2"/>
-          <text x="432" y="219" font-size="7" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">SmallBOOM (1-Wide)</text>
-          <text x="432" y="229" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">245k &#8226; 595 MB/s &#8226; 4 MSHR</text>
+          <text x="432" y="219" font-size="7" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">SmallBOOM (1-Wide)</text>
+          <text x="432" y="229" font-size="6.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">245k &#8226; 595 MB/s &#8226; 4 MSHR</text>
 
           <!-- Point 9: SonicBOOM 3-Wide Large (420 kGE, 782.5 MB/s) -> (849, 116) -->
           <circle cx="849" cy="116" r="11" fill="#d97706" stroke="#151b20" stroke-width="2.5"/>
           <circle cx="849" cy="116" r="4" fill="#ffffff"/>
           <!-- Champion Callout -->
           <rect x="765" y="75" width="150" height="30" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
-          <text x="840" y="87" font-size="7.5" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">&#9733; SonicBOOM (3-Wide)</text>
-          <text x="840" y="99" font-size="7" font-weight="800" fill="#dc2626" font-family="monospace" text-anchor="middle">420k &#8226; 782.5 MB/s &#8226; 8 MSHR</text>
+          <text x="840" y="87" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">&#9733; SonicBOOM (3-Wide)</text>
+          <text x="840" y="99" font-size="7" font-weight="900" fill="#000000" font-family="monospace" text-anchor="middle">420k &#8226; 782.5 MB/s &#8226; 8 MSHR</text>
 
           <!-- ============================================================ -->
           <!-- DUAL-ROW LEGEND & SPECIFICATION STRIP -->
           <!-- ============================================================ -->
           <!-- Row 1: Protocol Key -->
           <rect x="20" y="446" width="920" height="40" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-          <text x="30" y="460" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">PARETO DESIGN SPACE &amp; CONVEX FRONTIER KEY:</text>
+          <text x="30" y="460" font-size="7.5" font-weight="900" fill="#000000" font-family="monospace">PARETO DESIGN SPACE &amp; CONVEX FRONTIER KEY:</text>
           <circle cx="35" cy="474" r="5" fill="#d97706"/>
-          <text x="45" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Amber: Out-of-Order Superscalar (BOOM)</text>
+          <text x="45" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Amber: Out-of-Order Superscalar (BOOM)</text>
           <circle cx="265" cy="474" r="5" fill="#0284c7"/>
-          <text x="275" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Blue: Minimal In-Order (Rocket)</text>
+          <text x="275" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Blue: Minimal In-Order (Rocket)</text>
           <circle cx="465" cy="474" r="5" fill="#0d9488"/>
-          <text x="475" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Teal: Decoupled Scoreboard (CVA6)</text>
+          <text x="475" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Teal: Decoupled Scoreboard (CVA6)</text>
           <circle cx="675" cy="474" r="5" fill="#e11d48"/>
-          <text x="685" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Coral: Modular Multicore (BlackParrot)</text>
+          <text x="685" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Coral: Modular Multicore (BlackParrot)</text>
           <circle cx="860" cy="474" r="6" fill="none" stroke="#d97706" stroke-width="2"/>
-          <text x="872" y="477" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Radius: MSHRs</text>
+          <text x="872" y="477" font-size="7" font-weight="900" fill="#000000" font-family="monospace">Radius: MSHRs</text>
 
           <!-- Row 2: Standardized Benchmark Specification -->
           <rect x="20" y="492" width="920" height="48" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-          <text x="30" y="506" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">PHYSICAL SYNTHESIS TARGET &amp; METHODOLOGY SPECIFICATION</text>
-          <text x="30" y="524" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">PDK / Standard Cells: TSMC 16nm FinFET / GF 22FDX (TT / 0.8V / 25&#176;C)</text>
-          <text x="460" y="524" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">Synthesis: Synopsys Design Compiler / OpenLane Yosys</text>
-          <text x="810" y="524" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">Convex Pareto Envelope</text>
+          <text x="30" y="506" font-size="7.8" font-weight="900" fill="#000000" font-family="monospace">PHYSICAL SYNTHESIS TARGET &amp; METHODOLOGY SPECIFICATION</text>
+          <text x="30" y="524" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">PDK / Standard Cells: TSMC 16nm FinFET / GF 22FDX (TT / 0.8V / 25&#176;C)</text>
+          <text x="460" y="524" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">Synthesis: Synopsys Design Compiler / OpenLane Yosys</text>
+          <text x="810" y="524" font-size="7.2" font-weight="900" fill="#000000" font-family="monospace">Convex Pareto Envelope</text>
         </svg>
       </div>
       <div class="mobile-scroll-hint">&#8596; Interactive Schematic: Scroll horizontally on touchscreens to inspect full datapath interconnects</div>
