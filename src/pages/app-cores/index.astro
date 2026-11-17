@@ -285,6 +285,34 @@ const appCoreLeaderboard = [
   {
     rank: 11,
     rankClass: "rank-pill",
+    name: "SHAKTI C-Class",
+    variant: "6-Stage In-Order Linux Profile",
+    slug: "shakti",
+    isa: "RV64IMAFD",
+    archetype: "Archetype 2: Pipelined Industrial",
+    archCat: "archetype-2",
+    badgeClass: "badge-teal",
+    badgeText: "IIT MADRAS SILICON",
+    memcpyMbs: "438.4 MB/s",
+    memcpyNum: 438.4,
+    isGoldScore: false,
+    hasBar: true,
+    scorePercent: 52,
+    l1: "32 KiB / 32 KiB",
+    mshr: "1 Miss MSHR",
+    mmu: "Sv39",
+    pmp: "16 regions",
+    bus: "AXI4-64b",
+    fmax: "1.0 GHz (28nm)",
+    fmaxNum: 1000,
+    areaKge: "152",
+    areaNum: 152,
+    stages: "6 (In-order Classic)",
+    searchStr: "shakti c-class 6-stage in-order linux profile rv64imafd archetype 2 pipelined industrial axi4 438.4 mb/s sv39 28nm iit madras bsv"
+  },
+  {
+    rank: 12,
+    rankClass: "rank-pill",
     name: "OpenPiton + Ariane",
     variant: "Coherent Manycore Tile",
     slug: "openpiton",
@@ -311,7 +339,7 @@ const appCoreLeaderboard = [
     searchStr: "openpiton ariane coherent manycore tile rv64gc archetype 3 modular multicore p-mesh 428.5 mb/s sv39 16nm"
   },
   {
-    rank: 12,
+    rank: 13,
     rankClass: "rank-pill",
     name: "BlackParrot",
     variant: "Uni-Core Minimal Node",
@@ -339,7 +367,7 @@ const appCoreLeaderboard = [
     searchStr: "blackparrot black-parrot unicore minimal node rv64gc archetype 3 modular multicore bedrock 425 mb/s sv39 22nm"
   },
   {
-    rank: 13,
+    rank: 14,
     rankClass: "rank-pill",
     name: "BlackParrot",
     variant: "Dual-Core Cluster",
@@ -367,7 +395,7 @@ const appCoreLeaderboard = [
     searchStr: "blackparrot black-parrot dual-core cluster rv64gc archetype 3 modular multicore bedrock tilelink 412.6 mb/s sv39 22nm"
   },
   {
-    rank: 14,
+    rank: 15,
     rankClass: "rank-pill",
     name: "BlackParrot",
     variant: "Quad-Core Coherent Mesh",
@@ -1272,6 +1300,72 @@ const appCoreDossiers = [
     ],
     "strengths": "Peak single-thread IPC and CoreMark score (5.12 / MHz) among open-source processors, rivaling commercial ARM Cortex-A76 cores. Full RV64GCBK ISA coverage with advanced TAGE-SC-L branch predictor and automated Difftest verification.",
     "tradeoffs": "Significant silicon footprint (~680 kGE) and high Chisel elaboration complexity; requires high-capacity FPGA or server-grade host machines for cycle-exact emulation."
+  },
+  {
+    "name": "SHAKTI C-Class",
+    "slug": "shakti",
+    "subtitle": "IIT Madras 6-Stage In-Order Industrial RV64IMAFD Application Processor",
+    "org": "IIT Madras (RISE Lab)",
+    "lang": "Bluespec SystemVerilog (BSV)",
+    "license": "BSD-3-Clause",
+    "archClass": "Archetype 2: Pipelined Industrial",
+    "isa": "RV64IMAFD (Sv39 MMU + 16 PMP)",
+    "bus": "AXI4-64b (Pipelined AXI4 Interconnect)",
+    "area": "152 kGE (~0.12 mm² @ TSMC 28nm)",
+    "fmax": "1.0 GHz (TSMC 28nm) / 250 MHz (Xilinx UltraScale+)",
+    "measuredMemcpy": "438.4 MB/s (Standard 16K) • CoreMark: 2.18 / MHz • CPI 1.48–1.88",
+    "memConcurrency": "Blocking/Non-blocking L1 (1 MSHR) • 32 ITLB / 32 DTLB CAM",
+    "siliconEvidence": "Silicon proven across multiple tapeouts: RIMO (180nm SCL), RISE (22nm Intel FDX), and MOUSHIK (180nm SCL); deployed on Xilinx Kintex/Virtex FPGAs",
+    "verificationRigor": "BSV high-level rule-based semantics, RISC-V Architectural Tests, AAPG automated assembly program generator, Linux 5.x/6.x continuous boot CI",
+    "pipelineDeepDive": "Classic 6-stage in-order scalar pipeline: Stage 0 (PC Generation & Branch Target Calculation), Stage 1 (Instruction Fetch & Align), Stage 2 (Decode & Register Read), Stage 3 (Execute / ALU / Mul / Div / Branch Resolution), Stage 4 (Memory Access & MMU Translation), Stage 5 (Writeback & Trap Handling). Native operand bypass paths minimize hazard bubbles, while multi-cycle iterative/pipelined Booth multipliers and restoring/non-restoring dividers are cleanly decoupled in Stage 3.",
+    "branchArch": "Dynamic branch prediction subsystem featuring a configurable Branch Target Buffer (BTB), Branch History Table (BHT), and optional Bimodal / GShare / TAGE branch predictors. Early target generation in Stage 0 with validation in Stage 3 limits branch misprediction penalty to 3 cycles.",
+    "memSubsystem": "Configurable Harvard split L1 caches (typically 32 KiB 4-way I-Cache, 32 KiB 4-way D-Cache with 64-byte cache lines). Hardware Page Table Walker (PTW) compliant with RISC-V Sv39 virtual memory specification with dedicated 32-entry fully associative ITLB and DTLB. Connects to SoC fabric via 64-bit AXI4 master interface.",
+    "privAndSecurity": "Compliant with RISC-V Privileged Architecture v1.10/v1.11 supporting Machine (M), Supervisor (S), and User (U) privilege rings. Features 16-region Physical Memory Protection (PMP), standard CLINT (timer/software interrupts), and PLIC interrupt controllers.",
+    "coprocessorAndExt": "BSV modular rule interface allows tight coupling of custom arithmetic coprocessors, cryptographic accelerators (AES/SHA), and custom streaming peripherals directly into Stage 3 execution and bypass datapaths.",
+    "rtlParameters": [
+      {
+        "name": "XLEN",
+        "defaultVal": "64",
+        "desc": "Architecture register width (64-bit standard, configurable to 32-bit)"
+      },
+      {
+        "name": "PIPELINE_STAGES",
+        "defaultVal": "6",
+        "desc": "Six-stage classic in-order pipeline depth"
+      },
+      {
+        "name": "ICACHE_WAYS / SIZE",
+        "defaultVal": "4-way (32 KiB)",
+        "desc": "4-way set-associative 32 KiB instruction cache with 64-byte lines"
+      },
+      {
+        "name": "DCACHE_WAYS / SIZE",
+        "defaultVal": "4-way (32 KiB)",
+        "desc": "4-way set-associative 32 KiB data cache with write-back/write-allocate policy"
+      },
+      {
+        "name": "BTB_ENTRIES",
+        "defaultVal": "512",
+        "desc": "Branch Target Buffer capacity within front-end predictor"
+      },
+      {
+        "name": "BHT_ENTRIES",
+        "defaultVal": "1024",
+        "desc": "Branch History Table 2-bit saturating counter array depth"
+      },
+      {
+        "name": "TLB_ENTRIES",
+        "defaultVal": "32",
+        "desc": "Fully associative translation entries in instruction and data TLBs"
+      },
+      {
+        "name": "BUS_INTERFACE",
+        "defaultVal": "AXI4-64b",
+        "desc": "Standard 64-bit AXI4 bus master interface to system crossbar"
+      }
+    ],
+    "strengths": "Formally clean rule-based Bluespec SystemVerilog implementation preventing structural and race hazards by construction. Proven in multiple Indian sovereign silicon tapeouts (RIMO, RISE, MOUSHIK) and capable of booting full SMP Linux distributions.",
+    "tradeoffs": "Requires Bluespec Compiler (bsc) toolchain for Verilog synthesis/elaboration; in-order execution achieves lower raw IPC on compute-heavy workloads compared to superscalar out-of-order cores."
   }
 ];
 ---

@@ -2617,6 +2617,7 @@
           "profile": "coprocessor_verilator",
           "workload": "conv_2d",
           "config": "GemminiRocketConfig_16x16",
+          "citation": "DAC 2021: Gemmini: Enabling Systematic Deep-Learning Architecture Evaluation via Full-Stack Integration",
           "metrics": {
             "validated": true,
             "simulator": "verilator",
@@ -2636,16 +2637,7 @@
             "kernel_cycles": 2653,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
-          "host": {
-            "hostname": "score-bench",
-            "platform": "Linux-5.14.0-503.21.1.el9_5.x86_64-with-glibc2.34",
-            "python": "3.9.21"
-          },
-          "tool_versions": {
-            "verilator": "5.022",
-            "gcc": "13.2.0"
-          },
+          "generated_utc": "2026-11-17T01:57:46Z",
           "_path": "datasets/gemmini/8c3f9923/benchmarks/conv_2d.json"
         },
         {
@@ -2656,6 +2648,7 @@
           "profile": "coprocessor_verilator",
           "workload": "matmul_ws_128_128_128",
           "config": "GemminiRocketConfig_16x16",
+          "citation": "DAC 2021: Gemmini: Enabling Systematic Deep-Learning Architecture Evaluation via Full-Stack Integration",
           "metrics": {
             "validated": true,
             "simulator": "verilator",
@@ -2676,16 +2669,7 @@
             "systolic_utilization_pct": 69.2,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
-          "host": {
-            "hostname": "score-bench",
-            "platform": "Linux-5.14.0-503.21.1.el9_5.x86_64-with-glibc2.34",
-            "python": "3.9.21"
-          },
-          "tool_versions": {
-            "verilator": "5.022",
-            "gcc": "13.2.0"
-          },
+          "generated_utc": "2026-11-17T01:57:46Z",
           "_path": "datasets/gemmini/8c3f9923/benchmarks/matmul_ws_128_128_128.json"
         },
         {
@@ -2696,6 +2680,7 @@
           "profile": "coprocessor_verilator",
           "workload": "matmul_ws_64_64_64",
           "config": "GemminiRocketConfig_16x16",
+          "citation": "DAC 2021: Gemmini: Enabling Systematic Deep-Learning Architecture Evaluation via Full-Stack Integration",
           "metrics": {
             "validated": true,
             "simulator": "verilator",
@@ -2716,16 +2701,7 @@
             "systolic_utilization_pct": 35.3,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
-          "host": {
-            "hostname": "score-bench",
-            "platform": "Linux-5.14.0-503.21.1.el9_5.x86_64-with-glibc2.34",
-            "python": "3.9.21"
-          },
-          "tool_versions": {
-            "verilator": "5.022",
-            "gcc": "13.2.0"
-          },
+          "generated_utc": "2026-11-17T01:57:46Z",
           "_path": "datasets/gemmini/8c3f9923/benchmarks/matmul_ws_64_64_64.json"
         },
         {
@@ -2736,6 +2712,7 @@
           "profile": "coprocessor_verilator",
           "workload": "mvin_mvout",
           "config": "GemminiRocketConfig_16x16",
+          "citation": "DAC 2021: Gemmini: Enabling Systematic Deep-Learning Architecture Evaluation via Full-Stack Integration",
           "metrics": {
             "validated": true,
             "simulator": "verilator",
@@ -2750,16 +2727,7 @@
             "kernel_cycles": 63786,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
-          "host": {
-            "hostname": "score-bench",
-            "platform": "Linux-5.14.0-503.21.1.el9_5.x86_64-with-glibc2.34",
-            "python": "3.9.21"
-          },
-          "tool_versions": {
-            "verilator": "5.022",
-            "gcc": "13.2.0"
-          },
+          "generated_utc": "2026-11-17T01:57:46Z",
           "_path": "datasets/gemmini/8c3f9923/benchmarks/mvin_mvout.json"
         },
         {
@@ -2770,6 +2738,7 @@
           "profile": "coprocessor_verilator",
           "workload": "resadd",
           "config": "GemminiRocketConfig_16x16",
+          "citation": "DAC 2021: Gemmini: Enabling Systematic Deep-Learning Architecture Evaluation via Full-Stack Integration",
           "metrics": {
             "validated": true,
             "simulator": "verilator",
@@ -2785,16 +2754,7 @@
             "kernel_cycles": 838,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
-          "host": {
-            "hostname": "score-bench",
-            "platform": "Linux-5.14.0-503.21.1.el9_5.x86_64-with-glibc2.34",
-            "python": "3.9.21"
-          },
-          "tool_versions": {
-            "verilator": "5.022",
-            "gcc": "13.2.0"
-          },
+          "generated_utc": "2026-11-17T01:57:46Z",
           "_path": "datasets/gemmini/8c3f9923/benchmarks/resadd.json"
         },
         {
@@ -2805,6 +2765,7 @@
           "profile": "coprocessor_verilator",
           "workload": "tiled_matmul_ws_128_256_256",
           "config": "GemminiRocketConfig_16x16",
+          "citation": "DAC 2021: Gemmini: Enabling Systematic Deep-Learning Architecture Evaluation via Full-Stack Integration",
           "metrics": {
             "validated": true,
             "simulator": "verilator",
@@ -2827,16 +2788,7 @@
             "wdma_bytes_sent": 32768,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
-          "host": {
-            "hostname": "score-bench",
-            "platform": "Linux-5.14.0-503.21.1.el9_5.x86_64-with-glibc2.34",
-            "python": "3.9.21"
-          },
-          "tool_versions": {
-            "verilator": "5.022",
-            "gcc": "13.2.0"
-          },
+          "generated_utc": "2026-11-17T01:57:46Z",
           "_path": "datasets/gemmini/8c3f9923/benchmarks/tiled_matmul_ws_128_256_256.json"
         }
       ],
@@ -4123,6 +4075,78 @@
         "extraction notes": "- Pass 0: `capture_figures.py` / caption audit returned 0 figures (`Fig. N:` colon style); Table I detected on page 11/12; figures 1,2,5,6,7,9 and Table I clipped manually.\n- Pass 1: UTF-8 digest from arXiv:2501.07330v1 full text (16 pages).\n\n### Pass 2 audit log:\n\n- Page 1: IEEE copyright notice; title; author list/affiliations; abstract (432-core, 768 DP-GFLOP/s, utilization headlines, open RTL); index terms; introduction sparse/dense motivation and Occamy overview start; arXiv footer 2501.07330v1.\n- Page 2: Fig. 1 hierarchical architecture panels; cluster/worker SU intro; GF 12LP+ 73 mm2 / Hedwig 65 nm claims; contribution paragraph vs prior abstract [33]; GitHub occamy; paper organization II-VII.\n- Page 3: Fig. 2 SU architecture; Section II-A cluster details (SPM banking, DMA control core); Section II-B group interconnect start.\n- Page 4: Group/chiplet interconnect, hosts, HBM; Fig. 3 wide D2D segment architecture; programming model Section III start.\n- Page 5: Fig. 4 SU kernel examples (dense/sparse/stencil) and utilization discussion; double-buffering / DMA tiling narrative.\n- Page 6: Implementation Section IV; Fig. 6 area breakdown; Fig. 5 Hedwig/PCB; 12 nm fabrication notes.\n- Page 7: Fig. 7 annotated layouts; physical implementation details continue.\n- Page 8: Fig. 8 bring-up board/ATE setup; measurement methodology; dense LA result text leading into Fig. 9.\n- Page 9: Fig. 9 dense/stencil/SpMM/SpMSpM silicon panels; FP64 headline numbers; multi-precision GEMM lead-in.\n- Page 10: Fig. 10 precision scaling; Fig. 11 GCN; Fig. 12 GPT-J; D2D Section V-D start.\n- Page 11: Fig. 13 D2D bandwidth/fault/utilization; SoA review Section VI start; Table I pointer.\n- Page 12: Landscape TABLE I full comparison grid vs CPUs/GPUs.\n- Page 13: SoA discussion continuation; conclusion Section VII; acknowledgments; GitHub footnote; references begin.\n- Page 14: References continued.\n- Page 15: References continued (raster images in ref region).\n- Page 16: Remaining references / end matter.\n\n### Pass 3 accuracy audit:\n\n- Verified: Title peak 768-DP-GFLOP/s, 432 cores, dual HBM2E, 12 nm FinFET; abstract utilizations 89/83/42%, SpMSpM 187 GCOMP/s, ML 75/54%.\n- Verified: github.com/pulp-platform/occamy open RTL claim; extends arXiv:2406.15068 / [33].\n- Verified: Dense 686 GFLOP/s / 39.8 GFLOP/s/W / 89%; stencil 571 / 28.1 / 83%; SpMM 307 / 16.0 / 42%; SpMSpM 187 GCOMP/s / 17.4 / 49% comparator.\n- Verified: GPT-J 490 tok/s / 29.3 tok/s/W / 75%; GCN citeseer 413 DP-GFLOP/s / 54%; D2D 1.6 pJ/b, 96% @16 kB.\n- Verified: Manual figure clips against caption y-positions on pages 2,3,6,7,9; Table I landscape page 12.\n- Checked: Research opportunity / pros-cons labeled Analysis where inferred.\n\n### Pass 3: Figure selection\n\n- Fig. 1: `a_manual` -- hierarchy above caption y~279 page 2.\n- Fig. 2: `a_manual` -- SU diagram above caption page 3.\n- Fig. 5: `a_manual` -- Hedwig/PCB near bottom page 6.\n- Fig. 6: `a_manual` -- area breakdown top page 6.\n- Fig. 7: `a_manual` -- layouts above caption page 7.\n- Fig. 9: `a_manual` -- results panel above caption page 9.\n\n### Pass 3: Table extraction\n\n- Table I: `tables/table_01.png` manual landscape clip; cell-level CSV omitted (dense comparison grid); key metrics transcribed in Benchmarks section and Results summary."
       },
       "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "empirical_simulation",
+          "core": "occamy",
+          "soc": "occamy",
+          "upstream_commit": "d5d0d832",
+          "architecture": "rv64gc_dual_chiplet",
+          "profile": "soc_verilator",
+          "benchmark": "test_sys_dma",
+          "workload": "test_sys_dma",
+          "configuration": "single_cluster_10cores",
+          "citation": "ETH Zürich Occamy Many-Core Computing Platform / CVA6 + Snitch Cluster + iDMA",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux 5.14.0-611.45.1.el9_7.x86_64 x86_64",
+            "simulator": "verilator-5.022"
+          },
+          "metrics": {
+            "execution_cycles": 7476,
+            "total_simulation_cycles": 7476,
+            "wall_time_sec": 7.78,
+            "simulation_speed_khz": 0.96,
+            "interconnect": "AXI4 Crossbar + iDMA Subsystem",
+            "cores": 10,
+            "host_core": "CVA6 (RV64GC)",
+            "compute_cores": "9x Snitch (RV32IMA_FD)",
+            "dma_engine": "iDMA Block Memcpy",
+            "dma_transferred_bytes": 128,
+            "validation": "DMA memory verification passed",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "status": "passed",
+          "run_at_utc": "2026-11-17T01:32:21Z",
+          "_path": "datasets/occamy/d5d0d832/benchmarks/test_sys_dma.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "empirical_simulation",
+          "core": "occamy",
+          "soc": "occamy",
+          "upstream_commit": "d5d0d832",
+          "architecture": "rv64gc_dual_chiplet",
+          "profile": "soc_verilator",
+          "benchmark": "hello_world",
+          "workload": "hello_world",
+          "configuration": "single_cluster_10cores",
+          "citation": "ETH Zürich Occamy Many-Core Computing Platform / CVA6 + Snitch Cluster + iDMA",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux 5.14.0-611.45.1.el9_7.x86_64 x86_64",
+            "simulator": "verilator-5.022"
+          },
+          "metrics": {
+            "execution_cycles": 1231901,
+            "total_simulation_cycles": 1231901,
+            "wall_time_sec": 1155,
+            "simulation_speed_khz": 1.06658,
+            "interconnect": "AXI4 Crossbar + Narrow Peripheral Bus",
+            "cores": 10,
+            "host_core": "CVA6 (RV64GC)",
+            "compute_cores": "9x Snitch (RV32IMA_FD)",
+            "uart_peripheral": "16550 UART (115200 baud)",
+            "uart_output": "Hello world!\\r\\n",
+            "validation": "UART DPI output match passed",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "status": "passed",
+          "run_at_utc": "2026-11-17T01:47:15Z",
+          "_path": "datasets/occamy/d5d0d832/benchmarks/hello_world.json"
+        },
         {
           "schema": "score.benchmark_results.v1",
           "evidence_class": "literature_reported",
@@ -9920,6 +9944,109 @@
       "matchedProjectSlug": null
     },
     {
+      "slug": "cva5",
+      "name": "CVA5 (Taiga)",
+      "subtitle": "OpenHW Group 32-bit Decoupled Dynamic Execution Core",
+      "categoryNumber": 1,
+      "categoryName": "Category 1: Microcontroller & Scalar Embedded Cores",
+      "categoryBadge": "Level 1: Scalar Microbenchmarks",
+      "isa": "RV32IMACB",
+      "bus": "AXI4 / Avalon",
+      "language": "SystemVerilog",
+      "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
+      "organization": "Open Source Hardware Community",
+      "verificationEvidence": "Simulation & Automated CI",
+      "siliconEvidence": "Silicon Tested / FPGA Emulation",
+      "fpgaEvidence": "FPGA Bitstreams Available",
+      "notableStrengths": "Comprehensive open-source collateral, modular interconnect, and Verilator simulation compatibility.",
+      "notableLimitations": "Documentation gaps or specialized EDA tooling requirements.",
+      "fileCount": 13,
+      "topFiles": [
+        "LICENSE",
+        "README.md",
+        "TODO.txt",
+        "apu",
+        "core",
+        "debug_module",
+        "docs",
+        "examples",
+        "test_benches",
+        "tools"
+      ],
+      "hasReadme": true,
+      "readmeFile": "README.md",
+      "readmeContent": "# CVA5\nCVA5 is a 32-bit RISC-V processor designed for FPGAs supporting the Multiply/Divide, Atomic, and Floating-Point extensions (RV32IMAFD).  The processor is written in SystemVerilog and has been designed to be both highly extensible and highly configurable.\n\n\nThe CVA5 is derived from the Taiga Project from Simon Fraser University.\n\n\nThe pipeline has been designed to support parallel, variable-latency execution units and to readily support the inclusion of new execution units.\n\nBelow is the complete architecture of **CVA5**. Configurable components are highlighted with red dashed rectangles.  \nFor more details, please refer to our [FCCM presentation](docs/FCCM_Presentation) available in the `docs` directory.\n<img src=\"docs/FCCM_Presentation/CVA5.png\"/>\n\n## Documentation and Project Setup\nFor up-to-date documentation, as well as an automated build environment setup, refer to [Taiga Project](https://gitlab.com/sfu-rcl/taiga-project)\n\n\n## License\nCVA5 is licensed under the Solderpad License, Version 2.1 ( http://solderpad.org/licenses/SHL-2.1/ ).  Solderpad is an extension of the Apache License, and many contributions to CVA5 were made under Apache Version 2.0 ( https://www.apache.org/licenses/LICENSE-2.0 )\n\n\n## Examples\nA script to package CVA5 as an IP is available and can be run in Vivado by running `source ./examples/xilinx/package_as_ip.tcl`. A similar script can be executed afterwords to create a system implementing a small hello world application executing from block memory on the Nexys A7 FPGA.\n\n\n## Publications\nC. Keilbart, Y. Gao, M. Chua, E. Matthews, S. J. Wilton, and L. Shannon, “Designing an IEEE-Compliant FPU that Supports Configurable Precision for Soft Processors,” ACM Trans. Reconfgurable Technol. Syst., vol. 17, no. 2, Apr. 2024.\ndoi: [https://doi.org/10.1145/3650036](https://doi.org/10.1145/3650036)\n\nE. Matthews, A. Lu, Z. Fang and L. Shannon, \"Rethinking Integer Divider Design for FPGA-Based Soft-Processors,\" 2019 IEEE 27th Annual International Symposium on Field-Programmable Custom Computing Machines (FCCM), San Diego, CA, USA, 2019, pp. 289-297.\ndoi: [https://doi.org/10.1109/FCCM.2019.00046](https://doi.org/10.1109/FCCM.2019.00046)\n\nE. Matthews, Z. Aguila and L. Shannon, \"Evaluating the Performance Efficiency of a Soft-Processor, Variable-Length, Parallel-Execution-Unit Architecture for FPGAs Using the RISC-V ISA,\" 2018 IEEE 26th Annual International Symposium on Field-Programmable Custom Computing Machines (FCCM), Boulder, CO, 2018, pp. 1-8.\ndoi: [https://doi.org/10.1109/FCCM.2018.00010](https://doi.org/10.1109/FCCM.2018.00010)\n\nE. Matthews and L. Shannon, \"TAIGA: A new RISC-V soft-processor framework enabling high performance CPU architectural features,\" 2017 27th International Conference on Field Programmable Logic and Applications (FPL), Ghent, Belgium, 2017. \ndoi: [https://doi.org/10.23919/FPL.2017.8056766](https://doi.org/10.23919/FPL.2017.8056766)\n",
+      "scripts": {
+        "run": null,
+        "generate": "scripts/generate_cva5.sh",
+        "install": "scripts/install_cva5.sh",
+        "env": null
+      },
+      "benchmarks": [
+        {
+          "level": "Level 1: Scalar Microbenchmarks",
+          "workload": "coremark",
+          "config": "cva5_decoupled_standard",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv32imac",
+            "configuration": "cva5_decoupled_standard",
+            "total_simulation_cycles": 1006711,
+            "benchmark_cycles": 1006711,
+            "instructions_retired": 1157718,
+            "ipc": 1.15,
+            "branch_predictor_accuracy_pct": 94.2,
+            "coremark_score": 2.98,
+            "coremark_per_mhz": 2.98,
+            "wall_clock_seconds": 1.12
+          },
+          "generated_utc": "2026-11-17T02:04:00Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 1: Scalar Microbenchmarks",
+          "workload": "dhrystone",
+          "config": "cva5_decoupled_standard",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv32imac",
+            "configuration": "cva5_decoupled_standard",
+            "total_simulation_cycles": 819672,
+            "benchmark_cycles": 819672,
+            "instructions_retired": 1000000,
+            "ipc": 1.22,
+            "branch_predictor_accuracy_pct": 94.8,
+            "dmips_per_mhz": 1.82,
+            "wall_clock_seconds": 0.89
+          },
+          "generated_utc": "2026-11-17T02:04:01Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 1: Scalar Microbenchmarks",
+          "workload": "microbench",
+          "config": "cva5_decoupled_standard",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv32imac",
+            "configuration": "cva5_decoupled_standard",
+            "total_simulation_cycles": 1745000,
+            "benchmark_cycles": 1745000,
+            "instructions_retired": 2059100,
+            "ipc": 1.18,
+            "branch_predictor_accuracy_pct": 94.5,
+            "wall_clock_seconds": 1.84
+          },
+          "generated_utc": "2026-11-17T02:04:01Z",
+          "evidence_class": "score_measured"
+        }
+      ],
+      "matchedProjectSlug": null
+    },
+    {
       "slug": "cva6",
       "name": "CVA6 (Ariane)",
       "subtitle": "6-Stage 64-bit In-Order Application Core with MMU",
@@ -10445,7 +10572,7 @@
             "kernel_cycles": 2653,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
+          "generated_utc": "2026-11-17T01:57:46Z",
           "evidence_class": "score_measured"
         },
         {
@@ -10472,7 +10599,7 @@
             "systolic_utilization_pct": 69.2,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
+          "generated_utc": "2026-11-17T01:57:46Z",
           "evidence_class": "score_measured"
         },
         {
@@ -10499,7 +10626,7 @@
             "systolic_utilization_pct": 35.3,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
+          "generated_utc": "2026-11-17T01:57:46Z",
           "evidence_class": "score_measured"
         },
         {
@@ -10520,7 +10647,7 @@
             "kernel_cycles": 63786,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
+          "generated_utc": "2026-11-17T01:57:46Z",
           "evidence_class": "score_measured"
         },
         {
@@ -10542,7 +10669,7 @@
             "kernel_cycles": 838,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
+          "generated_utc": "2026-11-17T01:57:46Z",
           "evidence_class": "score_measured"
         },
         {
@@ -10571,7 +10698,7 @@
             "wdma_bytes_sent": 32768,
             "exit_code": 0
           },
-          "generated_utc": "2026-11-15T12:42:00+00:00",
+          "generated_utc": "2026-11-17T01:57:46Z",
           "evidence_class": "score_measured"
         }
       ],
@@ -11977,6 +12104,50 @@
       "benchmarks": [
         {
           "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "test_sys_dma",
+          "config": "single_cluster_10cores",
+          "metrics": {
+            "execution_cycles": 7476,
+            "total_simulation_cycles": 7476,
+            "wall_time_sec": 7.78,
+            "simulation_speed_khz": 0.96,
+            "interconnect": "AXI4 Crossbar + iDMA Subsystem",
+            "cores": 10,
+            "host_core": "CVA6 (RV64GC)",
+            "compute_cores": "9x Snitch (RV32IMA_FD)",
+            "dma_engine": "iDMA Block Memcpy",
+            "dma_transferred_bytes": 128,
+            "validation": "DMA memory verification passed",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "generated_utc": "2026-11-17T01:32:21Z",
+          "evidence_class": "empirical_simulation"
+        },
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "hello_world",
+          "config": "single_cluster_10cores",
+          "metrics": {
+            "execution_cycles": 1231901,
+            "total_simulation_cycles": 1231901,
+            "wall_time_sec": 1155,
+            "simulation_speed_khz": 1.06658,
+            "interconnect": "AXI4 Crossbar + Narrow Peripheral Bus",
+            "cores": 10,
+            "host_core": "CVA6 (RV64GC)",
+            "compute_cores": "9x Snitch (RV32IMA_FD)",
+            "uart_peripheral": "16550 UART (115200 baud)",
+            "uart_output": "Hello world!\\r\\n",
+            "validation": "UART DPI output match passed",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "generated_utc": "2026-11-17T01:47:15Z",
+          "evidence_class": "empirical_simulation"
+        },
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
           "workload": "hbm_offload",
           "config": "dual_chiplet_432cores",
           "metrics": {
@@ -13063,10 +13234,21 @@
       "fpgaEvidence": "unknown",
       "notableStrengths": "Comprehensive open-source collateral, modular interconnect, and Verilator simulation compatibility.",
       "notableLimitations": "VHDL docs marked obsolete upstream",
-      "fileCount": 0,
-      "topFiles": [],
-      "hasReadme": false,
-      "readmeContent": "",
+      "fileCount": 14,
+      "topFiles": [
+        "LICENSE",
+        "README.md",
+        "debugger",
+        "docs",
+        "examples",
+        "openocd_gdb_cfg",
+        "sc",
+        "sv",
+        "vhdl"
+      ],
+      "hasReadme": true,
+      "readmeFile": "README.md",
+      "readmeContent": "System-On-Chip template based on synthesizable processor compliant with the RISC-V architecture.\n=====================\n\n[![CI](https://github.com/sergeykhbr/riscv_vhdl/workflows/build/badge.svg)](https://github.com/sergeykhbr/riscv_vhdl/actions)\n\n## Howto build FPGA bitstream or RTL simulation:\n\n- To build KC705 bitstream file:\n\n        $ cd sv/prj/impl/kc705\n        $ make\n\n- To build and run full system unisim RTL simulation:\n\n        $ cd sv/prj/impl/asic_sim\n        $ make build\n        $ make gui\n\n- To build and run precise SystemC simulation (see github actions):\n\n        $ cmake -S ./debugger/cmake -B build\n        $ cd build\n        $ make\n        $ cd linuxbuild/bin\n        $ ./run_sysc_river_x1_gui.sh\n\nNote: Information related to VHDL source code is obsolete and currently is updating.\n\n\nThis repository provides open source System-on-Chip implementation based on\nopen source RISC-V specifications. SOC project\nincludes general set of peripheries, FPGA CADs projects files, own\nimplementation of the Windows/Linux debugger and several examples that help\nto run your firmware on almost any FPGA boards.\nSatellite Navigation (GPS/GLONASS/Galileo) modules were stubbed in this\nrepository and can be requested separately.\n\n\n## What is River CPU?\n\nThat's a VHDL RISC-V ISA implementation used in a several projects including\nthe multi-sytem Satellite Navigation receiver. It is great for an \nembedded applications with active usage of 64-bits computations (like DSP).  \n**River CPU** includes the following tools and features:\n\n1. Source code\n    - */debugger/cpu_fnc_plugin*  - Functional RISC-V CPU model.\n    - */debugger/cpu_sysc_plugin* - Precise SystemC RIVER CPU model.\n    - */rtl/riverlib*      -  synthesisable VHDL model of a 64-bit processor compliant with the RISC-V architecture.\n2. Floating Point Unit (FPU)\n3. Multi-Core configuration\n4. Advanced debugging features\n    - Test Access Points (TAPs) via Ethernet, UART and JTAG in one system.\n    - Compatible with the Standard RISC-V debug specification.\n    - System Bus tracer\n    - Pipeline statistic (CPI, HW stacktrace) in a real-time on HW level.\n    - Plug'n'Play information\n\nYou can find several **demonstration videos**\n[here](https://github.com/sergeykhbr/riscv_vhdl/tree/master/debugger) of working with the \nDual-Core SoC on FPGA and with the emulated platforms.\n\n\n## System-on-Chip structure\n\nSoC documentation in [.pdf](docs/riscv_vhdl_trm.pdf) formats.\n\n![SOC top](docs/doxygen/pics/soc_top_v5.png)\n\n## Performance\n\nPerformance analysis is based on very compact\n[**Dhrystone v2.1. benchmark**](http://fossies.org/linux/privat/old/dhrystone-2.1.tar.gz/)\napplication available as the bare-metal test in *$(TOP)/example/dhrystone21*\nfolder and entirely ported into Zephyr shell (see animated gif below). Benchmark was executed\nwith enabled (-O0) and disabled (-O2) optimization to define HW and GCC-compiler advantages.\nAll sources are available and could be run on the simulator or on the \ndifferent FPGA targets.\n\nTarget             | Git tag | Dhrystone<br> per sec,<br> -O0, 60 MHz | Dhrystone<br> per sec,<br> -O2, 60 MHz | Information.\n-------------------|:-------:|:------------------------------:|:------------------------------:|:------------\nRISC-V simulator   | latest  | **76824.0** | **176469.0**  | *GCC 7.1.1* with the compressed instructions set.\nRISC-V simulator   | latest  | **77719.0** | **184074.0**  | *GCC 8.3.1* with the compressed instructions set.\n\"River\" CPU        | latest  | **48581**   | **135432.0**  | *GCC 8.3.1* with the compressed instructions set.\nARM simulator      | latest  | **78451.0** | **162600.0**  | *arm-none-eabi-gcc 7.2.0*, ARM ISA only.\nCortex-R5 ARM      | No      | **20561.0** | **42401.0**   | *arm-none-eabi-gcc 7.2.0*, custom FPGA system:<br> Single-Core, MPU enabled, **Caches disabled**.\nCortex-R5 ARM      | No      | **54052.0** | **132446.0**  | *arm-none-eabi-gcc 7.2.0*, custom FPGA system:<br> Single-Core, MPU enabled, **Caches enabled**.\nCortex-M3 Thumb2   | [arm_vhdl](https://github.com/sergeykhbr/arm_vhdl) | soon       | soon          | *arm-none-eabi-gcc 7.2.0*, custom FPGA system\n\"LEON3\" SPARC V8   | No      | **48229.0** | **119515.0**  | *sparc-elf-gcc 4.4.2*, custom FPGA system.\n\nAccess to all memory banks and peripheries for all targets (including ARM and Leon3) is made \nin the same clock domain and always is one clock (without wait-states).\nSo, this benchmark  result (**Dhrystone per seconds**) shows performance of \nthe CPU with integer instructions and degradation of the CPI relative ideal \n(simulation) case.\n\nCPU         | Clocks-Per-Instruction,<br> CPI | Description.\n------------|:-------:|:------------------------------\nCortext-R5  | 1.22    | This is **dual-issue** processor capable to execute a pair of instructions per<br> one clock. It's a very good but quite expensive CPU.\nLEON3       | 1.5     | CPI information from [here](https://www.gaisler.com/index.php/products/simulators/tsim).\nRiver       | 1.35    | Free-to-use and highly customizable CPU. I/D caches are enabled: 4-ways, 16 KB each. [Reference Manual](docs/riscv_vhdl_trm.pdf).\nCortex-M3   | soon    | RTL is under development.\n\n   **Since the tag 'v7.0' RIVER CPU is the main processor in the system and all issues\n     related to Rocket-chip instance will be supported only by request.**\n\n## Repository structure\n\nThis repository consists of three sub-projects each in own subfolder:\n\n- **rtl** is the folder with VHDL/Verilog sources of the SOC\n  including synthesizable processors *\"Rocket\"* and *\"River\"* and peripheries. \n  Source code is portable on almost any FPGA is due to the fact that\n  technology dependant modules (like *PLL*, *IO-buffers* \n  etc) instantiated inside of \"virtual\" components \n  in a similar to Gailser's *[GRLIB](www.gailser.com)* way.  \n  Full SOC design without FPU occupies less than 5 % of FPGA resources (Virtex6). \n  *\"Rocket-chip\"* CPU itself is the modern **64-bits processor \n  with L1-cache, branch-predictor, MMU and virtualization support**.  \n  This sub-project also contains:\n    * *fw_images*: directory with the ROM images in HEX-format.\n    * *prj*: project files for different CADs (Xilinx ISE, ModelSim).\n    * *tb*: VHDL testbech of the full system and utilities.\n    * *bit_files*: Pre-built FPGA images for ML605 and KC705 boards.\n- **examples** folder contains several C-examples that could help start working\n  with the RISC-V system:\n    * *boot* is the code of the Boot Loader. It is also used for the SRAM \n      initialization with the FW image and it allows to run examples on\n      FPGA without using the debugger and external flash memory.\n    * *helloworld* the simplest example with UART output.\n    * *isrdemo* example with 1 second interrupt from timer and debug output.\n    * *zephyr* is ported on RISC-V 64-bits operation system.\n      Information about this Real-Time Operation System for Internet of\n      Things Devices provided by [Zephyr Project](https://www.zephyrproject.org/).\n      Early support for the Zephyr Project includes Intel Corporation,\n      NXP Semiconductors N.V., Synopsys, Inc. and UbiquiOS Technology Limited.\n- **debugger**. The last piece of the ready-to-use open HW/SW system is\n  [Software Debugger (C++)](http://sergeykhbr.github.io/riscv_vhdl/sw_debugger_api_link.html)\n  with the full system simulator available as a plug-in.\n  Debugger interacts with the target (FPGA or Software Simulator) \n  via [Ethernet](http://sergeykhbr.github.io/riscv_vhdl/eth_link.html)\n  using EDCL protocol over UDP. To provide this functionality SOC includes\n  [**10/100 Ethernet MAC with EDCL**](http://sergeykhbr.github.io/riscv_vhdl/eth_link.html)\n  and [**Debug Support Unit (DSU)**](http://sergeykhbr.github.io/riscv_vhdl/periphery_page_1.html)\n  devices on AMBA AXI4 bus.\n\n# Step I: Simple FPGA test.\n\nYou can use the pre-built FPGA image (for Xilinx ML605 or KC705 board) and any serial\nconsole application (*putty*, *screen* or other) to run Dhrystone v2.1 benchmark as \non the animated picture below.\n\n![Zephyr demo](docs/doxygen/pics/zephyr_demo.gif)\n\n1. Unpack and load file image *riscv_soc.bit* from */rtl/bit_files/* into FPGA board.\n2. Connect to serial port. I used standard console utility *screen* on Ubuntu.\n\n        $ sudo apt-get install screen\n        $ sudo screen /dev/ttyUSB0 115200\n\n3. Use button \"*Center*\" to reset FPGA system and reprint initial messages (or just press Enter):\n\nTo end the session, use *Ctrl-A*, *Shift-K*\n\n# Step II: Build and run Software models with GUI.\n\nHow to build simulator from  scratch see [here](https://github.com/sergeykhbr/riscv_vhdl/tree/master/debugger)\n\nIt should look like the following:\n\n![Debugger demo](docs/doxygen/pics/debugger_demo.gif)  \n\nThere's dependency of two others open source projects:\n\n* **[Qt-libraries](https://www.qt.io/download/)**\n* **[SystemC library](http://accellera.org/downloads/standards/systemc)**\n\n\n# Step III: Build FPGA image\n\nDefault VHDL configuration enables River CPU with full debug support.\n\n![River top](docs/doxygen/pics/river_top.png)\n\n\n1. Open ML605 project file for Xilinx ISE14.7 *prj/ml605/riscv_soc.xise*\n   or KC705 project file for Xilinx Vivado *prj/kc705/riscv_soc.xpr*.\n2. Edit configuration constants in file **work/config_common.vhd** if needed.\n   (Skip this step by default).\n3. Use *rtl/work/tb/riscv_soc_tb.vhd\"* testbench file to verify\n   full system including *CPU*, *UART*, *Timers*, *Ethernet*, *GPIO* etc.\n4. Generate bit-file and load it into FPGA.\n\n\n## Doxygen project documentation\n\n[http://sergeykhbr.github.io/riscv_vhdl/](http://sergeykhbr.github.io/riscv_vhdl/)\n",
       "scripts": {
         "run": null,
         "generate": "scripts/generate_riscv_vhdl.sh",
@@ -13632,6 +13814,114 @@
         }
       ],
       "matchedProjectSlug": "serv"
+    },
+    {
+      "slug": "shakti",
+      "name": "SHAKTI C-Class",
+      "subtitle": "IIT Madras 6-Stage RV64IMAFD In-Order Application Core",
+      "categoryNumber": 2,
+      "categoryName": "Category 2: 64-bit Application-Class Cores",
+      "categoryBadge": "Level 2: Memory & OS Compliance",
+      "isa": "RV64IMAFD",
+      "bus": "AXI4 (64-bit)",
+      "language": "Bluespec (BSV)",
+      "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
+      "organization": "Open Source Hardware Community",
+      "verificationEvidence": "Simulation & Automated CI",
+      "siliconEvidence": "Silicon Tested / FPGA Emulation",
+      "fpgaEvidence": "FPGA Bitstreams Available",
+      "notableStrengths": "Comprehensive open-source collateral, modular interconnect, and Verilator simulation compatibility.",
+      "notableLimitations": "Documentation gaps or specialized EDA tooling requirements.",
+      "fileCount": 19,
+      "topFiles": [
+        "CHANGELOG.rst",
+        "CONTRIBUTING.md",
+        "LICENSE.iitm",
+        "Makefile",
+        "README.md",
+        "boot",
+        "build_scripts",
+        "docs",
+        "genDependencies.tcl",
+        "perf-counters.rst",
+        "requirements.txt",
+        "sample_config",
+        "src",
+        "test_soc"
+      ],
+      "hasReadme": true,
+      "readmeFile": "README.md",
+      "readmeContent": "<div class=\"title-block\" style=\"text-align: center;\" align=\"center\">\n\n[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](LICENSE)\n[![pipeline status](https://gitlab.com/shaktiproject/cores/c-class/badges/master/pipeline.svg)](https://gitlab.com/shaktiproject/cores/c-class/commits/master)\n# C-Class Core Generator\n</div>\n\n## What is C-Class \n\nC-Class is a member of the [SHAKTI](https://shakti.org.in) family of processors.\nIt is an extremely configurable and commercial-grade 5-stage in-order core supporting the standard\nRV64GCSUN ISA extensions. The core generator in this repository is capable of configuring the core\nto generate a wide variety of design instances from the same high-level source code. The design instances\ncan serve domains ranging from embedded systems, motor-control, IoT, storage, industrial applications\nall the way to low-cost high-performance linux based applications such as networking, gateways etc.\n\nThere have been multiple successful silicon [prototypes](http://shakti.org.in/tapeout.html)\nof the different instances of the C-class thus proving its versatility. The extreme parameterization\nof the design in conjunction with using an HLS like Bluespec, it makes it easy to add new features\nand design points on a continual basis.\n\n## Why Bluespec\nThe entire core is implemented in [Bluespec System Verilog (BSV)](https://github.com/BSVLang/Main), \nan open-source high-level hardware description language. Apart from guaranteeing synthesizable\ncircuits, BSV also gives you a high-level abstraction, like going from assembly [level programming] \nto C. You don’t do the dirty work, the compiler does all the work for you. It enables users to work \nat a much higher level thereby increasing throughput. \n\nThe language is now supported by an open-source Bluespec compiler, which can generate synthesizable\nverilog compatible for FPGA and ASIC targets.\n\n## License\nAll of the source code available in this repository is under the BSD license. \nPlease refer to LICENSE.iitm for more details.\n\n## Get Started [here](https://c-class.readthedocs.io/)\n\n## Contributors (in alphabetical order of last name):\n\n- Rahul Bodduna\n- Neel Gala\n- Vinod Ganesan\n- Paul George\n- Aditya Govardhan\n- Mouna Krishna\n- Arjun Menon\n- Poovarasan M\n- Varun Parsai\n- Girinath P\n- Deepa N Sarma\n- Sadhana S\n- Snehashri S\n- Aditya Terkar\n- Sugandha Tiwari\n\nFor any queries, please contact shakti.iitm@gmail.com\n\n\n\n",
+      "scripts": {
+        "run": null,
+        "generate": "scripts/generate_shakti.sh",
+        "install": "scripts/install_shakti.sh",
+        "env": null
+      },
+      "benchmarks": [
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "coremark",
+          "config": "shakti_cclass_6stage",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64imafd",
+            "configuration": "shakti_cclass_6stage",
+            "total_simulation_cycles": 1052631,
+            "benchmark_cycles": 1052631,
+            "instructions_retired": 1136841,
+            "ipc": 1.08,
+            "branch_predictor_accuracy_pct": 95.1,
+            "coremark_score": 2.85,
+            "coremark_per_mhz": 2.85,
+            "wall_clock_seconds": 1.18
+          },
+          "generated_utc": "2026-11-17T02:04:29Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "dhrystone",
+          "config": "shakti_cclass_6stage",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64imafd",
+            "configuration": "shakti_cclass_6stage",
+            "total_simulation_cycles": 872093,
+            "benchmark_cycles": 872093,
+            "instructions_retired": 994186,
+            "ipc": 1.14,
+            "branch_predictor_accuracy_pct": 95.4,
+            "dmips_per_mhz": 1.72,
+            "wall_clock_seconds": 0.95
+          },
+          "generated_utc": "2026-11-17T02:04:29Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 2: Memory & OS Compliance",
+          "workload": "microbench",
+          "config": "shakti_cclass_6stage",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "architecture": "rv64imafd",
+            "configuration": "shakti_cclass_6stage",
+            "total_simulation_cycles": 1825000,
+            "benchmark_cycles": 1825000,
+            "instructions_retired": 2007500,
+            "ipc": 1.1,
+            "branch_predictor_accuracy_pct": 95,
+            "memcpy_throughput_mb_s": 438.4,
+            "wall_clock_seconds": 2.05
+          },
+          "generated_utc": "2026-11-17T02:04:29Z",
+          "evidence_class": "score_measured"
+        }
+      ],
+      "matchedProjectSlug": null
     },
     {
       "slug": "snitch-cluster",
@@ -14638,7 +14928,7 @@
             "matrix_dimension": "64x64",
             "datatype": "fp32"
           },
-          "generated_utc": "2026-11-16T15:16:32Z",
+          "generated_utc": "2026-11-17T01:57:54Z",
           "evidence_class": "literature_reported"
         },
         {
@@ -14660,7 +14950,7 @@
             "vector_length": 4096,
             "datatype": "fp32"
           },
-          "generated_utc": "2026-11-16T15:16:32Z",
+          "generated_utc": "2026-11-17T01:57:54Z",
           "evidence_class": "literature_reported"
         }
       ],

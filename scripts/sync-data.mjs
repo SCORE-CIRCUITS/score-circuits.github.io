@@ -149,7 +149,7 @@ function categorize(project) {
   const deliverable = (project.top_level_deliverable || "").toLowerCase();
 
   // Explicit mappings to our 4 Categories
-  if (["darkriscv", "hazard3", "ibex", "neorv32", "neorv32 (verilog)", "neorv32 (vhdl)", "picorv32", "scr1", "serv", "veer el2", "veer-el2", "vexriscv", "rv12", "riscv vhdl", "riscv-vhdl"].some(k => name.includes(k))) {
+  if (["darkriscv", "hazard3", "ibex", "neorv32", "neorv32 (verilog)", "neorv32 (vhdl)", "picorv32", "scr1", "serv", "veer el2", "veer-el2", "vexriscv", "rv12", "riscv vhdl", "riscv-vhdl", "cva5"].some(k => name.includes(k))) {
     return {
       id: "category-1",
       number: 1,
@@ -161,7 +161,7 @@ function categorize(project) {
     };
   }
 
-  if (["cva6", "rocket chip", "rocket-chip", "boom", "blackparrot", "black-parrot", "xiangshan", "nutshell", "c906", "c910"].some(k => name.includes(k))) {
+  if (["cva6", "rocket chip", "rocket-chip", "boom", "blackparrot", "black-parrot", "xiangshan", "nutshell", "c906", "c910", "shakti"].some(k => name.includes(k))) {
     return {
       id: "category-2",
       number: 2,
@@ -337,6 +337,7 @@ enrichedProjects.forEach(p => {
 // Explicit tool category and metadata directory
 const toolCategoryOverrides = {
   // Category 1: MCU & Scalar Embedded
+  "cva5": { cat: 1, title: "CVA5 (Taiga)", sub: "OpenHW Group 32-bit Decoupled Dynamic Execution Core", isa: "RV32IMACB", bus: "AXI4 / Avalon", lang: "SystemVerilog" },
   "darkriscv": { cat: 1, title: "DarkRISCV", sub: "1-2 Stage RV32E/I Soft Core in Verilog", isa: "RV32E / RV32I", bus: "LUT RAM / Harvard", lang: "Verilog" },
   "femtorv": { cat: 1, title: "FemtoRV", sub: "Minimalist RV32I/E Core Optimized for FPGA Logic Cell Usage", isa: "RV32I / RV32E", bus: "Memory-Mapped Native", lang: "Verilog" },
   "hazard3": { cat: 1, title: "Hazard3", sub: "3-Stage RV32I[M][A][C][B] Microcontroller Core", isa: "RV32IMACB", bus: "AHB-Lite / Hazard3 Bus", lang: "Verilog" },
@@ -361,6 +362,7 @@ const toolCategoryOverrides = {
   "cva6": { cat: 2, title: "CVA6 (Ariane)", sub: "6-Stage 64-bit In-Order Application Core with MMU", isa: "RV64GC", bus: "AXI4 (64-bit)", lang: "SystemVerilog" },
   "nutshell": { cat: 2, title: "NutShell (Min-Cai)", sub: "UCAS 6-Stage Dual-Issue In-Order RV64GC Core", isa: "RV64GC", bus: "AXI4 (64-bit)", lang: "Chisel (Scala)" },
   "rocket-chip": { cat: 2, title: "Rocket Chip", sub: "UC Berkeley 5-Stage RV64GC Generator in Chisel", isa: "RV64GC", bus: "TileLink (TL-UH)", lang: "Chisel (Scala)" },
+  "shakti": { cat: 2, title: "SHAKTI C-Class", sub: "IIT Madras 6-Stage RV64IMAFD In-Order Application Core", isa: "RV64IMAFD", bus: "AXI4 (64-bit)", lang: "Bluespec (BSV)" },
   "xiangshan": { cat: 2, title: "XiangShan (NanHu)", sub: "CAS/ICT 6-Issue Out-of-Order High-Performance RV64GCBK Core", isa: "RV64GCBK", bus: "TileLink / AXI4 (256-bit)", lang: "Chisel (Scala)" },
 
   // Category 3: Vector & Coprocessor Engines

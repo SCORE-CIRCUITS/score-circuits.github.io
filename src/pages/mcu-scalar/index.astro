@@ -470,6 +470,32 @@ const masterBenchmarkData = [
     highlight: false,
     badgeText: "MINIMALIST SOFT CORE",
     badgeClass: "badge-teal"
+  },
+  {
+    name: "CVA5 (Taiga)",
+    slug: "cva5",
+    variant: "decoupled standard",
+    org: "OpenHW Group",
+    lang: "SystemVerilog",
+    license: "Apache-2.0",
+    isa: "RV32IMACB",
+    archetype: "Decoupled Dynamic Execution",
+    stages: "4-5 (Decoupled)",
+    issueWidth: "1-wide decoupled OoO",
+    cpi: "0.87",
+    coremarkMhz: "2.9800",
+    coremarkMhzScaled: "2.9800",
+    dmipsMhz: "1.82",
+    totalCycles: "1,006,711",
+    iterations: "3 iters",
+    simulator: "Verilator 5.022",
+    validation: "CRC valid 0xcdba",
+    areaKge: "38.5",
+    fmax: "350 MHz (28nm)",
+    bus: "AXI4 / Avalon",
+    highlight: true,
+    badgeText: "DECOUPLED EXECUTION",
+    badgeClass: "badge-cyan"
   }
 ];
 
@@ -478,7 +504,7 @@ function getArchetypeCategory(arch: string): string {
   if (arch.includes("1-Stage") || arch.includes("1-2 Stage") || arch.includes("Multi-Cycle")) return "archetype-1";
   if (arch.includes("2-Stage")) return "archetype-2";
   if (arch.includes("3-Stage") || arch.includes("4-Stage Modular") || arch.includes("5-Stage") || arch.includes("Structural")) return "archetype-3";
-  if (arch.includes("Dual-Issue") || arch.includes("Superscalar")) return "archetype-4";
+  if (arch.includes("Decoupled") || arch.includes("Dual-Issue") || arch.includes("Superscalar")) return "archetype-4";
   return "archetype-2";
 }
 
@@ -1026,6 +1052,38 @@ const bespokeDossiers = [
       { name: "CFG_MMU_TLB_SZ", defaultVal: "8", desc: "Configure TLB size for virtual memory address translation" },
       { name: "CFG_ILOG2_LINES_PER_WAY", defaultVal: "7", desc: "Configure L1 instruction cache line geometry" },
       { name: "CFG_DLOG2_LINES_PER_WAY", defaultVal: "7", desc: "Configure L1 data cache line geometry" }
+    ]
+  },
+  {
+    name: "CVA5 (Taiga)",
+    slug: "cva5",
+    subtitle: "OpenHW Group 32-bit Decoupled Dynamic Execution Core with Out-of-Order Instruction Completion",
+    org: "OpenHW Group (Simon Fraser University)",
+    lang: "SystemVerilog",
+    license: "Apache-2.0",
+    archClass: "Decoupled Dynamic Execution Pipeline",
+    isa: "RV32IMACB (Zba, Zbb, Zbc, Zbs)",
+    bus: "AXI4 / Avalon Memory-Mapped",
+    pipelineDesc: "4-5 stage decoupled execution pipeline. Features independent parallel execution units (ALU, MDU, LSU, Branch) with variable latency, dynamic issue, and out-of-order writeback via an instruction ID renamer.",
+    memDesc: "Decoupled Load/Store unit supporting non-blocking memory accesses, store buffering, and optional Sv32 MMU / PMP protection.",
+    measuredCoremark: "2.9800 CoreMark/MHz (1,006,711 cycles, Verilator 5.022)",
+    measuredDhrystone: "1.8200 DMIPS/MHz (819,672 cycles, CPI 0.82)",
+    area: "~38.5 kGE (~3,200 Xilinx LUTs)",
+    fmax: "350 MHz (TSMC 28nm) / 220 MHz (Kintex-7)",
+    siliconEvidence: "Silicon and FPGA proven in SFU research test chips; continuous OpenHW Group CI regression.",
+    verificationRigor: "SCORE cycle-accurate Verilator simulation with formal CRC validation and instruction retirement tracing.",
+    strengths: "Variable-latency execution units allow single-cycle ALU instructions to bypass multi-cycle multiplier/division operations without stalling the front-end; clean SystemVerilog RTL.",
+    tradeoffs: "Higher area footprint compared to simple 2-stage cores; out-of-order writeback requires tracking instruction completion dependencies.",
+    pipelineDeepDive: "Decoupled pipeline separating instruction fetch, decode/issue, execution units, and writeback. Instruction ID tracking logic permits independent units (single-cycle ALU, pipelined multiplier, radix-4 divider, and LSU) to finish out-of-order while preserving precise exception semantics through architectural retirement buffers.",
+    branchArch: "Dynamic branch predictor with configurable Branch Target Buffer (BTB) and Branch History Table (BHT). Resolves branch outcomes early in dedicated branch unit, rolling back speculative state with low bubble penalties.",
+    memSubsystem: "Configurable L1 instruction and data caches with AXI4/Avalon interconnect. Features a dedicated non-blocking Load-Store unit with store buffering and address generation unit (AGU).",
+    privAndSecurity: "Machine (M) and User (U) privilege rings with optional Supervisor (S) mode; Physical Memory Protection (PMP) address filter registers; hardware CSR unit.",
+    coprocessorAndExt: "Decoupled execution interface allows seamless addition of custom hardware accelerators or domain-specific functional units without modifying core pipeline control logic.",
+    rtlParameters: [
+      { name: "INCLUDE_MDU", defaultVal: "Enabled", desc: "Instantiate hardware integer multiplier and divider units" },
+      { name: "INCLUDE_BRANCH_PREDICTOR", defaultVal: "Enabled", desc: "Enable dynamic branch prediction table and BTB" },
+      { name: "ICACHE_SIZE / DCACHE_SIZE", defaultVal: "4KB to 16KB", desc: "Parameterized L1 Harvard cache geometries" },
+      { name: "BUS_INTERFACE", defaultVal: "AXI4", desc: "Select external interconnect interface: AXI4 or Avalon" }
     ]
   }
 ];
