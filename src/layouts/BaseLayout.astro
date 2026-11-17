@@ -1,4 +1,6 @@
 ---
+import TableOfContents from "../components/TableOfContents.astro";
+
 interface Props {
   title: string;
   description?: string;
@@ -377,6 +379,8 @@ function isActive(href: string) {
           .catch(() => {});
       })();
     </script>
+    <!-- Sticky Table of Contents, ScrollSpy, Reading Progress & Back-to-Top -->
+    <TableOfContents />
   </body>
 </html>
 
