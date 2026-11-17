@@ -509,6 +509,30 @@ const masterBenchmarkData = [
     badgeClass: "badge-teal"
   },
   {
+    name: "Occamy (Single Cluster)",
+    slug: "occamy",
+    variant: "single_cluster_10cores",
+    org: "ETH Zürich",
+    lang: "SystemVerilog",
+    license: "Solderpad-0.51",
+    isa: "RV64GC (CVA6) + 9x RV32IMA (Snitch)",
+    archetype: "Archetype 5: Ultra-Scale Scratchpad & Multi-Chiplet Platforms",
+    hostCore: "1x CVA6 (64-bit Host)",
+    computeCores: "9x Snitch Cores + iDMA (1 Cluster)",
+    interconnect: "64-bit AXI4 Crossbar + Narrow Peripheral Bus",
+    memoryArch: "AXI4 Main Memory + 64KB SPM + iDMA",
+    workload: "test_sys_dma",
+    totalCycles: "7,476",
+    simSpeedKhz: "0.96",
+    wallTimeS: "7.78",
+    dmaTransfers: "32-word (128B) iDMA Transfer Verified",
+    simulator: "Verilator 5.022",
+    validation: "Cycle match (Verified)",
+    highlight: true,
+    badgeText: "VERILATOR VERIFIED",
+    badgeClass: "badge-lime"
+  },
+  {
     name: "Occamy (Dual Chiplet)",
     slug: "occamy",
     variant: "dual_chiplet_432cores",
@@ -1728,7 +1752,7 @@ const bespokeSocDossiers = [
     memoryCard: "Dual 8-channel HBM2e memory controllers delivering up to 820 GB/s. On-chip memory features 24MB of aggregate L1/L2 scratchpads.",
     securityCard: "Hardware domain firewalls separating chiplet management networks from raw compute streams; hardware interrupt aggregators.",
     extensibility: "Multi-chiplet scaling interface capable of scaling to 4 or 8 chiplets on larger organic interposers.",
-    reproRun: "./scripts/run_occamy.sh",
+    reproRun: "./scripts/benchmarks/run_occamy_benchmarks.sh",
     reproGen: "./scripts/generate_occamy.sh",
     reproInstall: "./scripts/install_occamy.sh",
     rtlParameters: [
@@ -3093,7 +3117,8 @@ Snitch-Cl   &amp; frep\_fmatmul   &amp; OBI TCDM Crossbar      &amp; 8x Snitch  
 AraXL       &amp; fmatmul          &amp; Dual AXI 512b Ring     &amp; 8 Lanes       &amp; 24,897   &amp; 0.95  &amp; Verified $\checkmark$ \\
 PULPissimo  &amp; keccak           &amp; 32b AXI4 + uDMA        &amp; 1x CV32E40P   &amp; 178,531  &amp; 24.50 &amp; Verified $\checkmark$ \\
 CROC        &amp; test\_idma      &amp; Open Bus Interface     &amp; 1x CVE2       &amp; 692      &amp; 42.00 &amp; Verified $\checkmark$ \\
-Occamy      &amp; hbm\_offload    &amp; FlooNoC 2D Mesh        &amp; 432x Snitch   &amp; 142,800  &amp; 8.40  &amp; Dual-Chiplet $\checkmark$ \\
+Occamy      &amp; test\_sys\_dma   &amp; AXI4 + iDMA Crossbar   &amp; 10x Cores     &amp; 7,476    &amp; 0.96  &amp; Verified $\checkmark$ \\
+Occamy-Dual &amp; hbm\_offload    &amp; FlooNoC 2D Mesh        &amp; 432x Snitch   &amp; 142,800  &amp; 8.40  &amp; Dual-Chiplet $\checkmark$ \\
 OpenPiton   &amp; helloworld       &amp; P-Mesh Coherent NoC    &amp; 1x Ariane     &amp; 356,310  &amp; 9.20  &amp; Verified $\checkmark$ \\
 Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync     &amp; 4,120    &amp; 52.80 &amp; Tapeout $\checkmark$ \\
 HERO        &amp; svm\_offload     &amp; PCIe + Coherent SVM    &amp; 8x PULP       &amp; 58,420   &amp; 14.18 &amp; Zero-Copy $\checkmark$ \\
