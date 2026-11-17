@@ -1870,10 +1870,15 @@ const infraToolsList = ((db as any).tools || [])
       <a href="#interconnect-standards" class="core-jump-pill">&sect; 1.2 Interconnect Standards</a>
       <a href="#divergence-drivers" class="core-jump-pill">&sect; 1.3 Divergence Drivers</a>
       <a href="#soc-spectrum" class="core-jump-pill">&sect; 2. The Five Archetypes</a>
+      <a href="#archetype-1" class="core-jump-pill">&sect; 2.1 Microcontroller SoCs</a>
+      <a href="#archetype-2" class="core-jump-pill">&sect; 2.2 Shared-L1 Clusters</a>
+      <a href="#archetype-3" class="core-jump-pill">&sect; 2.3 Linux App SoCs</a>
+      <a href="#archetype-4" class="core-jump-pill">&sect; 2.4 2D Mesh Manycores</a>
+      <a href="#archetype-5" class="core-jump-pill">&sect; 2.5 Flat Scratchpad Manycores</a>
       <a href="#sim-barrier-wall" class="core-jump-pill pill-sim">&#9654; Sim 1: Barrier Wall</a>
       <a href="#sim-dma-inflection" class="core-jump-pill pill-sim">&#9654; Sim 2: DMA Inflection</a>
       <a href="#shared-dna" class="core-jump-pill">&sect; 3. Shared System DNA</a>
-      <a href="#taxonomy-matrix" class="core-jump-pill">&sect; 4. Systematic Taxonomy Matrix</a>
+      <a href="#taxonomy-matrix" class="core-jump-pill">&sect; 4. Taxonomy Matrix</a>
       <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Empirical Leaderboard</a>
       <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Multi-Config Scaling</a>
       <a href="#soc-dossiers" class="core-jump-pill">&sect; 7. Native SoC Dossiers (23)</a>
@@ -2265,7 +2270,7 @@ const infraToolsList = ((db as any).tools || [])
   <!-- ============================================================ -->
   <section id="soc-spectrum" class="content-block">
     <div class="block-header-wrap">
-      <div class="badge badge-accent">&sect; 2. THE MULTI-CORE &amp; SOC SPECTRUM: FIVE SYSTEM ARCHETYPES</div>
+      <div class="badge badge-primary">&sect; 2. THE MULTI-CORE &amp; SOC SPECTRUM: FIVE SYSTEM ARCHETYPES</div>
       <h2 class="block-title">The Five Architectural Archetypes of Open-Source Systems</h2>
       <p class="block-desc">
         Every evaluated platform belongs to one of five distinct system archetypes ordered progressively from single-core bus-centric microcontrollers to massive multi-chiplet manycores:
@@ -2483,7 +2488,7 @@ const infraToolsList = ((db as any).tools || [])
   <section id="shared-dna" class="content-block">
     <div class="block-header-wrap">
       <div class="badge badge-primary">&sect; 3. CROSS-SOC SIMILARITIES: THE SHARED SYSTEM ARCHITECTURE DNA</div>
-      <h2 class="block-title">Shared System Architecture Standards Across All Platforms</h2>
+      <h2 class="block-title">Cross-Platform Similarities: The Shared System Architecture DNA</h2>
       <p class="block-desc">
         Despite divergent microarchitectures, open-source RISC-V System-on-Chip platforms adhere to unified architectural conventions:
       </p>
@@ -2537,8 +2542,8 @@ const infraToolsList = ((db as any).tools || [])
   <!-- ============================================================ -->
   <section id="taxonomy-matrix" class="content-block">
     <div class="block-header-wrap">
-      <div class="badge badge-accent">&sect; 4. CROSS-PLATFORM DIFFERENCES &amp; TAXONOMY MATRIX</div>
-      <h2 class="block-title">Side-by-Side Architectural Differences Matrix (23 Platforms)</h2>
+      <div class="badge badge-primary">&sect; 4. CROSS-PLATFORM DIFFERENCES &amp; TAXONOMY MATRIX</div>
+      <h2 class="block-title">Cross-Platform Differences: Engineering Trade-Offs &amp; Taxonomy Matrix</h2>
       <p class="block-desc">
         Comprehensive comparative taxonomy across all 23 SoC and multi-core platforms evaluating compute topology, interconnect networks, memory hierarchies, DMA capabilities, and silicon tapeout evidence:
       </p>
@@ -3285,65 +3290,64 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     margin-bottom: 2.25rem;
   }
   .intro-narrative {
-    background: #fff;
-    border: 2px solid var(--ink, #151b20);
-    border-radius: 8px;
-    padding: 1.25rem 1.5rem;
-    margin: 1.25rem 0;
-    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+    margin-top: 1rem;
+    margin-bottom: 1.75rem;
+    max-width: 950px;
   }
   .intro-lead-highlight {
-    font-size: 1.05rem;
-    font-weight: 600;
+    font-size: 1.15rem;
+    font-weight: 700;
     color: var(--ink, #151b20);
-    line-height: 1.6;
+    border-left: 4px solid var(--lime, #b7df69);
+    padding-left: 1rem;
   }
   .intro-p {
-    margin-bottom: 0.85rem;
-    color: #242c33;
-    line-height: 1.6;
-    font-size: 0.95rem;
-  }
-  .intro-p:last-child {
-    margin-bottom: 0;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--ink-light, #242c33);
+    margin: 0;
   }
   .core-jump-bar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1.5px solid var(--ink, #151b20);
-    border-radius: 6px;
+    gap: 0.4rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed #eee4c8;
   }
   .jump-label {
     font-size: 0.8rem;
     font-weight: 800;
-    text-transform: uppercase;
-    color: var(--ink, #151b20);
+    color: #151b20;
+    margin-right: 0.25rem;
   }
   .core-jump-pill {
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.25rem 0.6rem;
-    background: #fff;
+    background: var(--paper, #fffaf0);
     border: 1.5px solid var(--ink, #151b20);
-    border-radius: 4px;
+    border-radius: 999px;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 800;
     color: var(--ink, #151b20);
     text-decoration: none;
-    transition: all 0.15s ease;
+    transition: all 0.1s ease;
   }
   .core-jump-pill:hover {
-    background: var(--yellow, #ffc83e);
-    transform: translateY(-1px);
-    box-shadow: 1px 1px 0 var(--ink, #151b20);
+    background: var(--lime, #b7df69);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
   }
   .pill-sim {
     background: #eef2ff;
     color: #4338ca;
     border-color: #4338ca;
+  }
+  .pill-sim:hover {
+    background: #e0e7ff;
   }
   .pill-infra {
     background: #f1f5f9;
@@ -3933,18 +3937,31 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     border-radius: 6px;
     box-shadow: 2px 2px 0 var(--ink, #151b20);
   }
+  .dossier-jump-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1.5px dashed var(--line, #eee4c8);
+  }
   .dossier-jump-pill {
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.2rem 0.5rem;
-    background: #f1f5f9;
-    border: 1px solid var(--ink, #151b20);
-    border-radius: 4px;
+    background: var(--paper, #fffaf0);
+    border: 1.5px solid var(--ink, #151b20);
+    border-radius: 999px;
+    box-shadow: 2px 2px 0 var(--ink, #151b20);
+    padding: 0.25rem 0.65rem;
+    font-size: 0.78rem;
+    font-weight: 800;
     color: var(--ink, #151b20);
     text-decoration: none;
+    transition: all 0.1s ease;
   }
   .dossier-jump-pill:hover {
-    background: var(--yellow, #ffc83e);
+    background: var(--lime, #b7df69);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
   }
 
   /* Dossier Card */
