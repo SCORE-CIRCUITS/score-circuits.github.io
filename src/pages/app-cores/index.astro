@@ -6260,9 +6260,10 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
   }
 
   .isa-metric-item {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.25rem;
     font-size: 0.9rem;
     line-height: 1.5;
     color: var(--ink-light, #242c33);
@@ -6708,8 +6709,9 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
   }
 
   .arch-features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 1.25rem;
   }
 
@@ -7399,9 +7401,10 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
   }
 
   .aw-metric-strip {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
     background: var(--paper, #fffaf0);
     border: 1.5px solid var(--ink, #151b20);
     border-radius: 8px;
@@ -7559,10 +7562,10 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
 
   @media (min-width: 680px) {
     .prim-insight-row {
-      display: grid;
-      grid-template-columns: 210px 1fr;
-      align-items: baseline;
-      gap: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.25rem;
     }
   }
 
@@ -8008,8 +8011,9 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
   }
 
   .ladder-summary-bar {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 0.75rem;
     margin-top: 0.5rem;
     background: #ffffff;
@@ -8233,9 +8237,10 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
   }
 
   .sim-point-row {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.35rem;
     font-size: 0.9rem;
     line-height: 1.5;
     color: var(--ink-light, #242c33);
@@ -8243,7 +8248,6 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
     padding: 0.6rem 0.85rem;
     border-radius: 6px;
     border: 1px solid var(--line, #eee4c8);
-    align-items: baseline;
   }
 
   .point-badge {
@@ -8332,9 +8336,10 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
   }
 
   .diff-point-row {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.35rem;
     font-size: 0.9rem;
     line-height: 1.5;
     color: var(--ink-light, #242c33);
@@ -8342,7 +8347,6 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
     padding: 0.6rem 0.85rem;
     border-radius: 6px;
     border: 1px solid var(--line, #eee4c8);
-    align-items: baseline;
   }
 
   .diff-point-title {
@@ -8425,8 +8429,9 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
      ============================================================ */
   /* Quick Scoreboard KPI Summary Strip */
   .lb-kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 1rem;
     margin: 1.5rem 0 1.25rem 0;
   }

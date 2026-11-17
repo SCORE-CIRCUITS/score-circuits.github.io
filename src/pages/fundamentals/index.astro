@@ -4300,7 +4300,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
         </p>
 
         <!-- 3 Universal Qualification Criteria Cards -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div style="display: flex; flex-direction: column; width: 100%; gap: 1rem; margin-bottom: 2rem;">
           <div style="background: var(--paper-deep, #eee4c8); border: 1.5px solid var(--ink, #151b20); border-radius: 8px; padding: 1.15rem;">
             <span class="badge badge-yellow" style="font-size: 0.72rem; font-weight: 800; display: inline-block; margin-bottom: 0.5rem;">CRITERION 1</span>
             <h4 style="font-size: 0.95rem; font-weight: 900; margin: 0 0 0.5rem 0; color: var(--ink, #151b20);">Physical Phase Transition</h4>
@@ -7634,8 +7634,9 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   }
 
   .sv39-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 0.5rem;
     margin-bottom: 1rem;
   }
@@ -8147,8 +8148,9 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   }
 
   .alu-flags-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 0.5rem;
   }
 
@@ -8313,8 +8315,9 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
 
   /* Pipeline Stages Grid */
   .pipe-stages-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 0.75rem;
   }
 
@@ -8413,9 +8416,10 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   }
 
   .pipe-compare-metrics {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
   }
 
   @media (max-width: 640px) {
