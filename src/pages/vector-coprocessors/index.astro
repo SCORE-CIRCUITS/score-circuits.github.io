@@ -1037,204 +1037,243 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
     </div>
 
     <!-- FIGURE 1.0: Universal Vector Coprocessor Schematic -->
-    <div class="schematic-container" style="margin-top: 2rem; margin-bottom: 2rem;">
-      <div class="schematic-header">
-        <span class="schematic-tag">FIGURE 1.0 UNIVERSAL SCHEMATIC</span>
-        <h4 class="schematic-title">Universal Vector Coprocessor Architecture &amp; Multi-Lane Memory Highway</h4>
+    <div class="schematic-container" style="margin-top: 2rem; margin-bottom: 2rem; border-color: #0284c7; box-shadow: 4px 4px 0 #bae6fd;">
+      <div class="schematic-header" style="background: #e0f2fe; border-bottom: 2px solid #0284c7;">
+        <span class="schematic-tag" style="color: #0369a1; font-weight: 900;">FIGURE 1.0 UNIVERSAL SCHEMATIC</span>
+        <h4 class="schematic-title" style="color: #0284c7; font-weight: 900;">Universal Vector Coprocessor Architecture &amp; Multi-Lane Memory Highway</h4>
       </div>
-      <div class="schematic-svg-wrap">
+      <div class="schematic-svg-wrap" style="background: #fffaf0;">
         <svg viewBox="0 0 940 550" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="cadGridFig1" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="#151b20" opacity="0.12"/>
+              <circle cx="2" cy="2" r="1.2" fill="#38bdf8" opacity="0.2"/>
             </pattern>
             <linearGradient id="hostCoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#f6f0dc"/>
-              <stop offset="100%" stop-color="#ede3c3"/>
+              <stop offset="0%" stop-color="#fffbeb"/>
+              <stop offset="100%" stop-color="#fef3c7"/>
             </linearGradient>
             <linearGradient id="vrfBankGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#e0f2fe"/>
-              <stop offset="100%" stop-color="#bae6fd"/>
+              <stop offset="0%" stop-color="#f0f9ff"/>
+              <stop offset="100%" stop-color="#e0f2fe"/>
             </linearGradient>
             <linearGradient id="laneFpuGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#fef3c7"/>
-              <stop offset="100%" stop-color="#fde68a"/>
+              <stop offset="0%" stop-color="#fffbeb"/>
+              <stop offset="100%" stop-color="#fef3c7"/>
             </linearGradient>
             <linearGradient id="crossbarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#fee2e2"/>
-              <stop offset="100%" stop-color="#fecaca"/>
+              <stop offset="0%" stop-color="#fff1f2"/>
+              <stop offset="100%" stop-color="#fee2e2"/>
             </linearGradient>
             <linearGradient id="axiBusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#dcfce7"/>
-              <stop offset="100%" stop-color="#bbf7d0"/>
+              <stop offset="0%" stop-color="#f0fdf4"/>
+              <stop offset="100%" stop-color="#dcfce7"/>
             </linearGradient>
+
+            <!-- Custom Arrow Markers (No black!) -->
+            <marker id="arrowOrange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ea580c"/>
+            </marker>
+            <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#0284c7"/>
+            </marker>
+            <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#f43f5e"/>
+            </marker>
+            <marker id="arrowGreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#16a34a"/>
+            </marker>
           </defs>
 
-          <!-- Outer Frame & Grid -->
-          <rect width="938" height="548" x="1" y="1" rx="10" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
+          <!-- Outer Frame & Grid (Sky blue border, ivory canvas, light blue dots) -->
+          <rect width="938" height="548" x="1" y="1" rx="10" fill="#fffaf0" stroke="#38bdf8" stroke-width="2"/>
           <rect width="936" height="510" x="2" y="2" rx="9" fill="url(#cadGridFig1)"/>
 
           <!-- Header Banner -->
-          <rect x="2" y="2" width="936" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
-          <circle cx="16" cy="15" r="4.5" fill="#ffc83e"/>
-          <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH &#8226; UNIVERSAL VECTOR ACCELERATOR &amp; MULTI-BANK VRF DATAPATH</text>
+          <rect x="2" y="2" width="936" height="26" fill="#e0f2fe" stroke="#38bdf8" stroke-width="1.5" rx="8"/>
+          <circle cx="16" cy="15" r="4.5" fill="#f59e0b"/>
+          <text x="28" y="18" font-size="9.5" font-weight="900" fill="#0284c7" font-family="monospace">SCORE EDA WORKBENCH &#8226; UNIVERSAL VECTOR ACCELERATOR &amp; MULTI-BANK VRF DATAPATH</text>
 
           <!-- 1. HOST SCALAR CPU BLOCK -->
-          <rect x="30" y="55" width="200" height="200" rx="8" fill="url(#hostCoreGrad)" stroke="#151b20" stroke-width="2"/>
-          <rect x="30" y="55" width="200" height="24" rx="6" fill="#151b20"/>
-          <text x="130" y="71" font-size="9.5" font-weight="900" fill="#fdfbf7" font-family="monospace" text-anchor="middle">HOST SCALAR CORE (CVA6 / ROCKET)</text>
+          <rect x="30" y="55" width="200" height="200" rx="8" fill="url(#hostCoreGrad)" stroke="#f59e0b" stroke-width="2"/>
+          <rect x="30" y="55" width="200" height="24" rx="6" fill="#f59e0b"/>
+          <text x="130" y="71" font-size="9.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">HOST SCALAR CORE (CVA6 / ROCKET)</text>
           
-          <rect x="45" y="90" width="170" height="30" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="130" y="108" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Instruction Fetch &amp; Decode</text>
+          <rect x="45" y="90" width="170" height="30" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+          <text x="130" y="109" font-size="8.5" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Instruction Fetch &amp; Decode</text>
 
-          <rect x="45" y="130" width="170" height="30" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="130" y="148" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Scalar GPR File (x0&#8211;x31)</text>
+          <rect x="45" y="130" width="170" height="30" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+          <text x="130" y="149" font-size="8.5" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Scalar GPR File (x0&#8211;x31)</text>
 
-          <rect x="45" y="170" width="170" height="30" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="130" y="188" font-size="8.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Vector CSRs (vtype, vl, vstart)</text>
+          <rect x="45" y="170" width="170" height="30" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+          <text x="130" y="189" font-size="8.5" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Vector CSRs (vtype, vl, vstart)</text>
 
-          <rect x="45" y="210" width="170" height="32" rx="4" fill="#ffedd5" stroke="#151b20" stroke-width="1.2"/>
-          <text x="130" y="228" font-size="8.5" font-weight="900" fill="#9a3412" font-family="monospace" text-anchor="middle">Coprocessor Dispatch FIFO</text>
+          <rect x="45" y="210" width="170" height="32" rx="4" fill="#ffedd5" stroke="#fb923c" stroke-width="1.5"/>
+          <text x="130" y="230" font-size="8.5" font-weight="900" fill="#ea580c" font-family="monospace" text-anchor="middle">Coprocessor Dispatch FIFO</text>
 
           <!-- ARROW HOST -> SEQUENCER -->
-          <line x1="230" y1="226" x2="280" y2="226" stroke="#151b20" stroke-width="2.5" marker-end="url(#arrowEnd)"/>
-          <text x="255" y="218" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">Issue Cmd</text>
+          <line x1="230" y1="226" x2="278" y2="226" stroke="#ea580c" stroke-width="2.5" marker-end="url(#arrowOrange)"/>
+          <text x="255" y="218" font-size="8" font-weight="900" fill="#ea580c" font-family="monospace" text-anchor="middle">Issue Cmd</text>
 
           <!-- 2. VECTOR SEQUENCER & CONTROL BLOCK -->
-          <rect x="280" y="55" width="180" height="200" rx="8" fill="#fef3c7" stroke="#151b20" stroke-width="2"/>
-          <rect x="280" y="55" width="180" height="24" rx="6" fill="#151b20"/>
-          <text x="370" y="71" font-size="9.5" font-weight="900" fill="#fdfbf7" font-family="monospace" text-anchor="middle">VECTOR SEQUENCER &amp; FSM</text>
+          <rect x="280" y="55" width="180" height="200" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+          <rect x="280" y="55" width="180" height="24" rx="6" fill="#f59e0b"/>
+          <text x="370" y="71" font-size="9.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">VECTOR SEQUENCER &amp; FSM</text>
 
-          <rect x="295" y="90" width="150" height="32" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="370" y="106" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Loop Counter &amp; SEW Expander</text>
-          <text x="370" y="117" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">vadd / vmul / vfmacc</text>
+          <rect x="295" y="90" width="150" height="32" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+          <text x="370" y="105" font-size="8" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Loop Counter &amp; SEW Expander</text>
+          <text x="370" y="117" font-size="7.5" font-weight="900" fill="#ea580c" font-family="monospace" text-anchor="middle">vadd / vmul / vfmacc</text>
 
-          <rect x="295" y="132" width="150" height="32" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="370" y="148" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Hazard Scoreboard &amp; Chaining</text>
-          <text x="370" y="159" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">RAW / WAW Element Check</text>
+          <rect x="295" y="132" width="150" height="32" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+          <text x="370" y="147" font-size="8" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Hazard Scoreboard &amp; Chaining</text>
+          <text x="370" y="159" font-size="7.5" font-weight="900" fill="#ea580c" font-family="monospace" text-anchor="middle">RAW / WAW Element Check</text>
 
-          <rect x="295" y="174" width="150" height="32" rx="4" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-          <text x="370" y="190" font-size="8" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">VRF Bank Arbiter</text>
-          <text x="370" y="201" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Conflict-Free Bank Scheduling</text>
+          <rect x="295" y="174" width="150" height="32" rx="4" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+          <text x="370" y="189" font-size="8" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">VRF Bank Arbiter</text>
+          <text x="370" y="201" font-size="7.5" font-weight="900" fill="#ea580c" font-family="monospace" text-anchor="middle">Conflict-Free Bank Scheduling</text>
 
-          <rect x="295" y="216" width="150" height="26" rx="4" fill="#fee2e2" stroke="#151b20" stroke-width="1.2"/>
-          <text x="370" y="233" font-size="8" font-weight="900" fill="#991b1b" font-family="monospace" text-anchor="middle">Done / Ret Flag &rarr; Host</text>
+          <rect x="295" y="216" width="150" height="26" rx="4" fill="#fee2e2" stroke="#f87171" stroke-width="1.5"/>
+          <text x="370" y="233" font-size="8.5" font-weight="900" fill="#dc2626" font-family="monospace" text-anchor="middle">Done / Ret Flag &rarr; Host</text>
+
+          <!-- ARROW SEQUENCER -> VRF -->
+          <line x1="460" y1="130" x2="498" y2="130" stroke="#0284c7" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrowBlue)"/>
+          <text x="480" y="123" font-size="7.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank Arb</text>
 
           <!-- 3. MULTI-BANKED VRF BLOCK -->
-          <rect x="500" y="55" width="410" height="150" rx="8" fill="url(#vrfBankGrad)" stroke="#151b20" stroke-width="2"/>
-          <rect x="500" y="55" width="410" height="24" rx="6" fill="#151b20"/>
-          <text x="705" y="71" font-size="9.5" font-weight="900" fill="#fdfbf7" font-family="monospace" text-anchor="middle">MULTI-BANKED VECTOR REGISTER FILE (VRF) &#8226; VLEN=4096b / 32 REGISTERS</text>
+          <rect x="500" y="55" width="410" height="150" rx="8" fill="url(#vrfBankGrad)" stroke="#0284c7" stroke-width="2"/>
+          <rect x="500" y="55" width="410" height="24" rx="6" fill="#0284c7"/>
+          <text x="705" y="71" font-size="9" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">MULTI-BANKED VECTOR REGISTER FILE (VRF) &#8226; VLEN=4096b / 32 REGISTERS</text>
 
           <!-- VRF Banks (0 to 7) -->
           <g transform="translate(515, 90)">
-            <rect x="0" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-            <text x="21" y="20" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 0</text>
-            <text x="21" y="45" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">v0-v31</text>
-            <text x="21" y="85" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Lane 0</text>
+            <rect x="0" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="21" y="20" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 0</text>
+            <text x="21" y="45" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">v0-v31</text>
+            <text x="21" y="85" font-size="7.5" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">Lane 0</text>
 
-            <rect x="48" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-            <text x="69" y="20" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 1</text>
-            <text x="69" y="45" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">v0-v31</text>
-            <text x="69" y="85" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Lane 0</text>
+            <rect x="48" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="69" y="20" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 1</text>
+            <text x="69" y="45" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">v0-v31</text>
+            <text x="69" y="85" font-size="7.5" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">Lane 0</text>
 
-            <rect x="96" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-            <text x="117" y="20" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 2</text>
-            <text x="117" y="45" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">v0-v31</text>
-            <text x="117" y="85" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Lane 1</text>
+            <rect x="96" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="117" y="20" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 2</text>
+            <text x="117" y="45" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">v0-v31</text>
+            <text x="117" y="85" font-size="7.5" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">Lane 1</text>
 
-            <rect x="144" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-            <text x="165" y="20" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 3</text>
-            <text x="165" y="45" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">v0-v31</text>
-            <text x="165" y="85" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Lane 1</text>
+            <rect x="144" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="165" y="20" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 3</text>
+            <text x="165" y="45" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">v0-v31</text>
+            <text x="165" y="85" font-size="7.5" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">Lane 1</text>
 
-            <rect x="192" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-            <text x="213" y="20" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 4</text>
-            <text x="213" y="45" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">v0-v31</text>
-            <text x="213" y="85" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Lane 2</text>
+            <rect x="192" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="213" y="20" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 4</text>
+            <text x="213" y="45" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">v0-v31</text>
+            <text x="213" y="85" font-size="7.5" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">Lane 2</text>
 
-            <rect x="240" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-            <text x="261" y="20" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 5</text>
-            <text x="261" y="45" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">v0-v31</text>
-            <text x="261" y="85" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Lane 2</text>
+            <rect x="240" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="261" y="20" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 5</text>
+            <text x="261" y="45" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">v0-v31</text>
+            <text x="261" y="85" font-size="7.5" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">Lane 2</text>
 
-            <rect x="288" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-            <text x="309" y="20" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 6</text>
-            <text x="309" y="45" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">v0-v31</text>
-            <text x="309" y="85" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Lane 3</text>
+            <rect x="288" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="309" y="20" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 6</text>
+            <text x="309" y="45" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">v0-v31</text>
+            <text x="309" y="85" font-size="7.5" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">Lane 3</text>
 
-            <rect x="336" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1.2"/>
-            <text x="357" y="20" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 7</text>
-            <text x="357" y="45" font-size="7" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">v0-v31</text>
-            <text x="357" y="85" font-size="6.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Lane 3</text>
+            <rect x="336" y="0" width="42" height="100" rx="3" fill="#ffffff" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="357" y="20" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">Bank 7</text>
+            <text x="357" y="45" font-size="8" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">v0-v31</text>
+            <text x="357" y="85" font-size="7.5" font-weight="900" fill="#0369a1" font-family="monospace" text-anchor="middle">Lane 3</text>
           </g>
 
           <!-- 4. FOUR PARALLEL LANES BLOCK -->
           <g transform="translate(30, 280)">
             <!-- Lane 0 -->
-            <rect x="0" y="0" width="205" height="130" rx="6" fill="url(#laneFpuGrad)" stroke="#151b20" stroke-width="1.8"/>
-            <rect x="0" y="0" width="205" height="20" rx="5" fill="#151b20"/>
-            <text x="102" y="14" font-size="8.5" font-weight="900" fill="#fdfbf7" font-family="monospace" text-anchor="middle">LANE 0 (FP64/FP32 + INT)</text>
-            <rect x="10" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="54" y="46" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
-            <text x="54" y="60" font-size="6.5" font-weight="700" fill="#059669" font-family="monospace" text-anchor="middle">4 FLOPS / Cyc</text>
-            <rect x="107" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="151" y="46" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">64b INT ALU</text>
-            <text x="151" y="60" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Add / Sub / Logic</text>
-            <rect x="10" y="78" width="185" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="102" y="96" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Intra-Lane Operand Queues</text>
-            <text x="102" y="110" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Src1, Src2, Src3 Decoupled Buffers</text>
+            <rect x="0" y="0" width="205" height="130" rx="6" fill="url(#laneFpuGrad)" stroke="#f59e0b" stroke-width="2"/>
+            <rect x="0" y="0" width="205" height="20" rx="5" fill="#f59e0b"/>
+            <text x="102" y="14" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">LANE 0 (FP64/FP32 + INT)</text>
+            
+            <rect x="10" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#34d399" stroke-width="1.5"/>
+            <text x="54" y="46" font-size="8" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
+            <text x="54" y="60" font-size="7.5" font-weight="900" fill="#10b981" font-family="monospace" text-anchor="middle">4 FLOPS / Cyc</text>
+            
+            <rect x="107" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="151" y="46" font-size="8" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">64b INT ALU</text>
+            <text x="151" y="60" font-size="7.5" font-weight="900" fill="#3b82f6" font-family="monospace" text-anchor="middle">Add / Sub / Logic</text>
+            
+            <rect x="10" y="78" width="185" height="42" rx="3" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+            <text x="102" y="96" font-size="8" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">Intra-Lane Operand Queues</text>
+            <text x="102" y="110" font-size="7.5" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Src1, Src2, Src3 Decoupled Buffers</text>
 
             <!-- Lane 1 -->
-            <rect x="225" y="0" width="205" height="130" rx="6" fill="url(#laneFpuGrad)" stroke="#151b20" stroke-width="1.8"/>
-            <rect x="225" y="0" width="205" height="20" rx="5" fill="#151b20"/>
-            <text x="327" y="14" font-size="8.5" font-weight="900" fill="#fdfbf7" font-family="monospace" text-anchor="middle">LANE 1 (FP64/FP32 + INT)</text>
-            <rect x="235" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="279" y="46" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
-            <text x="279" y="60" font-size="6.5" font-weight="700" fill="#059669" font-family="monospace" text-anchor="middle">4 FLOPS / Cyc</text>
-            <rect x="332" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="376" y="46" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">64b INT ALU</text>
-            <text x="376" y="60" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Add / Sub / Logic</text>
-            <rect x="235" y="78" width="185" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="327" y="96" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Intra-Lane Operand Queues</text>
-            <text x="327" y="110" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Src1, Src2, Src3 Decoupled Buffers</text>
+            <rect x="225" y="0" width="205" height="130" rx="6" fill="url(#laneFpuGrad)" stroke="#f59e0b" stroke-width="2"/>
+            <rect x="225" y="0" width="205" height="20" rx="5" fill="#f59e0b"/>
+            <text x="327" y="14" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">LANE 1 (FP64/FP32 + INT)</text>
+            
+            <rect x="235" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#34d399" stroke-width="1.5"/>
+            <text x="279" y="46" font-size="8" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
+            <text x="279" y="60" font-size="7.5" font-weight="900" fill="#10b981" font-family="monospace" text-anchor="middle">4 FLOPS / Cyc</text>
+            
+            <rect x="332" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="376" y="46" font-size="8" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">64b INT ALU</text>
+            <text x="376" y="60" font-size="7.5" font-weight="900" fill="#3b82f6" font-family="monospace" text-anchor="middle">Add / Sub / Logic</text>
+            
+            <rect x="235" y="78" width="185" height="42" rx="3" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+            <text x="327" y="96" font-size="8" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">Intra-Lane Operand Queues</text>
+            <text x="327" y="110" font-size="7.5" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Src1, Src2, Src3 Decoupled Buffers</text>
 
             <!-- Lane 2 -->
-            <rect x="450" y="0" width="205" height="130" rx="6" fill="url(#laneFpuGrad)" stroke="#151b20" stroke-width="1.8"/>
-            <rect x="450" y="0" width="205" height="20" rx="5" fill="#151b20"/>
-            <text x="552" y="14" font-size="8.5" font-weight="900" fill="#fdfbf7" font-family="monospace" text-anchor="middle">LANE 2 (FP64/FP32 + INT)</text>
-            <rect x="460" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="504" y="46" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
-            <text x="504" y="60" font-size="6.5" font-weight="700" fill="#059669" font-family="monospace" text-anchor="middle">4 FLOPS / Cyc</text>
-            <rect x="557" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="601" y="46" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">64b INT ALU</text>
-            <text x="601" y="60" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Add / Sub / Logic</text>
-            <rect x="460" y="78" width="185" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="552" y="96" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Intra-Lane Operand Queues</text>
-            <text x="552" y="110" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Src1, Src2, Src3 Decoupled Buffers</text>
+            <rect x="450" y="0" width="205" height="130" rx="6" fill="url(#laneFpuGrad)" stroke="#f59e0b" stroke-width="2"/>
+            <rect x="450" y="0" width="205" height="20" rx="5" fill="#f59e0b"/>
+            <text x="552" y="14" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">LANE 2 (FP64/FP32 + INT)</text>
+            
+            <rect x="460" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#34d399" stroke-width="1.5"/>
+            <text x="504" y="46" font-size="8" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
+            <text x="504" y="60" font-size="7.5" font-weight="900" fill="#10b981" font-family="monospace" text-anchor="middle">4 FLOPS / Cyc</text>
+            
+            <rect x="557" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="601" y="46" font-size="8" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">64b INT ALU</text>
+            <text x="601" y="60" font-size="7.5" font-weight="900" fill="#3b82f6" font-family="monospace" text-anchor="middle">Add / Sub / Logic</text>
+            
+            <rect x="460" y="78" width="185" height="42" rx="3" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+            <text x="552" y="96" font-size="8" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">Intra-Lane Operand Queues</text>
+            <text x="552" y="110" font-size="7.5" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Src1, Src2, Src3 Decoupled Buffers</text>
 
             <!-- Lane 3 -->
-            <rect x="675" y="0" width="205" height="130" rx="6" fill="url(#laneFpuGrad)" stroke="#151b20" stroke-width="1.8"/>
-            <rect x="675" y="0" width="205" height="20" rx="5" fill="#151b20"/>
-            <text x="777" y="14" font-size="8.5" font-weight="900" fill="#fdfbf7" font-family="monospace" text-anchor="middle">LANE 3 (FP64/FP32 + INT)</text>
-            <rect x="685" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="729" y="46" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
-            <text x="729" y="60" font-size="6.5" font-weight="700" fill="#059669" font-family="monospace" text-anchor="middle">4 FLOPS / Cyc</text>
-            <rect x="782" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="826" y="46" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">64b INT ALU</text>
-            <text x="826" y="60" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Add / Sub / Logic</text>
-            <rect x="685" y="78" width="185" height="42" rx="3" fill="#ffffff" stroke="#151b20" stroke-width="1"/>
-            <text x="777" y="96" font-size="7.5" font-weight="800" fill="#151b20" font-family="monospace" text-anchor="middle">Intra-Lane Operand Queues</text>
-            <text x="777" y="110" font-size="6.5" font-weight="700" fill="#64748b" font-family="monospace" text-anchor="middle">Src1, Src2, Src3 Decoupled Buffers</text>
+            <rect x="675" y="0" width="205" height="130" rx="6" fill="url(#laneFpuGrad)" stroke="#f59e0b" stroke-width="2"/>
+            <rect x="675" y="0" width="205" height="20" rx="5" fill="#f59e0b"/>
+            <text x="777" y="14" font-size="8.5" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">LANE 3 (FP64/FP32 + INT)</text>
+            
+            <rect x="685" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#34d399" stroke-width="1.5"/>
+            <text x="729" y="46" font-size="8" font-weight="900" fill="#059669" font-family="monospace" text-anchor="middle">FP64 / FP32 FMA</text>
+            <text x="729" y="60" font-size="7.5" font-weight="900" fill="#10b981" font-family="monospace" text-anchor="middle">4 FLOPS / Cyc</text>
+            
+            <rect x="782" y="28" width="88" height="42" rx="3" fill="#ffffff" stroke="#60a5fa" stroke-width="1.5"/>
+            <text x="826" y="46" font-size="8" font-weight="900" fill="#2563eb" font-family="monospace" text-anchor="middle">64b INT ALU</text>
+            <text x="826" y="60" font-size="7.5" font-weight="900" fill="#3b82f6" font-family="monospace" text-anchor="middle">Add / Sub / Logic</text>
+            
+            <rect x="685" y="78" width="185" height="42" rx="3" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5"/>
+            <text x="777" y="96" font-size="8" font-weight="900" fill="#d97706" font-family="monospace" text-anchor="middle">Intra-Lane Operand Queues</text>
+            <text x="777" y="110" font-size="7.5" font-weight="900" fill="#b45309" font-family="monospace" text-anchor="middle">Src1, Src2, Src3 Decoupled Buffers</text>
           </g>
 
+          <!-- ARROWS FROM LANES TO CROSSBAR -->
+          <line x1="132" y1="410" x2="132" y2="428" stroke="#f43f5e" stroke-width="2" marker-end="url(#arrowRed)"/>
+          <line x1="357" y1="410" x2="357" y2="428" stroke="#f43f5e" stroke-width="2" marker-end="url(#arrowRed)"/>
+          <line x1="582" y1="410" x2="582" y2="428" stroke="#f43f5e" stroke-width="2" marker-end="url(#arrowRed)"/>
+          <line x1="807" y1="410" x2="807" y2="428" stroke="#f43f5e" stroke-width="2" marker-end="url(#arrowRed)"/>
+
           <!-- 5. SLIDE & PERMUTE CROSSBAR -->
-          <rect x="30" y="430" width="880" height="35" rx="6" fill="url(#crossbarGrad)" stroke="#151b20" stroke-width="1.8"/>
-          <text x="470" y="452" font-size="9" font-weight="900" fill="#991b1b" font-family="monospace" text-anchor="middle">INTER-LANE SLIDE &amp; PERMUTE CROSSBAR (vslideup, vslidedown, vrgather, reduction tree fold)</text>
+          <rect x="30" y="430" width="880" height="35" rx="6" fill="url(#crossbarGrad)" stroke="#f43f5e" stroke-width="2"/>
+          <text x="470" y="452" font-size="9" font-weight="900" fill="#e11d48" font-family="monospace" text-anchor="middle">INTER-LANE SLIDE &amp; PERMUTE CROSSBAR (vslideup, vslidedown, vrgather, reduction tree fold)</text>
+
+          <!-- ARROW FROM CROSSBAR TO VLSU -->
+          <line x1="470" y1="465" x2="470" y2="478" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
 
           <!-- 6. VECTOR LOAD-STORE UNIT & SYSTEM AXI4 BUS -->
-          <rect x="30" y="480" width="880" height="45" rx="6" fill="url(#axiBusGrad)" stroke="#151b20" stroke-width="1.8"/>
-          <text x="200" y="508" font-size="9.5" font-weight="900" fill="#166534" font-family="monospace">VLSU (UNIT-STRIDE BURST &bull; AGU)</text>
-          <text x="650" y="508" font-size="9.5" font-weight="900" fill="#166534" font-family="monospace">128-bit / 256-bit AXI4 MEMORY HIGHWAY &rarr; L2 CACHE</text>
+          <rect x="30" y="480" width="880" height="45" rx="6" fill="url(#axiBusGrad)" stroke="#16a34a" stroke-width="2"/>
+          <text x="200" y="508" font-size="9.5" font-weight="900" fill="#16a34a" font-family="monospace">VLSU (UNIT-STRIDE BURST &bull; AGU)</text>
+          <text x="650" y="508" font-size="9.5" font-weight="900" fill="#16a34a" font-family="monospace">128-bit / 256-bit AXI4 MEMORY HIGHWAY &rarr; L2 CACHE</text>
         </svg>
       </div>
     </div>
@@ -4706,8 +4745,9 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
     }
 
     .eda-display-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      display: flex;
+      flex-direction: column;
+      width: 100%;
       gap: 0.85rem;
       margin-bottom: 1rem;
     }
@@ -5099,8 +5139,9 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
 
     /* KPI Summary Cards */
     .lb-kpi-summary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      display: flex;
+      flex-direction: column;
+      width: 100%;
       gap: 1rem;
       margin-bottom: 1.75rem;
     }
@@ -5453,9 +5494,10 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
     }
 
     .dossier-specs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0.65rem;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.5rem;
       background: #fffdfa;
       border: 1.5px solid var(--ink, #151b20);
       border-radius: 8px;
@@ -5465,8 +5507,15 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
 
     .spec-item {
       display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.35rem 0;
+      border-bottom: 1px dashed var(--line, #eee4c8);
+      gap: 0.75rem;
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
     }
 
     .s-k {
@@ -5489,9 +5538,10 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
     }
 
     .dossier-pros-cons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.85rem;
       margin: 1.25rem 0;
     }
 
@@ -5652,8 +5702,9 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
     }
 
     .ppa-breakdown-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      display: flex;
+      flex-direction: column;
+      width: 100%;
       gap: 1.25rem;
       margin-top: 1rem;
     }

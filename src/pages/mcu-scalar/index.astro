@@ -7698,10 +7698,10 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
 
   @media (min-width: 680px) {
     .prim-insight-row {
-      display: grid;
-      grid-template-columns: 190px 1fr;
-      align-items: baseline;
-      gap: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.25rem;
     }
   }
 
@@ -7823,9 +7823,10 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
   }
 
   .isa-metric-item {
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.25rem;
     font-size: 0.9rem;
     line-height: 1.5;
     color: var(--ink-light, #242c33);
@@ -8124,8 +8125,9 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
   }
 
   .ladder-summary-bar {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 0.75rem;
     margin-top: 0.5rem;
     background: #ffffff;
@@ -8469,9 +8471,10 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
   }
 
   .monitor-top-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
     margin-bottom: 1rem;
   }
 
@@ -8542,8 +8545,9 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
   }
 
   .live-metrics-strip {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 0.75rem;
     background: var(--paper, #fffaf0);
     border: 1.5px solid var(--line, #eee4c8);
@@ -8701,9 +8705,10 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
   }
 
   .sim-point-row {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.35rem;
     font-size: 0.9rem;
     line-height: 1.5;
     color: var(--ink-light, #242c33);
@@ -8711,7 +8716,6 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
     padding: 0.6rem 0.85rem;
     border-radius: 6px;
     border: 1px solid var(--line, #eee4c8);
-    align-items: baseline;
   }
 
   .point-badge {
@@ -8790,9 +8794,10 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
   }
 
   .diff-point-row {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.35rem;
     font-size: 0.9rem;
     line-height: 1.5;
     color: var(--ink-light, #242c33);
@@ -8800,7 +8805,6 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
     padding: 0.6rem 0.85rem;
     border-radius: 6px;
     border: 1px solid var(--line, #eee4c8);
-    align-items: baseline;
   }
 
   .diff-point-title {
@@ -8978,8 +8982,9 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
 
   /* KPI Scoreboard Grid */
   .lb-kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 1rem;
     margin: 1.5rem 0 1.25rem 0;
   }

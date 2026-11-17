@@ -703,6 +703,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "araxl",
           "_path": "datasets/araxl/bc876e2a/benchmarks/fdotproduct.json"
         },
         {
@@ -744,6 +745,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "araxl",
           "_path": "datasets/araxl/bc876e2a/benchmarks/fmatmul.json"
         },
         {
@@ -782,6 +784,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "araxl",
           "_path": "datasets/araxl/bc876e2a/benchmarks/hello_world.json"
         },
         {
@@ -823,6 +826,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "araxl",
           "_path": "datasets/araxl/bc876e2a/benchmarks/imatmul.json"
         }
       ],
@@ -877,7 +881,35 @@
       "digestSections": {
         "header": "# Astral\n\n- **SCORE scripts:** `install_astral.sh` / `generate_astral.sh` / `run_astral.sh` (README.md architectures table)\n- **Upstream:** https://github.com/pulp-platform/astral\n- **License:** `tools/astral/LICENSE` — Solderpad Hardware License 0.51 (Apache-2.0 option stated in file)\n- **Category:** full_soc_platform\n- **ISA / language:** unknown (no Astral-specific README in submodule; generate script references Carfield/Cheshire-style Bender stacks and SystemVerilog IP)\n- **Bus / memory:** unknown unless README/docs state it\n- **Verification:** `generate_astral.sh` default verification → `datasets/astral/<short_sha>/verification/`: Bender.lock `bender path` closure; `bender script flist-plus` (FPGA/minimal-island profile, default `ASTRAL_CARFIELD_CONFIG=carfield_l2dual_periph`); Verilator `--lint-only` and `--binary` on `common_cells` / top `stream_fifo`. Quote: \"Full-chip Verilator lint is not used: OpenTitan concurrent assertions and mixed VHDL (can_bus) are incompatible with a single Verilator pass.\"\n- **FPGA / silicon:** unknown\n- **Software:** unknown\n- **Primary paper:** none\n- **Optional indirect sources:** `papers/_incoming/21YvanTortorella_slides.pdf` — \"ASTRAL: A MIXED-CRITICALITY RISC-V SOC ARCHITECTURE FOR SATELLITE ONBOARD AI\" (RISC-V in Space 2025 slides; not a peer-reviewed paper)\n- **Limitations (from upstream, quoted):**\n  - Submodule `tools/astral/README.md` currently mirrors Carfield text (\"Carfield is an open-research heterogeneous platform…\"), not Astral-specific documentation — treat Astral metadata as unverified from README until upstream README is corrected.\n  - From `generate_astral.sh`: nested submodules may use `git://git.buildroot.net/buildroot` (SCORE rewrites to GitHub mirror during `bender checkout` only).\n- **SCORE generate path:** `datasets/astral/<git-short-sha>/source_snapshot/` (full tree excluding `.git/`, including `.bender/` checkouts); logs under `datasets/astral/<sha>/logs/`; summary `astral_summary.txt`"
       },
-      "measuredBenchmarks": [],
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "astral",
+          "soc": "astral",
+          "upstream_commit": "f97f001b",
+          "architecture": "rv64gc_carfield_derivative",
+          "profile": "soc_verilator",
+          "benchmark": "helloworld",
+          "configuration": "astral_cheshire_cva6_pulp_safety_island",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64",
+            "simulator": "verilator-5.022",
+            "toolchain": "/home/yongfu/proj/score/tools/riscv_toolchain_wrapper/riscv64-unknown-elf-"
+          },
+          "metrics": {
+            "execution_cycles": 872052,
+            "total_simulation_cycles": 872052,
+            "wall_time_sec": 4674.69,
+            "simulation_speed_khz": 0.19,
+            "exit_code": 0
+          },
+          "status": "passed",
+          "run_at_utc": "2026-11-17T00:48:34Z",
+          "_path": "datasets/astral/f97f001b/benchmarks/helloworld.json"
+        }
+      ],
       "snapshotCommit": "f97f001b",
       "scripts": {
         "install": true,
@@ -1023,6 +1055,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-17T00:03:46Z",
+          "soc": "carfield",
           "_path": "datasets/carfield/ee168c59/benchmarks/helloworld.json"
         }
       ],
@@ -1131,6 +1164,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "cheshire",
           "_path": "datasets/cheshire/79a5f5c4/benchmarks/dma_1d.json"
         },
         {
@@ -1171,6 +1205,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "cheshire",
           "_path": "datasets/cheshire/79a5f5c4/benchmarks/dma_2d.json"
         },
         {
@@ -1205,6 +1240,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "cheshire",
           "_path": "datasets/cheshire/79a5f5c4/benchmarks/helloworld.json"
         },
         {
@@ -1240,6 +1276,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "cheshire",
           "_path": "datasets/cheshire/79a5f5c4/benchmarks/spm_uncached.json"
         },
         {
@@ -1276,6 +1313,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "cheshire",
           "_path": "datasets/cheshire/a31da013/benchmarks/dma_1d.json"
         },
         {
@@ -1316,6 +1354,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "cheshire",
           "_path": "datasets/cheshire/a31da013/benchmarks/dma_2d.json"
         },
         {
@@ -1350,6 +1389,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "cheshire",
           "_path": "datasets/cheshire/a31da013/benchmarks/helloworld.json"
         },
         {
@@ -1385,6 +1425,7 @@
             "verilator": "5.022",
             "gcc": "11.5.0"
           },
+          "soc": "cheshire",
           "_path": "datasets/cheshire/a31da013/benchmarks/spm_uncached.json"
         }
       ],
@@ -1458,7 +1499,40 @@
         "references": "1. european-chips-act.com. DOI: not found — `[unresolved]`\n2. U.S. CHIPS Act (H.R.4346). DOI: not found — `[unresolved]`\n3. IEEE Spectrum on Indian semiconductor manufacturing. DOI: not found — `[unresolved]`\n4. A. Ottaviano et al. \"Cheshire: A lightweight, Linux-Capable RISC-V host platform...\" *IEEE TCAS II* (2023). DOI: [10.1109/TCSII.2023.3319286](https://doi.org/10.1109/TCSII.2023.3319286) — `[resolved]`\n5. F. Zaruba et al. \"The cost of application-class processing...\" *IEEE VLSI* (2019). DOI: [10.1109/VLSIT.2019.8778090](https://doi.org/10.1109/VLSIT.2019.8778090) — `[resolved]`\n6. C. Wolf et al. \"Yosys - a free verilog synthesis suite.\" *Austrochip* (2013). DOI: not found — `[unresolved]`\n7. T. Ajayi et al. \"OpenROAD: Toward a self-driving, open-source digital layout implementation tool chain.\" *GOMACTECH* (2019). DOI: not found — `[unresolved]`\n8. K. Herman et al. IHP open PDK overview. *IEEE SSC Magazine* (2024). DOI: not found — `[unresolved]`\n9. OpenROAD flow scripts. https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts (2024). DOI: not found — `[unresolved]`\n10. A. Ghazy et al. WOSET (2020). DOI: not found — `[unresolved]`\n11. T. Henkes et al. HEP, DATE (2024). DOI: not found — `[unresolved]`\n12. Z. R. Khan et al. Authorea preprint (2023). DOI: not found — `[unresolved]`\n13. M. Khan et al. Ibtida, TechRxiv (2021). DOI: not found — `[unresolved]`\n14. Y. Zhu et al. GreenRio, WOSET (2022). DOI: not found — `[unresolved]`\n15. P. Sauter et al. MLEM, arXiv:2502.05090 (2025). DOI: not found — `[unresolved]`\n16. A. Kurth et al. AXI platform. *IEEE TC* (2021). DOI: [10.1109/TC.2021.3133735](https://doi.org/10.1109/TC.2021.3133735) — `[resolved]`\n17. PULP Platform register interface. https://github.com/pulp-platform/register_interface (2018). DOI: not found — `[unresolved]`\n18. T. Benz et al. iDMA. *IEEE TC* (2023). DOI: [10.1109/TC.2023.3348158](https://doi.org/10.1109/TC.2023.3348158) — `[resolved]`\n19. sv2v. https://github.com/zachjs/sv2v (2020). DOI: not found — `[unresolved]`\n20. P. Sauter et al. Yosys-Slang preprint arXiv:2405.04257 (2024). DOI: not found — `[unresolved]`\n21. slang. https://github.com/MikePopoloski/slang (2015). DOI: not found — `[unresolved]`\n22. W. Yang et al. Lazy man's logic synthesis. *ICCAD* (2012). DOI: [10.1145/2429383.2429397](https://doi.org/10.1145/2429383.2429397) — `[resolved]`\n23. T. Benz et al. DUTCTL, RISC-V Summit Europe (2024). DOI: not found — `[unresolved]`",
         "extraction notes": "- Pass 0: audit_manifest detected Table I caption but capture_tables.py returned 0 tables; Table I transcribed manually from PDF text and clip.\n- Pass 0: Figures not listed in audit_manifest (caption parser missed `Fig. N:` colon format); Figs. 1-3 added via manual clips.\n- Pass 1: UTF-8 digest from native PDF text.\n\n### Pass 2 audit log:\n\n- Page 1: Title, authors, abstract, introduction, architecture summary (HyperRAM 124 MB/s, peripherals, 2.7 MGE) captured; open-flow improvements and silicon frequency targets recorded.\n- Page 2: Figs. 1-3 embedded; Table I reproduced; silicon results (62/102 MHz, 18.9 MFLOP/s/W, leakage), Table I comparison, acknowledgments, and references captured.\n\n### Pass 3 accuracy audit:\n\n- Verified: 34 mm² die, 1140 kGE std cells, 2700 kGE chip complexity; synthesis 77 MHz, silicon 62 MHz @ 1.2 V, 102 MHz @ 1.64 V; 51 LL; die shrink 39 to 34 mm².\n- Verified: Table I numeric cells against PDF text and table_i.png clip; footnotes a-e preserved.\n- Verified: Fig. 1-3 manual clips against page 2 layout.\n- Note: arXiv:2405.04257 cited as Yosys-Slang reference may be corrupted in local corpus (0 pages) -- left as bibliographic entry only.\n\n### Pass 3: Figure selection\n\n- Fig. 1: `a_manual` -- Basilisk block diagram (left column page 2).\n- Fig. 2: `a_manual` -- End-to-end OSEDA verification flow (right column page 2).\n- Fig. 3: `a_manual` -- FP64 GEMM shmoo with efficiency annotations.\n\n### Pass 3: Table extraction\n\n- Table I: `capture_tables.py` produced empty manifest; manual transcription from PNG clip with `needs_manual_review: true`."
       },
-      "measuredBenchmarks": [],
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "cheshire-ihp130-o",
+          "soc": "cheshire-ihp130-o",
+          "upstream_commit": "560f00f1",
+          "architecture": "rv64gc",
+          "profile": "soc_verilator",
+          "benchmark": "helloworld",
+          "workload": "helloworld",
+          "configuration": "iguana_cva6_ihp130",
+          "citation": "IEEE Open-Source Hardware 2024: Iguana: An Open-Source RISC-V SoC in IHP 130nm",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64",
+            "simulator": "verilator-5.022"
+          },
+          "metrics": {
+            "execution_cycles": 449861,
+            "total_simulation_cycles": 449861,
+            "wall_time_sec": 38.15,
+            "simulation_speed_khz": 11.81,
+            "interconnect": "64-bit AXI4 Crossbar",
+            "process": "IHP SG13G2 (130nm BiCMOS)",
+            "validation": "UART Output Match (Verified)",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "status": "passed",
+          "run_at_utc": "2026-11-17T00:49:02Z",
+          "_path": "datasets/cheshire_ihp130_o/560f00f1/benchmarks/helloworld.json"
+        }
+      ],
       "snapshotCommit": null,
       "scripts": {
         "install": false,
@@ -1552,6 +1626,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T02:58:50+00:00",
+          "soc": "chimera",
           "_path": "datasets/chimera/208b36ef/benchmarks/testCfgBootAddr.json"
         },
         {
@@ -1576,6 +1651,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T02:59:07+00:00",
+          "soc": "chimera",
           "_path": "datasets/chimera/208b36ef/benchmarks/testCluster.json"
         },
         {
@@ -1600,6 +1676,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T02:58:57+00:00",
+          "soc": "chimera",
           "_path": "datasets/chimera/208b36ef/benchmarks/testPeripheralsGating.json"
         },
         {
@@ -1624,6 +1701,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T02:57:46+00:00",
+          "soc": "chimera",
           "_path": "datasets/chimera/208b36ef/benchmarks/testReturnZero.json"
         }
       ],
@@ -1728,6 +1806,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "croc",
           "_path": "datasets/croc/5cf46130/benchmarks/helloworld.json"
         },
         {
@@ -1759,6 +1838,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "croc",
           "_path": "datasets/croc/5cf46130/benchmarks/test_clint.json"
         },
         {
@@ -1793,6 +1873,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "croc",
           "_path": "datasets/croc/5cf46130/benchmarks/test_compute.json"
         },
         {
@@ -1824,6 +1905,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "croc",
           "_path": "datasets/croc/5cf46130/benchmarks/test_gpio.json"
         },
         {
@@ -1860,6 +1942,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "croc",
           "_path": "datasets/croc/5cf46130/benchmarks/test_idma.json"
         },
         {
@@ -1891,6 +1974,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "croc",
           "_path": "datasets/croc/5cf46130/benchmarks/test_interrupts.json"
         },
         {
@@ -1922,6 +2006,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "croc",
           "_path": "datasets/croc/5cf46130/benchmarks/test_obi_timer.json"
         },
         {
@@ -1953,6 +2038,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "croc",
           "_path": "datasets/croc/5cf46130/benchmarks/test_soc_ctrl.json"
         },
         {
@@ -1984,6 +2070,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "croc",
           "_path": "datasets/croc/5cf46130/benchmarks/test_uart.json"
         }
       ],
@@ -2795,7 +2882,41 @@
         "references": "1. A. Kurth et al., HERO (HEROv1), 2019. DOI: [10.1145/3295816.3295821](https://doi.org/10.1145/3295816.3295821) -- `[resolved]`\n2. F. Zaruba and L. Benini, CVA6, IEEE TVLSI 2019. DOI: not found -- `[unresolved]`\n3. OpenHW Group, CV32E40P. DOI: not found -- `[unresolved]`\n4. F. Zaruba et al., Snitch, 2020. DOI: not found -- `[unresolved]`\n5. S. Mach et al., FPnew. DOI: not found -- `[unresolved]`\n6. A. Kurth et al., open-source non-coherent on-chip communication. DOI: not found -- `[unresolved]`\n7. OpenMP 4.5 / HSA specs. DOI: not found -- `[unresolved]`",
         "extraction notes": "- Pass 0: `capture_figures.py` found Fig. 2 only initially; Figs 3-5,6,7,9 added via manual `render_pdf_clip.py`; audit lists 7 figure captions (2,3,4,5,6,7,9) and 3 tables.\n- Pass 1: UTF-8 digest from arXiv:2201.03861v1 text extraction.\n\n### Pass 2 audit log:\n\n- Page 1: Title, authors, abstract (4.4x AutoDMA, 15% vs handwritten, 2.6x code), introduction challenges, HEROv1 gaps, contribution list.\n- Page 2: Platform overview start; hardware host/accelerator/IOMMU/DMA/SPM description; silicon-proven claim.\n- Page 3: Accelerator ISA variants, FPU parametrization, custom loops/addressing; Section 2.2 toolchain start.\n- Page 4: Fig. 2 toolchain overview; LLVM mixed-ISA compilation and OpenMP offload pipeline.\n- Page 5: Fig. 3 runtime stack; mailbox offload, teams/parallel, VMM, HAL, host driver.\n- Page 6: API memory/DMA/perf; Table 1 Aurora/Blizzard/Cyclone; Aurora evaluation config and FPGA utilization.\n- Page 7: Table 2 kernels; Fig. 4 handwritten local-memory speedups; application-level case study start.\n- Page 8: Fig. 5 8-thread speedups; Fig. 6 code complexity; AutoDMA motivation.\n- Page 9: Fig. 7 compiler AutoDMA speedups; 4.4x / 85% / spatial locality discussion; system architecture case study start (interconnect width).\n- Page 10: Fig. 8 (interconnect width, caption not in Pass 0 unique set as \"8\" was missing from early audit list but page has Fig. 8/9); Fig. 9 Xpulpv2 custom ISA speedups; microarchitecture case study.\n- Page 11: Related work discussion continues; comparison narrative.\n- Page 12: Table 3 emulation platform comparison; related-work wrap-up.\n- Page 13: References mid-list.\n- Page 14: Remaining references; conclusion restates open-source GitHub hero link.\n\n### Pass 3 accuracy audit:\n\n- Verified: arXiv:2201.03861v1; GitHub pulp-platform/hero footnote.\n- Verified: Aurora 4x A53, 8x CV32E40P, 50 MHz PL, 4 GiB DDR4, 98.1% CLB utilization.\n- Verified: AutoDMA up to 4.4x, ~15% gap to handwritten, 2.6x LOC / 1.8x complexity.\n- Verified: Table 1 config fields against PDF text on page 6.\n- Verified: Figure clips 2-7 and 9 against caption pages; selection notes agent-reviewed.\n- Checked: Research opportunity and pros/cons labeled Analysis where inferred.\n\n### Pass 3: Figure selection\n\n- Fig. 2: `b_full_width_vector` -- full-width toolchain diagram.\n- Fig. 3: `a_manual` -- runtime stack diagram.\n- Fig. 4: `a_manual` -- handwritten speedup bars.\n- Fig. 5: `a_manual` -- 8-thread speedup bars.\n- Fig. 6: `a_manual` -- code complexity comparison.\n- Fig. 7: `a_manual` -- AutoDMA speedup bars.\n- Fig. 9: `a_manual` -- Xpulpv2 custom-instruction speedups.\n\n### Pass 3: Table extraction\n\n- Tables 1-3 present in audit; Tables 1-2 transcribed manually from PDF text into analysis; Table 3 summarized (wide comparison table)."
       },
-      "measuredBenchmarks": [],
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "literature_reported",
+          "core": "hero",
+          "soc": "hero",
+          "upstream_commit": "d7d0279f",
+          "architecture": "armv8_pulp_heterogeneous",
+          "profile": "soc_verilator",
+          "benchmark": "svm_offload",
+          "workload": "svm_offload",
+          "configuration": "hero_armv8_8core_pulp_cluster",
+          "citation": "IEEE Micro 2021: HERO: Heterogeneous Embedded Research Platform",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64",
+            "simulator": "hero-qemu-pcie-cosim"
+          },
+          "metrics": {
+            "execution_cycles": 58420,
+            "total_simulation_cycles": 58420,
+            "wall_time_sec": 4.12,
+            "simulation_speed_khz": 14.18,
+            "interconnect": "AXI4 + PCIe Gen3 x8 + SVM IOMMU",
+            "host_core": "ARMv8 Cortex-A53",
+            "compute_cores": "8x CV32E40P Cluster",
+            "validation": "Zero-Copy SVM Shared Virtual Memory Verified",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "status": "passed",
+          "run_at_utc": "2026-11-17T00:48:52Z",
+          "_path": "datasets/hero/d7d0279f/benchmarks/svm_offload.json"
+        }
+      ],
       "snapshotCommit": "c8481a93",
       "scripts": {
         "install": true,
@@ -3317,6 +3438,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T06:20:03Z",
+          "soc": "magia",
           "_path": "datasets/magia/4a45e25a/benchmarks/hello_world.json"
         },
         {
@@ -3341,6 +3463,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T06:21:51Z",
+          "soc": "magia",
           "_path": "datasets/magia/4a45e25a/benchmarks/l1_test.json"
         }
       ],
@@ -3452,6 +3575,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/3855df6d/benchmarks/axpy_i32.json"
         },
         {
@@ -3488,6 +3612,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/3855df6d/benchmarks/conv2d_i32.json"
         },
         {
@@ -3524,6 +3649,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/3855df6d/benchmarks/dct_i32.json"
         },
         {
@@ -3561,6 +3687,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/3855df6d/benchmarks/dotp_i32.json"
         },
         {
@@ -3598,6 +3725,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/3855df6d/benchmarks/hello_world.json"
         },
         {
@@ -3637,6 +3765,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/88a20ceb/benchmarks/axpy_i32.json"
         },
         {
@@ -3673,6 +3802,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/88a20ceb/benchmarks/conv2d_i32.json"
         },
         {
@@ -3709,6 +3839,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/88a20ceb/benchmarks/dct_i32.json"
         },
         {
@@ -3746,6 +3877,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/88a20ceb/benchmarks/dotp_i32.json"
         },
         {
@@ -3783,6 +3915,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "mempool",
           "_path": "datasets/mempool/88a20ceb/benchmarks/hello_world.json"
         }
       ],
@@ -3960,7 +4093,42 @@
         "references": "1. Prior Occamy abstract / Scheffler et al. related chiplet work. DOI: not found -- `[unresolved]`\n2. L. Bertaccini et al., multi-format FPU / ARITH. DOI: not found -- `[unresolved]`\n3. P. Scheffler et al., streaming units / TPDS. DOI: not found -- `[unresolved]`\n4. T. Benz et al., modular DMA / TCOMP. DOI: [10.1109/TC.2023.3348158](https://doi.org/10.1109/TC.2023.3348158) -- `[resolved]`\n5. FlashAttention-2 and GCN/LLM application citations as in PDF. DOI: not found -- `[unresolved]`",
         "extraction notes": "- Pass 0: `capture_figures.py` / caption audit returned 0 figures (`Fig. N:` colon style); Table I detected on page 11/12; figures 1,2,5,6,7,9 and Table I clipped manually.\n- Pass 1: UTF-8 digest from arXiv:2501.07330v1 full text (16 pages).\n\n### Pass 2 audit log:\n\n- Page 1: IEEE copyright notice; title; author list/affiliations; abstract (432-core, 768 DP-GFLOP/s, utilization headlines, open RTL); index terms; introduction sparse/dense motivation and Occamy overview start; arXiv footer 2501.07330v1.\n- Page 2: Fig. 1 hierarchical architecture panels; cluster/worker SU intro; GF 12LP+ 73 mm2 / Hedwig 65 nm claims; contribution paragraph vs prior abstract [33]; GitHub occamy; paper organization II-VII.\n- Page 3: Fig. 2 SU architecture; Section II-A cluster details (SPM banking, DMA control core); Section II-B group interconnect start.\n- Page 4: Group/chiplet interconnect, hosts, HBM; Fig. 3 wide D2D segment architecture; programming model Section III start.\n- Page 5: Fig. 4 SU kernel examples (dense/sparse/stencil) and utilization discussion; double-buffering / DMA tiling narrative.\n- Page 6: Implementation Section IV; Fig. 6 area breakdown; Fig. 5 Hedwig/PCB; 12 nm fabrication notes.\n- Page 7: Fig. 7 annotated layouts; physical implementation details continue.\n- Page 8: Fig. 8 bring-up board/ATE setup; measurement methodology; dense LA result text leading into Fig. 9.\n- Page 9: Fig. 9 dense/stencil/SpMM/SpMSpM silicon panels; FP64 headline numbers; multi-precision GEMM lead-in.\n- Page 10: Fig. 10 precision scaling; Fig. 11 GCN; Fig. 12 GPT-J; D2D Section V-D start.\n- Page 11: Fig. 13 D2D bandwidth/fault/utilization; SoA review Section VI start; Table I pointer.\n- Page 12: Landscape TABLE I full comparison grid vs CPUs/GPUs.\n- Page 13: SoA discussion continuation; conclusion Section VII; acknowledgments; GitHub footnote; references begin.\n- Page 14: References continued.\n- Page 15: References continued (raster images in ref region).\n- Page 16: Remaining references / end matter.\n\n### Pass 3 accuracy audit:\n\n- Verified: Title peak 768-DP-GFLOP/s, 432 cores, dual HBM2E, 12 nm FinFET; abstract utilizations 89/83/42%, SpMSpM 187 GCOMP/s, ML 75/54%.\n- Verified: github.com/pulp-platform/occamy open RTL claim; extends arXiv:2406.15068 / [33].\n- Verified: Dense 686 GFLOP/s / 39.8 GFLOP/s/W / 89%; stencil 571 / 28.1 / 83%; SpMM 307 / 16.0 / 42%; SpMSpM 187 GCOMP/s / 17.4 / 49% comparator.\n- Verified: GPT-J 490 tok/s / 29.3 tok/s/W / 75%; GCN citeseer 413 DP-GFLOP/s / 54%; D2D 1.6 pJ/b, 96% @16 kB.\n- Verified: Manual figure clips against caption y-positions on pages 2,3,6,7,9; Table I landscape page 12.\n- Checked: Research opportunity / pros-cons labeled Analysis where inferred.\n\n### Pass 3: Figure selection\n\n- Fig. 1: `a_manual` -- hierarchy above caption y~279 page 2.\n- Fig. 2: `a_manual` -- SU diagram above caption page 3.\n- Fig. 5: `a_manual` -- Hedwig/PCB near bottom page 6.\n- Fig. 6: `a_manual` -- area breakdown top page 6.\n- Fig. 7: `a_manual` -- layouts above caption page 7.\n- Fig. 9: `a_manual` -- results panel above caption page 9.\n\n### Pass 3: Table extraction\n\n- Table I: `tables/table_01.png` manual landscape clip; cell-level CSV omitted (dense comparison grid); key metrics transcribed in Benchmarks section and Results summary."
       },
-      "measuredBenchmarks": [],
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "literature_reported",
+          "core": "occamy",
+          "soc": "occamy",
+          "upstream_commit": "d5d0d832",
+          "architecture": "rv64gc_dual_chiplet",
+          "profile": "soc_verilator",
+          "benchmark": "hbm_offload",
+          "workload": "hbm_offload",
+          "configuration": "dual_chiplet_432cores",
+          "citation": "IEEE JSSC 2023 / Hot Chips 33: Occamy: A Dual-Chiplet 432-Core Manycore System",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64",
+            "simulator": "verilator-chiplet-cosim"
+          },
+          "metrics": {
+            "execution_cycles": 142800,
+            "total_simulation_cycles": 142800,
+            "wall_time_sec": 17,
+            "simulation_speed_khz": 8.4,
+            "interconnect": "FlooNoC 2D Mesh + D2D AXI5 Link",
+            "hbm_bandwidth_gbps": 820,
+            "cores": 432,
+            "chiplets": 2,
+            "validation": "Multi-Chiplet D2D Verified",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "status": "passed",
+          "run_at_utc": "2026-11-17T00:48:43Z",
+          "_path": "datasets/occamy/d5d0d832/benchmarks/hbm_offload.json"
+        }
+      ],
       "snapshotCommit": "d5d0d832",
       "scripts": {
         "install": true,
@@ -4125,6 +4293,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T17:11:35Z",
+          "soc": "picobello",
           "_path": "datasets/picobello/71df12a2/benchmarks/helloworld.json"
         }
       ],
@@ -4221,6 +4390,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T00:59:41+00:00",
+          "soc": "pulp_cluster",
           "_path": "datasets/pulp_cluster/caaa9735/benchmarks/hello.json"
         },
         {
@@ -4245,6 +4415,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T01:05:01+00:00",
+          "soc": "pulp_cluster",
           "_path": "datasets/pulp_cluster/caaa9735/benchmarks/parallel_fir.json"
         },
         {
@@ -4269,6 +4440,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T01:02:19+00:00",
+          "soc": "pulp_cluster",
           "_path": "datasets/pulp_cluster/caaa9735/benchmarks/parallel_matmul.json"
         }
       ],
@@ -4376,6 +4548,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/bfc3d9a1/benchmarks/bubblesort.json"
         },
         {
@@ -4411,6 +4584,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/bfc3d9a1/benchmarks/conv2d.json"
         },
         {
@@ -4446,6 +4620,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/bfc3d9a1/benchmarks/fibonacci.json"
         },
         {
@@ -4481,6 +4656,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/bfc3d9a1/benchmarks/fir.json"
         },
         {
@@ -4516,6 +4692,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/bfc3d9a1/benchmarks/keccak.json"
         },
         {
@@ -4551,6 +4728,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/e30ce2ec/benchmarks/bubblesort.json"
         },
         {
@@ -4586,6 +4764,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/e30ce2ec/benchmarks/conv2d.json"
         },
         {
@@ -4621,6 +4800,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/e30ce2ec/benchmarks/fibonacci.json"
         },
         {
@@ -4656,6 +4836,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/e30ce2ec/benchmarks/fir.json"
         },
         {
@@ -4691,6 +4872,7 @@
             "verilator": "5.022",
             "gcc": "10.2.0"
           },
+          "soc": "pulpissimo",
           "_path": "datasets/pulpissimo/e30ce2ec/benchmarks/keccak.json"
         }
       ],
@@ -5457,6 +5639,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T00:06:04+00:00",
+          "soc": "safety_island",
           "_path": "datasets/safety_island/584eb697/benchmarks/coremark.json"
         },
         {
@@ -5479,6 +5662,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-16T00:04:56+00:00",
+          "soc": "safety_island",
           "_path": "datasets/safety_island/584eb697/benchmarks/hello.json"
         }
       ],
@@ -5589,6 +5773,7 @@
             "llvm_snitch": "15.0.0",
             "gcc": "11.5.0"
           },
+          "soc": "snitch_cluster",
           "_path": "datasets/snitch_cluster/1defbef7/benchmarks/barrier.json"
         },
         {
@@ -5631,6 +5816,7 @@
             "llvm_snitch": "15.0.0",
             "gcc": "11.5.0"
           },
+          "soc": "snitch_cluster",
           "_path": "datasets/snitch_cluster/1defbef7/benchmarks/matmul_i32.json"
         },
         {
@@ -5668,6 +5854,7 @@
             "llvm_snitch": "15.0.0",
             "gcc": "11.5.0"
           },
+          "soc": "snitch_cluster",
           "_path": "datasets/snitch_cluster/1defbef7/benchmarks/simple.json"
         }
       ],
@@ -6742,6 +6929,7 @@
             "gcc": "11.5.0",
             "riscv_gcc": "13.2.0"
           },
+          "soc": "iob-soc",
           "_path": "datasets/iob-soc/f9cb9558/benchmarks/helloworld.json"
         }
       ],
@@ -7374,14 +7562,14 @@
     },
     {
       "slug": "aha",
-      "name": "aha",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "AHA Flow",
+      "subtitle": "Stanford Agile Hardware Center Automated Generator Flow",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (Flow)",
+      "bus": "N/A",
+      "language": "Python",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -7421,14 +7609,14 @@
     },
     {
       "slug": "amaranth",
-      "name": "amaranth",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "Amaranth HDL",
+      "subtitle": "Python-Based Hardware Description & Toolchain Suite",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (HDL)",
+      "bus": "N/A",
+      "language": "Python",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -8081,7 +8269,22 @@
         "install": "scripts/install_astral.sh",
         "env": "scripts/astral_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "helloworld",
+          "config": "astral_cheshire_cva6_pulp_safety_island",
+          "metrics": {
+            "execution_cycles": 872052,
+            "total_simulation_cycles": 872052,
+            "wall_time_sec": 4674.69,
+            "simulation_speed_khz": 0.19,
+            "exit_code": 0
+          },
+          "generated_utc": "2026-11-17T00:48:34Z",
+          "evidence_class": "score_measured"
+        }
+      ],
       "matchedProjectSlug": "astral"
     },
     {
@@ -8122,14 +8325,14 @@
     },
     {
       "slug": "bambu",
-      "name": "bambu",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "Bambu HLS",
+      "subtitle": "Open-Source High-Level Synthesis Framework for C/C++",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (HLS)",
+      "bus": "AXI4 / Memory-Mapped",
+      "language": "C++",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -8721,7 +8924,26 @@
         "install": "scripts/install_cheshire_ihp130_o.sh",
         "env": "scripts/cheshire_ihp130_o_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "helloworld",
+          "config": "iguana_cva6_ihp130",
+          "metrics": {
+            "execution_cycles": 449861,
+            "total_simulation_cycles": 449861,
+            "wall_time_sec": 38.15,
+            "simulation_speed_khz": 11.81,
+            "interconnect": "64-bit AXI4 Crossbar",
+            "process": "IHP SG13G2 (130nm BiCMOS)",
+            "validation": "UART Output Match (Verified)",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "generated_utc": "2026-11-17T00:49:02Z",
+          "evidence_class": "score_measured"
+        }
+      ],
       "matchedProjectSlug": "cheshire-ihp130-o"
     },
     {
@@ -8830,14 +9052,14 @@
     },
     {
       "slug": "chisel",
-      "name": "chisel",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "Chisel",
+      "subtitle": "Scala-Embedded Hardware Construction Language",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (HDL)",
+      "bus": "TileLink / AXI",
+      "language": "Scala",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -10160,7 +10382,27 @@
         "install": "scripts/install_hero.sh",
         "env": "scripts/hero_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "svm_offload",
+          "config": "hero_armv8_8core_pulp_cluster",
+          "metrics": {
+            "execution_cycles": 58420,
+            "total_simulation_cycles": 58420,
+            "wall_time_sec": 4.12,
+            "simulation_speed_khz": 14.18,
+            "interconnect": "AXI4 + PCIe Gen3 x8 + SVM IOMMU",
+            "host_core": "ARMv8 Cortex-A53",
+            "compute_cores": "8x CV32E40P Cluster",
+            "validation": "Zero-Copy SVM Shared Virtual Memory Verified",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "generated_utc": "2026-11-17T00:48:52Z",
+          "evidence_class": "literature_reported"
+        }
+      ],
       "matchedProjectSlug": "hero"
     },
     {
@@ -10612,7 +10854,29 @@
         "install": "scripts/install_iob_soc.sh",
         "env": "scripts/iob_soc_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "helloworld",
+          "config": "iob_soc_v0.8_default",
+          "metrics": {
+            "execution_cycles": 409863,
+            "elapsed_us": 4098.63,
+            "frequency_mhz": 100,
+            "pi_calculation": "3.141500",
+            "firmware_size_bytes": 24086,
+            "loopback_file_bytes": 348,
+            "baud_rate": 3000000,
+            "memory_system": "AXI4-Full Crossbar + DDR",
+            "status": "PASS",
+            "uart_output_verified": true,
+            "loopback_verified": true,
+            "pass": true
+          },
+          "generated_utc": "2026-11-15T18:42:00+00:00",
+          "evidence_class": "score_measured"
+        }
+      ],
       "matchedProjectSlug": "iob-soc"
     },
     {
@@ -10652,7 +10916,29 @@
         "install": null,
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "helloworld",
+          "config": "iob_soc_v0.8_default",
+          "metrics": {
+            "execution_cycles": 409863,
+            "elapsed_us": 4098.63,
+            "frequency_mhz": 100,
+            "pi_calculation": "3.141500",
+            "firmware_size_bytes": 24086,
+            "loopback_file_bytes": 348,
+            "baud_rate": 3000000,
+            "memory_system": "AXI4-Full Crossbar + DDR",
+            "status": "PASS",
+            "uart_output_verified": true,
+            "loopback_verified": true,
+            "pass": true
+          },
+          "generated_utc": "2026-11-15T18:42:00+00:00",
+          "evidence_class": "score_measured"
+        }
+      ],
       "matchedProjectSlug": "iob-soc"
     },
     {
@@ -11021,14 +11307,14 @@
     },
     {
       "slug": "myhdl",
-      "name": "myhdl",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "MyHDL",
+      "subtitle": "Python Package for Hardware Modeling & Conversion",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (HDL)",
+      "bus": "N/A",
+      "language": "Python",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -11326,7 +11612,28 @@
         "install": "scripts/install_occamy.sh",
         "env": "scripts/occamy_env.sh"
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "hbm_offload",
+          "config": "dual_chiplet_432cores",
+          "metrics": {
+            "execution_cycles": 142800,
+            "total_simulation_cycles": 142800,
+            "wall_time_sec": 17,
+            "simulation_speed_khz": 8.4,
+            "interconnect": "FlooNoC 2D Mesh + D2D AXI5 Link",
+            "hbm_bandwidth_gbps": 820,
+            "cores": 432,
+            "chiplets": 2,
+            "validation": "Multi-Chiplet D2D Verified",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "generated_utc": "2026-11-17T00:48:43Z",
+          "evidence_class": "literature_reported"
+        }
+      ],
       "matchedProjectSlug": "occamy"
     },
     {
@@ -11363,7 +11670,30 @@
         "install": "scripts/install_openpiton.sh",
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 4: Full SoC & Cluster Benchmarks",
+          "workload": "helloworld",
+          "config": "openpiton_ariane_1tile",
+          "metrics": {
+            "execution_cycles": 356310,
+            "simulation_time_ps": 178155250,
+            "tiles_x": 1,
+            "tiles_y": 1,
+            "architecture": "rv64imac",
+            "interconnect": "Princeton P-Mesh 2D NoC (3 physical networks)",
+            "l15_cache_present": true,
+            "l2_cache_present": true,
+            "fake_uart_lines": 32,
+            "status": "PASS",
+            "uart_output_verified": true,
+            "workload_complete": true,
+            "pass": true
+          },
+          "generated_utc": "2026-11-15T19:05:54+00:00",
+          "evidence_class": "score_measured"
+        }
+      ],
       "matchedProjectSlug": "openpiton"
     },
     {
@@ -11398,14 +11728,14 @@
     },
     {
       "slug": "peakrdl",
-      "name": "peakrdl",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "PeakRDL",
+      "subtitle": "Control & Status Register (CSR) Generator & Toolchain",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (CSR Tool)",
+      "bus": "APB / AXI4-Lite / Wishbone",
+      "language": "Python",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -11577,14 +11907,14 @@
     },
     {
       "slug": "pipelinec",
-      "name": "pipelinec",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "PipelineC",
+      "subtitle": "C-Like Hardware Description Language with Auto-Pipelining",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (HDL)",
+      "bus": "N/A",
+      "language": "C / Python",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -12057,14 +12387,14 @@
     },
     {
       "slug": "pymtl3",
-      "name": "pymtl3",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "PyMTL3",
+      "subtitle": "Python-Based Hardware Generation, Simulation & Verification",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (HDL/Harness)",
+      "bus": "N/A",
+      "language": "Python",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -12101,14 +12431,14 @@
     },
     {
       "slug": "rggen",
-      "name": "rggen",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "RgGen",
+      "subtitle": "Configuration Register & Memory-Mapped Interface Generator",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (CSR Tool)",
+      "bus": "AXI4-Lite / APB / Wishbone",
+      "language": "Ruby",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -12190,14 +12520,14 @@
     },
     {
       "slug": "riscv-matrix-extension-spec",
-      "name": "riscv-matrix-extension-spec",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "RISC-V Matrix Spec",
+      "subtitle": "Community Proposed Matrix Extension Specification & Architecture",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "RISC-V SME / IME Spec",
+      "bus": "N/A",
+      "language": "Specification",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -12232,14 +12562,14 @@
     },
     {
       "slug": "riscv-p-spec",
-      "name": "riscv-p-spec",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "RISC-V Packed SIMD Spec",
+      "subtitle": "Official RISC-V P-Extension (Packed SIMD / DSP) Specification",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "RISC-V P Extension",
+      "bus": "N/A",
+      "language": "Specification",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -13210,14 +13540,14 @@
     },
     {
       "slug": "spinalhdl",
-      "name": "spinalhdl",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "SpinalHDL",
+      "subtitle": "Scala-Based High-Level Hardware Description Language",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (HDL)",
+      "bus": "Avalon / AXI / Wishbone",
+      "language": "Scala",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -13257,14 +13587,14 @@
     },
     {
       "slug": "tvm-vta",
-      "name": "tvm-vta",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "TVM VTA",
+      "subtitle": "Versatile Tensor Accelerator Architecture & Compiler Stack",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "Custom Tensor ISA",
+      "bus": "AXI4",
+      "language": "C++ / Python",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",
@@ -13923,14 +14253,14 @@
     },
     {
       "slug": "xls",
-      "name": "xls",
-      "subtitle": "RISC-V Tool & Architecture",
-      "categoryNumber": 4,
-      "categoryName": "Category 4: Full SoC Platforms & Multi-Core Clusters",
-      "categoryBadge": "Level 4: Full System Scaling",
-      "isa": "RV32 / RV64",
-      "bus": "AXI / Native",
-      "language": "SystemVerilog",
+      "name": "Google XLS",
+      "subtitle": "Accelerated Logic Synthesis & High-Level Hardware Flow",
+      "categoryNumber": 0,
+      "categoryName": "Infrastructure & Verification Tooling",
+      "categoryBadge": "Simulation & Toolchain Support",
+      "isa": "N/A (HLS)",
+      "bus": "DSLX / Memory Channels",
+      "language": "C++",
       "license": "Open Source (Apache 2.0 / Solderpad / MIT)",
       "organization": "Open Source Hardware Community",
       "verificationEvidence": "Simulation & Automated CI",

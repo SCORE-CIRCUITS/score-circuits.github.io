@@ -3469,9 +3469,10 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     font-style: italic;
   }
   .arch-body-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1.25rem;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1.5px dashed #cbd5e1;
@@ -3484,9 +3485,10 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     margin-bottom: 0.8rem;
   }
   .arch-footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.85rem;
     font-size: 0.85rem;
   }
   .arch-sync {
@@ -3520,8 +3522,9 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     line-height: 1.55;
   }
   .sim-controls-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 1.25rem;
     background: #f8fafc;
     border: 1.5px solid #cbd5e1;
@@ -3558,9 +3561,10 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
     color: #fff;
   }
   .sim-dashboard {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
     margin-bottom: 1.25rem;
   }
   .dash-metric {
@@ -3675,8 +3679,9 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
 
   /* DNA Grid */
   .dna-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 1.25rem;
     margin-top: 1.5rem;
   }
@@ -4001,8 +4006,9 @@ Picobello   &amp; fractalsync      &amp; Tree Reduction NoC     &amp; 256C Sync 
 
   /* Deep Subsystem Stack */
   .dossier-deep-stack {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 1rem;
     margin-bottom: 1.25rem;
   }

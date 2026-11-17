@@ -397,16 +397,30 @@ const toolCategoryOverrides = {
   "snitch-cluster": { cat: 4, title: "Snitch Cluster", sub: "Pseudo-Dual-Issue Compute Cluster with SSR and FREP", isa: "RV32IMA + Xfrep + Xssr", bus: "Wide TCDM / AXI4 DMA", lang: "SystemVerilog" },
   "SoC_Automation": { cat: 4, title: "SoC Automation", sub: "Open-Source Automated SoC Generator & Assembly Flow", isa: "Multi-Architecture SoC", bus: "Parametric Bus Fabric", lang: "Python / Shell" },
 
-  // Category 0: Infrastructure, Tools & Simulators
+  // Category 0: Infrastructure, Tools, Simulators & RTL Generators
+  "aha": { cat: 0, title: "AHA Flow", sub: "Stanford Agile Hardware Center Automated Generator Flow", isa: "N/A (Flow)", bus: "N/A", lang: "Python" },
+  "amaranth": { cat: 0, title: "Amaranth HDL", sub: "Python-Based Hardware Description & Toolchain Suite", isa: "N/A (HDL)", bus: "N/A", lang: "Python" },
+  "bambu": { cat: 0, title: "Bambu HLS", sub: "Open-Source High-Level Synthesis Framework for C/C++", isa: "N/A (HLS)", bus: "AXI4 / Memory-Mapped", lang: "C++" },
+  "chisel": { cat: 0, title: "Chisel", sub: "Scala-Embedded Hardware Construction Language", isa: "N/A (HDL)", bus: "TileLink / AXI", lang: "Scala" },
   "dramsim2": { cat: 0, title: "DRAMSim2", sub: "Cycle-Accurate DDR2/DDR3 Memory System Simulator", isa: "N/A (Simulator)", bus: "Memory Bus", lang: "C++" },
   "ghdl": { cat: 0, title: "GHDL", sub: "Open-Source VHDL Simulator & Analysis Engine", isa: "N/A (Compiler/Simulator)", bus: "N/A", lang: "Ada / C++" },
   "hero-install": { cat: 0, title: "HERO Toolchain Installer", sub: "Automated Build System for Heterogeneous HERO SDK", isa: "N/A (Toolchain)", bus: "N/A", lang: "Bash" },
   "ibex-host-tools": { cat: 0, title: "Ibex Host Tools", sub: "Host Decoders, Spike Tracers & Verification Tools", isa: "RV32IMC Verification", bus: "N/A", lang: "C++ / Python" },
+  "myhdl": { cat: 0, title: "MyHDL", sub: "Python Package for Hardware Modeling & Conversion", isa: "N/A (HDL)", bus: "N/A", lang: "Python" },
   "noculator": { cat: 0, title: "NOCulator", sub: "Network-on-Chip Traffic, Routing & Contention Modeler", isa: "N/A (NoC Modeler)", bus: "Mesh / Torus / Crossbar", lang: "Python / C++" },
+  "peakrdl": { cat: 0, title: "PeakRDL", sub: "Control & Status Register (CSR) Generator & Toolchain", isa: "N/A (CSR Tool)", bus: "APB / AXI4-Lite / Wishbone", lang: "Python" },
+  "pipelinec": { cat: 0, title: "PipelineC", sub: "C-Like Hardware Description Language with Auto-Pipelining", isa: "N/A (HDL)", bus: "N/A", lang: "C / Python" },
   "py2hwsw": { cat: 0, title: "Py2HWSW", sub: "Python Framework for Hardware/Software Co-Design", isa: "N/A (Generator)", bus: "Parametric", lang: "Python" },
+  "pymtl3": { cat: 0, title: "PyMTL3", sub: "Python-Based Hardware Generation, Simulation & Verification", isa: "N/A (HDL/Harness)", bus: "N/A", lang: "Python" },
+  "rggen": { cat: 0, title: "RgGen", sub: "Configuration Register & Memory-Mapped Interface Generator", isa: "N/A (CSR Tool)", bus: "AXI4-Lite / APB / Wishbone", lang: "Ruby" },
   "riscv-compliance": { cat: 0, title: "RISC-V Compliance Suite", sub: "Official RISC-V Architectural Compliance Test Framework", isa: "RV32I/E/M/A/C/F/D", bus: "Target Test Harness", lang: "Assembly / C" },
+  "riscv-matrix-extension-spec": { cat: 0, title: "RISC-V Matrix Spec", sub: "Community Proposed Matrix Extension Specification & Architecture", isa: "RISC-V SME / IME Spec", bus: "N/A", lang: "Specification" },
+  "riscv-p-spec": { cat: 0, title: "RISC-V Packed SIMD Spec", sub: "Official RISC-V P-Extension (Packed SIMD / DSP) Specification", isa: "RISC-V P Extension", bus: "N/A", lang: "Specification" },
   "riscv_toolchain_wrapper": { cat: 0, title: "RISC-V Toolchain Wrapper", sub: "Universal Cross-Compilation & Target Linking Wrapper", isa: "RV32 / RV64 All Extensions", bus: "N/A", lang: "Shell / Python" },
-  "verilator_wrapper": { cat: 0, title: "Verilator Wrapper", sub: "Universal Verilator Testbench Harness & Waveform Dumper", isa: "N/A (Harness)", bus: "DPI-C / Direct Bus", lang: "C++ / SystemVerilog" }
+  "spinalhdl": { cat: 0, title: "SpinalHDL", sub: "Scala-Based High-Level Hardware Description Language", isa: "N/A (HDL)", bus: "Avalon / AXI / Wishbone", lang: "Scala" },
+  "tvm-vta": { cat: 0, title: "TVM VTA", sub: "Versatile Tensor Accelerator Architecture & Compiler Stack", isa: "Custom Tensor ISA", bus: "AXI4", lang: "C++ / Python" },
+  "verilator_wrapper": { cat: 0, title: "Verilator Wrapper", sub: "Universal Verilator Testbench Harness & Waveform Dumper", isa: "N/A (Harness)", bus: "DPI-C / Direct Bus", lang: "C++ / SystemVerilog" },
+  "xls": { cat: 0, title: "Google XLS", sub: "Accelerated Logic Synthesis & High-Level Hardware Flow", isa: "N/A (HLS)", bus: "DSLX / Memory Channels", lang: "C++" }
 };
 
 const enrichedTools = toolDirs.map(toolDir => {
@@ -450,7 +464,9 @@ const enrichedTools = toolDirs.map(toolDir => {
     if (!resultsList) return;
     for (const r of resultsList) {
       const core = (r.core || "").toLowerCase();
+      const soc = (r.soc || "").toLowerCase();
       const underCore = core.replace(/_/g, "-");
+      const underSoc = soc.replace(/_/g, "-");
       const toolLow = toolDir.toLowerCase();
       const normLow = normSlug.toLowerCase();
       const projLow = matchedProject?.slug?.toLowerCase() || "";
@@ -460,10 +476,14 @@ const enrichedTools = toolDirs.map(toolDir => {
       if (
         core === toolLow ||
         underCore === toolLow ||
+        soc === toolLow ||
+        underSoc === toolLow ||
         core === normLow ||
         underCore === normLow ||
+        soc === normLow ||
+        underSoc === normLow ||
         isMatrixMatch ||
-        (projLow && (core === projLow || underCore === projLow))
+        (projLow && (core === projLow || underCore === projLow || soc === projLow || underSoc === projLow))
       ) {
         toolBenchmarks.push({
           level: levelName,
