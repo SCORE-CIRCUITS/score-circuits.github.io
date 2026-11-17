@@ -860,11 +860,9 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <div class="page-header accent-coral">
     <div class="header-inner">
       <div class="header-badges">
-        <span class="badge badge-accent">VECTOR &amp; COPROCESSORS</span>
-        <span class="badge badge-yellow">EMPIRICAL BENCHMARKS</span>
-        <span class="badge badge-teal">8 MICROARCHITECTURAL ARCHETYPES</span>
+        <div class="badge badge-accent">VECTOR &amp; COPROCESSOR ACCELERATION ENGINES &bull; HARDWARE SPECTRUM &amp; BENCHMARKS</div>
       </div>
-      <h1 class="page-title">Vector &amp; Coprocessor Acceleration Engines</h1>
+      <h1 class="page-title">Understanding Vector &amp; Coprocessor Acceleration Engines</h1>
       <p class="page-lead">
         Comprehensive comparative study of open-source RISC-V Vector 1.0 (RVV) coprocessors, tightly-coupled embedded execution units, 2D spatial systolic matrix accelerators, decoupled streaming engines, and many-core SIMT GPGPUs. Evaluated under cycle-accurate Verilator simulation profiles with exact hardware execution cycles, arithmetic density, and empirical utilization collapse analysis.
       </p>
@@ -906,14 +904,13 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <!-- SECTION 1: ARCHITECTURAL FOUNDATIONS                                      -->
   <!-- ========================================================================= -->
   <section id="core-foundations" class="content-block">
-    <div class="section-tag-wrap">
-      <span class="badge badge-accent">SECTION 1</span>
-      <span class="badge badge-yellow">MICROARCHITECTURAL THEORY</span>
+    <div class="block-header-wrap">
+      <div class="badge badge-primary">&sect; 1. ARCHITECTURAL FOUNDATIONS: VECTOR ENGINE ANATOMY</div>
+      <h2 class="block-title">The Anatomy of Vector &amp; Coprocessor Engines &amp; the Arithmetic Intensity Wall</h2>
+      <p class="block-lead">
+        Scalar microarchitectures fundamentally saturate their execution efficiency at 1 instruction per cycle per execution unit due to instruction fetch, decode, and register renaming overheads. Vector and coprocessor engines bypass these von Neumann bottlenecks by amortizing a single decoded instruction over dozens to thousands of arithmetic operations across space (parallel execution lanes) and time (multi-cycle vector register expansion).
+      </p>
     </div>
-    <h2 class="block-title">1. Architectural Foundations: Anatomy of Vector &amp; Coprocessor Engines</h2>
-    <p class="block-lead">
-      Scalar microarchitectures fundamentally saturate their execution efficiency at 1 instruction per cycle per execution unit due to instruction fetch, decode, and register renaming overheads. Vector and coprocessor engines bypass these von Neumann bottlenecks by amortizing a single decoded instruction over dozens to thousands of arithmetic operations across space (parallel execution lanes) and time (multi-cycle vector register expansion).
-    </p>
 
     <!-- 1.1 Seven Universal Subsystems Grid -->
     <h3 class="subsection-title">1.1 The Seven Universal Subsystems of Vector Accelerators</h3>
@@ -1557,14 +1554,13 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <!-- SECTION 2: THE CORE ARCHETYPES & PROGRESSIVE LADDER                       -->
   <!-- ========================================================================= -->
   <section id="microarchitectural-spectrum" class="content-block">
-    <div class="section-tag-wrap">
-      <span class="badge badge-accent">SECTION 2</span>
-      <span class="badge badge-yellow">PROGRESSIVE MICROARCHITECTURE LADDER</span>
+    <div class="block-header-wrap">
+      <div class="badge badge-primary">&sect; 2. THE EIGHT CONFIGURATIONS &amp; PROGRESSIVE LADDER</div>
+      <h2 class="block-title">The Vector &amp; Coprocessor Design Space: A Top-Down Progression</h2>
+      <p class="block-lead">
+        Silicon designers scale vector acceleration along a well-defined progression: from area-minimized single-lane microcontroller coprocessors up through multi-lane monolithic RVV units, clustered scale-up fabrics, 2D systolic meshes, and full-stack SIMT GPGPUs.
+      </p>
     </div>
-    <h2 class="block-title">2. The Core Archetypes &amp; Progressive Architecture Ladder</h2>
-    <p class="block-lead">
-      Silicon designers scale vector acceleration along a well-defined progression: from area-minimized single-lane microcontroller coprocessors up through multi-lane monolithic RVV units, clustered scale-up fabrics, 2D systolic meshes, and full-stack SIMT GPGPUs.
-    </p>
 
     <!-- 2.0 Progressive Architectural Ladder (Top-Down Flow) -->
     <div class="ladder-container" style="margin-top: 1.5rem; margin-bottom: 2rem;">
@@ -2555,14 +2551,13 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <!-- SECTION 3: MASTER 8-ARCHETYPE TAXONOMY & INTERFACES                       -->
   <!-- ========================================================================= -->
   <section id="architectural-similarities" class="content-block">
-    <div class="section-tag-wrap">
-      <span class="badge badge-accent">SECTION 3</span>
-      <span class="badge badge-yellow">TAXONOMY &amp; COPROCESSOR INTERFACES</span>
+    <div class="block-header-wrap">
+      <div class="badge badge-primary">&sect; 3. MASTER TAXONOMY &amp; COPROCESSOR INTERFACES</div>
+      <h2 class="block-title">Cross-Engine Similarities: The Shared RVV &amp; Interface Foundation</h2>
+      <p class="block-lead">
+        Open-source vector and coprocessor accelerators represent an enormous diversity of microarchitectural design points. SCORE provides the first comprehensive empirical classification comparing all eight archetypes across standardized microarchitectural parameters:
+      </p>
     </div>
-    <h2 class="block-title">3. Master 8-Archetype Taxonomy &amp; Unified Coprocessor Interfaces</h2>
-    <p class="block-lead">
-      Open-source vector and coprocessor accelerators represent an enormous diversity of microarchitectural design points. SCORE provides the first comprehensive empirical classification comparing all eight archetypes across standardized microarchitectural parameters:
-    </p>
 
     <!-- 3.1 Master 8-Archetype Comparison Matrix -->
     <h3 class="subsection-title">3.1 The 8-Archetype Master Comparison Matrix</h3>
@@ -2750,14 +2745,13 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <!-- SECTION 4: PHYSICAL SYNTHESIS PPA & GATE BUDGETS                          -->
   <!-- ========================================================================= -->
   <section id="microarchitectural-differences" class="content-block">
-    <div class="section-tag-wrap">
-      <span class="badge badge-accent">SECTION 4</span>
-      <span class="badge badge-yellow">PHYSICAL SYNTHESIS PPA</span>
+    <div class="block-header-wrap">
+      <div class="badge badge-primary">&sect; 4. MICROARCHITECTURAL DIVERSITY &amp; PHYSICAL SYNTHESIS</div>
+      <h2 class="block-title">Cross-Engine Differences: Engineering Trade-Offs &amp; Physical PPA</h2>
+      <p class="block-lead">
+        Silicon area and maximum operating frequency <em>F</em><sub>max</sub> in vector accelerators are overwhelmingly dominated by vector register storage, SRAM multi-banking decoders, and crossbar routing congestion rather than arithmetic ALUs:
+      </p>
     </div>
-    <h2 class="block-title">4. Microarchitectural Differences &amp; Physical Synthesis PPA</h2>
-    <p class="block-lead">
-      Silicon area and maximum operating frequency <em>F</em><sub>max</sub> in vector accelerators are overwhelmingly dominated by vector register storage, SRAM multi-banking decoders, and crossbar routing congestion rather than arithmetic ALUs:
-    </p>
 
     <!-- 4.1 Physical Synthesis Comparison Table -->
     <div class="table-wrap" style="margin-top: 1rem; margin-bottom: 2rem;">
@@ -2879,15 +2873,18 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <!-- SECTION 5: MASTER EMPIRICAL BENCHMARK LEADERBOARD & PARETO                -->
   <!-- ========================================================================= -->
   <section id="benchmark-leaderboard" class="content-block">
-    <div class="section-tag-wrap">
-      <span class="badge badge-accent">SECTION 5</span>
-      <span class="badge badge-yellow">EMPIRICAL DATASET</span>
-      <span class="badge badge-teal">SCORE VERILATOR RUNS</span>
+    <div class="block-header-flex">
+      <div>
+        <div class="badge badge-primary">&sect; 5. EMPIRICAL BENCHMARK DATA</div>
+        <h2 class="block-title">Benchmark Leaderboard: Vector Throughput &amp; Utilization</h2>
+        <p class="block-desc">
+          All performance metrics are derived from genuine cycle-accurate Verilator simulation profiles. No estimated or synthetic multipliers are used; every data point reflects verified RTL instruction retirement, measured execution cycles, and arithmetic density.
+        </p>
+      </div>
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="latexVectorBox">
+        &lt;/&gt; Copy LaTeX Table
+      </button>
     </div>
-    <h2 class="block-title">5. Master Empirical Benchmark Leaderboard &amp; Microarchitectural Pareto Frontier</h2>
-    <p class="block-lead">
-      All performance metrics below are derived from genuine cycle-accurate simulation profiles executed under identical physical parameters. No estimated or synthetic multipliers are used; every data point reflects verified RTL instruction retirement, measured execution cycles, and arithmetic density.
-    </p>
 
     <!-- Four KPI Cards -->
     <div class="lb-kpi-summary-grid">
@@ -3273,14 +3270,13 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <!-- SECTION 6: CONFIGURATION SENSITIVITY & UTILIZATION COLLAPSE               -->
   <!-- ========================================================================= -->
   <section id="configuration-scaling" class="content-block">
-    <div class="section-tag-wrap">
-      <span class="badge badge-accent">SECTION 6</span>
-      <span class="badge badge-yellow">EMPIRICAL COLLAPSE ANALYSIS</span>
+    <div class="block-header-wrap">
+      <div class="badge badge-primary">&sect; 6. CONFIGURATION SENSITIVITY &amp; UTILIZATION COLLAPSE</div>
+      <h2 class="block-title">Multi-Configuration Scaling: Vector Coprocessor Tuning Impact</h2>
+      <p class="block-lead">
+        Our cycle-accurate Verilator benchmarking across standard scientific and neural network kernels exposes a fundamental vulnerability in modern tightly-coupled vector coprocessors: the catastrophic drop in hardware utilization when transitioning from regular matrix multiply to element-wise operations.
+      </p>
     </div>
-    <h2 class="block-title">6. Configuration Sensitivity &amp; The Vector Coprocessor Utilization Collapse</h2>
-    <p class="block-lead">
-      Our cycle-accurate Verilator benchmarking across standard scientific and neural network kernels exposes a fundamental vulnerability in modern tightly-coupled vector coprocessors: the catastrophic drop in hardware utilization when transitioning from regular matrix multiply to element-wise operations.
-    </p>
 
     <!-- FIGURE 6.1: Dual-Axis Utilization Collapse SVG Plot -->
     <div class="schematic-container" style="margin-top: 1.5rem; margin-bottom: 2rem;">
@@ -3465,14 +3461,12 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <!-- SECTION 7: FIRST-CLASS ARCHITECTURAL DOSSIERS                             -->
   <!-- ========================================================================= -->
   <section id="core-dossiers" class="content-block">
-    <div class="section-tag-wrap">
-      <span class="badge badge-accent">SECTION 7</span>
-      <span class="badge badge-teal">NATIVE SILICON DOSSIERS</span>
-    </div>
-    <h2 class="block-title">7. First-Class Architectural Dossiers: Open-Source Vector &amp; Coprocessor Engines</h2>
-    <p class="block-lead">
-      Deep-dive architectural dossiers for all nine evaluated vector and coprocessor engines. Features verified RTL configuration parameters, microarchitectural scoreboards, VRF banking topologies, execution pipeline timing, and copyable reproduction commands.
-    </p>
+    <div class="section-title-wrap">
+      <div class="badge badge-primary">&sect; 7. NATIVE ARCHITECTURAL SPECIFICATIONS</div>
+      <h2 class="section-heading">Detailed Native Vector Engine Dossiers</h2>
+      <p class="section-sub">
+        Deep-dive architectural dossiers for all nine evaluated vector and coprocessor engines. Features verified RTL configuration parameters, microarchitectural scoreboards, VRF banking topologies, execution pipeline timing, and copyable reproduction commands.
+      </p>
 
     <!-- Quick Jump Bar -->
     <div class="core-jump-bar" style="margin-top: 1rem; margin-bottom: 2rem;">
