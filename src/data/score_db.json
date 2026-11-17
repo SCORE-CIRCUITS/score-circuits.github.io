@@ -4371,6 +4371,42 @@
         },
         {
           "schema": "score.benchmark_results.v1",
+          "evidence_class": "empirical_simulation",
+          "core": "occamy",
+          "soc": "occamy",
+          "upstream_commit": "d5d0d832",
+          "architecture": "rv64gc_dual_chiplet",
+          "profile": "soc_verilator",
+          "benchmark": "hello_world",
+          "workload": "hello_world",
+          "configuration": "single_cluster_10cores",
+          "citation": "ETH Zürich Occamy Many-Core Computing Platform / CVA6 + Snitch Cluster + iDMA",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux 5.14.0-611.45.1.el9_7.x86_64 x86_64",
+            "simulator": "verilator-5.022"
+          },
+          "metrics": {
+            "execution_cycles": 1231901,
+            "total_simulation_cycles": 1231901,
+            "wall_time_sec": 1155.0,
+            "simulation_speed_khz": 1.06658,
+            "interconnect": "AXI4 Crossbar + Narrow Peripheral Bus",
+            "cores": 10,
+            "host_core": "CVA6 (RV64GC)",
+            "compute_cores": "9x Snitch (RV32IMA_FD)",
+            "uart_peripheral": "16550 UART (115200 baud)",
+            "uart_output": "Hello world!\\r\\n",
+            "validation": "UART DPI output match passed",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "status": "passed",
+          "run_at_utc": "2026-11-17T01:47:15Z",
+          "_path": "datasets/occamy/d5d0d832/benchmarks/hello_world.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
           "evidence_class": "literature_reported",
           "core": "occamy",
           "soc": "occamy",
@@ -17506,6 +17542,42 @@
           "status": "passed",
           "run_at_utc": "2026-11-17T01:32:21Z",
           "_path": "datasets/occamy/d5d0d832/benchmarks/test_sys_dma.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "empirical_simulation",
+          "core": "occamy",
+          "soc": "occamy",
+          "upstream_commit": "d5d0d832",
+          "architecture": "rv64gc_dual_chiplet",
+          "profile": "soc_verilator",
+          "benchmark": "hello_world",
+          "workload": "hello_world",
+          "configuration": "single_cluster_10cores",
+          "citation": "ETH Zürich Occamy Many-Core Computing Platform / CVA6 + Snitch Cluster + iDMA",
+          "environment": {
+            "hostname": "localhost.localdomain",
+            "os": "Linux 5.14.0-611.45.1.el9_7.x86_64 x86_64",
+            "simulator": "verilator-5.022"
+          },
+          "metrics": {
+            "execution_cycles": 1231901,
+            "total_simulation_cycles": 1231901,
+            "wall_time_sec": 1155.0,
+            "simulation_speed_khz": 1.06658,
+            "interconnect": "AXI4 Crossbar + Narrow Peripheral Bus",
+            "cores": 10,
+            "host_core": "CVA6 (RV64GC)",
+            "compute_cores": "9x Snitch (RV32IMA_FD)",
+            "uart_peripheral": "16550 UART (115200 baud)",
+            "uart_output": "Hello world!\\r\\n",
+            "validation": "UART DPI output match passed",
+            "status": "passed",
+            "exit_code": 0
+          },
+          "status": "passed",
+          "run_at_utc": "2026-11-17T01:47:15Z",
+          "_path": "datasets/occamy/d5d0d832/benchmarks/hello_world.json"
         },
         {
           "schema": "score.benchmark_results.v1",
