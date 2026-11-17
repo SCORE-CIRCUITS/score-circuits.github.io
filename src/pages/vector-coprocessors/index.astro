@@ -858,44 +858,37 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   description="Scalable RVV 1.0 vector coprocessors, clustered multi-bank VRFs, 2D systolic arrays, streaming DAE engines, SIMT GPGPUs, and cycle-accurate empirical benchmark leaderboard."
 >
   <div class="page-header accent-coral">
-    <div class="header-inner">
-      <div class="header-badges">
-        <div class="badge badge-accent">VECTOR &amp; COPROCESSOR ACCELERATION ENGINES &bull; HARDWARE SPECTRUM &amp; BENCHMARKS</div>
-      </div>
-      <h1 class="page-title">Understanding Vector &amp; Coprocessor Acceleration Engines</h1>
-      <p class="page-lead">
-        Comprehensive comparative study of open-source RISC-V Vector 1.0 (RVV) coprocessors, tightly-coupled embedded execution units, 2D spatial systolic matrix accelerators, decoupled streaming engines, and many-core SIMT GPGPUs. Evaluated under cycle-accurate Verilator simulation profiles with exact hardware execution cycles, arithmetic density, and empirical utilization collapse analysis.
+    <div class="badge badge-accent">VECTOR &amp; COPROCESSOR ACCELERATION ENGINES &bull; HARDWARE SPECTRUM &amp; BENCHMARKS</div>
+    <h1 class="page-title">Understanding Vector &amp; Coprocessor Acceleration Engines</h1>
+
+    <!-- First-Principles Intuitive Introduction -->
+    <div class="intro-narrative">
+      <p class="intro-p intro-lead-highlight">
+        When high-throughput computational workloads—from deep learning tensor convolutions and transformer attention blocks to scientific fluid dynamics and DSP signal processing—saturate scalar instruction pipelines, general-purpose processors hit the <strong>Arithmetic Intensity Wall</strong>. A standard von Neumann scalar core spends over 70% of its energy on instruction fetch, decode, and register renaming overheads just to perform a single 32-bit addition.
       </p>
+      <p class="intro-p">
+        <strong>Vector and coprocessor acceleration engines</strong> bypass this bottleneck by amortizing a single decoded instruction over dozens to thousands of parallel arithmetic operations across space (parallel SIMD execution lanes) and time (multi-cycle vector register expansion). In open-source silicon, designers span a dramatic microarchitectural spectrum: from ultra-compact single-lane microcontroller coprocessors consuming under 50 kGE, to multi-lane monolithic RVV 1.0 units (Ara), clustered multi-banked VRFs (AraXL), 2D spatial systolic meshes (Gemmini), and many-core SIMT GPGPUs (Vortex).
+      </p>
+      <p class="intro-p">
+        However, hardware acceleration is not a free lunch: scaling vector datapath width triggers the <strong>Utilization Collapse Phenomenon</strong>, where memory bandwidth starvation and strided access patterns cause wide execution lanes to stall empty. This page is an authoritative, top-down educational guide and empirical benchmark report covering <strong>open-source RISC-V vector and coprocessor engines</strong> evaluated under the SCORE platform, featuring verified cycle-accurate Verilator simulation traces, physical synthesis PPA comparisons, multi-configuration sensitivity scaling, and detailed native silicon dossiers.
+      </p>
+    </div>
 
-      <!-- Quick Navigation Jump Bars -->
-      <div class="core-jump-bar" style="margin-bottom: 0.5rem;">
-        <span class="jump-label">Jump to Section:</span>
-        <div class="jump-pills-wrap">
-          <a href="#core-foundations" class="core-jump-pill">&sect; 1. Foundations</a>
-          <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. Archetype Ladder</a>
-          <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Master Taxonomy</a>
-          <a href="#microarchitectural-differences" class="core-jump-pill">&sect; 4. Synthesis PPA</a>
-          <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Leaderboard</a>
-          <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Sensitivity</a>
-          <a href="#core-dossiers" class="core-jump-pill">&sect; 7. Native Dossiers</a>
-        </div>
-      </div>
-
-      <!-- Quick Navigation Jump to Cores -->
-      <div class="core-jump-bar">
-        <span class="jump-label">Jump to Core Architecture:</span>
-        <div class="jump-pills-wrap">
-          <a href="#core-ara" class="core-jump-pill">Ara (RVV 1.0)</a>
-          <a href="#core-araxl" class="core-jump-pill">AraXL (Clustered)</a>
-          <a href="#core-gemmini" class="core-jump-pill">Gemmini (Systolic)</a>
-          <a href="#core-spatz" class="core-jump-pill">Spatz (Embedded)</a>
-          <a href="#core-vicuna" class="core-jump-pill">Vicuna (Zve32f)</a>
-          <a href="#core-cv32e40p" class="core-jump-pill">CV32E40P (SIMD)</a>
-          <a href="#core-hwacha" class="core-jump-pill">Hwacha (DAE VT)</a>
-          <a href="#core-matrix-extensions" class="core-jump-pill">Matrix (IME / SME)</a>
-          <a href="#core-vortex" class="core-jump-pill">Vortex (SIMT GPGPU)</a>
-        </div>
-      </div>
+    <!-- Quick Navigation Jump Bar -->
+    <div class="core-jump-bar">
+      <span class="jump-label">Jump to Section:</span>
+      <a href="#core-foundations" class="core-jump-pill">&sect; 1. Engine Anatomy &amp; Arithmetic Wall</a>
+      <a href="#microarchitectural-spectrum" class="core-jump-pill">&sect; 2. Progressive Ladder</a>
+      <a href="#step-1" class="core-jump-pill">&sect; 2.1 Compact Embedded</a>
+      <a href="#step-2" class="core-jump-pill">&sect; 2.2 Monolithic RVV 1.0</a>
+      <a href="#step-3" class="core-jump-pill">&sect; 2.3 Clustered AraXL</a>
+      <a href="#step-4" class="core-jump-pill">&sect; 2.4 2D Systolic Gemmini</a>
+      <a href="#step-5" class="core-jump-pill">&sect; 2.5 SIMT GPGPU Vortex</a>
+      <a href="#architectural-similarities" class="core-jump-pill">&sect; 3. Shared RVV DNA</a>
+      <a href="#microarchitectural-differences" class="core-jump-pill">&sect; 4. Synthesis PPA</a>
+      <a href="#benchmark-leaderboard" class="core-jump-pill">&sect; 5. Empirical Leaderboard</a>
+      <a href="#configuration-scaling" class="core-jump-pill">&sect; 6. Utilization Collapse</a>
+      <a href="#core-dossiers" class="core-jump-pill">&sect; 7. Native Dossiers</a>
     </div>
   </div>
 
@@ -1570,7 +1563,7 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
       </div>
 
       <!-- Step 1 -->
-      <div class="boom-step-card">
+      <div class="boom-step-card" id="step-1">
         <div class="boom-step-head">
           <span class="boom-step-badge badge-green">STEP 01 &bull; COMPACT EMBEDDED</span>
           <div class="boom-step-title-wrap">
@@ -1594,7 +1587,7 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
       </div>
 
       <!-- Step 2 -->
-      <div class="boom-step-card">
+      <div class="boom-step-card" id="step-2">
         <div class="boom-step-head">
           <span class="boom-step-badge badge-yellow">STEP 02 &bull; MONOLITHIC RVV 1.0</span>
           <div class="boom-step-title-wrap">
@@ -1618,7 +1611,7 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
       </div>
 
       <!-- Step 3 -->
-      <div class="boom-step-card">
+      <div class="boom-step-card" id="step-3">
         <div class="boom-step-head">
           <span class="boom-step-badge badge-blue">STEP 03 &bull; CLUSTERED VRF SCALE-UP</span>
           <div class="boom-step-title-wrap">
@@ -1642,7 +1635,7 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
       </div>
 
       <!-- Step 4 -->
-      <div class="boom-step-card">
+      <div class="boom-step-card" id="step-4">
         <div class="boom-step-head">
           <span class="boom-step-badge badge-teal">STEP 04 &bull; 2D SPATIAL SYSTOLIC</span>
           <div class="boom-step-title-wrap">
@@ -1666,7 +1659,7 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
       </div>
 
       <!-- Step 5 -->
-      <div class="boom-step-card">
+      <div class="boom-step-card" id="step-5">
         <div class="boom-step-head">
           <span class="boom-step-badge badge-coral">STEP 05 &bull; MANY-CORE SIMT GPGPU</span>
           <div class="boom-step-title-wrap">
@@ -3460,7 +3453,7 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
   <!-- ========================================================================= -->
   <!-- SECTION 7: FIRST-CLASS ARCHITECTURAL DOSSIERS                             -->
   <!-- ========================================================================= -->
-  <section id="core-dossiers" class="content-block">
+  <section id="core-dossiers" class="dossiers-container">
     <div class="section-title-wrap">
       <div class="badge badge-primary">&sect; 7. NATIVE ARCHITECTURAL SPECIFICATIONS</div>
       <h2 class="section-heading">Detailed Native Vector Engine Dossiers</h2>
@@ -3468,19 +3461,18 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
         Deep-dive architectural dossiers for all nine evaluated vector and coprocessor engines. Features verified RTL configuration parameters, microarchitectural scoreboards, VRF banking topologies, execution pipeline timing, and copyable reproduction commands.
       </p>
 
-    <!-- Quick Jump Bar -->
-    <div class="core-jump-bar" style="margin-top: 1rem; margin-bottom: 2rem;">
-      <span class="jump-label">Jump to Core Dossier:</span>
-      <div class="jump-pills-wrap">
-        <a href="#core-ara" class="core-jump-pill">Ara (RVV 1.0)</a>
-        <a href="#core-araxl" class="core-jump-pill">AraXL (Clustered)</a>
-        <a href="#core-gemmini" class="core-jump-pill">Gemmini (Systolic)</a>
-        <a href="#core-spatz" class="core-jump-pill">Spatz (Embedded)</a>
-        <a href="#core-vicuna" class="core-jump-pill">Vicuna (Zve32f)</a>
-        <a href="#core-cv32e40p" class="core-jump-pill">CV32E40P (SIMD)</a>
-        <a href="#core-hwacha" class="core-jump-pill">Hwacha (DAE VT)</a>
-        <a href="#core-matrix-extensions" class="core-jump-pill">Matrix (IME / SME)</a>
-        <a href="#core-vortex" class="core-jump-pill">Vortex (SIMT GPGPU)</a>
+      <!-- Quick Dossier Jump Bar -->
+      <div class="dossier-jump-bar">
+        <span class="jump-label">Jump to Core Dossier:</span>
+        <a href="#core-ara" class="dossier-jump-pill">Ara (RVV 1.0)</a>
+        <a href="#core-araxl" class="dossier-jump-pill">AraXL (Clustered)</a>
+        <a href="#core-gemmini" class="dossier-jump-pill">Gemmini (Systolic)</a>
+        <a href="#core-spatz" class="dossier-jump-pill">Spatz (Embedded)</a>
+        <a href="#core-vicuna" class="dossier-jump-pill">Vicuna (Zve32f)</a>
+        <a href="#core-cv32e40p" class="dossier-jump-pill">CV32E40P (SIMD)</a>
+        <a href="#core-hwacha" class="dossier-jump-pill">Hwacha (DAE VT)</a>
+        <a href="#core-matrix-extensions" class="dossier-jump-pill">Matrix (IME / SME)</a>
+        <a href="#core-vortex" class="dossier-jump-pill">Vortex (SIMT GPGPU)</a>
       </div>
     </div>
 
@@ -4443,82 +4435,115 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
       margin-bottom: 2.25rem;
     }
 
-    .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .header-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
     .page-title {
       font-size: 2.25rem;
       font-weight: 900;
       color: var(--ink, #151b20);
-      margin: 0 0 1rem 0;
+      margin: 0.5rem 0 0.75rem 0;
+      letter-spacing: -0.02em;
       line-height: 1.2;
     }
 
-    .page-lead {
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: var(--ink-light, #242c33);
+    .intro-narrative {
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      margin-top: 1rem;
+      margin-bottom: 1.75rem;
       max-width: 950px;
-      margin: 0 0 1.5rem 0;
+    }
+
+    .intro-p {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--ink-light, #242c33);
+      margin: 0;
+    }
+
+    .intro-lead-highlight {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink, #151b20);
+      border-left: 4px solid var(--coral, #f38469);
+      padding-left: 1rem;
     }
 
     .core-jump-bar {
       display: flex;
-      align-items: center;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      background: #f6f0dc;
-      padding: 0.75rem 1rem;
-      border: 1.5px solid var(--ink, #151b20);
-      border-radius: 8px;
+      align-items: center;
+      gap: 0.4rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed #eee4c8;
     }
 
     .jump-label {
-      font-size: 0.82rem;
-      font-weight: 900;
-      font-family: var(--md-code-font, monospace);
-      color: var(--ink, #151b20);
-    }
-
-    .jump-pills-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #151b20;
+      margin-right: 0.25rem;
     }
 
     .core-jump-pill {
+      background: var(--paper, #fffaf0);
+      border: 1.5px solid var(--ink, #151b20);
+      border-radius: 999px;
+      box-shadow: 2px 2px 0 var(--ink, #151b20);
+      padding: 0.25rem 0.65rem;
       font-size: 0.78rem;
       font-weight: 800;
-      font-family: var(--md-code-font, monospace);
-      background: #ffffff;
       color: var(--ink, #151b20);
-      padding: 0.25rem 0.65rem;
-      border: 1.5px solid var(--ink, #151b20);
-      border-radius: 5px;
       text-decoration: none;
-      box-shadow: 1px 1px 0 var(--ink, #151b20);
-      transition: all 0.15s ease;
+      transition: all 0.1s ease;
     }
 
     .core-jump-pill:hover {
-      background: #ffc83e;
-      transform: translateY(-1px);
+      background: var(--coral, #f38469);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--ink, #151b20);
+    }
+
+    .dossier-jump-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      padding-top: 0.85rem;
+      border-top: 1.5px dashed var(--line, #eee4c8);
+    }
+
+    .dossier-jump-pill {
+      background: var(--paper, #fffaf0);
+      border: 1.5px solid var(--ink, #151b20);
+      border-radius: 999px;
       box-shadow: 2px 2px 0 var(--ink, #151b20);
+      padding: 0.25rem 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--ink, #151b20);
+      text-decoration: none;
+      transition: all 0.1s ease;
+    }
+
+    .dossier-jump-pill:hover {
+      background: var(--coral, #f38469);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--ink, #151b20);
     }
 
     .content-block {
-      max-width: 1200px;
-      margin: 0 auto 3.5rem;
-      padding: 0 1.5rem;
+      background: var(--cream, #fffaf0);
+      border: 2px solid var(--ink, #151b20);
+      border-radius: 14px;
+      box-shadow: 5px 5px 0px var(--ink, #151b20);
+      padding: 2.25rem;
+      margin-bottom: 2.5rem;
+      scroll-margin-top: 5rem;
+    }
+
+    .dossiers-container {
+      margin-bottom: 3.5rem;
     }
 
     .section-tag-wrap {
