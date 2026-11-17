@@ -161,7 +161,7 @@ function categorize(project) {
     };
   }
 
-  if (["cva6", "rocket chip", "rocket-chip", "boom", "blackparrot", "black-parrot"].some(k => name.includes(k))) {
+  if (["cva6", "rocket chip", "rocket-chip", "boom", "blackparrot", "black-parrot", "xiangshan", "nutshell", "c906", "c910"].some(k => name.includes(k))) {
     return {
       id: "category-2",
       number: 2,
@@ -355,11 +355,13 @@ const toolCategoryOverrides = {
 
   // Category 2: 64-bit Application-Class Cores
   "black-parrot": { cat: 2, title: "BlackParrot", sub: "Modular 64-bit Linux Multicore Processor", isa: "RV64GC", bus: "BedRock / TileLink", lang: "SystemVerilog" },
+  "boom": { cat: 2, title: "SonicBOOM (BOOMv3)", sub: "UC Berkeley 2-4 Wide Out-of-Order Superscalar RV64GC Core", isa: "RV64GC", bus: "TileLink (TL-UH)", lang: "Chisel (Scala)" },
   "c906": { cat: 2, title: "T-Head OpenC906", sub: "Commercial 5-Stage RV64GCV Core with Vector Processing Unit", isa: "RV64GCV", bus: "AXI4 (64-bit)", lang: "Verilog" },
   "c910": { cat: 2, title: "T-Head OpenC910", sub: "3-Issue Out-of-Order Superscalar RV64GCV Core with Dual VPU", isa: "RV64GCV", bus: "Dual AXI4 (128-bit)", lang: "Verilog" },
   "cva6": { cat: 2, title: "CVA6 (Ariane)", sub: "6-Stage 64-bit In-Order Application Core with MMU", isa: "RV64GC", bus: "AXI4 (64-bit)", lang: "SystemVerilog" },
   "nutshell": { cat: 2, title: "NutShell (Min-Cai)", sub: "UCAS 6-Stage Dual-Issue In-Order RV64GC Core", isa: "RV64GC", bus: "AXI4 (64-bit)", lang: "Chisel (Scala)" },
   "rocket-chip": { cat: 2, title: "Rocket Chip", sub: "UC Berkeley 5-Stage RV64GC Generator in Chisel", isa: "RV64GC", bus: "TileLink (TL-UH)", lang: "Chisel (Scala)" },
+  "xiangshan": { cat: 2, title: "XiangShan (NanHu)", sub: "CAS/ICT 6-Issue Out-of-Order High-Performance RV64GCBK Core", isa: "RV64GCBK", bus: "TileLink / AXI4 (256-bit)", lang: "Chisel (Scala)" },
 
   // Category 3: Vector & Coprocessor Engines
   "ara": { cat: 3, title: "Ara (RVV 1.0)", sub: "Scalable 4-16 Lane Vector Coprocessor for CVA6", isa: "RV64GCV (Vector 1.0)", bus: "AXI4 (Wide 128-512b)", lang: "SystemVerilog" },

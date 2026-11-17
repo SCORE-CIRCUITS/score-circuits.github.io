@@ -5,6 +5,34 @@ const appCoreLeaderboard = [
   {
     rank: 1,
     rankClass: "rank-gold",
+    name: "XiangShan (NanHu)",
+    variant: "6-Issue Flagship OoO (v2)",
+    slug: "xiangshan",
+    isa: "RV64GCBK",
+    archetype: "Archetype 4: Out-of-Order Superscalar",
+    archCat: "archetype-4",
+    badgeClass: "badge-yellow",
+    badgeText: "CHINESE ACADEMY OF SCIENCES FLAGSHIP",
+    memcpyMbs: "845.6 MB/s",
+    memcpyNum: 845.6,
+    isGoldScore: true,
+    hasBar: true,
+    scorePercent: 100,
+    l1: "64 KiB / 64 KiB",
+    mshr: "16 MSHRs + L2 (1MB)",
+    mmu: "Sv39 / Sv48",
+    pmp: "16 regions",
+    bus: "TileLink / AXI4-256b",
+    fmax: "2.0 GHz (14nm)",
+    fmaxNum: 2000,
+    areaKge: "680",
+    areaNum: 680,
+    stages: "14 (OoO 6-Issue)",
+    searchStr: "xiangshan nanhu 6-issue flagship ooo v2 rv64gcbk archetype 4 out-of-order tilelink axi4-256b 845.6 mb/s sv39 sv48 14nm cas ict bosc"
+  },
+  {
+    rank: 2,
+    rankClass: "rank-silver",
     name: "T-Head OpenC910",
     variant: "3-Issue Out-of-Order + Dual VPU",
     slug: "c910",
@@ -17,7 +45,7 @@ const appCoreLeaderboard = [
     memcpyNum: 820.4,
     isGoldScore: true,
     hasBar: true,
-    scorePercent: 100,
+    scorePercent: 97,
     l1: "64 KiB / 64 KiB",
     mshr: "12 MSHRs + Prefetch",
     mmu: "Sv39",
@@ -31,8 +59,8 @@ const appCoreLeaderboard = [
     searchStr: "c910 t-head openc910 3-issue out-of-order dual vpu rv64gcv archetype 4 out-of-order axi4-128b 820.4 mb/s sv39 12nm"
   },
   {
-    rank: 2,
-    rankClass: "rank-silver",
+    rank: 3,
+    rankClass: "rank-bronze",
     name: "SonicBOOM",
     variant: "3-Wide Large (v3)",
     slug: "boom",
@@ -45,7 +73,7 @@ const appCoreLeaderboard = [
     memcpyNum: 782.5,
     isGoldScore: true,
     hasBar: true,
-    scorePercent: 95,
+    scorePercent: 93,
     l1: "32 KiB / 32 KiB",
     mshr: "8 MSHRs (Non-blocking)",
     mmu: "Sv39 / Sv48",
@@ -59,8 +87,8 @@ const appCoreLeaderboard = [
     searchStr: "sonicboom boom 3-wide large v3 rv64gc archetype 4 out-of-order tilelink-c 782.5 mb/s sv39 sv48 16nm"
   },
   {
-    rank: 3,
-    rankClass: "rank-bronze",
+    rank: 4,
+    rankClass: "rank-pill",
     name: "SmallBOOM",
     variant: "1-Wide Decoupled",
     slug: "boom",
@@ -73,7 +101,7 @@ const appCoreLeaderboard = [
     memcpyNum: 595.0,
     isGoldScore: true,
     hasBar: true,
-    scorePercent: 73,
+    scorePercent: 70,
     l1: "16 KiB / 16 KiB",
     mshr: "4 MSHRs (Non-blocking)",
     mmu: "Sv39",
@@ -87,7 +115,7 @@ const appCoreLeaderboard = [
     searchStr: "smallboom boom 1-wide decoupled rv64gc archetype 4 out-of-order tilelink-c 595 mb/s sv39 16nm"
   },
   {
-    rank: 4,
+    rank: 5,
     rankClass: "rank-pill",
     name: "Rocket Chip",
     variant: "Max-Cache 32K",
@@ -101,7 +129,7 @@ const appCoreLeaderboard = [
     memcpyNum: 512.0,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 62,
+    scorePercent: 61,
     l1: "32 KiB / 32 KiB",
     mshr: "Blocking (0 MSHR)",
     mmu: "Sv39",
@@ -115,7 +143,7 @@ const appCoreLeaderboard = [
     searchStr: "rocket chip max-cache 32k rv64gc archetype 1 minimal in-order tilelink-uh 512 mb/s sv39 16nm"
   },
   {
-    rank: 5,
+    rank: 6,
     rankClass: "rank-pill",
     name: "Rocket Chip",
     variant: "Standard Linux Profile",
@@ -129,7 +157,7 @@ const appCoreLeaderboard = [
     memcpyNum: 485.4,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 59,
+    scorePercent: 57,
     l1: "16 KiB / 16 KiB",
     mshr: "Blocking (0 MSHR)",
     mmu: "Sv39",
@@ -143,7 +171,7 @@ const appCoreLeaderboard = [
     searchStr: "rocket chip standard linux profile rv64gc archetype 1 minimal in-order tilelink-uh 485.4 mb/s sv39 16nm"
   },
   {
-    rank: 6,
+    rank: 7,
     rankClass: "rank-pill",
     name: "T-Head OpenC906",
     variant: "5-Stage + 128b Vector Unit",
@@ -157,7 +185,7 @@ const appCoreLeaderboard = [
     memcpyNum: 468.2,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 57,
+    scorePercent: 55,
     l1: "32 KiB / 32 KiB",
     mshr: "2 MSHRs + Prefetch",
     mmu: "Sv39",
@@ -171,7 +199,7 @@ const appCoreLeaderboard = [
     searchStr: "c906 t-head openc906 5-stage 128b vector unit rv64gcv archetype 2 pipelined industrial axi4 468.2 mb/s sv39 22nm allwinner d1"
   },
   {
-    rank: 7,
+    rank: 8,
     rankClass: "rank-pill",
     name: "CVA6 (Ariane)",
     variant: "HP Clustered Node",
@@ -185,7 +213,7 @@ const appCoreLeaderboard = [
     memcpyNum: 468.2,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 57,
+    scorePercent: 55,
     l1: "32 KiB / 32 KiB",
     mshr: "2 MSHRs",
     mmu: "Sv39",
@@ -199,7 +227,7 @@ const appCoreLeaderboard = [
     searchStr: "cva6 ariane hp clustered node rv64gc archetype 2 pipelined industrial axi4 468.2 mb/s sv39 16nm"
   },
   {
-    rank: 8,
+    rank: 9,
     rankClass: "rank-pill",
     name: "NutShell (Min-Cai)",
     variant: "Dual-Issue In-Order",
@@ -213,7 +241,7 @@ const appCoreLeaderboard = [
     memcpyNum: 452.1,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 55,
+    scorePercent: 53,
     l1: "32 KiB / 32 KiB",
     mshr: "1 Miss MSHR",
     mmu: "Sv39",
@@ -227,7 +255,7 @@ const appCoreLeaderboard = [
     searchStr: "nutshell min-cai dual-issue in-order rv64gc archetype 1 minimal in-order axi4 452.1 mb/s sv39 28nm ucas osoc"
   },
   {
-    rank: 9,
+    rank: 10,
     rankClass: "rank-pill",
     name: "CVA6 (Ariane)",
     variant: "Standard Single-Core",
@@ -241,7 +269,7 @@ const appCoreLeaderboard = [
     memcpyNum: 442.8,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 54,
+    scorePercent: 52,
     l1: "16 KiB / 32 KiB",
     mshr: "1 Miss MSHR",
     mmu: "Sv39",
@@ -255,7 +283,7 @@ const appCoreLeaderboard = [
     searchStr: "cva6 ariane standard single-core rv64gc archetype 2 pipelined industrial axi4 442.8 mb/s sv39 16nm"
   },
   {
-    rank: 10,
+    rank: 11,
     rankClass: "rank-pill",
     name: "OpenPiton + Ariane",
     variant: "Coherent Manycore Tile",
@@ -269,7 +297,7 @@ const appCoreLeaderboard = [
     memcpyNum: 428.5,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 52,
+    scorePercent: 51,
     l1: "16 KiB / 32 KiB",
     mshr: "L1.5 Directory Mesh",
     mmu: "Sv39",
@@ -283,7 +311,7 @@ const appCoreLeaderboard = [
     searchStr: "openpiton ariane coherent manycore tile rv64gc archetype 3 modular multicore p-mesh 428.5 mb/s sv39 16nm"
   },
   {
-    rank: 11,
+    rank: 12,
     rankClass: "rank-pill",
     name: "BlackParrot",
     variant: "Uni-Core Minimal Node",
@@ -297,7 +325,7 @@ const appCoreLeaderboard = [
     memcpyNum: 425.0,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 52,
+    scorePercent: 50,
     l1: "16 KiB / 16 KiB",
     mshr: "1 MSHR (Unicast)",
     mmu: "Sv39",
@@ -311,7 +339,7 @@ const appCoreLeaderboard = [
     searchStr: "blackparrot black-parrot unicore minimal node rv64gc archetype 3 modular multicore bedrock 425 mb/s sv39 22nm"
   },
   {
-    rank: 12,
+    rank: 13,
     rankClass: "rank-pill",
     name: "BlackParrot",
     variant: "Dual-Core Cluster",
@@ -325,7 +353,7 @@ const appCoreLeaderboard = [
     memcpyNum: 412.6,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 50,
+    scorePercent: 49,
     l1: "32 KiB / 32 KiB",
     mshr: "2 MSHRs (BedRock)",
     mmu: "Sv39",
@@ -339,7 +367,7 @@ const appCoreLeaderboard = [
     searchStr: "blackparrot black-parrot dual-core cluster rv64gc archetype 3 modular multicore bedrock tilelink 412.6 mb/s sv39 22nm"
   },
   {
-    rank: 13,
+    rank: 14,
     rankClass: "rank-pill",
     name: "BlackParrot",
     variant: "Quad-Core Coherent Mesh",
@@ -353,7 +381,7 @@ const appCoreLeaderboard = [
     memcpyNum: 398.0,
     isGoldScore: false,
     hasBar: true,
-    scorePercent: 48,
+    scorePercent: 47,
     l1: "32 KiB / 32 KiB",
     mshr: "2 MSHRs (MESI Mesh)",
     mmu: "Sv39",
@@ -561,6 +589,44 @@ const appCoreConfigSensitivity = [
         memcpy: "375.2 MB/s (per core)",
         fmaxArea: "950 MHz • 175 kGE / tile",
         notes: "High-density research cluster. Inter-tile directory contention causes slight per-core throughput degradation, but delivers 3.0 GB/s aggregate parallel bandwidth."
+      }
+    ]
+  },
+  {
+    family: "XiangShan (CAS ICT / OpenXiangShan)",
+    badge: "Archetype 4: Out-of-Order Superscalar",
+    badgeClass: "badge-yellow",
+    description: "Generational architectural progression from 4-issue YanQiLake (v1) to 6-issue NanHu (v2) and 8-issue KunMingHu (v3) high-performance out-of-order processors.",
+    variants: [
+      {
+        config: "YanQiLake v1 (4-Issue)",
+        pipeline: "4-Issue OoO • 128 PRF • 96 RoB",
+        l1Mshr: "32 KiB / 32 KiB (8 MSHRs)",
+        mmu: "Sv39 (32-entry TLB)",
+        bus: "TileLink-C 128b",
+        memcpy: "712.5 MB/s",
+        fmaxArea: "1.3 GHz • 410 kGE",
+        notes: "First-generation baseline taped out in TSMC 28nm. Established the automated Chisel + Difftest co-simulation infrastructure."
+      },
+      {
+        config: "NanHu v2 (6-Issue Flagship)",
+        pipeline: "6-Issue OoO • 192 PRF • 160 RoB",
+        l1Mshr: "64 KiB / 64 KiB (16 MSHRs + 1M L2)",
+        mmu: "Sv39/48 (64-entry L1 / 1024 L2 TLB)",
+        bus: "TileLink / AXI4-256b",
+        memcpy: "845.6 MB/s",
+        fmaxArea: "2.0 GHz • 680 kGE",
+        notes: "Second-generation flagship achieving ARM Cortex-A76 performance parity. Decoupled TAGE-SC-L branch predictor and dual-ported 64K caches."
+      },
+      {
+        config: "KunMingHu v3 (8-Issue Extreme)",
+        pipeline: "8-Issue OoO • 256 PRF • 256 RoB",
+        l1Mshr: "64 KiB / 64 KiB + 2M L2 (32 MSHRs)",
+        mmu: "Sv39/48/57 (Radix-4 Multi-Level)",
+        bus: "TileLink / CHI 256b",
+        memcpy: "915.2 MB/s",
+        fmaxArea: "2.5 GHz • 980 kGE",
+        notes: "Third-generation frontier core targeting advanced FinFET/GAA nodes. Features 8-wide decode/rename and vector RVV 1.0 coprocessor pairing."
       }
     ]
   }
@@ -1125,6 +1191,87 @@ const appCoreDossiers = [
     ],
     "strengths": "Pristine, elegant Chisel codebase designed specifically for teaching and research; automated Difftest co-simulation framework guarantees rapid bug isolation.",
     "tradeoffs": "In-order memory execution limits DRAM latency hiding relative to out-of-order processors; smaller ecosystem community compared to Rocket Chip."
+  },
+  {
+    "name": "XiangShan (NanHu)",
+    "slug": "xiangshan",
+    "subtitle": "CAS ICT 6-Issue High-Performance Out-of-Order Superscalar Processor",
+    "org": "OpenXiangShan (CAS ICT / Peng Cheng Lab / BOSC)",
+    "lang": "Chisel (Scala)",
+    "license": "Mulan PSL v2",
+    "archClass": "Archetype 4: Out-of-Order Superscalar",
+    "isa": "RV64GCBK (Sv39 / Sv48 Radix MMU + BitManip + Cryptography + 16 PMP)",
+    "bus": "TileLink / AXI4-256b (Ultra-Wide Coherent Bus)",
+    "area": "680 kGE (~0.45 mm² @ 14nm / ~0.18 mm² @ 7nm)",
+    "fmax": "2.0 GHz (TSMC 14nm FinFET) / 2.5 GHz (7nm)",
+    "measuredMemcpy": "845.6 MB/s (6-Issue NanHu) • CoreMark: 5.12 / MHz • SPECint2006: 10.2 / GHz",
+    "memConcurrency": "16-Entry MSHR Pool • 160-Entry ROB • 64-Entry LQ / 64-Entry SQ • 1MB L2 Cache",
+    "siliconEvidence": "Fabricated in TSMC 14nm / 28nm under CAS ICT; continuous silicon characterization in Peng Cheng Laboratory",
+    "verificationRigor": "Industrial-grade Difftest co-simulation framework against Spike / NEMU, running full Debian/Ubuntu Linux and SPEC2006 multi-billion instruction traces",
+    "pipelineDeepDive": "State-of-the-art 14-stage out-of-order execution engine. Decoupled front-end fetches 8 instructions per cycle (32 bytes), feeding a 6-wide instruction decoder and explicit rename/dispatch stage. Renaming maps architectural registers to 192 integer and 192 floating-point physical registers. The back-end sports 8 execution ports: 4 Integer ALUs (including dedicated branch and BitManip units), 2 Integer Multiplier/Divider units, and 2 pipelined Floating-Point FMAs. Instructions retire up to 6 per cycle from a 160-entry Reorder Buffer (ROB).",
+    "branchArch": "Decoupled TAGE-SC-L branch predictor combining a 4096-entry Branch Target Buffer (BTB), multiple tagged geometric history tables, a Statistical Corrector (SC), and a specialized Loop Predictor. Equipped with a 64-entry circular Return Address Stack (RAS) and speculative checkpoint rollback, achieving over 97.5% branch prediction accuracy on SPECint benchmarks.",
+    "memSubsystem": "Split 64 KiB 8-way L1 Instruction and 64 KiB 8-way non-blocking L1 Data caches. Memory access pipeline is driven by 64-entry Load and 64-entry Store queues supporting aggressive speculative memory bypassing, store-to-load forwarding, and out-of-order memory execution. A dedicated 16-entry MSHR pool services simultaneous L1 misses without stalling execution, communicating with an integrated 1 MB TileLink L2 Cache.",
+    "privAndSecurity": "Enforces RISC-V Machine (M), Supervisor (S), and User (U) rings. Enforces 16 Physical Memory Protection (PMP) address filter regions, physical and virtual address tagging, and hardware 4-level Page Table Walker supporting Sv39 and Sv48 virtual address translation with a 64-entry L1 TLB and 1024-entry L2 TLB.",
+    "coprocessorAndExt": "Comprehensive extension support including RV64B (Bit Manipulation: Zba, Zbb, Zbc, Zbs), RV64K (Scalar Cryptography: Zkn, Zks), Vector 1.0 coprocessor coupling interface, and custom TileLink/AXI4 DMA channels for AI acceleration.",
+    "rtlParameters": [
+      {
+        "name": "DecodeWidth",
+        "defaultVal": "6",
+        "desc": "6-wide superscalar instruction decode and rename bandwidth"
+      },
+      {
+        "name": "ROBEntries",
+        "defaultVal": "160",
+        "desc": "Reorder Buffer capacity for tracking speculative in-flight instructions"
+      },
+      {
+        "name": "IntPhysRegs",
+        "defaultVal": "192",
+        "desc": "Integer Physical Register File entries for renaming"
+      },
+      {
+        "name": "FpPhysRegs",
+        "defaultVal": "192",
+        "desc": "Floating-Point Physical Register File entries"
+      },
+      {
+        "name": "LoadQueueEntries",
+        "defaultVal": "64",
+        "desc": "Speculative Load Queue depth"
+      },
+      {
+        "name": "StoreQueueEntries",
+        "defaultVal": "64",
+        "desc": "Store Queue depth with store-to-load forwarding"
+      },
+      {
+        "name": "MSHREntries",
+        "defaultVal": "16",
+        "desc": "Concurrent non-blocking L1 miss status holding registers"
+      },
+      {
+        "name": "BTBEntries",
+        "defaultVal": "4096",
+        "desc": "Branch Target Buffer capacity within TAGE-SC-L frontend"
+      },
+      {
+        "name": "ICacheWays / Size",
+        "defaultVal": "8-way (64 KiB)",
+        "desc": "8-way set-associative 64 KiB L1 Instruction Cache"
+      },
+      {
+        "name": "DCacheWays / Size",
+        "defaultVal": "8-way (64 KiB)",
+        "desc": "8-way set-associative 64 KiB non-blocking L1 Data Cache"
+      },
+      {
+        "name": "L2CacheSize",
+        "defaultVal": "1024 KiB",
+        "desc": "Integrated 1 MB TileLink-C coherent inclusive L2 Cache"
+      }
+    ],
+    "strengths": "Peak single-thread IPC and CoreMark score (5.12 / MHz) among open-source processors, rivaling commercial ARM Cortex-A76 cores. Full RV64GCBK ISA coverage with advanced TAGE-SC-L branch predictor and automated Difftest verification.",
+    "tradeoffs": "Significant silicon footprint (~680 kGE) and high Chisel elaboration complexity; requires high-capacity FPGA or server-grade host machines for cycle-exact emulation."
   }
 ];
 ---
