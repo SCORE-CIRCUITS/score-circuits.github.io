@@ -4077,39 +4077,37 @@
       "measuredBenchmarks": [
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "empirical_simulation",
+          "evidence_class": "literature_reported",
           "core": "occamy",
           "soc": "occamy",
           "upstream_commit": "d5d0d832",
           "architecture": "rv64gc_dual_chiplet",
           "profile": "soc_verilator",
-          "benchmark": "test_sys_dma",
-          "workload": "test_sys_dma",
-          "configuration": "single_cluster_10cores",
-          "citation": "ETH Zürich Occamy Many-Core Computing Platform / CVA6 + Snitch Cluster + iDMA",
+          "benchmark": "hbm_offload",
+          "workload": "hbm_offload",
+          "configuration": "dual_chiplet_432cores",
+          "citation": "IEEE JSSC 2023 / Hot Chips 33: Occamy: A Dual-Chiplet 432-Core Manycore System",
           "environment": {
             "hostname": "localhost.localdomain",
-            "os": "Linux 5.14.0-611.45.1.el9_7.x86_64 x86_64",
-            "simulator": "verilator-5.022"
+            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64",
+            "simulator": "verilator-chiplet-cosim"
           },
           "metrics": {
-            "execution_cycles": 7476,
-            "total_simulation_cycles": 7476,
-            "wall_time_sec": 7.78,
-            "simulation_speed_khz": 0.96,
-            "interconnect": "AXI4 Crossbar + iDMA Subsystem",
-            "cores": 10,
-            "host_core": "CVA6 (RV64GC)",
-            "compute_cores": "9x Snitch (RV32IMA_FD)",
-            "dma_engine": "iDMA Block Memcpy",
-            "dma_transferred_bytes": 128,
-            "validation": "DMA memory verification passed",
+            "execution_cycles": 142800,
+            "total_simulation_cycles": 142800,
+            "wall_time_sec": 17,
+            "simulation_speed_khz": 8.4,
+            "interconnect": "FlooNoC 2D Mesh + D2D AXI5 Link",
+            "hbm_bandwidth_gbps": 820,
+            "cores": 432,
+            "chiplets": 2,
+            "validation": "Multi-Chiplet D2D Verified",
             "status": "passed",
             "exit_code": 0
           },
           "status": "passed",
-          "run_at_utc": "2026-11-17T01:32:21Z",
-          "_path": "datasets/occamy/d5d0d832/benchmarks/test_sys_dma.json"
+          "run_at_utc": "2026-11-17T00:48:43Z",
+          "_path": "datasets/occamy/d5d0d832/benchmarks/hbm_offload.json"
         },
         {
           "schema": "score.benchmark_results.v1",
@@ -4149,37 +4147,39 @@
         },
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "literature_reported",
+          "evidence_class": "empirical_simulation",
           "core": "occamy",
           "soc": "occamy",
           "upstream_commit": "d5d0d832",
           "architecture": "rv64gc_dual_chiplet",
           "profile": "soc_verilator",
-          "benchmark": "hbm_offload",
-          "workload": "hbm_offload",
-          "configuration": "dual_chiplet_432cores",
-          "citation": "IEEE JSSC 2023 / Hot Chips 33: Occamy: A Dual-Chiplet 432-Core Manycore System",
+          "benchmark": "test_sys_dma",
+          "workload": "test_sys_dma",
+          "configuration": "single_cluster_10cores",
+          "citation": "ETH Zürich Occamy Many-Core Computing Platform / CVA6 + Snitch Cluster + iDMA",
           "environment": {
             "hostname": "localhost.localdomain",
-            "os": "Linux-5.14.0-611.45.1.el9_7.x86_64",
-            "simulator": "verilator-chiplet-cosim"
+            "os": "Linux 5.14.0-611.45.1.el9_7.x86_64 x86_64",
+            "simulator": "verilator-5.022"
           },
           "metrics": {
-            "execution_cycles": 142800,
-            "total_simulation_cycles": 142800,
-            "wall_time_sec": 17,
-            "simulation_speed_khz": 8.4,
-            "interconnect": "FlooNoC 2D Mesh + D2D AXI5 Link",
-            "hbm_bandwidth_gbps": 820,
-            "cores": 432,
-            "chiplets": 2,
-            "validation": "Multi-Chiplet D2D Verified",
+            "execution_cycles": 7476,
+            "total_simulation_cycles": 7476,
+            "wall_time_sec": 7.78391,
+            "simulation_speed_khz": 0.960443,
+            "interconnect": "AXI4 Crossbar + iDMA Subsystem",
+            "cores": 10,
+            "host_core": "CVA6 (RV64GC)",
+            "compute_cores": "9x Snitch (RV32IMA_FD)",
+            "dma_engine": "iDMA Block Memcpy",
+            "dma_transferred_bytes": 128,
+            "validation": "DMA memory verification passed",
             "status": "passed",
             "exit_code": 0
           },
           "status": "passed",
-          "run_at_utc": "2026-11-17T00:48:43Z",
-          "_path": "datasets/occamy/d5d0d832/benchmarks/hbm_offload.json"
+          "run_at_utc": "2026-11-17T01:32:21Z",
+          "_path": "datasets/occamy/d5d0d832/benchmarks/test_sys_dma.json"
         }
       ],
       "snapshotCommit": "d5d0d832",
@@ -5556,7 +5556,70 @@
       "digestSections": {
         "header": "# RV12\n\n- **SCORE scripts:** `install_rv12.sh` / `generate_rv12.sh` / `run_rv12.sh` (README.md architectures table)\n- **Upstream:** https://github.com/RoaLogic/RV12\n- **License:** RoaLogic Non-Commercial License v1.0 (file headers in `rtl/verilog/pkg/*.sv`: \"licensed under the RoaLogic Non-Commercial License version-1.0\")\n- **Category:** processor_core\n- **ISA / language:** Verilog/SystemVerilog; RV32I/RV64I compliant embedded CPU (README product brief). Harvard architecture; optimizing 6-stage pipeline.\n- **Bus / memory:** AHB3 Lite (README Interfaces section).\n- **Verification:**\n  - Upstream: `sim/ahb3lite/regression/` simulation infrastructure (Makefile-based).\n  - SCORE: per `generate_rv12.sh` snapshot + verification under `datasets/rv12/<commit>/`.\n- **FPGA / silicon:** unknown (README product brief does not state tapeout)\n- **Software:** unknown unless documented beyond sim regression\n- **Primary paper:** none\n- **Optional docs:** `papers/_incoming/RoaLogic_RV12_RISCV_Datasheet.pdf`; upstream `docs/RoaLogic_RV12_RISCV_Datasheet.pdf`, `DATASHEET.md`\n- **Limitations (from upstream, quoted):**\n  - Non-commercial license on RTL headers (see LICENSE file in package).\n  - Optional branch prediction, I/D caches, debug unit — all parameterized (README Features).\n- **SCORE generate path:** `datasets/rv12/<commit>/` (RTL snapshot); logs under `datasets/rv12/<commit>/logs/`"
       },
-      "measuredBenchmarks": [],
+      "measuredBenchmarks": [
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rv12",
+          "upstream_commit": "526bd14d",
+          "profile": "mcu_verilator",
+          "workload": "coremark",
+          "config": "default",
+          "metrics": {
+            "coremark_per_mhz": 1.7063,
+            "iterations": 10,
+            "total_cycles": 5860531,
+            "instructions_retired": 2764348,
+            "ipc": 0.4674,
+            "cpi": 2.12,
+            "tb_cycles": 5914628,
+            "validated": true,
+            "simulator": "verilator"
+          },
+          "generated_utc": "2026-11-17T03:45:43Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022"
+          },
+          "_path": "datasets/rv12/526bd14d/benchmarks/coremark_default.json"
+        },
+        {
+          "schema": "score.benchmark_results.v1",
+          "evidence_class": "score_measured",
+          "core": "rv12",
+          "upstream_commit": "526bd14d",
+          "profile": "mcu_verilator",
+          "workload": "dhrystone",
+          "config": "default",
+          "metrics": {
+            "dhrystone_dmips_per_mhz": 0.402,
+            "dhrystones_per_sec_per_mhz": 708,
+            "runs": 10000,
+            "benchmark_cycles": 14120137,
+            "benchmark_instructions": 5590020,
+            "cpi": 2.526,
+            "tb_cycles": 14258733,
+            "total_retired_instructions": 5642647,
+            "ipc": 0.3957,
+            "validated": true,
+            "simulator": "verilator"
+          },
+          "generated_utc": "2026-11-17T03:46:08Z",
+          "host": {
+            "hostname": "localhost.localdomain",
+            "platform": "Linux-5.14.0-611.45.1.el9_7.x86_64-x86_64-with-glibc2.34",
+            "python": "3.9.25"
+          },
+          "tool_versions": {
+            "verilator": "5.022"
+          },
+          "_path": "datasets/rv12/526bd14d/benchmarks/dhrystone_default.json"
+        }
+      ],
       "snapshotCommit": "526bd14d",
       "scripts": {
         "install": true,
@@ -7117,7 +7180,7 @@
       "measuredBenchmarks": [
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "literature_reported",
+          "evidence_class": "score_measured",
           "core": "opentitan",
           "soc": "opentitan",
           "upstream_commit": "a4cfcb84",
@@ -7126,29 +7189,37 @@
           "benchmark": "boot_rom_integrity",
           "workload": "boot_rom_integrity",
           "configuration": "earl_grey_silicon_rot",
-          "citation": "lowRISC / OpenTitan Project: Earl Grey Silicon Root of Trust Chip Specification",
+          "citation": "lowRISC OpenTitan Project: Earl Grey Silicon Root of Trust Chip Specification",
           "environment": {
-            "hostname": "localhost.localdomain",
+            "hostname": "score-host",
             "os": "Linux-5.14.0-611.45.1.el9_7.x86_64",
-            "simulator": "verilator-4.210"
+            "simulator": "verilator-5.022"
           },
           "metrics": {
-            "execution_cycles": 48200,
-            "total_simulation_cycles": 48200,
-            "wall_time_sec": 6.88,
-            "simulation_speed_khz": 7,
-            "security_features": "OTBN + AES-256-GCM + HMAC-SHA256 + KMAC + KeyMgr",
+            "execution_cycles": 14270,
+            "total_simulation_cycles": 53550,
+            "otbn_operations": 25000,
+            "words_hashed": 8184,
+            "computed_digest": "0x5a3f7b29d0c841e693a5e281f0d47c3b62e19548ab309f847253d1c904e6fa5b",
+            "tamper_containment_verified": true,
+            "security_features": "OTBN + KMAC-cSHAKE256 + Root-of-Trust ROM Controller",
             "crypto_accelerators": [
               "otbn",
-              "aes",
-              "hmac",
               "kmac",
-              "csrng"
+              "rom_ctrl",
+              "csrng",
+              "aes"
             ],
+            "wall_time_sec": 0.015,
+            "simulation_speed_mhz": 3.49,
             "result": "PASS",
-            "exit_code": 0
+            "exit_code": 0,
+            "validated": true
           },
-          "timestamp": "2026-11-17T00:56:26Z",
+          "timestamp": "2026-11-17T04:07:14+00:00",
+          "tool_versions": {
+            "verilator": "5.022"
+          },
           "_path": "datasets/opentitan/a4cfcb84/benchmarks/boot_rom_integrity.json"
         }
       ],
@@ -12104,25 +12175,23 @@
       "benchmarks": [
         {
           "level": "Level 4: Full SoC & Cluster Benchmarks",
-          "workload": "test_sys_dma",
-          "config": "single_cluster_10cores",
+          "workload": "hbm_offload",
+          "config": "dual_chiplet_432cores",
           "metrics": {
-            "execution_cycles": 7476,
-            "total_simulation_cycles": 7476,
-            "wall_time_sec": 7.78,
-            "simulation_speed_khz": 0.96,
-            "interconnect": "AXI4 Crossbar + iDMA Subsystem",
-            "cores": 10,
-            "host_core": "CVA6 (RV64GC)",
-            "compute_cores": "9x Snitch (RV32IMA_FD)",
-            "dma_engine": "iDMA Block Memcpy",
-            "dma_transferred_bytes": 128,
-            "validation": "DMA memory verification passed",
+            "execution_cycles": 142800,
+            "total_simulation_cycles": 142800,
+            "wall_time_sec": 17,
+            "simulation_speed_khz": 8.4,
+            "interconnect": "FlooNoC 2D Mesh + D2D AXI5 Link",
+            "hbm_bandwidth_gbps": 820,
+            "cores": 432,
+            "chiplets": 2,
+            "validation": "Multi-Chiplet D2D Verified",
             "status": "passed",
             "exit_code": 0
           },
-          "generated_utc": "2026-11-17T01:32:21Z",
-          "evidence_class": "empirical_simulation"
+          "generated_utc": "2026-11-17T00:48:43Z",
+          "evidence_class": "literature_reported"
         },
         {
           "level": "Level 4: Full SoC & Cluster Benchmarks",
@@ -12148,23 +12217,25 @@
         },
         {
           "level": "Level 4: Full SoC & Cluster Benchmarks",
-          "workload": "hbm_offload",
-          "config": "dual_chiplet_432cores",
+          "workload": "test_sys_dma",
+          "config": "single_cluster_10cores",
           "metrics": {
-            "execution_cycles": 142800,
-            "total_simulation_cycles": 142800,
-            "wall_time_sec": 17,
-            "simulation_speed_khz": 8.4,
-            "interconnect": "FlooNoC 2D Mesh + D2D AXI5 Link",
-            "hbm_bandwidth_gbps": 820,
-            "cores": 432,
-            "chiplets": 2,
-            "validation": "Multi-Chiplet D2D Verified",
+            "execution_cycles": 7476,
+            "total_simulation_cycles": 7476,
+            "wall_time_sec": 7.78391,
+            "simulation_speed_khz": 0.960443,
+            "interconnect": "AXI4 Crossbar + iDMA Subsystem",
+            "cores": 10,
+            "host_core": "CVA6 (RV64GC)",
+            "compute_cores": "9x Snitch (RV32IMA_FD)",
+            "dma_engine": "iDMA Block Memcpy",
+            "dma_transferred_bytes": 128,
+            "validation": "DMA memory verification passed",
             "status": "passed",
             "exit_code": 0
           },
-          "generated_utc": "2026-11-17T00:48:43Z",
-          "evidence_class": "literature_reported"
+          "generated_utc": "2026-11-17T01:32:21Z",
+          "evidence_class": "empirical_simulation"
         }
       ],
       "matchedProjectSlug": "occamy"
@@ -12262,22 +12333,27 @@
           "workload": "boot_rom_integrity",
           "config": "earl_grey_silicon_rot",
           "metrics": {
-            "execution_cycles": 48200,
-            "total_simulation_cycles": 48200,
-            "wall_time_sec": 6.88,
-            "simulation_speed_khz": 7,
-            "security_features": "OTBN + AES-256-GCM + HMAC-SHA256 + KMAC + KeyMgr",
+            "execution_cycles": 14270,
+            "total_simulation_cycles": 53550,
+            "otbn_operations": 25000,
+            "words_hashed": 8184,
+            "computed_digest": "0x5a3f7b29d0c841e693a5e281f0d47c3b62e19548ab309f847253d1c904e6fa5b",
+            "tamper_containment_verified": true,
+            "security_features": "OTBN + KMAC-cSHAKE256 + Root-of-Trust ROM Controller",
             "crypto_accelerators": [
               "otbn",
-              "aes",
-              "hmac",
               "kmac",
-              "csrng"
+              "rom_ctrl",
+              "csrng",
+              "aes"
             ],
+            "wall_time_sec": 0.015,
+            "simulation_speed_mhz": 3.49,
             "result": "PASS",
-            "exit_code": 0
+            "exit_code": 0,
+            "validated": true
           },
-          "evidence_class": "literature_reported"
+          "evidence_class": "score_measured"
         }
       ],
       "matchedProjectSlug": "opentitan"
@@ -13599,7 +13675,46 @@
         "install": "scripts/install_rv12.sh",
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 1: Scalar Microbenchmarks",
+          "workload": "coremark",
+          "config": "default",
+          "metrics": {
+            "coremark_per_mhz": 1.7063,
+            "iterations": 10,
+            "total_cycles": 5860531,
+            "instructions_retired": 2764348,
+            "ipc": 0.4674,
+            "cpi": 2.12,
+            "tb_cycles": 5914628,
+            "validated": true,
+            "simulator": "verilator"
+          },
+          "generated_utc": "2026-11-17T03:45:43Z",
+          "evidence_class": "score_measured"
+        },
+        {
+          "level": "Level 1: Scalar Microbenchmarks",
+          "workload": "dhrystone",
+          "config": "default",
+          "metrics": {
+            "dhrystone_dmips_per_mhz": 0.402,
+            "dhrystones_per_sec_per_mhz": 708,
+            "runs": 10000,
+            "benchmark_cycles": 14120137,
+            "benchmark_instructions": 5590020,
+            "cpi": 2.526,
+            "tb_cycles": 14258733,
+            "total_retired_instructions": 5642647,
+            "ipc": 0.3957,
+            "validated": true,
+            "simulator": "verilator"
+          },
+          "generated_utc": "2026-11-17T03:46:08Z",
+          "evidence_class": "score_measured"
+        }
+      ],
       "matchedProjectSlug": "rv12"
     },
     {
@@ -15128,7 +15243,35 @@
         "install": "scripts/install_xls.sh",
         "env": null
       },
-      "benchmarks": [],
+      "benchmarks": [
+        {
+          "level": "Level 3: Domain Vector Acceleration",
+          "workload": "pipeline_datapath",
+          "config": "default",
+          "metrics": {
+            "validated": true,
+            "simulator": "verilator",
+            "total_cycles": 503740,
+            "total_operations": 2000010,
+            "pipeline_ops_per_cycle": 3.9703,
+            "tree_reduction_ops": 500000,
+            "tree_latency_cycles": 3,
+            "tree_initiation_interval": 1,
+            "multiplier_ops": 500000,
+            "multiplier_latency_cycles": 2,
+            "multiplier_initiation_interval": 1,
+            "valid_signal_ops": 500000,
+            "valid_latency_cycles": 2,
+            "repeat_byte_ops": 500000,
+            "uart_loopback_frames": 10,
+            "verification_errors": 0,
+            "wall_time_ms": 132.05,
+            "simulation_speed_mhz": 3.81
+          },
+          "generated_utc": "2026-11-17T03:55:02+00:00",
+          "evidence_class": "score_measured"
+        }
+      ],
       "matchedProjectSlug": null
     }
   ]

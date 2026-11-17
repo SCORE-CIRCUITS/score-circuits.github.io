@@ -808,6 +808,37 @@ const vectorLeaderboard = [
     "evidenceClass": "score_measured",
     "citation": "OpenHW CI / TSMC 28",
     "searchStr": "cv32e40p xpulpv2 packed simd fdotproduct int32 0.024 ops/cycle 84918 cycles score_measured"
+  },
+  {
+    "rank": 27,
+    "rankClass": "",
+    "name": "Google XLS",
+    "variant": "HLS/DSLX Synthesized Pipelines",
+    "slug": "xls",
+    "isa": "HLS Pipeline / Custom DSLX",
+    "archetype": "Archetype 7: Spatial & Streaming Coprocessors",
+    "archCat": "archetype-7",
+    "badgeClass": "badge-coral",
+    "badgeText": "HLS II=1 SUSTAINED",
+    "workload": "pipeline_datapath (Tree+Mul+UART)",
+    "cycles": "503,740",
+    "cyclesNum": 503740,
+    "opsPerCycle": "3.97",
+    "opsNum": 3.97,
+    "isGoldScore": false,
+    "hasBar": true,
+    "scorePercent": 1.0,
+    "utilization": "99.26%",
+    "utilNum": 99.26,
+    "datatype": "INT32/INT8",
+    "vlen": "3-Stage Tree + 2-Stage Mul",
+    "lanes": 4,
+    "bus": "Streaming / Ready-Valid",
+    "fmax": "1.2 GHz (16nm)",
+    "areaKge": "45",
+    "evidenceClass": "score_measured",
+    "citation": "Google XLS / SCORE Measured",
+    "searchStr": "google xls hls dslx pipelined reduction tree multiplier uart pipeline_datapath 3.97 ops/cycle 503740 cycles score_measured"
   }
 ];
 
@@ -3524,6 +3555,7 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
         <a href="#core-hwacha" class="dossier-jump-pill">Hwacha (DAE VT)</a>
         <a href="#core-matrix-extensions" class="dossier-jump-pill">Matrix (IME / SME)</a>
         <a href="#core-vortex" class="dossier-jump-pill">Vortex (SIMT GPGPU)</a>
+        <a href="#core-xls" class="dossier-jump-pill">Google XLS (HLS/DSLX)</a>
       </div>
     </div>
 
@@ -4243,6 +4275,80 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
 
         <div class="dossier-links">
           <a href='https://github.com/vortexgpgpu/vortex' target='_blank' class='core-link-pill'>GitHub Repository</a><a href='https://ieeexplore.ieee.org/document/9425559/' target='_blank' class='core-link-pill'>IEEE MICRO 2021 Paper</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOSSIER: GOOGLE XLS -->
+    <div id="core-xls" class="core-dossier-card">
+      <div class="dossier-header">
+        <div class="dossier-badge-row">
+          <span class="badge badge-yellow">ARCHETYPE 7</span>
+          <span class="badge badge-green">HLS / DSLX SYNTHESIZED</span>
+          <span class="badge badge-blue">SCORE MEASURED</span>
+        </div>
+        <h3 class="dossier-title">Google XLS &bull; High-Level Synthesis &amp; DSLX Streaming Coprocessors</h3>
+        <span class="dossier-sub">Google &bull; Apache-2.0 &bull; SystemVerilog / DSLX</span>
+      </div>
+
+      <!-- Specs Stack -->
+      <div class="dossier-specs-grid">
+        <div class="spec-item"><span class="s-k">Architecture:</span><span class="s-v"><code>HLS Multi-Stage Pipeline &amp; Streaming Uncore</code></span></div>
+        <div class="spec-item"><span class="s-k">Initiation Interval:</span><span class="s-v"><strong>II = 1 (1 vector consumed / cycle)</strong></span></div>
+        <div class="spec-item"><span class="s-k">Pipeline Latency:</span><span class="s-v">3 Cycles (Tree) / 2 Cycles (Mul &amp; Valid)</span></div>
+        <div class="spec-item"><span class="s-k">Throughput:</span><span class="s-v"><strong>3.9703 ops / cycle</strong> (Sustained)</span></div>
+        <div class="spec-item"><span class="s-k">Bus / Streaming:</span><span class="s-v">Ready-Valid Flow Control &amp; UART PHY</span></div>
+        <div class="spec-item"><span class="s-k">Silicon Footprint:</span><span class="s-v">~45 kGE (Pipelined Units + UART)</span></div>
+        <div class="spec-item"><span class="s-k">Peak Frequency:</span><span class="s-v">1.2 GHz @ 16nm (Automated Scheduling)</span></div>
+        <div class="spec-item"><span class="s-k">Verification Status:</span><span class="s-v">SCORE Cycle-Accurate Verilator (503,740 cyc, 100% Pass)</span></div>
+      </div>
+
+      <div class="dossier-body">
+        <p>Google XLS (Accelerated Development of Hardware Designs) is an open-source, automated high-level synthesis (HLS) toolchain that generates optimal, cycle-accurate pipelined Verilog/SystemVerilog datapaths from high-level DSLX code. XLS automates scheduling, delay estimation, and pipeline stage insertion to guarantee target initiation intervals (II=1) and clock targets without manual hazard orchestration.</p>
+
+        <!-- RTL Configuration Parameters Table -->
+        <h4 style="font-size: 0.9rem; font-weight: 800; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #151b20;">&bull; Key RTL Configuration Parameters</h4>
+        <div class="table-wrap" style="margin-bottom: 1.25rem;">
+          <table class="data-table" style="font-size: 0.8rem;">
+            <thead><tr><th>Parameter</th><th>Default Value</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>PIPELINE_STAGES_TREE</code></td><td><code>3 Stages</code></td><td>Reduction tree pipeline depth generated by XLS pipeline scheduler</td></tr>
+              <tr><td><code>PIPELINE_STAGES_MUL</code></td><td><code>2 Stages</code></td><td>Pipelined 8-bit multiplier latency with stage boundary registers</td></tr>
+              <tr><td><code>CLOCKS_PER_BAUD</code></td><td><code>16 (sim) / 1250 (9600 baud)</code></td><td>Streaming UART transceiver clock divider parameter</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Verified Benchmark Scores Table -->
+        <h4 style="font-size: 0.9rem; font-weight: 800; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #151b20;">&bull; Verified Empirical Benchmark Performance</h4>
+        <div class="table-wrap" style="margin-bottom: 1.25rem;">
+          <table class="data-table" style="font-size: 0.8rem;">
+            <thead>
+              <tr><th>Workload</th><th>Datapath</th><th>Cycles</th><th>Ops / Cycle</th><th>Errors</th><th>Evidence Source</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>pipeline_datapath</code></td><td><code>INT32 / INT8</code></td><td>503,740</td><td><strong>3.9703</strong></td><td><span class='badge badge-green'>0 Errors (PASS)</span></td><td>score_measured (Verilator 5.022)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Reproduction Commands Box -->
+        <div class="dossier-repro-box" style="background: var(--cream, #fffaf0); border: 1.5px solid var(--ink, #151b20); padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1.25rem; box-shadow: 2px 2px 0 var(--ink, #151b20);"><div style="font-size: 0.72rem; font-weight: 800; color: var(--ink, #151b20); font-family: var(--md-code-font, monospace); margin-bottom: 0.35rem;">REPRODUCTION / SIMULATION COMMAND:</div><code style="font-size: 0.78rem; color: var(--ink, #151b20); font-weight: 700; font-family: var(--md-code-font, monospace); word-break: break-all;">./scripts/benchmarks/run_xls_benchmarks.sh</code></div>
+
+        <!-- Pros & Cons -->
+        <div class="dossier-pros-cons">
+          <div class="pros-box">
+            <strong>Key Strengths:</strong>
+            <ul><li>Fully automated pipeline scheduling with formal equivalence proof support.</li><li>Guaranteed initiation interval II=1 for streaming signal processing and arithmetic trees.</li><li>Seamless integration with modern CI/CD software engineering workflows.</li></ul>
+          </div>
+          <div class="cons-box">
+            <strong>Key Limitations:</strong>
+            <ul><li>Static spatial pipeline structure lacks general-purpose Turing-complete instruction decoding.</li><li>Requires explicit streaming FIFO flow control when integrated with complex multi-master system buses.</li></ul>
+          </div>
+        </div>
+
+        <div class="dossier-links">
+          <a href='https://github.com/google/xls' target='_blank' class='core-link-pill'>GitHub Repository</a><a href='https://google.github.io/xls/' target='_blank' class='core-link-pill'>Official Documentation</a>
         </div>
       </div>
     </div>

@@ -1074,14 +1074,14 @@ const masterBenchmarkData = [
     interconnect: "TileLink-UL Interconnect Crossbar",
     memoryArch: "128KB ROM + 64KB Main SRAM + 4KB Retention SRAM",
     workload: "boot_rom_integrity",
-    totalCycles: "48,200",
-    simSpeedKhz: "7.00",
-    wallTimeS: "6.88",
-    dmaTransfers: "OTBN DMA & AES KeyMgr Stream",
-    simulator: "Verilator 4.210",
-    validation: "Silicon RoT Boot Pass",
+    totalCycles: "14,270 (Boot) / 53,550 (Full)",
+    simSpeedKhz: "3,490.00",
+    wallTimeS: "0.015",
+    dmaTransfers: "OTBN 25k ops & KMAC 8.18k words",
+    simulator: "Verilator 5.022",
+    validation: "Authentic Boot & Tamper Containment (Score Measured)",
     highlight: true,
-    badgeText: "SILICON ROT VERIFIED",
+    badgeText: "SCORE-MEASURED",
     badgeClass: "badge-lime"
   }
 ];
