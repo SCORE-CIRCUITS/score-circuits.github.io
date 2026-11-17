@@ -322,7 +322,7 @@ function getToolUrl(tool: any) {
 
           <div class="insight-step-body">
             <p class="insight-narrative">
-              In shared-memory multi-core clusters (<strong>MemPool</strong> and <strong>Snitch</strong>), software barrier synchronization degrades exponentially past 64 cores. Software atomic memory operations (AMO) saturate the interconnect logarithmic crossbar, turning speedup negative on fine-grained parallel kernels.
+              In shared-memory multi-core clusters (<strong>MemPool</strong> and <strong>Snitch</strong>), software barrier synchronization degrades quadratically (O(N&sup2;)) past 64 cores. Software atomic memory operations (AMO) saturate the interconnect logarithmic crossbar, turning speedup negative on fine-grained parallel kernels.
             </p>
 
             <div class="insight-metrics-grid">

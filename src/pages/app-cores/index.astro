@@ -3194,7 +3194,7 @@ const appCoreDossiers = [
           </div>
           <div class="triad-step-body">
             <p>
-              In multi-core clusters, memory throughput dominates. Teams invest silicon in multi-banked non-blocking L1 caches, 4 to 8 MSHRs, and directory-based MESI coherence controllers (e.g. BlackParrot). This increases area to 165 kGE but prevents bus crossbar saturation.
+              In multi-core clusters, memory throughput dominates. Teams invest silicon in multi-banked non-blocking L1 caches, 4 to 16 MSHRs, and directory-based MESI coherence controllers (e.g. BlackParrot). This increases area to 165 kGE but prevents bus crossbar saturation.
             </p>
             <div class="triad-specs-row">
               <span class="triad-spec-item"><strong>Pipeline:</strong> Modular 3-Partition (FE/BE/ME)</span>
@@ -5170,8 +5170,8 @@ const appCoreDossiers = [
   <text x="507.0" y="481" text-anchor="middle" font-size="12" font-weight="900" fill="#151b20" font-family="monospace">NORMALIZED SILICON AREA (kGE, LOG SCALE • NAND2 EQUIVALENTS)</text>
   <text x="24" y="253.0" text-anchor="middle" font-size="12" font-weight="900" fill="#151b20" font-family="monospace" transform="rotate(-90 24 253.0)">LINUX 6.1 MEMCPY THROUGHPUT (MB/s)</text>
   <polyline points="271.4,344.8 329.3,326.7 490.7,270.1 689.0,142.2 788.2,116.3 866.2,99.1" fill="none" stroke="#0f766e" stroke-width="3" stroke-dasharray="7,4"/>
-  <rect x="459.3" y="181.4" width="174" height="20" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.3" rx="4"/>
-  <text x="546.3" y="194.9" text-anchor="middle" font-size="10" font-weight="900" fill="#115e59" font-family="monospace">MSHR PARETO FRONTIER</text>
+  <rect x="435.0" y="165.0" width="174" height="20" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.3" rx="4"/>
+  <text x="522.0" y="178.5" text-anchor="middle" font-size="10" font-weight="900" fill="#115e59" font-family="monospace">MSHR PARETO FRONTIER</text>
   <line x1="271.4" y1="344.8" x2="241.2" y2="323.2" stroke="#0284c7" stroke-width="1.05" opacity="0.7"/>
   <line x1="279.5" y1="356.5" x2="241.2" y2="347.7" stroke="#059669" stroke-width="1.05" opacity="0.7"/>
   <line x1="290.0" y1="367.5" x2="241.2" y2="370.9" stroke="#0284c7" stroke-width="1.05" opacity="0.7"/>
@@ -5185,7 +5185,7 @@ const appCoreDossiers = [
   <line x1="356.2" y1="404.4" x2="404.6" y2="429.6" stroke="#e11d48" stroke-width="1.05" opacity="0.7"/>
   <line x1="490.7" y1="270.1" x2="511.3" y2="270.0" stroke="#d97706" stroke-width="1.05" opacity="0.7"/>
   <line x1="689.0" y1="142.2" x2="667.6" y2="126.7" stroke="#d97706" stroke-width="1.05" opacity="0.7"/>
-  <line x1="788.2" y1="116.3" x2="788.2" y2="136.9" stroke="#d97706" stroke-width="1.05" opacity="0.7"/>
+  <line x1="788.2" y1="116.3" x2="796.0" y2="138.0" stroke="#d97706" stroke-width="1.05" opacity="0.7"/>
   <line x1="866.2" y1="99.1" x2="870.2" y2="76.2" stroke="#d97706" stroke-width="1.05" opacity="0.7"/>
   <circle cx="271.4" cy="344.8" r="7.2" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.3"/>
   <circle cx="271.4" cy="344.8" r="2.5" fill="#0284c7"/>
@@ -5219,7 +5219,7 @@ const appCoreDossiers = [
   <text x="663.6" y="130.2" text-anchor="end" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">SonicBOOM 3-w (420k)</text>
   <circle cx="788.2" cy="116.3" r="7.2" fill="#fef3c7" stroke="#d97706" stroke-width="2.3"/>
   <circle cx="788.2" cy="116.3" r="2.5" fill="#d97706"/>
-  <text x="788.2" y="140.4" text-anchor="middle" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">OpenC910 3-w (550k)</text>
+  <text x="794.0" y="148.5" text-anchor="start" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">OpenC910 3-w (550k)</text>
   <circle cx="866.2" cy="99.1" r="7.2" fill="#fef3c7" stroke="#d97706" stroke-width="2.3"/>
   <circle cx="866.2" cy="99.1" r="2.5" fill="#d97706"/>
   <text x="866.2" y="79.7" text-anchor="end" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">XiangShan 6-w (680k) ★</text>
@@ -5229,7 +5229,7 @@ const appCoreDossiers = [
   <circle cx="274" cy="511" r="5.5" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
   <text x="285" y="515" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Mint: Arch 2 Scoreboard / DSP</text>
   <circle cx="506" cy="511" r="5.5" fill="#ffe4e6" stroke="#e11d48" stroke-width="2"/>
-  <text x="517" y="515" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Coral: Arch 3 Coherent Multicore</text>
+  <text x="517" y="515" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Coral: Arch 3 Coherent Multi-Core</text>
   <circle cx="742" cy="511" r="5.5" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
   <text x="753" y="515" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Amber: Arch 4 OoO Superscalar</text>
   <text x="480.0" y="537" text-anchor="middle" font-size="9.8" font-weight="700" fill="#334155" font-family="monospace">Provenance: SCORE Verilator/Icarus RTL traces scaled at reference-node ASIC f_max (12–28 nm) • Area in NAND2 kGE</text>
