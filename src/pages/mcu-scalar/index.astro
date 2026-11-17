@@ -1,4 +1,4 @@
----
+﻿---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 // Master Empirical Benchmark Leaderboard: Exact figures measured under SCORE cycle-accurate simulation profiles
@@ -1101,380 +1101,215 @@ const bespokeDossiers = [
       <!-- Figure 1.0: Universal Baseline Scalar RISC-V Microarchitecture (PLACED FIRST) -->
       <div class="schematic-container" style="margin-top: 1.25rem; margin-bottom: 2rem;">
         <div class="schematic-header">
-          <span class="schematic-tag">FIGURE 1.0 ARCHITECTURAL FOUNDATION</span>
-          <h4 class="schematic-title">Universal Baseline Scalar RISC-V Microarchitecture</h4>
+          <span class="schematic-tag">&#9881; MASTER HARDWARE BLOCK DIAGRAM: UNIVERSAL BASELINE SCALAR RISC-V CORE</span>
+          <h4 class="schematic-title">Universal Baseline Scalar RISC-V Microarchitecture (RV32I/E Foundation)</h4>
         </div>
-        <div class="schematic-svg-wrap">
-          <!-- Figure 1.0: Universal Baseline Scalar RISC-V Microarchitecture (PLACED FIRST) -->
-          <svg viewBox="0 0 960 550" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Vector CAD Schematic -->
+        <div style="background: var(--paper-deep, #eee4c8); border-bottom: 2px solid var(--ink, #151b20); padding: 1rem; overflow-x: auto;">
+          <svg viewBox="0 0 960 520" class="schematic-svg" xmlns="http://www.w3.org/2000/svg" style="min-width: 700px; width: 100%; height: auto; display: block;">
             <defs>
-              <pattern id="cadGridBaseline" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="2" cy="2" r="1" fill="#151b20" opacity="0.12"/>
+              <pattern id="cadGridScalar" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(21, 27, 32, 0.08)" stroke-width="0.8"/>
               </pattern>
-              <marker id="arrowBase" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#151b20"/>
-              </marker>
-              <marker id="arrowBlue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
-              </marker>
-              <marker id="arrowTealBase" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#0d9488"/>
-              </marker>
-              <marker id="arrowRedBase" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
-              </marker>
-              <marker id="arrowPurple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#7c3aed"/>
-              </marker>
-              <marker id="arrowAmber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#d97706"/>
-              </marker>
+              <linearGradient id="nocHighwayGradScalar" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#b7df69" stop-opacity="0.25"/>
+                <stop offset="50%" stop-color="#22bfd7" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#b7df69" stop-opacity="0.25"/>
+              </linearGradient>
             </defs>
 
-            <!-- Frame Background & Grid -->
-            <rect width="958" height="548" x="1" y="1" rx="10" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
-            <rect width="956" height="510" x="2" y="2" rx="9" fill="url(#cadGridBaseline)"/>
+            <!-- Background CAD Canvas -->
+            <rect width="960" height="520" fill="#fffaf0"/>
+            <rect width="960" height="520" fill="url(#cadGridScalar)"/>
+            <rect x="15" y="15" width="930" height="490" rx="12" fill="none" stroke="#151b20" stroke-width="2.5"/>
 
-            <!-- Top Title Banner -->
-            <rect x="2" y="2" width="956" height="26" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="8"/>
-            <circle cx="16" cy="15" r="4.5" fill="#0d9488"/>
-            <text x="28" y="18" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • BASELINE SCALAR RISC-V (RV32I/E) ARCHITECTURAL DATAPATH &amp; CONTROL</text>
+            <!-- Top Title Bar -->
+            <rect x="15" y="15" width="930" height="34" rx="12" fill="#b7df69" stroke="#151b20" stroke-width="2.5"/>
+            <text x="480" y="38" font-size="12" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle" letter-spacing="1">
+              UNIVERSAL BASELINE SCALAR RISC-V (RV32I/E) ARCHITECTURAL DATAPATH &amp; CONTROL FABRIC
+            </text>
 
-            <!-- ============================================================ -->
-            <!-- PIPELINE STAGE ZONE HEADERS (y=30 to y=48) -->
-            <!-- ============================================================ -->
-            <rect x="18" y="30" width="202" height="18" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-dasharray="2,2"/>
-            <text x="32" y="42.5" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace">STAGE 1: INSTRUCTION FETCH (IF)</text>
+            <!-- 1. Block 01: Instruction Fetch Subsystem (Left Top) -->
+            <g id="svgFetchBlock">
+              <rect x="35" y="65" width="270" height="150" rx="8" fill="#c9f3f4" stroke="#151b20" stroke-width="2"/>
+              <text x="170" y="88" font-size="11" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">BLOCK 01: INSTRUCTION FETCH (IF)</text>
+              <text x="170" y="103" font-size="9" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">PC Sequencing &amp; I-Cache Subsystem</text>
 
-            <rect x="230" y="30" width="270" height="18" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-dasharray="2,2"/>
-            <text x="245" y="42.5" font-size="8.5" font-weight="900" fill="#7c3aed" font-family="monospace">STAGE 2: DECODE &amp; REGISTERS (ID)</text>
+              <rect x="50" y="115" width="115" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="107" y="132" font-size="9" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Next PC Mux</text>
+              <text x="107" y="146" font-size="8" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">[0]+4 [1]mtvec [2]BR</text>
 
-            <rect x="510" y="30" width="200" height="18" rx="4" fill="#fef3c7" stroke="#d97706" stroke-dasharray="2,2"/>
-            <text x="525" y="42.5" font-size="8.5" font-weight="900" fill="#d97706" font-family="monospace">STAGE 3: EXECUTE &amp; BRANCH (EX)</text>
+              <rect x="175" y="115" width="115" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="232" y="132" font-size="9" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">PC Register</text>
+              <text x="232" y="146" font-size="8" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">32-Bit Synchronous</text>
 
-            <rect x="720" y="30" width="222" height="18" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-dasharray="2,2"/>
-            <text x="735" y="42.5" font-size="8.5" font-weight="900" fill="#0d9488" font-family="monospace">STAGE 4 &amp; 5: MEM &amp; WRITEBACK</text>
+              <rect x="50" y="165" width="240" height="36" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="170" y="180" font-size="8.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Instruction Memory / I-Cache (IMEM)</text>
+              <text x="170" y="193" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">32-Bit Word Fetch &bull; Prefetch Buffer</text>
+            </g>
 
-            <!-- ============================================================ -->
-            <!-- DEDICATED CONTROL REDIRECTION HIGHWAYS (y=50 to y=118) -->
-            <!-- 100% Planar, Continuous Redirection Loops Originating at Chips -->
-            <!-- ============================================================ -->
-            <!-- Highway 1 (y=58): Branch Taken Redirection (Crimson, Top Lane) -->
-            <!-- Originates at Stage 3 BRU chip ▲ BR_TGT at (595, 107), rises to y=58, heads west to PC Mux Port [2] -->
-            <path d="M 595 107 L 595 58 L 470 58" fill="none" stroke="#dc2626" stroke-width="2.2"/>
-            <polygon points="530,55 524,58 530,61" fill="#dc2626"/>
-            <!-- Highway 1 Transceiver Banner (x=120..470, y=50..66) -->
-            <rect x="120" y="50" width="350" height="16" rx="4" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
-            <circle cx="128" cy="58" r="3" fill="#dc2626"/>
-            <circle cx="462" cy="58" r="3" fill="#dc2626"/>
-            <text x="138" y="61.5" font-size="7" font-weight="900" fill="#dc2626" font-family="monospace">BRANCH REDIRECT: [FROM STAGE 3 BRU • target_pc] → Next PC MUX [2]</text>
-            <!-- Highway 1 Westbound Exit into PC Mux Port [2] at (38, 248) -->
-            <path d="M 120 58 L 14 58 L 14 248 L 38 248" fill="none" stroke="#dc2626" stroke-width="2.2" marker-end="url(#arrowRedBase)"/>
-            <polygon points="65,55 59,58 65,61" fill="#dc2626"/>
+            <!-- 2. Block 02: Instruction Decode & ImmGen (Center Top) -->
+            <g id="svgDecodeBlock">
+              <rect x="325" y="65" width="350" height="150" rx="8" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
+              <text x="500" y="88" font-size="11" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">BLOCK 02: DECODE &amp; IMMGEN (ID)</text>
+              <text x="500" y="103" font-size="9" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">Instruction Slicer, Immediate Unit &amp; Control Matrix</text>
 
-            <!-- Highway 2 (y=82): Trap Vector Redirection (Purple, Lower Lane) -->
-            <!-- Originates at Block 6 CSR chip ▲ MTVEC at (430, 107), rises to y=82, heads west to PC Mux Port [1] -->
-            <path d="M 430 107 L 430 82 L 380 82" fill="none" stroke="#7c3aed" stroke-width="2.2"/>
-            <!-- Highway 2 Transceiver Banner (x=120..380, y=74..90) -->
-            <rect x="120" y="74" width="260" height="16" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
-            <circle cx="128" cy="82" r="3" fill="#7c3aed"/>
-            <circle cx="372" cy="82" r="3" fill="#7c3aed"/>
-            <text x="136" y="85.5" font-size="6.8" font-weight="900" fill="#7c3aed" font-family="monospace">TRAP REDIRECT: [FROM CSR • mtvec] → PC MUX [1]</text>
-            <!-- Highway 2 Westbound Exit into PC Mux Port [1] at (38, 226) -->
-            <path d="M 120 82 L 24 82 L 24 226 L 38 226" fill="none" stroke="#7c3aed" stroke-width="2.2" marker-end="url(#arrowPurple)"/>
-            <polygon points="65,79 59,82 65,85" fill="#7c3aed"/>
+              <rect x="340" y="115" width="95" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="387" y="132" font-size="9" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Opcode Slicer</text>
+              <text x="387" y="146" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">Funct3 / Funct7</text>
 
-            <!-- ============================================================ -->
-            <!-- STAGE 1: INSTRUCTION FETCH (IF) -->
-            <!-- ============================================================ -->
-            <!-- 1. Next PC Multiplexer -->
-            <polygon points="38,180 68,190 68,260 38,270" fill="#eee4c8" stroke="#151b20" stroke-width="2"/>
-            <text x="53" y="217" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">NEXT<tspan x="53" dy="9">PC</tspan><tspan x="53" dy="9">MUX</tspan></text>
+              <rect x="445" y="115" width="110" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="500" y="132" font-size="9" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Sign-Ext ImmGen</text>
+              <text x="500" y="146" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">I, S, B, U, J Types</text>
 
-            <!-- Next PC Mux Input Port Badges -->
-            <circle cx="38" cy="204" r="2.8" fill="#0284c7"/>
-            <text x="42" y="202" font-size="6.5" font-weight="900" fill="#0284c7" font-family="monospace">[0] +4</text>
-            <circle cx="38" cy="226" r="2.8" fill="#7c3aed"/>
-            <text x="42" y="224" font-size="6.5" font-weight="900" fill="#7c3aed" font-family="monospace">[1] TRAP</text>
-            <circle cx="38" cy="248" r="2.8" fill="#dc2626"/>
-            <text x="42" y="246" font-size="6.5" font-weight="900" fill="#dc2626" font-family="monospace">[2] BR</text>
+              <rect x="565" y="115" width="95" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="612" y="132" font-size="9" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Hazard Unit</text>
+              <text x="612" y="146" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">RAW / Load Stall</text>
 
-            <!-- Next PC Mux Select Control Badge & Input Line -->
-            <rect x="36" y="278" width="34" height="15" rx="3" fill="#eee4c8" stroke="#7c3aed" stroke-width="1.2"/>
-            <text x="53" y="288.5" font-size="6" font-weight="900" fill="#7c3aed" font-family="monospace" text-anchor="middle">pc_sel</text>
-            <line x1="53" y1="278" x2="53" y2="265" stroke="#7c3aed" stroke-width="1.6" marker-end="url(#arrowPurple)"/>
+              <rect x="340" y="165" width="320" height="36" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="500" y="180" font-size="8.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Main Hardware Control Matrix Generator</text>
+              <text x="500" y="193" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">alu_op &bull; pc_sel &bull; mem_we &bull; wb_sel &bull; reg_we</text>
+            </g>
 
-            <!-- Line from Next PC Mux to PC Reg -->
-            <line x1="68" y1="210" x2="80" y2="210" stroke="#151b20" stroke-width="2.2" marker-end="url(#arrowBase)"/>
-            <text x="69" y="205" font-size="6.2" font-weight="900" font-family="monospace">next_pc</text>
+            <!-- 3. Block 06: Privileged Control & CSR (Right Top) -->
+            <g id="svgCsrBlock">
+              <rect x="695" y="65" width="230" height="150" rx="8" fill="#e2dfff" stroke="#151b20" stroke-width="2"/>
+              <text x="810" y="88" font-size="11" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">BLOCK 06: PRIVILEGED CSR</text>
+              <text x="810" y="103" font-size="9" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">Machine Status &amp; Trap Controller</text>
 
-            <!-- 1. Program Counter (PC Reg) -->
-            <rect x="80" y="180" width="56" height="60" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="2"/>
-            <rect x="80" y="180" width="56" height="16" rx="4" fill="#eee4c8"/>
-            <text x="84" y="192" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">1. PC REG</text>
-            <text x="84" y="212" font-size="8.5" font-weight="800" fill="#151b20">PC [31:0]</text>
-            <text x="84" y="228" font-size="7" fill="#242c33">Clocked</text>
+              <rect x="710" y="115" width="200" height="42" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="810" y="132" font-size="9" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">mtvec Base Trap Vector</text>
+              <text x="810" y="146" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">mstatus &bull; mepc &bull; mcause &bull; mie</text>
 
-            <!-- PC out bus and split -->
-            <line x1="136" y1="210" x2="155" y2="210" stroke="#151b20" stroke-width="2.2" marker-end="url(#arrowBase)"/>
-            <circle cx="144" cy="210" r="3" fill="#151b20"/>
-            <text x="120" y="205" font-size="6.2" font-weight="800" font-family="monospace">addr</text>
+              <rect x="710" y="165" width="200" height="36" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="810" y="180" font-size="8.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Interrupt FSM &amp; Priority Logic</text>
+              <text x="810" y="193" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">External Hardware IRQ Lines ◄</text>
+            </g>
 
-            <!-- PC to PC+4 Increment Adder -->
-            <path d="M 144 210 L 144 143 L 136 143" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlue)"/>
+            <!-- Central Vertical Connectors (Top to Highway) -->
+            <line x1="170" y1="215" x2="170" y2="250" stroke="#151b20" stroke-width="2.5"/>
+            <polygon points="166,248 174,248 170,255" fill="#151b20"/>
 
-            <!-- PC+4 Adder (x=80..136, y=125..161) -->
-            <rect x="80" y="125" width="56" height="36" rx="4" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.8"/>
-            <text x="108" y="147" font-size="8.5" font-weight="900" fill="#0284c7" font-family="monospace" text-anchor="middle">ADD +4</text>
+            <line x1="500" y1="215" x2="500" y2="250" stroke="#151b20" stroke-width="2.5"/>
+            <polygon points="496,248 504,248 500,255" fill="#151b20"/>
 
-            <!-- PC+4 out loopback to Mux Input 0 -->
-            <path d="M 80 143 L 32 143 L 32 204 L 38 204" fill="none" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlue)"/>
+            <line x1="810" y1="215" x2="810" y2="250" stroke="#151b20" stroke-width="2.5"/>
+            <polygon points="806,248 814,248 810,255" fill="#151b20"/>
 
-            <!-- 2. Instruction Memory (IMEM / I-Cache) (x=155..217, y=170..250) -->
-            <rect x="155" y="170" width="62" height="80" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="2"/>
-            <rect x="155" y="170" width="62" height="16" rx="4" fill="#eee4c8"/>
-            <text x="160" y="182" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">2. IMEM</text>
-            <text x="160" y="204" font-size="8.5" font-weight="800" fill="#151b20">I-Cache</text>
-            <text x="160" y="220" font-size="7" fill="#242c33">ROM / SRAM</text>
-            <text x="160" y="236" font-size="6.5" fill="#0284c7">32-Bit Word</text>
+            <!-- 4. Central Datapath & Pipeline Interconnect Highway -->
+            <g id="svgPipelineHighway">
+              <rect x="35" y="255" width="890" height="60" rx="8" fill="url(#nocHighwayGradScalar)" stroke="#151b20" stroke-width="2.5"/>
+              <text x="480" y="280" font-size="11.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">
+                CORE DATAPATH &amp; CONTROL INTERCONNECT HIGHWAY (32-BIT PIPELINE FABRIC)
+              </text>
+              <text x="480" y="300" font-size="8.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">
+                Next PC Redirection &bull; Operand Forwarding &bull; RAW Bypass Mux &bull; Synchronous Commit Writeback Bus
+              </text>
+            </g>
 
-            <!-- Instruction bus from IMEM directly into Decoder (routes straight from 217 to 240 at y=210) -->
-            <line x1="217" y1="210" x2="240" y2="210" stroke="#151b20" stroke-width="2.2" marker-end="url(#arrowBase)"/>
-            <text x="219" y="203" font-size="6.5" font-weight="900" font-family="monospace">inst[31:0]</text>
+            <!-- Down Connectors (Highway to Bottom Row) -->
+            <line x1="190" y1="315" x2="190" y2="350" stroke="#151b20" stroke-width="2.5"/>
+            <polygon points="186,348 194,348 190,355" fill="#151b20"/>
 
-            <!-- ============================================================ -->
-            <!-- STAGE 2: DECODE, CONTROL, CSR & REGISTERS (ID) -->
-            <!-- ============================================================ -->
-            <!-- 3. Unified Decode, Control & Privileged CSR Unit (x=240..490, y=125..220) -->
-            <rect x="240" y="125" width="250" height="95" rx="5" fill="#fef3c7" stroke="#151b20" stroke-width="2"/>
-            <rect x="240" y="125" width="250" height="18" rx="4" fill="#fef3c7"/>
-            <text x="246" y="138" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">3. DECODE, IMMGEN, CONTROL &amp; CSR UNIT</text>
+            <line x1="490" y1="315" x2="490" y2="350" stroke="#151b20" stroke-width="2.5"/>
+            <polygon points="486,348 494,348 490,355" fill="#151b20"/>
 
-            <!-- Left Sub-Section: Instruction Decoder & ImmGen -->
-            <rect x="244" y="146" width="118" height="68" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1"/>
-            <text x="248" y="157" font-size="7" font-weight="900" fill="#151b20" font-family="monospace">Instruction Decoder</text>
-            <text x="248" y="169" font-size="6.5" fill="#151b20">Opcode, Funct3/7 Decoding</text>
-            <text x="248" y="181" font-size="6.5" fill="#d97706">ImmGen: I, S, B, U, J Types</text>
-            <text x="248" y="193" font-size="6.5" fill="#242c33">Hazard Detection &amp; Stall</text>
-            <text x="248" y="205" font-size="6.5" font-weight="800" fill="#7c3aed">Control Matrix Generator</text>
+            <line x1="780" y1="315" x2="780" y2="350" stroke="#151b20" stroke-width="2.5"/>
+            <polygon points="776,348 784,348 780,355" fill="#151b20"/>
 
-            <!-- Right Sub-Section: Privileged CSR & Trap Controller -->
-            <rect x="368" y="146" width="118" height="68" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
-            <text x="372" y="157" font-size="7" font-weight="900" fill="#7c3aed" font-family="monospace">CSR &amp; Trap Controller</text>
-            <text x="372" y="169" font-size="6.5" fill="#7c3aed">mtvec Reg (Trap Base Vector)</text>
-            <text x="372" y="181" font-size="6.5" fill="#151b20">mstatus, mepc, mcause</text>
-            <text x="372" y="193" font-size="6.5" font-weight="800" fill="#7c3aed">Interrupt FSM &amp; Vectored</text>
-            <text x="372" y="205" font-size="6.5" fill="#0d9488">Direct GPR Writeback Port</text>
+            <!-- 5. Block 03: Register File (Left Bottom) -->
+            <g id="svgRegFileBlock">
+              <rect x="35" y="355" width="310" height="135" rx="8" fill="#e7f4c8" stroke="#151b20" stroke-width="2"/>
+              <text x="190" y="378" font-size="11" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">BLOCK 03: REGISTER FILE (RF)</text>
+              <text x="190" y="393" font-size="8.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">32x32-Bit GPRs (x0–x31) &bull; Dual-Read / Single-Write</text>
 
-            <!-- Prominent Chip Terminal for mtvec (x=405..455, y=107..122) -->
-            <rect x="405" y="107" width="50" height="15" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.2"/>
-            <text x="430" y="117.5" font-size="6.8" font-weight="900" fill="#7c3aed" font-family="monospace" text-anchor="middle">▲ MTVEC</text>
-            <circle cx="430" cy="107" r="3" fill="#7c3aed"/>
+              <rect x="50" y="405" width="280" height="34" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="190" y="420" font-size="8.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Dual Combinational Read Ports (R1 &amp; R2)</text>
+              <text x="190" y="432" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">Port R1: rs1_data &bull; Port R2: rs2_data</text>
 
-            <!-- External IRQ Input Terminal Pin directly on CSR top -->
-            <rect x="460" y="107" width="25" height="15" rx="2" fill="#7c3aed" stroke="#151b20" stroke-width="1"/>
-            <text x="472.5" y="117.5" font-size="6" font-weight="900" fill="#ffffff" font-family="monospace" text-anchor="middle">IRQ◄</text>
+              <rect x="50" y="445" width="280" height="32" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="190" y="465" font-size="8.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Port W Synchronous Commit &bull; RAW Bypass Mux</text>
+            </g>
 
-            <!-- Internal Decode to Reg File rs1, rs2, rd addresses (straight down, zero crossing) -->
-            <line x1="300" y1="220" x2="300" y2="242" stroke="#151b20" stroke-width="1.8" marker-end="url(#arrowBase)"/>
-            <text x="304" y="234" font-size="6" font-weight="900" fill="#151b20" font-family="monospace">rs1/rs2/rd</text>
+            <!-- 6. Block 04: ALU & Comparator Subsystem (Center Bottom) -->
+            <g id="svgAluBlock">
+              <rect x="365" y="355" width="250" height="135" rx="8" fill="#c9f3f4" stroke="#151b20" stroke-width="2"/>
+              <text x="490" y="378" font-size="11" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">BLOCK 04: ALU &amp; COMPARATOR</text>
+              <text x="490" y="393" font-size="8.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">Arithmetic, Logic, Shifter &amp; Branch Flags</text>
 
-            <!-- Internal CSR to Reg File direct writeback bus (straight down, zero crossing) -->
-            <line x1="430" y1="220" x2="430" y2="242" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="2,2" marker-end="url(#arrowPurple)"/>
-            <text x="434" y="234" font-size="6" font-weight="900" fill="#7c3aed" font-family="monospace">csr_rdata</text>
+              <rect x="380" y="405" width="220" height="34" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="490" y="420" font-size="8.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">32-Bit Carry-Lookahead Adder (CLA)</text>
+              <text x="490" y="432" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">ADD &bull; SUB &bull; SLL &bull; SRL &bull; SRA Shifter</text>
 
-            <!-- 4. General-Purpose Register File (RF) (x=240..490, y=242..388) -->
-            <rect x="240" y="242" width="250" height="146" rx="5" fill="#fffaf0" stroke="#151b20" stroke-width="2"/>
-            <rect x="240" y="242" width="250" height="18" rx="4" fill="#eee4c8"/>
-            <text x="246" y="255" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">4. REG FILE (x0-x31) • 32x32-Bit GPRs</text>
+              <rect x="380" y="445" width="220" height="32" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="490" y="465" font-size="8.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">AND/OR/XOR &bull; SLT/SLTU Branch Flags</text>
+            </g>
 
-            <text x="246" y="275" font-size="7.5" font-weight="800" fill="#151b20">Dual-Read, Single-Write Ports</text>
-            <text x="246" y="290" font-size="7" fill="#151b20">• Port R1: rs1_data (Combinational Out)</text>
-            <text x="246" y="305" font-size="7" fill="#151b20">• Port R2: rs2_data (Combinational Out)</text>
-            <text x="246" y="320" font-size="7" font-weight="800" fill="#0d9488">• Port W: rd_data (Synchronous Commit)</text>
-            <text x="246" y="335" font-size="6.8" fill="#242c33">x0 Hardwired to 0 • Bypass Forwarding Network</text>
-            <text x="246" y="350" font-size="6.8" fill="#242c33">RAW Hazard Detection &amp; Load-Use Interlocks</text>
+            <!-- 7. Block 05: Load/Store Unit & System Bus (Right Bottom) -->
+            <g id="svgLsuBlock">
+              <rect x="635" y="355" width="290" height="135" rx="8" fill="#ffd8ce" stroke="#151b20" stroke-width="2"/>
+              <text x="780" y="378" font-size="11" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">BLOCK 05: LSU &amp; DMEM BUS</text>
+              <text x="780" y="393" font-size="8.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">Data Memory Access, PMP &amp; Bus Bridge</text>
 
-            <!-- Internal CSR Writeback Terminal inside Reg File -->
-            <rect x="395" y="265" width="70" height="20" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
-            <text x="430" y="278" font-size="6" font-weight="800" fill="#7c3aed" text-anchor="middle">CSR Direct Write</text>
+              <rect x="650" y="405" width="260" height="34" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="780" y="420" font-size="8.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">Byte-Lane Alignment &amp; Sign-Extension</text>
+              <text x="780" y="432" font-size="7.5" font-weight="800" fill="#242c33" font-family="var(--md-code-font, monospace)" text-anchor="middle">Load / Store Data Alignment (lw, lb, sw, sb)</text>
 
-            <!-- Port W Terminal Badge at bottom of RF -->
-            <rect x="320" y="372" width="45" height="14" rx="2" fill="#ccfbf1" stroke="#0d9488" stroke-width="1"/>
-            <text x="342.5" y="382.5" font-size="6.5" font-weight="900" fill="#0d9488" font-family="monospace" text-anchor="middle">PORT W</text>
-
-            <!-- ============================================================ -->
-            <!-- STAGE 3: EXECUTE & BRANCH (EX) -->
-            <!-- ============================================================ -->
-            <!-- 7. Branch & Jump Target Unit (x=525..660, y=125..207) -->
-            <rect x="525" y="125" width="135" height="82" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
-            <rect x="525" y="125" width="135" height="17" rx="4" fill="#fee2e2"/>
-            <text x="530" y="137" font-size="7.5" font-weight="900" fill="#dc2626" font-family="monospace">BR / JMP TARGET UNIT</text>
-
-            <!-- Prominent Chip Terminal for target_pc (x=565..625, y=107..122) -->
-            <rect x="565" y="107" width="60" height="15" rx="3" fill="#fee2e2" stroke="#dc2626" stroke-width="1.2"/>
-            <text x="595" y="117.5" font-size="6.8" font-weight="900" fill="#dc2626" font-family="monospace" text-anchor="middle">▲ BR_TGT</text>
-            <circle cx="595" cy="107" r="3" fill="#dc2626"/>
-
-            <text x="530" y="152" font-size="7" font-weight="800" fill="#151b20">Target Adder = PC + ImmGen</text>
-            <text x="530" y="164" font-size="6.8" fill="#151b20">Mux: taken ? Target : PC+4</text>
-            <text x="530" y="176" font-size="6.5" font-weight="800" fill="#dc2626">beq / bne / blt / bge / jal / jalr</text>
-            <text x="530" y="188" font-size="6.2" fill="#242c33">Evaluated in parallel with ALU</text>
-            <text x="530" y="199" font-size="6.2" fill="#0d9488">1-Cycle Early Branch Resolution</text>
-
-            <!-- Branch Evaluation Flag from ALU to Branch Target Unit (rises at x=595, zero crossings!) -->
-            <line x1="595" y1="260" x2="595" y2="207" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="2,2" marker-end="url(#arrowRedBase)"/>
-            <text x="600" y="236" font-size="6.5" font-weight="900" fill="#dc2626" font-family="monospace">branch_eval</text>
-
-            <!-- B/J Imm and PC from Decoder directly to BRU (routes straight from 490 to 525 at y=145, zero crossings!) -->
-            <line x1="490" y1="145" x2="525" y2="145" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowAmber)"/>
-            <text x="492" y="140" font-size="6" font-weight="900" fill="#d97706" font-family="monospace">pc+imm(B/J)</text>
-
-            <!-- Decoded ALU Control (alu_op[3:0]) from Decoder to ALU notch (routes at y=260 into ALU top, zero crossings!) -->
-            <path d="M 490 170 L 510 170 L 510 236 L 565 236 L 565 260" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="3,3" marker-end="url(#arrowPurple)"/>
-            <text x="492" y="166" font-size="6" font-weight="900" fill="#7c3aed" font-family="monospace">alu_op</text>
-
-            <!-- rs1_data (Port R1) from RF straight into ALU Input A (routes along y=280, zero crossings!) -->
-            <line x1="490" y1="280" x2="545" y2="280" stroke="#151b20" stroke-width="2.2" marker-end="url(#arrowBase)"/>
-            <text x="512" y="274" font-size="6.5" font-weight="900" font-family="monospace">op_a (rs1)</text>
-
-            <!-- Immediate imm[31:0] (I-type) from Decoder into OpB Mux Input [0] via EDA bridge hop over op_a -->
-            <path d="M 490 200 L 505 200 L 505 275 A 5 5 0 0 0 505 285 L 505 332 L 515 332" fill="none" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowAmber)"/>
-            <text x="508" y="305" font-size="6.5" font-weight="900" fill="#d97706" font-family="monospace">imm[31:0]</text>
-
-            <!-- Operand B Selection MUX (x=515..535, y=322..364) -->
-            <polygon points="515,322 535,328 535,358 515,364" fill="#fef3c7" stroke="#151b20" stroke-width="1.8"/>
-            <text x="517" y="346" font-size="7" font-weight="900" fill="#151b20">MUX</text>
-            <circle cx="515" cy="332" r="2" fill="#d97706"/>
-            <text x="518" y="331" font-size="5.5" font-weight="800">[0]</text>
-            <circle cx="515" cy="354" r="2" fill="#151b20"/>
-            <text x="518" y="353" font-size="5.5" font-weight="800">[1]</text>
-
-            <!-- OpB Mux Output into ALU Input B (at y=343) -->
-            <line x1="535" y1="343" x2="545" y2="343" stroke="#151b20" stroke-width="2.2" marker-end="url(#arrowBase)"/>
-            <text x="536" y="338" font-size="6" font-weight="900" font-family="monospace">op_b</text>
-
-            <!-- rs2_data from RF Port R2 into OpB Mux Input [1] (routes along y=354, zero crossings!) -->
-            <line x1="490" y1="354" x2="515" y2="354" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
-            <circle cx="498" cy="354" r="2.5" fill="#151b20"/>
-            <text x="496" y="350" font-size="6" font-weight="900" font-family="monospace">rs2</text>
-
-            <!-- 5. Arithmetic Logic Unit (ALU & Comparator) (x=545..625, y=260..360) -->
-            <polygon points="545,260 625,285 625,335 545,360 545,325 558,310 545,295" fill="#ccfbf1" stroke="#0d9488" stroke-width="2.5"/>
-            <text x="578" y="306" font-size="11" font-weight="900" fill="#151b20" font-family="monospace">ALU</text>
-            <text x="562" y="322" font-size="7.5" font-weight="800" fill="#0d9488">ADD/SUB/CMP</text>
-
-            <!-- ALU Result out bus at (625, 310) and split -->
-            <line x1="625" y1="310" x2="655" y2="310" stroke="#151b20" stroke-width="2.5"/>
-            <circle cx="655" cy="310" r="3.5" fill="#151b20"/>
-            <text x="626" y="304" font-size="6.5" font-weight="900" font-family="monospace">alu_out[31:0]</text>
-
-            <!-- ALU Result branch into LSU Memory Address (routes along y=310, zero crossings!) -->
-            <line x1="655" y1="310" x2="725" y2="310" stroke="#151b20" stroke-width="2.2" marker-end="url(#arrowBase)"/>
-            <text x="668" y="304" font-size="6.8" font-weight="900" font-family="monospace">mem_addr</text>
-
-            <!-- ALU Result branch down into Writeback MUX Input 0 (drops at x=655 down to y=390, zero crossings!) -->
-            <path d="M 655 310 L 655 390" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
-
-            <!-- mem_wdata (rs2_data) store data bus: clean EDA bridge hop over alu_out at x=655 -->
-            <path d="M 498 354 L 498 372 L 650 372 A 5 5 0 0 1 660 372 L 725 372 L 725 340" fill="none" stroke="#d97706" stroke-width="1.8" marker-end="url(#arrowAmber)"/>
-            <text x="515" y="369" font-size="6.5" font-weight="900" fill="#d97706" font-family="monospace">mem_wdata (rs2_data[31:0])</text>
-
-            <!-- ============================================================ -->
-            <!-- STAGE 4 & 5: MEM & WRITEBACK -->
-            <!-- ============================================================ -->
-            <!-- 8. Physical Memory Protection & MMU Subsystem (x=725..850, y=125..207) -->
-            <rect x="725" y="125" width="125" height="82" rx="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.8"/>
-            <rect x="725" y="125" width="125" height="17" rx="4" fill="#e0f2fe"/>
-            <text x="730" y="137" font-size="7.5" font-weight="900" fill="#0284c7" font-family="monospace">PMP &amp; BUS PROTECTION</text>
-
-            <text x="730" y="152" font-size="7" font-weight="800" fill="#151b20">16 Physical Memory Regions</text>
-            <text x="730" y="164" font-size="6.8" fill="#242c33">TOR, NA4, NAPOT Checking</text>
-            <text x="730" y="176" font-size="6.8" fill="#151b20">Read / Write / Execute Faults</text>
-            <text x="730" y="188" font-size="6.5" font-weight="800" fill="#0284c7">Zero-Wait Local TCM Access</text>
-            <text x="730" y="199" font-size="6.2" fill="#0d9488">Bus Privilege Interlock</text>
-
-            <!-- 5. Data Memory / Load-Store Unit (DMEM / LSU) (x=725..850, y=235..360) -->
-            <rect x="725" y="235" width="125" height="125" rx="5" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
-            <rect x="725" y="235" width="125" height="18" rx="4" fill="#ccfbf1"/>
-            <text x="730" y="248" font-size="8" font-weight="900" fill="#0d9488" font-family="monospace">5. DMEM / LSU BUS</text>
-            <text x="730" y="267" font-size="8.2" font-weight="800" fill="#151b20">Load / Store Unit</text>
-            <text x="730" y="283" font-size="7.2" fill="#151b20">Addr = alu_result</text>
-            <text x="730" y="299" font-size="7.2" fill="#151b20">WData = rs2_data</text>
-            <text x="730" y="315" font-size="7.2" fill="#242c33">Byte Mask &amp; Sign-Ext</text>
-            <text x="730" y="331" font-size="7.2" font-weight="800" fill="#0d9488">AHB / AXI / OBI Port</text>
-            <text x="730" y="347" font-size="6.8" fill="#242c33">Misaligned Support</text>
-
-            <!-- Memory Read Data out to Writeback Mux Input 1 (drops at x=785, zero crossings!) -->
-            <path d="M 785 360 L 785 390" fill="none" stroke="#151b20" stroke-width="2" marker-end="url(#arrowBase)"/>
-            <text x="790" y="378" font-size="7" font-weight="900" font-family="monospace">mem_rdata</text>
-
-            <!-- External System Bus Terminal Block (x=900..950, y=242..352) -->
-            <rect x="900" y="242" width="50" height="110" rx="4" fill="#f6f0dc" stroke="#0d9488" stroke-width="1.8"/>
-            <rect x="900" y="242" width="50" height="16" rx="3" fill="#ccfbf1"/>
-            <text x="925" y="253" font-size="6.5" font-weight="900" fill="#0d9488" font-family="monospace" text-anchor="middle">SYS BUS</text>
-
-            <!-- External System Bus Interconnect Lines (all from DMEM edge directly into SYS BUS block!) -->
-            <line x1="850" y1="270" x2="900" y2="270" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowBase)"/>
-            <text x="852" y="264" font-size="6.2" font-weight="900" fill="#0d9488" font-family="monospace">sys_addr</text>
-
-            <line x1="850" y1="292" x2="900" y2="292" stroke="#0d9488" stroke-width="1.8" marker-end="url(#arrowBase)"/>
-            <text x="852" y="286" font-size="6.2" font-weight="900" fill="#0d9488" font-family="monospace">sys_wdata</text>
-
-            <line x1="900" y1="314" x2="850" y2="314" stroke="#0284c7" stroke-width="1.8" marker-end="url(#arrowBlue)"/>
-            <text x="852" y="308" font-size="6.2" font-weight="900" fill="#0284c7" font-family="monospace">sys_rdata</text>
-
-            <line x1="850" y1="336" x2="900" y2="336" stroke="#151b20" stroke-width="1.5"/>
-            <text x="852" y="330" font-size="6.2" font-weight="800" fill="#242c33" font-family="monospace">req/gnt</text>
-
-            <!-- Writeback Selection MUX (WB MUX) (x=635..805, y=390..418) -->
-            <polygon points="635,390 805,390 795,418 645,418" fill="#ccfbf1" stroke="#0d9488" stroke-width="2"/>
-            <text x="720" y="408" font-size="8" font-weight="900" fill="#0d9488" font-family="monospace" text-anchor="middle">WRITEBACK MULTIPLEXER (WB MUX)</text>
-            <!-- Port Badges (Cleanly above input terminals, zero wire overlap) -->
-            <text x="605" y="384" font-size="6.5" font-weight="800" fill="#0d9488">[0] ALU_RES</text>
-            <text x="800" y="384" font-size="6.5" font-weight="800" fill="#0d9488">[1] MEM_DATA</text>
-
-            <!-- ============================================================ -->
-            <!-- THE WRITEBACK HIGHWAY (TEAL LOOPBACK TO REGISTER FILE) -->
-            <!-- ============================================================ -->
-            <!-- Exits WB Mux bottom at (720, 418), drops to y=436, heads west across transceiver banner -->
-            <path d="M 720 418 L 720 436 L 680 436" fill="none" stroke="#0d9488" stroke-width="2.6"/>
-            <!-- Inline Writeback Banner (x=270 to 680, y=428 to 444) -->
-            <rect x="270" y="428" width="410" height="16" rx="4" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
-            <circle cx="278" cy="436" r="3.5" fill="#0d9488"/>
-            <circle cx="672" cy="436" r="3.5" fill="#0d9488"/>
-            <text x="286" y="439.5" font-size="7.5" font-weight="900" fill="#0d9488" font-family="monospace">WRITEBACK HIGHWAY: rd_data[31:0] → REG FILE PORT W • Synchronous Commit</text>
-            <!-- Leftbound Return into Register File Write Port W at (342, 388) -->
-            <path d="M 270 436 L 225 436 L 225 380 L 320 380" fill="none" stroke="#0d9488" stroke-width="2.6" marker-end="url(#arrowTealBase)"/>
-            <polygon points="255,433 249,436 255,439" fill="#0d9488"/>
-
-            <!-- ============================================================ -->
-            <!-- BOTTOM BUS KEY LEGEND (EXPANDED DUAL ROW) -->
-            <!-- ============================================================ -->
-            <!-- Row 1: Signal Protocol Key -->
-            <rect x="18" y="456" width="924" height="38" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-            <text x="28" y="469" font-size="7.5" font-weight="900" fill="#151b20" font-family="monospace">SIGNAL &amp; BUS PROTOCOL CLASSIFICATION KEY:</text>
-            <circle cx="35" cy="482" r="4" fill="#7c3aed"/>
-            <text x="44" y="485" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Purple: Trap Vector (mtvec from Block 6 CSR)</text>
-            <circle cx="340" cy="482" r="4" fill="#dc2626"/>
-            <text x="349" y="485" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Crimson: Branch Redirect (target_pc from Stage 3 BRU)</text>
-            <circle cx="640" cy="482" r="4" fill="#0284c7"/>
-            <text x="649" y="485" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Cyan: PC Fetch (+4 / +2)</text>
-            <circle cx="790" cy="482" r="4" fill="#0d9488"/>
-            <text x="799" y="485" font-size="7" font-weight="700" fill="#151b20" font-family="monospace">Teal: Writeback Highway</text>
-
-            <!-- Row 2: Architecture Specifications -->
-            <rect x="18" y="496" width="924" height="42" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-            <text x="28" y="510" font-size="7.8" font-weight="900" fill="#151b20" font-family="monospace">BASELINE RISC-V RV32I/E ARCHITECTURAL SPECIFICATION &amp; SIGNAL TAXONOMY</text>
-            <text x="28" y="526" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">Datapath: 32-Bit Scalar In-Order Execution</text>
-            <text x="278" y="526" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">Branch: Parallel Early Target Calculation</text>
-            <text x="543" y="526" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">Trap: Independent mtvec Fast Exception Vector</text>
-            <text x="813" y="526" font-size="7.2" font-weight="800" fill="#151b20" font-family="monospace">100% Planar Routing</text>
+              <rect x="650" y="445" width="260" height="32" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
+              <text x="780" y="465" font-size="8.5" font-weight="900" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">PMP Protection &bull; AHB / AXI / OBI Bus</text>
+            </g>
           </svg>
         </div>
+
+        <!-- ASCII Brutalist View Toggle -->
+        <details style="padding: 0.75rem 1rem; background: var(--cream, #fffaf0); border-bottom: 2px solid var(--ink, #151b20); cursor: pointer;">
+          <summary style="font-weight: 800; font-size: 0.82rem; font-family: var(--md-code-font, monospace); color: var(--ink, #151b20);">
+            &#9654; View Plain Text / ASCII Terminal Blueprint
+          </summary>
+          <pre class="schematic-art" style="margin-top: 0.75rem;">
++-------------------------------------------------------------------------------------------------------------------------+
+|                    UNIVERSAL BASELINE SCALAR RISC-V (RV32I/E) MASTER ARCHITECTURAL HARDWARE FABRIC                      |
++-------------------------------------------------------------------------------------------------------------------------+
+|  +--------------------------------+   +---------------------------------------+   +----------------------------------+  |
+|  |  BLOCK 01: INSTRUCTION FETCH   |   |   BLOCK 02: DECODE &amp; IMMGEN (ID)      |   |   BLOCK 06: PRIVILEGED CSR &amp; TRAP|  |
+|  |  (PC Reg, Next PC Mux &amp; IMEM)  |   |   (Slicer, ImmGen &amp; Control Matrix)   |   |   (mtvec, mstatus, mepc &amp; IRQ)   |  |
+|  | +----------------------------+ |   | +-----------------------------------+ |   | +------------------------------+ |  |
+|  | | Next PC Mux | ADD +4 / +2  | |   | | Opcode Slicer | Funct3 / Funct7   | |   | | mtvec Base Exception Vector  | |  |
+|  | +----------------------------+ |   | +-----------------------------------+ |   | +------------------------------+ |  |
+|  | | 32-bit PC Reg | Reset Vec  | |   | | Sign-Ext ImmGen (I,S,B,U,J Types) | |   | | mstatus, mepc, mcause, mie   | |  |
+|  | +----------------------------+ |   | +-----------------------------------+ |   | +------------------------------+ |  |
+|  | | IMEM / I-Cache (32b Word)  | |   | | Control Matrix &amp; Hazard Unit      | |   | | Interrupt FSM &amp; Priority Pin | |  |
+|  | +----------------------------+ |   | +-----------------------------------+ |   | +------------------------------+ |  |
+|  +---------------+----------------+   +-------------------+-------------------+   +-----------------+----------------+  |
+|                  |                                        |                                         |                   |
+|                  | inst[31:0] &amp; PC                        | ctrl_matrix &amp; imm[31:0]                 | mtvec Trap Port   |
+|                  v                                        v                                         v                   |
+|  +-------------------------------------------------------------------------------------------------------------------+  |
+|  |                         CORE DATAPATH &amp; CONTROL INTERCONNECT HIGHWAY (32-BIT PIPELINE FABRIC)                     |  |
+|  |    Next PC Redirection  &bull;  Operand Forwarding  &bull;  RAW Bypass Mux  &bull;  Synchronous Commit Writeback Bus (rd_data)   |  |
+|  +---------------+----------------------------------------+-----------------------------------------+----------------+  |
+|                  |                                        |                                         |                   |
+|                  | rs1/rs2 Read &amp; rd Commit               | op_a, op_b &amp; alu_out                    | mem_addr &amp; r/wdata|
+|                  v                                        v                                         v                   |
+|  +---------------+----------------+   +-------------------v-------------------+   +-----------------v----------------+  |
+|  |  BLOCK 03: REGISTER FILE (RF)  |   |  BLOCK 04: ALU &amp; COMPARATOR           |   |  BLOCK 05: LSU &amp; SYSTEM BUS      |  |
+|  |  (32x32-Bit GPRs &bull; x0-x31)     |   |  (CLA Adder, Barrel Shifter &amp; CMP)    |   |  (Data Memory, PMP &amp; AHB/AXI/OBI)|  |
+|  | +----------------------------+ |   | +-----------------------------------+ |   | +------------------------------+ |  |
+|  | | Dual Read Ports (R1 &amp; R2)  | |   | | 32-bit CLA Adder &amp; Subtractor     | |   | | Byte Alignment &amp; Sign-Ext    | |  |
+|  | +----------------------------+ |   | +-----------------------------------+ |   | +------------------------------+ |  |
+|  | | Port R1: rs1 | Port R2: rs2| |   | | Barrel Shifter (SLL, SRL, SRA)    | |   | | LSU Interface (lw, lb, sw, sb| |  |
+|  | +----------------------------+ |   | +-----------------------------------+ |   | +------------------------------+ |  |
+|  | | Port W Commit | RAW Bypass | |   | | Branch Flags (SLT, BEQ, BNE, BLT) | |   | | PMP Checking &amp; AHB/AXI Master| |  |
+|  | +----------------------------+ |   | +-----------------------------------+ |   | +------------------------------+ |  |
+|  +--------------------------------+   +---------------------------------------+   +----------------------------------+  |
++-------------------------------------------------------------------------------------------------------------------------+
+          </pre>
+        </details>
+
         <div class="mobile-scroll-hint">&#8596; Interactive Schematic: Scroll horizontally on touchscreens to inspect full datapath interconnects</div>
         <p class="schematic-caption" style="margin-top: 0.75rem;">
-          <strong>Figure 1.0:</strong> Complete architectural datapath and control topology of a baseline scalar RISC-V (RV32I/E) processor core. Solid black traces show the 32-bit integer datapath; dashed purple traces indicate decoded control signals; upper dedicated highways carry redirection back to the Next PC multiplexer (Channel 1 in purple returns <code>mtvec</code> from Block 6 Privileged CSR &amp; Trap Controller on interrupts/exceptions; Channel 2 in crimson returns <code>target_pc</code> from Stage 3 Branch/Jump Target Unit on taken control hazards); the teal bus carries committed writeback data back to the register file.
+          <strong>Figure 1.0:</strong> Master architectural datapath and control topology of a baseline scalar RISC-V (RV32I/E) processor core rendered in SCORE Technical CAD specification. The architecture interconnects the six universal primitives across the high-bandwidth central datapath highway: Block 01 Instruction Fetch (Cyan), Block 02 Decode &amp; ImmGen (Yellow), Block 06 Privileged CSR &amp; Traps (Lavender), Block 03 General-Purpose Register File (Sage), Block 04 Arithmetic Logic Unit &amp; Comparator (Cyan), and Block 05 Load/Store Unit &amp; System Bus (Coral).
         </p>
       </div>
 
