@@ -5115,7 +5115,7 @@ const appCoreDossiers = [
 </svg>
       </div>
       <p class="schematic-caption">
-        <strong>Figure 5.1:</strong> Empirical memory bandwidth (memcpy MB/s) and peak operating frequency (Fmax) spectrum across evaluated 64-bit application core microarchitectures running unaligned memory sweeps under Linux 6.1 LTS. Bars are color-coded by microarchitectural archetype: Amber (Out-of-Order Superscalar), Cyan (Minimal In-Order Baseline), Mint (Pipelined Industrial Scoreboard), and Coral (Modular Multicore Tile). The secondary black indicator bar denotes peak synthesizable frequency. SonicBOOM (3-Wide) achieves the highest single-thread memory bandwidth (782.5 MB/s), while Rocket Chip (Standard) delivers the highest compute density per silicon gate (135 kGE).
+        <strong>Figure 5.1:</strong> Linux 6.1 LTS memory bandwidth (<code>memcpy</code> MB/s), reference-node operating frequency (<code>f_max</code>), normalized area (kGE), and MSHR depth across all 15 profiled 64-bit application core configurations. Bars are color-coded by microarchitectural archetype: Amber (Out-of-Order Superscalar), Cyan (Minimal In-Order), Mint (Industrial Scoreboard), and Coral (Coherent Multicore Tile). XiangShan (NanHu 6-wide, 16 MSHRs) leads at 845.6 MB/s followed by OpenC910 (820.4 MB/s) and SonicBOOM (782.5 MB/s), while Rocket Chip (Standard, 135 kGE) delivers peak in-order area efficiency.
       </p>
     </div>
 
@@ -5238,6 +5238,12 @@ const appCoreDossiers = [
       <p class="schematic-caption">
         <strong>Figure 5.2:</strong> Microarchitectural design space Pareto frontier mapping log-scale normalized silicon area (NAND2 kGE, 12&ndash;28nm reference nodes) against Linux 6.1 LTS <code>memcpy</code> throughput (MB/s) across all 15 profiled 64-bit configurations. The dashed Pareto envelope tracks throughput scaling across four microarchitectural regimes: Minimal In-Order (Rocket, NutShell), Industrial Scoreboard (CVA6, OpenC906, SHAKTI C-Class), Coherent Multicore Tiles (BlackParrot, OpenPiton), and Out-of-Order Superscalar Flagships (SmallBOOM, SonicBOOM, OpenC910, and XiangShan, scaling from 0 to 16 non-blocking MSHRs).
       </p>
+    </div>
+
+    <div style="margin: 1.5rem 0; padding: 1.15rem 1.4rem; background: #fffaf0; border: 2px solid #151b20; border-radius: 10px; box-shadow: 4px 4px 0 #151b20;">
+      <div style="font-family: var(--md-code-font, monospace); font-size: 0.78rem; font-weight: 900; letter-spacing: 0.05em; color: #0369a1; margin-bottom: 0.45rem;">SCORE LEVEL 2 MEMORY-WALL FORMULATION (EQS. 5–6 • 6/15 PARETO-OPTIMAL PROFILES)</div>
+      <div set:html={`$$\\mathrm{CPI}_{\\mathrm{app}} = \\mathrm{CPI}_{\\mathrm{core}} + \\frac{m_{\\mathrm{L1}}\\,L_{\\mathrm{miss}}}{N_{\\mathrm{MSHR}}^{\\mathrm{eff}}} + m_{\\mathrm{TLB}}\\,L_{\\mathrm{PTW}}, \\qquad B_{\\mathrm{memcpy}} = \\frac{S_{\\mathrm{bytes}}}{C_{\\mathrm{memcpy}}} \\cdot f_{\\max}$$`} />
+      <p style="margin: 0.4rem 0 0; font-size: 0.85rem; color: #334155;">Expanding non-blocking MSHR concurrency (<i>N</i><sub>MSHR</sub><sup>eff</sup> from 0–2 to 8–16 entries) lifts sustained <code>memcpy</code> throughput by up to 1.74&times; along the 6-profile Pareto frontier (Rocket Std &rarr; Rocket Max &rarr; SmallBOOM &rarr; SonicBOOM &rarr; OpenC910 &rarr; XiangShan).</p>
     </div>
 
     <!-- Leaderboard Interactive Controls (Filter, Search, Sort) -->

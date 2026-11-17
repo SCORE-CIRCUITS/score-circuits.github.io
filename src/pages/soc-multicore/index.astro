@@ -3768,6 +3768,12 @@ OpenTitan   &amp; boot\_rom        &amp; TileLink-UL Crossbar   &amp; 1x Ibex   
     <div class="block-header-wrap">
       <div class="badge badge-primary">&sect; 6. MULTI-CONFIGURATION SCALING &amp; ARCHITECTURAL SENSITIVITY</div>
       <h2 class="block-title">Quantitative Architectural Sensitivity &amp; Scaling Curves</h2>
+
+    <div style="margin: 1.25rem 0 1.5rem; padding: 1.15rem 1.4rem; background: #fffaf0; border: 2px solid #151b20; border-radius: 10px; box-shadow: 4px 4px 0 #151b20;">
+      <div style="font-family: var(--md-code-font, monospace); font-size: 0.78rem; font-weight: 900; letter-spacing: 0.05em; color: #3f6212; margin-bottom: 0.45rem;">SCORE LEVEL 4 BARRIER &amp; DMA SCALING LAWS (EQS. 9–10 • R&sup2; = 0.9999 AMO / 0.964 TREE)</div>
+      <div set:html={`$$L_{\\mathrm{AMO}}(N) = \\alpha_{0} + \\alpha_{1}N + \\alpha_{2}N^{2}, \\quad L_{\\mathrm{tree}}(N) = L_{\\mathrm{node}} \\lceil \\log_{k} N \\rceil, \\qquad S^{\\star} = \\frac{t_{\\mathrm{setup}}}{\\frac{1}{B_{\\mathrm{core}}} - \\frac{1}{B_{\\mathrm{DMA}}}}$$`} />
+      <p style="margin: 0.4rem 0 0; font-size: 0.85rem; color: #334155;">Quadratic AMO contention (&alpha;<sub>2</sub> = 0.445 cyc/core&sup2;) reaches 98,500 cycles at 432 cores vs. 610 cycles on FractalSync (161.5&times; speedup). At B<sub>core</sub> = 0.8 GB/s and B<sub>DMA</sub> = 14.8 GB/s, the 256-byte breakeven corresponds to t<sub>setup</sub> = 302.7 ns (~35 cycles at 115 MHz or ~151 total cycles at 500 MHz).</p>
+    </div>
       <p class="block-desc">
         How system-level parameters govern performance, wiring area, and contention across the multi-core design space:
       </p>

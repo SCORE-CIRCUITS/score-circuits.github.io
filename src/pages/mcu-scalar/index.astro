@@ -1,4 +1,4 @@
-﻿---
+---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 // Master Empirical Benchmark Leaderboard: Exact figures measured under SCORE cycle-accurate simulation profiles
@@ -5429,8 +5429,15 @@ const bespokeDossiers = [
 </svg>
         </div>
         <p class="schematic-caption">
-          <strong>Figure 5.2:</strong> Silicon trade-off landscape mapping computational efficiency (CoreMark/MHz) against normalized silicon area (kGE). The dashed teal Pareto frontier curve bounds the design space: from the ultra-minimal SERV (2.1 kGE) to the balanced knee of Ibex Small (18.5 kGE, 2.46 CoreMark/MHz) and the high-efficiency peak of Hazard3 / Ibex BP (~28–29 kGE, &gt;3.15 CoreMark/MHz). VeeR EL2 breaks past the single-issue IPC barrier (CPI &lt; 1.0) into dual-issue superscalar territory.
+          <strong>Figure 5.2:</strong> Log-area silicon trade-off landscape mapping computational efficiency (CoreMark/MHz) against normalized silicon area (NAND2 kGE) across all 17 empirically profiled scalar cores. The dashed teal Pareto frontier bounds six Pareto-optimal designs: SERV (2.1 kGE), FemtoRV32 (5.5 kGE), PicoRV32 (9.5 kGE), Ibex Small (18.5 kGE, 2.46 CoreMark/MHz), Ibex OpenTitan (26.5 kGE, 3.12), and Ibex Dyn-BP (28.0 kGE, 3.23). CVA5 (Taiga) breaks past the single-issue CPI barrier (0.87 CPI), while dual-issue VeeR EL2 achieves 1.03 CPI.
         </p>
+      </div>
+
+      <div style="margin: 1.5rem 0; padding: 1.15rem 1.4rem; background: #fffaf0; border: 2px solid #151b20; border-radius: 10px; box-shadow: 4px 4px 0 #151b20;">
+        <div style="font-family: var(--md-code-font, monospace); font-size: 0.78rem; font-weight: 900; letter-spacing: 0.05em; color: #0369a1; margin-bottom: 0.45rem;">SCORE LEVEL 1 ANALYTICAL FORMULATION (EQS. 3–4 • VALIDATED &le; 0.0023% RESIDUAL ON 21/22 COREMARK RUNS)</div>
+        <div set:html={`$$T_{\\mathrm{exec}} = \\frac{N_{\\mathrm{inst}} \\cdot \\mathrm{CPI}}{f_{\\max}}, \\quad \\mathrm{CPI} = \\mathrm{CPI}_{0} + p_{\\mathrm{br}}c_{\\mathrm{br}} + p_{\\mathrm{lu}}c_{\\mathrm{lu}} + p_{\\mathrm{mul}}c_{\\mathrm{mul}}$$`} />
+        <div set:html={`$$\\mathrm{CM/MHz} = \\frac{N_{\\mathrm{iter}} \\cdot 10^{6}}{C_{\\mathrm{CM}}}, \\qquad \\mathrm{DMIPS/MHz} = \\frac{N_{\\mathrm{runs}} \\cdot 10^{6}}{1757\\,C_{\\mathrm{Dhry}}}$$`} />
+        <p style="margin: 0.4rem 0 0; font-size: 0.85rem; color: #334155;">Active kernel cycles (<i>C</i><sub>CM</sub>, <i>C</i><sub>Dhry</sub>, excluding boot/UART startup) yield exact frequency-independent efficiency scores across Verilator, CXXRTL, Icarus Verilog, and GHDL harnesses.</p>
       </div>
 
     <!-- Leaderboard Interactive Controls (Filter, Search, Sort) -->
