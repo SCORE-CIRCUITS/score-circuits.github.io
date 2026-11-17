@@ -3122,77 +3122,136 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
           <rect width="956" height="546" x="2" y="2" rx="9" fill="url(#cadGridFig52)"/>
 
           <!-- Status Header -->
-          <rect x="15" y="12" width="930" height="26" fill="#e7f4c8" stroke="#151b20" stroke-width="1.5" rx="6"/>
-          <circle cx="28" cy="25" r="4.5" fill="#151b20"/>
-          <text x="40" y="29" font-size="9" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">SCORE EDA WORKBENCH &#8226; AREA VS THROUGHPUT CONVEX OPTIMAL PARETO ENVELOPE</text>
+          <rect x="15" y="12" width="930" height="30" fill="#e7f4c8" stroke="#151b20" stroke-width="1.5" rx="6"/>
+          <circle cx="30" cy="27" r="5" fill="#151b20"/>
+          <text x="44" y="32" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">SCORE EDA WORKBENCH &#8226; LOG-LOG AREA VS. THROUGHPUT PARETO FRONTIER (PRECISION-TAGGED)</text>
 
-          <!-- Axes: Origin at x=100, y=470. X-range: 0 to 2000 kGE (width 800px). Y-range: 0 to 400 Ops/cyc (height 400px) -->
-          <line x1="100" y1="470" x2="900" y2="470" stroke="#151b20" stroke-width="2"/>
-          <line x1="100" y1="470" x2="100" y2="70" stroke="#151b20" stroke-width="2"/>
+          <!-- Axes: Log X (10 to 3,000 kGE), Log Y (0.1 to 1,000 Ops/Cycle) -->
+          <line x1="115" y1="455" x2="915" y2="455" stroke="#151b20" stroke-width="2.2"/>
+          <line x1="115" y1="455" x2="115" y2="75" stroke="#151b20" stroke-width="2.2"/>
+          <!-- X Ticks (Logarithmic Area in kGE) -->
+          <line x1="115.0" y1="455" x2="115.0" y2="462" stroke="#151b20" stroke-width="2"/>
+          <text x="115.0" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">10</text>
+          <line x1="212.2" y1="455" x2="212.2" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="212.2" y1="455" x2="212.2" y2="462" stroke="#151b20" stroke-width="2"/>
+          <text x="212.2" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">20</text>
+          <line x1="340.7" y1="455" x2="340.7" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="340.7" y1="455" x2="340.7" y2="462" stroke="#151b20" stroke-width="2"/>
+          <text x="340.7" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">50</text>
+          <line x1="438.0" y1="455" x2="438.0" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="438.0" y1="455" x2="438.0" y2="462" stroke="#151b20" stroke-width="2"/>
+          <text x="438.0" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">100</text>
+          <line x1="535.2" y1="455" x2="535.2" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="535.2" y1="455" x2="535.2" y2="462" stroke="#151b20" stroke-width="2"/>
+          <text x="535.2" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">200</text>
+          <line x1="663.7" y1="455" x2="663.7" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="663.7" y1="455" x2="663.7" y2="462" stroke="#151b20" stroke-width="2"/>
+          <text x="663.7" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">500</text>
+          <line x1="760.9" y1="455" x2="760.9" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="760.9" y1="455" x2="760.9" y2="462" stroke="#151b20" stroke-width="2"/>
+          <text x="760.9" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">1,000</text>
+          <line x1="858.1" y1="455" x2="858.1" y2="75" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="858.1" y1="455" x2="858.1" y2="462" stroke="#151b20" stroke-width="2"/>
+          <text x="858.1" y="480" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">2,000</text>
+          <text x="515" y="514" font-size="14" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">SILICON GATE BUDGET (kGE &#8226; NAND2 EQUIVALENTS, LOG SCALE)</text>
+          <!-- Y Ticks (Logarithmic Throughput in Ops/Cycle) -->
+          <line x1="108" y1="455.0" x2="115" y2="455.0" stroke="#151b20" stroke-width="2"/>
+          <text x="102" y="460.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">0.1</text>
+          <line x1="115" y1="360.0" x2="915" y2="360.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="108" y1="360.0" x2="115" y2="360.0" stroke="#151b20" stroke-width="2"/>
+          <text x="102" y="365.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">1</text>
+          <line x1="115" y1="265.0" x2="915" y2="265.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="108" y1="265.0" x2="115" y2="265.0" stroke="#151b20" stroke-width="2"/>
+          <text x="102" y="270.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">10</text>
+          <line x1="115" y1="170.0" x2="915" y2="170.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="108" y1="170.0" x2="115" y2="170.0" stroke="#151b20" stroke-width="2"/>
+          <text x="102" y="175.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">100</text>
+          <line x1="115" y1="75.0" x2="915" y2="75.0" stroke="#151b20" stroke-width="1" stroke-dasharray="4,4" opacity="0.22"/>
+          <line x1="108" y1="75.0" x2="115" y2="75.0" stroke="#151b20" stroke-width="2"/>
+          <text x="102" y="80.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">1,000</text>
+          <text x="36" y="265" font-size="14" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle" transform="rotate(-90 36 265)">PEAK MEASURED THROUGHPUT (OPS / CYCLE, LOG SCALE)</text>
 
-          <!-- X Ticks: 0, 500, 1000, 1500, 2000 kGE (200px per 500 kGE) -->
-          <text x="100" y="490" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">0</text>
-          <line x1="300" y1="470" x2="300" y2="70" stroke="#151b20" stroke-width="1" stroke-dasharray="3,3" opacity="0.25"/>
-          <text x="300" y="490" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">500 kGE</text>
-          <line x1="500" y1="470" x2="500" y2="70" stroke="#151b20" stroke-width="1" stroke-dasharray="3,3" opacity="0.25"/>
-          <text x="500" y="490" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">1,000 kGE</text>
-          <line x1="700" y1="470" x2="700" y2="70" stroke="#151b20" stroke-width="1" stroke-dasharray="3,3" opacity="0.25"/>
-          <text x="700" y="490" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">1,500 kGE</text>
-          <line x1="900" y1="470" x2="900" y2="70" stroke="#151b20" stroke-width="1" stroke-dasharray="3,3" opacity="0.25"/>
-          <text x="900" y="490" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">2,000 kGE</text>
-          <text x="500" y="515" font-size="9" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">SILICON GATE BUDGET (kGE &bull; NAND2 EQUIVALENTS)</text>
+          <!-- TRUE PARETO FRONTIER ENVELOPE (CV32E40P -> Spatz -> IME -> Gemmini) -->
+          <polygon points="237.8,455 237.8,430.5 316.3,218.1 596.6,159.8 684.5,107.9 915,107.9 915,455" fill="#e7f4c8" opacity="0.40"/>
+          <path d="M 237.8,430.5 L 316.3,218.1 L 596.6,159.8 L 684.5,107.9 L 915,107.9" stroke="#151b20" stroke-width="2.8" stroke-dasharray="8,5" fill="none"/>
+          <text x="322" y="203" font-size="11.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" transform="rotate(-11.8 322 203)">PARETO OPTIMAL FRONTIER</text>
 
-          <!-- Y Ticks: 0, 100, 200, 300, 400 Ops/Cycle (100px per 100 Ops) -->
-          <text x="85" y="473" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">0</text>
-          <line x1="100" y1="370" x2="900" y2="370" stroke="#151b20" stroke-width="1" stroke-dasharray="3,3" opacity="0.25"/>
-          <text x="85" y="373" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">100</text>
-          <line x1="100" y1="270" x2="900" y2="270" stroke="#151b20" stroke-width="1" stroke-dasharray="3,3" opacity="0.25"/>
-          <text x="85" y="273" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">200</text>
-          <line x1="100" y1="170" x2="900" y2="170" stroke="#151b20" stroke-width="1" stroke-dasharray="3,3" opacity="0.25"/>
-          <text x="85" y="173" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">300</text>
-          <text x="85" y="75" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">400</text>
-          <text x="35" y="270" font-size="9" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle" transform="rotate(-90 35 270)">PEAK ARITHMETIC DENSITY (OPS / CYCLE)</text>
+          <!-- Precision-scaling link for Spatz (FP64 -> FP32) -->
+          <line x1="316.3" y1="246.5" x2="316.3" y2="218.1" stroke="#151b20" stroke-width="1.8" stroke-dasharray="3,3"/>
 
-          <!-- CONVEX PARETO ENVELOPE -->
-          <polygon points="100,470 110,466 119,463 332,115 900,115 900,470" fill="#e7f4c8" opacity="0.45"/>
-          <path d="M 110,466 L 119,463 L 332,115 L 900,115" stroke="#151b20" stroke-width="2.5" stroke-dasharray="6,4" fill="none"/>
-          <text x="450" y="105" font-size="9" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">OPTIMAL PARETO FRONTIER ENVELOPE</text>
+          <!-- SCATTER POINTS (Circles = SCORE Verilator Measured, Diamonds = Literature Reported) -->
+          <!-- Gemmini (580 kGE, 450.80 Ops, INT8) -->
+          <circle cx="684.5" cy="107.9" r="9" fill="#c9f3f4" stroke="#151b20" stroke-width="2.4"/>
+          <text x="698.5" y="85.9" font-size="13.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Gemmini (580 kGE)</text>
+          <text x="698.5" y="101.9" font-size="12" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)">450.8 Ops/cyc [INT8]</text>
 
-          <!-- SCATTER POINTS -->
-          <!-- Gemmini -->
-          <circle cx="332" cy="115" r="7.5" fill="#c9f3f4" stroke="#151b20" stroke-width="2"/>
-          <text x="345" y="112" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Gemmini (580 kGE, 354.55 Ops)</text>
-          <text x="345" y="125" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">16&times;16 Systolic Mesh &bull; Throughput Champion</text>
+          <!-- IME (310 kGE, 128.0 Ops, INT8, Lit Diamond) -->
+          <polygon points="596.6,150.8 605.6,159.8 596.6,168.8 587.6,159.8" fill="#c9f3f4" stroke="#151b20" stroke-width="2.2"/>
+          <text x="588.6" y="122.0" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">IME Tile (310 kGE)</text>
+          <text x="588.6" y="138.0" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="end">128.0 Ops [INT8]</text>
 
-          <!-- Vortex -->
-          <circle cx="760" cy="406" r="7.5" fill="#e2dfff" stroke="#151b20" stroke-width="2"/>
-          <text x="772" y="402" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Vortex (1,650 kGE, 15.12 Ops)</text>
-          <text x="772" y="415" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">4-Core GPGPU SIMT &bull; OpenCL Warp Scheduler</text>
+          <!-- Spatz FP32 (42 kGE, 31.13 Ops, FP32) -->
+          <circle cx="316.3" cy="218.1" r="8.5" fill="#b7df69" stroke="#151b20" stroke-width="2.4"/>
+          <text x="302.3" y="210.1" font-size="13" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">Spatz (42 kGE)</text>
+          <text x="302.3" y="226.1" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="end">31.13 Ops [FP32]</text>
 
-          <!-- AraXL -->
-          <circle cx="236" cy="454" r="6" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
-          <text x="248" y="448" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">AraXL (340 kGE, 7.82 Ops)</text>
-          <text x="248" y="460" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">8-Lane Clustered RVV</text>
+          <!-- Spatz FP64 (42 kGE, 15.64 Ops, FP64) -->
+          <circle cx="316.3" cy="246.5" r="6.5" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
+          <text x="328.3" y="250.5" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="start">15.64 Ops [FP64]</text>
 
-          <!-- Ara -->
-          <circle cx="188" cy="462" r="6" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
-          <text x="180" y="440" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Ara (220 kGE, 2.38 Ops)</text>
+          <!-- Vicuna (48 kGE, 6.46 Ops, INT8) -->
+          <circle cx="335.0" cy="283.0" r="7.5" fill="#c9f3f4" stroke="#151b20" stroke-width="2.2"/>
+          <text x="347.0" y="299.0" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Vicuna (48 kGE)</text>
+          <text x="347.0" y="314.0" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)">6.46 Ops [INT8]</text>
 
-          <!-- Vicuna -->
-          <circle cx="119" cy="463" r="5.5" fill="#e7f4c8" stroke="#151b20" stroke-width="2"/>
-          <text x="130" y="475" font-size="8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Vicuna (48 kGE, 6.46 Ops)</text>
+          <!-- Ara 4-Lane (220 kGE, 7.87 Ops, FP64) -->
+          <circle cx="548.5" cy="274.9" r="8" fill="#fff0b9" stroke="#151b20" stroke-width="2.2"/>
+          <text x="538.5" y="300.9" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">Ara 4L (220 kGE)</text>
+          <text x="538.5" y="315.9" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">7.87 Ops [FP64]</text>
 
-          <!-- Spatz -->
-          <circle cx="117" cy="466" r="5" fill="#e7f4c8" stroke="#151b20" stroke-width="2"/>
-          <text x="127" y="492" font-size="8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Spatz (42 kGE)</text>
+          <!-- AraXL 8-Lane (340 kGE, 7.82 Ops, FP64) -->
+          <circle cx="609.6" cy="275.1" r="8" fill="#fff0b9" stroke="#151b20" stroke-width="2.2"/>
+          <text x="623.6" y="301.1" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="start">AraXL 8L (340 kGE)</text>
+          <text x="623.6" y="316.1" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="start">7.82 Ops [FP64]</text>
 
-          <!-- CV32E40P -->
-          <circle cx="110" cy="466" r="5" fill="#ffd8ce" stroke="#151b20" stroke-width="2"/>
-          <text x="40" y="455" font-size="8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">CV32E40P (24 kGE)</text>
+          <!-- Hwacha (410 kGE, 14.80 Ops, FP32, Lit Diamond) -->
+          <polygon points="635.9,240.3 644.4,248.8 635.9,257.3 627.4,248.8" fill="#b7df69" stroke="#151b20" stroke-width="2.2"/>
+          <text x="635.9" y="222.8" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">Hwacha (410 kGE)</text>
+          <text x="635.9" y="236.8" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">14.80 Ops [FP32]</text>
+
+          <!-- Vortex (1,650 kGE, 15.12 Ops, FP32, Lit Diamond) -->
+          <polygon points="831.1,238.9 840.1,247.9 831.1,256.9 822.1,247.9" fill="#b7df69" stroke="#151b20" stroke-width="2.2"/>
+          <text x="831.1" y="221.9" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">Vortex (1,650 kGE)</text>
+          <text x="831.1" y="235.9" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)" text-anchor="middle">15.12 Ops [FP32]</text>
+
+          <!-- CV32E40P (24 kGE, 0.18 Ops, INT32) -->
+          <circle cx="237.8" cy="430.5" r="7.5" fill="#ffd8ce" stroke="#151b20" stroke-width="2.2"/>
+          <text x="251.8" y="426.5" font-size="12.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">CV32E40P (24 kGE)</text>
+          <text x="251.8" y="441.5" font-size="11.5" font-weight="800" fill="#151b20" font-family="var(--md-code-font, monospace)">0.18 Ops [INT32 SIMD]</text>
+
+          <!-- LEGEND BOX (Bottom-Right Open Space) -->
+          <rect x="655" y="346" width="248" height="98" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.8"/>
+          <text x="668" y="365" font-size="11.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">PRECISION &amp; EVIDENCE LEGEND</text>
+          <line x1="665" y1="371" x2="893" y2="371" stroke="#151b20" stroke-width="1" opacity="0.3"/>
+
+          <circle cx="674" cy="385" r="5.5" fill="#c9f3f4" stroke="#151b20" stroke-width="1.6"/>
+          <text x="685" y="389" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">INT8</text>
+          <circle cx="732" cy="385" r="5.5" fill="#b7df69" stroke="#151b20" stroke-width="1.6"/>
+          <text x="743" y="389" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">FP32</text>
+          <circle cx="790" cy="385" r="5.5" fill="#fff0b9" stroke="#151b20" stroke-width="1.6"/>
+          <text x="801" y="389" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">FP64</text>
+          <circle cx="848" cy="385" r="5.5" fill="#ffd8ce" stroke="#151b20" stroke-width="1.6"/>
+          <text x="859" y="389" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">INT32</text>
+
+          <circle cx="674" cy="408" r="5.5" fill="#ffffff" stroke="#151b20" stroke-width="2"/>
+          <text x="687" y="412" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">Circle: SCORE Verilator</text>
+
+          <polygon points="674,422 680,428 674,434 668,428" fill="#ffffff" stroke="#151b20" stroke-width="2"/>
+          <text x="687" y="432" font-size="11" font-weight="800" fill="#000000" font-family="var(--md-code-font, monospace)">Diamond: Literature</text>
         </svg>
       </div>
       <p class="schematic-caption">
-        <strong>Figure 5.2: Microarchitectural Pareto Frontier Envelope.</strong> Measured silicon area (kGE) plotted against peak arithmetic throughput (Ops/cycle) across TSMC 28nm implementations, tracing the optimal hardware envelope from sub-word SIMD to 2D systolic arrays.
+        <strong>Figure 5.2: Microarchitectural Pareto Frontier Envelope (Log&ndash;Log Scale).</strong> Normalized silicon gate area (kGE) plotted against peak measured arithmetic throughput (Ops/cycle) across precision domains (INT8, FP32, FP64, INT32) and evidence classes (circles: SCORE Verilator measured; diamonds: literature reported). The true Pareto-optimal frontier spans CV32E40P (24&thinsp;kGE, 0.18&thinsp;Ops/cyc) &rarr; Spatz (42&thinsp;kGE, 31.13&thinsp;Ops/cyc FP32 / 15.64&thinsp;Ops/cyc FP64) &rarr; IME Tile (310&thinsp;kGE, 128.0&thinsp;Ops/cyc INT8) &rarr; Gemmini (580&thinsp;kGE, 450.8&thinsp;Ops/cyc INT8).
       </p>
     </div>
 
