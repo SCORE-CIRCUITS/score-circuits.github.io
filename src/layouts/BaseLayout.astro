@@ -7,7 +7,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "SCORE: Survey & Benchmark Dataset of Open-Source Chip Repositories for EDA & Computer Architecture Research." } = Astro.props;
+const { title, description = "SCORE: Survey of Open-Source Chip Repositories for EDA, Circuit, and System Research." } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const pathname = Astro.url.pathname;
 const pageTitle = title === "SCORE" || title === "Home" ? "SCORE — Benchmark-Driven Open Architecture Platform" : `${title} · SCORE`;
@@ -367,7 +367,7 @@ function isActive(href: string) {
     <footer class="score-footer">
       <div class="score-footer-inner">
         <div>
-          <strong>SCORE (Survey of Open-Source Chip Repositories)</strong> — An open community dataset for reproducible EDA and architecture research.
+          <strong>SCORE (Survey of Open-Source Chip Repositories for EDA, Circuit, and System Research)</strong> — An open community dataset for reproducible EDA, circuit, and system research.
         </div>
         <div style="display: flex; gap: 1rem; align-items: center;">
           <a href="https://github.com/SCORE-CIRCUITS/score" target="_blank" rel="noopener" style="font-weight: 700; color: var(--ink);">GitHub Repository</a>

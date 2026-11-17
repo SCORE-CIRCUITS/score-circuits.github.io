@@ -1,6 +1,6 @@
 {
   "version": "2.1",
-  "generatedAt": "2026-11-17T08:09:07.825Z",
+  "generatedAt": "2026-11-17T21:09:02.388Z",
   "counts": {
     "projects": 46,
     "tools": 80,
@@ -1119,6 +1119,7 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-17T00:48:34Z",
+          "workload": "helloworld",
           "_path": "datasets/astral/f97f001b/benchmarks/helloworld.json"
         }
       ],
@@ -1176,7 +1177,7 @@
       "measuredBenchmarks": [
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "simulated",
+          "evidence_class": "score_measured",
           "core": "auteur",
           "soc": "auteur",
           "upstream_commit": "8951b3cf",
@@ -1297,6 +1298,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-17T00:03:46Z",
           "soc": "carfield",
+          "workload": "helloworld",
+          "evidence_class": "score_measured",
           "_path": "datasets/carfield/ee168c59/benchmarks/helloworld.json"
         }
       ],
@@ -1868,6 +1871,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T02:58:50+00:00",
           "soc": "chimera",
+          "workload": "testCfgBootAddr",
+          "evidence_class": "score_measured",
           "_path": "datasets/chimera/208b36ef/benchmarks/testCfgBootAddr.json"
         },
         {
@@ -1893,6 +1898,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T02:59:07+00:00",
           "soc": "chimera",
+          "workload": "testCluster",
+          "evidence_class": "score_measured",
           "_path": "datasets/chimera/208b36ef/benchmarks/testCluster.json"
         },
         {
@@ -1918,6 +1925,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T02:58:57+00:00",
           "soc": "chimera",
+          "workload": "testPeripheralsGating",
+          "evidence_class": "score_measured",
           "_path": "datasets/chimera/208b36ef/benchmarks/testPeripheralsGating.json"
         },
         {
@@ -1943,6 +1952,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T02:57:46+00:00",
           "soc": "chimera",
+          "workload": "testReturnZero",
+          "evidence_class": "score_measured",
           "_path": "datasets/chimera/208b36ef/benchmarks/testReturnZero.json"
         }
       ],
@@ -3632,6 +3643,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T06:20:03Z",
           "soc": "magia",
+          "workload": "hello_world",
+          "evidence_class": "score_measured",
           "_path": "datasets/magia/4a45e25a/benchmarks/hello_world.json"
         },
         {
@@ -3657,6 +3670,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T06:21:51Z",
           "soc": "magia",
+          "workload": "l1_test",
+          "evidence_class": "score_measured",
           "_path": "datasets/magia/4a45e25a/benchmarks/l1_test.json"
         }
       ],
@@ -4323,7 +4338,7 @@
         },
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "empirical_simulation",
+          "evidence_class": "score_measured",
           "core": "occamy",
           "soc": "occamy",
           "upstream_commit": "d5d0d832",
@@ -4359,7 +4374,7 @@
         },
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "empirical_simulation",
+          "evidence_class": "score_measured",
           "core": "occamy",
           "soc": "occamy",
           "upstream_commit": "d5d0d832",
@@ -4559,6 +4574,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T17:11:35Z",
           "soc": "picobello",
+          "workload": "helloworld",
+          "evidence_class": "score_measured",
           "_path": "datasets/picobello/71df12a2/benchmarks/helloworld.json"
         }
       ],
@@ -4656,6 +4673,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T00:59:41+00:00",
           "soc": "pulp_cluster",
+          "workload": "hello",
+          "evidence_class": "score_measured",
           "_path": "datasets/pulp_cluster/caaa9735/benchmarks/hello.json"
         },
         {
@@ -4681,6 +4700,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T01:05:01+00:00",
           "soc": "pulp_cluster",
+          "workload": "parallel_fir",
+          "evidence_class": "score_measured",
           "_path": "datasets/pulp_cluster/caaa9735/benchmarks/parallel_fir.json"
         },
         {
@@ -4706,6 +4727,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T01:02:19+00:00",
           "soc": "pulp_cluster",
+          "workload": "parallel_matmul",
+          "evidence_class": "score_measured",
           "_path": "datasets/pulp_cluster/caaa9735/benchmarks/parallel_matmul.json"
         }
       ],
@@ -5214,7 +5237,7 @@
       "measuredBenchmarks": [
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "simulated",
+          "evidence_class": "score_measured",
           "core": "pulp_soc",
           "soc": "pulp_soc",
           "upstream_commit": "bf65372a",
@@ -5905,7 +5928,7 @@
       "measuredBenchmarks": [
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "simulated",
+          "evidence_class": "score_measured",
           "core": "rv_tracer",
           "soc": "rv_tracer",
           "upstream_commit": "b7e65fd7",
@@ -6026,6 +6049,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T00:06:04+00:00",
           "soc": "safety_island",
+          "workload": "coremark",
+          "evidence_class": "score_measured",
           "_path": "datasets/safety_island/584eb697/benchmarks/coremark.json"
         },
         {
@@ -6049,6 +6074,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T00:04:56+00:00",
           "soc": "safety_island",
+          "workload": "hello",
+          "evidence_class": "score_measured",
           "_path": "datasets/safety_island/584eb697/benchmarks/hello.json"
         }
       ],
@@ -8511,7 +8538,7 @@
       "fpgaEvidence": "unknown",
       "notableStrengths": "Physically scalable ultra-wide RVV 1.0 vector unit",
       "notableLimitations": "Successor to Ara; host core integration required",
-      "fileCount": 25,
+      "fileCount": 26,
       "topFiles": [
         "Bender.local",
         "Bender.lock",
@@ -8862,7 +8889,7 @@
             "result": "PASS",
             "exit_code": 0
           },
-          "evidence_class": "simulated"
+          "evidence_class": "score_measured"
         }
       ],
       "matchedProjectSlug": "auteur"
@@ -12425,7 +12452,7 @@
             "exit_code": 0
           },
           "generated_utc": "2026-11-17T01:47:15Z",
-          "evidence_class": "empirical_simulation"
+          "evidence_class": "score_measured"
         },
         {
           "level": "Level 4: Full SoC & Cluster Benchmarks",
@@ -12447,7 +12474,7 @@
             "exit_code": 0
           },
           "generated_utc": "2026-11-17T01:32:21Z",
-          "evidence_class": "empirical_simulation"
+          "evidence_class": "score_measured"
         }
       ],
       "matchedProjectSlug": "occamy"
@@ -12936,7 +12963,7 @@
             "result": "PASS",
             "exit_code": 0
           },
-          "evidence_class": "simulated"
+          "evidence_class": "score_measured"
         }
       ],
       "matchedProjectSlug": "pulp-soc"
@@ -13842,7 +13869,7 @@
             "result": "PASS",
             "exit_code": 0
           },
-          "evidence_class": "simulated"
+          "evidence_class": "score_measured"
         }
       ],
       "matchedProjectSlug": "rv-tracer"
@@ -16484,8 +16511,9 @@
     "soc": {
       "schema": "score.benchmark_aggregated.v1",
       "category": "Full SoC Platforms & Multi-Core Clusters",
-      "generated_utc": "2026-11-17T04:08:12+00:00",
+      "generated_utc": "2026-11-17T21:09:02+00:00",
       "count": 69,
+      "unique_count": 55,
       "results": [
         {
           "schema": "score.benchmark_results.v1",
@@ -16674,11 +16702,12 @@
           },
           "status": "passed",
           "run_at_utc": "2026-11-17T00:48:34Z",
+          "workload": "helloworld",
           "_path": "datasets/astral/f97f001b/benchmarks/helloworld.json"
         },
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "simulated",
+          "evidence_class": "score_measured",
           "core": "auteur",
           "soc": "auteur",
           "upstream_commit": "8951b3cf",
@@ -16727,6 +16756,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-17T00:03:46Z",
           "soc": "carfield",
+          "workload": "helloworld",
+          "evidence_class": "score_measured",
           "_path": "datasets/carfield/ee168c59/benchmarks/helloworld.json"
         },
         {
@@ -17082,6 +17113,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T02:58:50+00:00",
           "soc": "chimera",
+          "workload": "testCfgBootAddr",
+          "evidence_class": "score_measured",
           "_path": "datasets/chimera/208b36ef/benchmarks/testCfgBootAddr.json"
         },
         {
@@ -17107,6 +17140,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T02:59:07+00:00",
           "soc": "chimera",
+          "workload": "testCluster",
+          "evidence_class": "score_measured",
           "_path": "datasets/chimera/208b36ef/benchmarks/testCluster.json"
         },
         {
@@ -17132,6 +17167,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T02:58:57+00:00",
           "soc": "chimera",
+          "workload": "testPeripheralsGating",
+          "evidence_class": "score_measured",
           "_path": "datasets/chimera/208b36ef/benchmarks/testPeripheralsGating.json"
         },
         {
@@ -17157,6 +17194,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T02:57:46+00:00",
           "soc": "chimera",
+          "workload": "testReturnZero",
+          "evidence_class": "score_measured",
           "_path": "datasets/chimera/208b36ef/benchmarks/testReturnZero.json"
         },
         {
@@ -17548,6 +17587,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T06:20:03Z",
           "soc": "magia",
+          "workload": "hello_world",
+          "evidence_class": "score_measured",
           "_path": "datasets/magia/4a45e25a/benchmarks/hello_world.json"
         },
         {
@@ -17573,6 +17614,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T06:21:51Z",
           "soc": "magia",
+          "workload": "l1_test",
+          "evidence_class": "score_measured",
           "_path": "datasets/magia/4a45e25a/benchmarks/l1_test.json"
         },
         {
@@ -17991,7 +18034,7 @@
         },
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "empirical_simulation",
+          "evidence_class": "score_measured",
           "core": "occamy",
           "soc": "occamy",
           "upstream_commit": "d5d0d832",
@@ -18027,7 +18070,7 @@
         },
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "empirical_simulation",
+          "evidence_class": "score_measured",
           "core": "occamy",
           "soc": "occamy",
           "upstream_commit": "d5d0d832",
@@ -18165,6 +18208,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T17:11:35Z",
           "soc": "picobello",
+          "workload": "helloworld",
+          "evidence_class": "score_measured",
           "_path": "datasets/picobello/71df12a2/benchmarks/helloworld.json"
         },
         {
@@ -18190,6 +18235,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T00:59:41+00:00",
           "soc": "pulp_cluster",
+          "workload": "hello",
+          "evidence_class": "score_measured",
           "_path": "datasets/pulp_cluster/caaa9735/benchmarks/hello.json"
         },
         {
@@ -18215,6 +18262,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T01:05:01+00:00",
           "soc": "pulp_cluster",
+          "workload": "parallel_fir",
+          "evidence_class": "score_measured",
           "_path": "datasets/pulp_cluster/caaa9735/benchmarks/parallel_fir.json"
         },
         {
@@ -18240,11 +18289,13 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T01:02:19+00:00",
           "soc": "pulp_cluster",
+          "workload": "parallel_matmul",
+          "evidence_class": "score_measured",
           "_path": "datasets/pulp_cluster/caaa9735/benchmarks/parallel_matmul.json"
         },
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "simulated",
+          "evidence_class": "score_measured",
           "core": "pulp_soc",
           "soc": "pulp_soc",
           "upstream_commit": "bf65372a",
@@ -18632,7 +18683,7 @@
         },
         {
           "schema": "score.benchmark_results.v1",
-          "evidence_class": "simulated",
+          "evidence_class": "score_measured",
           "core": "rv_tracer",
           "soc": "rv_tracer",
           "upstream_commit": "b7e65fd7",
@@ -18681,6 +18732,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T00:06:04+00:00",
           "soc": "safety_island",
+          "workload": "coremark",
+          "evidence_class": "score_measured",
           "_path": "datasets/safety_island/584eb697/benchmarks/coremark.json"
         },
         {
@@ -18704,6 +18757,8 @@
           "status": "passed",
           "run_at_utc": "2026-11-16T00:04:56+00:00",
           "soc": "safety_island",
+          "workload": "hello",
+          "evidence_class": "score_measured",
           "_path": "datasets/safety_island/584eb697/benchmarks/hello.json"
         },
         {

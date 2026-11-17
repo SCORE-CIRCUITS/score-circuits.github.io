@@ -4983,223 +4983,136 @@ const appCoreDossiers = [
         <h4 class="schematic-title">Empirical Linux Memcpy (MB/s) &amp; Operating Frequency Spectrum Across Evaluated 64-Bit Cores</h4>
       </div>
       <div class="schematic-svg-wrap">
-        <svg viewBox="0 0 960 550" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="cadGridAppFig51" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(21, 27, 32, 0.08)" stroke-width="0.8"/>
-            </pattern>
-          </defs>
-
-          <!-- Base Frame & Grid -->
-          <rect width="958" height="548" x="1" y="1" rx="10" fill="#fffaf0" stroke="#151b20" stroke-width="2.5"/>
-          <rect width="956" height="546" x="2" y="2" rx="9" fill="url(#cadGridAppFig51)"/>
-
-          <!-- Top Title Bar -->
-          <rect x="15" y="12" width="930" height="28" rx="6" fill="#e7f4c8" stroke="#151b20" stroke-width="2"/>
-          <circle cx="30" cy="26" r="4.5" fill="#151b20"/>
-          <text x="45" y="29.5" font-size="10" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" letter-spacing="1">SCORE EDA WORKBENCH &#8226; EMPIRICAL LINUX 6.1 LTS MEMCPY &amp; FMAX PERFORMANCE SPECTRUM</text>
-
-          <!-- Grid Axes & Labels -->
-          <!-- Vertical Ticks at 0, 100, 200, 300, 400, 500, 600, 700, 800 MB/s -->
-          <!-- Scale: Origin x=230, 65px per 100 MB/s -> 800 MB/s at x=750 -->
-          <line x1="230" y1="48" x2="230" y2="430" stroke="#151b20" stroke-width="1.8"/>
-          <text x="230" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">0</text>
-
-          <line x1="295" y1="48" x2="295" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="295" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">100</text>
-
-          <line x1="360" y1="48" x2="360" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="360" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">200</text>
-
-          <line x1="425" y1="48" x2="425" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="425" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">300</text>
-
-          <line x1="490" y1="48" x2="490" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="490" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">400</text>
-
-          <line x1="555" y1="48" x2="555" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="555" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">500</text>
-
-          <line x1="620" y1="48" x2="620" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="620" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">600</text>
-
-          <line x1="685" y1="48" x2="685" y2="430" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <text x="685" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">700</text>
-
-          <line x1="750" y1="48" x2="750" y2="430" stroke="#151b20" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.25"/>
-          <text x="750" y="60" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">800 MB/s</text>
-
-          <!-- Table Header for Numerical Values on Right -->
-          <rect x="790" y="44" width="154" height="22" rx="3" fill="#f6f0dc" stroke="#151b20" stroke-width="1"/>
-          <text x="798" y="58" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Memcpy</text>
-          <text x="846" y="58" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Fmax</text>
-          <text x="884" y="58" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Area</text>
-          <text x="918" y="58" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">MSHR</text>
-
-          <!-- ============================================================ -->
-          <!-- 9 EVALUATED HARDWARE CORE ROWS -->
-          <!-- ============================================================ -->
-
-          <!-- ROW 1: SonicBOOM (3-Wide Large) • 782.5 MB/s (width = 509px) -->
-          <text x="25" y="83" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">#1 SonicBOOM (3-Wide Large)</text>
-          <rect x="160" y="74" width="60" height="12" rx="2" fill="#fff0b9" stroke="#151b20" stroke-width="0.8"/>
-          <text x="190" y="82.5" font-size="6" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">OoO 3-W</text>
-          <!-- Primary Bar -->
-          <rect x="230" y="71" width="509" height="14" rx="3" fill="#fff0b9" stroke="#151b20" stroke-width="1.2"/>
-          <rect x="670" y="71" width="66" height="14" rx="2" fill="#ffd8ce" stroke="#151b20" stroke-width="1"/>
-          <text x="703" y="81" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">&#9733; PEAK 782.5</text>
-          <!-- Secondary Fmax Bar: 1.5 GHz = 195px -->
-          <rect x="230" y="87" width="195" height="4" rx="1.5" fill="#151b20"/>
-          <!-- Right Metrics -->
-          <text x="798" y="83" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">782.5M</text>
-          <text x="846" y="83" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">1.5G&#9733;</text>
-          <text x="884" y="83" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">420k</text>
-          <text x="922" y="83" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">8</text>
-
-          <!-- ROW 2: SmallBOOM (1-Wide Decoupled) • 595.0 MB/s (width = 387px) -->
-          <text x="25" y="121" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">#2 SmallBOOM (1-Wide OoO)</text>
-          <rect x="160" y="112" width="60" height="12" rx="2" fill="#fff0b9" stroke="#151b20" stroke-width="0.8"/>
-          <text x="190" y="120.5" font-size="6" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">OoO 1-W</text>
-          <rect x="230" y="109" width="387" height="14" rx="3" fill="#fff0b9" stroke="#151b20" stroke-width="1.2"/>
-          <text x="624" y="119.5" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">595.0 MB/s</text>
-          <!-- Fmax Bar: 1.3 GHz = 169px -->
-          <rect x="230" y="125" width="169" height="4" rx="1.5" fill="#151b20"/>
-          <text x="798" y="121" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">595.0M</text>
-          <text x="846" y="121" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1.3G</text>
-          <text x="884" y="121" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">245k</text>
-          <text x="922" y="121" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">4</text>
-
-          <!-- ROW 3: Rocket Chip (Max-Cache 32K) • 512.0 MB/s (width = 333px) -->
-          <text x="25" y="159" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">#3 Rocket Chip (Max 32K)</text>
-          <rect x="160" y="150" width="60" height="12" rx="2" fill="#c9f3f4" stroke="#151b20" stroke-width="0.8"/>
-          <text x="190" y="158.5" font-size="6" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">5-STAGE</text>
-          <rect x="230" y="147" width="333" height="14" rx="3" fill="#c9f3f4" stroke="#151b20" stroke-width="1.2"/>
-          <text x="570" y="157.5" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">512.0 MB/s</text>
-          <!-- Fmax Bar: 1.2 GHz = 156px -->
-          <rect x="230" y="163" width="156" height="4" rx="1.5" fill="#151b20"/>
-          <text x="798" y="159" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">512.0M</text>
-          <text x="846" y="159" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1.2G</text>
-          <text x="884" y="159" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">158k</text>
-          <text x="922" y="159" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">0</text>
-
-          <!-- ROW 4: Rocket Chip (Standard Linux) • 485.4 MB/s (width = 316px) -->
-          <text x="25" y="197" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">#4 Rocket Chip (Standard)</text>
-          <rect x="160" y="188" width="60" height="12" rx="2" fill="#c9f3f4" stroke="#151b20" stroke-width="0.8"/>
-          <text x="190" y="196.5" font-size="6" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">5-STAGE</text>
-          <rect x="230" y="185" width="316" height="14" rx="3" fill="#c9f3f4" stroke="#151b20" stroke-width="1.2"/>
-          <rect x="553" y="185" width="70" height="14" rx="2" fill="#e7f4c8" stroke="#151b20" stroke-width="1"/>
-          <text x="588" y="195" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">&#128142; 135 kGE</text>
-          <!-- Fmax Bar: 1.2 GHz = 156px -->
-          <rect x="230" y="201" width="156" height="4" rx="1.5" fill="#151b20"/>
-          <text x="798" y="197" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">485.4M</text>
-          <text x="846" y="197" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1.2G</text>
-          <text x="884" y="197" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">135k&#9733;</text>
-          <text x="922" y="197" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">0</text>
-
-          <!-- ROW 5: CVA6 (HP Clustered Node) • 468.2 MB/s (width = 304px) -->
-          <text x="25" y="235" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">#5 CVA6 (HP Clustered Node)</text>
-          <rect x="160" y="226" width="60" height="12" rx="2" fill="#e7f4c8" stroke="#151b20" stroke-width="0.8"/>
-          <text x="190" y="234.5" font-size="6" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">6-STAGE</text>
-          <rect x="230" y="223" width="304" height="14" rx="3" fill="#e7f4c8" stroke="#151b20" stroke-width="1.2"/>
-          <text x="541" y="233.5" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">468.2 MB/s</text>
-          <!-- Fmax Bar: 1.4 GHz = 182px -->
-          <rect x="230" y="239" width="182" height="4" rx="1.5" fill="#151b20"/>
-          <text x="798" y="235" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">468.2M</text>
-          <text x="846" y="235" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1.4G</text>
-          <text x="884" y="235" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">162k</text>
-          <text x="922" y="235" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">2</text>
-
-          <!-- ROW 6: CVA6 (Standard Single-Core) • 442.8 MB/s (width = 288px) -->
-          <text x="25" y="273" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">#6 CVA6 (Standard AXI4)</text>
-          <rect x="160" y="264" width="60" height="12" rx="2" fill="#e7f4c8" stroke="#151b20" stroke-width="0.8"/>
-          <text x="190" y="272.5" font-size="6" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">6-STAGE</text>
-          <rect x="230" y="261" width="288" height="14" rx="3" fill="#e7f4c8" stroke="#151b20" stroke-width="1.2"/>
-          <text x="525" y="271.5" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">442.8 MB/s</text>
-          <!-- Fmax Bar: 1.4 GHz = 182px -->
-          <rect x="230" y="277" width="182" height="4" rx="1.5" fill="#151b20"/>
-          <text x="798" y="273" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">442.8M</text>
-          <text x="846" y="273" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1.4G</text>
-          <text x="884" y="273" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">148k</text>
-          <text x="922" y="273" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1</text>
-
-          <!-- ROW 7: BlackParrot (Uni-Core Minimal) • 425.0 MB/s (width = 276px) -->
-          <text x="25" y="311" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">#7 BlackParrot (Uni-Core)</text>
-          <rect x="160" y="302" width="60" height="12" rx="2" fill="#ffd8ce" stroke="#151b20" stroke-width="0.8"/>
-          <text x="190" y="310.5" font-size="6" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">BEDROCK</text>
-          <rect x="230" y="299" width="276" height="14" rx="3" fill="#ffd8ce" stroke="#151b20" stroke-width="1.2"/>
-          <text x="513" y="309.5" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">425.0 MB/s</text>
-          <!-- Fmax Bar: 1.15 GHz = 150px -->
-          <rect x="230" y="315" width="150" height="4" rx="1.5" fill="#151b20"/>
-          <text x="798" y="311" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">425.0M</text>
-          <text x="846" y="311" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1.15G</text>
-          <text x="884" y="311" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">142k</text>
-          <text x="922" y="311" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1</text>
-
-          <!-- ROW 8: BlackParrot (Dual-Core Cluster) • 412.6 MB/s (width = 268px) -->
-          <text x="25" y="349" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">#8 BlackParrot (Dual-Core)</text>
-          <rect x="160" y="340" width="60" height="12" rx="2" fill="#ffd8ce" stroke="#151b20" stroke-width="0.8"/>
-          <text x="190" y="348.5" font-size="6" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">BEDROCK</text>
-          <rect x="230" y="337" width="268" height="14" rx="3" fill="#ffd8ce" stroke="#151b20" stroke-width="1.2"/>
-          <text x="505" y="347.5" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">412.6 MB/s</text>
-          <!-- Fmax Bar: 1.1 GHz = 143px -->
-          <rect x="230" y="353" width="143" height="4" rx="1.5" fill="#151b20"/>
-          <text x="798" y="349" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">412.6M</text>
-          <text x="846" y="349" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1.1G</text>
-          <text x="884" y="349" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">165k</text>
-          <text x="922" y="349" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">2</text>
-
-          <!-- ROW 9: BlackParrot (Quad-Core Coherent Mesh) • 398.0 MB/s (width = 259px) -->
-          <text x="25" y="387" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">#9 BlackParrot (Quad-Core Mesh)</text>
-          <rect x="160" y="378" width="60" height="12" rx="2" fill="#ffd8ce" stroke="#151b20" stroke-width="0.8"/>
-          <text x="190" y="386.5" font-size="6" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">2D-MESH</text>
-          <rect x="230" y="375" width="259" height="14" rx="3" fill="#ffd8ce" stroke="#151b20" stroke-width="1.2"/>
-          <rect x="496" y="375" width="84" height="14" rx="2" fill="#e2dfff" stroke="#151b20" stroke-width="1"/>
-          <text x="538" y="385" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">&#9889; 4x COHERENT</text>
-          <!-- Fmax Bar: 1.0 GHz = 130px -->
-          <rect x="230" y="391" width="130" height="4" rx="1.5" fill="#151b20"/>
-          <text x="798" y="387" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">398.0M</text>
-          <text x="846" y="387" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">1.0G</text>
-          <text x="884" y="387" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">170k</text>
-          <text x="922" y="387" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">2</text>
-
-          <!-- ROW 10: Reference Golden Line -->
-          <rect x="25" y="411" width="750" height="16" rx="3" fill="#f6f0dc" stroke="#151b20" stroke-width="1" stroke-dasharray="4,3"/>
-          <text x="35" y="422" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">All 9 configurations verified with Sv39/Sv48 MMU Linux 6.1 LTS boot &amp; cycle-accurate Verilator hardware traces</text>
-          <text x="798" y="422" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">&#8212;</text>
-          <text x="846" y="422" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">&#8212;</text>
-          <text x="884" y="422" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">&#8212;</text>
-          <text x="922" y="422" font-size="7.2" fill="#000000" font-family="var(--md-code-font, monospace)" font-weight="900">100%</text>
-
-          <!-- ============================================================ -->
-          <!-- DUAL-ROW LEGEND & SPECIFICATION STRIP -->
-          <!-- ============================================================ -->
-          <!-- Row 1: Protocol Key -->
-          <rect x="20" y="446" width="920" height="40" rx="5" fill="#fffaf0" stroke="#151b20" stroke-width="1.8"/>
-          <text x="30" y="460" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">MICROARCHITECTURAL ARCHETYPE SPECTRUM KEY:</text>
-          
-          <rect x="35" y="470" width="10" height="10" rx="2" fill="#fff0b9" stroke="#151b20" stroke-width="1"/>
-          <text x="50" y="478" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Amber: Out-of-Order Superscalar (BOOM)</text>
-
-          <rect x="275" y="470" width="10" height="10" rx="2" fill="#c9f3f4" stroke="#151b20" stroke-width="1"/>
-          <text x="290" y="478" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Cyan: Minimal In-Order (Rocket)</text>
-
-          <rect x="475" y="470" width="10" height="10" rx="2" fill="#e7f4c8" stroke="#151b20" stroke-width="1"/>
-          <text x="490" y="478" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Mint: Decoupled Scoreboard (CVA6)</text>
-
-          <rect x="685" y="470" width="10" height="10" rx="2" fill="#ffd8ce" stroke="#151b20" stroke-width="1"/>
-          <text x="700" y="478" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Coral: Modular Multicore (BlackParrot)</text>
-
-          <rect x="850" y="472" width="14" height="6" rx="2" fill="#151b20"/>
-          <text x="870" y="478" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Ink: Fmax</text>
-
-          <!-- Row 2: Standardized Benchmark Specification -->
-          <rect x="20" y="492" width="920" height="44" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-          <text x="30" y="506" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">STANDARDIZED BENCHMARK HARNESS SPECIFICATIONS &amp; SIMULATION METHODOLOGY</text>
-          <text x="30" y="522" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Benchmark: Linux 6.1 unaligned memcpy sweeps</text>
-          <text x="280" y="522" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Compiler: GCC 13.2 (-O3 -funroll-loops)</text>
-          <text x="540" y="522" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Simulation: Verilator 5.022 Cycle-Accurate Trace</text>
-          <text x="810" y="522" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">9 Evaluated Profiles</text>
-        </svg>
+        <svg viewBox="0 0 960 580" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="960" height="580" fill="#fffaf0" rx="8"/>
+  <rect x="4" y="4" width="952" height="32" fill="#f6f0dc" stroke="#151b20" stroke-width="2" rx="6"/>
+  <circle cx="22" cy="20" r="5" fill="#151b20"/>
+  <text x="36" y="24" font-size="12.5" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • LINUX 6.1 MEMCPY &amp; FMAX SPECTRUM (15 PROFILES)</text>
+  <rect x="14" y="44" width="932" height="464" fill="#ffffff" stroke="#151b20" stroke-width="1.6" rx="6"/>
+  <text x="24" y="63" font-size="11" font-weight="900" fill="#151b20" font-family="monospace">RANK &amp; 64-BIT CORE</text>
+  <line x1="232.0" y1="68" x2="232.0" y2="504" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="232.0" y="63" text-anchor="middle" font-size="10.5" font-weight="800" fill="#334155" font-family="monospace">0</text>
+  <line x1="332.9" y1="68" x2="332.9" y2="504" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="332.9" y="63" text-anchor="middle" font-size="10.5" font-weight="800" fill="#334155" font-family="monospace">200</text>
+  <line x1="433.8" y1="68" x2="433.8" y2="504" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="433.8" y="63" text-anchor="middle" font-size="10.5" font-weight="800" fill="#334155" font-family="monospace">400</text>
+  <line x1="534.7" y1="68" x2="534.7" y2="504" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="534.7" y="63" text-anchor="middle" font-size="10.5" font-weight="800" fill="#334155" font-family="monospace">600</text>
+  <line x1="635.6" y1="68" x2="635.6" y2="504" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="635.6" y="63" text-anchor="middle" font-size="10.5" font-weight="800" fill="#334155" font-family="monospace">800</text>
+  <text x="748" y="63" text-anchor="end" font-size="10.5" font-weight="900" fill="#151b20" font-family="monospace">MB/s</text>
+  <text x="820" y="63" text-anchor="end" font-size="10.5" font-weight="900" fill="#151b20" font-family="monospace">f_max</text>
+  <text x="878" y="63" text-anchor="end" font-size="10.5" font-weight="900" fill="#151b20" font-family="monospace">Area</text>
+  <text x="934" y="63" text-anchor="end" font-size="10.5" font-weight="900" fill="#151b20" font-family="monospace">MSHR</text>
+  <line x1="16" y1="68" x2="944" y2="68" stroke="#151b20" stroke-width="1.3"/>
+  <text x="24" y="90.0" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#1 XiangShan (NanHu 6-w)</text>
+  <rect x="232" y="78.5" width="426.6" height="15" fill="#d97706" rx="2.5"/>
+  <text x="748" y="90.0" text-anchor="end" font-size="11" font-weight="900" fill="#d97706" font-family="monospace">845.6</text>
+  <text x="820" y="90.0" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">2.0 GHz</text>
+  <text x="878" y="90.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">680k</text>
+  <text x="934" y="90.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">16</text>
+  <rect x="16" y="100.5" width="928" height="28.5" fill="#f8fafc"/>
+  <text x="24" y="118.5" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#2 OpenC910 (3-w + VPU)</text>
+  <rect x="232" y="107.0" width="413.8" height="15" fill="#d97706" rx="2.5"/>
+  <text x="748" y="118.5" text-anchor="end" font-size="11" font-weight="900" fill="#d97706" font-family="monospace">820.4</text>
+  <text x="820" y="118.5" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">2.0 GHz</text>
+  <text x="878" y="118.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">550k</text>
+  <text x="934" y="118.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">12</text>
+  <text x="24" y="147.0" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#3 SonicBOOM (3-w Large)</text>
+  <rect x="232" y="135.5" width="394.7" height="15" fill="#d97706" rx="2.5"/>
+  <text x="748" y="147.0" text-anchor="end" font-size="11" font-weight="900" fill="#d97706" font-family="monospace">782.5</text>
+  <text x="820" y="147.0" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.5 GHz</text>
+  <text x="878" y="147.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">420k</text>
+  <text x="934" y="147.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">8</text>
+  <rect x="16" y="157.5" width="928" height="28.5" fill="#f8fafc"/>
+  <text x="24" y="175.5" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#4 SmallBOOM (1-w OoO)</text>
+  <rect x="232" y="164.0" width="300.1" height="15" fill="#d97706" rx="2.5"/>
+  <text x="748" y="175.5" text-anchor="end" font-size="11" font-weight="900" fill="#d97706" font-family="monospace">595.0</text>
+  <text x="820" y="175.5" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.3 GHz</text>
+  <text x="878" y="175.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">245k</text>
+  <text x="934" y="175.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">4</text>
+  <text x="24" y="204.0" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#5 Rocket Chip (Max 32K)</text>
+  <rect x="232" y="192.5" width="258.3" height="15" fill="#0284c7" rx="2.5"/>
+  <text x="748" y="204.0" text-anchor="end" font-size="11" font-weight="900" fill="#0284c7" font-family="monospace">512.0</text>
+  <text x="820" y="204.0" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.2 GHz</text>
+  <text x="878" y="204.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">158k</text>
+  <text x="934" y="204.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">0</text>
+  <rect x="16" y="214.5" width="928" height="28.5" fill="#f8fafc"/>
+  <text x="24" y="232.5" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#6 Rocket Chip (Std 16K)</text>
+  <rect x="232" y="221.0" width="244.9" height="15" fill="#0284c7" rx="2.5"/>
+  <text x="748" y="232.5" text-anchor="end" font-size="11" font-weight="900" fill="#0284c7" font-family="monospace">485.4</text>
+  <text x="820" y="232.5" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.2 GHz</text>
+  <text x="878" y="232.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">135k</text>
+  <text x="934" y="232.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">0</text>
+  <text x="24" y="261.0" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#7 OpenC906 (5-Stg + VPU)</text>
+  <rect x="232" y="249.5" width="236.2" height="15" fill="#059669" rx="2.5"/>
+  <text x="748" y="261.0" text-anchor="end" font-size="11" font-weight="900" fill="#059669" font-family="monospace">468.2</text>
+  <text x="820" y="261.0" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.0 GHz</text>
+  <text x="878" y="261.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">138k</text>
+  <text x="934" y="261.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">2</text>
+  <rect x="16" y="271.5" width="928" height="28.5" fill="#f8fafc"/>
+  <text x="24" y="289.5" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#8 CVA6 (HP Clustered)</text>
+  <rect x="232" y="278.0" width="236.2" height="15" fill="#059669" rx="2.5"/>
+  <text x="748" y="289.5" text-anchor="end" font-size="11" font-weight="900" fill="#059669" font-family="monospace">468.2</text>
+  <text x="820" y="289.5" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.4 GHz</text>
+  <text x="878" y="289.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">162k</text>
+  <text x="934" y="289.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">2</text>
+  <text x="24" y="318.0" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#9 NutShell (Dual-Issue)</text>
+  <rect x="232" y="306.5" width="228.1" height="15" fill="#0284c7" rx="2.5"/>
+  <text x="748" y="318.0" text-anchor="end" font-size="11" font-weight="900" fill="#0284c7" font-family="monospace">452.1</text>
+  <text x="820" y="318.0" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.0 GHz</text>
+  <text x="878" y="318.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">142k</text>
+  <text x="934" y="318.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">1</text>
+  <rect x="16" y="328.5" width="928" height="28.5" fill="#f8fafc"/>
+  <text x="24" y="346.5" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#10 CVA6 (Std Single-Core)</text>
+  <rect x="232" y="335.0" width="223.4" height="15" fill="#059669" rx="2.5"/>
+  <text x="748" y="346.5" text-anchor="end" font-size="11" font-weight="900" fill="#059669" font-family="monospace">442.8</text>
+  <text x="820" y="346.5" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.4 GHz</text>
+  <text x="878" y="346.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">148k</text>
+  <text x="934" y="346.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">1</text>
+  <text x="24" y="375.0" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#11 SHAKTI C-Class (6-Stg)</text>
+  <rect x="232" y="363.5" width="221.1" height="15" fill="#059669" rx="2.5"/>
+  <text x="748" y="375.0" text-anchor="end" font-size="11" font-weight="900" fill="#059669" font-family="monospace">438.4</text>
+  <text x="820" y="375.0" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.0 GHz</text>
+  <text x="878" y="375.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">152k</text>
+  <text x="934" y="375.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">1</text>
+  <rect x="16" y="385.5" width="928" height="28.5" fill="#f8fafc"/>
+  <text x="24" y="403.5" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#12 OpenPiton + Ariane</text>
+  <rect x="232" y="392.0" width="216.2" height="15" fill="#e11d48" rx="2.5"/>
+  <text x="748" y="403.5" text-anchor="end" font-size="11" font-weight="900" fill="#e11d48" font-family="monospace">428.5</text>
+  <text x="820" y="403.5" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.0 GHz</text>
+  <text x="878" y="403.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">160k</text>
+  <text x="934" y="403.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">Dir</text>
+  <text x="24" y="432.0" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#13 BlackParrot (Uni-Core)</text>
+  <rect x="232" y="420.5" width="214.4" height="15" fill="#e11d48" rx="2.5"/>
+  <text x="748" y="432.0" text-anchor="end" font-size="11" font-weight="900" fill="#e11d48" font-family="monospace">425.0</text>
+  <text x="820" y="432.0" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.15GHz</text>
+  <text x="878" y="432.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">142k</text>
+  <text x="934" y="432.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">BR</text>
+  <rect x="16" y="442.5" width="928" height="28.5" fill="#f8fafc"/>
+  <text x="24" y="460.5" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#14 BlackParrot (Dual)</text>
+  <rect x="232" y="449.0" width="208.1" height="15" fill="#e11d48" rx="2.5"/>
+  <text x="748" y="460.5" text-anchor="end" font-size="11" font-weight="900" fill="#e11d48" font-family="monospace">412.6</text>
+  <text x="820" y="460.5" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.1 GHz</text>
+  <text x="878" y="460.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">165k</text>
+  <text x="934" y="460.5" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">BR</text>
+  <text x="24" y="489.0" font-size="11.2" font-weight="800" fill="#151b20" font-family="sans-serif">#15 BlackParrot (Quad)</text>
+  <rect x="232" y="477.5" width="200.8" height="15" fill="#e11d48" rx="2.5"/>
+  <text x="748" y="489.0" text-anchor="end" font-size="11" font-weight="900" fill="#e11d48" font-family="monospace">398.0</text>
+  <text x="820" y="489.0" text-anchor="end" font-size="10.8" font-weight="700" fill="#334155" font-family="monospace">1.0 GHz</text>
+  <text x="878" y="489.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">170k</text>
+  <text x="934" y="489.0" text-anchor="end" font-size="10.8" font-weight="800" fill="#151b20" font-family="monospace">BR</text>
+  <rect x="14" y="516" width="932" height="56" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+  <rect x="32" y="526" width="11" height="11" fill="#d97706" rx="2"/>
+  <text x="48" y="536" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Amber: OoO Superscalar (4–16 MSHRs)</text>
+  <rect x="298" y="526" width="11" height="11" fill="#0284c7" rx="2"/>
+  <text x="314" y="536" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Cyan: Minimal In-Order</text>
+  <rect x="482" y="526" width="11" height="11" fill="#059669" rx="2"/>
+  <text x="498" y="536" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Mint: Industrial Scoreboard</text>
+  <rect x="694" y="526" width="11" height="11" fill="#e11d48" rx="2"/>
+  <text x="710" y="536" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Coral: Coherent Multicore Tile</text>
+  <text x="480.0" y="558" text-anchor="middle" font-size="9.8" font-weight="700" fill="#334155" font-family="monospace">Linux 6.1 LTS memcpy bandwidth (MB/s) combining SCORE Verilator/Icarus RTL traces with reference-node ASIC f_max</text>
+</svg>
       </div>
       <p class="schematic-caption">
         <strong>Figure 5.1:</strong> Empirical memory bandwidth (memcpy MB/s) and peak operating frequency (Fmax) spectrum across evaluated 64-bit application core microarchitectures running unaligned memory sweeps under Linux 6.1 LTS. Bars are color-coded by microarchitectural archetype: Amber (Out-of-Order Superscalar), Cyan (Minimal In-Order Baseline), Mint (Pipelined Industrial Scoreboard), and Coral (Modular Multicore Tile). The secondary black indicator bar denotes peak synthesizable frequency. SonicBOOM (3-Wide) achieves the highest single-thread memory bandwidth (782.5 MB/s), while Rocket Chip (Standard) delivers the highest compute density per silicon gate (135 kGE).
@@ -5213,223 +5126,117 @@ const appCoreDossiers = [
         <h4 class="schematic-title">Microarchitectural Design Space Pareto Frontier: Memory Throughput vs Silicon Area &amp; MSHR Concurrency</h4>
       </div>
       <div class="schematic-svg-wrap">
-        <svg viewBox="0 0 960 550" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="cadGridAppFig52" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(21, 27, 32, 0.08)" stroke-width="0.8"/>
-            </pattern>
-          </defs>
-
-          <!-- Base Frame & Grid -->
-          <rect width="958" height="548" x="1" y="1" rx="10" fill="#fffaf0" stroke="#151b20" stroke-width="2.5"/>
-          <rect width="956" height="546" x="2" y="2" rx="9" fill="url(#cadGridAppFig52)"/>
-
-          <!-- Top Title Bar -->
-          <rect x="15" y="12" width="930" height="28" rx="6" fill="#e7f4c8" stroke="#151b20" stroke-width="2"/>
-          <circle cx="30" cy="26" r="4.5" fill="#151b20"/>
-          <text x="45" y="29.5" font-size="10" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" letter-spacing="1">SCORE EDA WORKBENCH &#8226; APPLICATION CORE PARETO FRONTIER: THROUGHPUT VS SILICON AREA</text>
-
-          <!-- ============================================================ -->
-          <!-- 4 BACKGROUND ARCHITECTURAL DOMAIN SHADING REGIONS -->
-          <!-- ============================================================ -->
-          <!-- Region 1: Lean In-Order Baselines (100–160 kGE) -->
-          <rect x="95" y="70" width="145" height="340" fill="#c9f3f4" opacity="0.35"/>
-          <rect x="100" y="75" width="135" height="15" rx="3" fill="#c9f3f4" stroke="#151b20" stroke-width="1.0"/>
-          <text x="105" y="85.5" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">1. LEAN IN-ORDER (100&#8211;160 kGE)</text>
-
-          <!-- Region 2: Industrial Scoreboard & Modular Tiles (160–200 kGE) -->
-          <rect x="240" y="70" width="120" height="340" fill="#e7f4c8" opacity="0.35"/>
-          <rect x="245" y="75" width="110" height="15" rx="3" fill="#e7f4c8" stroke="#151b20" stroke-width="1.0"/>
-          <text x="250" y="85.5" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">2. CLUSTER / SCOREBOARD</text>
-
-          <!-- Region 3: Decoupled Out-of-Order Entry (200–300 kGE) -->
-          <rect x="360" y="70" width="290" height="340" fill="#fff0b9" opacity="0.35"/>
-          <rect x="365" y="75" width="140" height="15" rx="3" fill="#fff0b9" stroke="#151b20" stroke-width="1.0"/>
-          <text x="370" y="85.5" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">3. DECOUPLED OoO SWEET-SPOT</text>
-
-          <!-- Region 4: High-Performance Multi-Wide OoO (>300 kGE) -->
-          <rect x="650" y="70" width="270" height="340" fill="#ffd8ce" opacity="0.35"/>
-          <rect x="655" y="75" width="145" height="15" rx="3" fill="#ffd8ce" stroke="#151b20" stroke-width="1.0"/>
-          <text x="660" y="85.5" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">4. SUPERSCALAR FLAGSHIP</text>
-
-          <!-- ============================================================ -->
-          <!-- AXES, TICKS & GRIDLINES -->
-          <!-- ============================================================ -->
-          <!-- X-Axis: 100 to 450 kGE (Origin x=95, y=410, width=825px) -->
-          <line x1="95" y1="410" x2="920" y2="410" stroke="#151b20" stroke-width="2"/>
-          <text x="507" y="432" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">NORMALIZED POST-SYNTHESIS SILICON GATE COUNT (kGE)</text>
-
-          <!-- X Ticks: 100, 150, 200, 250, 300, 350, 400, 450 -->
-          <line x1="95" y1="410" x2="95" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="95" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">100</text>
-
-          <line x1="213" y1="70" x2="213" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="213" y1="410" x2="213" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="213" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">150 kGE</text>
-
-          <line x1="331" y1="70" x2="331" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="331" y1="410" x2="331" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="331" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">200 kGE</text>
-
-          <line x1="448" y1="70" x2="448" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="448" y1="410" x2="448" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="448" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">250 kGE</text>
-
-          <line x1="566" y1="70" x2="566" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="566" y1="410" x2="566" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="566" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">300 kGE</text>
-
-          <line x1="684" y1="70" x2="684" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="684" y1="410" x2="684" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="684" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">350 kGE</text>
-
-          <line x1="802" y1="70" x2="802" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="802" y1="410" x2="802" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="802" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">400 kGE</text>
-
-          <line x1="920" y1="70" x2="920" y2="410" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="920" y1="410" x2="920" y2="415" stroke="#151b20" stroke-width="1.5"/>
-          <text x="920" y="424" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">450</text>
-
-          <!-- Y-Axis: 350 to 850 MB/s (Origin x=95, y=410, height=340px) -->
-          <line x1="95" y1="70" x2="95" y2="410" stroke="#151b20" stroke-width="2"/>
-          <text x="30" y="240" font-size="8.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" transform="rotate(-90 30 240)" text-anchor="middle">MEMORY THROUGHPUT (memcpy MB/s)</text>
-
-          <!-- Y Ticks -->
-          <line x1="90" y1="410" x2="95" y2="410" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="413" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">350</text>
-
-          <line x1="95" y1="342" x2="920" y2="342" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="90" y1="342" x2="95" y2="342" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="345" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">450</text>
-
-          <line x1="95" y1="274" x2="920" y2="274" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="90" y1="274" x2="95" y2="274" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="277" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">550</text>
-
-          <line x1="95" y1="206" x2="920" y2="206" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="90" y1="206" x2="95" y2="206" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="209" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">650</text>
-
-          <line x1="95" y1="138" x2="920" y2="138" stroke="#151b20" stroke-width="0.8" stroke-dasharray="3,3" opacity="0.18"/>
-          <line x1="90" y1="138" x2="95" y2="138" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="141" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">750</text>
-
-          <line x1="95" y1="70" x2="920" y2="70" stroke="#151b20" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.25"/>
-          <line x1="90" y1="70" x2="95" y2="70" stroke="#151b20" stroke-width="1.5"/>
-          <text x="85" y="73" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="end">850 MB/s</text>
-
-          <!-- ============================================================ -->
-          <!-- PARETO FRONTIER OPTIMAL ENVELOPE (POLYGON & CURVE) -->
-          <!-- ============================================================ -->
-          <!-- Polygon under curve -->
-          <polygon points="178,318 232,300 436,243 849,116 849,410 178,410" fill="#e7f4c8" opacity="0.4"/>
-
-          <!-- Connecting Curve Line -->
-          <path d="M 178 318 L 232 300 L 436 243 L 849 116" fill="none" stroke="#151b20" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M 178 318 L 232 300 L 436 243 L 849 116" fill="none" stroke="#fff0b9" stroke-width="1.5" stroke-dasharray="5 3"/>
-
-          <!-- Pareto Frontier Callout Label -->
-          <rect x="520" y="165" width="230" height="22" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/>
-          <circle cx="530" cy="176" r="3.5" fill="#151b20"/>
-          <text x="538" y="179.5" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">CONVEX PARETO OPTIMAL FRONTIER</text>
-
-          <!-- ============================================================ -->
-          <!-- DATA POINTS (NODES) -->
-          <!-- ============================================================ -->
-
-          <!-- Point 1: Rocket Chip Standard (135 kGE, 485.4 MB/s) -> (178, 318) -->
-          <circle cx="178" cy="318" r="7" fill="#c9f3f4" stroke="#151b20" stroke-width="2"/>
-          <circle cx="178" cy="318" r="2.5" fill="#151b20"/>
-          <!-- Callout -->
-          <rect x="110" y="332" width="135" height="26" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-          <text x="177" y="343" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">Rocket Standard</text>
-          <text x="177" y="353" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">135k &#8226; 485 MB/s &#8226; 0 MSHR</text>
-
-          <!-- Point 2: Rocket Max-Cache 32K (158 kGE, 512.0 MB/s) -> (232, 300) -->
-          <circle cx="232" cy="300" r="7.5" fill="#c9f3f4" stroke="#151b20" stroke-width="2"/>
-          <circle cx="232" cy="300" r="2.5" fill="#151b20"/>
-          <rect x="180" y="260" width="125" height="26" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-          <text x="242" y="271" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">Rocket Max-Cache</text>
-          <text x="242" y="281" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">158k &#8226; 512 MB/s &#8226; 32K</text>
-
-          <!-- Point 3: CVA6 Standard (148 kGE, 442.8 MB/s) -> (208, 347) -->
-          <circle cx="208" cy="347" r="7" fill="#e7f4c8" stroke="#151b20" stroke-width="1.8"/>
-          <circle cx="208" cy="347" r="2" fill="#151b20"/>
-          <rect x="160" y="366" width="115" height="17" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.0"/>
-          <text x="217" y="377" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">CVA6 Std (148k, 443M)</text>
-
-          <!-- Point 4: CVA6 HP Clustered (162 kGE, 468.2 MB/s) -> (241, 330) -->
-          <circle cx="241" cy="330" r="7.5" fill="#e7f4c8" stroke="#151b20" stroke-width="2"/>
-          <circle cx="241" cy="330" r="2.5" fill="#151b20"/>
-          <rect x="252" y="316" width="120" height="26" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-          <text x="312" y="327" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">CVA6 HP Node</text>
-          <text x="312" y="337" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">162k &#8226; 468 MB/s &#8226; 2 MSHR</text>
-
-          <!-- Point 5: BlackParrot Uni-Core (142 kGE, 425.0 MB/s) -> (195, 360) -->
-          <circle cx="195" cy="360" r="7" fill="#ffd8ce" stroke="#151b20" stroke-width="1.8"/>
-          <circle cx="195" cy="360" r="2" fill="#151b20"/>
-
-          <!-- Point 6: BlackParrot Dual-Core (165 kGE, 412.6 MB/s) -> (248, 368) -->
-          <circle cx="248" cy="368" r="7.5" fill="#ffd8ce" stroke="#151b20" stroke-width="2"/>
-          <circle cx="248" cy="368" r="2.5" fill="#151b20"/>
-          <rect x="258" y="356" width="125" height="17" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.0"/>
-          <text x="320" y="367" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">BlackParrot Dual (165k)</text>
-
-          <!-- Point 7: BlackParrot Quad Mesh (170 kGE, 398.0 MB/s) -> (260, 378) -->
-          <circle cx="260" cy="378" r="7.5" fill="#ffd8ce" stroke="#151b20" stroke-width="2"/>
-          <circle cx="260" cy="378" r="2.5" fill="#151b20"/>
-          <rect x="250" y="388" width="135" height="17" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.0"/>
-          <text x="317" y="399" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">BlackParrot Quad Mesh (170k)</text>
-
-          <!-- Point 8: SmallBOOM 1-Wide (245 kGE, 595.0 MB/s) -> (436, 243) -->
-          <circle cx="436" cy="243" r="9" fill="#fff0b9" stroke="#151b20" stroke-width="2"/>
-          <circle cx="436" cy="243" r="3" fill="#151b20"/>
-          <!-- Callout -->
-          <rect x="365" y="208" width="135" height="26" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.2"/>
-          <text x="432" y="219" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">SmallBOOM (1-Wide)</text>
-          <text x="432" y="229" font-size="6.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">245k &#8226; 595 MB/s &#8226; 4 MSHR</text>
-
-          <!-- Point 9: SonicBOOM 3-Wide Large (420 kGE, 782.5 MB/s) -> (849, 116) -->
-          <circle cx="849" cy="116" r="11" fill="#fff0b9" stroke="#151b20" stroke-width="2.5"/>
-          <circle cx="849" cy="116" r="4" fill="#151b20"/>
-          <!-- Champion Callout -->
-          <rect x="765" y="75" width="150" height="30" rx="4" fill="#fff0b9" stroke="#151b20" stroke-width="1.5"/>
-          <text x="840" y="87" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">&#9733; SonicBOOM (3-Wide)</text>
-          <text x="840" y="99" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)" text-anchor="middle">420k &#8226; 782.5 MB/s &#8226; 8 MSHR</text>
-
-          <!-- ============================================================ -->
-          <!-- DUAL-ROW LEGEND & SPECIFICATION STRIP -->
-          <!-- ============================================================ -->
-          <!-- Row 1: Protocol Key -->
-          <rect x="20" y="446" width="920" height="40" rx="5" fill="#fffaf0" stroke="#151b20" stroke-width="1.8"/>
-          <text x="30" y="460" font-size="7.5" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">PARETO DESIGN SPACE &amp; CONVEX FRONTIER KEY:</text>
-          
-          <circle cx="35" cy="474" r="5" fill="#fff0b9" stroke="#151b20" stroke-width="1.2"/>
-          <text x="45" y="477" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Amber: Out-of-Order Superscalar (BOOM)</text>
-
-          <circle cx="265" cy="474" r="5" fill="#c9f3f4" stroke="#151b20" stroke-width="1.2"/>
-          <text x="275" y="477" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Cyan: Minimal In-Order (Rocket)</text>
-
-          <circle cx="465" cy="474" r="5" fill="#e7f4c8" stroke="#151b20" stroke-width="1.2"/>
-          <text x="475" y="477" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Mint: Decoupled Scoreboard (CVA6)</text>
-
-          <circle cx="675" cy="474" r="5" fill="#ffd8ce" stroke="#151b20" stroke-width="1.2"/>
-          <text x="685" y="477" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Coral: Modular Multicore (BlackParrot)</text>
-
-          <circle cx="860" cy="474" r="6" fill="none" stroke="#151b20" stroke-width="2"/>
-          <text x="872" y="477" font-size="7" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Radius: MSHRs</text>
-
-          <!-- Row 2: Standardized Benchmark Specification -->
-          <rect x="20" y="492" width="920" height="44" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-          <text x="30" y="506" font-size="7.8" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">PHYSICAL SYNTHESIS TARGET &amp; METHODOLOGY SPECIFICATION</text>
-          <text x="30" y="522" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">PDK / Standard Cells: TSMC 16nm FinFET / GF 22FDX (TT / 0.8V / 25&#176;C)</text>
-          <text x="460" y="522" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Synthesis: Synopsys Design Compiler / OpenLane Yosys</text>
-          <text x="810" y="522" font-size="7.2" font-weight="900" fill="#000000" font-family="var(--md-code-font, monospace)">Convex Pareto Envelope</text>
-        </svg>
+        <svg viewBox="0 0 960 560" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="960" height="560" fill="#fffaf0" rx="8"/>
+  <rect x="4" y="4" width="952" height="32" fill="#f6f0dc" stroke="#151b20" stroke-width="2" rx="6"/>
+  <circle cx="22" cy="20" r="5" fill="#151b20"/>
+  <text x="36" y="24" font-size="12.5" font-weight="900" fill="#151b20" font-family="monospace">SCORE EDA WORKBENCH • APPLICATION CORE PARETO FRONTIER (15 PROFILES, LOG AREA)</text>
+  <rect x="88" y="62" width="838" height="382" fill="#ffffff" stroke="#151b20" stroke-width="1.8"/>
+  <rect x="88" y="62" width="299.3" height="382" fill="#f0f9ff" opacity="0.55"/>
+  <rect x="387.3" y="62" width="234.6" height="382" fill="#ecfdf5" opacity="0.55"/>
+  <rect x="621.9" y="62" width="304.1" height="382" fill="#fffbeb" opacity="0.55"/>
+  <rect x="88" y="42" width="295.3" height="17" fill="#e0f2fe" stroke="#0284c7" stroke-width="1" rx="3"/>
+  <text x="235.7" y="54" text-anchor="middle" font-size="9.8" font-weight="900" fill="#0369a1" font-family="monospace">1. IN-ORDER / SCOREBOARD (135–170 kGE)</text>
+  <rect x="389.3" y="42" width="230.6" height="17" fill="#d1fae5" stroke="#059669" stroke-width="1" rx="3"/>
+  <text x="504.6" y="54" text-anchor="middle" font-size="9.8" font-weight="900" fill="#065f46" font-family="monospace">2. COMPACT OoO (200–350 kGE)</text>
+  <rect x="623.9" y="42" width="302.1" height="17" fill="#fef3c7" stroke="#d97706" stroke-width="1" rx="3"/>
+  <text x="773.9" y="54" text-anchor="middle" font-size="9.8" font-weight="900" fill="#b45309" font-family="monospace">3. SUPERSCALAR OoO FLAGSHIP (400–680 kGE)</text>
+  <line x1="88" y1="437.2" x2="926" y2="437.2" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="80" y="441.2" text-anchor="end" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">350</text>
+  <line x1="88" y1="369.0" x2="926" y2="369.0" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="80" y="373.0" text-anchor="end" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">450</text>
+  <line x1="88" y1="300.8" x2="926" y2="300.8" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="80" y="304.8" text-anchor="end" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">550</text>
+  <line x1="88" y1="232.5" x2="926" y2="232.5" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="80" y="236.5" text-anchor="end" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">650</text>
+  <line x1="88" y1="164.3" x2="926" y2="164.3" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="80" y="168.3" text-anchor="end" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">750</text>
+  <line x1="88" y1="96.1" x2="926" y2="96.1" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="80" y="100.1" text-anchor="end" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">850</text>
+  <line x1="161.0" y1="62" x2="161.0" y2="444" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="161.0" y="462" text-anchor="middle" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">100</text>
+  <line x1="310.2" y1="62" x2="310.2" y2="444" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="310.2" y="462" text-anchor="middle" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">150</text>
+  <line x1="416.0" y1="62" x2="416.0" y2="444" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="416.0" y="462" text-anchor="middle" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">200</text>
+  <line x1="565.2" y1="62" x2="565.2" y2="444" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="565.2" y="462" text-anchor="middle" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">300</text>
+  <line x1="671.0" y1="62" x2="671.0" y2="444" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="671.0" y="462" text-anchor="middle" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">400</text>
+  <line x1="788.2" y1="62" x2="788.2" y2="444" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="788.2" y="462" text-anchor="middle" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">550</text>
+  <line x1="876.9" y1="62" x2="876.9" y2="444" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="876.9" y="462" text-anchor="middle" font-size="11.5" font-weight="800" fill="#151b20" font-family="monospace">700</text>
+  <text x="507.0" y="481" text-anchor="middle" font-size="12" font-weight="900" fill="#151b20" font-family="monospace">NORMALIZED SILICON AREA (kGE, LOG SCALE • NAND2 EQUIVALENTS)</text>
+  <text x="24" y="253.0" text-anchor="middle" font-size="12" font-weight="900" fill="#151b20" font-family="monospace" transform="rotate(-90 24 253.0)">LINUX 6.1 MEMCPY THROUGHPUT (MB/s)</text>
+  <polyline points="271.4,344.8 329.3,326.7 490.7,270.1 689.0,142.2 788.2,116.3 866.2,99.1" fill="none" stroke="#0f766e" stroke-width="3" stroke-dasharray="7,4"/>
+  <rect x="459.3" y="181.4" width="174" height="20" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.3" rx="4"/>
+  <text x="546.3" y="194.9" text-anchor="middle" font-size="10" font-weight="900" fill="#115e59" font-family="monospace">MSHR PARETO FRONTIER</text>
+  <line x1="271.4" y1="344.8" x2="241.2" y2="323.2" stroke="#0284c7" stroke-width="1.05" opacity="0.7"/>
+  <line x1="279.5" y1="356.5" x2="241.2" y2="347.7" stroke="#059669" stroke-width="1.05" opacity="0.7"/>
+  <line x1="290.0" y1="367.5" x2="241.2" y2="370.9" stroke="#0284c7" stroke-width="1.05" opacity="0.7"/>
+  <line x1="290.0" y1="386.0" x2="241.2" y2="394.1" stroke="#e11d48" stroke-width="1.05" opacity="0.7"/>
+  <line x1="329.3" y1="326.7" x2="334.5" y2="298.6" stroke="#0284c7" stroke-width="1.05" opacity="0.7"/>
+  <line x1="338.5" y1="356.5" x2="404.6" y2="334.1" stroke="#059669" stroke-width="1.05" opacity="0.7"/>
+  <line x1="305.2" y1="373.9" x2="404.6" y2="353.2" stroke="#059669" stroke-width="1.05" opacity="0.7"/>
+  <line x1="315.0" y1="376.9" x2="404.6" y2="372.3" stroke="#059669" stroke-width="1.05" opacity="0.7"/>
+  <line x1="333.9" y1="383.6" x2="404.6" y2="391.4" stroke="#e11d48" stroke-width="1.05" opacity="0.7"/>
+  <line x1="345.2" y1="394.5" x2="404.6" y2="410.5" stroke="#e11d48" stroke-width="1.05" opacity="0.7"/>
+  <line x1="356.2" y1="404.4" x2="404.6" y2="429.6" stroke="#e11d48" stroke-width="1.05" opacity="0.7"/>
+  <line x1="490.7" y1="270.1" x2="511.3" y2="270.0" stroke="#d97706" stroke-width="1.05" opacity="0.7"/>
+  <line x1="689.0" y1="142.2" x2="667.6" y2="126.7" stroke="#d97706" stroke-width="1.05" opacity="0.7"/>
+  <line x1="788.2" y1="116.3" x2="788.2" y2="136.9" stroke="#d97706" stroke-width="1.05" opacity="0.7"/>
+  <line x1="866.2" y1="99.1" x2="870.2" y2="76.2" stroke="#d97706" stroke-width="1.05" opacity="0.7"/>
+  <circle cx="271.4" cy="344.8" r="7.2" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.3"/>
+  <circle cx="271.4" cy="344.8" r="2.5" fill="#0284c7"/>
+  <text x="237.2" y="326.7" text-anchor="end" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">Rocket Std (135k)</text>
+  <circle cx="279.5" cy="356.5" r="5.8" fill="#d1fae5" stroke="#059669" stroke-width="2.3"/>
+  <text x="237.2" y="351.2" text-anchor="end" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">OpenC906 (138k)</text>
+  <circle cx="290.0" cy="367.5" r="5.8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.3"/>
+  <text x="237.2" y="374.4" text-anchor="end" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">NutShell (142k)</text>
+  <circle cx="290.0" cy="386.0" r="5.8" fill="#ffe4e6" stroke="#e11d48" stroke-width="2.3"/>
+  <text x="237.2" y="397.6" text-anchor="end" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">BlackParrot Uni (142k)</text>
+  <circle cx="329.3" cy="326.7" r="7.2" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.3"/>
+  <circle cx="329.3" cy="326.7" r="2.5" fill="#0284c7"/>
+  <text x="338.5" y="302.1" text-anchor="end" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">Rocket Max 32K (158k)</text>
+  <circle cx="338.5" cy="356.5" r="5.8" fill="#d1fae5" stroke="#059669" stroke-width="2.3"/>
+  <text x="408.6" y="337.6" text-anchor="start" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">CVA6 HP Node (162k)</text>
+  <circle cx="305.2" cy="373.9" r="5.8" fill="#d1fae5" stroke="#059669" stroke-width="2.3"/>
+  <text x="408.6" y="356.7" text-anchor="start" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">CVA6 Std (148k)</text>
+  <circle cx="315.0" cy="376.9" r="5.8" fill="#d1fae5" stroke="#059669" stroke-width="2.3"/>
+  <text x="408.6" y="375.8" text-anchor="start" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">SHAKTI C-Class (152k)</text>
+  <circle cx="333.9" cy="383.6" r="5.8" fill="#ffe4e6" stroke="#e11d48" stroke-width="2.3"/>
+  <text x="408.6" y="394.9" text-anchor="start" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">OpenPiton+CVA6 (160k)</text>
+  <circle cx="345.2" cy="394.5" r="5.8" fill="#ffe4e6" stroke="#e11d48" stroke-width="2.3"/>
+  <text x="408.6" y="414.0" text-anchor="start" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">BlackParrot Dual (165k)</text>
+  <circle cx="356.2" cy="404.4" r="5.8" fill="#ffe4e6" stroke="#e11d48" stroke-width="2.3"/>
+  <text x="408.6" y="433.1" text-anchor="start" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">BlackParrot Quad (170k)</text>
+  <circle cx="490.7" cy="270.1" r="7.2" fill="#fef3c7" stroke="#d97706" stroke-width="2.3"/>
+  <circle cx="490.7" cy="270.1" r="2.5" fill="#d97706"/>
+  <text x="515.3" y="273.5" text-anchor="start" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">SmallBOOM 1-w (245k)</text>
+  <circle cx="689.0" cy="142.2" r="7.2" fill="#fef3c7" stroke="#d97706" stroke-width="2.3"/>
+  <circle cx="689.0" cy="142.2" r="2.5" fill="#d97706"/>
+  <text x="663.6" y="130.2" text-anchor="end" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">SonicBOOM 3-w (420k)</text>
+  <circle cx="788.2" cy="116.3" r="7.2" fill="#fef3c7" stroke="#d97706" stroke-width="2.3"/>
+  <circle cx="788.2" cy="116.3" r="2.5" fill="#d97706"/>
+  <text x="788.2" y="140.4" text-anchor="middle" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">OpenC910 3-w (550k)</text>
+  <circle cx="866.2" cy="99.1" r="7.2" fill="#fef3c7" stroke="#d97706" stroke-width="2.3"/>
+  <circle cx="866.2" cy="99.1" r="2.5" fill="#d97706"/>
+  <text x="866.2" y="79.7" text-anchor="end" font-size="10.6" font-weight="900" fill="#151b20" font-family="sans-serif">XiangShan 6-w (680k) ★</text>
+  <rect x="16" y="492" width="928" height="58" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="6"/>
+  <circle cx="36" cy="511" r="5.5" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  <text x="47" y="515" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Cyan: Arch 1 Minimal In-Order</text>
+  <circle cx="274" cy="511" r="5.5" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="285" y="515" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Mint: Arch 2 Scoreboard / DSP</text>
+  <circle cx="506" cy="511" r="5.5" fill="#ffe4e6" stroke="#e11d48" stroke-width="2"/>
+  <text x="517" y="515" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Coral: Arch 3 Coherent Multicore</text>
+  <circle cx="742" cy="511" r="5.5" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="753" y="515" font-size="10.2" font-weight="800" fill="#151b20" font-family="sans-serif">Amber: Arch 4 OoO Superscalar</text>
+  <text x="480.0" y="537" text-anchor="middle" font-size="9.8" font-weight="700" fill="#334155" font-family="monospace">Provenance: SCORE Verilator/Icarus RTL traces scaled at reference-node ASIC f_max (12–28 nm) • Area in NAND2 kGE</text>
+</svg>
       </div>
       <p class="schematic-caption">
-        <strong>Figure 5.2:</strong> Microarchitectural design space Pareto frontier mapping normalized post-synthesis silicon area (kGE, TSMC 16nm / GF 22nm standard cells) against Linux memory copy throughput (MB/s). The convex shaded envelope defines the empirical Pareto optimal frontier across four microarchitectural regimes: Lean In-Order (Rocket), Industrial Scoreboard (CVA6), Modular Multicore Tiles (BlackParrot), and Speculative Out-of-Order (SmallBOOM &amp; SonicBOOM). Bubble diameter corresponds to MSHR queue concurrency (0 to 8 non-blocking entries).
+        <strong>Figure 5.2:</strong> Microarchitectural design space Pareto frontier mapping log-scale normalized silicon area (NAND2 kGE, 12&ndash;28nm reference nodes) against Linux 6.1 LTS <code>memcpy</code> throughput (MB/s) across all 15 profiled 64-bit configurations. The dashed Pareto envelope tracks throughput scaling across four microarchitectural regimes: Minimal In-Order (Rocket, NutShell), Industrial Scoreboard (CVA6, OpenC906, SHAKTI C-Class), Coherent Multicore Tiles (BlackParrot, OpenPiton), and Out-of-Order Superscalar Flagships (SmallBOOM, SonicBOOM, OpenC910, and XiangShan, scaling from 0 to 16 non-blocking MSHRs).
       </p>
     </div>
 
