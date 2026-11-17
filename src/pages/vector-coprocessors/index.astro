@@ -5346,7 +5346,8 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
 
     .data-table td {
       padding: 0.75rem 0.85rem;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid var(--line, #eee4c8);
+      border-right: 1px solid var(--line, #eee4c8);
       vertical-align: middle;
     }
 
@@ -5901,8 +5902,11 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
       .dossier-pros-cons {
         grid-template-columns: 1fr !important;
       }
-      .paradigm-step-card {
-        padding: 1.25rem;
+      .paradigm-step-head {
+        padding: 0.75rem 1rem;
+      }
+      .paradigm-body {
+        padding: 1rem;
       }
     }
 

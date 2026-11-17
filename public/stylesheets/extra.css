@@ -1299,8 +1299,9 @@ body,
 
 /* High Contrast Tables */
 .md-typeset table:not([class]) {
-  border: 1px solid var(--tcl-border) !important;
-  border-radius: 8px !important;
+  border: 2px solid var(--ink, #151b20) !important;
+  border-radius: 10px !important;
+  box-shadow: 3px 3px 0 var(--ink, #151b20) !important;
   overflow: hidden !important;
 }
 

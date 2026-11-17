@@ -7944,8 +7944,9 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
 
   .truth-table-panel {
     background: var(--cream);
-    border: 1.5px solid var(--ink);
+    border: 2px solid var(--ink, #151b20);
     border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
     padding: 1rem;
   }
 
@@ -8677,10 +8678,21 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   .table-scroll {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin-bottom: 1rem;
-    border: 1.5px solid var(--ink);
-    border-radius: 8px;
-    background: var(--paper);
+    margin-bottom: 1.25rem;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    background: #ffffff;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1.25rem;
+    border: 2px solid var(--ink, #151b20);
+    border-radius: 10px;
+    box-shadow: 3px 3px 0 var(--ink, #151b20);
+    background: #ffffff;
   }
 
   .data-table {
