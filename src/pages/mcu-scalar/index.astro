@@ -473,7 +473,7 @@ const masterBenchmarkData = [
   }
 ];
 
-// Helper to derive archetype category code for filtering
+// Helper to derive archetype code for filtering
 function getArchetypeCategory(arch: string): string {
   if (arch.includes("1-Stage") || arch.includes("1-2 Stage") || arch.includes("Multi-Cycle")) return "archetype-1";
   if (arch.includes("2-Stage")) return "archetype-2";
@@ -621,7 +621,7 @@ const bespokeDossiers = [
     fmax: "380 MHz (TSMC 40nm / 250 MHz FPGA)",
     siliconEvidence: "Mass-production commercial silicon on TSMC 40nm in the Raspberry Pi RP2350 microcontroller (dual Hazard3 cores).",
     verificationRigor: "Full formal assertion suite (SVA) with SymbiYosys, RISC-V Architectural Compatibility Tests (ACT), CXXRTL and Verilator testbenches.",
-    strengths: "Top-tier 3.17 CoreMark/MHz efficiency; mass-production silicon heritage; full RV32_Zba/bb/bc/bs bit-manipulation support; dual AHB5 bus integration.",
+    strengths: "Leading 3.17 CoreMark/MHz efficiency; mass-production silicon heritage; full RV32_Zba/bb/bc/bs bit-manipulation support; dual AHB5 bus integration.",
     tradeoffs: "Higher area than 2-stage cores; no MMU for virtual memory operating systems (strictly baremetal/RTOS).",
     pipelineDeepDive: "3-stage in-order Harvard pipeline (Instruction Fetch, Instruction Decode, Execute / Writeback). Features a decoupled fetch engine with a 2-word prefetch buffer that insulates decode from instruction bus latency. The execution datapath includes single-cycle ALU forwarding (X->X, X->M), a single-cycle fast multiplier (MUL_FAST) with an optional 1-cycle latency mode (MUL_FASTER), and an iterative divider unrolled to 1, 2, or 4 bits/cycle.",
     branchArch: "Features an innovative 1-entry micro-BTB (BRANCH_PREDICTOR) allocated dynamically on taken backward branches (loops) and invalidated on mispredictions, traps, or fence.i, completely eliminating the 1-cycle fetch bubble in loop bodies. Incorporates a dedicated branch comparator (FAST_BRANCHCMP) separate from the ALU, eliminating critical path delay when Zba shifted-add instructions are active.",
@@ -668,7 +668,7 @@ const bespokeDossiers = [
     coprocessorAndExt: "Support for Microsoft CHERI memory safety capabilities (ibex_cheriot_pkg); Hardware Performance Monitors (HPM) with up to 31 counters (40-bit width); official RISC-V debug specification support with hardware breakpoint triggers.",
     rtlParameters: [
       { name: "RV32M", defaultVal: "RV32MFast", desc: "Multiplier architecture: RV32MNone, RV32MSlow (multi-cycle), RV32MFast (single-cycle DSP)" },
-      { name: "RV32B", defaultVal: "RV32BNone", desc: "Bit-manipulation tier: RV32BNone, RV32BBalanced, RV32BFull" },
+      { name: "RV32B", defaultVal: "RV32BNone", desc: "Bit-manipulation configuration: RV32BNone, RV32BBalanced, RV32BFull" },
       { name: "WritebackStage", defaultVal: "0 (2-Stage)", desc: "1 = Add third pipeline stage (Writeback) to isolate load-use stalls and increase Fmax" },
       { name: "BranchPredictor", defaultVal: "0 (Disabled)", desc: "1 = Enable dynamic 2-bit saturating counter branch prediction table" },
       { name: "BranchTargetALU", defaultVal: "0 (Disabled)", desc: "1 = Dedicated branch adder to eliminate ALU serialization on branch targets" },
@@ -1766,7 +1766,7 @@ const bespokeDossiers = [
                 The Complete 40-Instruction Set of RV32I &amp; RV32E Base Integer ISAs
               </h4>
               <p style="font-size: 0.9rem; color: #242c33; margin: 0; max-width: 850px;">
-                The official RISC-V unprivileged integer specification defines exactly <strong>40 unprivileged instructions</strong>. Both <strong>RV32I</strong> and <strong>RV32E</strong> share the identical 40 opcodes, functional encodings, and RTL semantics. Filter by functional category or search for any instruction below:
+                The official RISC-V unprivileged integer specification defines exactly <strong>40 unprivileged instructions</strong>. Both <strong>RV32I</strong> and <strong>RV32E</strong> share the identical 40 opcodes, functional encodings, and RTL semantics. Filter by functional group or search for any instruction below:
               </p>
             </div>
             <!-- Search Input -->
@@ -1775,7 +1775,7 @@ const bespokeDossiers = [
             </div>
           </div>
 
-          <!-- Category Filter Pills -->
+          <!-- Functional Group Filter Pills -->
           <div class="isa-cat-filter-bar" style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem;">
             <button class="isa-cat-btn active" data-isa-cat="all">All Base Instructions (40)</button>
             <button class="isa-cat-btn" data-isa-cat="alu-reg">ALU Reg-Reg [R-Type] (10)</button>
@@ -6156,7 +6156,7 @@ const bespokeDossiers = [
           Empirical measurements generated from cycle-accurate Verilator 5.022, CXXRTL, Icarus, and GHDL simulation profiles. Compiled with <code>-O3 -funroll-loops</code>.
         </p>
       </div>
-      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="cat1-latex">
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="mcu-scalar-latex">
         &lt;/&gt; Copy LaTeX Table
       </button>
     </div>
@@ -6858,16 +6858,16 @@ const bespokeDossiers = [
     </p>
 
     <!-- LaTeX Code Box -->
-    <div class="latex-export-box" id="cat1-latex" style="display: none;">
+    <div class="latex-export-box" id="mcu-scalar-latex" style="display: none;">
       <div class="latex-head">
-        <span>LaTeX Table: Category 1 Microcontroller &amp; Scalar Cores (SCORE Dataset)</span>
+        <span>LaTeX Table: Microcontroller &amp; Scalar Cores (SCORE Dataset)</span>
         <button class="close-latex-btn">&times;</button>
       </div>
       <pre class="latex-code"><code>\begin&#123;table&#125;[t]
 \centering
 \small
-\caption&#123;Category 1 Microcontroller and Scalar Embedded Core Empirical Leaderboard (SCORE Dataset)&#125;
-\label&#123;tab:cat1_mcu_benchmarks&#125;
+\caption&#123;Microcontroller and Scalar Embedded Core Empirical Leaderboard (SCORE Dataset)&#125;
+\label&#123;tab:mcu_scalar_benchmarks&#125;
 \begin&#123;tabular&#125;&#123;llccccccr&#125;
 \toprule
 \textbf&#123;Core&#125; &amp; \textbf&#123;Archetype&#125; &amp; \textbf&#123;ISA&#125; &amp; \textbf&#123;CoreMark/MHz&#125; &amp; \textbf&#123;DMIPS/MHz&#125; &amp; \textbf&#123;CPI&#125; &amp; \textbf&#123;Area (kGE)&#125; &amp; \textbf&#123;Fmax (MHz)&#125; &amp; \textbf&#123;Bus&#125; \\
@@ -7087,21 +7087,21 @@ SERV &amp; 1-bit Bit-Serial &amp; RV32I &amp; 0.97* &amp; 0.15 &amp; 32.0 &amp; 
     </div>
   </section>
 
-  <!-- Category Navigation Pager -->
+  <!-- Navigation Pager -->
   <div class="score-pager">
     <a href="/fundamentals/" class="score-pager-btn prev">
       <span class="pager-dir">&larr; Previous</span>
       <span class="pager-title">Computer Architecture Fundamentals</span>
     </a>
     <a href="/app-cores/" class="score-pager-btn next">
-      <span class="pager-dir">Next Category &rarr;</span>
-      <span class="pager-title">Category 2: 64-Bit Application Cores</span>
+      <span class="pager-dir">Next Track &rarr;</span>
+      <span class="pager-title">64-Bit Application Cores</span>
     </a>
   </div>
 </BaseLayout>
 
 <script>
-  // Filter Matrix by Tier
+  // Filter Matrix by Archetype
   const filterBtns = document.querySelectorAll(".matrix-filter-btn");
   const matrixRows = document.querySelectorAll("#matrix-table tbody tr");
 

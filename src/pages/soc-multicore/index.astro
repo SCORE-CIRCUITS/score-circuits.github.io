@@ -1816,8 +1816,8 @@ const bespokeSocDossiers = [
   }
 ];
 
-// Master Category 0 Infrastructure, Verification & RTL Generation Tooling
-const cat0Fallbacks: Record<string, string> = {
+// Master Infrastructure, Verification & RTL Generation Tooling
+const toolingFallbacks: Record<string, string> = {
   dramsim2: "Cycle-accurate memory system simulator for DDR2/DDR3 memory systems. Used in SCORE to model realistic DRAM controller latencies and memory controller contention.",
   ghdl: "Open-source VHDL simulator capable of compiling VHDL 2008 designs down to native machine code via LLVM/GCC. Primary simulator for NEORV32 and VHDL RISC-V platforms.",
   "hero-install": "Automated deployment harness installing LLVM heterogeneous OpenMP compilers and cross-compilers for ARMv8 and PULP cluster architectures.",
@@ -1837,7 +1837,7 @@ const infraToolsList = ((db as any).tools || [])
     org: tool.organization || tool.org || "Open Source Community",
     lang: tool.language || tool.lang || "RTL / Tooling",
     license: tool.license || "Open-Source",
-    desc: cat0Fallbacks[tool.slug] || tool.subtitle || tool.notableStrengths || "Open-source hardware infrastructure and tooling framework."
+    desc: toolingFallbacks[tool.slug] || tool.subtitle || tool.notableStrengths || "Open-source hardware infrastructure and tooling framework."
   }));
 ---
 

@@ -2189,21 +2189,21 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
             <text x="377" y="30" font-size="6.5" font-weight="600" fill="#151b20" font-family="monospace" text-anchor="middle">rs1[31:24]&times;rs2[31:24]</text>
           </g>
 
-          <!-- 2-Level Reduction Adder Tree -->
+          <!-- 2-Stage Reduction Adder Tree -->
           <g transform="translate(340, 185)">
             <rect x="0" y="0" width="140" height="35" rx="3" fill="#dcfce7" stroke="#059669" stroke-width="0.8"/>
-            <text x="70" y="15" font-size="7" font-weight="800" fill="#059669" font-family="monospace" text-anchor="middle">Level 1: (M0 + M1)</text>
+            <text x="70" y="15" font-size="7" font-weight="800" fill="#059669" font-family="monospace" text-anchor="middle">Stage 1: (M0 + M1)</text>
             <text x="70" y="27" font-size="6.5" font-weight="600" fill="#475569" font-family="monospace" text-anchor="middle">16-bit intermediate sum</text>
 
             <rect x="170" y="0" width="140" height="35" rx="3" fill="#dcfce7" stroke="#059669" stroke-width="0.8"/>
-            <text x="240" y="15" font-size="7" font-weight="800" fill="#059669" font-family="monospace" text-anchor="middle">Level 1: (M2 + M3)</text>
+            <text x="240" y="15" font-size="7" font-weight="800" fill="#059669" font-family="monospace" text-anchor="middle">Stage 1: (M2 + M3)</text>
             <text x="240" y="27" font-size="6.5" font-weight="600" fill="#475569" font-family="monospace" text-anchor="middle">16-bit intermediate sum</text>
 
             <line x1="70" y1="35" x2="155" y2="50" stroke="#34d399" stroke-width="1.2"/>
             <line x1="240" y1="35" x2="155" y2="50" stroke="#34d399" stroke-width="1.2"/>
 
             <rect x="75" y="50" width="160" height="35" rx="3" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
-            <text x="155" y="65" font-size="7.5" font-weight="900" fill="#6d28d9" font-family="monospace" text-anchor="middle">Level 2: Final Sum + Accumulator</text>
+            <text x="155" y="65" font-size="7.5" font-weight="900" fill="#6d28d9" font-family="monospace" text-anchor="middle">Stage 2: Final Sum + Accumulator</text>
             <text x="155" y="78" font-size="6.5" font-weight="600" fill="#151b20" font-family="monospace" text-anchor="middle">pv.dotsp.b / pv.sdotsp.b</text>
           </g>
 
@@ -4212,15 +4212,15 @@ CV32E40P & Archetype 1 & fdotproduct & INT32 & 1 & 32b GPR & 84,918 & 0.024 & 2.
 
   </section>
 
-  <!-- Category Navigation Pager -->
+  <!-- Navigation Pager -->
   <div class="score-pager">
     <a href="/app-cores/" class="score-pager-btn prev">
-      <span class="pager-dir">&larr; Previous Category</span>
-      <span class="pager-title">Category 2: 64-Bit Application Cores</span>
+      <span class="pager-dir">&larr; Previous Track</span>
+      <span class="pager-title">64-Bit Application Cores</span>
     </a>
     <a href="/soc-multicore/" class="score-pager-btn next">
-      <span class="pager-dir">Next Category &rarr;</span>
-      <span class="pager-title">Category 4: SoC &amp; Multi-Core Clusters</span>
+      <span class="pager-dir">Next Track &rarr;</span>
+      <span class="pager-title">SoC &amp; Multi-Core Clusters</span>
     </a>
   </div>
 

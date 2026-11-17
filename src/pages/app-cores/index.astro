@@ -370,7 +370,7 @@ const appCoreLeaderboard = [
 
 const cat2Leaderboard = appCoreLeaderboard;
 
-// Configuration sensitivity dataset for Category 2 application cores
+// Configuration sensitivity dataset for 64-bit application cores
 const appCoreConfigSensitivity = [
   {
     family: "SonicBOOM (UC Berkeley / CHIPS Alliance)",
@@ -1131,7 +1131,7 @@ const appCoreDossiers = [
 
 <BaseLayout
   title="Application Cores"
-  description="Category 2: 64-bit application processors, virtual memory MMU compliance, benchmark leaderboard, and evaluated core implementations."
+  description="64-bit application processors, virtual memory MMU compliance, benchmark leaderboard, and evaluated core implementations."
 >
   <div class="page-header accent-teal">
     <div class="badge badge-accent">OPEN-SOURCE APPLICATION ARCHITECTURES &bull; 64-BIT LINUX FOUNDATIONS &amp; BENCHMARKS</div>
@@ -1194,7 +1194,7 @@ const appCoreDossiers = [
         <h3 class="step-card-title">Anatomy of an Application-Class 64-Bit RISC-V Core</h3>
       </div>
       <p class="step-card-lead">
-        In deeply embedded microcontroller cores, instruction throughput is primarily bounded by ALU critical paths and simple branch bubble penalties. In Category 2 Application Cores, the fundamental engineering barrier shifts entirely to the <strong>Memory Wall</strong>: while 64-bit ALUs and FPU execution pipelines operate at gigahertz frequencies (&lt;1.0 ns clock period), external DDR DRAM memory takes 50 to 100 ns (100 to 200 clock cycles) to respond. Furthermore, running multi-user operating systems (such as Linux 6.1) mandates hardware-enforced privilege rings, dynamic virtual memory translation, and cache coherence.
+        In deeply embedded microcontroller cores, instruction throughput is primarily bounded by ALU critical paths and simple branch bubble penalties. In 64-bit Application Cores, the fundamental engineering barrier shifts entirely to the <strong>Memory Wall</strong>: while 64-bit ALUs and FPU execution pipelines operate at gigahertz frequencies (&lt;1.0 ns clock period), external DDR DRAM memory takes 50 to 100 ns (100 to 200 clock cycles) to respond. Furthermore, running multi-user operating systems (such as Linux 6.1) mandates hardware-enforced privilege rings, dynamic virtual memory translation, and cache coherence.
         Every evaluated 64-bit application core (from 135 kGE in-order cores up to 420 kGE out-of-order superscalar processors) implements seven coordinated hardware primitives to conquer memory latency and sustain instruction flow:
       </p>
 
@@ -2051,7 +2051,7 @@ const appCoreDossiers = [
               The Complete 60-Instruction Set of RV64GC Application Architecture
             </h4>
             <p style="font-size: 0.9rem; color: #242c33; margin: 0; max-width: 850px;">
-              The official RISC-V Linux profile combines 64-bit base integer instructions (<code>RV64I</code>), integer multiplication/division (<code>M</code>), atomic primitives (<code>A</code>), floating-point units (<code>F/D</code>), compressed encodings (<code>C</code>), and Privileged MMU registers. Filter by extension category or search for any instruction below:
+              The official RISC-V Linux profile combines 64-bit base integer instructions (<code>RV64I</code>), integer multiplication/division (<code>M</code>), atomic primitives (<code>A</code>), floating-point units (<code>F/D</code>), compressed encodings (<code>C</code>), and Privileged MMU registers. Filter by standard extension or search for any instruction below:
             </p>
           </div>
           <!-- Search Input -->
@@ -2060,7 +2060,7 @@ const appCoreDossiers = [
           </div>
         </div>
 
-        <!-- Category Filter Pills -->
+        <!-- Extension Filter Pills -->
         <div class="isa-cat-filter-bar">
           <button class="isa-cat-btn active" data-isa-cat="all">All Base &amp; Extended (60)</button>
           <button class="isa-cat-btn" data-isa-cat="rv64i">RV64I 64-Bit Base (18)</button>
@@ -2747,7 +2747,7 @@ const appCoreDossiers = [
                 <strong>Software Payoff:</strong> <strong>25&times; to 60&times; acceleration</strong> over GCC software emulation routines (<code>__muldi3</code>, <code>__divdi3</code>). Eliminates severe thread scheduling stalls during kernel hash table lookups, timer tick calculations, and slab allocator maths.
               </p>
               <div class="isa-adoption-note">
-                <strong>Adoption Decision:</strong> Universal in all Category 2 processors. Rocket integrates a non-blocking iterative divider; BOOM features fully pipelined multi-cycle multiplier stages.
+                <strong>Adoption Decision:</strong> Universal in all evaluated application processors. Rocket integrates a non-blocking iterative divider; BOOM features fully pipelined multi-cycle multiplier stages.
               </div>
             </div>
           </div>
@@ -2835,7 +2835,7 @@ const appCoreDossiers = [
                 <strong>Software Payoff:</strong> The physical foundation of modern OS security: enforces process address space isolation, demand paging, memory-mapped I/O protection, and copy-on-write (<code>fork</code>).
               </p>
               <div class="isa-adoption-note">
-                <strong>Adoption Decision:</strong> The non-negotiable definition of a Category 2 Application Core.
+                <strong>Adoption Decision:</strong> The non-negotiable definition of an application-class processor.
               </div>
             </div>
           </div>
@@ -3667,7 +3667,7 @@ const appCoreDossiers = [
                 <tr>
                   <td><strong>Silicon Area &amp; Operating Freq</strong></td>
                   <td>~135 kGE &bull; ~1.2 &ndash; 1.4 GHz (TSMC 16nm / GF 22FDX)</td>
-                  <td>Smallest footprint in the evaluated application core category; ideal for power-critical edge nodes.</td>
+                  <td>Smallest footprint among evaluated application cores; ideal for power-critical edge nodes.</td>
                 </tr>
               </tbody>
             </table>
@@ -4364,7 +4364,7 @@ const appCoreDossiers = [
                 <tr>
                   <td><strong>Silicon Area &amp; Operating Freq</strong></td>
                   <td>~420 kGE &bull; ~1.5 GHz (TSMC 16nm / GlobalFoundries 22FDX)</td>
-                  <td>Consumes ~3.1&times; the area of Rocket Chip, representing the peak high-performance tier of open-source RISC-V.</td>
+                  <td>Consumes ~3.1&times; the area of Rocket Chip, representing the peak high-performance frontier of open-source RISC-V compute.</td>
                 </tr>
               </tbody>
             </table>
@@ -4732,7 +4732,7 @@ const appCoreDossiers = [
           Evaluates memory throughput (unaligned memcpy sweeps), MMU translation behavior, MSHR concurrency, and PMP violation traps across standard workloads under Linux 6.1 LTS and bare-metal environments.
         </p>
       </div>
-      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="cat2-latex">
+      <button class="btn btn-outline btn-sm copy-latex-btn" data-target="app-cores-latex">
         &lt;/&gt; Copy LaTeX Table
       </button>
     </div>
@@ -5406,16 +5406,16 @@ const appCoreDossiers = [
     </p>
 
     <!-- LaTeX Code Box -->
-    <div class="latex-export-box" id="cat2-latex" style="display: none;">
+    <div class="latex-export-box" id="app-cores-latex" style="display: none;">
       <div class="latex-head">
-        <span>LaTeX Table: Category 2 64-bit Application Cores (SCORE Dataset)</span>
+        <span>LaTeX Table: 64-Bit Application Cores (SCORE Dataset)</span>
         <button class="close-latex-btn">&times;</button>
       </div>
       <pre class="latex-code"><code>\begin&#123;table&#125;[t]
 \centering
 \small
 \caption&#123;Open-Source 64-bit Application Core Benchmark Comparison (SCORE Dataset)&#125;
-\label&#123;tab:cat2_benchmarks&#125;
+\label&#123;tab:app_cores_benchmarks&#125;
 \begin&#123;tabular&#125;&#123;llcccccr&#125;
 \toprule
 \textbf&#123;Core&#125; &amp; \textbf&#123;Pipeline Archetype&#125; &amp; \textbf&#123;ISA&#125; &amp; \textbf&#123;Memcpy BW&#125; &amp; \textbf&#123;L1 (I/D) \&amp; MSHR&#125; &amp; \textbf&#123;MMU / PMP&#125; &amp; \textbf&#123;Fmax&#125; &amp; \textbf&#123;Area (kGE)&#125; \\
@@ -5858,15 +5858,15 @@ BlackParrot (Quad)    &amp; Modular Multicore        &amp; RV64GC &amp; 398.0 MB
     </div>
   </section>
 
-  <!-- Category Navigation Pager -->
+  <!-- Navigation Pager -->
   <div class="score-pager">
     <a href="/mcu-scalar/" class="score-pager-btn prev">
-      <span class="pager-dir">&larr; Previous Category</span>
-      <span class="pager-title">Category 1: MCU / Scalar Cores</span>
+      <span class="pager-dir">&larr; Previous Track</span>
+      <span class="pager-title">MCU &amp; Scalar Cores</span>
     </a>
     <a href="/vector-coprocessors/" class="score-pager-btn next">
-      <span class="pager-dir">Next Category &rarr;</span>
-      <span class="pager-title">Category 3: Vector &amp; Coprocessors</span>
+      <span class="pager-dir">Next Track &rarr;</span>
+      <span class="pager-title">Vector &amp; Coprocessors</span>
     </a>
   </div>
 </BaseLayout>

@@ -1033,9 +1033,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <circle cx="640" cy="172" r="12" fill="#22bfd7" stroke="#fffaf0" stroke-width="1.5"/>
                   <text x="640" y="176" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle" font-family="monospace">P7,G7</text>
 
-                  <!-- Level 1 (Stride 1) -->
+                  <!-- Stage 1 (Stride 1) -->
                   <line x1="22" y1="202" x2="738" y2="202" stroke="#151b20" stroke-width="1" stroke-dasharray="2 2"/>
-                  <text x="26" y="214" font-size="7.5" font-weight="800" fill="#b7df69" font-family="monospace">LEVEL 1 (Stride 1): Delay = 1 t_pg</text>
+                  <text x="26" y="214" font-size="7.5" font-weight="800" fill="#b7df69" font-family="monospace">STAGE 1 (Stride 1): Delay = 1 t_pg</text>
                   <line x1="80" y1="184" x2="80" y2="232" stroke="#22bfd7" stroke-width="1.5"/>
                   <line x1="80" y1="184" x2="160" y2="218" stroke="#b7df69" stroke-width="1.5"/>
                   <circle cx="160" cy="218" r="7" fill="#b7df69" stroke="#151b20" stroke-width="1"/>
@@ -1052,9 +1052,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <circle cx="640" cy="218" r="7" fill="#b7df69" stroke="#151b20" stroke-width="1"/>
                   <line x1="560" y1="184" x2="640" y2="218" stroke="#b7df69" stroke-width="1.5"/>
 
-                  <!-- Level 2 (Stride 2) -->
+                  <!-- Stage 2 (Stride 2) -->
                   <line x1="22" y1="242" x2="738" y2="242" stroke="#151b20" stroke-width="1" stroke-dasharray="2 2"/>
-                  <text x="26" y="254" font-size="7.5" font-weight="800" fill="#ffc83e" font-family="monospace">LEVEL 2 (Stride 2): Delay = 2 t_pg</text>
+                  <text x="26" y="254" font-size="7.5" font-weight="800" fill="#ffc83e" font-family="monospace">STAGE 2 (Stride 2): Delay = 2 t_pg</text>
                   <circle cx="240" cy="258" r="7" fill="#ffc83e" stroke="#151b20" stroke-width="1"/>
                   <line x1="80" y1="184" x2="240" y2="258" stroke="#ffc83e" stroke-width="1.5"/>
                   <circle cx="320" cy="258" r="7" fill="#ffc83e" stroke="#151b20" stroke-width="1"/>
@@ -1068,9 +1068,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                   <circle cx="640" cy="258" r="7" fill="#ffc83e" stroke="#151b20" stroke-width="1"/>
                   <line x1="480" y1="218" x2="640" y2="258" stroke="#ffc83e" stroke-width="1.5"/>
 
-                  <!-- Level 3 (Stride 4) -->
+                  <!-- Stage 3 (Stride 4) -->
                   <line x1="22" y1="282" x2="738" y2="282" stroke="#151b20" stroke-width="1" stroke-dasharray="2 2"/>
-                  <text x="26" y="294" font-size="7.5" font-weight="800" fill="#f38469" font-family="monospace">LEVEL 3 (Stride 4): Delay = 3 t_pg</text>
+                  <text x="26" y="294" font-size="7.5" font-weight="800" fill="#f38469" font-family="monospace">STAGE 3 (Stride 4): Delay = 3 t_pg</text>
                   <circle cx="400" cy="298" r="7" fill="#f38469" stroke="#151b20" stroke-width="1"/>
                   <line x1="80" y1="184" x2="400" y2="298" stroke="#f38469" stroke-width="1.5"/>
                   <circle cx="480" cy="298" r="7" fill="#f38469" stroke="#151b20" stroke-width="1"/>
@@ -1187,7 +1187,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
                 <text x="508" y="420" font-size="8.5" font-weight="900" fill="#151b20" font-family="monospace">SCORE ARCHITECTURE DEPLOYMENT</text>
                 <rect x="508" y="428" width="232" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
                 <text id="svgAdderCoreName" x="624" y="446" font-size="12" font-weight="900" fill="#b7df69" font-family="monospace" text-anchor="middle">CVA6 &amp; BOOM</text>
-                <text id="svgAdderCoreDesc" x="508" y="470" font-size="7.5" fill="#242c33" font-family="sans-serif">Category 3/4 high-performance cores (&gt;1.5 GHz)</text>
+                <text id="svgAdderCoreDesc" x="508" y="470" font-size="7.5" fill="#242c33" font-family="sans-serif">High-performance application &amp; vector cores (&gt;1.5 GHz)</text>
                 <text id="svgAdderFreqNote" x="508" y="485" font-size="7.5" font-weight="800" fill="#22bfd7" font-family="sans-serif">Est. Peak Frequency: &#8776; 1,800 MHz (16nm)</text>
               </svg>
             </div>
@@ -1220,7 +1220,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
               <div class="tradeoff-col">
                 <span class="to-label">&#127919; SCORE Benchmark Reality</span>
                 <p>
-                  &bull; <code>SERV</code> (Category 1) calculates 32-bit addition bit-by-bit over 32 clock cycles with a <strong>single 1-bit full adder</strong>, shrinking the entire core to 2.1 kGE.<br/>
+                  &bull; <code>SERV</code> (Bit-Serial Scalar Core) calculates 32-bit addition bit-by-bit over 32 clock cycles with a <strong>single 1-bit full adder</strong>, shrinking the entire core to 2.1 kGE.<br/>
                   &bull; <code>Ibex</code> uses a balanced Brent-Kung CLA.<br/>
                   &bull; <code>CVA6</code> and <code>BOOM</code> employ wide parallel prefix trees to hit &gt;1.5 GHz operating frequencies.
                 </p>
@@ -1731,7 +1731,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
         </div>
 
         <div class="alu-explanation-box">
-          <strong>Microarchitectural Insight (SERV vs. Ibex):</strong> In Category 1, the ultra-compact <code>SERV</code> core implements a <strong>bit-serial ALU</strong>—it calculates 32-bit addition with a <em>single 1-bit full adder</em> over 32 clock cycles, shrinking the entire core to a record <strong>2.1 kGE</strong>! Meanwhile, balanced cores like <code>Ibex</code> use a full 32-bit parallel carry-lookahead adder to finish in 1 cycle, spending ~24 kGE of silicon.
+          <strong>Microarchitectural Analysis (SERV vs. Ibex):</strong> In scalar microcontroller designs, the ultra-compact <code>SERV</code> core implements a <strong>bit-serial ALU</strong>—it calculates 32-bit addition with a <em>single 1-bit full adder</em> over 32 clock cycles, shrinking the entire core to a record <strong>2.1 kGE</strong>! Meanwhile, balanced cores like <code>Ibex</code> use a full 32-bit parallel carry-lookahead adder to finish in 1 cycle, spending ~24 kGE of silicon.
 
         </div>
       </div>
@@ -2169,13 +2169,13 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECTION 4: PIPELINING & HAZARDS (CATEGORY 1 BRIDGE) -->
+    <!-- SECTION 4: PIPELINING & HAZARDS (MCU & SCALAR BRIDGE) -->
     <!-- ============================================================ -->
     <section id="pipelining-hazards" class="fund-section-card">
       <div class="fund-header">
         <span class="fund-num">04</span>
         <div>
-          <a href="/mcu-scalar/" style="text-decoration: none;"><span class="badge badge-accent">CATEGORY 1 BRIDGE &bull; SCALAR MICROARCHITECTURE &rarr;</span></a>
+          <a href="/mcu-scalar/" style="text-decoration: none;"><span class="badge badge-accent">MCU &amp; SCALAR CORES &bull; SCALAR MICROARCHITECTURE &rarr;</span></a>
           <h2 class="fund-title">Pipelining &amp; The Three Hazards</h2>
         </div>
       </div>
@@ -2542,7 +2542,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <rect x="498" y="434" width="244" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text id="svgFwdAreaVal" x="620" y="451" font-size="11" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">~280 GE &#8226; +35 ps Mux Delay</text>
   <text x="498" y="475" font-size="7.5" fill="#242c33">4x 5-bit register comparators + 64x 3:1 MUX gates</text>
-  <text x="498" y="490" font-size="7.5" font-weight="800" fill="#8275e8">SCORE Mapping: Ibex, CV32E40P, CVA6 (All Cat 2-4)</text>
+  <text x="498" y="490" font-size="7.5" font-weight="800" fill="#8275e8">SCORE Mapping: Ibex, CV32E40P, CVA6, BOOM</text>
 </svg>
             </div>
 
@@ -2802,7 +2802,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <rect x="498" y="406" width="244" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="620" y="423" font-size="11" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">2 Bits / Table Entry (BHT)</text>
   <text x="498" y="445" font-size="7.5" fill="#242c33">1,024-entry BHT requires only 256 Bytes of dedicated SRAM</text>
-  <text x="498" y="458" font-size="7.5" font-weight="800" fill="#8275e8">SCORE Mapping: Ibex (Cat 2), CVA6 (Cat 3), BOOM (Cat 4)</text>
+  <text x="498" y="458" font-size="7.5" font-weight="800" fill="#8275e8">SCORE Mapping: Ibex, CVA6, BOOM</text>
 </svg>
             </div>
 
@@ -2870,18 +2870,18 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECTION 5: MEMORY HIERARCHY, MMU & OUT-OF-ORDER (CATEGORY 2 BRIDGE) -->
+    <!-- SECTION 5: MEMORY HIERARCHY, MMU & OUT-OF-ORDER (APPLICATION CORES BRIDGE) -->
     <!-- ============================================================ -->
     <section id="memory-virtual" class="fund-section-card">
       <div class="fund-header">
         <span class="fund-num">05</span>
         <div>
-          <a href="/app-cores/" style="text-decoration: none;"><span class="badge badge-accent">CATEGORY 2 BRIDGE &bull; APPLICATION CLASS &rarr;</span></a>
+          <a href="/app-cores/" style="text-decoration: none;"><span class="badge badge-accent">APPLICATION PROCESSORS &bull; APPLICATION CLASS &rarr;</span></a>
           <h2 class="fund-title">The Memory Hierarchy, MMU &amp; Out-of-Order Execution</h2>
         </div>
       </div>
       <p class="fund-lead">
-        While processors operate in gigahertz (&lt;1 nanosecond), external DRAM memory takes 50 to 100 nanoseconds to respond. This is the <strong>Memory Wall</strong>. Category 2 Application Cores solve this through multi-level caches, hardware virtual memory (MMU), and Out-of-Order (OoO) superscalar execution.
+        While processors operate in gigahertz (&lt;1 nanosecond), external DRAM memory takes 50 to 100 nanoseconds to respond. This is the <strong>Memory Wall</strong>. 64-Bit Application Cores solve this through multi-level caches, hardware virtual memory (MMU), and Out-of-Order (OoO) superscalar execution.
       </p>
 
       <!-- Top-Down Progression: Virtual Memory & OoO Cores -->
@@ -3030,7 +3030,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <rect x="498" y="424" width="244" height="26" rx="4" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
   <text x="620" y="441" font-size="11" font-weight="900" fill="#151b20" font-family="monospace" text-anchor="middle">L1 TLB: 32 Entries &#8226; L2 TLB: 512</text>
   <text x="498" y="465" font-size="7.5" fill="#242c33">Hardware Page Table Walker FSM embedded in MMU</text>
-  <text x="498" y="478" font-size="7.5" font-weight="800" fill="#8275e8">SCORE Mapping: CVA6 (Cat 3), BOOM &amp; Ara (Cat 4)</text>
+  <text x="498" y="478" font-size="7.5" font-weight="800" fill="#8275e8">SCORE Mapping: CVA6, BOOM, XiangShan</text>
 </svg>
             </div>
 
@@ -3114,7 +3114,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
             <h3 class="step-card-title">In-Order vs. Out-of-Order (OoO) Superscalar Execution</h3>
           </div>
           <p>
-            Why do high-performance Category 2 cores like <code>BOOM</code> and <code>XiangShan</code> take 400+ kGE of silicon?
+            Why do high-performance application cores like <code>BOOM</code> and <code>XiangShan</code> take 400+ kGE of silicon?
           </p>
           <ul class="concept-list">
             <li><strong>In-Order Bottleneck:</strong> If instruction 1 suffers a cache miss and waits 100 cycles for DRAM, the <em>entire pipeline freezes</em>, even if instructions 2, 3, and 4 are completely independent!</li>
@@ -3327,13 +3327,13 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECTION 6: VECTOR ENGINES & PARALLELISM (CATEGORY 3 BRIDGE) -->
+    <!-- SECTION 6: VECTOR ENGINES & PARALLELISM (VECTOR COPROCESSORS BRIDGE) -->
     <!-- ============================================================ -->
     <section id="vector-parallelism" class="fund-section-card">
       <div class="fund-header">
         <span class="fund-num">06</span>
         <div>
-          <a href="/vector-coprocessors/" style="text-decoration: none;"><span class="badge badge-accent">CATEGORY 3 BRIDGE &bull; HIGH-THROUGHPUT COMPUTE &rarr;</span></a>
+          <a href="/vector-coprocessors/" style="text-decoration: none;"><span class="badge badge-accent">VECTOR COPROCESSORS &bull; HIGH-THROUGHPUT COMPUTE &rarr;</span></a>
           <h2 class="fund-title">Vector Coprocessors &amp; Systolic Arrays</h2>
         </div>
       </div>
@@ -3634,7 +3634,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <text x="604" y="192" font-size="7" fill="#242c33" text-anchor="middle">Activations pass rightwards; weights pass downwards</text>
 
   <text x="604" y="235" font-size="8" font-weight="800" fill="#b7df69" text-anchor="middle">&#10003; 98% Compute Efficiency: Cuts DRAM energy by 90%!</text>
-  <text x="604" y="250" font-size="7" fill="#242c33" text-anchor="middle">SCORE Category 3/4 Engine (Gemmini, Spatz, Ara)</text>
+  <text x="604" y="250" font-size="7" fill="#242c33" text-anchor="middle">SCORE Vector &amp; Spatial Accelerators (Gemmini, Spatz, Ara)</text>
 
   <!-- Bottom Legend Strip -->
   <rect x="18" y="295" width="726" height="45" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1"/>
@@ -3715,13 +3715,13 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
     </section>
 
     <!-- ============================================================ -->
-    <!-- SECTION 7: SOC FABRICS, INTERCONNECTS & CLUSTERS (CATEGORY 4 BRIDGE) -->
+    <!-- SECTION 7: SOC FABRICS, INTERCONNECTS & CLUSTERS (SOC & MULTI-CORE BRIDGE) -->
     <!-- ============================================================ -->
     <section id="soc-interconnects" class="fund-section-card">
       <div class="fund-header">
         <span class="fund-num">07</span>
         <div>
-          <a href="/soc-multicore/" style="text-decoration: none;"><span class="badge badge-accent">CATEGORY 4 BRIDGE &bull; MANYCORE SYSTEMS &rarr;</span></a>
+          <a href="/soc-multicore/" style="text-decoration: none;"><span class="badge badge-accent">SOC &amp; MULTI-CORE &bull; MANYCORE SYSTEMS &rarr;</span></a>
           <h2 class="fund-title">SoC Interconnect Fabrics &amp; Multi-Core Clusters</h2>
         </div>
       </div>
@@ -3838,7 +3838,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <rect x="18" y="285" width="724" height="40" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1"/>
   <text x="30" y="303" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">BANDWIDTH SCALING COMPARISON:</text>
   <text x="210" y="303" font-size="7.5" fill="#242c33" font-family="monospace">Bus: Saturated at 4 cores &#8226; Crossbar: Area explodes to 65,536 switches at 256 cores &#8226; 2D Mesh NoC: Bisection bandwidth scales cleanly as O(&#8730;N)</text>
-  <text x="30" y="318" font-size="7.5" font-weight="800" fill="#0d9488">SCORE Archetype: Category 1 (Bus) &#8594; Category 2 (Crossbar) &#8594; Category 4 (Snitch 2D Mesh Cluster)</text>
+  <text x="30" y="318" font-size="7.5" font-weight="800" fill="#0d9488">SCORE Archetypes: Single-Core Bus &#8594; Multi-Master Crossbar &#8594; Snitch 2D Mesh Cluster</text>
 </svg>
             </div>
             <div class="schematic-caption">
@@ -3918,7 +3918,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
           </p>
           <ul class="concept-list">
             <li><strong>Autonomous DMA:</strong> Direct Memory Access engines stream gigabytes of matrix tiles from external DRAM into local tightly-coupled SRAM buffers without halting the CPU.</li>
-            <li><strong>The Manycore Spinlock Wall:</strong> When 256 cores wait for each other using software spinlocks (atomic memory operations), the crossbar congests. Category 4 clusters (like <code>Snitch</code>) integrate dedicated <strong>hardware barrier wires</strong> to synchronize 256 cores in a single clock cycle!</li>
+            <li><strong>The Manycore Spinlock Wall:</strong> When 256 cores wait for each other using software spinlocks (atomic memory operations), the crossbar congests. Manycore clusters (like <code>Snitch</code>) integrate dedicated <strong>hardware barrier wires</strong> to synchronize 256 cores in a single clock cycle!</li>
           </ul>
 
 <!-- SCHEMATIC: HARDWARE BARRIER TREE -->
@@ -3989,7 +3989,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
 
   <!-- Bottom Legend Strip -->
   <rect x="18" y="250" width="724" height="34" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1"/>
-  <text x="30" y="271" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">SCORE INSIGHT (SNITCH CLUSTERS):</text>
+  <text x="30" y="271" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">SCORE FINDING (SNITCH CLUSTERS):</text>
   <text x="235" y="271" font-size="8" fill="#242c33" font-family="monospace">By replacing software spinlocks with dedicated 1-cycle hardware barrier trees, Snitch achieves &gt;92% parallel compute efficiency across 256 cores!</text>
 </svg>
             </div>
@@ -4141,25 +4141,25 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
         </div>
       </div>
 
-<!-- SCHEMATIC: 4-LEVEL EVALUATION LADDER -->
+<!-- SCHEMATIC: ALIGNED EVALUATION LADDER -->
       <div class="schematic-container" style="margin-bottom: 2rem;">
         <div class="schematic-header">
           <span class="schematic-tag">BENCHMARKING METHODOLOGY</span>
-          <h3 class="schematic-title">The 4-Tier Aligned Benchmarking Ladder (Categories 1–4)</h3>
+          <h3 class="schematic-title">The Aligned Benchmarking Ladder: From Scalar Cores to Multi-Core SoCs</h3>
         </div>
         <div class="schematic-svg-wrap" style="background: var(--cream, #fffaf0); padding: 0.5rem; border-radius: 8px; border: 1.5px solid var(--ink, #151b20);">
           <svg viewBox="0 0 760 320" class="schematic-svg" xmlns="http://www.w3.org/2000/svg">
   <!-- Status Banner (Light Theme) -->
   <rect x="2" y="2" width="756" height="24" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5" rx="5"/>
   <circle cx="16" cy="14" r="4" fill="#0d9488"/>
-  <text x="26" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE METHODOLOGY &#8226; 4-TIER ALIGNED BENCHMARKING LADDER (CATEGORY 1 TO 4 MAPPING)</text>
+  <text x="26" y="17" font-size="9" font-weight="900" fill="#151b20" font-family="monospace">SCORE METHODOLOGY &#8226; ALIGNED BENCHMARKING LADDER (SCALAR TO MULTI-CORE)</text>
 
   <!-- Frame Background -->
   <rect x="8" y="30" width="744" height="282" rx="6" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
 
-  <!-- Tier 1: Scalar Pipeline (x=18 to 190) -->
+  <!-- Track 1: Scalar Pipeline (x=18 to 190) -->
   <rect x="18" y="42" width="172" height="215" rx="5" fill="#f6f0dc" stroke="#151b20" stroke-width="1.5"/>
-  <rect x="18" y="42" width="172" height="22" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/><text x="104" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">TIER 1: SCALAR PIPELINE</text>
+  <rect x="18" y="42" width="172" height="22" rx="4" fill="#eee4c8" stroke="#151b20" stroke-width="1"/><text x="104" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">TRACK 1: SCALAR PIPELINE</text>
 
   <rect x="26" y="72" width="156" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="104" y="90" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Verification Target</text>
@@ -4171,12 +4171,12 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <text x="104" y="159" font-size="7" fill="#242c33" text-anchor="middle">CoreMark 1.0 &#8226; Dhrystone 2.1</text>
 
   <rect x="26" y="174" width="156" height="38" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-  <text x="104" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Category 1:</text>
-  <text x="104" y="204" font-size="7" fill="#0d9488" text-anchor="middle">MCU / Scalar Cores (SERV, Ibex)</text>
+  <text x="104" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; MCU &amp; Scalar:</text>
+  <text x="104" y="204" font-size="7" fill="#0d9488" text-anchor="middle">Embedded Cores (SERV, Ibex)</text>
 
-  <!-- Tier 2: Memory & OS (x=200 to 372) -->
+  <!-- Track 2: Memory & OS (x=200 to 372) -->
   <rect x="200" y="42" width="172" height="215" rx="5" fill="#f6f0dc" stroke="#ffc83e" stroke-width="1.5"/>
-  <rect x="200" y="42" width="172" height="22" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1"/><text x="286" y="57" font-size="8.5" font-weight="900" fill="#ffc83e" text-anchor="middle">TIER 2: MEMORY &amp; OS</text>
+  <rect x="200" y="42" width="172" height="22" rx="4" fill="#fff0b9" stroke="#ffc83e" stroke-width="1"/><text x="286" y="57" font-size="8.5" font-weight="900" fill="#ffc83e" text-anchor="middle">TRACK 2: MEMORY &amp; OS</text>
 
   <rect x="208" y="72" width="156" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="286" y="90" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Verification Target</text>
@@ -4188,12 +4188,12 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <text x="286" y="159" font-size="7" fill="#242c33" text-anchor="middle">Linux 6.1 Boot &#8226; Embench</text>
 
   <rect x="208" y="174" width="156" height="38" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-  <text x="286" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Category 2:</text>
-  <text x="286" y="204" font-size="7" fill="#ffc83e" text-anchor="middle">Application Cores (CVA6, BOOM)</text>
+  <text x="286" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Application Cores:</text>
+  <text x="286" y="204" font-size="7" fill="#ffc83e" text-anchor="middle">64-Bit Cores (CVA6, BOOM)</text>
 
-  <!-- Tier 3: Vector Intensity (x=382 to 554) -->
+  <!-- Track 3: Vector Intensity (x=382 to 554) -->
   <rect x="382" y="42" width="172" height="215" rx="5" fill="#e7f4c8" stroke="#b7df69" stroke-width="1.5"/>
-  <rect x="382" y="42" width="172" height="22" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/><text x="468" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">TIER 3: VECTOR INTENSITY</text>
+  <rect x="382" y="42" width="172" height="22" rx="4" fill="#e7f4c8" stroke="#b7df69" stroke-width="1"/><text x="468" y="57" font-size="8.5" font-weight="900" fill="#151b20" text-anchor="middle">TRACK 3: VECTOR INTENSITY</text>
 
   <rect x="390" y="72" width="156" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="468" y="90" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Verification Target</text>
@@ -4205,12 +4205,12 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <text x="468" y="159" font-size="7" fill="#242c33" text-anchor="middle">GEMM, 2D-FFT, Conv2D</text>
 
   <rect x="390" y="174" width="156" height="38" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-  <text x="468" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Category 3:</text>
-  <text x="468" y="204" font-size="7" fill="#151b20" text-anchor="middle">Vector Coprocessors (Ara, Spatz)</text>
+  <text x="468" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Vector Coprocessors:</text>
+  <text x="468" y="204" font-size="7" fill="#151b20" text-anchor="middle">RVV Engines (Ara, Spatz)</text>
 
-  <!-- Tier 4: SoC Interconnects & Clusters (x=564 to 742) -->
+  <!-- Track 4: SoC Interconnects & Clusters (x=564 to 742) -->
   <rect x="564" y="42" width="178" height="215" rx="5" fill="#f6f0dc" stroke="#8275e8" stroke-width="1.5"/>
-  <rect x="564" y="42" width="178" height="22" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1"/><text x="653" y="57" font-size="8.5" font-weight="900" fill="#8275e8" text-anchor="middle">TIER 4: SOC CLUSTERS</text>
+  <rect x="564" y="42" width="178" height="22" rx="4" fill="#e2dfff" stroke="#8275e8" stroke-width="1"/><text x="653" y="57" font-size="8.5" font-weight="900" fill="#8275e8" text-anchor="middle">TRACK 4: SOC CLUSTERS</text>
 
   <rect x="572" y="72" width="162" height="50" rx="3" fill="#fffaf0" stroke="#22bfd7" stroke-width="1.5"/>
   <text x="653" y="90" font-size="8" font-weight="900" fill="#22bfd7" text-anchor="middle">Verification Target</text>
@@ -4222,40 +4222,40 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
   <text x="653" y="159" font-size="7" fill="#242c33" text-anchor="middle">SPLASH-2, PARSEC, ResNet-50</text>
 
   <rect x="572" y="174" width="162" height="38" rx="3" fill="#fffaf0" stroke="#151b20" stroke-width="1.5"/>
-  <text x="653" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; Category 4:</text>
+  <text x="653" y="192" font-size="8" font-weight="900" fill="#151b20" text-anchor="middle">&#8594; SoC &amp; Manycore:</text>
   <text x="653" y="204" font-size="7" fill="#8275e8" text-anchor="middle">SoC Fabrics (Snitch, Cheshire)</text>
 
   <!-- Bottom Legend Strip -->
   <rect x="18" y="268" width="724" height="34" rx="4" fill="#f6f0dc" stroke="#151b20" stroke-width="1"/>
   <text x="30" y="289" font-size="8" font-weight="900" fill="#151b20" font-family="monospace">SCORE LADDER OBJECTIVE:</text>
-  <text x="175" y="289" font-size="8" fill="#242c33" font-family="monospace">Isolating hardware bottlenecks tier-by-tier ensures architecture decisions are grounded in empirical cycle-accurate measurements.</text>
+  <text x="175" y="289" font-size="8" fill="#242c33" font-family="monospace">Isolating hardware bottlenecks track-by-track ensures architecture decisions are grounded in empirical cycle-accurate measurements.</text>
 </svg>
         </div>
         <div class="schematic-caption">
-          <strong>Figure 8.1:</strong> The SCORE 4-tier benchmarking ladder systematically isolates bottlenecks at each abstraction layer, directly mapping verification insights onto the 4 SCORE Architecture Categories.
+          <strong>Figure 8.1:</strong> The SCORE benchmarking ladder systematically isolates bottlenecks at each abstraction layer, directly mapping verification results across the open-source compute domains.
         </div>
       </div>
-      <!-- INTERACTIVE 4-LEVEL BENCHMARKING LADDER -->
+      <!-- INTERACTIVE BENCHMARKING LADDER -->
       <div class="interactive-widget-box" id="benchLevelWidget" style="margin-top: 2rem;">
         <div class="widget-header">
           <span class="widget-badge">SCORE BENCHMARKING METHODOLOGY</span>
-          <h3 class="widget-title">The 4-Level Evaluation Ladder</h3>
+          <h3 class="widget-title">Evaluation Ladder &amp; Testbenches</h3>
           <p class="widget-desc">
-            Computer architecture research cannot rely on a single benchmark. SCORE evaluates processors across 4 aligned verification tiers to isolate bottlenecks at each abstraction layer. Click a level to inspect workloads, simulation targets, and next-generation architectural insights:
+            Computer architecture research cannot rely on a single benchmark. SCORE evaluates processors across 4 aligned verification tracks to isolate bottlenecks at each abstraction layer. Select a track to inspect workloads, simulation targets, and empirical findings:
           </p>
         </div>
 
         <div class="bench-level-buttons">
-          <button class="bench-lvl-btn active" data-blvl="1">Level 1: Scalar Pipeline (MCU Cores)</button>
-          <button class="bench-lvl-btn" data-blvl="2">Level 2: Memory &amp; OS (Application Cores)</button>
-          <button class="bench-lvl-btn" data-blvl="3">Level 3: Vector Intensity (Vector Engines)</button>
-          <button class="bench-lvl-btn" data-blvl="4">Level 4: Interconnect &amp; Clusters (SoC Platforms)</button>
+          <button class="bench-lvl-btn active" data-blvl="1">Scalar Pipeline (MCU Cores)</button>
+          <button class="bench-lvl-btn" data-blvl="2">Memory &amp; OS (Application Cores)</button>
+          <button class="bench-lvl-btn" data-blvl="3">Vector Intensity (Vector Engines)</button>
+          <button class="bench-lvl-btn" data-blvl="4">Interconnect &amp; Clusters (SoC Platforms)</button>
         </div>
 
         <div class="bench-level-card" id="benchLevelCard">
           <div class="blc-header">
             <div>
-              <span class="blc-badge" id="blcBadge">LEVEL 01 &bull; SCALAR EFFICIENCY</span>
+              <span class="blc-badge" id="blcBadge">01 &bull; SCALAR EFFICIENCY</span>
               <h4 class="blc-title" id="blcTitle">Microcontroller &amp; In-Order Pipeline Optimization</h4>
             </div>
             <div class="blc-scope-tag" id="blcScopeTag">Scope: Single-Net / Single-Threaded Core</div>
@@ -4332,7 +4332,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
           <table class="ds-table" style="background: #ffffff; border: 1.5px solid var(--ink, #151b20); border-radius: 8px; width: 100%; font-size: 0.85rem;">
             <thead>
               <tr style="background: var(--paper-deep, #eee4c8); border-bottom: 2px solid var(--ink, #151b20);">
-                <th style="padding: 0.65rem 0.85rem; text-align: left;">Domain Category</th>
+                <th style="padding: 0.65rem 0.85rem; text-align: left;">Computing Domain</th>
                 <th style="padding: 0.65rem 0.85rem; text-align: center;">Archetypes</th>
                 <th style="padding: 0.65rem 0.85rem; text-align: left;">Governing Hardware Dimension</th>
                 <th style="padding: 0.65rem 0.85rem; text-align: left;">Phase Transitions &amp; Exemplars</th>
@@ -4340,7 +4340,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
             </thead>
             <tbody>
               <tr>
-                <td style="padding: 0.65rem 0.85rem;"><strong>Category 1: Microcontrollers</strong><br /><small class="text-muted">Scalar Embedded Cores</small></td>
+                <td style="padding: 0.65rem 0.85rem;"><strong>Microcontrollers &amp; Scalar Cores</strong><br /><small class="text-muted">Scalar Embedded Processors</small></td>
                 <td style="padding: 0.65rem 0.85rem; text-align: center;"><span class="badge badge-yellow">4 Archetypes</span></td>
                 <td style="padding: 0.65rem 0.85rem;"><strong>1D Von Neumann Instruction Stream:</strong> Area vs. CPI vs. Frequency levers in SRAM-direct execution.</td>
                 <td style="padding: 0.65rem 0.85rem;">
@@ -4351,7 +4351,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
                 </td>
               </tr>
               <tr style="background: #fafaf5;">
-                <td style="padding: 0.65rem 0.85rem;"><strong>Category 2: Application Cores</strong><br /><small class="text-muted">Linux-Capable Processors</small></td>
+                <td style="padding: 0.65rem 0.85rem;"><strong>64-Bit Application Cores</strong><br /><small class="text-muted">Linux-Capable Processors</small></td>
                 <td style="padding: 0.65rem 0.85rem; text-align: center;"><span class="badge badge-teal">4 Archetypes</span></td>
                 <td style="padding: 0.65rem 0.85rem;"><strong>Memory Wall &amp; Hazard Mitigation:</strong> Overcoming DRAM latency and branch misprediction penalties.</td>
                 <td style="padding: 0.65rem 0.85rem;">
@@ -4362,7 +4362,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
                 </td>
               </tr>
               <tr>
-                <td style="padding: 0.65rem 0.85rem;"><strong>Category 3: Vector &amp; Accelerators</strong><br /><small class="text-muted">Spatial &amp; SIMD Engines</small></td>
+                <td style="padding: 0.65rem 0.85rem;"><strong>Vector Engines &amp; Accelerators</strong><br /><small class="text-muted">Spatial &amp; SIMD Processors</small></td>
                 <td style="padding: 0.65rem 0.85rem; text-align: center;"><span class="badge badge-coral">8 Archetypes</span></td>
                 <td style="padding: 0.65rem 0.85rem;"><strong>Spatial Parallelism &amp; Algebra Dimensions:</strong> 1D sequential vectoring vs. 2D systolic meshes vs. DAE streaming vs. SIMT.</td>
                 <td style="padding: 0.65rem 0.85rem;">
@@ -4373,7 +4373,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
                 </td>
               </tr>
               <tr style="background: #fafaf5;">
-                <td style="padding: 0.65rem 0.85rem;"><strong>Category 4: SoCs &amp; Manycores</strong><br /><small class="text-muted">Clusters &amp; Interconnects</small></td>
+                <td style="padding: 0.65rem 0.85rem;"><strong>SoC Platforms &amp; Manycore Clusters</strong><br /><small class="text-muted">Coherent Systems &amp; Interconnects</small></td>
                 <td style="padding: 0.65rem 0.85rem; text-align: center;"><span class="badge badge-lime">5 Archetypes</span></td>
                 <td style="padding: 0.65rem 0.85rem;"><strong>Interconnect Topology &amp; Consistency Scaling:</strong> Bus &rarr; TCDM Crossbar &rarr; System AXI &rarr; Coherent Mesh &rarr; Chiplet TCDM.</td>
                 <td style="padding: 0.65rem 0.85rem;">
@@ -4398,7 +4398,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
     </section>
   </div>
 
-  <!-- Category Navigation Pager -->
+  <!-- Navigation Pager -->
   <div class="score-pager">
     <a href="/" class="score-pager-btn prev">
       <span class="pager-dir">&larr; Overview</span>
@@ -4406,7 +4406,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
     </a>
     <a href="/mcu-scalar/" class="score-pager-btn next">
       <span class="pager-dir">Explore Hardware &rarr;</span>
-      <span class="pager-title">Category 1: MCU / Scalar Cores</span>
+      <span class="pager-title">MCU &amp; Scalar Cores</span>
     </a>
   </div>
 </BaseLayout>
@@ -5372,7 +5372,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
       areaFormula = "Minimal single 1-bit FA footprint";
       speedupTxt = `Sequential execution (${adderBits} clock cycles latency)`;
       wireNote = "Lowest wiring complexity • Zero routing congestion";
-      coreName = "SERV (Category 1)";
+      coreName = "SERV (Bit-Serial Microcontroller)";
       coreDesc = "Ultra-compact IoT core shrinking to 2.1 kGE";
       if (adderCanvasTitle) adderCanvasTitle.textContent = `TOPOLOGY: BIT-SERIAL FULL ADDER (${adderBits}-BIT OPERATION)`;
       if (adderCanvasSub) adderCanvasSub.textContent = `Sequential 1-bit adder: 1 full adder evaluated over ${adderBits} clock cycles`;
@@ -5397,7 +5397,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
       const sp = (adderBits / delay).toFixed(1);
       speedupTxt = `Speedup: ${sp}× faster than Ripple-Carry`;
       wireNote = "Medium wiring complexity • 2 metal layers";
-      coreName = "Ibex & CV32E40P (Category 2)";
+      coreName = "Ibex & CV32E40P (Scalar Pipelined Cores)";
       coreDesc = "Balanced embedded cores (800-1200 MHz)";
       if (adderCanvasTitle) adderCanvasTitle.textContent = `TOPOLOGY: CARRY-LOOKAHEAD ADDER (${adderBits}-BIT DATAPATH)`;
       if (adderCanvasSub) adderCanvasSub.textContent = "Hierarchical 4-bit block generate/propagate carry lookahead tree";
@@ -5410,7 +5410,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
       const sp = (adderBits / delay).toFixed(1);
       speedupTxt = `Speedup: ${sp}× faster than Ripple-Carry`;
       wireNote = "Requires dense routing on M3-M5 metal layers";
-      coreName = "CVA6 & BOOM (Category 3/4)";
+      coreName = "CVA6 & BOOM (High-Performance Cores)";
       coreDesc = "High-performance out-of-order cores (>1.5 GHz)";
       if (adderCanvasTitle) adderCanvasTitle.textContent = `TOPOLOGY: KOGGE-STONE PARALLEL PREFIX TREE (${adderBits}-BIT DATAPATH)`;
       if (adderCanvasSub) adderCanvasSub.textContent = `Full parallel prefix computation: Carries computed simultaneously in ${delay} gate delays`;
@@ -5423,7 +5423,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
       const sp = (adderBits / delay).toFixed(1);
       speedupTxt = `Speedup: ${sp}× faster than Ripple-Carry`;
       wireNote = "Medium-low wiring congestion • Excellent placement fit";
-      coreName = "Ibex (Category 2 Champion)";
+      coreName = "Ibex (Scalar Benchmark Standard)";
       coreDesc = "Balanced area-delay trade-off for microcontrollers";
       if (adderCanvasTitle) adderCanvasTitle.textContent = `TOPOLOGY: BRENT-KUNG PREFIX TREE (${adderBits}-BIT DATAPATH)`;
       if (adderCanvasSub) adderCanvasSub.textContent = `Bounded fan-out prefix tree: ${delay} gate delays with minimal wiring tracks`;
@@ -6438,7 +6438,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
 
   const ladderData: Record<number, LevelData> = {
     1: {
-      badge: "LEVEL 01 &bull; SCALAR EFFICIENCY",
+      badge: "01 &bull; SCALAR EFFICIENCY",
       title: "Microcontroller & In-Order Pipeline Optimization",
       scope: "Scope: Single-Net / Single-Threaded Core",
       target: "Instruction fetch throughput, branch prediction accuracy, ALU execution latency, and load-use hazard stalls in cycle-accurate Verilator simulations.",
@@ -6447,7 +6447,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
       remedy: "→ Dual-issue in-order pipelines with static branch hints and zero-cycle hardware loop controllers (e.g. VeeR EL2, CV32E40P)."
     },
     2: {
-      badge: "LEVEL 02 &bull; MEMORY & OS INTEGRATION",
+      badge: "02 &bull; MEMORY & OS INTEGRATION",
       title: "64-Bit Application Cores & Linux Boot Compliance",
       scope: "Scope: Virtual Memory Subsystem (Sv39 MMU) + Multi-level Caches",
       target: "TLB miss latency, hardware page table walking, cache line fill concurrency (MSHRs), and atomic memory operations under Linux boot workloads.",
@@ -6456,7 +6456,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
       remedy: "→ Out-of-Order superscalar execution with register renaming, non-blocking caches (MSHRs), and aggressive hardware stride prefetchers (e.g. BOOM, XiangShan)."
     },
     3: {
-      badge: "LEVEL 03 &bull; VECTOR INTENSITY",
+      badge: "03 &bull; VECTOR INTENSITY",
       title: "Vector Coprocessors & Systolic Acceleration",
       scope: "Scope: SIMD Vector Execution Units (VLEN 512–4096 bits)",
       target: "Vector arithmetic density, floating-point utilization, crossbar bank conflict stalls, and decoupled scalar-vector command issue.",
@@ -6465,7 +6465,7 @@ ceil$), reducing 32-bit delay from 32 steps down to only 5 steps.
       remedy: "→ Decoupled Access-Execute (DAE) hardware engines and multi-banked, clustered Vector Register Files (VRF) to decouple memory prefetch from vector math."
     },
     4: {
-      badge: "LEVEL 04 &bull; MANYCORE CLUSTERS & SOCS",
+      badge: "04 &bull; MANYCORE CLUSTERS & SOCS",
       title: "Shared-Memory Interconnects & System-on-Chip Fabrics",
       scope: "Scope: 16 to 432-Core Coherent Platforms",
       target: "Bisection bandwidth, Network-on-Chip (NoC) flit latency, DMA transfer efficiency, and collective hardware barrier synchronization.",
